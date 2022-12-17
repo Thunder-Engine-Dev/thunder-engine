@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dcnay4n7iasda"]
+
+[ext_resource type="Script" path="res://engine/nodes/core/player/player.gd" id="1_oexgf"]
+[ext_resource type="Script" path="res://engine/singletones/player_configuration/player_configuration.gd" id="2_swksi"]
+[ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://engine/nodes/core/player/player_no_img.svg" id="2_vs53i"]
+[ext_resource type="Script" path="res://engine/external/smoothing_2d.gd" id="4_urwgn"]
+
+[sub_resource type="Resource" id="Resource_qcvwo"]
+script = ExtResource("2_swksi")
+state_animations = {}
+state_scripts = {}
+jump_speed_stopped = 20.0
+jump_speed_moving = 25.0
+fall_speed = 50.0
+max_fall_speed = 550.0
+acceleration_speed = 12.5
+deceleration_speed = 5.0
+initial_acceleration = 40.0
+initial_accel_trigger = 20.0
+max_walk_speed = 175.0
+max_run_speed = 350.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
+size = Vector2(20, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psf8v"]
+size = Vector2(20, 56)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_oexgf")
+config = SubResource("Resource_qcvwo")
+
+[node name="CollisionSmall" type="CollisionShape2D" parent="."]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_wxu54")
+
+[node name="CollisionBig" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_psf8v")
+
+[node name="Sprites" type="Node2D" parent="."]
+script = ExtResource("4_urwgn")
+target = NodePath("..")
+flags = 63
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Sprites"]
+
+[node name="SpriteNoImg" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -27)
+texture = ExtResource("2_vs53i")
