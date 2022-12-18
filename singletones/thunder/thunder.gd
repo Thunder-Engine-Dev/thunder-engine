@@ -2,6 +2,8 @@
 
 extends Node
 
+var _target_speed: int = 50
+
 var _current_frame: Frame: # Reference to the current frame scene
 	set(node):
 		assert(is_instance_valid(node) || !(node is Frame), "Frame node is invalid")
@@ -33,4 +35,4 @@ func get_or_null(obj: Variant, key: String):
 
 
 func get_delta(delta: float) -> float:
-	return 50 * delta
+	return _target_speed * delta
