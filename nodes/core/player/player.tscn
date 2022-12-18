@@ -9,16 +9,16 @@
 script = ExtResource("2_swksi")
 state_animations = {}
 state_scripts = {}
-jump_speed_stopped = 20.0
-jump_speed_moving = 25.0
-fall_speed = 50.0
-max_fall_speed = 550.0
+jump_speed_stopped = 20
+jump_speed_moving = 25
+fall_speed = 50
+max_fall_speed = 550
 acceleration_speed = 12.5
-deceleration_speed = 5.0
-initial_acceleration = 40.0
-initial_accel_trigger = 20.0
-max_walk_speed = 175.0
-max_run_speed = 350.0
+deceleration_speed = 5
+initial_acceleration = 40
+initial_accel_trigger = 20
+max_walk_speed = 175
+max_run_speed = 350
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
 size = Vector2(20, 26)
