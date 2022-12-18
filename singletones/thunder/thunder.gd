@@ -2,8 +2,6 @@
 
 extends Node
 
-const DEFAULT_DELTA:float = 0.0001 # Default delta
-
 var _current_frame: Frame: # Reference to the current frame scene
 	set(node):
 		assert(is_instance_valid(node) || !(node is Frame), "Frame node is invalid")
@@ -35,4 +33,4 @@ func get_or_null(obj: Variant, key: String):
 
 
 func get_delta(delta: float) -> float:
-	return 50 * (delta if delta != 0 else DEFAULT_DELTA)
+	return 50 * delta
