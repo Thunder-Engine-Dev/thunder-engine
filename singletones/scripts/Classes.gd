@@ -2,4 +2,4 @@
 # to prevent from large amount of icons displaying in Node dock
 extends Node
 
-const PLAYER_STATE_MANAGER:Script = preload("res://engine/scripts/nodes/core/player/player_state_manager.gd")
+# const CLASS_NAME:Script = preload("script path here!")
