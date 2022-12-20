@@ -6,6 +6,8 @@ extends Node
 var view:View = View.new()
 
 
+var gravity_speed: float = 50
+
 var _target_speed: int = 50
 
 var _current_frame: Stage2D: # Reference to the current frame scene

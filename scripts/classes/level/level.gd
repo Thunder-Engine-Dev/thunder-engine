@@ -1,7 +1,7 @@
 # Base level node
 
 @tool
-extends Frame
+extends Stage2D
 class_name Level
 @icon("./icon.svg")
 

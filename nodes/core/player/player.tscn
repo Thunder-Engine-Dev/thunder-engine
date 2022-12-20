@@ -33,6 +33,7 @@ size = Vector2(20, 26)
 size = Vector2(20, 56)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 16
 script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
 
