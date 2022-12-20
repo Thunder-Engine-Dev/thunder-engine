@@ -2,6 +2,10 @@
 
 extends Node
 
+
+var view:View = View.new()
+
+
 var _target_speed: int = 50
 
 var _current_frame: Stage2D: # Reference to the current frame scene
@@ -35,3 +39,37 @@ func get_or_null(obj: Variant, key: String):
 
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
+
+
+
+class View:
+	var border: Rect2i
+	var trans: Transform2D
+	
+	func camborder(cam: Camera2D) -> void:
+		trans = cam.get_viewport_transform()
+		border.size = cam.get_viewport_rect().size
+		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
+	
+	func screen_left(pos: Vector2, offset: float) -> bool:
+		return (trans * pos).x > -offset
+	
+	func screen_right(pos: Vector2, offset: float) -> bool:
+		return (trans * pos).x < border.size.x + offset
+	
+	func screen_top(pos: Vector2, offset: float) -> bool:
+		return (trans * pos).y > -offset
+	
+	func screen_bottom(pos: Vector2, offset: float) -> bool:
+		return (trans * pos).y > border.size.y + offset
+	
+	func screen_dir(pos: Vector2, dir: Vector2, offset: float) -> bool:
+		var ang: float = dir.angle()
+		if ang > 3*PI/4 || ang < -3*PI/4:
+			return screen_left(pos, offset)
+		elif ang >= -3*PI/4 && ang <= -PI/4:
+			return screen_top(pos, offset)
+		elif ang > -PI/4 && ang < PI/4:
+			return screen_right(pos, offset)
+		else:
+			return screen_bottom(pos, offset)
