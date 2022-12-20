@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ncqrqnwb123a"]
+[gd_scene load_steps=8 format=3 uid="uid://m70j6aspkcpn"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/core/player/player.gd" id="1_h6nik"]
 [ext_resource type="Script" path="res://engine/scripts/resources/player/player_configuration.gd" id="2_swksi"]
-[ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://engine/assets/textures/nodes/core/player/player_no_img.svg" id="4_eurgm"]
+[ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://engine/nodes/core/player/textures/player_no_img.svg" id="4_o8a8c"]
 [ext_resource type="Script" path="res://engine/external/smoothing_2d.gd" id="4_urwgn"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
@@ -15,16 +15,16 @@ control_jump = &"m_jump"
 control_run = &"m_run"
 state_animations = null
 state_scripts = null
-jump_speed_stopped = 20
-jump_speed_moving = 25
-fall_speed = 50
-max_fall_speed = 550
+jump_speed_stopped = 20.0
+jump_speed_moving = 25.0
+fall_speed = 50.0
+max_fall_speed = 550.0
 acceleration_speed = 12.5
-deceleration_speed = 5
-initial_acceleration = 40
-initial_accel_trigger = 20
-max_walk_speed = 175
-max_run_speed = 350
+deceleration_speed = 5.0
+initial_acceleration = 40.0
+initial_accel_trigger = 20.0
+max_walk_speed = 175.0
+max_run_speed = 350.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
 size = Vector2(20, 26)
@@ -53,4 +53,4 @@ flags = 63
 
 [node name="SpriteNoImg" type="Sprite2D" parent="Sprites"]
 position = Vector2(0, -27)
-texture = ExtResource("4_eurgm")
+texture = ExtResource("4_o8a8c")
