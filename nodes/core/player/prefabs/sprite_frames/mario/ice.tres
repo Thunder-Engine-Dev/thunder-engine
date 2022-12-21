@@ -1,0 +1,93 @@
+[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://dow36xjd0brm2"]
+
+[ext_resource type="Texture2D" uid="uid://c36dij4dty3bt" path="res://engine/nodes/core/player/textures/mario/IceClimb.png" id="1_swfio"]
+[ext_resource type="Texture2D" uid="uid://b1bka4okkj0bm" path="res://engine/nodes/core/player/textures/mario/Dead.png" id="2_2au88"]
+[ext_resource type="Texture2D" uid="uid://dytgbk5waed2s" path="res://engine/nodes/core/player/textures/mario/IceCrouch.png" id="2_vo0ev"]
+[ext_resource type="Texture2D" uid="uid://cvqplbqim4apv" path="res://engine/nodes/core/player/textures/mario/IceWalking.png" id="4_o5r0n"]
+[ext_resource type="Texture2D" uid="uid://dgdhr6j5wah2y" path="res://engine/nodes/core/player/textures/mario/IceJump.png" id="5_clc4u"]
+[ext_resource type="Texture2D" uid="uid://cy42pg2vmqqye" path="res://engine/nodes/core/player/textures/mario/IceSwim.png" id="6_wlp0v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yin6x"]
+atlas = ExtResource("1_swfio")
+region = Rect2(0, 0, 31, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47na6"]
+atlas = ExtResource("1_swfio")
+region = Rect2(31, 0, 31, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce1yr"]
+atlas = ExtResource("4_o5r0n")
+region = Rect2(0, 0, 31, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2vah"]
+atlas = ExtResource("4_o5r0n")
+region = Rect2(31, 0, 31, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oggri"]
+atlas = ExtResource("4_o5r0n")
+region = Rect2(62, 0, 31, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6byqb"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(0, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5vp8"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(41, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moe23"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(82, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocxea"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(123, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5psc6"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(164, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frak6"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(205, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_afwvx"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(246, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcu5t"]
+atlas = ExtResource("6_wlp0v")
+region = Rect2(287, 0, 41, 54)
+
+[resource]
+animations = [{
+"frames": [SubResource("AtlasTexture_yin6x"), SubResource("AtlasTexture_47na6")],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [ExtResource("2_vo0ev")],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [ExtResource("2_2au88")],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_ce1yr"), SubResource("AtlasTexture_u2vah"), SubResource("AtlasTexture_oggri")],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [ExtResource("5_clc4u")],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_6byqb"), SubResource("AtlasTexture_s5vp8"), SubResource("AtlasTexture_moe23"), SubResource("AtlasTexture_ocxea"), SubResource("AtlasTexture_5psc6"), SubResource("AtlasTexture_frak6"), SubResource("AtlasTexture_afwvx"), SubResource("AtlasTexture_wcu5t")],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}]

@@ -40,15 +40,15 @@ func _movement_generic(delta: float) -> void:
 		velocity.x = min(velocity.x + config.deceleration_speed * delta, 0)
 	
 	# Controls
-	states.left_or_right = int(Input.get_axis(config.control_left,config.control_right))
-	var walk:int = states.left_or_right
+	states.left_or_right = int(Input.get_axis(config.control_left, config.control_right))
+	var walk: int = states.left_or_right
 	
 	# Acceleration
 	
 	# Moving left and right
 	if walk != 0:
-		var speed_x:float = abs(velocity.x)
-		var mark_x:float = velocity.x * sign(walk)
+		var speed_x: float = abs(velocity.x)
+		var mark_x: float = velocity.x * sign(walk)
 		if speed_x < config.initial_accel_trigger / 2:
 			velocity.x = config.initial_accel_trigger * walk
 		elif mark_x <= -config.initial_accel_trigger:
