@@ -65,7 +65,7 @@ func _movement_generic(delta: float) -> void:
 		states.jump_buffer = false
 	
 	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor():
-		velocity.y = -700
+		velocity.y = -config.jump_velocity
 		states.jump_buffer = false
 
 func _movement_default(delta: float) -> void:

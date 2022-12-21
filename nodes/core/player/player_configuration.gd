@@ -17,13 +17,16 @@ class_name PlayerConfiguration
 
 # SFX
 @export_group("SFX")
-@export var jump_sound: AudioStream
+@export var jump_sound: AudioStream = preload("./sounds/jump.wav")
+@export var pipe_sound: AudioStream = preload("./sounds/pipe.wav")
+@export var powerdown_sound: AudioStream = preload("./sounds/pipe.wav")
 @export var die_music: Resource
 
 # Physics, values are defaulted to Mario config
 @export_group("Physics")
 @export var jump_speed_stopped: float = 20
 @export var jump_speed_moving: float = 25
+@export var jump_velocity: float = 700
 @export var fall_speed: float = 50
 @export var max_fall_speed: float = 550
 @export var acceleration_speed: float = 12.5
