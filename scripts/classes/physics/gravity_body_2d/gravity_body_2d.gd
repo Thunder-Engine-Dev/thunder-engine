@@ -9,7 +9,7 @@ class_name GravityBody2D
 @export var max_falling_speed: float:
 	set(value):
 		max_falling_speed = clamp(value,0,INF)
-@export var real_velocity: bool = true
+@export var real_velocity: bool
 @export_group("Correction")
 @export var correction_enabled:bool = true
 
@@ -21,14 +21,13 @@ signal collided_floor
 
 
 func motion_process(delta: float) -> void:
+	velocity_temp = velocity_local
 	var gspeed: float = gravity_scale * Thunder.gravity_speed
 	if !is_on_floor():
 		if max_falling_speed > 0:
 			accelerate_y(max_falling_speed, gspeed)
 		else:
 			velocity_local.y += gspeed
-	elif !real_velocity && velocity_local.y > 0:
-		velocity_local.y = 0
 	
 	up_direction = Vector2.UP.rotated(global_rotation)
 	velocity = velocity_local.rotated(global_rotation) * delta
@@ -43,10 +42,16 @@ func motion_process(delta: float) -> void:
 
 func collision_process() -> void:
 	if is_on_wall():
+		if !real_velocity:
+			velocity_local.x = 0
 		collided_wall.emit()
 	if is_on_ceiling():
+		if !real_velocity:
+			velocity_local.y = 0
 		collided_ceiling.emit()
 	if is_on_floor():
+		if !real_velocity:
+			velocity_local.y = 0
 		collided_floor.emit()
 
 

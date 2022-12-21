@@ -10,13 +10,13 @@ var gravity_speed: float = 50
 
 var _target_speed: int = 50
 
-var _current_frame: Stage2D: # Reference to the current frame scene
+var _current_stage: Stage2D: # Reference to the current stage scene
 	set(node):
 		assert(is_instance_valid(node) || !(node is Stage2D), "Stage2D node is invalid")
-		_current_frame = node
+		_current_stage = node
 	get:
-		assert(is_instance_valid(_current_frame) || !(_current_frame is Stage2D), "Stage2D node is invalid or not set")
-		return _current_frame
+		assert(is_instance_valid(_current_stage) || !(_current_stage is Stage2D), "Stage2D node is invalid or not set")
+		return _current_stage
 
 var _current_camera: Camera2D: # Reference to the current camera node
 	set(node):

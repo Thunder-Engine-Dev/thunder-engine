@@ -1,10 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://qe6edswawpvq"]
+[gd_scene load_steps=11 format=3 uid="uid://qe6edswawpvq"]
 
 [ext_resource type="Script" path="res://engine/nodes/enemies/_scripts/general.gd" id="1_bkaf1"]
 [ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/nodes/enemies/goombas/textures/goomba.png" id="2_8xnig"]
+[ext_resource type="Script" path="res://engine/nodes/enemies/_scripts/enemy_attacked.gd" id="2_21cco"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_ccgfb"]
+[ext_resource type="Script" path="res://engine/scripts/resources/node2d_creation/node2d_creation.gd" id="4_0ahi6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_y0a3w"]
+script = ExtResource("4_0ahi6")
+creation_offset = null
+creation_z_index = null
+creation_z_as_relative = true
+creation_y_sort_enabled = null
+inherit_rotation = null
+inherit_scale = null
+inherit_skew = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gtr3k"]
 atlas = ExtResource("2_8xnig")
@@ -26,13 +39,30 @@ animations = [{
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_bkaf1")
-velocity_local = Vector2(-50, 0)
+velocity_local = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"velocity_local", &"gravity_scale"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_21cco")
+stamping_offset = Vector2(0, 0)
+stamping_creation = SubResource("Resource_y0a3w")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 frames = SubResource("SpriteFrames_1e01p")
 playing = true
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+script = ExtResource("3_ccgfb")
