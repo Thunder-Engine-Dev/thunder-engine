@@ -44,6 +44,7 @@ gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"velocity_local", &"gravity_scale"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
@@ -52,6 +53,7 @@ collision_layer = 2
 collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
@@ -65,4 +67,5 @@ frames = SubResource("SpriteFrames_1e01p")
 playing = true
 
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 script = ExtResource("3_ccgfb")

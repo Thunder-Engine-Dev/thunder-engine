@@ -5,14 +5,14 @@ class_name Player
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
 
 var states: PlayerStatesManager = PlayerStatesManager.new()
-var sprites: Node2D
+
+@onready var sprites: Node2D = $Sprites
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	Thunder._current_player = self
 	
-	sprites = $Sprites
+	Thunder._current_player = self
 	
 	sprites.teleport()
 
