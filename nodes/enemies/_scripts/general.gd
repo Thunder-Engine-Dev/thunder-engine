@@ -10,4 +10,4 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	gravity_process(Thunder.get_delta(delta))
-	motion_process(Thunder.get_delta(delta),false,false)
+	motion_process(Thunder.get_delta(delta),false)

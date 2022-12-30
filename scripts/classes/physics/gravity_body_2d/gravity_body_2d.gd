@@ -38,12 +38,12 @@ func gravity_process(delta: float) -> void:
 	else:
 		velocity_local.y += gravity
 
-func motion_process(delta: float, elastic:bool, corrected:bool = false) -> void:
+func motion_process(delta: float, elastic:bool) -> void:
 	var gdir:float = global_gravity_dir.orthogonal().angle()
 	velocity_previous = velocity_local
 	velocity = velocity_local.rotated(gdir)
 	if collision:
-		if corrected:
+		if correction_enabled:
 			move_and_slide_corrected()
 		else:
 			move_and_slide()
