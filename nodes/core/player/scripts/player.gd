@@ -16,6 +16,7 @@ func _ready() -> void:
 	
 	sprites.teleport()
 
+
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	if states.current_state != "dead": _player_process(Thunder.get_delta(delta))
@@ -28,6 +29,7 @@ func _player_process(delta: float) -> void:
 		"default": _movement_default(delta)
 	
 	move_and_slide_corrected()
+
 
 func _movement_generic(delta: float) -> void:
 	# Fall
@@ -67,6 +69,7 @@ func _movement_generic(delta: float) -> void:
 	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor():
 		velocity.y = -700
 		states.jump_buffer = false
+
 
 func _movement_default(delta: float) -> void:
 	# Hold jump
