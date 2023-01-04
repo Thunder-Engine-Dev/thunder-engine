@@ -1,0 +1,93 @@
+[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://cu2foc167c0co"]
+
+[ext_resource type="Texture2D" uid="uid://dpmxnnruljhcp" path="res://engine/nodes/core/player/textures/mario/LuiClimb.png" id="1_bntqd"]
+[ext_resource type="Texture2D" uid="uid://b1bka4okkj0bm" path="res://engine/nodes/core/player/textures/mario/Dead.png" id="2_3fxsf"]
+[ext_resource type="Texture2D" uid="uid://btplyua6s5oar" path="res://engine/nodes/core/player/textures/mario/LuiCrouch.png" id="2_wy6n6"]
+[ext_resource type="Texture2D" uid="uid://bnd8r4ofqxe1o" path="res://engine/nodes/core/player/textures/mario/LuiWalk.png" id="4_teg8f"]
+[ext_resource type="Texture2D" uid="uid://cyf78e54ml6an" path="res://engine/nodes/core/player/textures/mario/LuiJump.png" id="5_wyugk"]
+[ext_resource type="Texture2D" uid="uid://c40w53trrpgx7" path="res://engine/nodes/core/player/textures/mario/LuiSwim.png" id="6_3x660"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqcis"]
+atlas = ExtResource("1_bntqd")
+region = Rect2(0, 0, 31, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmww5"]
+atlas = ExtResource("1_bntqd")
+region = Rect2(31, 0, 31, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6hki"]
+atlas = ExtResource("4_teg8f")
+region = Rect2(0, 0, 32, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl72m"]
+atlas = ExtResource("4_teg8f")
+region = Rect2(32, 0, 32, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwqk0"]
+atlas = ExtResource("4_teg8f")
+region = Rect2(64, 0, 32, 59)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdpjl"]
+atlas = ExtResource("6_3x660")
+region = Rect2(0, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lclfm"]
+atlas = ExtResource("6_3x660")
+region = Rect2(41, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7yif"]
+atlas = ExtResource("6_3x660")
+region = Rect2(82, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyp6y"]
+atlas = ExtResource("6_3x660")
+region = Rect2(123, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eojtf"]
+atlas = ExtResource("6_3x660")
+region = Rect2(164, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc2hd"]
+atlas = ExtResource("6_3x660")
+region = Rect2(205, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4dv0"]
+atlas = ExtResource("6_3x660")
+region = Rect2(246, 0, 41, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwhn4"]
+atlas = ExtResource("6_3x660")
+region = Rect2(287, 0, 41, 54)
+
+[resource]
+animations = [{
+"frames": [SubResource("AtlasTexture_kqcis"), SubResource("AtlasTexture_vmww5")],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [ExtResource("2_wy6n6")],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [ExtResource("2_3fxsf")],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_h6hki"), SubResource("AtlasTexture_sl72m"), SubResource("AtlasTexture_dwqk0")],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [ExtResource("5_wyugk")],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_vdpjl"), SubResource("AtlasTexture_lclfm"), SubResource("AtlasTexture_y7yif"), SubResource("AtlasTexture_yyp6y"), SubResource("AtlasTexture_eojtf"), SubResource("AtlasTexture_yc2hd"), SubResource("AtlasTexture_w4dv0"), SubResource("AtlasTexture_vwhn4")],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}]

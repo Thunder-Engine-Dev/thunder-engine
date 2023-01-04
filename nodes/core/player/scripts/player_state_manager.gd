@@ -5,6 +5,7 @@ var jump_buffer: bool = false
 var left_or_right:int
 var dir: int = 1
 
+
 func _init() -> void:
 	add_states([
 		"duck",

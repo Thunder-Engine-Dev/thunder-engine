@@ -5,14 +5,14 @@ class_name Player
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
 
 var states: PlayerStatesManager = PlayerStatesManager.new()
-var sprites: Node2D
+
+@onready var sprites: Node2D = $Sprites
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
-	Thunder._current_player = self
 	
-	sprites = $Sprites
+	Thunder._current_player = self
 	
 	sprites.teleport()
 
@@ -42,15 +42,15 @@ func _movement_generic(delta: float) -> void:
 		velocity.x = min(velocity.x + config.deceleration_speed * delta, 0)
 	
 	# Controls
-	states.left_or_right = int(Input.get_axis(config.control_left,config.control_right))
-	var walk:int = states.left_or_right
+	states.left_or_right = int(Input.get_axis(config.control_left, config.control_right))
+	var walk: int = states.left_or_right
 	
 	# Acceleration
 	
 	# Moving left and right
 	if walk != 0:
-		var speed_x:float = abs(velocity.x)
-		var mark_x:float = velocity.x * sign(walk)
+		var speed_x: float = abs(velocity.x)
+		var mark_x: float = velocity.x * sign(walk)
 		if speed_x < config.initial_accel_trigger / 2:
 			velocity.x = config.initial_accel_trigger * walk
 		elif mark_x <= -config.initial_accel_trigger:
@@ -67,7 +67,7 @@ func _movement_generic(delta: float) -> void:
 		states.jump_buffer = false
 	
 	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor():
-		velocity.y = -700
+		velocity.y = -config.jump_velocity
 		states.jump_buffer = false
 
 
