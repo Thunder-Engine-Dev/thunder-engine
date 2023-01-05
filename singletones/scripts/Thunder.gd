@@ -3,7 +3,7 @@
 extends Node
 
 
-var view:View = View.new()
+var view: View = View.new()
 
 
 var gravity_speed: float = 50
@@ -42,6 +42,9 @@ func get_or_null(obj: Variant, key: String):
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
 
+
+func _init():
+	Engine.physics_ticks_per_second = DisplayServer.screen_get_refresh_rate()
 
 
 class View:

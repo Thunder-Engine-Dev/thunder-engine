@@ -91,11 +91,11 @@ func turn_y() -> void:
 func jump(speed: float) -> void:
 	velocity_local.y = -abs(speed)
 
-func velset(vel: Vector2) -> void:
+func vel_set(vel: Vector2) -> void:
 	velocity_local = vel
 
-func velsetx(velx: float) -> void:
+func vel_set_x(velx: float) -> void:
 	velocity_local.x = velx
 
-func velsety(vely: float) -> void:
+func vel_set_y(vely: float) -> void:
 	velocity_local.y = vely

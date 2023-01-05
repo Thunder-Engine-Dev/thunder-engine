@@ -34,7 +34,7 @@ func get_velocity_random() -> Vector2:
 
 func apply_velocity_local() -> GravityBody2DPhysics:
 	if gravity_body:
-		gravity_body.velset(get_velocity_random())
+		gravity_body.vel_set(get_velocity_random())
 	return self
 
 
