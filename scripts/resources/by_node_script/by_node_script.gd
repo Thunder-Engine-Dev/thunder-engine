@@ -31,21 +31,21 @@ func _init(by:Node) -> void:
 
 
 # _ready()
-func _instantiated_by(by:Node) -> void:
+func _instantiated_by(by: Node) -> void:
 	pass
 
 # _enter_tree()
-func _enter_tree_by(by:Node) -> void:
+func _enter_tree_by(by: Node) -> void:
 	pass
 
 # _exit_tree()
-func _exit_tree_by(by:Node) -> void:
+func _exit_tree_by(by: Node) -> void:
 	pass
 
 # _process(delta)
-func _process_by(delta:float,by:Node) -> void:
+func _process_by(delta: float, by: Node) -> void:
 	pass
 
 # _physics_process(delta)
-func _physics_process_by(delta:float,by:Node) -> void:
+func _physics_process_by(delta: float, by: Node) -> void:
 	pass

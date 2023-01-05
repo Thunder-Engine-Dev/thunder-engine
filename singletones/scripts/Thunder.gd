@@ -44,14 +44,14 @@ func get_delta(delta: float) -> float:
 
 
 func _init():
-	Engine.physics_ticks_per_second = DisplayServer.screen_get_refresh_rate()
+	Engine.physics_ticks_per_second = int(DisplayServer.screen_get_refresh_rate())
 
 
 class View:
 	var border: Rect2i
 	var trans: Transform2D
 	
-	func camborder(cam: Camera2D) -> void:
+	func cam_border(cam: Camera2D) -> void:
 		trans = cam.get_viewport_transform()
 		border.size = cam.get_viewport_rect().size
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
