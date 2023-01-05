@@ -30,17 +30,22 @@ func _init(by:Node) -> void:
 	node.get_tree().physics_frame.connect(_physics_process_by.bind(node.get_physics_process_delta_time(),node))
 
 
+# _ready()
 func _instantiated_by(by:Node) -> void:
 	pass
 
+# _enter_tree()
 func _enter_tree_by(by:Node) -> void:
 	pass
 
+# _exit_tree()
 func _exit_tree_by(by:Node) -> void:
 	pass
 
+# _process(delta)
 func _process_by(delta:float,by:Node) -> void:
 	pass
 
+# _physics_process(delta)
 func _physics_process_by(delta:float,by:Node) -> void:
 	pass

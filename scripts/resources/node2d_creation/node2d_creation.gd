@@ -67,4 +67,4 @@ func call_physics() -> GravityBody2DPhysics:
 
 
 func _report_resource() -> void:
-	printerr("[Report] The error happened on: " + str(get_rid()))
+	printerr("[Report] The error happened on: " + str(get_rid()) + ", with path:" + resource_path)
