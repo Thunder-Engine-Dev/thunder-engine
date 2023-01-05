@@ -31,7 +31,7 @@ signal collided_floor
 func gravity_process(delta: float) -> void:
 	global_gravity_dir = gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
 	
-	var gravity:float = gravity_scale * GRAVITY
+	var gravity: float = gravity_scale * GRAVITY
 	if max_falling_speed > 0:
 		if velocity_local.y < max_falling_speed:
 			accelerate_y(max_falling_speed,gravity)
@@ -41,7 +41,7 @@ func gravity_process(delta: float) -> void:
 		velocity_local.y += gravity
 
 func motion_process(delta: float, elastic:bool) -> void:
-	var gdir:float = global_gravity_dir.orthogonal().angle()
+	var gdir: float = global_gravity_dir.orthogonal().angle()
 	velocity_previous = velocity_local
 	velocity = velocity_local.rotated(gdir)
 	if collision:
