@@ -5,14 +5,16 @@ class_name GravityBody2D
 
 const GRAVITY:float = 50.0
 
-@export_group("Basic Physics")
+@export_group("Velocity")
 @export var velocity_local: Vector2
+@export_group("Gravity")
 @export var gravity_dir: Vector2 = Vector2.DOWN
 @export var gravity_dir_rotation: bool
 @export var gravity_scale: float
 @export var max_falling_speed: float:
 	set(value):
 		max_falling_speed = clamp(value,0,INF)
+@export_group("Collision")
 @export var collision: bool = true
 @export_group("Correction")
 @export var correction_enabled:bool = true
@@ -65,7 +67,6 @@ func motion_process(delta: float, elastic:bool) -> void:
 			collided_floor.emit()
 	else:
 		global_position += velocity * delta
-	print(velocity_local)
 
 # Some useful functions
 func accelerate(to: Vector2, a: float) -> void:
@@ -86,11 +87,11 @@ func turn_y() -> void:
 func jump(speed: float) -> void:
 	velocity_local.y = -abs(speed)
 
-func velcall(vel: Vector2) -> void:
+func velset(vel: Vector2) -> void:
 	velocity_local = vel
 
-func velcallx(velx: float) -> void:
+func velsetx(velx: float) -> void:
 	velocity_local.x = velx
 
-func velcally(vely: float) -> void:
+func velsety(vely: float) -> void:
 	velocity_local.y = vely

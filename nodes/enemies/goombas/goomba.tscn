@@ -69,3 +69,5 @@ playing = true
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
 visible = false
 script = ExtResource("3_ccgfb")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
