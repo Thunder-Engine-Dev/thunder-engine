@@ -6,8 +6,8 @@ class_name Player
 @export var custom_script:Script
 
 var states: PlayerStatesManager = PlayerStatesManager.new()
-var extra_script:Script
 
+@onready var extra_script:Script = ByNodeScript.activate_script(custom_script,self)
 @onready var sprites: Node2D = $Sprites
 
 
@@ -15,8 +15,6 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
 	Thunder._current_player = self
-	
-	extra_script = ByNodeScript.activate_script(custom_script,self)
 	
 	sprites.teleport()
 

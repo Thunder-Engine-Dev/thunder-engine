@@ -1,7 +1,12 @@
 extends GDScript
 class_name ByNodeScript
 
-signal extra_script # Only used as identifier, no other usage!
+# Note: if you want to make a ByNodeScript activated, you should code like this:
+# @onready var extra_script:Script = ByNodeScript.activate_script(custom_script,self)
+# if you want to use _ready()-like functions in your ByNodeScripts, please override _instantiated_by() method
+# other virtual methods are used as what they are when in Nodes, plus a param "by" in each virtual methods below
+
+signal extra_script # Only used as an identifier, no other usage!
 
 var node:Node
 
