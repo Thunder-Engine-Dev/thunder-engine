@@ -13,29 +13,34 @@ var source_process_mode: int = PROCESS_MODE_INHERIT
 
 func _ready() -> void:
 	var set_mode_on: Callable = func() -> void:
-		if target_node:
-			target_node.process_mode = source_process_mode
-			source_process_mode = PROCESS_MODE_INHERIT
+		if !target_node: return
+		
+		target_node.process_mode = source_process_mode
+		source_process_mode = PROCESS_MODE_INHERIT
+	
 	var set_mode_off: Callable = func() -> void:
-		if target_node:
-			source_process_mode = target_node.process_mode
-			target_node.process_mode = PROCESS_MODE_DISABLED
+		if !target_node: return
+		
+		source_process_mode = target_node.process_mode
+		target_node.process_mode = PROCESS_MODE_DISABLED
 	
 	if disabled_when_out_of_screen:
 		set_mode_off.call()
 	
 	screen_entered.connect(
 		func() -> void:
-			if !activated:
-				if target_node && disabled_when_out_of_screen:
-					set_mode_on.call()
-				if active_once:
-					activated = true
+			if activated: return
+			
+			if target_node && disabled_when_out_of_screen:
+				set_mode_on.call()
+			if active_once:
+				activated = true
 	)
 	
 	screen_exited.connect(
 		func() -> void:
-			if !activated:
-				if target_node && disabled_when_out_of_screen:
-					set_mode_off.call()
+			if activated: return
+			
+			if target_node && disabled_when_out_of_screen:
+				set_mode_off.call()
 	)

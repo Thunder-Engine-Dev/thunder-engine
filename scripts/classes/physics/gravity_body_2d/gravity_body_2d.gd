@@ -40,33 +40,37 @@ func gravity_process(delta: float) -> void:
 	else:
 		velocity_local.y += gravity
 
+
 func motion_process(delta: float, elastic:bool) -> void:
 	var gdir: float = global_gravity_dir.orthogonal().angle()
 	velocity_previous = velocity_local
 	velocity = velocity_local.rotated(gdir)
-	if collision:
-		if correction_enabled:
-			move_and_slide_corrected()
-		else:
-			move_and_slide()
-		if elastic:
-			velocity = get_real_velocity()
-			velocity_local = velocity.rotated(-gdir)
-		if is_on_wall():
-			if !elastic:
-				velocity_local.x = 0
-			collided.emit()
-			collided_wall.emit()
-		if is_on_ceiling():
-			collided.emit()
-			collided_ceiling.emit()
-		if is_on_floor():
-			if !elastic:
-				velocity_local.y = 0
-			collided.emit()
-			collided_floor.emit()
-	else:
+	
+	if !collision:
 		global_position += velocity * delta
+		return
+	
+	if correction_enabled:
+		move_and_slide_corrected()
+	else:
+		move_and_slide()
+	if elastic:
+		velocity = get_real_velocity()
+		velocity_local = velocity.rotated(-gdir)
+	if is_on_wall():
+		if !elastic:
+			velocity_local.x = 0
+		collided.emit()
+		collided_wall.emit()
+	if is_on_ceiling():
+		collided.emit()
+		collided_ceiling.emit()
+	if is_on_floor():
+		if !elastic:
+			velocity_local.y = 0
+		collided.emit()
+		collided_floor.emit()
+
 
 # Some useful functions
 func accelerate(to: Vector2, a: float) -> void:

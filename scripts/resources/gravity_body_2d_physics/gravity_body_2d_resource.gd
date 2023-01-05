@@ -18,20 +18,25 @@ func bind(grav_body:GravityBody2D) -> GravityBody2DPhysics:
 	gravity_body = grav_body
 	return self
 
+
 func unbind() -> void:
 	gravity_body = null
+
 
 func get_velocity_random() -> Vector2:
 	var r: Vector2 = Vector2(
 		randf_range(velocity_local.x,velocity_local_random_max.x) if velocity_local_random_max.x > velocity_local.x else velocity_local.x,
 		randf_range(velocity_local.y,velocity_local_random_max.y) if velocity_local_random_max.y > velocity_local.y else velocity_local.y
 	)
+	
 	return r
+
 
 func apply_velocity_local() -> GravityBody2DPhysics:
 	if gravity_body:
 		gravity_body.velcall(get_velocity_random())
 	return self
+
 
 func override_gravity() -> GravityBody2DPhysics:
 	if gravity_body && gravity_override:
