@@ -16,8 +16,7 @@ func _ready() -> void:
 	
 	Thunder._current_player = self
 	
-	if custom_script:
-		extra_script = custom_script.new(self)
+	extra_script = ByNodeScript.activate_script(custom_script,self)
 	
 	sprites.teleport()
 
