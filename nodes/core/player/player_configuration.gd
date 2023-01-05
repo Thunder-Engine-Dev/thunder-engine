@@ -17,9 +17,9 @@ class_name PlayerConfiguration
 
 # SFX
 @export_group("SFX")
-@export var jump_sound: AudioStream = preload("./sounds/jump.wav")
-@export var pipe_sound: AudioStream = preload("./sounds/pipe.wav")
-@export var powerdown_sound: AudioStream = preload("./sounds/pipe.wav")
+@export var jump_sound: AudioStream
+@export var pipe_sound: AudioStream
+@export var powerdown_sound: AudioStream
 @export var die_music: Resource
 
 # Physics, values are defaulted to Mario config
