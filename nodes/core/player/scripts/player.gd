@@ -3,8 +3,10 @@ extends CorrectedCharacterBody2D
 class_name Player
 
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
+@export var custom_script:Script
 
 var states: PlayerStatesManager = PlayerStatesManager.new()
+var extra_script:Script
 
 @onready var sprites: Node2D = $Sprites
 
@@ -13,6 +15,9 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
 	Thunder._current_player = self
+	
+	if custom_script:
+		extra_script = custom_script.new(self)
 	
 	sprites.teleport()
 
