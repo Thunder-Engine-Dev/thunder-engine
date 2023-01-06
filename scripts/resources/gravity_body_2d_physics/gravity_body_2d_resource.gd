@@ -16,6 +16,7 @@ var gravity_body:GravityBody2D
 
 func bind(grav_body:GravityBody2D) -> GravityBody2DPhysics:
 	gravity_body = grav_body
+	
 	return self
 
 
@@ -33,13 +34,17 @@ func get_velocity_random() -> Vector2:
 
 
 func apply_velocity_local() -> GravityBody2DPhysics:
-	if gravity_body:
-		gravity_body.vel_set(get_velocity_random())
+	if !gravity_body: return self
+	
+	gravity_body.vel_set(get_velocity_random())
+	
 	return self
 
 
 func override_gravity() -> GravityBody2DPhysics:
-	if gravity_body && gravity_override:
-		gravity_body.gravity_scale = gravity_scale
-		gravity_body.max_falling_speed = max_falling_speed
+	if !gravity_body || !gravity_override: return self
+	
+	gravity_body.gravity_scale = gravity_scale
+	gravity_body.max_falling_speed = max_falling_speed
+	
 	return self

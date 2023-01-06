@@ -24,28 +24,23 @@ static func activate_script(script:GDScript,by:Node) -> GDScript:
 func _init(by:Node) -> void:
 	if !by: return
 	node = by
-	_instantiated_by(node)
-	node.tree_entered.connect(_enter_tree_by.bind(node))
-	node.get_tree().process_frame.connect(_process_by.bind(node.get_process_delta_time(),node))
-	node.get_tree().physics_frame.connect(_physics_process_by.bind(node.get_physics_process_delta_time(),node))
+	_ready()
+	node.tree_entered.connect(_enter_tree)
+	node.get_tree().process_frame.connect(_process.bind(node.get_process_delta_time()))
+	node.get_tree().physics_frame.connect(_physics_process.bind(node.get_physics_process_delta_time()))
 
 
-# _ready()
-func _instantiated_by(by: Node) -> void:
+func _ready() -> void:
 	pass
 
-# _enter_tree()
-func _enter_tree_by(by: Node) -> void:
+func _enter_tree() -> void:
 	pass
 
-# _exit_tree()
-func _exit_tree_by(by: Node) -> void:
+func _exit_tree() -> void:
 	pass
 
-# _process(delta)
-func _process_by(delta: float, by: Node) -> void:
+func _process(delta: float) -> void:
 	pass
 
-# _physics_process(delta)
-func _physics_process_by(delta: float, by: Node) -> void:
+func _physics_process(delta: float) -> void:
 	pass

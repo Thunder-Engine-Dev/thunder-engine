@@ -3,7 +3,7 @@
 extends Node
 
 
-var view: View = View.new()
+var view: View = View.new() # View subsingleton
 
 
 var gravity_speed: float = 50
@@ -45,6 +45,8 @@ func get_delta(delta: float) -> float:
 
 func _init():
 	Engine.physics_ticks_per_second = int(DisplayServer.screen_get_refresh_rate())
+
+
 
 
 class View:

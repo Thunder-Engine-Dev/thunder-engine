@@ -6,6 +6,7 @@ class_name Node2DCreation
 @export_group("Creation","creation_")
 @export var creation_node: PackedScene
 @export var creation_offset: Vector2
+@export_node_path(Node2D) var creation_attachment: NodePath
 @export var creation_z_index: int
 @export var creation_z_as_relative: bool = true
 @export var creation_y_sort_enabled: bool
@@ -17,10 +18,16 @@ class_name Node2DCreation
 
 var node: Node2D
 var base: Node2D
+var attachment: Node2D
 
 
 func prepare(on: Node2D) -> void:
 	base = on
+	
+	if !base:
+		printerr("[Null Base Node Error] You set a null as a base node! Please check the parameter you input!")
+		_report_resource()
+		return
 	
 	if !node:
 		printerr("[Node2D Preparing Error] No creations installed! Please check \"creation_node\" first!")
@@ -28,6 +35,12 @@ func prepare(on: Node2D) -> void:
 		return
 	
 	node = creation_node.instantiate()
+	
+	attachment = base.get_node_or_null(creation_attachment)
+	
+	if !attachment: return
+	
+	node.add_child(attachment.duplicate())
 
 
 func create(as_child: bool = false) -> void:

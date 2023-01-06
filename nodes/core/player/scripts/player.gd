@@ -6,13 +6,15 @@ class_name Player
 @export var custom_script:Script
 
 var states: PlayerStatesManager = PlayerStatesManager.new()
+var extra_script:Script
 
-@onready var extra_script:Script = ByNodeScript.activate_script(custom_script,self)
 @onready var sprite: Node2D = $Sprites
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	
+	extra_script = ByNodeScript.activate_script(custom_script,self)
 	
 	Thunder._current_player = self
 
@@ -35,7 +37,7 @@ func _movement_generic(delta: float) -> void:
 	# Fall
 	velocity.y = min(velocity.y + config.fall_speed * delta, config.max_fall_speed)
 	
-	# Deceleration
+	# Decceleration
 	if velocity.x > 0:
 		velocity.x = max(velocity.x - config.deceleration_speed * delta, 0)
 	if velocity.x < 0:

@@ -1,5 +1,6 @@
 extends ByNodeScript
 
 
-func _process_by(delta:float, by:Node) -> void:
-	print(by)
+func _process(delta:float) -> void:
+	if !node: return
+	print(node)
