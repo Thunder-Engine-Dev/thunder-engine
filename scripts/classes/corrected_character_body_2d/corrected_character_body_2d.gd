@@ -11,7 +11,7 @@ func move_and_slide_corrected() -> bool:
 
 func horizontal_correction(amount: int) -> void:
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(0, velocity.y * delta).rotated(rotation), true, true, true)
+	var collide = move_and_collide(Vector2(0, velocity.y * delta).rotated(global_rotation), true, true, true)
 	
 	if !collide: return
 	if velocity.y >= 0: return
@@ -21,15 +21,15 @@ func horizontal_correction(amount: int) -> void:
 		for j in [-1.0, 1.0]:
 			if !test_move(
 				global_transform.translated(Vector2(i * j, 0)),
-				Vector2(0, velocity.y * delta).rotated(rotation)
+				Vector2(0, velocity.y * delta).rotated(global_rotation)
 			):
-				translate(Vector2(i * j, 0).rotated(rotation))
+				translate(Vector2(i * j, 0).rotated(global_rotation))
 				return
 
 # Tile gap runover
 func vertical_correction(amount: int) -> void:
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(rotation), true, true, true)
+	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(global_rotation), true, true, true)
 	
 	if !collide: return
 	if velocity.y <= 0: return
@@ -38,12 +38,12 @@ func vertical_correction(amount: int) -> void:
 	
 	for i in range(1, amount + 1):
 		for j in [-1.0, 0]:
-			var normal = collide.get_normal().rotated(-rotation)
+			var normal = collide.get_normal().rotated(-global_rotation)
 
 			if !test_move(
 				global_transform.translated(Vector2(0, i * j)),
-				Vector2(velocity.x * delta, 0).rotated(rotation)
+				Vector2(velocity.x * delta, 0).rotated(global_rotation)
 			) && !is_on_floor() && (normal.x == -1 || normal.x == 1) && abs(normal.y) < 0.1:
-				translate(Vector2(0, i * j).rotated(rotation))
+				translate(Vector2(0, i * j).rotated(global_rotation))
 				if velocity.y * j < 0: velocity.y = 0
 				return

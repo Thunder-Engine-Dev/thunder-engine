@@ -36,6 +36,7 @@ func _player_process(delta: float) -> void:
 	
 	velocity = velocity_local.rotated(global_rotation)
 	move_and_slide_corrected()
+	velocity_local = velocity
 	_stamping()
 
 
