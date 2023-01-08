@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dh3bnx6iavs68"]
+[gd_scene load_steps=10 format=3 uid="uid://dh3bnx6iavs68"]
 
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player.gd" id="1_64hux"]
 [ext_resource type="Script" path="res://engine/nodes/core/player/player_configuration.gd" id="2_en0ed"]
@@ -37,6 +37,9 @@ size = Vector2(20, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psf8v"]
 size = Vector2(20, 56)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wegi3"]
+size = Vector2(0, 0)
+
 [node name="Player" type="CharacterBody2D"]
 editor_description = "This is a reference node for player creation."
 collision_mask = 16
@@ -50,6 +53,14 @@ shape = SubResource("RectangleShape2D_wxu54")
 [node name="CollisionBig" type="CollisionShape2D" parent="."]
 position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_psf8v")
+
+[node name="StampingCast" type="ShapeCast2D" parent="."]
+shape = SubResource("RectangleShape2D_wegi3")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 
