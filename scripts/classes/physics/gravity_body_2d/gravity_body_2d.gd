@@ -19,7 +19,7 @@ const GRAVITY:float = 50.0
 @export_group("Correction")
 @export var correction_enabled:bool = true
 
-var prespeed: Vector2 # previous speed
+var prespeed: Vector2
 var global_gravity_dir: Vector2
 
 @onready var up: Vector2 = up_direction
@@ -30,7 +30,7 @@ signal collided_ceiling
 signal collided_floor
 
 
-func gravity_process(delta: float) -> void:
+func gravity_process() -> void:
 	global_gravity_dir = gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
 	up_direction = up.rotated(global_rotation)
 	
@@ -44,8 +44,9 @@ func gravity_process(delta: float) -> void:
 		speed.y += gravity
 
 
-func motion_process(delta: float, rigid: bool) -> void:
+func motion_process(delta: float, deep_snap:bool = true, can_fly: bool = true, rigid: bool = false) -> void:
 	var gdir: float = global_gravity_dir.orthogonal().angle()
+	
 	prespeed = speed
 	velocity = speed.rotated(gdir)
 	
@@ -58,23 +59,32 @@ func motion_process(delta: float, rigid: bool) -> void:
 	else:
 		move_and_slide()
 	
-	var speed_x: float = speed.x
 	velocity = get_real_velocity()
 	speed = velocity.rotated(-gdir)
 	
-	if !rigid && !is_on_wall():
-		speed.x = speed_x
+	var on_wall: bool = is_on_wall()
+	var on_ceiling: bool = is_on_ceiling()
+	var on_floor: bool = is_on_floor()
 	
-	if is_on_wall():
+	if !rigid:
+		if !on_wall:
+			speed.x = prespeed.x
+		else:
+			speed.x = 0
+	
+	if speed.x == 0 && speed.y < 0 && deep_snap:
+		speed.y *= -1
+	
+	if !can_fly && on_floor:
+		speed.y = GRAVITY * gravity_scale
+	
+	if on_wall:
 		collided.emit()
 		collided_wall.emit()
-		
-		if speed.x == 0 && is_on_floor() && speed.dot(gravity_dir) < 0:
-			speed.y = 0
-	if is_on_ceiling():
+	if on_ceiling:
 		collided.emit()
 		collided_ceiling.emit()
-	if is_on_floor():
+	if on_floor:
 		collided.emit()
 		collided_floor.emit()
 
