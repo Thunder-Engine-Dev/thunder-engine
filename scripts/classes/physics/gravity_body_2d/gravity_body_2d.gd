@@ -44,7 +44,7 @@ func gravity_process() -> void:
 		speed.y += gravity
 
 
-func motion_process(delta: float, rigid: bool) -> void:
+func motion_process(delta: float, rigid: bool = false, rigid_with_speed_x: bool = true) -> void:
 	var gdir: float = global_gravity_dir.orthogonal().angle()
 	
 	prespeed = speed
@@ -69,6 +69,9 @@ func motion_process(delta: float, rigid: bool) -> void:
 	var on_ceiling: bool = is_on_ceiling()
 	var on_floor: bool = is_on_floor()
 	
+	if rigid && rigid_with_speed_x && !on_wall:
+		speed.x = prespeed.x
+	
 	if on_wall:
 		collided.emit()
 		collided_wall.emit()
@@ -78,6 +81,7 @@ func motion_process(delta: float, rigid: bool) -> void:
 	if on_floor:
 		collided.emit()
 		collided_floor.emit()
+
 
 # Some useful functions
 func accelerate(to: Vector2, a: float) -> void:
