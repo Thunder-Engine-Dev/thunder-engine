@@ -5,8 +5,8 @@ class_name GravityBody2D
 
 const GRAVITY:float = 50.0
 
-@export_group("Velocity")
-@export var velocity_local: Vector2
+@export_group("Speed")
+@export var speed: Vector2 # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
 @export_group("Gravity")
 @export var gravity_dir: Vector2 = Vector2.DOWN
 @export var gravity_dir_rotation: bool
@@ -19,7 +19,7 @@ const GRAVITY:float = 50.0
 @export_group("Correction")
 @export var correction_enabled:bool = true
 
-var velocity_previous: Vector2
+var prespeed: Vector2 # previous speed
 var global_gravity_dir: Vector2
 
 signal collided
@@ -33,18 +33,18 @@ func gravity_process(delta: float) -> void:
 	
 	var gravity: float = gravity_scale * GRAVITY
 	if max_falling_speed > 0:
-		if velocity_local.y < max_falling_speed:
+		if speed.y < max_falling_speed:
 			accelerate_y(max_falling_speed,gravity)
-		elif velocity_local.y > max_falling_speed:
-			velocity_local.y = max_falling_speed
+		elif speed.y > max_falling_speed:
+			speed.y = max_falling_speed
 	else:
-		velocity_local.y += gravity
+		speed.y += gravity
 
 
-func motion_process(delta: float, elastic:bool) -> void:
+func motion_process(delta: float, rigid: bool) -> void:
 	var gdir: float = global_gravity_dir.orthogonal().angle()
-	velocity_previous = velocity_local
-	velocity = velocity_local.rotated(gdir)
+	prespeed = speed
+	velocity = speed.rotated(gdir)
 	
 	if !collision:
 		global_position += velocity * delta
@@ -54,48 +54,52 @@ func motion_process(delta: float, elastic:bool) -> void:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
-	if elastic:
-		velocity = get_real_velocity()
-		velocity_local = velocity.rotated(-gdir)
+	
+	var speed_x: float = speed.x
+	velocity = get_real_velocity()
+	speed = velocity.rotated(-gdir)
+	
+	if !rigid && !is_on_wall():
+		speed.x = speed_x
+	
 	if is_on_wall():
-		if !elastic:
-			velocity_local.x = 0
 		collided.emit()
 		collided_wall.emit()
+		
+		if speed.x == 0 && is_on_floor() && speed.dot(gravity_dir) < 0:
+			speed.y = 0
 	if is_on_ceiling():
 		collided.emit()
 		collided_ceiling.emit()
 	if is_on_floor():
-		if !elastic:
-			velocity_local.y = 0
 		collided.emit()
 		collided_floor.emit()
 
 
 # Some useful functions
 func accelerate(to: Vector2, a: float) -> void:
-	velocity_local = velocity_local.move_toward(to, a)
+	speed = speed.move_toward(to, a)
 
 func accelerate_x(to: float, a: float) -> void:
-	velocity_local.x = move_toward(velocity_local.x, to, a)
+	speed.x = move_toward(speed.x, to, a)
 
 func accelerate_y(to: float, a: float) -> void:
-	velocity_local.y = move_toward(velocity_local.y, to, a)
+	speed.y = move_toward(speed.y, to, a)
 
 func turn_x() -> void:
-	velocity_local.x = -velocity_previous.x
+	speed.x = -prespeed.x
 
 func turn_y() -> void:
-	velocity_local.y = -velocity_previous.y
+	speed.y = -prespeed.y
 
-func jump(speed: float) -> void:
-	velocity_local.y = -abs(speed)
+func jump(jumping_speed: float) -> void:
+	speed.y = -abs(jumping_speed)
 
 func vel_set(vel: Vector2) -> void:
-	velocity_local = vel
+	speed = vel
 
 func vel_set_x(velx: float) -> void:
-	velocity_local.x = velx
+	speed.x = velx
 
 func vel_set_y(vely: float) -> void:
-	velocity_local.y = vely
+	speed.y = vely
