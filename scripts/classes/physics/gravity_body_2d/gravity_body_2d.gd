@@ -19,7 +19,6 @@ const GRAVITY:float = 50.0
 @export_group("Correction")
 @export var correction_enabled:bool = true
 @export_group("Floor","floor_")
-@export_range(0,256,0.1,"suffix:px") var floor_snap_length_extra: float
 
 var prespeed: Vector2
 var global_gravity_dir: Vector2
@@ -34,7 +33,6 @@ signal collided_floor
 
 func gravity_process() -> void:
 	global_gravity_dir = gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
-	up_direction = up.rotated(global_rotation)
 	
 	var gravity: float = gravity_scale * GRAVITY
 	if max_falling_speed > 0:
@@ -46,9 +44,8 @@ func gravity_process() -> void:
 		speed.y += gravity
 
 
-func motion_process(delta: float) -> void:
+func motion_process(delta: float, rigid: bool) -> void:
 	var gdir: float = global_gravity_dir.orthogonal().angle()
-	var snap: float = floor_snap_length
 	
 	prespeed = speed
 	velocity = speed.rotated(gdir)
@@ -57,23 +54,20 @@ func motion_process(delta: float) -> void:
 		global_position += velocity * delta
 		return
 	
-	floor_snap_length += floor_snap_length_extra
+	up_direction = up.rotated(global_rotation)
 	
 	if correction_enabled:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
 	
-	velocity = get_real_velocity()
-	floor_snap_length = snap
+	if rigid:
+		velocity = get_real_velocity()
 	speed = velocity.rotated(-gdir)
 	
 	var on_wall: bool = is_on_wall()
 	var on_ceiling: bool = is_on_ceiling()
 	var on_floor: bool = is_on_floor()
-	
-	if floor_constant_speed && !on_wall:
-		speed.x = prespeed.x
 	
 	if on_wall:
 		collided.emit()
