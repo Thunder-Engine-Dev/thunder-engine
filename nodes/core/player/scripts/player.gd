@@ -118,7 +118,7 @@ func _stamping() -> void:
 		
 		if !enemy_attacked: continue
 		
-		result = enemy_attacked.got_stamped(self)
+		result = enemy_attacked.got_stomped(self)
 	
 	if result.is_empty(): return
 	
