@@ -109,7 +109,7 @@ func _movement_default(delta: float) -> void:
 func _stomping() -> void:
 	if !stomping_cast.shape:
 		stomping_cast.shape = shape_big.shape
-	stomping_cast.target_position = velocity_local.normalized() * 4
+	stomping_cast.target_position = velocity_local.normalized() * 8
 	
 	var count: int = stomping_cast.get_collision_count()
 	var result: Dictionary

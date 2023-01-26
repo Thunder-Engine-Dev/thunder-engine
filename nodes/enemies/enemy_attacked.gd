@@ -37,7 +37,7 @@ const PROJECTILE_IMMUNE_TO: Dictionary = {
 @export_group("Extra")
 @export var custom_script: Script
 
-var stomping_delayed: bool
+var stomping_delayer: SceneTreeTimer
 
 @onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self)
 @onready var area: Area2D = get_parent()
@@ -63,18 +63,17 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		center.global_transform.translated(stomping_offset + offset).get_origin()
 	).dot(stomping_standard)
 	
-	if stomping_delayed: return result
+	if stomping_delayer: return result
 	
 	stomped.emit()
 	
 	if dot > 0:
 		stomped_succeeded.emit()
-		stomping_delayed = true
 		
-		var delayer: SceneTreeTimer = get_tree().create_timer(get_physics_process_delta_time() * 5)
-		delayer.timeout.connect(
+		stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * 5)
+		stomping_delayer.timeout.connect(
 			func() -> void:
-				stomping_delayed = false
+				stomping_delayer = null
 		)
 		
 		_creation(stomping_creation)
