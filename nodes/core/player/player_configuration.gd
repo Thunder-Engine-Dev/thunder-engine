@@ -11,7 +11,7 @@ class_name PlayerConfiguration
 @export var control_run:StringName = &"m_run"
 
 # GFX
-@export_group("GFX")
+@export_group("GFX Overrides")
 @export var state_animations: Dictionary
 @export var state_scripts: Dictionary
 

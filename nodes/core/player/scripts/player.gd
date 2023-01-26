@@ -3,16 +3,18 @@ extends CorrectedCharacterBody2D
 class_name Player
 
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
-@export var custom_script:Script
+@export var custom_script: Script
+@export var default_player_state: PlayerStateData = PlayerStateData.new()
 
-var states: PlayerStatesManager = PlayerStatesManager.new()
-var extra_script:Script
+var states: PlayerStatesManager = PlayerStatesManager.new(self)
+var extra_script: Script
 var velocity_local: Vector2
 
 @onready var sprite: Node2D = $Sprite
+@onready var sprite_no_img: Node2D = $SpriteNoImg
 @onready var shape_small: CollisionShape2D = $CollisionSmall
 @onready var shape_big: CollisionShape2D = $CollisionBig
-@onready var stamping_cast: ShapeCast2D = $StampingCast
+@onready var stomping_cast: ShapeCast2D = $StompingCast
 
 
 func _ready() -> void:
@@ -21,6 +23,9 @@ func _ready() -> void:
 	extra_script = ByNodeScript.activate_script(custom_script,self)
 	
 	Thunder._current_player = self
+	
+	if !Thunder._current_player_state:
+		Thunder._current_player_state = default_player_state
 
 
 func _physics_process(delta: float) -> void:
@@ -33,11 +38,12 @@ func _player_process(delta: float) -> void:
 	
 	match states.current_state:
 		"default": _movement_default(delta)
+		"jump": _movement_default(delta)
 	
 	velocity = velocity_local.rotated(global_rotation)
 	move_and_slide_corrected()
 	velocity_local = velocity
-	_stamping()
+	_stomping()
 
 
 func _movement_generic(delta: float) -> void:
@@ -83,6 +89,7 @@ func _movement_generic(delta: float) -> void:
 func _movement_default(delta: float) -> void:
 	# Hold jump
 	if !is_on_floor() && Input.is_action_pressed(config.control_jump) && velocity_local.y < 0:
+		states.set_state("jump")
 		if abs(velocity_local.x) < 1:
 			velocity_local.y -= config.jump_speed_stopped * delta
 		else:
@@ -99,18 +106,18 @@ func _movement_default(delta: float) -> void:
 	_movement_generic(delta)
 
 
-func _stamping() -> void:
-	if !stamping_cast.shape:
-		stamping_cast.shape = shape_big.shape
-	stamping_cast.target_position = velocity_local.normalized() * 4
+func _stomping() -> void:
+	if !stomping_cast.shape:
+		stomping_cast.shape = shape_big.shape
+	stomping_cast.target_position = velocity_local.normalized() * 4
 	
-	var count: int = stamping_cast.get_collision_count()
+	var count: int = stomping_cast.get_collision_count()
 	var result: Dictionary
 	
 	if count <= 0: return
 	
 	for i in count:
-		var casted: Area2D = stamping_cast.get_collider(i) as Area2D
+		var casted: Area2D = stomping_cast.get_collider(i) as Area2D
 		
 		if !casted: continue
 		
@@ -129,3 +136,15 @@ func _stamping() -> void:
 			velocity_local.y = -result.jumping_min
 	else:
 		print("player gets hurt")
+
+
+func _on_state_change(data: PlayerStateData) -> void:
+	if !data.player_prefab:
+		sprite.visible = false
+		sprite_no_img.visible = true
+		return
+	
+	sprite.frames = data.player_prefab
+	sprite.playing = true
+	sprite.visible = true
+	sprite_no_img.visible = false

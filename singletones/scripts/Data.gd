@@ -10,3 +10,9 @@ const ATTACKERS: Dictionary = {
 	iceball = &"iceball",
 	hammer = &"hammer"
 }
+
+enum PLAYER_POWER {
+	SMALL, # self-explanable
+	SUPER, # for example big mario
+	FULL   # for example fire mario
+}

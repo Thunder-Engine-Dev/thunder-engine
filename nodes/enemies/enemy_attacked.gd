@@ -44,9 +44,9 @@ var stomping_delayed: bool
 @onready var center: Node2D = get_node_or_null(center_node)
 @onready var sound: AudioStreamPlayer2D = get_node_or_null(sound_player)
 
-signal stamped
-signal stamped_succeeded
-signal stamped_failed
+signal stomped
+signal stomped_succeeded
+signal stomped_failed
 signal killed
 signal killed_succeeded
 signal killed_failed
@@ -65,10 +65,10 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	
 	if stomping_delayed: return result
 	
-	stamped.emit()
+	stomped.emit()
 	
 	if dot > 0:
-		stamped_succeeded.emit()
+		stomped_succeeded.emit()
 		stomping_delayed = true
 		
 		var delayer: SceneTreeTimer = get_tree().create_timer(get_physics_process_delta_time() * 5)
@@ -80,7 +80,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		_creation(stomping_creation)
 		result = {result = true, jumping_min = stomping_player_jumping_min, jumping_max = stomping_player_jumping_max}
 	else:
-		stamped_failed.emit()
+		stomped_failed.emit()
 		result = {result = false}
 	
 	return result

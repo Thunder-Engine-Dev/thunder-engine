@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dh3bnx6iavs68"]
+[gd_scene load_steps=11 format=3 uid="uid://dh3bnx6iavs68"]
 
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player.gd" id="1_64hux"]
 [ext_resource type="Script" path="res://engine/nodes/core/player/player_configuration.gd" id="2_en0ed"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://modules/base/objects/mario/sounds/jump.wav" id="2_ybs47"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://modules/base/objects/mario/sounds/pipe.wav" id="3_flfm0"]
 [ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://modules/base/objects/mario/textures/player_no_img.svg" id="4_o8a8c"]
+[ext_resource type="Resource" uid="uid://ld86im33pogl" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
 script = ExtResource("2_en0ed")
@@ -45,6 +46,7 @@ editor_description = "This is a reference node for player creation."
 collision_mask = 16
 script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
+default_player_state = ExtResource("5_08kj1")
 
 [node name="CollisionSmall" type="CollisionShape2D" parent="."]
 position = Vector2(0, -13)
@@ -54,15 +56,18 @@ shape = SubResource("RectangleShape2D_wxu54")
 position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_psf8v")
 
-[node name="StampingCast" type="ShapeCast2D" parent="."]
+[node name="StompingCast" type="ShapeCast2D" parent="."]
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_wegi3")
 target_position = Vector2(0, 0)
+margin = 10.0
 max_results = 8
 collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+centered = false
 
 [node name="SpriteNoImg" type="Sprite2D" parent="."]
 position = Vector2(0, -27)
