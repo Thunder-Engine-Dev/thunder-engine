@@ -1,9 +1,9 @@
 # Base level node
 
 @tool
+@icon("./icon.svg")
 extends Stage2D
 class_name Level
-@icon("./icon.svg")
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): prepare_template()

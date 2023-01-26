@@ -1,6 +1,6 @@
+@icon("./gravity_body_2d.svg")
 extends CorrectedCharacterBody2D
 class_name GravityBody2D
-@icon("./gravity_body_2d.svg")
 
 
 const GRAVITY:float = 50.0

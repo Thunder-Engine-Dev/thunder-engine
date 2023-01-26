@@ -1,6 +1,6 @@
+@icon("res://engine/scripts/classes/physics/gravity_body_2d/gravity_body_2d.svg")
 extends Resource
 class_name GravityBody2DPhysics
-@icon("res://engine/scripts/classes/physics/gravity_body_2d/gravity_body_2d.svg")
 
 @export_category("GravityBody2DPhysics")
 @export_group("Velocity")
