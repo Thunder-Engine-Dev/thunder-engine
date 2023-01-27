@@ -2,28 +2,26 @@
 extends CorrectedCharacterBody2D
 class_name GravityBody2D
 
+# Note: Due to bugs with gravity direction whose angle is not 90°,180°,270° or 0°, you need to manually change up_direction via inspector
+# We are still trying to fix the bug with GDScript :)
 
-const GRAVITY:float = 50.0
+const GRAVITY: float = 50.0
 
 @export_group("Speed")
 @export var speed: Vector2 # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
 @export_group("Gravity")
 @export var gravity_dir: Vector2 = Vector2.DOWN
-@export var gravity_dir_rotation: bool
+@export var gravity_dir_rotation: bool = true
 @export var gravity_scale: float
-@export var max_falling_speed: float:
-	set(value):
-		max_falling_speed = clamp(value,0,INF)
+@export_range(0,100000,0.1) var max_falling_speed: float
 @export_group("Collision")
 @export var collision: bool = true
 @export_group("Correction")
 @export var correction_enabled:bool = true
 @export_group("Floor","floor_")
 
-var prespeed: Vector2
-var global_gravity_dir: Vector2
+var speed_previous: Vector2
 
-@onready var up: Vector2 = up_direction
 
 signal collided
 signal collided_wall
@@ -31,46 +29,41 @@ signal collided_ceiling
 signal collided_floor
 
 
-func gravity_process() -> void:
-	global_gravity_dir = gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
-	
+func motion_process(delta: float, kinematic: bool = true) -> void:
 	var gravity: float = gravity_scale * GRAVITY
-	if max_falling_speed > 0:
-		if speed.y < max_falling_speed:
-			accelerate_y(max_falling_speed,gravity)
-		elif speed.y > max_falling_speed:
-			speed.y = max_falling_speed
-	else:
-		speed.y += gravity
-
-
-func motion_process(delta: float, rigid: bool = false, rigid_with_speed_x: bool = true) -> void:
-	var gdir: float = global_gravity_dir.orthogonal().angle()
+	var gdir: float = Vector2.DOWN.angle_to(get_global_gravity_dir())
 	
-	prespeed = speed
+	speed_previous = speed
+	
+	if gravity > 0:
+		if max_falling_speed > 0:
+			if speed.y < max_falling_speed:
+				accelerate_y(max_falling_speed,gravity)
+			elif speed.y > max_falling_speed:
+				speed.y = max_falling_speed
+		else:
+			speed.y += gravity
+	
 	velocity = speed.rotated(gdir)
 	
 	if !collision:
 		global_position += velocity * delta
 		return
 	
-	up_direction = up.rotated(global_rotation)
-	
 	if correction_enabled:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
 	
-	if rigid:
-		velocity = get_real_velocity()
+	velocity = get_real_velocity()
 	speed = velocity.rotated(-gdir)
 	
 	var on_wall: bool = is_on_wall()
 	var on_ceiling: bool = is_on_ceiling()
 	var on_floor: bool = is_on_floor()
 	
-	if rigid && rigid_with_speed_x && !on_wall:
-		speed.x = prespeed.x
+	if kinematic && !on_wall:
+		speed.x = speed_previous.x
 	
 	if on_wall:
 		collided.emit()
@@ -94,10 +87,10 @@ func accelerate_y(to: float, a: float) -> void:
 	speed.y = move_toward(speed.y, to, a)
 
 func turn_x() -> void:
-	speed.x = -prespeed.x
+	speed.x = -speed_previous.x
 
 func turn_y() -> void:
-	speed.y = -prespeed.y
+	speed.y = -speed_previous.y
 
 func jump(jumping_speed: float) -> void:
 	speed.y = -abs(jumping_speed)
@@ -110,3 +103,8 @@ func vel_set_x(velx: float) -> void:
 
 func vel_set_y(vely: float) -> void:
 	speed.y = vely
+
+
+# Getters
+func get_global_gravity_dir() -> Vector2:
+	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
