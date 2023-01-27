@@ -148,3 +148,6 @@ func _on_state_change(data: PlayerStateData) -> void:
 	sprite.playing = true
 	sprite.visible = true
 	sprite_no_img.visible = false
+	
+	shape_small.disabled = data.player_power != Data.PLAYER_POWER.SMALL
+	shape_big.disabled = data.player_power == Data.PLAYER_POWER.SMALL

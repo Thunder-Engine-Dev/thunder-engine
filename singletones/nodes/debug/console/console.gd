@@ -11,7 +11,7 @@ var position_in_history: int
 func _ready():
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
 	
-	self.print("\t\t\t[wave amp=50 freq=2]Console[/wave]")
+	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
 	$"UI/Enter".pressed.connect(execute)
 	close_requested.connect(func (): hide())
@@ -34,18 +34,24 @@ func _physics_process(delta: float) -> void:
 			move_history(-1)
 
 func execute() -> void:
-	history.append(input.text)
+	self.print("[b]> %s[/b]" % input.text)
+	
+	history.remove_at(0)
+	history.push_front(input.text)
+	history.push_front("")
+	
 	var args = input.text.split(' ')
 	
 	var cmdName = args[0]
 	args.remove_at(0)
+	
+	input.clear()
 	
 	if !commands.has(cmdName):
 		col_print("Command does not exist!", Color.RED)
 		return
 	
 	self.print(commands[cmdName].try_execute(args))
-	input.clear()
 
 func move_history(amount: int) -> void:
 	position_in_history += amount
@@ -53,8 +59,8 @@ func move_history(amount: int) -> void:
 	input.text = history[position_in_history]
 	input.caret_column = input.text.length()
 
-func print(msg: String) -> void:
-	output.text += msg + '\n'
+func print(msg: Variant) -> void:
+	output.text += "%s\n" % msg
 	print(msg)
 
 func col_print(msg: String, col:Color) -> void:

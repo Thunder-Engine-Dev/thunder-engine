@@ -36,7 +36,7 @@ offset_right = -39.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
-placeholder_text = ">cmd:\\"
+placeholder_text = "type help to get help."
 shortcut_keys_enabled = false
 caret_blink = true
 

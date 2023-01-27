@@ -8,7 +8,7 @@ enum Error{
 }
 
 class ExecuteResult:
-	var msg: String
+	var msg: Variant
 	var err: Error
 	func _init(msg,err = -1): self.msg = msg; self.err = err
 
@@ -27,7 +27,7 @@ var description: String = NIY
 
 
 # NOT FOR OVERRIDING
-func try_execute(args: Array) -> String:
+func try_execute(args: Array) -> Variant:
 	if args.size() < params.keys().size():
 		return messages[Error.Param]
 	
