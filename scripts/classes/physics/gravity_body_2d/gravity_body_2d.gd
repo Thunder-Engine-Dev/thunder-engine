@@ -29,13 +29,15 @@ signal collided_ceiling
 signal collided_floor
 
 
-func motion_process(delta: float, kinematic: bool = true) -> void:
+func motion_process(delta:float,deep_snap:bool = true,kinematic:bool = true) -> void:
+	var up_temp: Vector2 = up_direction
 	var gravity: float = gravity_scale * GRAVITY
-	var gdir: float = Vector2.DOWN.angle_to(get_global_gravity_dir())
+	var global_gravity_dir: Vector2 = get_global_gravity_dir()
+	var gdir: float = Vector2.DOWN.angle_to(global_gravity_dir)
 	
 	speed_previous = speed
 	
-	if gravity > 0:
+	if !is_on_floor() || is_able_slope_down():
 		if max_falling_speed > 0:
 			if speed.y < max_falling_speed:
 				accelerate_y(max_falling_speed,gravity)
@@ -44,11 +46,18 @@ func motion_process(delta: float, kinematic: bool = true) -> void:
 		else:
 			speed.y += gravity
 	
+	if is_on_floor() && (!is_on_wall() || deep_snap) && speed.y < 0:
+		velocity.y = 0
+	
+	update_up_direction(up_temp,global_gravity_dir)
+	
 	velocity = speed.rotated(gdir)
 	
 	if !collision:
 		global_position += velocity * delta
 		return
+	
+	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if correction_enabled:
 		move_and_slide_corrected()
@@ -108,3 +117,17 @@ func vel_set_y(vely: float) -> void:
 # Getters
 func get_global_gravity_dir() -> Vector2:
 	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
+
+
+# Updaters
+func update_up_direction(up_temp:Vector2,down:Vector2) -> void:
+	up_direction = up_temp
+	if !is_equal_approx(get_floor_normal().dot(down),-1):
+		up_direction = up_temp.rotated(global_rotation)
+
+
+# Is-methods
+func is_able_slope_down() -> bool:
+	if floor_stop_on_slope: return false
+	var dot:float = get_floor_normal().dot(get_global_gravity_dir())
+	return is_on_floor() && dot < 0 && !is_equal_approx(dot,-1)
