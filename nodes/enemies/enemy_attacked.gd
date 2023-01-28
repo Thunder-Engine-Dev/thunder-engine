@@ -14,8 +14,8 @@ const PROJECTILE_IMMUNE_TO: Dictionary = {
 
 @export_category("EnemyAttacked")
 @export_group("General")
-@export_node_path(Node2D) var center_node: NodePath = ^"../.."
-@export_node_path(AudioStreamPlayer2D) var sound_player: NodePath = ^"Sound"
+@export_node_path("Node2D") var center_node: NodePath = ^"../.."
+@export_node_path("AudioStreamPlayer2D") var sound_player: NodePath = ^"Sound"
 @export_group("Stomping","stomping_")
 @export var stomping_enabled: bool = true
 @export var stomping_available: bool = true

@@ -44,7 +44,7 @@ func update_states() -> void:
 		
 
 func _update_animations() -> void:
-	var size = owner.sprite.frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
+	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
 	owner.sprite.offset.y = -size.y
 	owner.sprite.offset.x = -size.x / 2
 	
@@ -55,7 +55,7 @@ func _update_animations() -> void:
 		owner.sprite.speed_scale = 1
 	
 	if owner.velocity_local.x == 0:
-		owner.sprite.frame = owner.sprite.frames.get_frame_count(current_state) - 1
+		owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count(current_state) - 1
 		owner.sprite.speed_scale = 0
 	
 	if owner.velocity_local.x > 0:

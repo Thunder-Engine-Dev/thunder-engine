@@ -6,7 +6,7 @@ class_name Node2DCreation
 @export_group("Creation","creation_")
 @export var creation_node: PackedScene
 @export var creation_offset: Vector2
-@export_node_path(Node2D) var creation_attachment: NodePath
+@export_node_path("Node2D") var creation_attachment: NodePath
 @export var creation_z_index: int
 @export var creation_z_as_relative: bool = true
 @export var creation_y_sort_enabled: bool

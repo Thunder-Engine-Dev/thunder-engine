@@ -1,7 +1,7 @@
 extends VisibleOnScreenNotifier2D
 
 @export_category("VisionDetector")
-@export_node_path(Node2D) var target_nodepath:NodePath = ^".."
+@export_node_path("Node2D") var target_nodepath:NodePath = ^".."
 @export var disabled_when_out_of_screen: bool
 @export var active_once: bool = true
 
