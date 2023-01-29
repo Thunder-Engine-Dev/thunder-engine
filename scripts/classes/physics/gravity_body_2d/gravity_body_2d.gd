@@ -109,14 +109,18 @@ func get_global_gravity_dir() -> Vector2:
 
 # Updaters
 func update_up_direction() -> void:
-	up_direction = up_temp.rotated(global_rotation)
+	up_direction = up_temp
+	if is_on_slope():
+		up_direction = up_temp.rotated(global_rotation)
 
 
 # Is-methods
-func is_able_slope_down() -> bool:
-	if floor_stop_on_slope: return false
+func is_on_slope() -> bool:
 	var dot:float = get_floor_normal().dot(get_global_gravity_dir())
-	return is_on_floor() && dot < 0 && !is_equal_approx(dot,-1)
+	return dot < 0 && !is_equal_approx(dot,-1)
+
+func is_able_slope_down() -> bool:
+	return !floor_stop_on_slope && !is_on_wall() && is_on_slope()
 
 
 # Private methods
