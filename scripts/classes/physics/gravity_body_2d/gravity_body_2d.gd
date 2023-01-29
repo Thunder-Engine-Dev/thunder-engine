@@ -22,6 +22,8 @@ const GRAVITY: float = 50.0
 
 var speed_previous: Vector2
 
+@onready var up_temp: Vector2 = up_direction
+
 
 signal collided
 signal collided_wall
@@ -30,59 +32,45 @@ signal collided_floor
 
 
 func motion_process(delta:float,deep_snap:bool = true,kinematic:bool = true) -> void:
-	var up_temp: Vector2 = up_direction
 	var gravity: float = gravity_scale * GRAVITY
-	var global_gravity_dir: Vector2 = get_global_gravity_dir()
-	var gdir: float = Vector2.DOWN.angle_to(global_gravity_dir)
 	
 	speed_previous = speed
 	
 	if !is_on_floor() || is_able_slope_down():
-		if max_falling_speed > 0:
-			if speed.y < max_falling_speed:
-				accelerate_y(max_falling_speed,gravity)
-			elif speed.y > max_falling_speed:
-				speed.y = max_falling_speed
-		else:
-			speed.y += gravity
+		speed += gravity * gravity_dir
+		if max_falling_speed > 0 && speed.y > max_falling_speed:
+			speed.y = max_falling_speed
 	
-	if is_on_floor() && (!is_on_wall() || deep_snap) && speed.y < 0:
-		velocity.y = 0
+	if is_on_floor() && deep_snap && speed.y < 0:
+		speed.y = 0
 	
-	update_up_direction(up_temp,global_gravity_dir)
+	update_up_direction()
 	
-	velocity = speed.rotated(gdir)
+	velocity = speed.rotated(global_rotation)
+	
+	do_movement(delta)
+	
+	if kinematic && !is_on_wall():
+		speed.x = speed_previous.x
+	
+	_collision_signals()
+
+func do_movement(delta:float,emit_detection_signal:bool = false) -> void:
+	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if !collision:
 		global_position += velocity * delta
 		return
 	
-	if velocity.is_equal_approx(Vector2.ZERO): return
-	
 	if correction_enabled:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
-	
 	velocity = get_real_velocity()
-	speed = velocity.rotated(-gdir)
+	speed = velocity.rotated(-global_rotation)
 	
-	var on_wall: bool = is_on_wall()
-	var on_ceiling: bool = is_on_ceiling()
-	var on_floor: bool = is_on_floor()
-	
-	if kinematic && !on_wall:
-		speed.x = speed_previous.x
-	
-	if on_wall:
-		collided.emit()
-		collided_wall.emit()
-	if on_ceiling:
-		collided.emit()
-		collided_ceiling.emit()
-	if on_floor:
-		collided.emit()
-		collided_floor.emit()
+	if !emit_detection_signal: return
+	_collision_signals()
 
 
 # Some useful functions
@@ -120,10 +108,8 @@ func get_global_gravity_dir() -> Vector2:
 
 
 # Updaters
-func update_up_direction(up_temp:Vector2,down:Vector2) -> void:
-	up_direction = up_temp
-	if !is_equal_approx(get_floor_normal().dot(down),-1):
-		up_direction = up_temp.rotated(global_rotation)
+func update_up_direction() -> void:
+	up_direction = up_temp.rotated(global_rotation)
 
 
 # Is-methods
@@ -131,3 +117,16 @@ func is_able_slope_down() -> bool:
 	if floor_stop_on_slope: return false
 	var dot:float = get_floor_normal().dot(get_global_gravity_dir())
 	return is_on_floor() && dot < 0 && !is_equal_approx(dot,-1)
+
+
+# Private methods
+func _collision_signals() -> void:
+	if is_on_wall():
+		collided.emit()
+		collided_wall.emit()
+	if is_on_ceiling():
+		collided.emit()
+		collided_ceiling.emit()
+	if is_on_floor():
+		collided.emit()
+		collided_floor.emit()
