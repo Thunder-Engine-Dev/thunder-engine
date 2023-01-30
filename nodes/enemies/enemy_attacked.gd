@@ -52,6 +52,11 @@ signal killed_succeeded
 signal killed_failed
 
 
+func _ready() -> void:
+	stomped_succeeded.connect(func(): Audio.play_sound(killing_sound_succeeded, center))
+	stomped_failed.connect(func(): Audio.play_sound(killing_sound_failed, center))
+
+
 func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	var result: Dictionary
 	
@@ -83,20 +88,6 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		result = {result = false}
 	
 	return result
-
-
-func _sound(stream: AudioStream) -> void:
-	if !sound || !center: return
-	
-	var snd: AudioStreamPlayer2D = sound.duplicate()
-	
-	snd.stream = stream
-	snd.autoplay = true
-	snd.finished.connect(snd.queue_free)
-	
-	center.add_sibling(sound)
-	
-	snd.position = center.position
 
 
 func _creation(creation: Node2DCreation) -> void:

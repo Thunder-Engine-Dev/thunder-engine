@@ -2,18 +2,17 @@
 
 extends Node
 
+signal stage_changed
 
 var view: View = View.new() # View subsingleton
-
-
 var gravity_speed: float = 50
-
 var _target_speed: int = 50
 
 var _current_stage: Stage2D: # Reference to the current stage scene
 	set(node):
 		assert(is_instance_valid(node) || !(node is Stage2D), "Stage2D node is invalid")
 		_current_stage = node
+		stage_changed.emit()
 	get:
 		assert(is_instance_valid(_current_stage) || !(_current_stage is Stage2D), "Stage2D node is invalid or not set")
 		return _current_stage

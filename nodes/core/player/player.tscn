@@ -61,6 +61,7 @@ shape = SubResource("RectangleShape2D_psf8v")
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_wegi3")
 target_position = Vector2(0, 0)
+margin = 8.0
 max_results = 8
 collision_mask = 2
 collide_with_areas = true

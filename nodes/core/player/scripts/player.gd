@@ -40,7 +40,7 @@ func _player_process(delta: float) -> void:
 	
 	velocity = velocity_local.rotated(global_rotation)
 	move_and_slide_corrected()
-	velocity_local = velocity
+	velocity_local = velocity.rotated(-global_rotation)
 	_stomping()
 	
 	states.update_states()
@@ -84,6 +84,7 @@ func _movement_generic(delta: float) -> void:
 	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor():
 		velocity_local.y = -config.jump_velocity
 		states.jump_buffer = false
+		Audio.play_sound(config.jump_sound, self)
 
 
 func _movement_default(delta: float) -> void:

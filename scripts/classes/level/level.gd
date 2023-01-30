@@ -5,6 +5,7 @@
 extends Stage2D
 class_name Level
 
+
 func _ready() -> void:
 	if Engine.is_editor_hint(): prepare_template()
 
