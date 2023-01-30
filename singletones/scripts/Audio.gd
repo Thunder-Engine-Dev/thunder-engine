@@ -1,5 +1,13 @@
 extends Node
 
+enum FadingMethod {LINEAR,LERP}
+
+var fading_musics: Array[Dictionary]
+
+
+func _process(delta: float) -> void:
+	_fading(delta)
+
 
 func _create_2d_player(pos: Vector2, is_global: bool) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
@@ -23,8 +31,36 @@ func _create_1d_player(pos: Vector2, is_global: bool) -> AudioStreamPlayer:
 func _calculate_player_position(ref: Node2D) -> Vector2:
 	return ref.global_position
 
+func _fading(delta: float) -> void:
+	for i in fading_musics:
+		var fading_music_player: AudioStreamPlayer = i.fading_music_player as AudioStreamPlayer
+		
+		if !fading_music_player: continue
+		
+		match i.fading_method:
+			FadingMethod.LINEAR: fading_music_player.volume_db = move_toward(fading_music_player.volume_db,i.fading_to,i.fading_weight)
+			FadingMethod.LERP: fading_music_player.volume_db = lerp(fading_music_player.volume_db,i.fading_to,i.fading_weight)
+		
+		if fading_music_player.volume_db == i.fading_to:
+			if bool(i.fading_stop_after_fading):
+				fading_music_player.stop()
+			continue
+
 
 func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true) -> void:
 	var player = _create_2d_player(_calculate_player_position(ref), is_global)
 	player.stream = resource
 	player.play()
+
+
+func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
+	if player in fading_musics: return
+	fading_musics.append(
+		{
+			fading_music_player = player,
+			fading_to = to, 
+			fading_weight = weight, 
+			fading_method = method, 
+			fading_stop_after_fading = stop_after_fading
+		}
+	)
