@@ -34,8 +34,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _player_process(delta: float) -> void:
-	states.update_states()
-	
 	match states.current_state:
 		"default": _movement_default(delta)
 		"jump": _movement_default(delta)
@@ -44,6 +42,8 @@ func _player_process(delta: float) -> void:
 	move_and_slide_corrected()
 	velocity_local = velocity
 	_stomping()
+	
+	states.update_states()
 
 
 func _movement_generic(delta: float) -> void:

@@ -34,14 +34,13 @@ func _change_state(_new_state: String, _prev_state: String) -> String:
 	return _new_state
 
 func update_states() -> void:
-	_update_animations()
-	
 	if current_state == "jump" && owner.is_on_floor():
 		set_state("default")
 	
 	if !owner.is_on_floor() && current_state == "default":
 		set_state("jump")
-		
+	
+	_update_animations()
 
 func _update_animations() -> void:
 	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
