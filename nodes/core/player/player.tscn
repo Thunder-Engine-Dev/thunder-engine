@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://dh3bnx6iavs68"]
+[gd_scene load_steps=12 format=3 uid="uid://cjtnk1ep7g836"]
 
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player.gd" id="1_64hux"]
-[ext_resource type="Script" path="res://engine/nodes/core/player/player_configuration.gd" id="2_en0ed"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://modules/base/objects/mario/sounds/jump.wav" id="2_ybs47"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://modules/base/objects/mario/sounds/pipe.wav" id="3_flfm0"]
 [ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://modules/base/objects/mario/textures/player_no_img.svg" id="4_o8a8c"]
-[ext_resource type="Resource" uid="uid://cily1f8lrtj54" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
+[ext_resource type="AudioStream" uid="uid://b1bxtmesp2bfq" path="res://modules/base/objects/mario/sounds/powerup.wav" id="4_qv77i"]
+[ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player_configuration.gd" id="4_vgx2b"]
+[ext_resource type="Resource" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
-script = ExtResource("2_en0ed")
+script = ExtResource("4_vgx2b")
 control_left = &"m_left"
 control_right = &"m_right"
 control_up = &"m_up"
@@ -19,6 +20,7 @@ state_animations = null
 state_scripts = null
 jump_sound = ExtResource("2_ybs47")
 pipe_sound = ExtResource("3_flfm0")
+powerup_sound = ExtResource("4_qv77i")
 powerdown_sound = ExtResource("3_flfm0")
 jump_speed_stopped = 20.0
 jump_speed_moving = 25.0
@@ -31,6 +33,9 @@ initial_acceleration = 40.0
 initial_accel_trigger = 20.0
 max_walk_speed = 175.0
 max_run_speed = 350.0
+powerup_animation_time = 40.0
+powerdown_animation_time = 40.0
+powerdown_invincible_time = 70.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
 size = Vector2(20, 26)

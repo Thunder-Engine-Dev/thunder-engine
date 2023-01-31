@@ -29,8 +29,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
 	if Engine.is_editor_hint(): return
 	if states.current_state != "dead": _player_process(Thunder.get_delta(delta))
+	if states.invincible_timer:
+		print(states.invincible_timer, states.appear_timer)
 
 
 func _player_process(delta: float) -> void:
@@ -43,7 +46,7 @@ func _player_process(delta: float) -> void:
 	velocity_local = velocity.rotated(-global_rotation)
 	_stomping()
 	
-	states.update_states()
+	states.update_states(delta)
 
 
 func _movement_generic(delta: float) -> void:
@@ -136,7 +139,7 @@ func _stomping() -> void:
 		else:
 			velocity_local.y = -result.jumping_min
 	else:
-		print("player gets hurt")
+		powerdown()
 
 
 func _on_state_change(data: PlayerStateData) -> void:
@@ -153,3 +156,22 @@ func _on_state_change(data: PlayerStateData) -> void:
 	
 	shape_small.disabled = data.player_power != Data.PLAYER_POWER.SMALL
 	shape_big.disabled = data.player_power == Data.PLAYER_POWER.SMALL
+
+
+func powerdown() -> void:
+	if states.invincible_timer > 0: return
+	
+	if Thunder._current_player_state.powerdown_state:
+		states.appear_timer = config.powerdown_animation_time
+		states.invincible_timer = config.powerdown_invincible_time
+		Thunder._current_player_state = Thunder._current_player_state.powerdown_state
+		Audio.play_sound(config.powerdown_sound, self)
+	else:
+		# death code
+		pass
+
+func powerup(state: PlayerStateData) -> void:
+	states.appear_timer = config.powerup_animation_time
+	states.invincible_timer = config.powerup_animation_time
+	Thunder._current_player_state = state
+	Audio.play_sound(config.powerup_sound, self)
