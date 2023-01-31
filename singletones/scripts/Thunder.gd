@@ -43,6 +43,7 @@ func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
 	return obj[key]
 
+
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
 

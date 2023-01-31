@@ -19,7 +19,6 @@ class_name PlayerConfiguration
 @export_group("SFX")
 @export var jump_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/jump.wav")
 @export var pipe_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
-@export var powerup_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/powerup.wav")
 @export var powerdown_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var die_music: Resource
 
@@ -41,4 +40,4 @@ class_name PlayerConfiguration
 @export_group("Misc")
 @export var powerup_animation_time: float = 40
 @export var powerdown_animation_time: float = 40
-@export var powerdown_invincible_time: float = 70
+@export var powerdown_invincible_time: float = 100

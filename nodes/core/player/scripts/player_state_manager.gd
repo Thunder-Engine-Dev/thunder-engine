@@ -24,7 +24,11 @@ func _change_state(_new_state: String, _prev_state: String) -> String:
 	
 	if _new_state == "jump":
 		match _prev_state:
-			"crouch": return _prev_state
+			"swim": return _prev_state
+	
+	if _new_state == "crouch":
+		match _prev_state:
+			"jump": return _prev_state
 			"swim": return _prev_state
 	
 	#if _new_state == "":
@@ -38,7 +42,7 @@ func update_states(delta: float) -> void:
 	if current_state == "jump" && owner.is_on_floor():
 		set_state("default")
 	
-	if !owner.is_on_floor() && current_state == "default":
+	if !owner.is_on_floor() && (current_state == "default" || current_state == "crouch"):
 		set_state("jump")
 	
 	if invincible_timer > 0:

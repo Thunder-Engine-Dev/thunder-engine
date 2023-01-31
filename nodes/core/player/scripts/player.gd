@@ -32,14 +32,13 @@ func _physics_process(delta: float) -> void:
 	
 	if Engine.is_editor_hint(): return
 	if states.current_state != "dead": _player_process(Thunder.get_delta(delta))
-	if states.invincible_timer:
-		print(states.invincible_timer, states.appear_timer)
 
 
 func _player_process(delta: float) -> void:
 	match states.current_state:
 		"default": _movement_default(delta)
 		"jump": _movement_default(delta)
+		"crouch": _movement_default(delta)
 	
 	velocity = velocity_local.rotated(global_rotation)
 	move_and_slide_corrected()
@@ -60,13 +59,16 @@ func _movement_generic(delta: float) -> void:
 		velocity_local.x = min(velocity_local.x + config.deceleration_speed * delta, 0)
 	
 	# Controls
-	states.left_or_right = int(Input.get_axis(config.control_left, config.control_right))
+	if states.current_state != "crouch":
+		states.left_or_right = int(Input.get_axis(config.control_left, config.control_right))
+	else:
+		states.left_or_right = 0
 	var walk: int = states.left_or_right
 	
 	# Acceleration
 	
 	# Moving left and right
-	if walk != 0:
+	if walk != 0 && states.current_state != "crouch":
 		var speed_x: float = abs(velocity_local.x)
 		var mark_x: float = velocity_local.x * sign(walk)
 		if speed_x < config.initial_accel_trigger / 2:
@@ -77,17 +79,6 @@ func _movement_generic(delta: float) -> void:
 			velocity_local.x += config.acceleration_speed * delta * walk
 		elif speed_x < config.max_run_speed && Input.is_action_pressed(config.control_run):
 			velocity_local.x += config.acceleration_speed * delta * walk
-	
-	if Input.is_action_just_pressed(config.control_jump) && !is_on_floor() && velocity_local.y > 0:
-		states.jump_buffer = true
-	
-	if Input.is_action_just_released(config.control_jump):
-		states.jump_buffer = false
-	
-	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor():
-		velocity_local.y = -config.jump_velocity
-		states.jump_buffer = false
-		Audio.play_sound(config.jump_sound, self)
 
 
 func _movement_default(delta: float) -> void:
@@ -105,6 +96,23 @@ func _movement_default(delta: float) -> void:
 	
 	# Direction
 	states.dir = abs(velocity_local.x)
+	
+	if Input.is_action_pressed(config.control_down):
+		states.set_state("crouch")
+	
+	if !Input.is_action_pressed(config.control_down) && states.current_state == "crouch":
+		states.set_state("default")
+	
+	if Input.is_action_just_pressed(config.control_jump) && !is_on_floor() && velocity_local.y > 0:
+		states.jump_buffer = true
+	
+	if Input.is_action_just_released(config.control_jump):
+		states.jump_buffer = false
+	
+	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && states.current_state != "crouch":
+		velocity_local.y = -config.jump_velocity
+		states.jump_buffer = false
+		Audio.play_sound(config.jump_sound, self)
 	
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
@@ -167,11 +175,10 @@ func powerdown() -> void:
 		Thunder._current_player_state = Thunder._current_player_state.powerdown_state
 		Audio.play_sound(config.powerdown_sound, self)
 	else:
-		# death code
-		pass
+		states.set_state("dead")
+
 
 func powerup(state: PlayerStateData) -> void:
 	states.appear_timer = config.powerup_animation_time
 	states.invincible_timer = config.powerup_animation_time
 	Thunder._current_player_state = state
-	Audio.play_sound(config.powerup_sound, self)
