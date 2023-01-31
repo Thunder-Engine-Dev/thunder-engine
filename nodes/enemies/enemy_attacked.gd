@@ -25,8 +25,8 @@ const PROJECTILE_IMMUNE_TO: Dictionary = {
 @export var stomping_creation: Node2DCreation
 @export var stomping_scores: int
 @export var stomping_sound: AudioStream
-@export var stomping_player_jumping_min: float = 400
-@export var stomping_player_jumping_max: float = 650
+@export var stomping_player_jumping_min: float = 500
+@export var stomping_player_jumping_max: float = 700
 @export_group("Killing","killing_")
 @export var killing_enabled: bool = true
 @export var killing_immune: Dictionary = PROJECTILE_IMMUNE_TO

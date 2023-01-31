@@ -8,6 +8,7 @@ class_name Player
 
 var states: PlayerStatesManager = PlayerStatesManager.new(self)
 var extra_script: Script
+var powerup_script: Script
 var velocity_local: Vector2
 
 @onready var sprite: Node2D = $Sprite
@@ -20,7 +21,7 @@ var velocity_local: Vector2
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
-	extra_script = ByNodeScript.activate_script(custom_script,self)
+	extra_script = ByNodeScript.activate_script(custom_script, self)
 	
 	Thunder._current_player = self
 	
@@ -164,6 +165,10 @@ func _on_state_change(data: PlayerStateData) -> void:
 	
 	shape_small.disabled = data.player_power != Data.PLAYER_POWER.SMALL
 	shape_big.disabled = data.player_power == Data.PLAYER_POWER.SMALL
+	
+	powerup_script = null
+	if data.player_script:
+		powerup_script = ByNodeScript.activate_script(data.player_script, self)
 
 
 func powerdown() -> void:
@@ -175,10 +180,14 @@ func powerdown() -> void:
 		Thunder._current_player_state = Thunder._current_player_state.powerdown_state
 		Audio.play_sound(config.powerdown_sound, self)
 	else:
-		states.set_state("dead")
+		kill()
 
 
 func powerup(state: PlayerStateData) -> void:
 	states.appear_timer = config.powerup_animation_time
 	states.invincible_timer = config.powerup_animation_time
 	Thunder._current_player_state = state
+
+
+func kill() -> void:
+	states.set_state("dead")

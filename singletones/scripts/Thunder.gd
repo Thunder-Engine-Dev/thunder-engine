@@ -49,9 +49,13 @@ func get_delta(delta: float) -> float:
 
 
 func _init():
-	Engine.physics_ticks_per_second = int(DisplayServer.screen_get_refresh_rate())
-
-
+# warning-ignore:narrowing_conversion
+	var rate: int = int(DisplayServer.screen_get_refresh_rate())
+	if rate < 119:
+		Engine.physics_ticks_per_second = rate * 2
+		print('Using double fps for physics')
+	else:
+		Engine.physics_ticks_per_second = rate
 
 
 class View:
@@ -85,3 +89,4 @@ class View:
 			return screen_right(pos, offset)
 		else:
 			return screen_bottom(pos, offset)
+			

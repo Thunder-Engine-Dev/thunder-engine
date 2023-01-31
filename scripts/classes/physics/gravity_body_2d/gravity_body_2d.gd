@@ -5,7 +5,7 @@ class_name GravityBody2D
 # Note: Due to bugs with gravity direction whose angle is not 90°,180°,270° or 0°, you need to manually change up_direction via inspector
 # We are still trying to fix the bug with GDScript :)
 
-const GRAVITY: float = 20.0
+const GRAVITY: float = 50.0
 
 @export_group("Speed")
 @export var speed: Vector2 # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
@@ -31,13 +31,13 @@ signal collided_ceiling
 signal collided_floor
 
 
-func motion_process(delta:float,deep_snap:bool = true,kinematic:bool = true) -> void:
+func motion_process(delta: float, deep_snap: bool = true, kinematic: bool = true) -> void:
 	var gravity: float = gravity_scale * GRAVITY
 	
 	speed_previous = speed
 	
 	if !is_on_floor() || is_able_slope_down():
-		speed += gravity * gravity_dir
+		speed += gravity * gravity_dir * delta
 		if max_falling_speed > 0 && speed.y > max_falling_speed:
 			speed.y = max_falling_speed
 	
