@@ -53,9 +53,26 @@ func _init():
 	var rate: int = int(DisplayServer.screen_get_refresh_rate())
 	if rate < 119:
 		Engine.physics_ticks_per_second = rate * 2
-		print('Using double fps for physics')
+		print("Using double fps for physics")
 	else:
 		Engine.physics_ticks_per_second = rate
+
+
+func add_lives(count: int):
+	if count <= 0 or count > 10:
+		push_error("[Thunder Engine] add_lives: Invalid life count. Must be between 1 and 10")
+		return
+	
+	Data.values.lives += count
+	ScoreText.new("1UP", _current_player)
+
+func add_score(count: int):
+	if count <= 0:
+		push_error("[Thunder Engine] add_score: Invalid score count. Must be greater than 0")
+		return
+	
+	Data.values.score += count
+	ScoreText.new(str(count), _current_player)
 
 
 class View:

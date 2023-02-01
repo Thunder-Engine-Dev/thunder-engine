@@ -17,7 +17,6 @@ var velocity_local: Vector2
 @onready var shape_big: CollisionShape2D = $CollisionBig
 @onready var stomping_cast: ShapeCast2D = $StompingCast
 
-
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
@@ -27,6 +26,11 @@ func _ready() -> void:
 	
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = default_player_state
+	else:
+		_on_state_change(Thunder._current_player_state)
+	
+	if Data.values.lives == -1:
+		Data.values.lives = config.default_life_count
 
 
 func _physics_process(delta: float) -> void:
@@ -190,4 +194,16 @@ func powerup(state: PlayerStateData) -> void:
 
 
 func kill() -> void:
+	if states.current_state == "dead":
+		return
 	states.set_state("dead")
+	collision_layer = 0
+	collision_mask = 0
+	
+	var timer = get_tree().create_timer(1.0, false)
+	timer.timeout.connect(
+		func():
+			Thunder._current_player_state = default_player_state
+			Thunder._current_stage.restart()
+			Data.values.lives -= 1
+	)

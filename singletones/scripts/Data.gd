@@ -1,6 +1,13 @@
 # Singleton that stores general data
 extends Node
 
+var values: Dictionary = {
+	lives = -1,
+	score = 0,
+	coins = 0,
+	time = -1
+}
+
 const ATTACKERS: Dictionary = {
 	head = &"head",
 	starman = &"starman",

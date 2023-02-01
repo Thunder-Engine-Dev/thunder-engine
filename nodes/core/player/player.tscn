@@ -34,6 +34,7 @@ max_run_speed = 350.0
 powerup_animation_time = 40.0
 powerdown_animation_time = 40.0
 powerdown_invincible_time = 100.0
+default_life_count = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
 size = Vector2(20, 26)
