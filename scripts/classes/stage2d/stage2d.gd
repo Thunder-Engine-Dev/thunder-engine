@@ -5,7 +5,8 @@ extends Node2D
 class_name Stage2D
 
 func _ready() -> void:
-	Thunder._current_stage = self
+	if !Engine.is_editor_hint():
+		Thunder._current_stage = self
 
 
 func restart() -> void:

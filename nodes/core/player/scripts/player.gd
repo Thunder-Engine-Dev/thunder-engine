@@ -1,4 +1,3 @@
-@tool
 extends CorrectedCharacterBody2D
 class_name Player
 
@@ -18,6 +17,13 @@ var death_movement: bool
 @onready var shape_big: CollisionShape2D = $CollisionBig
 @onready var stomping_cast: ShapeCast2D = $StompingCast
 
+var movements = {
+	"default": _movement_default,
+	"jump": _movement_default,
+	"crouch": _movement_default
+}
+
+
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
@@ -35,21 +41,17 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
-	if Engine.is_editor_hint(): return
-	
 	if states.current_state == "dead": 
 		_movement_death(delta)
+		states.update_states(delta)
 		return
 	
 	_player_process(Thunder.get_delta(delta))
 
 
 func _player_process(delta: float) -> void:
-	match states.current_state:
-		"default": _movement_default(delta)
-		"jump": _movement_default(delta)
-		"crouch": _movement_default(delta)
+	if movements.has(states.current_state):
+		movements[states.current_state].call(delta)
 	
 	velocity = velocity_local.rotated(global_rotation)
 	move_and_slide_corrected()

@@ -5,13 +5,17 @@
 extends Stage2D
 class_name Level
 
+@export var time: int = 360
 
-#func _ready() -> void:
-#	super()
-#	if Engine.is_editor_hint(): prepare_template()
+
+func _ready() -> void:
+	super()
+	if Engine.is_editor_hint():
+		prepare_template()
+		return
+	
+	Data.values.time = time
 
 # Adding neccessary nodes to our level scene
-#func prepare_template() -> void:
-#	var tilemap = TileMap.new()
-#	add_child(tilemap)
-#	tilemap.set_owner(self)
+func prepare_template() -> void:
+	pass
