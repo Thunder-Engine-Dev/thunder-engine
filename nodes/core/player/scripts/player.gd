@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	if states.current_state == "dead": 
-		_movemnt_death(delta)
+		_movement_death(delta)
 		return
 	
 	_player_process(Thunder.get_delta(delta))
@@ -130,10 +130,10 @@ func _movement_default(delta: float) -> void:
 	_movement_generic(delta)
 
 
-func _movemnt_death(delta: float) -> void:
+func _movement_death(delta: float) -> void:
 	if !death_movement: return
 	
-	velocity_local.y = move_toward(velocity_local.y, 500, 15)
+	velocity_local.y = move_toward(velocity_local.y, 500, 8)
 	
 	velocity = velocity_local.rotated(global_rotation)
 	global_position += velocity * delta
@@ -221,7 +221,7 @@ func kill() -> void:
 	get_tree().create_timer(0.5, false).timeout.connect(
 		func() -> void:
 			death_movement = true
-			velocity_local = Vector2(0,-700)
+			velocity_local = Vector2(0, -500)
 	)
 	
 	get_tree().create_timer(4.0, false).timeout.connect(
