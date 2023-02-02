@@ -10,6 +10,7 @@ var states: PlayerStatesManager = PlayerStatesManager.new(self)
 var extra_script: Script
 var powerup_script: Script
 var velocity_local: Vector2
+var death_movement: bool
 
 @onready var sprite: Node2D = $Sprite
 @onready var sprite_no_img: Node2D = $SpriteNoImg
@@ -36,7 +37,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	if Engine.is_editor_hint(): return
-	if states.current_state != "dead": _player_process(Thunder.get_delta(delta))
+	
+	if states.current_state == "dead": 
+		_movemnt_death(delta)
+		return
+	
+	_player_process(Thunder.get_delta(delta))
 
 
 func _player_process(delta: float) -> void:
@@ -55,7 +61,8 @@ func _player_process(delta: float) -> void:
 
 func _movement_generic(delta: float) -> void:
 	# Fall
-	velocity_local.y = min(velocity_local.y + config.fall_speed * delta, config.max_fall_speed)
+#	velocity_local.y = min(velocity_local.y + config.fall_speed * delta, config.max_fall_speed)
+	velocity_local.y = move_toward(velocity_local.y, config.max_fall_speed, config.fall_speed * delta)
 	
 	# Decceleration
 	if velocity_local.x > 0:
@@ -121,6 +128,16 @@ func _movement_default(delta: float) -> void:
 	
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
+
+
+func _movemnt_death(delta: float) -> void:
+	if !death_movement: return
+	
+	velocity_local.y = move_toward(velocity_local.y, 500, 15)
+	
+	velocity = velocity_local.rotated(global_rotation)
+	global_position += velocity * delta
+
 
 
 func _stomping() -> void:
@@ -199,10 +216,16 @@ func kill() -> void:
 	states.set_state("dead")
 	collision_layer = 0
 	collision_mask = 0
+	z_index = 30
 	
-	var timer = get_tree().create_timer(1.0, false)
-	timer.timeout.connect(
-		func():
+	get_tree().create_timer(0.5, false).timeout.connect(
+		func() -> void:
+			death_movement = true
+			velocity_local = Vector2(0,-700)
+	)
+	
+	get_tree().create_timer(4.0, false).timeout.connect(
+		func() -> void:
 			Thunder._current_player_state = default_player_state
 			Thunder._current_stage.restart()
 			Data.values.lives -= 1

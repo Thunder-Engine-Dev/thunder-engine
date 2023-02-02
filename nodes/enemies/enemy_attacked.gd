@@ -1,20 +1,9 @@
 # Node should be placed as a child of Area2D
 extends Node
 
-const PROJECTILE_IMMUNE_TO: Dictionary = {
-	Data.ATTACKERS.head: false,
-	Data.ATTACKERS.starman: false,
-	Data.ATTACKERS.shell: false,
-	&"shell_defence": 0, # Available only when Data.ATTACKERS.shell is "true"
-	Data.ATTACKERS.fireball: false,
-	Data.ATTACKERS.beetroot: false,
-	Data.ATTACKERS.iceball: false,
-	Data.ATTACKERS.hammer: false,
-}
-
 @export_category("EnemyAttacked")
 @export_group("General")
-@export_node_path("Node2D") var center_node: NodePath = ^"../.."
+@export var center_node: NodePath = ^"../.."
 @export_node_path("AudioStreamPlayer2D") var sound_player: NodePath = ^"Sound"
 @export_group("Stomping","stomping_")
 @export var stomping_enabled: bool = true
@@ -29,7 +18,16 @@ const PROJECTILE_IMMUNE_TO: Dictionary = {
 @export var stomping_player_jumping_max: float = 700
 @export_group("Killing","killing_")
 @export var killing_enabled: bool = true
-@export var killing_immune: Dictionary = PROJECTILE_IMMUNE_TO
+@export var killing_immune: Dictionary = {
+	Data.ATTACKERS.head: false,
+	Data.ATTACKERS.starman: false,
+	Data.ATTACKERS.shell: false,
+	&"shell_defence": 0, # Available only when Data.ATTACKERS.shell is "true"
+	Data.ATTACKERS.fireball: false,
+	Data.ATTACKERS.beetroot: false,
+	Data.ATTACKERS.iceball: false,
+	Data.ATTACKERS.hammer: false,
+}
 @export var killing_creation: Node2DCreation
 @export var killing_scores: int
 @export var killing_sound_succeeded: AudioStream

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/gravity_body_2d.svg-61b7b039274f9ee4b94c09fcc
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
