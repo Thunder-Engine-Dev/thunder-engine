@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	if states.current_state == "dead": 
-		_movemnt_death(delta)
+		_movement_death(delta)
 		return
 	
 	_player_process(Thunder.get_delta(delta))
