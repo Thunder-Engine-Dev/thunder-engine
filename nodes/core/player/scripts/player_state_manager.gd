@@ -55,9 +55,6 @@ func update_states(delta: float) -> void:
 func _update_animations() -> void:
 	if !is_instance_valid(owner.sprite.sprite_frames):
 		return
-	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
-	owner.sprite.offset.y = -size.y
-	owner.sprite.offset.x = -size.x / 2
 	
 	if appear_timer == 0:
 		owner.sprite.animation = current_state
@@ -83,3 +80,7 @@ func _update_animations() -> void:
 		owner.sprite.flip_h = false
 	if owner.velocity_local.x < 0:
 		owner.sprite.flip_h = true
+	
+	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
+	owner.sprite.offset.y = -size.y
+	owner.sprite.offset.x = -size.x / 2
