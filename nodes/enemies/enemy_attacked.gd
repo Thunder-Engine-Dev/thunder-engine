@@ -51,8 +51,9 @@ signal killed_failed
 
 
 func _ready() -> void:
-	stomped_succeeded.connect(func(): Audio.play_sound(killing_sound_succeeded, center))
-	stomped_failed.connect(func(): Audio.play_sound(killing_sound_failed, center))
+	stomped_succeeded.connect(func(): Audio.play_sound(stomping_sound, center))
+	killed_succeeded.connect(func(): Audio.play_sound(killing_sound_succeeded, center))
+	killed_failed.connect(func(): Audio.play_sound(killing_sound_failed, center))
 
 func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	var result: Dictionary

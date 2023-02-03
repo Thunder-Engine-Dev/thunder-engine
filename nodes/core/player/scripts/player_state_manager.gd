@@ -60,7 +60,7 @@ func _update_animations() -> void:
 		owner.sprite.animation = current_state
 		
 		if current_state == "default":
-			owner.sprite.speed_scale = abs(owner.velocity_local.x / 50) * 2.5 + 4
+			owner.sprite.speed_scale = abs(owner.velocity_local.x / Thunder._target_speed) * 2.5 + 4
 		else:
 			owner.sprite.speed_scale = 1
 		
