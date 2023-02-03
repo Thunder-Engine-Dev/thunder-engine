@@ -16,27 +16,31 @@ class_name Node2DCreation
 @export var inherit_scale: bool
 @export var inherit_skew: bool
 
+var emiter: Node
 var node: Node2D
 var base: Node2D
 var attachment: Node2D
 
 
-func prepare(on: Node2D) -> void:
+func prepare(caller: Node, on: Node2D) -> void:
 	base = on
+	emiter = caller
 	
 	if !base:
 		printerr("[Null Base Node Error] You set a null as a base node! Please check the parameter you input!")
 		_report_resource()
 		return
 	
-	if !node:
+	if !creation_node:
 		printerr("[Node2D Preparing Error] No creations installed! Please check \"creation_node\" first!")
 		_report_resource()
 		return
 	
 	node = creation_node.instantiate()
 	
-	attachment = base.get_node_or_null(creation_attachment)
+	if !emiter: return
+	
+	attachment = emiter.get_node_or_null(creation_attachment)
 	
 	if !attachment: return
 	
@@ -59,10 +63,7 @@ func create(as_child: bool = false) -> void:
 	else:
 		base.add_sibling(node)
 	
-	node.translate(creation_offset)
-	node.z_index = creation_z_index
-	node.z_as_relative = creation_z_as_relative
-	node.y_sort_enabled = creation_y_sort_enabled
+	node.global_position = base.global_position
 	
 	if inherit_rotation:
 		node.rotation = base.rotation
@@ -70,6 +71,16 @@ func create(as_child: bool = false) -> void:
 		node.scale = base.scale
 	if inherit_skew:
 		node.skew = base.skew
+	
+	node.translate(creation_offset)
+	node.z_index = creation_z_index
+	node.z_as_relative = creation_z_as_relative
+	node.y_sort_enabled = creation_y_sort_enabled
+	
+	emiter = null
+	node = null
+	base = null
+	attachment = null
 
 
 func call_physics() -> GravityBody2DPhysics:

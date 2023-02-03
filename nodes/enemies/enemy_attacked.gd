@@ -3,7 +3,7 @@ extends Node
 
 @export_category("EnemyAttacked")
 @export_group("General")
-@export var center_node: NodePath = ^"../.."
+@export_node_path("Node2D") var center_node: NodePath = ^"../.."
 @export_node_path("AudioStreamPlayer2D") var sound_player: NodePath = ^"Sound"
 @export_group("Stomping","stomping_")
 @export var stomping_enabled: bool = true
@@ -54,7 +54,6 @@ func _ready() -> void:
 	stomped_succeeded.connect(func(): Audio.play_sound(killing_sound_succeeded, center))
 	stomped_failed.connect(func(): Audio.play_sound(killing_sound_failed, center))
 
-
 func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	var result: Dictionary
 	
@@ -79,7 +78,11 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 				stomping_delayer = null
 		)
 		
+		if stomping_scores > 0:
+			ScoreText.new(str(stomping_scores), center)
+		
 		_creation(stomping_creation)
+		
 		result = {result = true, jumping_min = stomping_player_jumping_min, jumping_max = stomping_player_jumping_max}
 	else:
 		stomped_failed.emit()
@@ -91,7 +94,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 func _creation(creation: Node2DCreation) -> void:
 	if !creation: return
 	
-	creation.prepare(center)
+	creation.prepare(self,center)
 	
 	if creation.creation_physics:
 		creation.call_physics().apply_velocity_local().override_gravity().unbind()

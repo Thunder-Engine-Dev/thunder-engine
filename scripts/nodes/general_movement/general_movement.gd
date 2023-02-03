@@ -1,7 +1,7 @@
 extends GravityBody2D
-class_name GeneralMovementEnemy
+class_name GeneralMovementBody2D
 
-@export_category("GeneralMovementEnemy")
+@export_category("GeneralMovement")
 @export var look_at_player: bool
 @export var deep_snap: bool = true
 @export var kinematic_movement: bool = true
