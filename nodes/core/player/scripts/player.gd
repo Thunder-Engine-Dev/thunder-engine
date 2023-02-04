@@ -1,6 +1,8 @@
 extends CorrectedCharacterBody2D
 class_name Player
 
+signal on_collision_shape_changed
+
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
 @export var custom_script: Script
 @export var default_player_state: PlayerStateData = PlayerStateData.new()
@@ -13,14 +15,14 @@ var death_movement: bool
 
 @onready var sprite: Node2D = $Sprite
 @onready var sprite_no_img: Node2D = $SpriteNoImg
-@onready var shape_small: CollisionShape2D = $CollisionSmall
-@onready var shape_big: CollisionShape2D = $CollisionBig
+@onready var collision: CollisionShape2D = $Collision
 @onready var stomping_cast: ShapeCast2D = $StompingCast
 
 var movements = {
 	"default": _movement_default,
 	"jump": _movement_default,
-	"crouch": _movement_default
+	"crouch": _movement_default,
+	"stuck": _movement_stuck
 }
 
 
@@ -34,7 +36,7 @@ func _ready() -> void:
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = default_player_state
 	else:
-		_on_state_change(Thunder._current_player_state)
+		_on_power_state_change(Thunder._current_player_state)
 	
 	if Data.values.lives == -1:
 		Data.values.lives = config.default_life_count
@@ -109,9 +111,12 @@ func _movement_default(delta: float) -> void:
 		velocity_local.x = config.initial_acceleration * states.left_or_right
 	
 	# Direction
-	states.dir = abs(velocity_local.x)
+	if velocity_local.x > config.initial_acceleration:
+		states.dir = 1
+	elif velocity_local.x < config.initial_acceleration:
+		states.dir = -1
 	
-	if Input.is_action_pressed(config.control_down):
+	if Input.is_action_pressed(config.control_down) && Thunder._current_player_state.player_power != Data.PLAYER_POWER.SMALL:
 		states.set_state("crouch")
 	
 	if !Input.is_action_pressed(config.control_down) && states.current_state == "crouch":
@@ -132,6 +137,42 @@ func _movement_default(delta: float) -> void:
 	_movement_generic(delta)
 
 
+func _movement_stuck(delta: float) -> void:
+	#velocity_local.y = move_toward(velocity_local.y, config.max_fall_speed, config.fall_speed * delta)
+	
+	var vertical_pos: Vector2 = Vector2(0, -config.collision_shape_big.size.y / 2).rotated(rotation)
+	var horizontal_pos: Vector2 = Vector2(0, 0).rotated(rotation)
+
+	horizontal_pos = Vector2(config.collision_shape_big.size.x, 0).rotated(rotation)
+
+	var left_collide: bool = test_move(
+		Transform2D(
+			global_rotation, global_position - horizontal_pos + vertical_pos
+		),
+		velocity
+	)
+	var right_collide: bool = test_move(
+		Transform2D(
+			global_rotation, global_position + horizontal_pos + vertical_pos
+		),
+		velocity
+	)
+	
+	if left_collide && right_collide:
+		velocity_local.x = 50 if sprite.flip_h else -50
+
+	if left_collide && !right_collide:
+		velocity_local.x = 50
+
+	if right_collide && !left_collide:
+		velocity_local.x = -50
+	
+	if (!right_collide && !left_collide) || !test_move(global_transform, Vector2(0, -6).rotated(global_rotation)):
+		velocity_local.x = 0
+		if !update_collisions(Thunder._current_player_state, false):
+			states.set_state("default")
+
+
 func _movement_death(delta: float) -> void:
 	if !death_movement: return
 	
@@ -144,7 +185,7 @@ func _movement_death(delta: float) -> void:
 
 func _stomping() -> void:
 	if !stomping_cast.shape:
-		stomping_cast.shape = shape_big.shape
+		stomping_cast.shape = config.collision_shape_big
 	stomping_cast.target_position = velocity_local.normalized() * 4
 	
 	var count: int = stomping_cast.get_collision_count()
@@ -174,24 +215,63 @@ func _stomping() -> void:
 		powerdown()
 
 
-func _on_state_change(data: PlayerStateData) -> void:
+func _on_power_state_change(data: PlayerStateData) -> void:
+	# If there's no valid animation in new player state, enable fallback sprite
 	if !data.player_prefab:
 		sprite.visible = false
 		sprite_no_img.visible = true
 		return
 	
+	# Assigning new player state animations
 	sprite.frames = data.player_prefab
 	sprite.visible = true
 	sprite_no_img.visible = false
 	
 	sprite.play()
 	
-	shape_small.disabled = data.player_power != Data.PLAYER_POWER.SMALL
-	shape_big.disabled = data.player_power == Data.PLAYER_POWER.SMALL
+	# If Super Mario is crouching and gets hit, prevent Small Mario from crouching
+	if states.current_state == "crouch" && data.player_power == Data.PLAYER_POWER.SMALL:
+		states.set_state("default")
+	
+	# Update Small/Big/Crouching collision shapes
+	update_collisions(data, states.current_state == "crouch")
+	
+	#stomping_cast.shape = collision.shape
 	
 	powerup_script = null
 	if data.player_script:
 		powerup_script = ByNodeScript.activate_script(data.player_script, self)
+
+
+func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
+	var power = state.player_power
+
+	if power == Data.PLAYER_POWER.SMALL:
+		if collision.shape.get_instance_id() == config.collision_shape_small.get_instance_id():
+			return false
+		collision.shape = config.collision_shape_small
+	else:
+		if crouching:
+			if collision.shape.get_instance_id() == config.collision_shape_crouch.get_instance_id():
+				return false
+			collision.shape = config.collision_shape_crouch
+		else:
+			if collision.shape.get_instance_id() == config.collision_shape_big.get_instance_id():
+				return false
+			if states.current_state == "crouch" and test_move(
+				Transform2D(
+					global_rotation,
+					global_position + Vector2(0, -config.collision_shape_big.size.y / 2)
+				),
+				Vector2.ZERO
+			):
+				return true
+			collision.shape = config.collision_shape_big
+
+	collision.position.y = -collision.shape.size.y / 2
+	on_collision_shape_changed.emit()
+	print('Player collision changed.')
+	return false
 
 
 func powerdown() -> void:
@@ -220,6 +300,8 @@ func kill() -> void:
 	collision_mask = 0
 	z_index = 30
 	
+	Thunder._current_hud.timer.paused = true
+	
 	get_tree().create_timer(0.5, false).timeout.connect(
 		func() -> void:
 			death_movement = true
@@ -228,6 +310,9 @@ func kill() -> void:
 	
 	get_tree().create_timer(4.0, false).timeout.connect(
 		func() -> void:
+			if Data.values.lives == 0:
+				Thunder._current_hud.game_over()
+				return
 			Thunder._current_player_state = default_player_state
 			Thunder._current_stage.restart()
 			Data.values.lives -= 1

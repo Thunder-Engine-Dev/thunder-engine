@@ -32,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
 offset_top = -35.0
-offset_right = -39.0
+offset_right = -70.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -47,14 +47,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -35.0
+offset_left = -65.0
 offset_top = -35.0
 offset_right = -5.0
 offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 0
 shortcut = SubResource("Shortcut_8ddje")
-text = "EN"
+text = "Send"
 
 [node name="OutputContainer" type="Panel" parent="."]
 layout_mode = 1

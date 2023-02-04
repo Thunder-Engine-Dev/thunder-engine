@@ -1,6 +1,6 @@
 class_name Command
 
-enum Error{
+enum Error {
 	OK = -1,
 	Unknown = 0,
 	Param = 1, # Uses for miss param
@@ -10,13 +10,16 @@ enum Error{
 class ExecuteResult:
 	var msg: Variant
 	var err: Error
-	func _init(msg,err = -1): self.msg = msg; self.err = err
+	func _init(msg, err = Error.OK):
+		self.msg = msg
+		self.err = err
 
 # For print what goes wrong
 const messages: Dictionary = { 
-	Error.Unknown:"[color=red]Unknown Error[/color]",
-	Error.Param:"[color=red]Invalid Params[/color]",
-	Error.Wrong:"[color=red]Something Went Wrong[/color]"}
+	Error.Unknown: "[color=red]Unknown Error[/color]",
+	Error.Param: "[color=red]Invalid Arguments[/color]",
+	Error.Wrong: "[color=red]Something Went Wrong[/color]"
+}
 
 const NIY: String = "Not Implemented Yet"
 
@@ -44,13 +47,14 @@ func try_execute(args: Array) -> Variant:
 
 # NOT FOR OVERRIDING
 func get_help() -> String:
-	if params.is_empty(): return "No Params"
-	
 	var result: String = ""
 	
-	for k in params.keys():
-		# TODO: replace print intager to print actual type name
-		result += " <%s: %s(type)>" % [k,params[k]]
+	if params.is_empty():
+		result = "No Params"
+	else:
+		for k in params.keys():
+			# TODO: replace print intager to print actual type name
+			result += " <%s: %s(type)>" % [k, params[k]]
 	
 	result += " - %s" % description
 	

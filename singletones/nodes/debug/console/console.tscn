@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bquqhbqux15rr" path="res://engine/singletones/nodes/debug/console/console_ui.tscn" id="2_g800c"]
 
 [node name="Console" type="Window"]
+process_mode = 3
 disable_3d = true
 title = "Console"
 position = Vector2i(64, 71)

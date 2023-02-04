@@ -7,6 +7,8 @@ class_name Level
 
 @export var time: int = 360
 
+@export_enum("Nothing", "Death", "Wrap") var falling_below_screen_action: int = 1
+
 
 func _ready() -> void:
 	super()

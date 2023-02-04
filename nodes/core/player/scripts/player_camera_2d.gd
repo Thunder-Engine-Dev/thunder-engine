@@ -2,7 +2,9 @@ extends Camera2D
 class_name PlayerCamera2D
 
 
-func _ready(): teleport()
+func _ready():
+	make_current()
+	teleport()
 func _process(_delta): teleport()
 func _physics_process(_delta): teleport()
 

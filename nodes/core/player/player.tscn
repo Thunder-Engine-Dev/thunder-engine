@@ -1,11 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://cjtnk1ep7g836"]
 
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player.gd" id="1_64hux"]
+[ext_resource type="Shape2D" uid="uid://kxicbpkvp83b" path="res://modules/base/objects/mario/prefabs/collisions/shape_big.tres" id="2_0yhvu"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://modules/base/objects/mario/sounds/jump.wav" id="2_ybs47"]
+[ext_resource type="Shape2D" uid="uid://dmb1hdy0mt1dk" path="res://modules/base/objects/mario/prefabs/collisions/shape_small.tres" id="3_8jium"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://modules/base/objects/mario/sounds/pipe.wav" id="3_flfm0"]
 [ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://modules/base/objects/mario/textures/player_no_img.svg" id="4_o8a8c"]
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player_configuration.gd" id="4_vgx2b"]
-[ext_resource type="Resource" uid="uid://dibemklem7ypn" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
+[ext_resource type="Resource" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
 script = ExtResource("4_vgx2b")
@@ -31,16 +33,13 @@ initial_acceleration = 40.0
 initial_accel_trigger = 20.0
 max_walk_speed = 175.0
 max_run_speed = 350.0
+collision_shape_small = ExtResource("3_8jium")
+collision_shape_big = ExtResource("2_0yhvu")
+collision_shape_crouch = ExtResource("3_8jium")
 powerup_animation_time = 40.0
 powerdown_animation_time = 40.0
 powerdown_invincible_time = 100.0
 default_life_count = 4
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxu54"]
-size = Vector2(20, 26)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_psf8v"]
-size = Vector2(20, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wegi3"]
 size = Vector2(0, 0)
@@ -53,13 +52,9 @@ script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
 default_player_state = ExtResource("5_08kj1")
 
-[node name="CollisionSmall" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -13)
-shape = SubResource("RectangleShape2D_wxu54")
-
-[node name="CollisionBig" type="CollisionShape2D" parent="."]
-position = Vector2(0, -28)
-shape = SubResource("RectangleShape2D_psf8v")
+shape = ExtResource("3_8jium")
 
 [node name="StompingCast" type="ShapeCast2D" parent="."]
 position = Vector2(0, -10)

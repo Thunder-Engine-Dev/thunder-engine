@@ -81,6 +81,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		
 		if stomping_scores > 0:
 			ScoreText.new(str(stomping_scores), center)
+			Data.values.score += stomping_scores
 		
 		_creation(stomping_creation)
 		

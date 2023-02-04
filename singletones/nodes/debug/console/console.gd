@@ -14,7 +14,11 @@ func _ready():
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
 	$"UI/Enter".pressed.connect(execute)
-	close_requested.connect(func (): hide())
+	close_requested.connect(
+		func():
+			get_tree().paused = false
+			hide()
+	)
 
 func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
@@ -24,7 +28,9 @@ func load_commands(dir: String) -> void:
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("a_console"):
 		visible = !visible
+		get_tree().paused = visible
 	if visible:
+		
 		if Input.is_key_pressed(KEY_ESCAPE):
 			grab_focus()
 		
@@ -33,7 +39,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down"):
 			move_history(-1)
 
-func execute() -> void:
+func execute() -> void:	
 	self.print("[b]> %s[/b]" % input.text)
 	
 	history.remove_at(0)
@@ -46,9 +52,11 @@ func execute() -> void:
 	args.remove_at(0)
 	
 	input.clear()
+	input.grab_focus()
 	
 	if !commands.has(cmdName):
-		col_print("Command does not exist!", Color.RED)
+		if cmdName != "":
+			col_print("Command does not exist!", Color.RED)
 		return
 	
 	self.print(commands[cmdName].try_execute(args))

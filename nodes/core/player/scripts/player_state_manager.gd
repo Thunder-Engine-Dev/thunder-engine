@@ -15,7 +15,8 @@ func _init(owner_node: Node2D) -> void:
 		"swim",
 		"climb",
 		"dead",
-		"static"
+		"static",
+		"stuck"
 	])
 
 
@@ -30,6 +31,12 @@ func _change_state(_new_state: String, _prev_state: String) -> String:
 		match _prev_state:
 			"jump": return _prev_state
 			"swim": return _prev_state
+			_:
+				owner.update_collisions(Thunder._current_player_state, true)
+	
+	if _prev_state == "crouch":
+		if owner.update_collisions(Thunder._current_player_state, false):
+			return "stuck"
 	
 	#if _new_state == "":
 	#	match _prev_state:
@@ -57,7 +64,17 @@ func _update_animations() -> void:
 		return
 	
 	if appear_timer == 0:
-		owner.sprite.animation = current_state
+		if current_state == "stuck":
+			owner.sprite.set_animation("default")
+			owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count("default") - 1
+			owner.sprite.speed_scale = 0
+			return
+		
+		if owner.sprite.sprite_frames.has_animation(current_state):
+			owner.sprite.animation = current_state
+		else:
+			push_error("[PlayerStateManager] Invalid animation '" + current_state + "'")
+			return
 		
 		if current_state == "default":
 			owner.sprite.speed_scale = abs(owner.velocity_local.x / Thunder._target_speed) * 2.5 + 4
@@ -67,6 +84,7 @@ func _update_animations() -> void:
 		if owner.velocity_local.x == 0:
 			owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count(current_state) - 1
 			owner.sprite.speed_scale = 0
+			owner.sprite.frame_progress = 1.0
 	else:
 		owner.sprite.animation = "appear"
 		owner.sprite.speed_scale = 1

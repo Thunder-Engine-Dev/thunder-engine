@@ -4,7 +4,7 @@ static func register() -> Command:
 	return new().set_name("eval").add_param("code", TYPE_STRING).set_description("Evaluates a gdscript snippet. [color=red]This can crash the game![/color]")
 
 func execute(args:Array) -> Command.ExecuteResult:
-	var msg: String
+	var msg: String = ""
 	for w in args:
 		msg += w + ' '
 	

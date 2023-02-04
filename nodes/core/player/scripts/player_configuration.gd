@@ -36,6 +36,11 @@ class_name PlayerConfiguration
 @export var max_walk_speed: float = 175
 @export var max_run_speed: float = 350
 
+@export_group("Collisions")
+@export var collision_shape_small: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_small.tres")
+@export var collision_shape_big: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_big.tres")
+@export var collision_shape_crouch: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_small.tres")
+
 # Other values
 @export_group("Misc")
 @export var powerup_animation_time: float = 40

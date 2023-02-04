@@ -36,7 +36,15 @@ var _current_player: Player: # Reference to the current player
 var _current_player_state: PlayerStateData: # Current state of the player
 	set(data):
 		_current_player_state = data
-		_current_player._on_state_change(data)
+		_current_player._on_power_state_change(data)
+
+var _current_hud: CanvasLayer: # Reference to level HUD
+	set(node):
+		assert(is_instance_valid(node) || !(node is CanvasLayer), "HUD node is invalid")
+		_current_hud = node
+	get:
+		assert(is_instance_valid(_current_hud) || !(_current_hud is CanvasLayer), "HUD node is invalid or not set")
+		return _current_hud
 
 
 func get_or_null(obj: Variant, key: String):
