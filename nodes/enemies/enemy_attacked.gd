@@ -83,10 +83,42 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		
 		_creation(stomping_creation)
 		
-		result = {result = true, jumping_min = stomping_player_jumping_min, jumping_max = stomping_player_jumping_max}
+		result = {
+			result = true,
+			jumping_min = stomping_player_jumping_min,
+			jumping_max = stomping_player_jumping_max
+		}
 	else:
 		stomped_failed.emit()
 		result = {result = false}
+	
+	return result
+
+func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
+	var result: Dictionary
+	
+	if !by in killing_immune: return result
+	
+	if killing_immune[by]:
+		killed_failed.emit()
+		
+		result = {
+			result = false,
+			attackee = self
+		}
+	else:
+		killed_succeeded.emit()
+		
+		_creation(killing_creation)
+		
+		if killing_scores > 0:
+			ScoreText.new(str(stomping_scores), center)
+			Data.values.score += stomping_scores
+		
+		result = {
+			result = true,
+			attackee = self
+		}
 	
 	return result
 

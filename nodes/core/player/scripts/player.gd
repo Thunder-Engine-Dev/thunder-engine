@@ -196,11 +196,9 @@ func _stomping() -> void:
 	
 	for i in count:
 		var casted: Area2D = stomping_cast.get_collider(i) as Area2D
-		
 		if !casted: continue
 		
 		var enemy_attacked: Node = casted.get_node_or_null(^"EnemyAttacked")
-		
 		if !enemy_attacked: continue
 		
 		result = enemy_attacked.got_stomped(self)
