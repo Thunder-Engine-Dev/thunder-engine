@@ -303,7 +303,8 @@ func kill() -> void:
 	collision_mask = 0
 	z_index = 30
 	
-	Thunder._current_hud.timer.paused = true
+	if is_instance_valid(Thunder._current_hud):
+		Thunder._current_hud.timer.paused = true
 	
 	get_tree().create_timer(0.5, false).timeout.connect(
 		func() -> void:
@@ -314,7 +315,8 @@ func kill() -> void:
 	get_tree().create_timer(4.0, false).timeout.connect(
 		func() -> void:
 			if Data.values.lives == 0:
-				Thunder._current_hud.game_over()
+				if is_instance_valid(Thunder._current_hud):
+					Thunder._current_hud.game_over()
 				return
 			Thunder._current_player_state = default_player_state
 			Thunder._current_stage.restart()
