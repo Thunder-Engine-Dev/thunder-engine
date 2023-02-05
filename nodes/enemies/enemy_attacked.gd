@@ -4,7 +4,6 @@ extends Node
 @export_category("EnemyAttacked")
 @export_group("General")
 @export_node_path("Node2D") var center_node: NodePath = ^"../.."
-@export_node_path("AudioStreamPlayer2D") var sound_player: NodePath = ^"Sound"
 @export_group("Stomping","stomping_")
 @export var stomping_enabled: bool = true
 @export var stomping_available: bool = true
@@ -40,7 +39,6 @@ var stomping_delayer: SceneTreeTimer
 @onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self)
 @onready var area: Area2D = get_parent()
 @onready var center: Node2D = get_node_or_null(center_node)
-@onready var sound: AudioStreamPlayer2D = get_node_or_null(sound_player)
 
 signal stomped
 signal stomped_succeeded

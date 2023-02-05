@@ -12,6 +12,7 @@ var extra_script: Script
 var powerup_script: Script
 var velocity_local: Vector2
 var death_movement: bool
+var projectiles_count: int = 2
 
 @onready var sprite: Node2D = $Sprite
 @onready var sprite_no_img: Node2D = $SpriteNoImg
@@ -234,7 +235,8 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 		states.set_state("default")
 	
 	# Update Small/Big/Crouching collision shapes
-	update_collisions(data, states.current_state == "crouch")
+	if update_collisions(data, states.current_state == "crouch"):
+		states.set_state("stuck")
 	
 	#stomping_cast.shape = collision.shape
 	
@@ -258,7 +260,10 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 		else:
 			if collision.shape.get_instance_id() == config.collision_shape_big.get_instance_id():
 				return false
-			if states.current_state == "crouch" and test_move(
+			if (
+				states.current_state == "crouch" ||
+				Thunder._current_player_state.player_power == Data.PLAYER_POWER.SMALL
+			) && test_move(
 				Transform2D(
 					global_rotation,
 					global_position + Vector2(0, -config.collision_shape_big.size.y / 2)
@@ -270,7 +275,6 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 
 	collision.position.y = -collision.shape.size.y / 2
 	on_collision_shape_changed.emit()
-	print('Player collision changed.')
 	return false
 
 
@@ -288,7 +292,8 @@ func powerdown() -> void:
 
 func powerup(state: PlayerStateData) -> void:
 	states.appear_timer = config.powerup_animation_time
-	states.invincible_timer = config.powerup_animation_time
+	if config.powerup_animation_time > states.invincible_timer:
+		states.invincible_timer = config.powerup_animation_time
 	Thunder._current_player_state = state
 
 

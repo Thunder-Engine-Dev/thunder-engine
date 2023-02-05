@@ -41,7 +41,7 @@ powerdown_animation_time = 40.0
 powerdown_invincible_time = 100.0
 default_life_count = 4
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wegi3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8phf"]
 size = Vector2(0, 0)
 
 [node name="Player" type="CharacterBody2D"]
@@ -58,7 +58,7 @@ shape = ExtResource("3_8jium")
 
 [node name="StompingCast" type="ShapeCast2D" parent="."]
 position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_wegi3")
+shape = SubResource("RectangleShape2D_v8phf")
 target_position = Vector2(0, 0)
 margin = 8.0
 max_results = 8

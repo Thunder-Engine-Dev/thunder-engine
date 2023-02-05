@@ -10,6 +10,7 @@ enum Error {
 class ExecuteResult:
 	var msg: Variant
 	var err: Error
+	@warning_ignore("shadowed_variable", "shadowed_variable")
 	func _init(msg, err = Error.OK):
 		self.msg = msg
 		self.err = err
@@ -76,6 +77,7 @@ func add_param(key: String, val: int) -> Command:
 	params[key] = val
 	return self
 
+@warning_ignore("shadowed_variable")
 func set_name(name: String) -> Command:
 	self.name = name
 	return self

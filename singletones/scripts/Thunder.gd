@@ -17,13 +17,14 @@ var _current_stage: Stage2D: # Reference to the current stage scene
 		assert(is_instance_valid(_current_stage) || !(_current_stage is Stage2D), "Stage2D node is invalid or not set")
 		return _current_stage
 
-var _current_camera: Camera2D: # Reference to the current camera node
-	set(node):
-		assert(is_instance_valid(node) || !(node is Camera2D), "Camera node is invalid")
-		_current_camera = node
-	get:
-		assert(is_instance_valid(_current_camera) || !(_current_camera is Camera2D), "Camera node is invalid or not set")
-		return _current_camera
+#var _current_camera: Camera2D: # Reference to the current camera node
+#	set(node):
+#		assert(is_instance_valid(node) || !(node is Camera2D), "Camera node is invalid")
+#		_current_camera = node
+#	get:
+#		assert(is_instance_valid(_current_camera) || !(_current_camera is Camera2D), "Camera node is invalid or not set")
+#		return _current_camera
+# TO GET CURRENT CAMERA, USE Viewport.get_camera_2d()
 
 var _current_player: Player: # Reference to the current player
 	set(node):

@@ -6,6 +6,7 @@ var left_or_right: int
 var dir: int = 1
 var invincible_timer: float = 0
 var appear_timer: float = 0
+var launch_timer: float = 0
 
 func _init(owner_node: Node2D) -> void:
 	super(owner_node)
@@ -56,6 +57,8 @@ func update_states(delta: float) -> void:
 		invincible_timer = max(invincible_timer - delta, 0)
 	if appear_timer > 0:
 		appear_timer = max(appear_timer - delta, 0)
+	if launch_timer > 0:
+		launch_timer = max(launch_timer - delta, 0)
 	
 	_update_animations()
 
@@ -63,17 +66,14 @@ func _update_animations() -> void:
 	if !is_instance_valid(owner.sprite.sprite_frames):
 		return
 	
-	if appear_timer == 0:
+	if appear_timer == 0 && launch_timer == 0:
 		if current_state == "stuck":
 			owner.sprite.set_animation("default")
 			owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count("default") - 1
 			owner.sprite.speed_scale = 0
 			return
 		
-		if owner.sprite.sprite_frames.has_animation(current_state):
-			owner.sprite.animation = current_state
-		else:
-			push_error("[PlayerStateManager] Invalid animation '" + current_state + "'")
+		if !_set_animation(current_state):
 			return
 		
 		if current_state == "default":
@@ -85,7 +85,11 @@ func _update_animations() -> void:
 			owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count(current_state) - 1
 			owner.sprite.speed_scale = 0
 			owner.sprite.frame_progress = 1.0
-	else:
+	elif launch_timer > 0:
+		appear_timer = 0
+		owner.sprite.animation = "launch"
+		owner.sprite.speed_scale = 1
+	elif appear_timer > 0:
 		owner.sprite.animation = "appear"
 		owner.sprite.speed_scale = 1
 	
@@ -102,3 +106,11 @@ func _update_animations() -> void:
 	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
 	owner.sprite.offset.y = -size.y
 	owner.sprite.offset.x = -size.x / 2
+
+func _set_animation(animation) -> bool:
+	if owner.sprite.sprite_frames.has_animation(animation):
+		owner.sprite.animation = animation
+	else:
+		push_error("[PlayerStateManager] Invalid animation '" + animation + "'")
+		return false
+	return true
