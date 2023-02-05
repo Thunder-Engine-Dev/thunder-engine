@@ -112,8 +112,8 @@ func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
 		_creation(killing_creation)
 		
 		if killing_scores > 0:
-			ScoreText.new(str(stomping_scores), center)
-			Data.values.score += stomping_scores
+			ScoreText.new(str(killing_scores), center)
+			Data.values.score += killing_scores
 		
 		result = {
 			result = true,
