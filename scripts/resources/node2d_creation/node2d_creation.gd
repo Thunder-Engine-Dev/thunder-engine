@@ -63,7 +63,7 @@ func create(as_child: bool = false) -> void:
 	else:
 		base.add_sibling(node)
 	
-	node.global_position = base.global_position
+	node.global_position = base.global_transform.translated_local(creation_offset).get_origin()
 	
 	if inherit_rotation:
 		node.rotation = base.rotation
@@ -72,7 +72,6 @@ func create(as_child: bool = false) -> void:
 	if inherit_skew:
 		node.skew = base.skew
 	
-	node.translate(creation_offset)
 	node.z_index = creation_z_index
 	node.z_as_relative = creation_z_as_relative
 	node.y_sort_enabled = creation_y_sort_enabled

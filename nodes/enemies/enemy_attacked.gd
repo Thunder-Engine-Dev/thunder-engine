@@ -26,6 +26,7 @@ extends Node
 	Data.ATTACKERS.beetroot: false,
 	Data.ATTACKERS.iceball: false,
 	Data.ATTACKERS.hammer: false,
+	Data.ATTACKERS.boomerang: false,
 }
 @export var killing_creation: Node2DCreation
 @export var killing_scores: int
@@ -68,7 +69,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	
 	stomped.emit()
 	
-	if dot > 0:
+	if dot > 0 && stomping_available:
 		stomped_succeeded.emit()
 		
 		stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * 5)
@@ -97,7 +98,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
 	var result: Dictionary
 	
-	if !by in killing_immune: return result
+	if !killing_enabled || !by in killing_immune: return result
 	
 	if killing_immune[by]:
 		killed_failed.emit()
