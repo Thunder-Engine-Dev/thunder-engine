@@ -4,6 +4,9 @@ class_name PlayerStatesManager
 var jump_buffer: bool = false
 var left_or_right: int
 var dir: int = 1
+
+var projectiles_count: int = 2
+
 var invincible_timer: float = 0
 var appear_timer: float = 0
 var launch_timer: float = 0

@@ -12,7 +12,6 @@ var extra_script: Script
 var powerup_script: Script
 var velocity_local: Vector2
 var death_movement: bool
-var projectiles_count: int = 2
 
 @onready var sprite: Node2D = $Sprite
 @onready var sprite_no_img: Node2D = $SpriteNoImg
