@@ -321,3 +321,5 @@ func kill() -> void:
 			Thunder._current_stage.restart()
 			Data.values.lives -= 1
 	)
+	
+	Audio.play_music(config.die_music, 1)

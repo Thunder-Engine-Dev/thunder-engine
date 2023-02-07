@@ -3,7 +3,7 @@ extends Node
 enum FadingMethod {LINEAR,LERP,SMOOTH_STEP}
 
 var fading_musics: Array[Dictionary]
-
+var music_channels: Dictionary = {}
 
 func _process(delta: float) -> void:
 	_fading(delta)
@@ -57,6 +57,13 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true) -> void:
 	var player = _create_1d_player(is_global)
 	player.stream = resource
 	player.play()
+
+func play_music(resource: AudioStream, channel_id: int) -> void:
+	if !music_channels.has(channel_id) || !is_instance_valid(music_channels[channel_id]):
+		music_channels[channel_id] = _create_1d_player(false)
+	
+	music_channels[channel_id].stream = resource
+	music_channels[channel_id].play()
 
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
 	var has_player:bool
