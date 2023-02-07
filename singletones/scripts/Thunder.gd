@@ -73,7 +73,7 @@ func add_lives(count: int):
 		return
 	
 	Data.values.lives += count
-	ScoreTextLife.new("1UP", _current_player)
+	ScoreTextLife.new("%sUP" % count, _current_player)
 
 func add_score(count: int):
 	if count <= 0:

@@ -6,15 +6,18 @@ extends Node
 
 
 func _init():
-	var autoload_list: Array = get_files("res://modules/", "preload.gd")
-	if autoload_list.is_empty(): return
+	var autoload_script_list: Array = get_files("res://modules/", "preload.gd")
+	if !autoload_script_list.is_empty():
+		for i in autoload_script_list:
+			var instance = load(i).new()
+			add_child(instance)
 	
-	for i in autoload_list:
-		var node = Node.new()
-		node.set_script(load(i))
-		add_child(node)
-		
-		node.set_name(node.get_name())
+	var autoload_scene_list: Array = get_files("res://modules/", "preload.tscn")
+	if !autoload_scene_list.is_empty():
+		for i in autoload_scene_list:
+			var instance = load(i).instantiate()
+			add_child(instance)
+	
 
 
 func get_files(path: String, file := "", files := []):
