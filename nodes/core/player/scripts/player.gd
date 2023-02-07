@@ -316,6 +316,7 @@ func kill() -> void:
 			if Data.values.lives == 0:
 				if is_instance_valid(Thunder._current_hud):
 					Thunder._current_hud.game_over()
+					Audio.play_music(config.gameover_music, 1)
 				return
 			Thunder._current_player_state = default_player_state
 			Thunder._current_stage.restart()

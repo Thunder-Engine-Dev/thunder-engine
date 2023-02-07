@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjtnk1ep7g836"]
+[gd_scene load_steps=13 format=3 uid="uid://cjtnk1ep7g836"]
 
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player.gd" id="1_64hux"]
 [ext_resource type="Shape2D" uid="uid://kxicbpkvp83b" path="res://modules/base/objects/mario/prefabs/collisions/shape_big.tres" id="2_0yhvu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player_configuration.gd" id="4_vgx2b"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://modules/base/objects/mario/sounds/music-die.ogg" id="4_wn4im"]
 [ext_resource type="Resource" uid="uid://dibemklem7ypn" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
+[ext_resource type="AudioStream" uid="uid://cas2ld31gvw6h" path="res://modules/base/objects/mario/sounds/music-gameover.ogg" id="5_fvegf"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
 script = ExtResource("4_vgx2b")
@@ -24,6 +25,7 @@ jump_sound = ExtResource("2_ybs47")
 pipe_sound = ExtResource("3_flfm0")
 powerdown_sound = ExtResource("3_flfm0")
 die_music = ExtResource("4_wn4im")
+gameover_music = ExtResource("5_fvegf")
 jump_speed_stopped = 20.0
 jump_speed_moving = 25.0
 jump_velocity = 700.0

@@ -21,6 +21,7 @@ class_name PlayerConfiguration
 @export var pipe_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var powerdown_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var die_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-die.ogg")
+@export var gameover_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-gameover.ogg")
 
 # Physics, values are defaulted to Mario config
 @export_group("Physics")
