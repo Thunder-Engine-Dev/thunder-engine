@@ -206,14 +206,16 @@ func _stomping() -> void:
 	
 	if result.result == true:
 		if Input.is_action_pressed(config.control_jump):
-			velocity_local.y = -result.jumping_max
+			velocity_local.y = -result.jumping_max * config.stomp_multiplicator
 		else:
-			velocity_local.y = -result.jumping_min
+			velocity_local.y = -result.jumping_min * config.stomp_multiplicator
 	else:
 		powerdown()
 
 
 func _on_power_state_change(data: PlayerStateData) -> void:
+	if !data:
+		return
 	# If there's no valid animation in new player state, enable fallback sprite
 	if !data.player_prefab:
 		sprite.visible = false
@@ -236,6 +238,10 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 		states.set_state("stuck")
 	
 	#stomping_cast.shape = collision.shape
+	
+	# Call _exit_tree() in old powerup script before right before changing the state
+	if powerup_script && powerup_script.has_method("_exit_tree"):
+		powerup_script._exit_tree()
 	
 	powerup_script = null
 	if data.player_script:

@@ -49,11 +49,17 @@ func _fading(delta: float) -> void:
 
 
 func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true) -> void:
+	# Stop on empty sound to avoid crashes
+	if resource == null: return
+	
 	var player = _create_2d_player(_calculate_player_position(ref), is_global)
 	player.stream = resource
 	player.play()
 
 func play_1d_sound(resource: AudioStream, is_global: bool = true) -> void:
+	# Stop on empty sound to avoid crashes
+	if resource == null: return
+	
 	var player = _create_1d_player(is_global)
 	player.stream = resource
 	player.play()

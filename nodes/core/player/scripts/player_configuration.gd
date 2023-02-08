@@ -28,6 +28,7 @@ class_name PlayerConfiguration
 @export var jump_speed_stopped: float = 20
 @export var jump_speed_moving: float = 25
 @export var jump_velocity: float = 700
+@export var stomp_multiplicator: float = 1.0
 @export var fall_speed: float = 50
 @export var max_fall_speed: float = 550
 @export var acceleration_speed: float = 12.5
