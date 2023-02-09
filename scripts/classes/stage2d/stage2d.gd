@@ -10,4 +10,5 @@ func _ready() -> void:
 
 
 func restart() -> void:
-	get_tree().reload_current_scene()
+	#get_tree().reload_current_scene()
+	Thunder.goto_scene(Thunder._current_stage.scene_file_path)

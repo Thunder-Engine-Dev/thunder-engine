@@ -27,7 +27,7 @@ func prepare(caller: Node, on: Node2D) -> void:
 	emiter = caller
 	
 	if !base:
-		printerr("[Null Base Node Error] You set a null as a base node! Please check the parameter you input!")
+		printerr("[Null Base Node Error] You have set null as a base node! Please check the parameter you have typed in!")
 		_report_resource()
 		return
 	

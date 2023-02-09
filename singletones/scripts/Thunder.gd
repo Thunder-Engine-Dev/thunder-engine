@@ -8,30 +8,23 @@ var view: View = View.new() # View subsingleton
 var gravity_speed: float = 50
 var _target_speed: int = 50
 
-var _current_stage: Stage2D: # Reference to the current stage scene
+var _current_stage: Stage2D: #= get_tree().root.get_child(get_tree().root.get_child_count() - 1) # Reference to the current stage scene
 	set(node):
-		assert(is_instance_valid(node) || !(node is Stage2D), "Stage2D node is invalid")
+		assert(is_instance_valid(node) && (node is Stage2D), "Stage2D node is invalid")
 		_current_stage = node
 		stage_changed.emit()
 	get:
-		assert(is_instance_valid(_current_stage) || !(_current_stage is Stage2D), "Stage2D node is invalid or not set")
+		assert(is_instance_valid(_current_stage) && (_current_stage is Stage2D), "Stage2D node is invalid or not set")
 		return _current_stage
 
-#var _current_camera: Camera2D: # Reference to the current camera node
-#	set(node):
-#		assert(is_instance_valid(node) || !(node is Camera2D), "Camera node is invalid")
-#		_current_camera = node
-#	get:
-#		assert(is_instance_valid(_current_camera) || !(_current_camera is Camera2D), "Camera node is invalid or not set")
-#		return _current_camera
 # TO GET CURRENT CAMERA, USE Viewport.get_camera_2d()
 
 var _current_player: Player: # Reference to the current player
 	set(node):
-		assert(is_instance_valid(node) || !(node is Player), "Player node is invalid")
+		assert(is_instance_valid(node) && (node is Player), "Player node is invalid")
 		_current_player = node
 	get:
-		assert(is_instance_valid(_current_player) || !(_current_player is Player), "Player node is invalid or not set")
+		assert(is_instance_valid(_current_player) && (_current_player is Player), "Player node is invalid or not set")
 		return _current_player
 
 var _current_player_state: PlayerStateData: # Current state of the player
@@ -41,10 +34,10 @@ var _current_player_state: PlayerStateData: # Current state of the player
 
 var _current_hud: CanvasLayer: # Reference to level HUD
 	set(node):
-		assert(is_instance_valid(node) || !(node is CanvasLayer), "HUD node is invalid")
+		assert(is_instance_valid(node) && (node is CanvasLayer), "HUD node is invalid")
 		_current_hud = node
 	get:
-		assert(is_instance_valid(_current_hud) || !(_current_hud is CanvasLayer), "HUD node is invalid or not set")
+		assert(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer), "HUD node is invalid or not set")
 		return _current_hud
 
 
@@ -62,9 +55,23 @@ func _init():
 	var rate: int = int(DisplayServer.screen_get_refresh_rate())
 	if rate < 119:
 		Engine.physics_ticks_per_second = rate * 2
-		print("Using double fps for physics")
+		print(&"Using double fps for physics")
 	else:
 		Engine.physics_ticks_per_second = rate
+
+
+func goto_scene(path):
+	call_deferred(&"_deferred_goto_scene", path)
+
+func _deferred_goto_scene(path):
+	_current_stage.free()
+	
+	var s = ResourceLoader.load(path)
+	_current_stage = s.instantiate()
+	stage_changed.emit()
+	
+	if !_current_stage.is_inside_tree():
+		get_tree().root.add_child(_current_stage)
 
 
 func add_lives(count: int):
