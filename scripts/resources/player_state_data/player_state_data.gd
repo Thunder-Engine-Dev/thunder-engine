@@ -6,3 +6,4 @@ class_name PlayerStateData
 @export var player_script: Script
 @export var player_power: Data.PLAYER_POWER
 @export var powerdown_state: PlayerStateData # empty = death
+@export var player_state_config: PlayerConfiguration
