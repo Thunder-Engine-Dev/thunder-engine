@@ -10,4 +10,4 @@ func _physics_process(_delta): teleport()
 
 func teleport() -> void:
 	if !Thunder._current_player: return
-	global_position = Thunder._current_player.global_position
+	global_position = Vector2i(Thunder._current_player.global_position)
