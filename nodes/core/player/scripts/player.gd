@@ -1,7 +1,8 @@
 extends CorrectedCharacterBody2D
 class_name Player
 
-signal on_collision_shape_changed
+signal powerup_state_changed
+signal collision_shape_changed
 
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
 @export var custom_script: Script
@@ -166,11 +167,12 @@ func _movement_stuck(delta: float) -> void:
 
 	if right_collide && !left_collide:
 		velocity_local.x = -50
-	
+		
 	if (!right_collide && !left_collide) || !test_move(global_transform, Vector2(0, -6).rotated(global_rotation)):
 		velocity_local.x = 0
 		if !update_collisions(Thunder._current_player_state, false):
 			states.set_state("default")
+	
 
 
 func _movement_death(delta: float) -> void:
@@ -214,12 +216,12 @@ func _stomping() -> void:
 
 
 func _on_power_state_change(data: PlayerStateData) -> void:
-	if !data:
-		return
+	assert(data, "PlayerStateData is empty.")
 	# If there's no valid animation in new player state, enable fallback sprite
 	if !data.player_prefab:
 		sprite.visible = false
 		sprite_no_img.visible = true
+		powerup_state_changed.emit(data)
 		return
 	
 	# Assigning new player state animations
@@ -242,6 +244,8 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 	# Call _exit_tree() in old powerup script before right before changing the state
 	if powerup_script && powerup_script.has_method("_exit_tree"):
 		powerup_script._exit_tree()
+	
+	powerup_state_changed.emit(data)
 	
 	powerup_script = null
 	if data.player_script:
@@ -277,7 +281,7 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 			collision.shape = config.collision_shape_big
 
 	collision.position.y = -collision.shape.size.y / 2
-	on_collision_shape_changed.emit()
+	collision_shape_changed.emit()
 	return false
 
 
