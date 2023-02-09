@@ -132,7 +132,7 @@ func _movement_default(delta: float) -> void:
 	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && states.current_state != "crouch":
 		velocity_local.y = -config.jump_velocity
 		states.jump_buffer = false
-		Audio.play_sound(config.jump_sound, self)
+		Audio.play_sound(config.jump_sound, self, true, {pitch = config.sound_pitch})
 	
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
@@ -216,6 +216,8 @@ func _stomping() -> void:
 
 
 func _on_power_state_change(data: PlayerStateData) -> void:
+	config.sound_pitch = 1.0
+	
 	assert(data, "PlayerStateData is empty.")
 	# If there's no valid animation in new player state, enable fallback sprite
 	if !data.player_prefab:
@@ -333,4 +335,4 @@ func kill() -> void:
 			Data.values.lives -= 1
 	)
 	
-	Audio.play_music(config.die_music, 1)
+	Audio.play_music(config.die_music, 1, {pitch = config.sound_pitch})

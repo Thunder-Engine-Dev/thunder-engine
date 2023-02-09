@@ -17,11 +17,14 @@ class_name PlayerConfiguration
 
 # SFX
 @export_group("SFX")
+@export_subgroup("Sounds")
 @export var jump_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/jump.wav")
 @export var pipe_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var powerdown_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var die_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-die.ogg")
 @export var gameover_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-gameover.ogg")
+@export_subgroup("Sound Settings")
+@export var sound_pitch:float = 1.0
 
 # Physics, values are defaulted to Mario config
 @export_group("Physics")

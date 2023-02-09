@@ -48,28 +48,34 @@ func _fading(delta: float) -> void:
 			continue
 
 
-func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true) -> void:
+func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, other_keys: Dictionary = {}) -> void:
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
 	var player = _create_2d_player(_calculate_player_position(ref), is_global)
 	player.stream = resource
 	player.play()
+	
+	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
 
-func play_1d_sound(resource: AudioStream, is_global: bool = true) -> void:
+func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Dictionary = {}) -> void:
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
 	var player = _create_1d_player(is_global)
 	player.stream = resource
 	player.play()
+	
+	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
 
-func play_music(resource: AudioStream, channel_id: int) -> void:
+func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary = {}) -> void:
 	if !music_channels.has(channel_id) || !is_instance_valid(music_channels[channel_id]):
 		music_channels[channel_id] = _create_1d_player(false)
 	
 	music_channels[channel_id].stream = resource
 	music_channels[channel_id].play()
+	
+	if &"pitch" in other_keys && other_keys.pitch is float: music_channels[channel_id].pitch_scale = other_keys.pitch
 
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
 	var has_player:bool

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b8crjngtpakcd" path="res://modules/base/objects/mario/textures/player_no_img.svg" id="4_o8a8c"]
 [ext_resource type="Script" path="res://engine/nodes/core/player/scripts/player_configuration.gd" id="4_vgx2b"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://modules/base/objects/mario/sounds/music-die.ogg" id="4_wn4im"]
-[ext_resource type="Resource" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
+[ext_resource type="Resource" uid="uid://dibemklem7ypn" path="res://modules/base/objects/mario/prefabs/small_state.tres" id="5_08kj1"]
 [ext_resource type="AudioStream" uid="uid://cas2ld31gvw6h" path="res://modules/base/objects/mario/sounds/music-gameover.ogg" id="5_fvegf"]
 
 [sub_resource type="Resource" id="Resource_p510p"]
@@ -26,6 +26,7 @@ pipe_sound = ExtResource("3_flfm0")
 powerdown_sound = ExtResource("3_flfm0")
 die_music = ExtResource("4_wn4im")
 gameover_music = ExtResource("5_fvegf")
+sound_pitch = 1.0
 jump_speed_stopped = 20.0
 jump_speed_moving = 25.0
 jump_velocity = 700.0
@@ -52,7 +53,7 @@ size = Vector2(0, 0)
 [node name="Player" type="CharacterBody2D"]
 editor_description = "This is a reference node for player creation."
 collision_mask = 16
-floor_snap_length = 12.0
+floor_snap_length = 20.0
 script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
 default_player_state = ExtResource("5_08kj1")
