@@ -21,6 +21,7 @@ const GRAVITY: float = 50.0
 @export_group("Floor","floor_")
 
 var speed_previous: Vector2
+var snapped:bool
 
 @onready var up_temp: Vector2 = up_direction
 
@@ -36,12 +37,11 @@ func motion_process(delta: float, deep_snap: bool = true, kinematic: bool = true
 	
 	speed_previous = speed
 	
-	if !is_on_floor() || is_able_slope_down():
-		speed += gravity * gravity_dir * delta
-		if max_falling_speed > 0 && speed.y > max_falling_speed:
-			speed.y = max_falling_speed
+	speed += gravity * gravity_dir * delta
+	if max_falling_speed > 0 && speed.y > max_falling_speed:
+		speed.y = max_falling_speed
 	
-	if is_on_floor() && deep_snap && speed.y < 0:
+	if is_on_floor() && snapped && deep_snap && speed.y < 0:
 		speed.y = 0
 	
 	update_up_direction()
@@ -52,8 +52,6 @@ func motion_process(delta: float, deep_snap: bool = true, kinematic: bool = true
 	
 	if kinematic && !is_on_wall():
 		speed.x = speed_previous.x
-	
-	_collision_signals()
 
 func do_movement(delta:float,emit_detection_signal:bool = false) -> void:
 	if velocity.is_equal_approx(Vector2.ZERO): return
@@ -66,6 +64,7 @@ func do_movement(delta:float,emit_detection_signal:bool = false) -> void:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
+	
 	velocity = get_real_velocity()
 	speed = velocity.rotated(-global_rotation)
 	
@@ -76,30 +75,47 @@ func do_movement(delta:float,emit_detection_signal:bool = false) -> void:
 # Some useful functions
 func accelerate(to: Vector2, a: float) -> void:
 	speed = speed.move_toward(to, a)
+	snapped_off()
 
 func accelerate_x(to: float, a: float) -> void:
 	speed.x = move_toward(speed.x, to, a)
 
 func accelerate_y(to: float, a: float) -> void:
 	speed.y = move_toward(speed.y, to, a)
+	snapped_off()
 
 func turn_x() -> void:
 	speed.x = -speed_previous.x
 
 func turn_y() -> void:
 	speed.y = -speed_previous.y
+	snapped_off()
 
 func jump(jumping_speed: float) -> void:
 	speed.y = -abs(jumping_speed)
+	snapped_off()
 
 func vel_set(vel: Vector2) -> void:
 	speed = vel
+	snapped_off()
 
 func vel_set_x(velx: float) -> void:
 	speed.x = velx
 
 func vel_set_y(vely: float) -> void:
 	speed.y = vely
+	snapped_off()
+
+
+# Status notifiers
+func snapped_off() -> void:
+	if collision && velocity.dot(get_global_gravity_dir()) < 0:
+		snapped = false
+
+func stop_notify(wall_notify:bool = true, ceiling_notify:bool = true, floor_notify:bool = true) -> void:
+	if wall_notify && is_on_wall() && speed.x != 0: speed.x = 0
+	if ceiling_notify && is_on_ceiling() && speed.y < 0 && !slide_on_ceiling: speed.y = 0
+	if floor_notify && is_on_floor() && speed.y > 0 && !floor_stop_on_slope: speed.y = 0
 
 
 # Getters
