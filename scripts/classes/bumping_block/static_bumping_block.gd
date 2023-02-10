@@ -12,11 +12,12 @@ var triggered: bool = false
 @export var bump_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/bump.wav")
 @export var break_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/break.wav")
 
+## Assign ShapeCast2D of the Bumping Block here.
 @export_group("Bump Detection")
-@export var area_below: Area2D #if detection_below: detection_below.body_entered.connect()
-@export var area_above: Area2D
-@export var area_left: Area2D
-@export var area_right: Area2D
+@export var cast_below: ShapeCast2D #if cast_below: cast_below.body_entered.connect()
+@export var cast_above: ShapeCast2D
+@export var cast_left: ShapeCast2D
+@export var cast_right: ShapeCast2D
 
 var no_result_appearing_animation: bool = false
 
@@ -57,8 +58,14 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	else:
 		Audio.play_sound(bump_sound, self)
 	
-	bumped.emit()
+	if disable:
+		if cast_below: cast_below.enabled = false
+		if cast_above: cast_above.enabled = false
+		if cast_left: cast_left.enabled = false
+		if cast_right: cast_right.enabled = false
 	
+	bumped.emit()
+
 func _creation(creation: Node2DCreation) -> void:
 	if !creation: return
 	
@@ -72,3 +79,26 @@ func _creation(creation: Node2DCreation) -> void:
 		creation.call_physics().apply_velocity_local().override_gravity().unbind()
 	
 	creation.create()
+
+
+func is_body_colliding(body: CollisionObject2D, shape_cast: ShapeCast2D) -> bool:
+	if !shape_cast: push_error("Shape Cast is not valid."); return false
+	if !shape_cast.enabled: return false
+	
+	if shape_cast.is_colliding():
+		for i in shape_cast.get_collision_count():
+			var collider = shape_cast.get_collider(i)
+			
+			return collider is body
+	return false
+
+func is_player_colliding(shape_cast: ShapeCast2D) -> bool:
+	if !shape_cast: push_error("Shape Cast is not valid."); return false
+	if !shape_cast.enabled: return false
+	
+	if shape_cast.is_colliding():
+		for i in shape_cast.get_collision_count():
+			var collider = shape_cast.get_collider(i)
+			
+			return collider is Player
+	return false
