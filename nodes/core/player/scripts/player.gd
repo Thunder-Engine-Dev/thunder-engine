@@ -47,14 +47,17 @@ func _ready() -> void:
 		
 
 
+var debug_expanded: bool
+
 func _physics_process(delta: float) -> void:
 	if OS.is_debug_build():
 		var label: Label = $Label # Label
-		if Input.is_action_just_pressed(&"mouse_middle"):
+		if Input.is_action_just_pressed(&"a_player_label"):
 			label.visible = !label.visible
+			debug_expanded = Input.is_action_pressed(&"a_player_label_expanded")
 		
 		if label.visible:
-			label.text = _debug()
+			label.text = _debug_info() + (_debug_info_more() if debug_expanded else "")
 			label.position.y = -label.size.y - 32
 	
 	if states.current_state == "dead":
@@ -351,21 +354,32 @@ func kill() -> void:
 	
 	Audio.play_music(config.die_music, 1, {pitch = config.sound_pitch})
 
-func _debug() -> String:
+func _debug_info() -> String:
 	return (
 """x: %f
 y: %f 
 x vel: %f 
 y vel: %f 
-st: %s, pw: %s
+st: %s""" % [
+		position.x, position.y,
+		velocity_local.x, velocity_local.y,
+		states.current_state
+	])
+
+func _debug_info_more() -> String:
+	var str: String = (
+""", pw: %s
 i: %.2f,
 a: %.2f, l: %.2f, fc: %.0f
-""" % [position.x, position.y,
-velocity_local.x, velocity_local.y,
-states.current_state, Thunder._current_player_state.state_name,
-states.invincible_timer, states.appear_timer,
-states.launch_timer, states.projectiles_count]
-	)
+""" % [
+		Thunder._current_player_state.state_name,
+		states.invincible_timer, states.appear_timer,
+		states.launch_timer, states.projectiles_count
+	])
+	str += "fl " if is_on_floor() else char(32).repeat(5)
+	str += "wa " if is_on_wall() else char(32).repeat(5)
+	str += "ceiling\n" if is_on_ceiling() else "\n"
+	return str
 
 func _debug_setup_label() -> void:
 	var label: Label = Label.new()
