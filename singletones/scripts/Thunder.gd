@@ -50,7 +50,7 @@ func get_delta(delta: float) -> float:
 	return _target_speed * delta
 
 
-func _init():
+func _init() -> void:
 # warning-ignore:narrowing_conversion
 	var rate: int = int(DisplayServer.screen_get_refresh_rate())
 	if rate < 119:
@@ -60,10 +60,10 @@ func _init():
 		Engine.physics_ticks_per_second = rate
 
 
-func goto_scene(path):
+func goto_scene(path) -> void:
 	call_deferred(&"_deferred_goto_scene", path)
 
-func _deferred_goto_scene(path):
+func _deferred_goto_scene(path) -> void:
 	_current_stage.free()
 	
 	var s = ResourceLoader.load(path)

@@ -41,15 +41,29 @@ func _ready() -> void:
 	
 	if Data.values.lives == -1:
 		Data.values.lives = config.default_life_count
+	
+	if OS.is_debug_build():
+		_debug_setup_label()
+		
 
 
 func _physics_process(delta: float) -> void:
-	if states.current_state == "dead": 
+	if OS.is_debug_build():
+		var label: Label = $Label # Label
+		if Input.is_action_just_pressed(&"mouse_middle"):
+			label.visible = !label.visible
+		
+		if label.visible:
+			label.text = _debug()
+			label.position.y = -label.size.y - 32
+	
+	if states.current_state == "dead":
 		_movement_death(delta)
 		states.update_states(delta)
 		return
 	
 	_player_process(Thunder.get_delta(delta))
+	
 
 
 func _player_process(delta: float) -> void:
@@ -336,3 +350,33 @@ func kill() -> void:
 	)
 	
 	Audio.play_music(config.die_music, 1, {pitch = config.sound_pitch})
+
+func _debug() -> String:
+	return (
+"""x: %f
+y: %f 
+x vel: %f 
+y vel: %f 
+st: %s, pw: %s
+i: %.2f,
+a: %.2f, l: %.2f, fc: %.0f
+""" % [position.x, position.y,
+velocity_local.x, velocity_local.y,
+states.current_state, Thunder._current_player_state.state_name,
+states.invincible_timer, states.appear_timer,
+states.launch_timer, states.projectiles_count]
+	)
+
+func _debug_setup_label() -> void:
+	var label: Label = Label.new()
+	label.visible = false
+	label.uppercase = true
+	#label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	label.label_settings = LabelSettings.new()
+	label.label_settings.font = preload("res://modules/base/components/hud/hud_font.fnt")
+	label.scale = Vector2(0.75, 0.75)
+	label.position = Vector2(-80, 0)
+	label.custom_minimum_size = Vector2(96, 0)
+	label.z_as_relative = false
+	label.z_index = 10
+	add_child(label, true)

@@ -53,7 +53,6 @@ size = Vector2(0, 0)
 [node name="Player" type="CharacterBody2D"]
 editor_description = "This is a reference node for player creation."
 collision_mask = 16
-floor_snap_length = 20.0
 script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
 default_player_state = ExtResource("5_08kj1")
