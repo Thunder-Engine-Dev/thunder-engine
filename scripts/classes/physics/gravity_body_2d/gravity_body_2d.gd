@@ -48,7 +48,7 @@ func motion_process(delta: float, deep_snap: bool = true, kinematic: bool = true
 	
 	velocity = speed.rotated(global_rotation)
 	
-	do_movement(delta)
+	do_movement(delta,true)
 	
 	if kinematic && !is_on_wall():
 		speed.x = speed_previous.x
