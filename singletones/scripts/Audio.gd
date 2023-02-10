@@ -5,6 +5,9 @@ enum FadingMethod {LINEAR,LERP,SMOOTH_STEP}
 var fading_musics: Array[Dictionary]
 var music_channels: Dictionary = {}
 
+var _calculate_player_position = func(ref: Node2D) -> Vector2:
+	return ref.global_position
+
 func _process(delta: float) -> void:
 	_fading(delta)
 
@@ -28,9 +31,6 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 	return player
 
 
-func _calculate_player_position(ref: Node2D) -> Vector2:
-	return ref.global_position
-
 func _fading(delta: float) -> void:
 	for i in fading_musics:
 		var fading_music_player: AudioStreamPlayer = i.fading_music_player
@@ -52,7 +52,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
-	var player = _create_2d_player(_calculate_player_position(ref), is_global)
+	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
 	player.stream = resource
 	player.play()
 	

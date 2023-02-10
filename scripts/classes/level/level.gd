@@ -53,8 +53,6 @@ func _physics_process(delta):
 	
 	if Thunder._current_player.position.y > 512: # TEMP
 		match falling_below_screen_action:
-			1:
-				Thunder._current_player.kill()
-			2:
-				Thunder._current_player.position.y -= 608
-		
+			1: Thunder._current_player.kill()
+			2: Thunder._current_player.position.y -= 608
+

@@ -66,7 +66,7 @@ func goto_scene(path) -> void:
 func _deferred_goto_scene(path) -> void:
 	_current_stage.free()
 	
-	var s = ResourceLoader.load(path)
+	var s = load(path)
 	_current_stage = s.instantiate()
 	stage_changed.emit()
 	
