@@ -4,6 +4,8 @@ var current_scene:Node
 var current_root:Node
 var buffered_scenes:Array[Node]
 
+@onready var root:Node = get_tree().root
+
 signal scene_changed(to:PackedScene)
 
 
@@ -56,14 +58,11 @@ func switch_to_scene_packed(pck:PackedScene) -> void:
 	load_scene_from_packed(pck)
 
 
-# Reload current scene 重载当前场景
+# Reload current scene
 func reload_current_scene() -> void:
 	var path:String = current_scene.scene_file_path
 	unload_current_scene()
 	load_scene_from_path(path)
-
-func reload_current_game() -> void:
-	get_tree().reload_current_scene()
 
 
 # Buffer scene
