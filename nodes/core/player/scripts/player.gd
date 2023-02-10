@@ -244,7 +244,7 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 		return
 	
 	# Assigning new player state animations
-	sprite.frames = data.player_prefab
+	sprite.sprite_frames = data.player_prefab
 	sprite.visible = true
 	sprite_no_img.visible = false
 	
