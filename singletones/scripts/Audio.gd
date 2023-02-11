@@ -17,7 +17,7 @@ func _create_2d_player(pos: Vector2, is_global: bool) -> AudioStreamPlayer2D:
 	player.global_position = pos
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Thunder.stage_changed.connect(player.queue_free)
+		Scenes.scene_changed_notification.connect(player.queue_free)
 	add_child(player)
 	return player
 
@@ -26,7 +26,7 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Thunder.stage_changed.connect(player.queue_free)
+		Scenes.scene_changed_notification.connect(player.queue_free)
 	add_child(player)
 	return player
 

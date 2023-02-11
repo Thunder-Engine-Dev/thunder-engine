@@ -348,7 +348,7 @@ func kill() -> void:
 					Audio.play_music(config.gameover_music, 1)
 				return
 			Thunder._current_player_state = default_player_state
-			Thunder._current_stage.restart()
+			Scenes.reload_current_scene()
 			Data.values.lives -= 1
 	)
 	

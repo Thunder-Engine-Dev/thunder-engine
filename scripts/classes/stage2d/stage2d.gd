@@ -6,9 +6,8 @@ class_name Stage2D
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		Thunder._current_stage = self
+		Scenes.register(self)
 
 
 func restart() -> void:
-	#get_tree().reload_current_scene()
-	Thunder.goto_scene(Thunder._current_stage.scene_file_path)
+	Scenes.reload_current_scene()

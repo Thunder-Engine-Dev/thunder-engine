@@ -7,12 +7,15 @@ var current_root:Node
 var hung_scene:Node
 var hung_scene_process_mode:ProcessMode
 
+signal scene_changed_notification
 signal scene_changed(to:PackedScene)
 signal scene_got_hung(hung:Node)
 
 
 # Register scene
 func register(scene:Node) -> void:
+	if current_scene == scene: return
+	
 	current_scene = scene
 	if current_scene.is_inside_tree(): current_root = scene.get_parent()
 	
@@ -41,7 +44,7 @@ func load_scene_from_packed(pck:PackedScene) -> void:
 func unload_current_scene(delete_current_packed:bool = true) -> void:
 	if delete_current_packed: current_scene_packed = null
 	current_scene.queue_free()
-	Thunder.stage_changed.emit()
+	scene_changed_notification.emit()
 
 
 # Switch to scene
@@ -49,13 +52,17 @@ func switch_to_scene(to:Node,hang_current:bool = false) -> void:
 	if hang_current: hang_current_scene()
 	else: unload_current_scene()
 	load_scene(to)
+	
 	scene_changed.emit(current_scene)
+	scene_changed_notification.emit()
 
 func switch_to_scene_packed(pck:PackedScene,hang_current:bool = false) -> void:
 	if hang_current: hang_current_scene()
 	else: unload_current_scene()
 	load_scene_from_packed(pck)
+	
 	scene_changed.emit(current_scene)
+	scene_changed_notification.emit()
 
 
 # Reload current scene
@@ -69,13 +76,13 @@ func hang_scene(scene:Node) -> void:
 	if hung_scene: return
 	
 	hung_scene = scene
-	scene_got_hung.emit(scene)
 	
 	hung_scene_process_mode = scene.process_mode
 	if &"visible" in scene: scene.visible = false
 	scene.process_mode = Node.PROCESS_MODE_DISABLED
 	
-	Thunder.stage_changed.emit()
+	scene_got_hung.emit(scene)
+	scene_changed_notification.emit()
 
 func hang_current_scene() -> void:
 	hang_scene(current_scene)
@@ -85,7 +92,6 @@ func unhang_scene_as_current() -> void:
 	if !hung_scene: return
 	
 	register(hung_scene)
-	scene_changed.emit(current_scene)
 	
 	if &"visible" in current_scene: current_scene.visible = true
 	current_scene.process_mode = hung_scene_process_mode
@@ -93,7 +99,8 @@ func unhang_scene_as_current() -> void:
 	hung_scene = null
 	hung_scene_process_mode = ProcessMode.PROCESS_MODE_INHERIT
 	
-	Thunder.stage_changed.emit()
+	scene_changed.emit(current_scene)
+	scene_changed_notification.emit()
 
 func unhang_scene_and_queue_free() -> void:
 	if !hung_scene: return
