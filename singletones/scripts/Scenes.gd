@@ -8,8 +8,8 @@ var hung_scene:Node
 var hung_scene_process_mode:ProcessMode
 
 signal scene_changed_notification
-signal scene_changed(to:PackedScene)
-signal scene_got_hung(hung:Node)
+signal scene_changed(to: PackedScene)
+signal scene_got_hung(hung: Node)
 
 
 # Register scene
@@ -34,21 +34,21 @@ func load_scene(scene:Node) -> void:
 	register(scene)
 	install_scene()
 
-func load_scene_from_packed(pck:PackedScene) -> void:
+func load_scene_from_packed(pck: PackedScene) -> void:
 	if !pck: return
-	var scene:Node = pck.instantiate()
+	var scene: Node = pck.instantiate()
 	load_scene(scene)
 
 
 # Unload scene
-func unload_current_scene(delete_current_packed:bool = true) -> void:
+func unload_current_scene(delete_current_packed: bool = true) -> void:
 	if delete_current_packed: current_scene_packed = null
 	current_scene.queue_free()
 	scene_changed_notification.emit()
 
 
 # Switch to scene
-func switch_to_scene(to:Node,hang_current:bool = false) -> void:
+func switch_to_scene(to: Node, hang_current: bool = false) -> void:
 	if hang_current: hang_current_scene()
 	else: unload_current_scene()
 	load_scene(to)
@@ -56,7 +56,7 @@ func switch_to_scene(to:Node,hang_current:bool = false) -> void:
 	scene_changed.emit(current_scene)
 	scene_changed_notification.emit()
 
-func switch_to_scene_packed(pck:PackedScene,hang_current:bool = false) -> void:
+func switch_to_scene_packed(pck: PackedScene, hang_current:bool = false) -> void:
 	if hang_current: hang_current_scene()
 	else: unload_current_scene()
 	load_scene_from_packed(pck)
@@ -72,7 +72,7 @@ func reload_current_scene() -> void:
 
 
 # Hang scene
-func hang_scene(scene:Node) -> void:
+func hang_scene(scene: Node) -> void:
 	if hung_scene: return
 	
 	hung_scene = scene
@@ -111,6 +111,6 @@ func unhang_scene_and_queue_free() -> void:
 func swap_hung_scene_and_current_scene() -> void:
 	if !hung_scene || !current_scene: return
 	
-	var swamped:Node = current_scene
+	var swapped: Node = current_scene
 	unhang_scene_as_current()
-	hang_scene(swamped)
+	hang_scene(swapped)

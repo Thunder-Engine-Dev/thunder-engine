@@ -324,7 +324,7 @@ func powerup(state: PlayerStateData) -> void:
 
 
 func kill() -> void:
-	if states.current_state == "dead":
+	if states.current_state == "dead":#
 		return
 	states.set_state("dead")
 	collision_layer = 0

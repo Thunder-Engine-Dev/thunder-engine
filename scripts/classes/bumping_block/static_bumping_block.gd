@@ -27,6 +27,7 @@ signal result_appeared
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		visible = true
+		#Engine.time_scale = 0.5
 		return
 
 func _physics_process(delta) -> void:
@@ -38,7 +39,7 @@ func _editor_process() -> void:
 	return
 
 func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
-	if interrupt && triggered: return
+	if triggered: return
 	if !active: return
 	
 	triggered = true
@@ -47,10 +48,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	var tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
 	tw.tween_property(self, "position", init_position + Vector2(0, -6).rotated(deg_to_rad(bump_rotation)), 0.12)#.set_ease(Tween.EASE_OUT)
 	tw.tween_property(self, "position", init_position, 0.12)#.set_ease(Tween.EASE_IN)
-	tw.tween_callback(func():
-		if !disable:
-			triggered = false
-	)
+	tw.tween_callback(_lt.bind(disable))
 	
 	if result:
 		call_deferred(&"_creation", result)
@@ -65,6 +63,10 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		if cast_right: cast_right.enabled = false
 	
 	bumped.emit()
+
+func _lt(disable):
+	if !disable:
+		triggered = false
 
 func _creation(creation: Node2DCreation) -> void:
 	if !creation: return

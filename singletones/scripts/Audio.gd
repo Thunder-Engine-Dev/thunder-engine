@@ -5,7 +5,9 @@ enum FadingMethod {LINEAR,LERP,SMOOTH_STEP}
 var fading_musics: Array[Dictionary]
 var music_channels: Dictionary = {}
 
-var _calculate_player_position = func(ref: Node2D) -> Vector2:
+var _calculate_player_position = _lcpp.bind()
+
+func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
 func _process(delta: float) -> void:

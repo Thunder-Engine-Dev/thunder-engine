@@ -13,7 +13,7 @@ func horizontal_correction(amount: int) -> void:
 	if velocity.y >= 0: return
 	
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(0, velocity.y * delta).rotated(global_rotation), true, true, true)
+	var collide = move_and_collide(Vector2(0, velocity.y * delta).rotated(global_rotation), true)
 	
 	if !collide: return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return
@@ -28,6 +28,7 @@ func horizontal_correction(amount: int) -> void:
 				Vector2(0, velocity.y * delta).rotated(global_rotation)
 			):
 				translate(Vector2(i * j, 0).rotated(global_rotation))
+				if velocity.x * j < 0: velocity.x = 0
 				return
 
 # Tile gap runover
@@ -36,7 +37,7 @@ func vertical_correction(amount: int) -> void:
 	if velocity.y <= 0 or abs(velocity.x) <= 1: return
 	
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(global_rotation), true, true, true)
+	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(global_rotation), true)
 	
 	if !collide: return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return

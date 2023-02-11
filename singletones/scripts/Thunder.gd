@@ -8,15 +8,6 @@ var view: View = View.new() # View subsingleton
 var gravity_speed: float = 50
 var _target_speed: int = 50
 
-var _current_stage: Stage2D: #= get_tree().root.get_child(get_tree().root.get_child_count() - 1) # Reference to the current stage scene
-	set(node):
-		assert(is_instance_valid(node) && (node is Stage2D), "Stage2D node is invalid")
-		_current_stage = node
-		stage_changed.emit()
-	get:
-		assert(is_instance_valid(_current_stage) && (_current_stage is Stage2D), "Stage2D node is invalid or not set")
-		return _current_stage
-
 # TO GET CURRENT CAMERA, USE Viewport.get_camera_2d()
 
 var _current_player: Player: # Reference to the current player
@@ -64,14 +55,14 @@ func goto_scene(path) -> void:
 	call_deferred(&"_deferred_goto_scene", path)
 
 func _deferred_goto_scene(path) -> void:
-	_current_stage.free()
+	Scenes.current_scene.free()
 	
 	var s = load(path)
-	_current_stage = s.instantiate()
+	Scenes.current_scene = s.instantiate()
 	stage_changed.emit()
 	
-	if !_current_stage.is_inside_tree():
-		get_tree().root.add_child(_current_stage)
+	if !Scenes.current_scene.is_inside_tree():
+		get_tree().root.add_child(Scenes.current_scene)
 
 
 func add_lives(count: int):
