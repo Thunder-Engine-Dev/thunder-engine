@@ -5,8 +5,7 @@ var current_scene_packed:PackedScene
 var current_root:Node
 
 var hung_scene:Node
-var hung_scene_process:bool
-var hung_scene_physics_process:bool
+var hung_scene_process_mode:ProcessMode
 
 signal scene_changed(to:PackedScene)
 signal scene_got_hung(hung:Node)
@@ -70,15 +69,11 @@ func hang_scene(scene:Node) -> void:
 	if hung_scene: return
 	
 	hung_scene = scene
-	
 	scene_got_hung.emit(scene)
 	
-	hung_scene_process = scene.is_processing()
-	hung_scene_physics_process = scene.is_physics_processing()
-	
+	hung_scene_process_mode = scene.process_mode
 	if &"visible" in scene: scene.visible = false
-	scene.set_process(false)
-	scene.set_physics_process(false)
+	scene.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	Thunder.stage_changed.emit()
 
@@ -90,16 +85,13 @@ func unhang_scene_as_current() -> void:
 	if !hung_scene: return
 	
 	register(hung_scene)
-	
 	scene_changed.emit(current_scene)
 	
 	if &"visible" in current_scene: current_scene.visible = true
-	current_scene.set_process(hung_scene_process)
-	current_scene.set_physics_process(hung_scene_physics_process)
+	current_scene.process_mode = hung_scene_process_mode
 	
 	hung_scene = null
-	hung_scene_process = false
-	hung_scene_physics_process = false
+	hung_scene_process_mode = ProcessMode.PROCESS_MODE_INHERIT
 	
 	Thunder.stage_changed.emit()
 
