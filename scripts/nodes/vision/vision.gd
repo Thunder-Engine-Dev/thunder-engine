@@ -15,6 +15,7 @@ func _ready() -> void:
 	var set_mode_on: Callable = func() -> void:
 		if !target_node: return
 		
+		@warning_ignore("int_as_enum_without_cast")
 		target_node.process_mode = source_process_mode
 		source_process_mode = PROCESS_MODE_INHERIT
 	

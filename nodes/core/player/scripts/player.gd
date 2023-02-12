@@ -81,11 +81,11 @@ func _player_process(delta: float) -> void:
 	states.update_states(delta)
 
 
-func _movement_generic(delta: float) -> void:
+func _movement_generic_fall(delta: float) -> void:
 	# Fall
-#	velocity_local.y = min(velocity_local.y + config.fall_speed * delta, config.max_fall_speed)
 	velocity_local.y = move_toward(velocity_local.y, config.max_fall_speed, config.fall_speed * delta)
 	
+func _movement_generic(delta: float) -> void:
 	# Decceleration
 	if velocity_local.x > 0:
 		velocity_local.x = max(velocity_local.x - config.deceleration_speed * delta, 0)
@@ -153,11 +153,10 @@ func _movement_default(delta: float) -> void:
 	
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
+	_movement_generic_fall(delta)
 
 
-func _movement_stuck(delta: float) -> void:
-	#velocity_local.y = move_toward(velocity_local.y, config.max_fall_speed, config.fall_speed * delta)
-	
+func _movement_stuck(delta: float) -> void:	
 	var vertical_pos: Vector2 = Vector2(0, -config.collision_shape_big.size.y / 2).rotated(rotation)
 	var horizontal_pos: Vector2 = Vector2(0, 0).rotated(rotation)
 
