@@ -27,9 +27,9 @@ static func activate_script(script: GDScript, by: Node, new_vars: Dictionary = {
 func _init(by: Node, new_vars: Dictionary = {}, new_other_nodes: Dictionary = {}, new_other_resources: Dictionary = {}) -> void:
 	if !by: return
 	node = by
-	vars = new_vars.duplicate(true)
-	other_nodes = new_other_nodes.duplicate(true)
-	other_resources = new_other_resources.duplicate(true)
+	vars = new_vars
+	other_nodes = new_other_nodes
+	other_resources = new_other_resources
 	_ready()
 	node.tree_entered.connect(_enter_tree)
 	node.tree_exited.connect(_exit_tree)
