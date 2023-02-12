@@ -15,6 +15,9 @@ class_name Node2DCreation
 @export var inherit_rotation: bool
 @export var inherit_scale: bool
 @export var inherit_skew: bool
+@export_group("Extension")
+@export var custom_vars:Dictionary
+@export var custom_script:GDScript
 
 var emiter: Node
 var node: Node2D
@@ -75,6 +78,8 @@ func create(as_child: bool = false) -> void:
 	node.z_index = creation_z_index
 	node.z_as_relative = creation_z_as_relative
 	node.y_sort_enabled = creation_y_sort_enabled
+	
+	var custom_script_instance:ByNodeScript = ByNodeScript.activate_script(custom_script,node,custom_vars,{launcher = base})
 	
 	emiter = null
 	node = null
