@@ -19,6 +19,7 @@ class_name PlayerConfiguration
 @export_group("SFX")
 @export_subgroup("Sounds")
 @export var jump_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/jump.wav")
+@export var swim_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/swim.wav")
 @export var pipe_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var powerdown_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
 @export var die_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-die.ogg")
