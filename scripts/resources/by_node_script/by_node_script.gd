@@ -1,23 +1,38 @@
 extends GDScript
 class_name ByNodeScript
 
-# Note: if you want to make a ByNodeScript activated, you should code like this:
-# @onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self)
-# if you want to use _ready()-like functions in your ByNodeScripts, please override _instantiated_by() method
-# other virtual methods are used as what they are when in Nodes, plus a param "by" in each virtual methods below
+## A kind of [GDScript] that supports fast access to nodes, variables, and resources[br]
+## [color=orange][b]Note:[/b][/color] You need a variable assigned with [code]static[/code] [method activate_script]
+## to make the script you firstly set instantiated and work
+## [codeblock]
+## @export var custom_script: GDScript = preload(...)
+## # Defined a custom script, but it won't work right in the game
+## #
+## @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,node) 
+## # This will make custom_script works
+## [/codeblock]
 
-signal extra_script # Only used as an identifier, no other usage!
+## Only used as an identifier, no other usage!
+signal extra_script
 
+## Root node of the script to do fast access
 var node: Node
+## Optinal variables of the script to do fast access
 var vars: Dictionary
+## Optinal relative nodes of the script to do fast access
 var other_nodes: Dictionary
+## Optinal resources of the script to do fast access
 var other_resources: Dictionary
 
-
+## Used to activate a resource script[br]
+## [code]script[/code] is that resource script you need to make be running[br]
+## [code]by[/code] is the node you need to bind as the root node to get fast access[br]
+## [code]new_vars[/code], [code]new_other_nodes[/code] and [code]new_other_resources[/code] are [i]optinal[/i], 
+## for register of [memebr vars], [member other_nodes] and [memebr other_resources] respectively
 static func activate_script(script: GDScript, by: Node, new_vars: Dictionary = {}, new_other_nodes: Dictionary = {}, new_other_resources: Dictionary = {}) -> GDScript:
 	var result: GDScript
 	if script:
-		if script.has_script_signal(&"extra_script"):
+		if script.has_script_signal(&"_extra_script"):
 			result = script.new(by, new_vars, new_other_nodes, new_other_resources)
 		else:
 			push_error("[Extra Script Error] Inserted script is not extended from ByNodeScript. Please check it")
@@ -37,17 +52,26 @@ func _init(by: Node, new_vars: Dictionary = {}, new_other_nodes: Dictionary = {}
 	node.get_tree().physics_frame.connect(_physics_process.bind(node.get_physics_process_delta_time()))
 
 
+## [code]@abstract[/code] called by [member node]'s [method Node._ready]
 func _ready() -> void:
 	pass
 
+## [code]@abstract[/code] called by [member node]'s [method Node._enter_tree]
 func _enter_tree() -> void:
 	pass
 
+## [code]@abstract[/code] called by [member node]'s [method Node._exit_tree]
 func _exit_tree() -> void:
 	pass
 
+## [code]@abstract[/code] called by [member node]'s [method Node._process][br]
+## [color=orange][b]Note:[/b][/color] sometimes you need to assign a variable to get delta:[br]
+## [code]var delta: float = node.get_process_delta_time()[/code]
 func _process(delta: float) -> void:
 	pass
 
+## [code]@abstract[/code] called by [member node]'s [method Node._physics_process][br]
+## [color=orange][b]Note:[/b][/color] sometimes you need to assign a variable to get delta:[br]
+## [code]var delta: float = node.get_physics_process_delta_time()[/code]
 func _physics_process(delta: float) -> void:
 	pass

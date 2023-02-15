@@ -1,27 +1,38 @@
-# Base level node
-
 @tool
 @icon("./icon.svg")
 extends Stage2D
 class_name Level
 
+## Base level node[br]
+## Once you selected this node via [b]Create Node Pannel[/b] it will automatically deploy the basic template
+## of a level, which is more convenient to structure a level from zero.
+
+## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.
 @export var time: int = 360
 
+@export_group("Player's Falling Below")
+## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
+## 0 = Nothing[br]
+## 1 = Death[br]
+## 2 = Wrap from top of the screen
 @export_enum("Nothing", "Death", "Wrap") var falling_below_screen_action: int = 1
+
+## Modifies the bottom line that detect player as "falling below the screen"
+@export var falling_below_y_offset: float = 32.0
 
 
 func _ready() -> void:
 	super()
 	if Engine.is_editor_hint():
 		if get_child_count() == 0:
-			prepare_template()
+			_prepare_template()
 		
 		return
 	
 	Data.values.time = time
 
 # Adding neccessary nodes to our level scene
-func prepare_template() -> void:
+func _prepare_template() -> void:
 	var player = load("res://engine/nodes/core/player/player.tscn").instantiate()
 	add_child(player)
 	player.position = Vector2(80, 416)
@@ -51,7 +62,8 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
-	if Thunder._current_player.position.y > 512: # TEMP
+	var bottom: float = (get_viewport_transform().affine_inverse() * get_viewport_rect().position).y + get_viewport_rect().size.y + falling_below_y_offset
+	if Thunder._current_player.global_position.y > bottom: # TEMP
 		match falling_below_screen_action:
 			1: Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608

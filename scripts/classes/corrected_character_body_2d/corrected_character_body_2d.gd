@@ -1,14 +1,22 @@
 extends CharacterBody2D
 class_name CorrectedCharacterBody2D
 
+## A kind of [CharacterBody2D] that walks with correction when moving over through 32*32 tile gap
+
+@export_group("Correction")
+## Defines the amount of the vertical correction when moving over through 32*32 tile gap
 @export var vertical_correction_amount: int = 10
+
+## Defines the amount of the vertical correction when the body collide the corner of block
 @export var horizontal_correction_amount: int = 5
 
+## Run [method move_and_slide] with corrections
 func move_and_slide_corrected() -> bool:
 	vertical_correction(vertical_correction_amount)
 	horizontal_correction(horizontal_correction_amount)
 	return move_and_slide()
 
+## Process of horizontal correction
 func horizontal_correction(amount: int) -> void:
 	if velocity.y >= 0: return
 	
@@ -31,6 +39,7 @@ func horizontal_correction(amount: int) -> void:
 				if velocity.x * j < 0: velocity.x = 0
 				return
 
+## Process of vertical correction
 # Tile gap runover
 func vertical_correction(amount: int) -> void:
 	if is_on_floor(): return

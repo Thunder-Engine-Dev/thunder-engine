@@ -1,13 +1,8 @@
-# Singleton that stores general data
 extends Node
 
-var values: Dictionary = {
-	lives = -1,
-	score = 0,
-	coins = 0,
-	time = -1
-}
+## Singleton that stores general data in the game
 
+## Defines enemies' type of receiving attack
 const ATTACKERS:Dictionary = {
 	head = &"head",
 	starman = &"starman",
@@ -19,13 +14,24 @@ const ATTACKERS:Dictionary = {
 	boomerang = &"boomerang"
 }
 
+## Defines player's basic power-up status
 enum PLAYER_POWER {
-	SMALL, # self-explanable
-	SUPER, # for example big mario
-	FULL   # for example fire mario
+	SMALL, ## Self-explanable, e.g. small Mario
+	SUPER, ## e.g. big Mario
+	FULL   ## e.g. fire Mario
 }
 
+## Defines which type a projectile belongs.[br]
+## Projectiles can be items thrown, or items with damage
 enum PROJECTILE_BELONGS {
-	PLAYER,
-	ENEMY
+	PLAYER, ## Player thrown and attacks enemies
+	ENEMY ## Enemy thrown and attacks players
+}
+
+## Defines basic information of a player
+var values: Dictionary = {
+	lives = -1,
+	score = 0,
+	coins = 0,
+	time = -1
 }
