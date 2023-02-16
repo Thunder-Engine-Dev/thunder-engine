@@ -1,8 +1,8 @@
 extends Node
 
 ## Singleton that manages scene operations[br]
-## Because of vague implement of scenes in Godot, we need to have such a singleton to manage each scene we need,
-## and with this one, it's available to achieve them
+## Because of vague implement of scenes in Godot, we need to have such a singleton to manage 
+## each scene we need, and with this one, it's available to achieve them
 
 ## The scene that is displaying and running, instead of main scene when you run
 ## the whole project and defined a main scene and try referring [member SceneTree.current_scene]

@@ -60,7 +60,7 @@ func _fading(delta: float) -> void:
 				fading_music_player.stop()
 			continue
 
-## Play a [color=green]sound[/color] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
+## Play a [color=green]sound[/color] with given [AudioStream] resource and bind the sound player to a [Node2D][br]
 ## [color=orange][b]Note:[/b][/color] This method creates [AudioStreamPlayer2D] which plays sound with pan changed according to its position to the center of screen, rather than [AudioStreamPlayer].[br]
 ## [code]resource[/code] is the sound stream you are going to install[br]
 ## [code]ref[/code] is the node to be bound[br]
@@ -76,7 +76,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
 
-## Play a [color=green]sound[/color] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
+## Play a [color=green]sound[/color] with given [AudioStream] resource[br]
 ## [color=orange][b]Note:[/b][/color] This method creates [AudioStreamPlayer], and please see [method play_sound] to learn their differences.[br]
 ## [code]resource[/code] is the sound stream you are going to install[br]
 ## [code]ref[/code] is the node to be bound[br]
@@ -122,7 +122,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 ## [code]to[/code] is the final [member AudioStreamPlayer.volume_db] you wish[br]
 ## [code]weight[/code] is the strength/delta-value to fade the music[br]
 ## [code]method[/code] is the way to fade the music, different [code]method[/code] decides different [code]weight[/code] calculation. See [enum FadingMethod][br]
-## [code]stop_after_fading[/code] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and_stop musics
+## [code]stop_after_fading[/code] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
 	var has_player:bool
 	
