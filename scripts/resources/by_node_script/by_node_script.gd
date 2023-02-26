@@ -32,7 +32,7 @@ var other_resources: Dictionary
 static func activate_script(script: GDScript, by: Node, new_vars: Dictionary = {}, new_other_nodes: Dictionary = {}, new_other_resources: Dictionary = {}) -> GDScript:
 	var result: GDScript
 	if script:
-		if script.has_script_signal(&"_extra_script"):
+		if script.has_script_signal(&"extra_script"):
 			result = script.new(by, new_vars, new_other_nodes, new_other_resources)
 		else:
 			push_error("[Extra Script Error] Inserted script is not extended from ByNodeScript. Please check it")
