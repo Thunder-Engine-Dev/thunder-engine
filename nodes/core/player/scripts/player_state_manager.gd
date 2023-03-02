@@ -115,7 +115,8 @@ func _update_animations() -> void:
 					owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count("default") - 1
 	
 	owner.sprite.visible = (int(invincible_timer * 1.5 / 2) % 2 == 0) if invincible_timer > 0 && appear_timer == 0 else true
-	owner.sprite.flip_h = (owner.velocity_local.x < 0)
+	if owner.velocity_local.x != 0:
+		owner.sprite.flip_h = (owner.velocity_local.x < 0)
 	
 	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
 	owner.sprite.offset = Vector2(-size.x / 2, -size.y)

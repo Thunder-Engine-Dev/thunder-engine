@@ -110,7 +110,7 @@ func is_body_colliding(body: CollisionObject2D, shape_cast: ShapeCast2D) -> bool
 		for i in shape_cast.get_collision_count():
 			var collider = shape_cast.get_collider(i)
 			
-			return collider is body
+			return is_instance_of(collider, body)
 	return false
 
 ## Returns [code]true[/code] if [member Thunder._current_player] collides with [code]shape_cast[/code]
