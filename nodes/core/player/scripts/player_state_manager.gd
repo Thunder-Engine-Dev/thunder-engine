@@ -1,9 +1,13 @@
 extends StateManager
 class_name PlayerStatesManager
 
+enum WarpDirection {NONE, LEFT, RIGHT, UP, DOWN}
+
 var jump_buffer: bool = false
 var left_or_right: int
 var dir: int = 1
+
+var warp_direction: WarpDirection
 
 var projectiles_count: int = 2
 
@@ -20,7 +24,8 @@ func _init(owner_node: Node2D) -> void:
 		"climb",
 		"dead",
 		"static",
-		"stuck"
+		"stuck",
+		"warp"
 	])
 
 
@@ -76,18 +81,17 @@ func _update_animations() -> void:
 			owner.sprite.speed_scale = 0
 			return
 		
-		if !_set_animation(current_state):
+		if current_state != "warp" && !_set_animation(current_state):
 			return
 		
 		if current_state == "default":
 			owner.sprite.speed_scale = abs(owner.velocity_local.x / Thunder._target_speed) * 2.5 + 4
+			if owner.velocity_local.x == 0:
+				owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count(current_state) - 1
+				owner.sprite.speed_scale = 0
+				owner.sprite.frame_progress = 1.0
 		else:
 			owner.sprite.speed_scale = 1
-		
-		if owner.velocity_local.x == 0:
-			owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count(current_state) - 1
-			owner.sprite.speed_scale = 0
-			owner.sprite.frame_progress = 1.0
 	elif launch_timer > 0:
 		appear_timer = 0
 		owner.sprite.animation = "launch"
@@ -96,19 +100,25 @@ func _update_animations() -> void:
 		owner.sprite.animation = "appear"
 		owner.sprite.speed_scale = 1
 	
-	if invincible_timer > 0 && appear_timer == 0:
-		owner.sprite.visible = int(invincible_timer * 1.5 / 2) % 2 == 0
-	else:
-		owner.sprite.visible = true
+	if current_state == "warp":
+		owner.velocity_local = Vector2.ZERO
+		match warp_direction:
+			WarpDirection.LEFT, WarpDirection.RIGHT: 
+				owner.sprite.set_animation("default")
+				owner.sprite.speed_scale = 1.5
+			WarpDirection.UP: owner.sprite.set_animation("jump")
+			WarpDirection.DOWN: 
+				if owner.sprite.sprite_frames.has_animation("crouch"):
+					owner.sprite.set_animation("crouch")
+				elif owner.sprite.sprite_frames.has_animation("default"):
+					owner.sprite.set_animation("default")
+					owner.sprite.frame = owner.sprite.sprite_frames.get_frame_count("default") - 1
 	
-	if owner.velocity_local.x > 0:
-		owner.sprite.flip_h = false
-	if owner.velocity_local.x < 0:
-		owner.sprite.flip_h = true
+	owner.sprite.visible = (int(invincible_timer * 1.5 / 2) % 2 == 0) if invincible_timer > 0 && appear_timer == 0 else true
+	owner.sprite.flip_h = (owner.velocity_local.x < 0)
 	
 	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
-	owner.sprite.offset.y = -size.y
-	owner.sprite.offset.x = -size.x / 2
+	owner.sprite.offset = Vector2(-size.x / 2, -size.y)
 
 func _set_animation(animation) -> bool:
 	if owner.sprite.sprite_frames.has_animation(animation):

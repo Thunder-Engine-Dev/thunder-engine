@@ -70,13 +70,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _player_process(delta: float) -> void:
-	if movements.has(states.current_state):
-		movements[states.current_state].call(delta)
-	
-	velocity = velocity_local.rotated(global_rotation)
-	move_and_slide_corrected()
-	velocity_local = velocity.rotated(-global_rotation)
-	_stomping()
+	if states.current_state != "warp":
+		if movements.has(states.current_state):
+			movements[states.current_state].call(delta)
+		
+		velocity = velocity_local.rotated(global_rotation)
+		move_and_slide_corrected()
+		velocity_local = velocity.rotated(-global_rotation)
+		_stomping()
 	
 	states.update_states(delta)
 
@@ -198,7 +199,6 @@ func _movement_death(delta: float) -> void:
 	
 	velocity = velocity_local.rotated(global_rotation)
 	global_position += velocity * delta
-
 
 
 func _stomping() -> void:
