@@ -28,6 +28,8 @@ var movements = {
 
 
 func _ready() -> void:
+	super()
+	
 	if Engine.is_editor_hint(): return
 	
 	extra_script = ByNodeScript.activate_script(custom_script, self)

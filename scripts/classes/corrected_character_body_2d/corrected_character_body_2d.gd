@@ -10,6 +10,15 @@ class_name CorrectedCharacterBody2D
 ## Defines the amount of the vertical correction when the body collide the corner of block
 @export var horizontal_correction_amount: int = 5
 
+## Should we automatically correct the collision?
+@export var correct_collision: bool = true
+
+func _ready() -> void:
+	if !correct_collision: return
+	
+	var collision = Thunder.get_child_by_class_name(self, 'CollisionShape2D')
+	if collision: collision.global_position.y -= 1
+
 ## Run [method move_and_slide] with corrections
 func move_and_slide_corrected() -> bool:
 	vertical_correction(vertical_correction_amount)

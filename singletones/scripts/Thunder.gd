@@ -44,6 +44,12 @@ func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
 	return obj[key]
 
+## Find a child of [code]ref[/code] by [code]name[/code] of its class and return it or null
+func get_child_by_class_name(ref: Node, name: String) -> Node:
+	for child in ref.get_children():
+		if child.is_class(name): return child
+	return null
+
 ## Get relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
@@ -57,6 +63,9 @@ func _init() -> void:
 		print(&"Using double fps for physics")
 	else:
 		Engine.physics_ticks_per_second = rate
+	
+	# Setting minimum window dimensions
+	DisplayServer.window_set_min_size(Vector2i(640, 480))
 
 ## Discarded, see [method "engine/singletones/scripts/Scenes.gd".switch_to_scene]
 func goto_scene(path) -> void:
