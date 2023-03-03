@@ -1,16 +1,21 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("eval").add_param("code", TYPE_STRING).set_description("Evaluates a gdscript snippet. [color=red]This can crash the game![/color]")
+	return new().set_name("eval").add_param("code", TYPE_STRING).set_description("Evaluates a gdscript snippet.")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var msg: String = ""
 	for w in args:
 		msg += w + ' '
 	
-	var script = GDScript.new()
-	script.source_code = "func a():return %s" % msg
-	script.reload()
+	var expression = Expression.new()
+	var error = expression.parse(msg)
 	
-	var result: Command.ExecuteResult = Command.ExecuteResult.new(script.new().call("a"))
-	return result
+	if error != OK:
+		return Command.ExecuteResult.new("[color=red]Failed to parse the snippet[/color]\n%s" % expression.get_error_text())
+	
+	var execution_result = expression.execute()
+	if expression.has_execute_failed():
+		return Command.ExecuteResult.new("[color=red]Failed to execute the snippet[/color]\n%s" % expression.get_error_text())
+
+	return Command.ExecuteResult.new(str(execution_result))

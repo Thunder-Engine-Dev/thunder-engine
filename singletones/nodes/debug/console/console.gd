@@ -20,6 +20,10 @@ func _ready():
 			hide()
 	)
 
+func _input(event) -> void:
+	if event.is_action_pressed("ui_accept"):
+		execute()
+
 func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
 		var command: Command = load(dir+cmd).register()
