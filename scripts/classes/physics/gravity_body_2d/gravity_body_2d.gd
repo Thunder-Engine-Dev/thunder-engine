@@ -26,11 +26,6 @@ const GRAVITY: float = 50.0
 ## Defines if the body enables collision. For those who don't need any collision, it's recommeneded to set this value to [code]false[/code]
 ## to acquire more performance
 @export var collision: bool = true
-@export_group("Correction")
-## Defines if the body enables correction movements, and if [code]true[/code], during the process of [method motion_process], [method move_and_slide_corrected]
-## will be called instead of [method move_and_slide]
-@export var correction_enabled: bool = true
-@export_group("Floor","floor_")
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
@@ -83,7 +78,7 @@ func do_movement(delta:float,emit_detection_signal:bool = false) -> void:
 		global_position += velocity * delta
 		return
 	
-	if correction_enabled:
+	if correct_collision:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()

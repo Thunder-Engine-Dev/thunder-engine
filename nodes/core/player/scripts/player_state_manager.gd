@@ -105,7 +105,8 @@ func _update_animations() -> void:
 		match warp_direction:
 			WarpDirection.LEFT, WarpDirection.RIGHT: 
 				owner.sprite.set_animation("default")
-				owner.sprite.speed_scale = 1.5
+				owner.sprite.speed_scale = 10
+				owner.sprite.flip_h = (warp_direction == WarpDirection.LEFT)
 			WarpDirection.UP: owner.sprite.set_animation("jump")
 			WarpDirection.DOWN: 
 				if owner.sprite.sprite_frames.has_animation("crouch"):
