@@ -14,7 +14,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if error != OK:
 		return Command.ExecuteResult.new("[color=red]Failed to parse the snippet[/color]\n%s" % expression.get_error_text())
 	
-	var execution_result = expression.execute()
+	var execution_result = expression.execute([], Thunder)
 	if expression.has_execute_failed():
 		return Command.ExecuteResult.new("[color=red]Failed to execute the snippet[/color]\n%s" % expression.get_error_text())
 
