@@ -300,7 +300,7 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 				return true
 			collision.shape = config.collision_shape_big
 
-	collision.position.y = -collision.shape.size.y / 2
+	collision.position.y = -collision.shape.size.y / 2 - 1
 	collision_shape_changed.emit()
 	return false
 

@@ -14,6 +14,9 @@ class_name CorrectedCharacterBody2D
 @export var correct_collision: bool = true
 
 func _ready() -> void:
+	_correct_collision()
+
+func _correct_collision() -> void:
 	if !correct_collision: return
 	
 	var collision = Thunder.get_child_by_class_name(self, 'CollisionShape2D')
