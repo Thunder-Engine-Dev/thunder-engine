@@ -8,6 +8,8 @@ class_name GeneralMovementBody2D
 
 
 func _ready() -> void:
+	super()
+	
 	if look_at_player && Thunder._current_player:
 		speed.x *= (global_transform.affine_inverse().basis_xform(global_position.direction_to(Thunder._current_player.global_position))).sign().x
 
