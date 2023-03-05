@@ -39,7 +39,8 @@ func prepare(caller: Node, on: Node2D) -> void:
 		_report_resource()
 		return
 	
-	node = creation_node.instantiate()
+	if !node:
+		node = creation_node.instantiate()
 	
 	if !emiter: return
 	
