@@ -3,6 +3,9 @@
 extends Node
 # const CLASS_NAME:Script = preload("script path here!")
 
+@export_group("Effects")
+@export var coin_effect: Script = preload("res://modules/base/objects/effects/coin_effect/coin_effect.gd")
+
 
 func _init():
 	var autoload_script_list: Array = get_files("res://modules/", "preload.gd")
