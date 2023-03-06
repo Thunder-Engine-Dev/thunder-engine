@@ -7,7 +7,9 @@ class_name StaticBumpingBlock
 ## Generally, bricks, question blocks, message blocks, etc. all belong to the class
 
 ## The item you want to let the block spawn when the block gets bumped
-@export var result: Node2DCreation
+@export var result: InstanceNode2D
+## If [code]true[/code], the result added will be a sibling node of the block
+@export var result_as_sibling_node: bool = true
 ## If [code]false[/code], the block won't react to any kind of bumping
 @export var active: bool = true
 var _triggered: bool = false
@@ -87,17 +89,14 @@ func _lt(disable):
 	if !disable:
 		_triggered = false
 
-func _creation(creation: Node2DCreation) -> void:
+func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
 	
 	var center = self
-	creation.prepare(self, center)
+	NodeCreator.create_ins_2d(creation, self, true)
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	
 	Audio.play_sound(appear_sound, self)
-	
-	if creation.creation_physics:
-		creation.call_physics().apply_velocity_local().override_gravity().unbind()
 	
 	creation.create()
 

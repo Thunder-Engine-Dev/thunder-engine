@@ -10,7 +10,7 @@ extends Node
 @export var stomping_hurtable: bool = true
 @export var stomping_standard: Vector2 = Vector2.DOWN
 @export var stomping_offset: Vector2
-@export var stomping_creation: Node2DCreation
+@export var stomping_creation: InstanceNode2D
 @export var stomping_scores: int
 @export var stomping_sound: AudioStream
 @export var stomping_player_jumping_min: float = 500
@@ -28,16 +28,19 @@ extends Node
 	Data.ATTACKERS.hammer: false,
 	Data.ATTACKERS.boomerang: false,
 }
-@export var killing_creation: Node2DCreation
+@export var killing_creation: InstanceNode2D
 @export var killing_scores: int
 @export var killing_sound_succeeded: AudioStream
 @export var killing_sound_failed: AudioStream
 @export_group("Extra")
+## Custom vars for [member custom_scipt][br]
+@export var custom_vars: Dictionary
+## Custom [ByNodeScript] to extend functions
 @export var custom_script: Script
 
 var stomping_delayer: SceneTreeTimer
 
-@onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self)
+@onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var area: Area2D = get_parent()
 @onready var center: Node2D = get_node_or_null(center_node)
 
@@ -131,12 +134,8 @@ func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
 	return result
 
 
-func _creation(creation: Node2DCreation) -> void:
+func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
 	
-	creation.prepare(self,center)
-	
-	if creation.creation_physics:
-		creation.call_physics().apply_velocity_local().override_gravity().unbind()
-	
-	creation.create()
+	var node_creation: NodeCreator.NodeCreation = NodeCreator.create_ins_2d(creation, center, true, {enemy_attacked = self}, true)
+	var node: Node2D = node_creation.get_node()
