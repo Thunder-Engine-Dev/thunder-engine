@@ -136,6 +136,4 @@ func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
 
 func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
-	
-	var node_creation: NodeCreator.NodeCreation = NodeCreator.create_ins_2d(creation, center, true, {enemy_attacked = self}, true)
-	var node: Node2D = node_creation.get_node()
+	NodeCreator.create_ins_2d(creation, center, true, {enemy_attacked = self})

@@ -17,7 +17,8 @@ class_name InstanceNode2D
 @export var visi_y_sort_enabled: bool
 @export_group("Extension")
 @export var custom_vars: Dictionary
-@export var custom_script: GDScript
+@export var custom_script_before_ready: GDScript
+@export var custom_script_after_ready: GDScript
 
 
 func _report_resource() -> void:

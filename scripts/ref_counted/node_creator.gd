@@ -14,36 +14,36 @@ static func _create(ins: Node2D, on: Node2D, as_sibling: bool = true) -> void:
 
 
 ## Used to create an 2D node from a [PackedScene] given
-static func create_2d(pck: PackedScene, on:Node2D, as_sibling: bool = true, method_preready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
+static func create_2d(pck: PackedScene, on:Node2D, as_sibling: bool = true, custom_script_before_ready: GDScript = null, custom_script_after_ready: GDScript = null, custom_vars: Dictionary = {}, method_preready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
 	if !pck || !on: return null
 	
 	var ins: Node2D = _instantiate_2d(pck)
 	if !ins: return null
 	
-	if method_preready: method_preready.call(ins)
-	_create(ins,on,as_sibling)
-	if method_afteready: method_afteready.call(ins)
 	
-	return NodeCreation.new(ins)
+	var vars_list: Dictionary = custom_vars
+	vars_list.merge({spawner = on})
+	
+	var creation_ref: NodeCreation = NodeCreation.new(ins)
+	
+	if method_preready: method_preready.call(ins)
+	var _creation_script1: Script = creation_ref.execute_script(custom_script_before_ready, vars_list)
+	_create(ins, on, as_sibling)
+	if method_afteready:method_afteready.call(ins)
+	var _creation_script2: Script = creation_ref.execute_script(custom_script_after_ready, vars_list)
+	
+	return creation_ref
 
 ## Used to create an 2D node from a [InstanceNode2D] given
-static func create_ins_2d(ins2d:InstanceNode2D, on:Node2D, as_sibling: bool = true, custom_vars: Dictionary = {}, script_before_ready: bool = false, method_preready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
+static func create_ins_2d(ins2d:InstanceNode2D, on:Node2D, as_sibling: bool = true, custom_vars: Dictionary = {}, method_pready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
 	if !ins2d || !on || !ins2d.creation_nodepack: return null
 	
 	var ins: Node2D = _instantiate_2d(ins2d.creation_nodepack)
 	var creation_ref: NodeCreation = NodeCreation.new(ins)
-	var created: Node2D = creation_ref.get_node()
-	var script_call: Callable = func() -> void:
-		var vars_list: Dictionary = ins2d.custom_vars
-		vars_list.merge(custom_vars)
-		vars_list.merge({spawner = on})
-		creation_ref.execute_script(ins2d.custom_script, vars_list) as Node2D
 	
-	if method_preready: method_preready.call(ins2d)
-	if script_before_ready: script_call.call()
-	_create(ins,on,as_sibling)
-	if method_afteready: method_afteready.call(ins2d)
-	if !script_before_ready: script_call.call()
+	var vars_list: Dictionary = ins2d.custom_vars
+	vars_list.merge(custom_vars)
+	var created: Node2D = create_2d(ins2d.creation_nodepack, on, as_sibling, ins2d.custom_script_before_ready, ins2d.custom_script_after_ready, vars_list, method_pready, method_afteready).get_node()
 	
 	created.global_position = on.global_transform.translated_local(ins2d.trans_offset).get_origin()
 	created.global_rotation = ins2d.trans_rotation
@@ -70,7 +70,7 @@ class NodeCreation extends RefCounted:
 	func get_node() -> Node:
 		return _node
 	
-	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> Node:
-		if !custom_script: return _node
+	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> Script:
+		if !custom_script: return null
 		var _scr: Script = ByNodeScript.activate_script(custom_script, _node, custom_vars)
-		return _node
+		return _scr
