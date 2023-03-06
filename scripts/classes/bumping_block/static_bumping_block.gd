@@ -93,7 +93,7 @@ func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
 	
 	var center = self
-	NodeCreator.create_ins_2d(creation, self, true)
+	NodeCreator.prepare_ins_2d(creation, self).execute_instance_script({},&"_pre_ready").create_2d().execute_instance_script({},&"_after_ready")
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	
 	Audio.play_sound(appear_sound, self)

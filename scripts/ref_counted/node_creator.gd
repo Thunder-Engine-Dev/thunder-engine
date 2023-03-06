@@ -8,69 +8,85 @@ static func _instantiate_2d(pck: PackedScene) -> Node2D:
 	var node: Node2D = pck.instantiate() as Node2D
 	return node
 
-static func _create(ins: Node2D, on: Node2D, as_sibling: bool = true) -> void:
-	if as_sibling: on.add_sibling(ins)
-	elif Scenes.current_scene: Scenes.current_scene.add_child(ins)
-
-
 ## Used to create an 2D node from a [PackedScene] given
-static func create_2d(pck: PackedScene, on:Node2D, as_sibling: bool = true, custom_script_before_ready: GDScript = null, custom_script_after_ready: GDScript = null, custom_vars: Dictionary = {}, method_preready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
+static func prepare_2d(pck: PackedScene, on:Node2D) -> NodeCreation:
 	if !pck || !on: return null
 	
 	var ins: Node2D = _instantiate_2d(pck)
 	if !ins: return null
 	
-	
-	var vars_list: Dictionary = custom_vars
-	vars_list.merge({spawner = on})
-	
-	var creation_ref: NodeCreation = NodeCreation.new(ins)
-	
-	if method_preready: method_preready.call(ins)
-	var _creation_script1: Script = creation_ref.execute_script(custom_script_before_ready, vars_list)
-	_create(ins, on, as_sibling)
-	if method_afteready:method_afteready.call(ins)
-	var _creation_script2: Script = creation_ref.execute_script(custom_script_after_ready, vars_list)
-	
-	return creation_ref
+	return NodeCreation.new(ins, on)
 
 ## Used to create an 2D node from a [InstanceNode2D] given
-static func create_ins_2d(ins2d:InstanceNode2D, on:Node2D, as_sibling: bool = true, custom_vars: Dictionary = {}, method_pready: Callable = Callable(), method_afteready: Callable = Callable()) -> NodeCreation:
+static func prepare_ins_2d(ins2d:InstanceNode2D, on:Node2D) -> NodeCreation:
 	if !ins2d || !on || !ins2d.creation_nodepack: return null
 	
 	var ins: Node2D = _instantiate_2d(ins2d.creation_nodepack)
-	var creation_ref: NodeCreation = NodeCreation.new(ins)
+	if !ins: return null
 	
-	var vars_list: Dictionary = ins2d.custom_vars
-	vars_list.merge(custom_vars)
-	var created: Node2D = create_2d(ins2d.creation_nodepack, on, as_sibling, ins2d.custom_script_before_ready, ins2d.custom_script_after_ready, vars_list, method_pready, method_afteready).get_node()
-	
-	created.global_position = on.global_transform.translated_local(ins2d.trans_offset).get_origin()
-	created.global_rotation = ins2d.trans_rotation
-	created.global_scale = ins2d.trans_scale
-	created.global_skew = ins2d.trans_skew
-	
-	if ins2d.trans_inheritances & 001 == 001:
-		created.global_rotation += on.global_rotation
-	if ins2d.trans_inheritances & 010 == 010:
-		created.global_scale *= on.global_scale
-	if ins2d.trans_inheritances & 100 == 100:
-		created.global_skew += on.global_skew
-	
-	return creation_ref
+	return NodeCreation.new(ins, on, ins2d)
 
 
 ## A [RefCounted]-extending object that includes methods to operate the instance created more deeply
 class NodeCreation extends RefCounted:
-	var _node: Node
+	var _node: Node2D
+	var _on: Node2D
+	var _ins2d: InstanceNode2D
 	
-	func _init(node: Node) -> void:
+	func _init(node: Node2D, on: Node2D, ins2d: InstanceNode2D = null) -> void:
 		_node = node
+		_on = on
+		_ins2d = ins2d
 	
-	func get_node() -> Node:
+	
+	func get_node() -> Node2D:
 		return _node
 	
-	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> Script:
-		if !custom_script: return null
+	func call_method(method: Callable) -> NodeCreation:
+		if !_node: return self
+		if method: method.call(_node)
+		return self
+	
+	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> NodeCreation:
+		if !_node || !custom_script: return self
 		var _scr: Script = ByNodeScript.activate_script(custom_script, _node, custom_vars)
-		return _scr
+		return self
+	
+	func execute_instance_script(custom_vars: Dictionary = {}, which_method: StringName = &"") -> NodeCreation:
+		if !_node || !_ins2d.custom_script: return self
+		var vars: Dictionary = custom_vars
+		vars.merge(_ins2d.custom_vars)
+		var scr: Script = ByNodeScript.activate_script(_ins2d.custom_script, _node, vars)
+		if which_method in scr.get_script_method_list(): scr.call(which_method)
+		return self
+	
+	func bind_global_transform(offset: Vector2 = Vector2.ZERO, rot: float = 0, scl: Vector2 = Vector2.ONE, skew: float = 0) -> NodeCreation:
+		if !_node || !_on: return self
+		_node.global_transform = _on.global_transform.translated_local(offset).rotated(rot).scaled(scl)
+		_node.skew = _on.global_skew
+		return self
+	
+	func create_2d(as_sibling: bool = true, ins2d: InstanceNode2D = null) -> NodeCreation:
+		if !_node: return self
+		
+		if as_sibling: _on.add_sibling(_node)
+		elif Scenes.current_scene: Scenes.current_scene.add_child(_node)
+		
+		if ins2d: _ins2d = ins2d
+		if !_ins2d: return self
+		
+		_node.global_position = _on.global_transform.translated_local(_ins2d.trans_offset).get_origin()
+		_node.global_rotation = _ins2d.trans_rotation
+		_node.global_scale = _ins2d.trans_scale
+		_node.global_skew = _ins2d.trans_skew
+		
+		if _ins2d.trans_inheritances & 001 == 001:
+			_node.global_rotation += _on.global_rotation
+		if _ins2d.trans_inheritances & 010 == 010:
+			_node.global_scale *= _on.global_scale
+		if _ins2d.trans_inheritances & 100 == 100:
+			_node.global_skew += _on.global_skew
+		
+		print(_node.global_position)
+		
+		return self
