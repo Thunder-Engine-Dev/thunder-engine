@@ -6,6 +6,8 @@ class_name StaticBumpingBlock
 ## Base class for blocks that can be bumped by players and enemies[br]
 ## Generally, bricks, question blocks, message blocks, etc. all belong to the class
 
+const _HITTER: PackedScene = preload("res://modules/base/objects/bumping_blocks/_hitter/hit.tscn")
+
 ## The item you want to let the block spawn when the block gets bumped
 @export var result: InstanceNode2D
 ## If [code]true[/code], the result added will be a sibling node of the block
@@ -33,6 +35,8 @@ var _triggered: bool = false
 @export var cast_right: ShapeCast2D
 
 var _no_result_appearing_animation: bool = false
+
+@onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 ## Emitted when getting bumped
 signal bumped
@@ -84,6 +88,9 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		if cast_right: cast_right.enabled = false
 	
 	bumped.emit()
+	
+	var hitter: float = -_collision_shape_2d.shape.size.y / 2  if _collision_shape_2d.shape is RectangleShape2D else -16
+	NodeCreator.prepare_2d(_HITTER, self).create_2d().bind_global_transform(Vector2(0, hitter - 1))
 
 func _lt(disable):
 	if !disable:
@@ -97,8 +104,6 @@ func _creation(creation: InstanceNode2D) -> void:
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	
 	Audio.play_sound(appear_sound, self)
-	
-	creation.create()
 
 ## Returns [code]true[/code] if [code]body[/code] collides with [code]shape_cast[/code]
 func is_body_colliding(body: CollisionObject2D, shape_cast: ShapeCast2D) -> bool:

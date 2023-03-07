@@ -10,19 +10,19 @@ static func _instantiate_2d(pck: PackedScene) -> Node2D:
 
 ## Used to create an 2D node from a [PackedScene] given
 static func prepare_2d(pck: PackedScene, on:Node2D) -> NodeCreation:
-	if !pck || !on: return null
+	if !pck || !on: return NodeCreation.new(null, null)
 	
 	var ins: Node2D = _instantiate_2d(pck)
-	if !ins: return null
+	if !ins: return NodeCreation.new(null, on)
 	
 	return NodeCreation.new(ins, on)
 
 ## Used to create an 2D node from a [InstanceNode2D] given
 static func prepare_ins_2d(ins2d:InstanceNode2D, on:Node2D) -> NodeCreation:
-	if !ins2d || !on || !ins2d.creation_nodepack: return null
+	if !ins2d || !on || !ins2d.creation_nodepack: return NodeCreation.new(null, null)
 	
 	var ins: Node2D = _instantiate_2d(ins2d.creation_nodepack)
-	if !ins: return null
+	if !ins: return NodeCreation.new(null, on)
 	
 	return NodeCreation.new(ins, on, ins2d)
 

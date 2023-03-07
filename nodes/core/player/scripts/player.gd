@@ -269,7 +269,7 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 	
 	powerup_script = null
 	if data.player_script:
-		powerup_script = ByNodeScript.activate_script(data.player_script, self)
+		powerup_script = ByNodeScript.activate_script(data.player_script, self, data.player_state_vars)
 
 
 func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
@@ -349,7 +349,7 @@ func kill() -> void:
 					Audio.play_music(config.gameover_music, 1)
 				return
 			Thunder._current_player_state = default_player_state
-			Scenes.reload_current_scene()
+			Scenes.current_scene.restart()
 			Data.values.lives -= 1
 	)
 	
