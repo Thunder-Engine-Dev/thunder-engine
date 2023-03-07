@@ -9,7 +9,10 @@ class_name StaticBumpingBlock
 const _HITTER: PackedScene = preload("res://modules/base/objects/bumping_blocks/_hitter/hit.tscn")
 
 ## The item you want to let the block spawn when the block gets bumped
-@export var result: InstanceNode2D
+@export var result: PowerupCreation:
+	get:
+		if Engine.is_editor_hint(): return result
+		return result.prepare()
 ## If [code]true[/code], the result added will be a sibling node of the block
 @export var result_as_sibling_node: bool = true
 ## If [code]false[/code], the block won't react to any kind of bumping
@@ -18,7 +21,7 @@ var _triggered: bool = false
 
 @export_group("Sounds")
 ## The sound when the block spawns an item
-@export var appear_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/appear.wav")
+@export var appear_sound: AudioStream = null
 ## The sound when the block gets bumped
 @export var bump_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/bump.wav")
 ## The sound when the block breaks (if possible)
@@ -99,8 +102,9 @@ func _lt(disable):
 func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
 	
-	var center = self
-	NodeCreator.prepare_ins_2d(creation, self).execute_instance_script({},&"_pre_ready").create_2d().execute_instance_script({},&"_after_ready")
+	var created:Node2D = NodeCreator.prepare_ins_2d(creation, self).execute_instance_script({},&"_pre_ready").create_2d().execute_instance_script({},&"_after_ready").get_node()
+	if created && created.has_method(&"_from_bumping_block"): created._from_bumping_block()
+	
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	
 	Audio.play_sound(appear_sound, self)

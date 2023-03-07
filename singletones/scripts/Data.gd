@@ -35,3 +35,10 @@ var values: Dictionary = {
 	coins = 0,
 	time = -1
 }
+
+
+func add_coin(amount: int = 1) -> void:
+	Data.values.coins += 1
+	if Data.values.coins > 99:
+		Data.values.coins = 0
+		Thunder.add_lives(1)
