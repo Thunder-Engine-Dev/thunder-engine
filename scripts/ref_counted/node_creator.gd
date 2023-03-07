@@ -1,7 +1,9 @@
 extends RefCounted
 class_name NodeCreator
 
-## Useful [RefCounted]-extending object for adding 2D nodes
+## Useful [RefCounted]-extending object for adding 2D nodes[br]
+## You are allowed to directly add a [Node2D], or add it via
+## [InstanceNode2D]
 
 static func _instantiate_2d(pck: PackedScene) -> Node2D:
 	if !pck: return null
@@ -27,7 +29,7 @@ static func prepare_ins_2d(ins2d:InstanceNode2D, on:Node2D) -> NodeCreation:
 	return NodeCreation.new(ins, on, ins2d)
 
 
-## A [RefCounted]-extending object that includes methods to operate the instance created more deeply
+## A [RefCounted]-extending object that includes methods to operate the instance's creating
 class NodeCreation extends RefCounted:
 	var _node: Node2D
 	var _on: Node2D
@@ -39,19 +41,25 @@ class NodeCreation extends RefCounted:
 		_ins2d = ins2d
 	
 	
+	## Return [Node2D] assigned via calling [method NodeCreator.prepare_2d] or [method NodeCreator.prepare_ins_2d]
 	func get_node() -> Node2D:
 		return _node
 	
+	## Call an [Callable] method for the instance[br]
+	## [color=red][b]Warning:[/b][/color] the method you are calling should contain a parameter in [Node2D] type as the first param of it
 	func call_method(method: Callable) -> NodeCreation:
 		if !_node: return self
 		if method: method.call(_node)
 		return self
 	
+	## Execute an [GDScript] extending from [ByNodeScript] with [code]custom_vars[/code]
 	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> NodeCreation:
 		if !_node || !custom_script: return self
 		var _scr: Script = ByNodeScript.activate_script(custom_script, _node, custom_vars)
 		return self
 	
+	## Execute an [member InstanceNode2D.custom_script] input with [code]custom_vars[/code][br]
+	## If [code]which_method[/code] in the script exists, the method will be called before its [code]_ready()[/code] if available
 	func execute_instance_script(custom_vars: Dictionary = {}, which_method: StringName = &"") -> NodeCreation:
 		if !_node || !_ins2d.custom_script: return self
 		var vars: Dictionary = custom_vars
@@ -60,12 +68,19 @@ class NodeCreation extends RefCounted:
 		if which_method in scr.get_script_method_list(): scr.call(which_method)
 		return self
 	
+	## If you haven't called [method NodeCreator.prepare_ins_2d], then you need to call this function
+	## to set the [member Node2D.global_transform] of the node input[br]
+	## It's also allowed to call it before or after you call [method create_2d]
 	func bind_global_transform(offset: Vector2 = Vector2.ZERO, rot: float = 0, scl: Vector2 = Vector2.ONE, skew: float = 0) -> NodeCreation:
 		if !_node || !_on: return self
 		_node.global_transform = _on.global_transform.translated_local(offset).rotated(rot).scaled(scl)
 		_node.skew = _on.global_skew
 		return self
 	
+	## Execute adding the node input to the tree[br]
+	## If you called [method NodeCreator.prepare_ins_2d] with [code]ins2d[/code] input, the function will automatically make the node 
+	## input inherit the transform properties in [InstanceNode2D][br]
+	## If [code]ins2d[/code] input, the input one will override the existing one
 	func create_2d(as_sibling: bool = true, ins2d: InstanceNode2D = null) -> NodeCreation:
 		if !_node: return self
 		
@@ -86,7 +101,5 @@ class NodeCreation extends RefCounted:
 			_node.global_scale *= _on.global_scale
 		if _ins2d.trans_inheritances & 100 == 100:
 			_node.global_skew += _on.global_skew
-		
-		print(_node.global_position)
 		
 		return self

@@ -1,30 +1,51 @@
 extends CorrectedCharacterBody2D
 class_name Player
 
+## Class extended from [CorrectedCharacterBody2D] that defines a player[br]
+## All players belong to this class
+
+## Emitted when the [member default_player_state] gets changed
 signal powerup_state_changed
+## Emitted when the [member collision] gets changed
 signal collision_shape_changed
 
+## Used to define the configuration of the player. See [PlayerConfiguration]
 @export var config: PlayerConfiguration = PlayerConfiguration.new()
+## An extra [GDScript] extended from [ByNodeScript]
 @export var custom_script: Script
+## Used to define the suit state of the player. See [PlayerStateData]
 @export var default_player_state: PlayerStateData = PlayerStateData.new()
 
+## A state machine to control the state of the player. See [PlayerStatesManager]
 var states: PlayerStatesManager = PlayerStatesManager.new(self)
+## Instanced [member custom_script]
 var extra_script: Script
+## Instanced [member PlayerStateData.player_script]
 var powerup_script: Script
+## Local velocity of the player
 var velocity_local: Vector2
+## [code]True[/code] if the player is dead and doing movement of death
 var death_movement: bool
 
+## [AnimatedSprite2D] used for the player
 @onready var sprite: Node2D = $Sprite
+## [Sprite2D] used for the player if in debug mode
 @onready var sprite_no_img: Node2D = $SpriteNoImg
+## [CollisionShape2D] used for the player
 @onready var collision: CollisionShape2D = $Collision
+## [ShapeCast2D] used for the player to detect stomping
 @onready var stomping_cast: ShapeCast2D = $StompingCast
 
+## [Callable]s called according to the [member state]
 var movements = {
 	"default": _movement_default,
 	"jump": _movement_default,
 	"crouch": _movement_default,
 	"stuck": _movement_stuck
 }
+
+## If [code]true[/code], the debug will display
+var debug_expanded: bool
 
 
 func _ready() -> void:
@@ -47,9 +68,6 @@ func _ready() -> void:
 	if OS.is_debug_build():
 		_debug_setup_label()
 		
-
-
-var debug_expanded: bool
 
 func _physics_process(delta: float) -> void:
 	if OS.is_debug_build():
@@ -272,6 +290,8 @@ func _on_power_state_change(data: PlayerStateData) -> void:
 		powerup_script = ByNodeScript.activate_script(data.player_script, self, data.player_state_vars)
 
 
+## Update [member collision] according to the given [code]state[/code]
+## If [code]crouching[/code] is [code]true[/code], the [memeber collision] will always be the one in small state
 func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 	var power = state.player_power
 
@@ -305,6 +325,7 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 	return false
 
 
+## If called, make the player get hurt
 func powerdown() -> void:
 	if states.invincible_timer > 0: return
 	
@@ -317,6 +338,7 @@ func powerdown() -> void:
 		kill()
 
 
+## If called, make the player get the powerup related to given [code]state[/code]
 func powerup(state: PlayerStateData) -> void:
 	states.appear_timer = config.powerup_animation_time
 	if config.powerup_animation_time > states.invincible_timer:
@@ -324,6 +346,7 @@ func powerup(state: PlayerStateData) -> void:
 	Thunder._current_player_state = state
 
 
+## If called, the player dies
 func kill() -> void:
 	if states.current_state == "dead":#
 		return
