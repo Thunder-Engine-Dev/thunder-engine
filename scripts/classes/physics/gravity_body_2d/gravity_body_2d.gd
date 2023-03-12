@@ -63,7 +63,7 @@ func motion_process(delta: float, deep_snap: bool = true, kinematic: bool = true
 	
 	velocity = speed.rotated(global_rotation)
 	
-	do_movement(delta,true)
+	do_movement(delta, true)
 	
 	if kinematic && !is_on_wall():
 		speed.x = speed_previous.x
@@ -118,7 +118,8 @@ func accelerate_y(to: float, a: float) -> void:
 
 ## Reverse [member speed].x
 func turn_x() -> void:
-	speed.x = -speed_previous.x
+	speed_previous.x = -speed_previous.x
+	speed.x = speed_previous.x
 
 ## Reverse [member speed].y
 func turn_y() -> void:
