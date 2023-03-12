@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://fq0xf7e2fvfm"]
+
+[ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
+[ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b06tt"]
+size = Vector2(20, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yo0u"]
+atlas = ExtResource("1_mcj00")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ob8l6"]
+atlas = ExtResource("1_mcj00")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6hvt"]
+atlas = ExtResource("1_mcj00")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v64cq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yo0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ob8l6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6hvt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Coin" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_exjvk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_b06tt")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v64cq")
+autoplay = "default"

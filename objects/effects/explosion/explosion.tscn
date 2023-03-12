@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ces7bytc0ugus"]
+
+[ext_resource type="SpriteFrames" uid="uid://3hcc7mb6hjkx" path="res://engine/objects/effects/explosion/explosion.tres" id="1_dslx6"]
+[ext_resource type="Script" path="res://engine/objects/effects/explosion/explosion.gd" id="2_pisc5"]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_dslx6")
+script = ExtResource("2_pisc5")

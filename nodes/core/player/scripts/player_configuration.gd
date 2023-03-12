@@ -18,12 +18,12 @@ class_name PlayerConfiguration
 # SFX
 @export_group("SFX")
 @export_subgroup("Sounds")
-@export var jump_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/jump.wav")
-@export var swim_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/swim.wav")
-@export var pipe_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
-@export var powerdown_sound: AudioStream = preload("res://modules/base/objects/mario/sounds/pipe.wav")
-@export var die_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-die.ogg")
-@export var gameover_music: AudioStream = preload("res://modules/base/objects/mario/sounds/music-gameover.ogg")
+@export var jump_sound: AudioStream = preload("res://engine/objects/mario/sounds/jump.wav")
+@export var swim_sound: AudioStream = preload("res://engine/objects/mario/sounds/swim.wav")
+@export var pipe_sound: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var powerdown_sound: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var die_music: AudioStream = preload("res://engine/objects/mario/sounds/music-die.ogg")
+@export var gameover_music: AudioStream = preload("res://engine/objects/mario/sounds/music-gameover.ogg")
 @export_subgroup("Sound Settings")
 @export var sound_pitch:float = 1.0
 
@@ -43,9 +43,9 @@ class_name PlayerConfiguration
 @export var max_run_speed: float = 350
 
 @export_group("Collisions")
-@export var collision_shape_small: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_small.tres")
-@export var collision_shape_big: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_big.tres")
-@export var collision_shape_crouch: Shape2D = preload("res://modules/base/objects/mario/prefabs/collisions/shape_small.tres")
+@export var collision_shape_small: Shape2D = preload("res://engine/objects/mario/prefabs/collisions/shape_small.tres")
+@export var collision_shape_big: Shape2D = preload("res://engine/objects/mario/prefabs/collisions/shape_big.tres")
+@export var collision_shape_crouch: Shape2D = preload("res://engine/objects/mario/prefabs/collisions/shape_small.tres")
 
 # Other values
 @export_group("Misc")

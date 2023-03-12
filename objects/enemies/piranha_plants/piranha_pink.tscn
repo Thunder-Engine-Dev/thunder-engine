@@ -1,0 +1,121 @@
+[gd_scene load_steps=18 format=3 uid="uid://oja3uy1y4hpl"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
+[ext_resource type="Texture2D" uid="uid://cn66b21sja8vk" path="res://engine/objects/enemies/piranha_plants/textures/head_pink.png" id="2_7expw"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_m1eaf"]
+[ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="3_12v5v"]
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="3_l5y0h"]
+[ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="8_85764"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_dl36v"]
+
+[sub_resource type="Resource" id="Resource_i5haj"]
+script = ExtResource("2_m1eaf")
+creation_nodepack = ExtResource("2_3i2bd")
+trans_offset = Vector2(0, -24)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wvqc"]
+atlas = ExtResource("2_7expw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8c8o4"]
+atlas = ExtResource("2_7expw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jlnk"]
+atlas = ExtResource("2_7expw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kug6o"]
+atlas = ExtResource("2_7expw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2q2vw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wvqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8c8o4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jlnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kug6o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaPink" type="Node2D"]
+self_modulate = Color(1, 1, 1, 0.121569)
+script = ExtResource("1_2qrva")
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("5_uv5hw"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.18",
+"projectile_speed_max": Vector2(200, -300),
+"projectile_speed_min": Vector2(-200, -550)
+}
+custom_script = ExtResource("3_l5y0h")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_64hdc")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("7_pt4ko")
+stomping_available = false
+killing_scores = 100
+killing_sound_succeeded = ExtResource("8_85764")
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_2q2vw")
+autoplay = "default"
+metadata/_edit_group_ = true
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Stem" type="Sprite2D" parent="Head"]
+position = Vector2(1, 24)
+texture = ExtResource("3_12v5v")
+metadata/_edit_pinned_properties_ = [&"texture"]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("11_dl36v")
+target_nodepath = NodePath("")
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[node name="Fire" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=18]

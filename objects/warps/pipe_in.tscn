@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://engine/objects/warps/pipe_in.gd" id="1_17oxu"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_78r3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqxto"]
+size = Vector2(32, 16)
+
+[node name="PipeIn" type="Area2D" groups=["pipe_in"]]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_17oxu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_rqxto")
+debug_color = Color(0, 0.352941, 0.180392, 0.419608)
+
+[node name="Arrow" type="Polygon2D" parent="."]
+color = Color(0.337255, 0.847059, 0, 1)
+polygon = PackedVector2Array(-3, 0, 3, 0, 3, 16, 9, 16, 0, 30, -9, 16, -3, 16)
+
+[node name="PosPlayer" type="Marker2D" parent="."]
+visible = false
+
+[node name="TextDir" type="Label" parent="."]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+scale = Vector2(0.666667, 0.666667)
+pivot_offset = Vector2(32, 16)
+theme_override_fonts/font = ExtResource("2_78r3h")
+text = "down"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

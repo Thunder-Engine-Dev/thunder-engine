@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerStateData" load_steps=4 format=3 uid="uid://dkr3ph2e4aw48"]
+
+[ext_resource type="SpriteFrames" uid="uid://bu7ffodj4k8gr" path="res://engine/objects/mario/prefabs/sprite_frames/big.tres" id="1_0am4m"]
+[ext_resource type="Script" path="res://engine/scripts/resources/player_state_data/player_state_data.gd" id="1_vfkae"]
+[ext_resource type="Resource" path="res://engine/objects/mario/prefabs/small_state.tres" id="2_guia8"]
+
+[resource]
+script = ExtResource("1_vfkae")
+state_name = &"big"
+player_prefab = ExtResource("1_0am4m")
+player_power = 1
+powerdown_state = ExtResource("2_guia8")

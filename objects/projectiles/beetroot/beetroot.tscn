@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc12btlrtjxyl"]
+
+[ext_resource type="Script" path="res://engine/objects/projectiles/beetroot/beetroot.gd" id="1_qd3dy"]
+[ext_resource type="Texture2D" uid="uid://cd4tiiirqgtvi" path="res://engine/objects/projectiles/beetroot/texture.png" id="2_n2mkg"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_3efnn"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_p2s0u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
+size = Vector2(20, 32)
+
+[node name="Beetroot" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("1_qd3dy")
+deep_snap = false
+speed = Vector2(120, -300)
+gravity_scale = 0.4
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture = ExtResource("2_n2mkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_t82ul")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_t82ul")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 66
+collide_with_areas = true
+script = ExtResource("3_p2s0u")
+killer_type = &"beetroot"
+metadata/_edit_pinned_properties_ = [&"killer_type"]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+script = ExtResource("3_3efnn")
+
+[connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
+[connection signal="collided_floor" from="." to="." method="bounce"]
+[connection signal="collided_wall" from="." to="." method="bounce"]
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
+[connection signal="killed" from="Attack" to="." method="bounce" binds= [false]]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

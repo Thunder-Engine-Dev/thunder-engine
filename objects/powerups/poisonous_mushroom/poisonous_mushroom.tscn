@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://d3x5itop6w8qu"]
+
+[ext_resource type="Script" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.gd" id="1_iyqkm"]
+[ext_resource type="Texture2D" uid="uid://2nahs8sqdrc" path="res://engine/objects/powerups/poisonous_mushroom/texture.png" id="2_osacd"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_83v4w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70umx"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekaoo"]
+atlas = ExtResource("2_osacd")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0chs"]
+atlas = ExtResource("2_osacd")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1jdnw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekaoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0chs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PoisonousMushroom" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_iyqkm")
+speed = Vector2(100, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_70umx")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1jdnw")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("4_83v4w")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]

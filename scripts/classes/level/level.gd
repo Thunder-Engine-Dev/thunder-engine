@@ -48,12 +48,12 @@ func _prepare_template() -> void:
 	camera.set_owner(self)
 	
 	var tilemap = TileMap.new()
-	tilemap.tile_set = load("res://modules/base/tilesets/placeholder/placeholder_tileset.tres")
+	tilemap.tile_set = load("res://engine/tilesets/placeholder/placeholder_tileset.tres")
 	add_child(tilemap, true)
 	tilemap.set_cell(0, Vector2i(2, 13), 1, Vector2i.ZERO)
 	tilemap.set_owner(self)
 	
-	var hud = load("res://modules/base/components/hud/hud.tscn").instantiate()
+	var hud = load("res://engine/components/hud/hud.tscn").instantiate()
 	add_child(hud)
 	hud.set_owner(self)
 

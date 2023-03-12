@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PlayerStateData" load_steps=6 format=3 uid="uid://drwi1gfxu5xxp"]
+
+[ext_resource type="Script" path="res://engine/scripts/resources/player_state_data/player_state_data.gd" id="1_3v2v2"]
+[ext_resource type="SpriteFrames" uid="uid://cxhkqao5btkv8" path="res://engine/objects/mario/prefabs/sprite_frames/beetroot.tres" id="1_13lj6"]
+[ext_resource type="Resource" uid="uid://dkr3ph2e4aw48" path="res://engine/objects/mario/prefabs/big_state.tres" id="2_7y10g"]
+[ext_resource type="Script" path="res://engine/objects/powerups/bullet_action.gd" id="2_wp2k6"]
+[ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="3_q7yte"]
+
+[resource]
+script = ExtResource("1_3v2v2")
+state_name = &"beetroot"
+player_prefab = ExtResource("1_13lj6")
+player_script = ExtResource("2_wp2k6")
+player_power = 2
+powerdown_state = ExtResource("2_7y10g")
+player_state_vars = {
+"bullet": ExtResource("3_q7yte"),
+"bullet_speed": Vector2(120, -300)
+}

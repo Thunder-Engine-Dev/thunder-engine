@@ -1,0 +1,132 @@
+[gd_scene load_steps=19 format=3 uid="uid://o3k018cbex8g"]
+
+[ext_resource type="Script" path="res://engine/objects/powerups/green_lui/green_lui.gd" id="1_w0eyt"]
+[ext_resource type="Resource" path="res://engine/objects/mario/prefabs/lui_state.tres" id="2_fck5w"]
+[ext_resource type="Texture2D" uid="uid://skeuracpsv2p" path="res://engine/objects/powerups/green_lui/texture.png" id="3_7ksfc"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_wvem1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mndcc"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(0, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5851"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(30, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grdnv"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(60, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sqmj"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(90, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t2dl"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(120, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tl73h"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(150, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgdde"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(180, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a16es"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(210, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1v7r"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(240, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_838dk"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(270, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg8jc"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(300, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si1qb"]
+atlas = ExtResource("3_7ksfc")
+region = Rect2(330, 0, 30, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nlhr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mndcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5851")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grdnv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sqmj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t2dl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tl73h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgdde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a16es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1v7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_838dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg8jc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si1qb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 40.0
+}]
+
+[node name="GreenLui" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_w0eyt")
+deep_snap = false
+set_player_state = ExtResource("2_fck5w")
+gravity_scale = 0.2
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nlhr2")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("4_wvem1")

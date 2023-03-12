@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvfwgs0v63euo"]
+
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="1_l1san"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ca6l3"]
+size = Vector2(32, 2)
+
+[node name="Hit" type="ShapeCast2D"]
+shape = SubResource("RectangleShape2D_ca6l3")
+target_position = Vector2(0, -1)
+collision_mask = 6
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("1_l1san")
+killer_type = &"head"
+metadata/_edit_pinned_properties_ = [&"killer_type"]
+
+[node name="Destroy" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Destroy" to="." method="queue_free"]

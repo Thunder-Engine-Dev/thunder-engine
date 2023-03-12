@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://oe7i3cief0g"]
+
+[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_kouot"]
+
+[node name="EnemyKilled" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_kouot")
+speed = Vector2(0, -230)
+gravity_scale = 0.2
+correction_enabled = false

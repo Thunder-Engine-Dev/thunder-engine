@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://dt52xvrtre8h3"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
+[ext_resource type="Texture2D" uid="uid://cr6oyvxb77tau" path="res://engine/objects/enemies/piranha_plants/textures/head.png" id="2_3vf3t"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_r5fwf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbf7c"]
+size = Vector2(31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fenoi"]
+atlas = ExtResource("2_3vf3t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu2tg"]
+atlas = ExtResource("2_3vf3t")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7v68o"]
+atlas = ExtResource("2_3vf3t")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2het"]
+atlas = ExtResource("2_3vf3t")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjbik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fenoi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu2tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7v68o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2het")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaHead" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_x0p8k")
+kinematic_movement = false
+collision = false
+correction_enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_bbf7c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tjbik")
+autoplay = "default"
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_kfaj4")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_bbf7c")
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("4_r5fwf")

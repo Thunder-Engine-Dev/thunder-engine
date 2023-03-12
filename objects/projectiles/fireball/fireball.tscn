@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4jlbnswk5dlw"]
+
+[ext_resource type="Script" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
+[ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_sssv4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
+radius = 8.0
+
+[node name="Fireball" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("1_hkxrj")
+deep_snap = false
+speed = Vector2(387.5, 0)
+gravity_scale = 0.5
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture = ExtResource("2_thdmy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_eyugj")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_eyugj")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_po12v")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("3_sssv4")
+
+[connection signal="collided_floor" from="." to="." method="jump"]
+[connection signal="collided_wall" from="." to="." method="explode"]
+[connection signal="damaged_player" from="Attack" to="." method="explode"]
+[connection signal="killed" from="Attack" to="." method="explode"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

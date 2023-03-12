@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="InstanceNode2D" load_steps=4 format=3 uid="uid://ds3br3hi1ydqs"]
+
+[ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="1_uocsv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_stomped.gd" id="2_cs1x7"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_c7vmn"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("3_c7vmn")
+creation_nodepack = ExtResource("1_uocsv")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("")
+}
+custom_script = ExtResource("2_cs1x7")

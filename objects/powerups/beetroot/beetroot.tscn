@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://8a7nemgi0b6q"]
+
+[ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_elpo1"]
+[ext_resource type="Resource" uid="uid://bq8xvni32xm7a" path="res://engine/objects/mario/prefabs/beetroot_state.tres" id="2_vyduk"]
+[ext_resource type="Texture2D" uid="uid://3y6dl3ecp4ph" path="res://engine/objects/powerups/beetroot/texture.png" id="3_scld5"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_tk2ye"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br1rb"]
+atlas = ExtResource("3_scld5")
+region = Rect2(0, 0, 27, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_welj1"]
+atlas = ExtResource("3_scld5")
+region = Rect2(27, 0, 27, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5npo4"]
+atlas = ExtResource("3_scld5")
+region = Rect2(54, 0, 27, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glwkm"]
+atlas = ExtResource("3_scld5")
+region = Rect2(81, 0, 27, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkrha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br1rb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_welj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5npo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glwkm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Beetroot" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_elpo1")
+set_player_state = ExtResource("2_vyduk")
+speed = Vector2(0, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wkrha")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("4_tk2ye")

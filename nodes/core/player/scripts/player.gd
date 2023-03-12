@@ -411,7 +411,7 @@ func _debug_setup_label() -> void:
 	label.uppercase = true
 	#label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	label.label_settings = LabelSettings.new()
-	label.label_settings.font = preload("res://modules/base/components/hud/hud_font.fnt")
+	label.label_settings.font = preload("res://engine/components/hud/hud_font.fnt")
 	label.scale = Vector2(0.75, 0.75)
 	label.position = Vector2(-80, 0)
 	label.custom_minimum_size = Vector2(96, 0)

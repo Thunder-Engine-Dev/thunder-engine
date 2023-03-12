@@ -6,7 +6,7 @@ class_name StaticBumpingBlock
 ## Base class for blocks that can be bumped by players and enemies[br]
 ## Generally, bricks, question blocks, message blocks, etc. all belong to the class
 
-const _HITTER: PackedScene = preload("res://modules/base/objects/bumping_blocks/_hitter/hit.tscn")
+const _HITTER: PackedScene = preload("res://engine/objects/bumping_blocks/_hitter/hit.tscn")
 
 ## The item you want to let the block spawn when the block gets bumped
 @export var result: InstancePowerup:
@@ -24,9 +24,9 @@ var _triggered: bool = false
 ## The sound when the block spawns an item
 @export var appear_sound: AudioStream = null
 ## The sound when the block gets bumped
-@export var bump_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/bump.wav")
+@export var bump_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 ## The sound when the block breaks (if possible)
-@export var break_sound: AudioStream = preload("res://modules/base/objects/bumping_blocks/_sounds/break.wav")
+@export var break_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 
 @export_group("Bump Detection")
 ## Bottom detector of bumping

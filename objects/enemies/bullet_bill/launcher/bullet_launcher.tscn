@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvolo50530iv7"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.gd" id="1_3oj3x"]
+[ext_resource type="Texture2D" uid="uid://b25ptq2d2d6g1" path="res://engine/objects/enemies/bullet_bill/launcher/texture/launcher.png" id="1_ud8qb"]
+[ext_resource type="Texture2D" uid="uid://cy1ilh0qxu3f4" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler.png" id="2_7a3u8"]
+[ext_resource type="Texture2D" uid="uid://cy4krigq0scxj" path="res://engine/objects/enemies/bullet_bill/launcher/texture/middle.png" id="3_3d123"]
+[ext_resource type="Texture2D" uid="uid://c6rtd10yuhxrn" path="res://engine/objects/enemies/bullet_bill/launcher/texture/base.png" id="4_7nhdc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abljg"]
+size = Vector2(32, 32)
+
+[node name="BulletLauncher" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(16, 16)
+script = ExtResource("1_3oj3x")
+
+[node name="Obstacle" type="AnimatableBody2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+shape = SubResource("RectangleShape2D_abljg")
+
+[node name="Launcher" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("1_ud8qb")
+
+[node name="Handler" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("2_7a3u8")
+metadata/_edit_lock_ = true
+
+[node name="Base" type="Control" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = 32.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 0)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Middle" type="Sprite2D" parent="Base"]
+position = Vector2(16, 16)
+texture = ExtResource("3_3d123")
+
+[node name="TextureRect" type="TextureRect" parent="Base"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = 32.0
+offset_right = 16.0
+texture = ExtResource("4_7nhdc")
+stretch_mode = 1

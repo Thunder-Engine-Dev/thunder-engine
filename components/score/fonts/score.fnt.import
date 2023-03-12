@@ -1,0 +1,16 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://dva6dn1umvs5p"
+path="res://.godot/imported/score.fnt-18d98f37efe687672218526ad6396e69.fontdata"
+
+[deps]
+
+source_file="res://engine/components/score/fonts/score.fnt"
+dest_files=["res://.godot/imported/score.fnt-18d98f37efe687672218526ad6396e69.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true

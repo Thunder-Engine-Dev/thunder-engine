@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://2yepdgrhpmj3"]
+
+[ext_resource type="Script" path="res://engine/objects/bumping_blocks/brick/brick.gd" id="1_5y3xv"]
+[ext_resource type="SpriteFrames" uid="uid://bkrdwg2xxodgg" path="res://engine/objects/bumping_blocks/brick/brick.tres" id="2_p1ujx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lk56e"]
+size = Vector2(32, 1)
+
+[node name="Brick" type="StaticBody2D" node_paths=PackedStringArray("cast_below")]
+collision_layer = 112
+script = ExtResource("1_5y3xv")
+cast_below = NodePath("ShapeCast2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_2x2nd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_p1ujx")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_lk56e")
+target_position = Vector2(0, 2)
+max_results = 8

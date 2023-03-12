@@ -1,0 +1,16 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://ipv6msse6sfa"
+path="res://.godot/imported/life.fnt-222376c32956debdb9f0664302d73094.fontdata"
+
+[deps]
+
+source_file="res://engine/components/score/fonts/life.fnt"
+dest_files=["res://.godot/imported/life.fnt-222376c32956debdb9f0664302d73094.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
