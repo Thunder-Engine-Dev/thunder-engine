@@ -13,10 +13,10 @@ func prepare() -> Variant:
 	if !creation_nodepack: return d_self
 	
 	if (
-		creation_fallback_node &&
-		creation_nodepack.resource_path != creation_fallback_node.resource_path &&
-		Thunder._current_player_state.player_power == Data.PLAYER_POWER.SMALL
+		d_self.creation_fallback_node &&
+		d_self.creation_nodepack.resource_path != d_self.creation_fallback_node.resource_path &&
+		Thunder.is_player_power(Data.PLAYER_POWER.SMALL)
 	):
-		d_self.creation_nodepack = creation_fallback_node
+		d_self.creation_nodepack = d_self.creation_fallback_node
 	
 	return d_self
