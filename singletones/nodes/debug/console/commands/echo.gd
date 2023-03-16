@@ -1,7 +1,7 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("say").add_param("message", TYPE_STRING).set_description("Prints message in console")
+	return new().set_name("echo").add_param("message", TYPE_STRING).set_description("Prints message in console")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var msg: String = ""
