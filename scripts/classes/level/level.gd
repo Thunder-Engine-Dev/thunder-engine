@@ -18,7 +18,7 @@ class_name Level
 @export_enum("Nothing", "Death", "Wrap") var falling_below_screen_action: int = 1
 
 ## Modifies the bottom line that detect player as "falling below the screen"
-@export var falling_below_y_offset: float = 32.0
+@export var falling_below_y_offset: float = 64.0
 
 
 func _ready() -> void:
