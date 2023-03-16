@@ -68,12 +68,14 @@ killing_sound_succeeded = ExtResource("9_wsasv")
 metadata/_edit_pinned_properties_ = [&"stomping_available"]
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
+z_index = -1
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_ym01l")
 autoplay = "default"
 metadata/_edit_group_ = true
 
 [node name="Stem" type="Sprite2D" parent="Head"]
+z_index = -1
 position = Vector2(1, 24)
 texture = ExtResource("3_blccl")
 

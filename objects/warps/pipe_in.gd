@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	var input_y: int = int(Input.get_axis(player.config.control_up,player.config.control_down))
 	
 	
-	if !_on_warp:
+	if !_on_warp && player.states.current_state != "warp":
 		if input_x > 0 && warp_direction == PlayerStatesManager.WarpDirection.RIGHT:
 			_on_warp = true
 			pos_player.position = Vector2(-(shape.shape as RectangleShape2D).size.x / 2,0)

@@ -9,11 +9,10 @@ class_name StaticBumpingBlock
 const _HITTER: PackedScene = preload("res://engine/objects/bumping_blocks/_hitter/hit.tscn")
 
 ## The item you want to let the block spawn when the block gets bumped
-@export var result: InstancePowerup:
-	get:
-		if Engine.is_editor_hint(): return result
-		if result: return result.prepare()
-		return null
+@export var result: InstancePowerup
+#	get:
+#		if Engine.is_editor_hint(): return result
+#		return result.prepare()
 ## If [code]true[/code], the result added will be a sibling node of the block
 @export var result_as_sibling_node: bool = true
 ## If [code]false[/code], the block won't react to any kind of bumping
@@ -80,7 +79,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	tw.tween_callback(_lt.bind(disable))
 	
 	if result:
-		call_deferred(&"_creation", result)
+		call_deferred(&"_creation", result.prepare())
 		result_appeared.emit()
 	else:
 		Audio.play_sound(bump_sound, self)
