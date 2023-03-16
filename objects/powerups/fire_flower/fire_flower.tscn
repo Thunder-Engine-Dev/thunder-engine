@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://bsdcxwngf5hru"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_a0bpr"]
-[ext_resource type="Resource" uid="uid://2xi2hqej65re" path="res://engine/objects/mario/prefabs/flower_state.tres" id="2_2jjy3"]
+[ext_resource type="Resource" uid="uid://bgmiyfnr2lo0" path="res://engine/objects/mario/prefabs/flower_state.tres" id="2_2jjy3"]
 [ext_resource type="Texture2D" uid="uid://dr27m02d1hglo" path="res://engine/objects/powerups/fire_flower/texture.png" id="3_46su7"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_rrc8r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+size = Vector2(31, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m4vm8"]
 atlas = ExtResource("3_46su7")
@@ -55,6 +55,7 @@ gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 

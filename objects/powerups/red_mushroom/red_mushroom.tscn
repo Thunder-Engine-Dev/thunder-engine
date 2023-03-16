@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_ccgfb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+size = Vector2(31, 31)
 
 [node name="RedMushroom" type="CharacterBody2D"]
 collision_layer = 4
@@ -20,6 +20,7 @@ gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 

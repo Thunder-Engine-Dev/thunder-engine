@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://8a7nemgi0b6q"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_elpo1"]
-[ext_resource type="Resource" uid="uid://bq8xvni32xm7a" path="res://engine/objects/mario/prefabs/beetroot_state.tres" id="2_vyduk"]
+[ext_resource type="Resource" uid="uid://drwi1gfxu5xxp" path="res://engine/objects/mario/prefabs/beetroot_state.tres" id="2_vyduk"]
 [ext_resource type="Texture2D" uid="uid://3y6dl3ecp4ph" path="res://engine/objects/powerups/beetroot/texture.png" id="3_scld5"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_tk2ye"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+size = Vector2(31, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_br1rb"]
 atlas = ExtResource("3_scld5")
@@ -51,11 +51,11 @@ floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_elpo1")
 set_player_state = ExtResource("2_vyduk")
-speed = Vector2(0, 0)
 gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
