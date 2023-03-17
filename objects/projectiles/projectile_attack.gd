@@ -1,6 +1,7 @@
 extends ShapeCast2D
 
 @export var killer_type: StringName = Data.ATTACKERS.fireball
+@export var killing_detection_scale: float = 1.0
 @export var special_tags: Array[StringName]
 
 var velocity: Vector2
@@ -8,7 +9,7 @@ var belongs_to: Data.PROJECTILE_BELONGS
 
 @onready var par:Node2D = get_parent()
 
-signal killed
+signal killed(what: Node)
 signal killed_succeeded
 signal killed_failed
 signal damaged_player
@@ -17,7 +18,7 @@ signal damaged_player
 func _process(delta: float) -> void:
 	if par is GravityBody2D: 
 		velocity = par.velocity
-		target_position = (velocity * get_physics_process_delta_time()).rotated(-global_rotation)
+		target_position = (velocity * get_physics_process_delta_time() * killing_detection_scale).rotated(-global_rotation)
 	
 	if &"belongs_to" in par: belongs_to = par.belongs_to
 	
@@ -38,12 +39,13 @@ func _kill_enemy() -> void:
 		
 		result = enemy_attacked.got_killed(killer_type, special_tags)
 	if result.is_empty(): return
-	elif result.result:
-		killed.emit()
+	var attackee: Node = result.attackee if &"attackee" in result else null
+	if result.result:
+		killed.emit(attackee)
 		killed_succeeded.emit()
 		return
 	else:
-		killed.emit()
+		killed.emit(attackee)
 		killed_failed.emit()
 		return
 

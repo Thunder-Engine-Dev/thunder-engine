@@ -49,6 +49,7 @@ extends Node
 	Data.ATTACKERS.starman: false,
 	Data.ATTACKERS.shell: false,
 	&"shell_defence": 0, # Available only when Data.ATTACKERS.shell is "true"
+	&"shell_forced": false, # DO NOT REMOVE THIS!!
 	Data.ATTACKERS.fireball: false,
 	Data.ATTACKERS.beetroot: false,
 	Data.ATTACKERS.iceball: false,
@@ -69,8 +70,10 @@ extends Node
 ## Custom [ByNodeScript] to extend functions
 @export var custom_script: Script
 
-var _stomping_delayer: SceneTreeTimer
+var _stomping_delayer: SceneTreeTimer:
+	get = get_stomping_delayer
 
+@warning_ignore("unused_private_class_variable")
 @onready var _extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var _center: Node2D = get_node_or_null(center_node)
 
@@ -78,7 +81,7 @@ var _stomping_delayer: SceneTreeTimer
 signal stomped
 ## Emitted when the enemy gets stomped successfully
 signal stomped_succeeded
-## Emitted when the enemy hurts the player
+## Emitted when the enemy touches the player directly
 signal stomped_failed
 ## Emitted when the enemy gets killed by the attacker
 signal killed
@@ -108,6 +111,8 @@ func _lkf():
 ## + [param offset]
 func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	var result: Dictionary
+	
+	if !stomping_enabled: return result
 	
 	if !_center:
 		push_error("[No Center Node Error] No _center node set. Please check if you have set the _center node of EnemyAttacked. At " + str(get_path()))
@@ -151,12 +156,12 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 ## Makes the enemy killed by a certain attacker[br]
 ## [param by] is type of the attacker, see [member killing_immune][br]
 ## You can give the extra behavior by inputting [param special_tags]
-func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
+func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 	var result: Dictionary
 	
 	if !killing_enabled || !by in killing_immune: return result
 	
-	if killing_immune[by]:
+	if killing_immune[by] || &"shell_attack" in special_tags:
 		killed_failed.emit()
 		
 		result = {
@@ -168,7 +173,7 @@ func got_killed(by: StringName, special_tags:Array[StringName]) -> Dictionary:
 		
 		_creation(killing_creation)
 		
-		if killing_scores > 0:
+		if killing_scores > 0 && !&"no_score" in special_tags:
 			ScoreText.new(str(killing_scores), _center)
 			Data.values.score += killing_scores
 		
@@ -185,3 +190,8 @@ func _creation(creation: InstanceNode2D) -> void:
 	
 	var vars: Dictionary = {enemy_attacked = self}
 	NodeCreator.prepare_ins_2d(creation, _center).execute_instance_script(vars).create_2d()
+
+
+
+func get_stomping_delayer() -> SceneTreeTimer:
+	return _stomping_delayer

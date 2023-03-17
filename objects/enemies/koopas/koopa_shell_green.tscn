@@ -1,0 +1,136 @@
+[gd_scene load_steps=19 format=3 uid="uid://b5tqloaji44l"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell.png" id="2_f45j3"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tulax"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="3_lyc5n"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_v7we4"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pugg3"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hgfia"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_uy00l"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="8_yvu7y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
+size = Vector2(32, 28)
+
+[sub_resource type="Resource" id="Resource_d0m1t"]
+resource_local_to_scene = true
+script = ExtResource("6_hgfia")
+creation_nodepack = ExtResource("4_v7we4")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_pugg3")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_alv11"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86os0"]
+atlas = ExtResource("2_f45j3")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ugf7"]
+atlas = ExtResource("2_f45j3")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cff2n"]
+atlas = ExtResource("2_f45j3")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ilor"]
+atlas = ExtResource("2_f45j3")
+region = Rect2(64, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2216j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86os0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ugf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cff2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ilor")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="KoopaShellGreen" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 8.0
+script = ExtResource("1_4u51b")
+look_at_player = true
+deep_snap = false
+sprite = NodePath("Sprite")
+speed = Vector2(250, 0)
+gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"deep_snap", &"gravity_scale", &"speed", &"look_at_player", &"sprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_dceiv")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_tulax")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_dceiv")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body" groups=["shell"]]
+script = ExtResource("2_f14e0")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_scores = 100
+stomping_sound = ExtResource("3_lyc5n")
+killing_creation = SubResource("Resource_d0m1t")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_uy00l")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"killing_creation"]
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_alv11")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("8_yvu7y")
+killer_type = &"shell"
+killing_detection_scale = 8.0
+special_tags = Array[StringName]([&"shell_attack"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2216j")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_flip_v" binds= [true]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="status_swap" binds= [true]]
+[connection signal="killed" from="Attack" to="." method="_on_killing"]

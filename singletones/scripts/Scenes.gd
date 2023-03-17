@@ -7,6 +7,7 @@ extends Node
 ## The scene that is displaying and running, instead of main scene when you run
 ## the whole project and defined a main scene and try referring [member SceneTree.current_scene]
 var current_scene:Node
+var _current_scene_path: String
 var _current_scene_packed:PackedScene
 var _current_root:Node
 
@@ -31,8 +32,9 @@ func register(scene:Node) -> void:
 	current_scene = scene
 	if current_scene.is_inside_tree(): _current_root = scene.get_parent()
 	
-	_current_scene_packed = PackedScene.new()
-	_current_scene_packed.pack(current_scene)
+	if _current_scene_path != current_scene.scene_file_path:
+		_current_scene_path = current_scene.scene_file_path
+		_current_scene_packed = load(_current_scene_path)
 
 
 ## Install [member current_scene] that hasn't been added as the child of main scene,

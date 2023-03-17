@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://vqn6y17pt5mx"]
+[gd_scene load_steps=20 format=3 uid="uid://vqn6y17pt5mx"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_ltt83"]
 [ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/objects/enemies/goombas/textures/goomba.png" id="2_8xnig"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_21cco"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tm4ve"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_5ceaa"]
 [ext_resource type="Texture2D" uid="uid://dt4l713dj8ype" path="res://engine/objects/enemies/goombas/textures/goomba_stamped.png" id="3_bwyev"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_ccgfb"]
@@ -92,6 +93,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 7
+script = ExtResource("2_tm4ve")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false

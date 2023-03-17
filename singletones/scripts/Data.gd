@@ -42,3 +42,9 @@ func add_coin(amount: int = 1) -> void:
 	if Data.values.coins > 99:
 		Data.values.coins = 0
 		Thunder.add_lives(1)
+
+func add_score(amount: int) -> void:
+	Data.values.score += amount
+
+func add_lives(amount: int = 1) -> void:
+	Data.values.lives += amount
