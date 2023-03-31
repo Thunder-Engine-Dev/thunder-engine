@@ -1,7 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4ybecka645y6"]
+[gd_scene load_steps=18 format=3 uid="uid://c4ybecka645y6"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_0f4cl"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_3xxsn"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_t3grt"]
+[ext_resource type="PackedScene" uid="uid://b5tqloaji44l" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="3_arw64"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_yicjg"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_fhwgb"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_5whu3"]
@@ -13,6 +15,19 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_iogvd"]
+script = ExtResource("5_yicjg")
+creation_nodepack = ExtResource("3_arw64")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_llg06"]
 resource_local_to_scene = true
@@ -66,6 +81,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 7
+script = ExtResource("2_3xxsn")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false
@@ -74,8 +90,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_t3grt")
-stomping_enabled = false
-stomping_creation = null
+stomping_creation = SubResource("Resource_iogvd")
 stomping_scores = 100
 stomping_sound = ExtResource("6_fhwgb")
 killing_creation = SubResource("Resource_llg06")
@@ -105,4 +120,3 @@ script = ExtResource("12_5lllt")
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_flip_v" binds= [true]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_visible"]

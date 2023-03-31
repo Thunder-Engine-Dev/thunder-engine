@@ -64,6 +64,8 @@ extends Node
 @export var killing_sound_succeeded: AudioStream
 ## Sound triggered when the enemy blocks the attacker
 @export var killing_sound_failed: AudioStream
+@export_group("Sound", "sound_")
+@export var sound_pitch: float = 1.0
 @export_group("Extra")
 ## Custom vars for [member custom_scipt][br]
 @export var custom_vars: Dictionary
@@ -98,11 +100,11 @@ func _ready() -> void:
 
 
 func _lss():
-	Audio.play_sound(stomping_sound, _center)
+	Audio.play_sound(stomping_sound, _center, false, {pitch = sound_pitch})
 func _lks():
-	Audio.play_sound(killing_sound_succeeded, _center)
+	Audio.play_sound(killing_sound_succeeded, _center, false, {pitch = sound_pitch})
 func _lkf():
-	Audio.play_sound(killing_sound_failed, _center)
+	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch})
 
 
 ## Makes the enemy stomped by the player, usually triggered

@@ -2,17 +2,10 @@ extends GeneralMovementBody2D
 
 @export_category("KoopaShell")
 @export var stopping: bool = true
-@export var kicked_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
 @export var restoring_damage_delay: float = 0.8
-@export var combo_sound: Array[AudioStream] = [
-	null,
-	null,
-	null,
-	null,
-	null,
-	null,
-	null,
-]
+@export_group("sound", "sound_")
+@export var kicked_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
+@export var combo_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
 
 var _delayer: SceneTreeTimer
 
@@ -44,6 +37,7 @@ func status_update() -> void:
 	update_dir()
 	vel_set_x(0.0 if stopping else init_speed * -dir)
 	body.solid = stopping
+	body.turn_back = stopping
 	attack.killer_type = &"" if stopping else attack_type
 	
 	if !stopping:
@@ -81,9 +75,10 @@ func _on_killing(target_enemy_attacked: Node) -> void:
 		enemy_attacked.killing_immune.shell_defence <= target_enemy_attacked.killing_immune.shell_defence:
 			enemy_attacked.got_killed(&"shell_forced")
 	else:
-		combo.combo()
-		target_enemy_attacked.killing_sound_succeeded = combo_sound[combo.get_combo() - 1]
+		if !combo.get_combo() <= 0:
+			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.1475
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
+		combo.combo()
 
 
 func _on_body_entered(player: Node2D) -> void:
