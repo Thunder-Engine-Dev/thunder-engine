@@ -33,7 +33,7 @@ func _ready() -> void:
 
 # Adding neccessary nodes to our level scene
 func _prepare_template() -> void:
-	var player = load("res://engine/nodes/core/player/player.tscn").instantiate()
+	var player = load("res://engine/objects/core/player/player.tscn").instantiate()
 	add_child(player)
 	player.position = Vector2(80, 416)
 	player.set_owner(self)
