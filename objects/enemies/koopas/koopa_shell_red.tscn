@@ -1,0 +1,70 @@
+[gd_scene load_steps=12 format=3 uid="uid://bcfv3ma44i1dp"]
+
+[ext_resource type="PackedScene" uid="uid://b5tqloaji44l" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="1_7cyc1"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_m1tbr"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_pv3jy"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_06jjt"]
+[ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="5_rfrlf"]
+
+[sub_resource type="Resource" id="Resource_uscug"]
+resource_local_to_scene = true
+script = ExtResource("4_06jjt")
+creation_nodepack = ExtResource("2_m1tbr")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_pv3jy")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c541x"]
+atlas = ExtResource("5_rfrlf")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tpoa"]
+atlas = ExtResource("5_rfrlf")
+region = Rect2(0, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcxpk"]
+atlas = ExtResource("5_rfrlf")
+region = Rect2(32, 0, 32, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwjxl"]
+atlas = ExtResource("5_rfrlf")
+region = Rect2(64, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gapby"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c541x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tpoa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcxpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwjxl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="KoopaShellRed" instance=ExtResource("1_7cyc1")]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_creation = SubResource("Resource_uscug")
+
+[node name="Sprite" parent="." index="3"]
+sprite_frames = SubResource("SpriteFrames_gapby")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
