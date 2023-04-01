@@ -121,7 +121,7 @@ class View:
 	func cam_border() -> void:
 		var cam: Camera2D = Thunder.get_viewport().get_camera_2d()
 		trans = cam.get_viewport_transform()
-		border.size = cam.get_viewport_rect().size
+		border.size = Vector2i(cam.get_viewport_rect().size)
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of left edge of screen
@@ -138,7 +138,7 @@ class View:
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of bottom edge of screen
 	func screen_bottom(pos: Vector2, offset: float) -> bool:
-		return (trans * pos).y > border.size.y + offset
+		return (trans * pos).y < border.size.y + offset
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is out of the edge of screen, which is decided by
 	## [code]dir[/code] given

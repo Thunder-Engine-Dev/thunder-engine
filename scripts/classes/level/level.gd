@@ -62,8 +62,7 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
-	var bottom: float = (get_viewport_transform().affine_inverse() * get_viewport_rect().position).y + get_viewport_rect().size.y + falling_below_y_offset
-	if Thunder._current_player.global_position.y > bottom: # TEMP
+	if !Thunder.view.screen_bottom(Thunder._current_player.global_position, falling_below_y_offset): # TEMP
 		match falling_below_screen_action:
 			1: Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608
