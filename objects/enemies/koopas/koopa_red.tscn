@@ -35,7 +35,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("3_okgwa")
@@ -82,7 +82,7 @@ animations = [{
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_qcd8b")
 killing_creation = SubResource("Resource_u0sf6")
-metadata/_edit_pinned_properties_ = [&"stomping_creation"]
+metadata/_edit_pinned_properties_ = [&"stomping_creation", &"killing_creation"]
 
 [node name="Turner" type="RayCast2D" parent="." index="2"]
 visible = false

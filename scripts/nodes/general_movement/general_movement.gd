@@ -16,7 +16,7 @@ func _ready() -> void:
 	
 	if look_at_player && Thunder._current_player:
 		update_dir()
-		speed.x *= dir
+		speed_to_dir()
 
 
 func _physics_process(delta: float) -> void:
@@ -28,4 +28,8 @@ func _physics_process(delta: float) -> void:
 
 
 func update_dir() -> void:
-	dir = int((global_transform.affine_inverse().basis_xform(global_position.direction_to(Thunder._current_player.global_position))).sign().x)
+	dir = Thunder.Math.look_at(global_position, Thunder._current_player.global_position, global_transform)
+
+
+func speed_to_dir() -> void:
+	speed.x *= dir

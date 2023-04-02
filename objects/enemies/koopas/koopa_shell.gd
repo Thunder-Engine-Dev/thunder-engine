@@ -76,7 +76,7 @@ func _on_killing(target_enemy_attacked: Node) -> void:
 			enemy_attacked.got_killed(&"shell_forced")
 	else:
 		if !combo.get_combo() <= 0:
-			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.1475
+			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		combo.combo()
 

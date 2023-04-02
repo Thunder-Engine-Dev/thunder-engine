@@ -129,14 +129,8 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	stomped.emit()
 	
 	if dot > 0:
+		stomping_delay()
 		stomped_succeeded.emit()
-		
-		_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * 5)
-		_stomping_delayer.timeout.connect(
-			func() -> void:
-				_stomping_delayer = null
-		)
-		
 		if stomping_scores > 0:
 			ScoreText.new(str(stomping_scores), _center)
 			Data.values.score += stomping_scores
@@ -193,6 +187,13 @@ func _creation(creation: InstanceNode2D) -> void:
 	var vars: Dictionary = {enemy_attacked = self}
 	NodeCreator.prepare_ins_2d(creation, _center).execute_instance_script(vars).create_2d()
 
+
+func stomping_delay() -> void:
+	_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * 5)
+	_stomping_delayer.timeout.connect(
+		func() -> void:
+			_stomping_delayer = null
+	)
 
 
 func get_stomping_delayer() -> SceneTreeTimer:

@@ -45,9 +45,9 @@ func get_or_null(obj: Variant, key: String):
 	return obj[key]
 
 ## Find a child of [code]ref[/code] by [code]name[/code] of its class and return it or null
-func get_child_by_class_name(ref: Node, name: String) -> Node:
+func get_child_by_class_name(ref: Node, classname: String) -> Node:
 	for child in ref.get_children():
-		if child.is_class(name): return child
+		if child.is_class(classname): return child
 	return null
 
 ## Get relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
@@ -153,3 +153,13 @@ class View:
 		else:
 			return screen_bottom(pos, offset)
 			
+
+
+class Math:
+	## Return a point on a oval by given [param center], [param amplitude], [param phase], and [param rot(optional)]
+	static func oval(center: Vector2, amplitude: Vector2, phase: float, rot: float = 0) -> Vector2:
+		return center + Vector2(amplitude.x * cos(phase), amplitude.y * sin(phase)).rotated(rot)
+	
+	## Return a direction from one point ot another
+	static func look_at(from: Vector2, to: Vector2, trans: Transform2D) -> int:
+		return int((trans.affine_inverse().basis_xform(from.direction_to(to))).sign().x)
