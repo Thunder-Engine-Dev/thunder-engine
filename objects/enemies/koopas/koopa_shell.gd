@@ -56,6 +56,7 @@ func status_update() -> void:
 		
 #		enemy_attacked.remove_from_group(&"shell")
 		enemy_attacked.stomping_enabled = false
+		combo.reset_combo()
 
 
 func status_swap(to: bool) -> void:
