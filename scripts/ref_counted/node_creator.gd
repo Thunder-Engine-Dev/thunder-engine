@@ -5,10 +5,12 @@ class_name NodeCreator
 ## You are allowed to directly add a [Node2D], or add it via
 ## [InstanceNode2D]
 
+
 static func _instantiate_2d(pck: PackedScene) -> Node2D:
 	if !pck: return null
 	var node: Node2D = pck.instantiate() as Node2D
 	return node
+
 
 ## Used to create an 2D node from a [PackedScene] given
 static func prepare_2d(pck: PackedScene, on:Node2D) -> NodeCreation:
@@ -19,8 +21,9 @@ static func prepare_2d(pck: PackedScene, on:Node2D) -> NodeCreation:
 	
 	return NodeCreation.new(ins, on)
 
+
 ## Used to create an 2D node from a [InstanceNode2D] given
-static func prepare_ins_2d(ins2d:InstanceNode2D, on:Node2D) -> NodeCreation:
+static func prepare_ins_2d(ins2d: InstanceNode2D, on:Node2D) -> NodeCreation:
 	if !ins2d || !on || !ins2d.creation_nodepack: return NodeCreation.new(null, null)
 	
 	var ins: Node2D = _instantiate_2d(ins2d.creation_nodepack)
@@ -35,6 +38,7 @@ class NodeCreation extends RefCounted:
 	var _on: Node2D
 	var _ins2d: InstanceNode2D
 	
+	
 	func _init(node: Node2D, on: Node2D, ins2d: InstanceNode2D = null) -> void:
 		_node = node
 		_on = on
@@ -45,21 +49,24 @@ class NodeCreation extends RefCounted:
 	func get_node() -> Node2D:
 		return _node
 	
+	
 	## Call an [Callable] method for the instance[br]
-	## [color=red][b]Warning:[/b][/color] the method you are calling should contain a parameter in [Node2D] type as the first param of it
+	## [b]Warning:[/b] the method you are calling should contain a parameter in [Node2D] type as the first param of it
 	func call_method(method: Callable) -> NodeCreation:
 		if !_node: return self
 		if method: method.call(_node)
 		return self
 	
-	## Execute an [GDScript] extending from [ByNodeScript] with [code]custom_vars[/code]
+	
+	## Execute an [GDScript] extending from [ByNodeScript] with [param custom_vars]
 	func execute_script(custom_script: GDScript, custom_vars: Dictionary = {}) -> NodeCreation:
 		if !_node || !custom_script: return self
 		var _scr: Script = ByNodeScript.activate_script(custom_script, _node, custom_vars)
 		return self
 	
-	## Execute an [member InstanceNode2D.custom_script] input with [code]custom_vars[/code][br]
-	## If [code]which_method[/code] in the script exists, the method will be called before its [code]_ready()[/code] if available
+	
+	## Execute an [member InstanceNode2D.custom_script] input with [param custom_vars][br]
+	## If [param which_method] in the script exists, the method will be called before its [method ByNodeScript._ready] if available
 	func execute_instance_script(custom_vars: Dictionary = {}, which_method: StringName = &"") -> NodeCreation:
 		if !_node || !_ins2d.custom_script: return self
 		var vars: Dictionary = custom_vars
@@ -67,6 +74,7 @@ class NodeCreation extends RefCounted:
 		var scr: Script = ByNodeScript.activate_script(_ins2d.custom_script, _node, vars)
 		if which_method in scr.get_script_method_list(): scr.call(which_method)
 		return self
+	
 	
 	## If you haven't called [method NodeCreator.prepare_ins_2d], then you need to call this function
 	## to set the [member Node2D.global_transform] of the node input[br]
@@ -77,10 +85,11 @@ class NodeCreation extends RefCounted:
 		_node.skew = _on.global_skew
 		return self
 	
+	
 	## Execute adding the node input to the tree[br]
-	## If you called [method NodeCreator.prepare_ins_2d] with [code]ins2d[/code] input, the function will automatically make the node 
+	## If you called [method NodeCreator.prepare_ins_2d] with [param ins2d] input, the function will automatically make the node 
 	## input inherit the transform properties in [InstanceNode2D][br]
-	## If [code]ins2d[/code] input, the input one will override the existing one
+	## If [param ins2d] input, the input one will override the existing one
 	func create_2d(as_sibling: bool = true, ins2d: InstanceNode2D = null) -> NodeCreation:
 		if !_node: return self
 		

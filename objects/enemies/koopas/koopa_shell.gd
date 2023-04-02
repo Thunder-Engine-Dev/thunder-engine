@@ -3,7 +3,7 @@ extends GeneralMovementBody2D
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.8
-@export_group("sound", "sound_")
+@export_group("Sound", "sound_")
 @export var kicked_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
 @export var combo_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
 

@@ -1,4 +1,3 @@
-# Create a Node2D with physics and some other parameters
 extends Resource
 class_name InstanceNode2D
 

@@ -2,7 +2,7 @@ extends GDScript
 class_name ByNodeScript
 
 ## A kind of [GDScript] that supports fast access to nodes, variables, and resources[br]
-## [color=orange][b]Note:[/b][/color] You need a variable assigned with [code]static[/code] [method activate_script]
+## [b]Note:[/b] You need a variable assigned with [code]static[/code] [method activate_script]
 ## to make the script you firstly set instantiated and work
 ## [codeblock]
 ## @export var custom_script: GDScript = preload(...)
@@ -21,10 +21,9 @@ var node: Node
 var vars: Dictionary
 
 ## Used to activate a resource script[br]
-## [code]script[/code] is that resource script you need to make be running[br]
-## [code]by[/code] is the node you need to bind as the root node to get fast access[br]
-## [code]new_vars[/code], [code]new_other_nodes[/code] and [code]new_other_resources[/code] are [i]optinal[/i], 
-## for register of [memebr vars], [member other_nodes] and [memebr other_resources] respectively
+## [param script] is that resource script you need to make be running[br]
+## [param by] is the node you need to bind as the root node to get fast access[br]
+## [param new_vars] is [i]optinal[/i], used to give the script the vars to use
 static func activate_script(script: GDScript, by: Node, new_vars: Dictionary = {}) -> GDScript:
 	var result: GDScript
 	if script:
@@ -60,13 +59,13 @@ func _exit_tree() -> void:
 	pass
 
 ## [code]@abstract[/code] called by [member node]'s [method Node._process][br]
-## [color=orange][b]Note:[/b][/color] sometimes you need to assign a variable to get delta:[br]
-## [code]var delta: float = node.get_process_delta_time()[/code]
+## [b]Note:[/b] sometimes you need to assign a variable to get delta:[br]
+## [code]delta: float = node.get_process_delta_time()[/code]
 func _process(delta: float) -> void:
 	pass
 
 ## [code]@abstract[/code] called by [member node]'s [method Node._physics_process][br]
-## [color=orange][b]Note:[/b][/color] sometimes you need to assign a variable to get delta:[br]
-## [code]var delta: float = node.get_physics_process_delta_time()[/code]
+## [b]Note:[/b] sometimes you need to assign a variable to get delta:[br]
+## [code]delta: float = node.get_physics_process_delta_time()[/code]
 func _physics_process(delta: float) -> void:
 	pass

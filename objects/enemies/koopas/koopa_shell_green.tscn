@@ -78,11 +78,11 @@ floor_constant_speed = true
 floor_snap_length = 8.0
 script = ExtResource("1_4u51b")
 look_at_player = true
-deep_snap = false
+slide = true
 sprite = NodePath("Sprite")
 speed = Vector2(250, 0)
 gravity_scale = 0.5
-metadata/_edit_pinned_properties_ = [&"deep_snap", &"gravity_scale", &"speed", &"look_at_player", &"sprite"]
+metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"look_at_player", &"sprite", &"slide"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

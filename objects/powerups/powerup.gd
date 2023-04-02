@@ -2,8 +2,7 @@ extends GravityBody2D
 class_name Powerup
 
 @export_group("PowerupSettings")
-@export var deep_snap: bool = true
-@export var kinematic_movement: bool = true
+@export var slide: bool = true
 @export var set_player_state: PlayerStateData
 @export var force_powerup_state: bool = false
 @export var appear_distance: float = 32
@@ -27,7 +26,7 @@ func _from_bumping_block() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !appear_distance:
-		motion_process(Thunder.get_delta(delta), deep_snap, kinematic_movement)
+		motion_process(Thunder.get_delta(delta), slide)
 		z_index = 0
 	else:
 		appear_process(Thunder.get_delta(delta))

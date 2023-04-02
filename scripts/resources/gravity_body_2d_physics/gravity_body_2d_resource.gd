@@ -11,10 +11,10 @@ class_name GravityBody2DPhysics
 @export var gravity_scale: float
 @export var max_falling_speed: float
 
-var gravity_body:GravityBody2D
+var gravity_body: GravityBody2D
 
 
-func bind(grav_body:GravityBody2D) -> GravityBody2DPhysics:
+func bind(grav_body: GravityBody2D) -> GravityBody2DPhysics:
 	gravity_body = grav_body
 	
 	return self

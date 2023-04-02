@@ -4,8 +4,7 @@ class_name GeneralMovementBody2D
 @export_category("GeneralMovement")
 @export var look_at_player: bool
 @export var turn_sprite: bool = true
-@export var deep_snap: bool = true
-@export var kinematic_movement: bool = true
+@export var slide: bool
 @export_category("References")
 @export var sprite: NodePath
 
@@ -19,8 +18,9 @@ func _ready() -> void:
 		update_dir()
 		speed.x *= dir
 
+
 func _physics_process(delta: float) -> void:
-	motion_process(Thunder.get_delta(delta), deep_snap, kinematic_movement)
+	motion_process(Thunder.get_delta(delta), slide)
 	
 	var sprite_node = get_node_or_null(sprite)
 	if turn_sprite && sprite_node:
@@ -28,4 +28,4 @@ func _physics_process(delta: float) -> void:
 
 
 func update_dir() -> void:
-	dir = (global_transform.affine_inverse().basis_xform(global_position.direction_to(Thunder._current_player.global_position))).sign().x
+	dir = int((global_transform.affine_inverse().basis_xform(global_position.direction_to(Thunder._current_player.global_position))).sign().x)
