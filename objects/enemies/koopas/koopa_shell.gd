@@ -1,8 +1,12 @@
 extends GeneralMovementBody2D
 
+const Shell: Script = preload("./koopa_shell.gd")
+
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.8
+@export_subgroup("Attack")
+@export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
 @export var kicked_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
 @export var combo_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
@@ -70,16 +74,18 @@ func sound() -> void:
 
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	if target_enemy_attacked == enemy_attacked: return
-	if target_enemy_attacked.is_in_group(&"shell") && \
-		target_enemy_attacked.owner.get_script() == get_script() && \
+	# Shells crashing with each other
+	if is_instance_of(target_enemy_attacked.owner, Shell) && \
 		!target_enemy_attacked.owner.stopping && \
-		enemy_attacked.killing_immune.shell_defence <= target_enemy_attacked.killing_immune.shell_defence:
+		sharpness <= target_enemy_attacked.killing_immune.shell_defence:
 			enemy_attacked.got_killed(&"shell_forced")
-	elif result.result:
+	# Combo
+	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
 		if !combo.get_combo() <= 0:
 			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		combo.combo()
+	# Gets blocked
 	else:
 		enemy_attacked.got_killed(&"shell_forced")
 

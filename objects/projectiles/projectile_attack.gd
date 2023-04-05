@@ -33,7 +33,7 @@ func _kill_enemy() -> void:
 	var result:Dictionary 
 	for i in get_collision_count():
 		var ins:Area2D = get_collider(i) as Area2D
-		if !ins: continue
+		if !ins || ins.get_parent() == get_parent(): continue
 		
 		var enemy_attacked:Node = ins.get_node_or_null(^"EnemyAttacked")
 		if !enemy_attacked: continue

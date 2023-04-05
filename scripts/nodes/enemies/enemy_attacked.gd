@@ -157,12 +157,18 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 	
 	if !killing_enabled || !by in killing_immune: return result
 	
-	if killing_immune[by] || &"shell_attack" in special_tags:
+	if killing_immune[by]:
 		killed_failed.emit()
 		
 		result = {
 			result = false,
 			attackee = self
+		}
+	elif &"shell_attack" in special_tags:
+		result = {
+			result = true,
+			attackee = self,
+			type = &"shell"
 		}
 	else:
 		killed_succeeded.emit()
