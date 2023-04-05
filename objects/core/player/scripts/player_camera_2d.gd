@@ -7,7 +7,6 @@ func _ready():
 	make_current()
 	teleport()
 
-#func _process(_delta): teleport()
 func _physics_process(_delta): teleport()
 
 func teleport() -> void:
