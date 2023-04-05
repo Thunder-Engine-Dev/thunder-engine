@@ -74,9 +74,6 @@ func _physics_process(delta: float) -> void:
 		match falling_below_screen_action:
 			1: Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608
-	
-	if Input.is_action_just_pressed("m_up"):
-		finish()
 
 
 func finish() -> void:
