@@ -68,18 +68,20 @@ func sound() -> void:
 	Audio.play_sound(kicked_sound, self)
 
 
-func _on_killing(target_enemy_attacked: Node) -> void:
+func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	if target_enemy_attacked == enemy_attacked: return
 	if target_enemy_attacked.is_in_group(&"shell") && \
 		target_enemy_attacked.owner.get_script() == get_script() && \
 		!target_enemy_attacked.owner.stopping && \
 		enemy_attacked.killing_immune.shell_defence <= target_enemy_attacked.killing_immune.shell_defence:
 			enemy_attacked.got_killed(&"shell_forced")
-	else:
+	elif result.result:
 		if !combo.get_combo() <= 0:
 			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		combo.combo()
+	else:
+		enemy_attacked.got_killed(&"shell_forced")
 
 
 func _on_body_entered(player: Node2D) -> void:

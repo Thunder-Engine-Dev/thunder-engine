@@ -1,13 +1,15 @@
 extends AnimatedSprite2D
 
+@export_category("Wing")
 @export var flip_as_parent: bool = true
+@export var follow_parent_animation_speed: bool = true
 
 @onready var sprite: AnimatedSprite2D = get_parent() as AnimatedSprite2D
 @onready var pos_x: float = position.x
 
 
 func _ready() -> void:
-	if sprite:
+	if sprite && follow_parent_animation_speed:
 		sprite_frames.set_animation_speed(animation, sprite.sprite_frames.get_animation_speed(sprite.animation))
 
 

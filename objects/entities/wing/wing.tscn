@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bygif6p7x4soj"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Texture2D" uid="uid://dte3ul3uk6t4h" path="res://engine/objects/entities/wings.png" id="1_print"]
-[ext_resource type="Script" path="res://engine/objects/entities/wings.gd" id="2_65m4u"]
+[ext_resource type="Texture2D" uid="uid://dte3ul3uk6t4h" path="res://engine/objects/entities/wing/texture/wing.png" id="1_print"]
+[ext_resource type="Script" path="res://engine/objects/entities/wing/wing.gd" id="2_65m4u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_atpof"]
 atlas = ExtResource("1_print")

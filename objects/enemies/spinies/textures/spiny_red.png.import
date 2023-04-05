@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dte3ul3uk6t4h"
-path="res://.godot/imported/wings.png-5d183e3381c608d27c6d1bdca109e941.ctex"
+uid="uid://du5b4o1tollys"
+path="res://.godot/imported/spiny_red.png-0ce7c6c27de859bf8b864333730ed71c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/entities/wings.png"
-dest_files=["res://.godot/imported/wings.png-5d183e3381c608d27c6d1bdca109e941.ctex"]
+source_file="res://engine/objects/enemies/spinies/textures/spiny_red.png"
+dest_files=["res://.godot/imported/spiny_red.png-0ce7c6c27de859bf8b864333730ed71c.ctex"]
 
 [params]
 

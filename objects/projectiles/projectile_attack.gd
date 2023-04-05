@@ -9,7 +9,8 @@ var belongs_to: Data.PROJECTILE_BELONGS
 
 @onready var par:Node2D = get_parent()
 
-signal killed(what: Node)
+signal killed(what: Node, result: Dictionary)
+signal killed_notify
 signal killed_succeeded
 signal killed_failed
 signal damaged_player
@@ -41,11 +42,13 @@ func _kill_enemy() -> void:
 	if result.is_empty(): return
 	var attackee: Node = result.attackee if &"attackee" in result else null
 	if result.result:
-		killed.emit(attackee)
+		killed_notify.emit()
+		killed.emit(attackee, result)
 		killed_succeeded.emit()
 		return
 	else:
-		killed.emit(attackee)
+		killed_notify.emit()
+		killed.emit(attackee, result)
 		killed_failed.emit()
 		return
 

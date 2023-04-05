@@ -12,7 +12,6 @@ size = Vector2(20, 32)
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_qd3dy")
-deep_snap = false
 speed = Vector2(120, -300)
 gravity_scale = 0.4
 
@@ -41,5 +40,5 @@ script = ExtResource("3_3efnn")
 [connection signal="collided_floor" from="." to="." method="bounce"]
 [connection signal="collided_wall" from="." to="." method="bounce"]
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="killed" from="Attack" to="." method="bounce" binds= [false]]
+[connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

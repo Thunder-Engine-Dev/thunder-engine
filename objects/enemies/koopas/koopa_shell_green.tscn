@@ -128,9 +128,8 @@ sprite_frames = SubResource("SpriteFrames_2216j")
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_flip_v" binds= [true]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="status_swap" binds= [true]]
 [connection signal="killed" from="Attack" to="." method="_on_killing"]

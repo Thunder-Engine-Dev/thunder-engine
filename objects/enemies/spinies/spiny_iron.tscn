@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://crb8jkwa0r1dl"]
+
+[ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_b77y2"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yr4ok"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_rrxf1"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_f1y31"]
+[ext_resource type="Texture2D" uid="uid://6jvnknfhxi0m" path="res://engine/objects/enemies/spinies/textures/spiny_iron.png" id="5_wysra"]
+
+[sub_resource type="Resource" id="Resource_0woj2"]
+resource_local_to_scene = true
+script = ExtResource("4_f1y31")
+creation_nodepack = ExtResource("2_yr4ok")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_rrxf1")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7adc"]
+atlas = ExtResource("5_wysra")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blibx"]
+atlas = ExtResource("5_wysra")
+region = Rect2(0, 32, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l71n6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7adc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blibx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="SpinyIron" instance=ExtResource("1_b77y2")]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": true,
+"starman": false
+}
+killing_creation = SubResource("Resource_0woj2")
+metadata/_edit_pinned_properties_ = [&"killing_immune"]
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_l71n6")
