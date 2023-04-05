@@ -10,6 +10,13 @@ class_name Level
 ## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.
 @export var time: int = 360
 
+@export_group("Level Completion")
+
+## Level completion music
+@export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
+## Jump to scene after level completion sequence
+@export var jump_to_scene: String
+
 @export_group("Player's Falling Below")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
 ## 0 = Nothing[br]
@@ -19,6 +26,7 @@ class_name Level
 
 ## Modifies the bottom line that detect player as "falling below the screen"
 @export var falling_below_y_offset: float = 64.0
+
 
 
 func _ready() -> void:
@@ -58,7 +66,7 @@ func _prepare_template() -> void:
 	hud.set_owner(self)
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -66,4 +74,25 @@ func _physics_process(delta):
 		match falling_below_screen_action:
 			1: Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608
+	
+	if Input.is_action_just_pressed("m_up"):
+		finish()
 
+
+func finish() -> void:
+	Thunder._current_hud.timer.paused = true
+	Thunder._current_player.controls_enabled = false
+	Audio.play_music(completion_music, 1)
+	await Audio._music_channels[1].finished
+	
+	Thunder._current_hud.time_countdown_finished.connect(
+		func() -> void:
+			await get_tree().create_timer(0.5).timeout
+			
+			if jump_to_scene:
+				Scenes.load_scene_from_packed(load(jump_to_scene))
+			else:
+				printerr("[Level] Jump to scene is not defined in the level.")
+	)
+	Thunder._current_hud.time_countdown()
+	

@@ -31,6 +31,7 @@ func _on_body_exited(body: Node2D) -> void:
 		player.states.set_state("default")
 		player.z_index = 0
 		player = null
+		Thunder._current_hud.timer.paused = false
 
 
 func pass_player(new_player: Player) -> void:

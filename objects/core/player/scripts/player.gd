@@ -15,6 +15,8 @@ signal collision_shape_changed
 @export var custom_script: Script
 ## Used to define the suit state of the player. See [PlayerStateData]
 @export var default_player_state: PlayerStateData = PlayerStateData.new()
+## Should player be controllable?
+@export var controls_enabled: bool = true
 
 ## A state machine to control the state of the player. See [PlayerStatesManager]
 var states: PlayerStatesManager = PlayerStatesManager.new(self)
@@ -115,7 +117,7 @@ func _movement_generic(delta: float) -> void:
 	
 	# Controls
 	if states.current_state != "crouch":
-		states.left_or_right = int(Input.get_axis(config.control_left, config.control_right))
+		states.left_or_right = int(_get_axis(config.control_left, config.control_right))
 	else:
 		states.left_or_right = 0
 	var walk: int = states.left_or_right
@@ -130,15 +132,15 @@ func _movement_generic(delta: float) -> void:
 			velocity_local.x = config.initial_accel_trigger * walk
 		elif mark_x <= -config.initial_accel_trigger:
 			velocity_local.x += config.initial_accel_trigger * delta * walk
-		elif speed_x < config.max_walk_speed && !Input.is_action_pressed(config.control_run):
+		elif speed_x < config.max_walk_speed && !_is_action_pressed(config.control_run):
 			velocity_local.x += config.acceleration_speed * delta * walk
-		elif speed_x < config.max_run_speed && Input.is_action_pressed(config.control_run):
+		elif speed_x < config.max_run_speed && _is_action_pressed(config.control_run):
 			velocity_local.x += config.acceleration_speed * delta * walk
 
 
 func _movement_default(delta: float) -> void:
 	# Hold jump
-	if !is_on_floor() && Input.is_action_pressed(config.control_jump) && velocity_local.y < 0:
+	if !is_on_floor() && _is_action_pressed(config.control_jump) && velocity_local.y < 0:
 		states.set_state("jump")
 		if abs(velocity_local.x) < 1:
 			velocity_local.y -= config.jump_speed_stopped * delta
@@ -155,19 +157,19 @@ func _movement_default(delta: float) -> void:
 	elif velocity_local.x < config.initial_acceleration:
 		states.dir = -1
 	
-	if Input.is_action_pressed(config.control_down) && Thunder._current_player_state.player_power != Data.PLAYER_POWER.SMALL:
+	if _is_action_pressed(config.control_down) && Thunder._current_player_state.player_power != Data.PLAYER_POWER.SMALL:
 		states.set_state("crouch")
 	
-	if !Input.is_action_pressed(config.control_down) && states.current_state == "crouch":
+	if !_is_action_pressed(config.control_down) && states.current_state == "crouch":
 		states.set_state("default")
 	
-	if Input.is_action_just_pressed(config.control_jump) && !is_on_floor() && velocity_local.y > 0:
+	if _is_action_just_pressed(config.control_jump) && !is_on_floor() && velocity_local.y > 0:
 		states.jump_buffer = true
 	
-	if Input.is_action_just_released(config.control_jump):
+	if _is_action_just_released(config.control_jump):
 		states.jump_buffer = false
 	
-	if (Input.is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && states.current_state != "crouch":
+	if (_is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && states.current_state != "crouch":
 		velocity_local.y = -config.jump_velocity
 		states.jump_buffer = false
 		Audio.play_sound(config.jump_sound, self, true, {pitch = config.sound_pitch})
@@ -243,7 +245,7 @@ func _stomping() -> void:
 	if result.is_empty(): return
 	
 	if result.result == true:
-		if Input.is_action_pressed(config.control_jump):
+		if _is_action_pressed(config.control_jump):
 			velocity_local.y = -result.jumping_max * config.stomp_multiplicator
 		else:
 			velocity_local.y = -result.jumping_min * config.stomp_multiplicator
@@ -378,6 +380,24 @@ func kill() -> void:
 	
 	Audio.play_music(config.die_music, 1, {pitch = config.sound_pitch})
 
+
+## Modified is_action_pressed
+func _is_action_pressed(action: StringName, exact_match: bool = false) -> bool:
+	return controls_enabled && Input.is_action_pressed(action, exact_match)
+
+## Modified is_action_just_pressed
+func _is_action_just_pressed(action: StringName, exact_match: bool = false) -> bool:
+	return controls_enabled && Input.is_action_just_pressed(action, exact_match)
+
+## Modified is_action_just_released
+func _is_action_just_released(action: StringName, exact_match: bool = false) -> bool:
+	return controls_enabled && Input.is_action_just_released(action, exact_match)
+
+## Modified get_axis
+func _get_axis(negative_action: StringName, positive_action: StringName) -> float:
+	return Input.get_axis(negative_action, positive_action) if controls_enabled else 0
+
+
 func _debug_info() -> String:
 	return (
 """x: %f
@@ -409,7 +429,6 @@ func _debug_setup_label() -> void:
 	var label: Label = Label.new()
 	label.visible = false
 	label.uppercase = true
-	#label.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	label.label_settings = LabelSettings.new()
 	label.label_settings.font = preload("res://engine/components/hud/hud_font.fnt")
 	label.scale = Vector2(0.75, 0.75)

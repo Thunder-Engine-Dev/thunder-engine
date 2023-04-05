@@ -12,7 +12,7 @@ func _physics_process(delta: float) -> void:
 	if player.states.projectiles_count <= 0 || player.states.current_state == "dead":
 		return
 	
-	if Input.is_action_just_pressed("m_run"):
+	if player._is_action_just_pressed("m_run"):
 		NodeCreator.prepare_ins_2d(vars.bullet, player).call_method(func(ins: GravityBody2D) -> void:
 			ins.speed = vars.bullet_speed
 			if player.sprite.flip_h: ins.speed.x = -abs(ins.speed.x)
