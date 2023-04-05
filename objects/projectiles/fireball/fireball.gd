@@ -11,6 +11,7 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 func _ready():
 	super()
 
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	
@@ -19,6 +20,7 @@ func _physics_process(delta: float) -> void:
 
 func jump(jspeed:float = jumping_speed) -> void:
 	super(jspeed)
+
 
 func explode():
 	var effect: Callable = func(eff: Node2D) -> void:
@@ -35,3 +37,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func _exit_tree():
 	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
 		Thunder._current_player.states.projectiles_count += 1
+
+
+func _on_attack_killed_notify():
+	pass # Replace with function body.

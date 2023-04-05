@@ -12,7 +12,6 @@ radius = 8.0
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hkxrj")
-deep_snap = false
 speed = Vector2(387.5, 0)
 gravity_scale = 0.5
 
@@ -39,5 +38,5 @@ script = ExtResource("3_sssv4")
 [connection signal="collided_floor" from="." to="." method="jump"]
 [connection signal="collided_wall" from="." to="." method="explode"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
-[connection signal="killed" from="Attack" to="." method="explode"]
+[connection signal="killed_notify" from="Attack" to="." method="explode"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
