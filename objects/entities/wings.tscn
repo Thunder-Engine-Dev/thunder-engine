@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bygif6p7x4soj"]
+
+[ext_resource type="Texture2D" uid="uid://dte3ul3uk6t4h" path="res://engine/objects/entities/wings.png" id="1_print"]
+[ext_resource type="Script" path="res://engine/objects/entities/wings.gd" id="2_65m4u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atpof"]
+atlas = ExtResource("1_print")
+region = Rect2(0, 0, 15, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nwh5"]
+atlas = ExtResource("1_print")
+region = Rect2(0, 28, 15, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21d5r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atpof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nwh5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Wings" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_21d5r")
+autoplay = "default"
+frame_progress = 0.0991579
+script = ExtResource("2_65m4u")

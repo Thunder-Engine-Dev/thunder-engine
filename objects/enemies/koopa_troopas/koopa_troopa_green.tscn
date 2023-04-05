@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bdfnyft5eyf03"]
+[gd_scene load_steps=23 format=3 uid="uid://bdfnyft5eyf03"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_fjnp1"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8i1ht"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c3iwbjridbirg" path="res://engine/objects/enemies/koopas/textures/koopa.png" id="10_cn3qv"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell.png" id="11_2yxir"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_ytsr5"]
+[ext_resource type="PackedScene" uid="uid://bygif6p7x4soj" path="res://engine/objects/entities/wings.tscn" id="14_wfoaj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
@@ -95,6 +96,7 @@ sprite = NodePath("Sprite")
 metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"]
 
 [node name="Body" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_8i1ht")
@@ -121,6 +123,9 @@ position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_oof6l")
 autoplay = "default"
 
+[node name="Wings" parent="Sprite" instance=ExtResource("14_wfoaj")]
+position = Vector2(-8, -9)
+
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
 rotation = 3.14159
@@ -131,6 +136,6 @@ visible = false
 script = ExtResource("12_ytsr5")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_flip_v" binds= [true]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_flip_v" binds= [true]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
