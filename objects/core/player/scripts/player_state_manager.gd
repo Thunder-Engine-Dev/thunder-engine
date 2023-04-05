@@ -119,8 +119,10 @@ func _update_animations() -> void:
 	if owner.velocity_local.x != 0:
 		owner.sprite.flip_h = (owner.velocity_local.x < 0)
 	
-	var size = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame).get_size()
-	owner.sprite.offset = Vector2(-size.x / 2, -size.y)
+	var texture = owner.sprite.sprite_frames.get_frame_texture(owner.sprite.animation, owner.sprite.frame)
+	if texture:
+		var size = texture.get_size()
+		owner.sprite.offset = Vector2(-size.x / 2, -size.y)
 
 func _set_animation(animation) -> bool:
 	if owner.sprite.sprite_frames.has_animation(animation):
