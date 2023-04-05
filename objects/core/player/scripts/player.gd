@@ -15,8 +15,6 @@ signal collision_shape_changed
 @export var custom_script: Script
 ## Used to define the suit state of the player. See [PlayerStateData]
 @export var default_player_state: PlayerStateData = PlayerStateData.new()
-## Should player be controllable?
-@export var controls_enabled: bool = true
 
 ## A state machine to control the state of the player. See [PlayerStatesManager]
 var states: PlayerStatesManager = PlayerStatesManager.new(self)
@@ -329,6 +327,7 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 
 ## If called, make the player get hurt
 func powerdown() -> void:
+	if states.invincible: return
 	if states.invincible_timer > 0: return
 	
 	if Thunder._current_player_state.powerdown_state:
@@ -350,6 +349,8 @@ func powerup(state: PlayerStateData) -> void:
 
 ## If called, the player dies
 func kill() -> void:
+	if states.invincible: return
+	
 	if states.current_state == "dead":#
 		return
 	states.set_state("dead")
@@ -383,19 +384,19 @@ func kill() -> void:
 
 ## Modified is_action_pressed
 func _is_action_pressed(action: StringName, exact_match: bool = false) -> bool:
-	return controls_enabled && Input.is_action_pressed(action, exact_match)
+	return states.controls_enabled && Input.is_action_pressed(action, exact_match)
 
 ## Modified is_action_just_pressed
 func _is_action_just_pressed(action: StringName, exact_match: bool = false) -> bool:
-	return controls_enabled && Input.is_action_just_pressed(action, exact_match)
+	return states.controls_enabled && Input.is_action_just_pressed(action, exact_match)
 
 ## Modified is_action_just_released
 func _is_action_just_released(action: StringName, exact_match: bool = false) -> bool:
-	return controls_enabled && Input.is_action_just_released(action, exact_match)
+	return states.controls_enabled && Input.is_action_just_released(action, exact_match)
 
 ## Modified get_axis
 func _get_axis(negative_action: StringName, positive_action: StringName) -> float:
-	return Input.get_axis(negative_action, positive_action) if controls_enabled else 0
+	return Input.get_axis(negative_action, positive_action) if states.controls_enabled else 0
 
 
 func _debug_info() -> String:

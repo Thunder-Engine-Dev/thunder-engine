@@ -15,6 +15,9 @@ var invincible_timer: float = 0
 var appear_timer: float = 0
 var launch_timer: float = 0
 
+var controls_enabled: bool = true
+var invincible: bool = false
+
 func _init(owner_node: Node2D) -> void:
 	super(owner_node)
 	add_states([

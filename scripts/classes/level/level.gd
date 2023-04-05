@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 
 func finish() -> void:
 	Thunder._current_hud.timer.paused = true
-	Thunder._current_player.controls_enabled = false
+	Thunder._current_player.states.controls_enabled = false
 	Audio.play_music(completion_music, 1)
 	await Audio._music_channels[1].finished
 	
