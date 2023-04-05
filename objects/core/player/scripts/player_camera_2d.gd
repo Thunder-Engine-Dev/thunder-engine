@@ -3,10 +3,11 @@ class_name PlayerCamera2D
 
 
 func _ready():
+	Thunder._current_camera = self
 	make_current()
 	teleport()
 
-func _process(_delta): teleport()
+#func _process(_delta): teleport()
 func _physics_process(_delta): teleport()
 
 func teleport() -> void:

@@ -39,6 +39,8 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 		assert(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer), "HUD node is invalid or not set")
 		return _current_hud
 
+var _current_camera: Camera2D
+
 ## Get an [code]key[/code] from [code]obj[/code], this won't send any errors if there is no such key in the object
 func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
@@ -119,7 +121,7 @@ class View:
 	## Update [member border] and [member trans] for detectional functions, you need to call this method
 	## in [method Node._process] or [method Node.__physics_process] to get better use of it
 	func cam_border() -> void:
-		var cam: Camera2D = Scenes._current_root.get_viewport().get_camera_2d()
+		var cam: Camera2D = Thunder._current_camera
 		if !cam:
 			printerr("[Thunder Engine] Failed to retrieve current camera, is the current viewport correct?")
 			return
