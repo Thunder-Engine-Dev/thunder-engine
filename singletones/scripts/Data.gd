@@ -33,7 +33,8 @@ var values: Dictionary = {
 	lives = -1,
 	score = 0,
 	coins = 0,
-	time = -1
+	time = -1,
+	checkpoint = -1
 }
 
 

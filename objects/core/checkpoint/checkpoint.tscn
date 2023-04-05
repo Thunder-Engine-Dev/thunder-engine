@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddwxc43m3q1c6"]
+
+[ext_resource type="Script" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
+[ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
+[ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ta5g1"]
+size = Vector2(112, 112)
+
+[sub_resource type="Animation" id="Animation_xksp8"]
+resource_name = "checkpoint"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -86), Vector2(0, -83.1), Vector2(0, -86)]
+}
+
+[sub_resource type="Animation" id="Animation_o8ube"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -85)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h2w1e"]
+_data = {
+"RESET": SubResource("Animation_o8ube"),
+"checkpoint": SubResource("Animation_xksp8")
+}
+
+[node name="Checkpoint" type="Area2D"]
+script = ExtResource("1_ssh5j")
+
+[node name="Sign" type="Sprite2D" parent="."]
+position = Vector2(9, -55)
+texture = ExtResource("1_uqans")
+
+[node name="Text" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.188235)
+position = Vector2(0, -85)
+texture = ExtResource("2_13hdd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(8, -56)
+shape = SubResource("RectangleShape2D_ta5g1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_h2w1e")
+}
