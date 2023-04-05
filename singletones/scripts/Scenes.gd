@@ -6,10 +6,10 @@ extends Node
 
 ## The scene that is displaying and running, instead of main scene when you run
 ## the whole project and defined a main scene and try referring [member SceneTree.current_scene]
-var current_scene:Node
+var current_scene: Node
 var _current_scene_path: String
-var _current_scene_packed:PackedScene
-var _current_root:Node
+var _current_scene_packed: PackedScene
+var _current_root: Node
 
 var _hung_scene:Node
 var _hung_scene_process_mode:ProcessMode

@@ -119,7 +119,10 @@ class View:
 	## Update [member border] and [member trans] for detectional functions, you need to call this method
 	## in [method Node._process] or [method Node.__physics_process] to get better use of it
 	func cam_border() -> void:
-		var cam: Camera2D = Thunder.get_viewport().get_camera_2d()
+		var cam: Camera2D = Scenes._current_root.get_viewport().get_camera_2d()
+		if !cam:
+			printerr("[Thunder Engine] Failed to retrieve current camera, is the current viewport correct?")
+			return
 		trans = cam.get_viewport_transform()
 		border.size = Vector2i(cam.get_viewport_rect().size)
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
