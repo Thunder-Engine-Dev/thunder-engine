@@ -1,6 +1,6 @@
 # Base for blocks that can be bumped from below like bricks and question blocks
 @icon("res://engine/scripts/classes/bumping_block/icon.png")
-extends StaticBody2D
+extends AnimatableBody2D
 class_name StaticBumpingBlock
 
 ## Base class for blocks that can be bumped by players and enemies[br]

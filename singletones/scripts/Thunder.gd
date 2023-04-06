@@ -41,16 +41,19 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 
 var _current_camera: Camera2D
 
+
 ## Get an [code]key[/code] from [code]obj[/code], this won't send any errors if there is no such key in the object
 func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
 	return obj[key]
+
 
 ## Find a child of [code]ref[/code] by [code]name[/code] of its class and return it or null
 func get_child_by_class_name(ref: Node, classname: String) -> Node:
 	for child in ref.get_children():
 		if child.is_class(classname): return child
 	return null
+
 
 ## Get relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
 func get_delta(delta: float) -> float:
@@ -69,9 +72,11 @@ func _init() -> void:
 	# Setting minimum window dimensions
 	DisplayServer.window_set_min_size(Vector2i(640, 480))
 
+
 ## Discarded, see [method "engine/singletones/scripts/Scenes.gd".switch_to_scene]
 func goto_scene(path) -> void:
 	call_deferred(&"_deferred_goto_scene", path)
+
 
 func _deferred_goto_scene(path) -> void:
 	Scenes.current_scene.free()
@@ -82,6 +87,7 @@ func _deferred_goto_scene(path) -> void:
 	
 	if !Scenes.current_scene.is_inside_tree():
 		get_tree().root.add_child(Scenes.current_scene)
+
 
 ## Add lives for [member _current_player][br]
 ## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be between 1 and 10, or an error will be sent to console. 
@@ -95,6 +101,7 @@ func add_lives(count: int):
 	Data.values.lives += count
 	ScoreTextLife.new("%sUP" % count, _current_player)
 
+
 ## Add scores for [member _current_player][br]
 ## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be greater than 0, or an error will be sent to console.
 ## So if you want to cut down the scores, please code:[br]
@@ -107,9 +114,11 @@ func add_score(count: int):
 	Data.values.score += count
 	ScoreText.new(str(count), _current_player)
 
+
 ## Compare current player power with [member power]
 func is_player_power(power: Data.PLAYER_POWER) -> bool:
 	return _current_player_state.player_power == power
+
 
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them
 class View:
@@ -117,6 +126,7 @@ class View:
 	var border: Rect2i
 	## Current transformation of viewport
 	var trans: Transform2D
+	
 	
 	## Update [member border] and [member trans] for detectional functions, you need to call this method
 	## in [method Node._process] or [method Node.__physics_process] to get better use of it
@@ -129,21 +139,26 @@ class View:
 		border.size = Vector2i(cam.get_viewport_rect().size)
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
 	
+	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of left edge of screen
 	func screen_left(pos: Vector2, offset: float) -> bool:
 		return (trans * pos).x > -offset
+	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of right edge of screen
 	func screen_right(pos: Vector2, offset: float) -> bool:
 		return (trans * pos).x < border.size.x + offset
 	
+	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of top edge of screen
 	func screen_top(pos: Vector2, offset: float) -> bool:
 		return (trans * pos).y > -offset
 	
+	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of bottom edge of screen
 	func screen_bottom(pos: Vector2, offset: float) -> bool:
 		return (trans * pos).y < border.size.y + offset
+	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is out of the edge of screen, which is decided by
 	## [code]dir[/code] given
@@ -157,13 +172,13 @@ class View:
 			return screen_right(pos, offset)
 		else:
 			return screen_bottom(pos, offset)
-			
 
 
 class Math:
 	## Return a point on a oval by given [param center], [param amplitude], [param phase], and [param rot(optional)]
 	static func oval(center: Vector2, amplitude: Vector2, phase: float, rot: float = 0) -> Vector2:
 		return center + Vector2(amplitude.x * cos(phase), amplitude.y * sin(phase)).rotated(rot)
+	
 	
 	## Return a direction from one point ot another
 	static func look_at(from: Vector2, to: Vector2, trans: Transform2D) -> int:

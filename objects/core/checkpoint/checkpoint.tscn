@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ta5g1"]
-size = Vector2(112, 112)
+size = Vector2(90, 111)
 
 [sub_resource type="Animation" id="Animation_o8ube"]
 length = 0.001
@@ -58,7 +58,7 @@ texture = ExtResource("2_13hdd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(8, -56)
+position = Vector2(0, -55.5)
 shape = SubResource("RectangleShape2D_ta5g1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

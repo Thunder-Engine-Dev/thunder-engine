@@ -26,7 +26,7 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk56e"]
 size = Vector2(32, 1)
 
-[node name="QuestionBlock" type="StaticBody2D" node_paths=PackedStringArray("cast_below")]
+[node name="QuestionBlock" type="AnimatableBody2D" node_paths=PackedStringArray("cast_below")]
 z_index = 1
 collision_layer = 112
 script = ExtResource("1_cty0g")

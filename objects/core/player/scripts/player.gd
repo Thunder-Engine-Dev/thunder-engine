@@ -382,19 +382,22 @@ func kill() -> void:
 	Audio.play_music(config.die_music, 1, {pitch = config.sound_pitch})
 
 
-## Modified is_action_pressed
+## Modified [method Input.is_action_pressed]
 func _is_action_pressed(action: StringName, exact_match: bool = false) -> bool:
 	return states.controls_enabled && Input.is_action_pressed(action, exact_match)
 
-## Modified is_action_just_pressed
+
+## Modified [method Input.is_action_just_pressed]
 func _is_action_just_pressed(action: StringName, exact_match: bool = false) -> bool:
 	return states.controls_enabled && Input.is_action_just_pressed(action, exact_match)
 
-## Modified is_action_just_released
+
+## Modified [method Input.is_action_just_released]
 func _is_action_just_released(action: StringName, exact_match: bool = false) -> bool:
 	return states.controls_enabled && Input.is_action_just_released(action, exact_match)
 
-## Modified get_axis
+
+## Modified [method Input.get_axis]
 func _get_axis(negative_action: StringName, positive_action: StringName) -> float:
 	return Input.get_axis(negative_action, positive_action) if states.controls_enabled else 0
 
@@ -411,6 +414,7 @@ st: %s""" % [
 		states.current_state
 	])
 
+
 func _debug_info_more() -> String:
 	var str: String = (
 """, pw: %s
@@ -425,6 +429,7 @@ a: %.2f, l: %.2f, fc: %.0f
 	str += "wa " if is_on_wall() else char(32).repeat(5)
 	str += "ceiling\n" if is_on_ceiling() else "\n"
 	return str
+
 
 func _debug_setup_label() -> void:
 	var label: Label = Label.new()
