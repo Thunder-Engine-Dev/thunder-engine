@@ -37,6 +37,12 @@ var _triggered: bool = false
 ## Right-side detector of bumping
 @export var cast_right: ShapeCast2D
 
+@export_group("Block Visibility")
+## Is initially visible
+@export var initially_visible: bool = true
+## Exists only before player dies
+@export var exists_once: bool = false
+
 var _no_result_appearing_animation: bool = false
 
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
@@ -49,9 +55,10 @@ signal result_appeared
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		visible = true
-		#Engine.time_scale = 0.5
-		return
+		if !initially_visible:
+			if !Data.values.onetime_blocks: queue_free()
+			_collision_shape_2d.disabled = true
+		visible = initially_visible
 
 func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
@@ -69,6 +76,9 @@ func _editor_process() -> void:
 func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if _triggered: return
 	if !active: return
+	
+	_collision_shape_2d.disabled = false
+	visible = true
 	
 	_triggered = true
 	

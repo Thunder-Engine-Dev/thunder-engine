@@ -85,7 +85,10 @@ func finish(walking: bool = false) -> void:
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.states.controls_enabled = false
 	Audio.play_music(completion_music, 1)
+	
 	if walking: _force_mario_walking = true
+	Data.values.onetime_blocks = true
+	
 	await Audio._music_channels[1].finished
 	
 	Thunder._current_hud.time_countdown_finished.connect(
@@ -97,4 +100,5 @@ func finish(walking: bool = false) -> void:
 			else:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
+	
 	Thunder._current_hud.time_countdown()

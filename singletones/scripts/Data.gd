@@ -35,7 +35,8 @@ var values: Dictionary = {
 	coins = 0,
 	time = -1,
 	checkpoint = -1,
-	checked_cps = []
+	checked_cps = [],
+	onetime_blocks = true
 }
 
 

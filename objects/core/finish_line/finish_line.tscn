@@ -71,4 +71,5 @@ libraries = {
 }
 
 [node name="ScoreTextMarker" type="Marker2D" parent="."]
+visible = false
 position = Vector2(207, -259)

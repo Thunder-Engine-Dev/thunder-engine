@@ -32,6 +32,8 @@ collision_layer = 112
 script = ExtResource("1_cty0g")
 result = SubResource("Resource_j6lvo")
 cast_below = NodePath("ShapeCast2D")
+initially_visible = null
+exists_once = null
 metadata/_edit_pinned_properties_ = [&"result"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

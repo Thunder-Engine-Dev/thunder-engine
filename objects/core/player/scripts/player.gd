@@ -350,9 +350,10 @@ func powerup(state: PlayerStateData) -> void:
 ## If called, the player dies
 func kill() -> void:
 	if states.invincible: return
+	if states.current_state == "dead": return
 	
-	if states.current_state == "dead":#
-		return
+	Data.values.onetime_blocks = false
+	
 	states.set_state("dead")
 	collision_layer = 0
 	collision_mask = 0
