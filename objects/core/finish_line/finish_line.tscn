@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://dfm7d4qtja67b"]
+
+[ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="1_8jdlp"]
+[ext_resource type="Script" path="res://engine/objects/core/finish_line/finish_line.gd" id="1_h4anr"]
+[ext_resource type="Script" path="res://engine/objects/core/finish_line/crossing_bar.gd" id="2_4ss8s"]
+[ext_resource type="Texture2D" uid="uid://bitys6p06gwh6" path="res://engine/objects/core/finish_line/textures/crossingbar.png" id="2_35wvr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wg2sy"]
+size = Vector2(44, 16)
+
+[sub_resource type="Animation" id="Animation_xxwwv"]
+resource_name = "bar"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrossingBarArea:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(202, -256), Vector2(202, -38), Vector2(202, -256)]
+}
+
+[sub_resource type="Animation" id="Animation_a2di4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrossingBarArea:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(202, -256)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3bes0"]
+_data = {
+"RESET": SubResource("Animation_a2di4"),
+"bar": SubResource("Animation_xxwwv")
+}
+
+[node name="FinishLine" type="Node2D"]
+script = ExtResource("1_h4anr")
+
+[node name="Finishline" type="Sprite2D" parent="."]
+position = Vector2(128, -143)
+texture = ExtResource("1_8jdlp")
+
+[node name="CrossingBarArea" type="Area2D" parent="."]
+position = Vector2(202, -256)
+script = ExtResource("2_4ss8s")
+
+[node name="Crossingbar" type="Sprite2D" parent="CrossingBarArea"]
+texture = ExtResource("2_35wvr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrossingBarArea"]
+visible = false
+shape = SubResource("RectangleShape2D_wg2sy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "bar"
+libraries = {
+"": SubResource("AnimationLibrary_3bes0")
+}
+
+[node name="ScoreTextMarker" type="Marker2D" parent="."]
+position = Vector2(207, -259)

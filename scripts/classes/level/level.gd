@@ -27,6 +27,8 @@ class_name Level
 ## Modifies the bottom line that detect player as "falling below the screen"
 @export var falling_below_y_offset: float = 64.0
 
+# Forces player to walk forward, used in finish sequence
+var _force_mario_walking: bool = false
 
 
 func _ready() -> void:
@@ -74,12 +76,16 @@ func _physics_process(delta: float) -> void:
 		match falling_below_screen_action:
 			1: Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608
+	
+	if _force_mario_walking:
+		Thunder._current_player.velocity_local.x = 120
 
 
-func finish() -> void:
+func finish(walking: bool = false) -> void:
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.states.controls_enabled = false
 	Audio.play_music(completion_music, 1)
+	if walking: _force_mario_walking = true
 	await Audio._music_channels[1].finished
 	
 	Thunder._current_hud.time_countdown_finished.connect(
@@ -92,4 +98,3 @@ func finish() -> void:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
 	Thunder._current_hud.time_countdown()
-	
