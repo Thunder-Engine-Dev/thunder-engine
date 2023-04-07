@@ -62,10 +62,10 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("4_eemo7")
-stomping_available = false
+stomping_standard = Vector2(0, 0)
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_wsasv")
-metadata/_edit_pinned_properties_ = [&"stomping_available"]
+metadata/_edit_pinned_properties_ = [&"stomping_standard"]
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = -1
