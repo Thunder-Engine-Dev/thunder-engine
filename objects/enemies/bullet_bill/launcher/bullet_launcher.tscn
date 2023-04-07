@@ -1,67 +1,57 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvolo50530iv7"]
+[gd_scene load_steps=8 format=3 uid="uid://bvolo50530iv7"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.gd" id="1_3oj3x"]
 [ext_resource type="Texture2D" uid="uid://b25ptq2d2d6g1" path="res://engine/objects/enemies/bullet_bill/launcher/texture/launcher.png" id="1_ud8qb"]
 [ext_resource type="Texture2D" uid="uid://cy1ilh0qxu3f4" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler.png" id="2_7a3u8"]
-[ext_resource type="Texture2D" uid="uid://cy4krigq0scxj" path="res://engine/objects/enemies/bullet_bill/launcher/texture/middle.png" id="3_3d123"]
-[ext_resource type="Texture2D" uid="uid://c6rtd10yuhxrn" path="res://engine/objects/enemies/bullet_bill/launcher/texture/base.png" id="4_7nhdc"]
+[ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="2_74smt"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_axxmi"]
+
+[sub_resource type="Resource" id="Resource_b3ipg"]
+script = ExtResource("3_axxmi")
+creation_nodepack = ExtResource("2_74smt")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abljg"]
 size = Vector2(32, 32)
 
-[node name="BulletLauncher" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-pivot_offset = Vector2(16, 16)
-script = ExtResource("1_3oj3x")
-
-[node name="Obstacle" type="AnimatableBody2D" parent="."]
+[node name="BulletLauncher" type="AnimatableBody2D"]
 position = Vector2(16, 16)
+collision_layer = 48
+collision_mask = 0
+script = ExtResource("1_3oj3x")
+bullet_bill = SubResource("Resource_b3ipg")
+metadata/_edit_pinned_properties_ = [&"bullet_bill"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_abljg")
 
 [node name="Launcher" type="Sprite2D" parent="."]
-position = Vector2(16, 16)
 texture = ExtResource("1_ud8qb")
+metadata/_edit_lock_ = true
+
+[node name="PosBullet" type="Marker2D" parent="Launcher"]
+visible = false
 
 [node name="Handler" type="Sprite2D" parent="."]
-position = Vector2(16, 16)
 texture = ExtResource("2_7a3u8")
 metadata/_edit_lock_ = true
 
-[node name="Base" type="Control" parent="."]
-clip_contents = true
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = 32.0
-offset_right = 16.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(16, 0)
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(1.6, 1.6)
 
-[node name="Middle" type="Sprite2D" parent="Base"]
-position = Vector2(16, 16)
-texture = ExtResource("3_3d123")
+[node name="Interval" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
 
-[node name="TextureRect" type="TextureRect" parent="Base"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = 32.0
-offset_right = 16.0
-texture = ExtResource("4_7nhdc")
-stretch_mode = 1
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_on_bullet_launched"]

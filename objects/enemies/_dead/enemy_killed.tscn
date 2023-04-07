@@ -8,4 +8,3 @@ collision_mask = 0
 script = ExtResource("1_kouot")
 speed = Vector2(0, -230)
 gravity_scale = 0.2
-correction_enabled = false

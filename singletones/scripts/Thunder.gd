@@ -42,20 +42,20 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 var _current_camera: Camera2D
 
 
-## Get an [code]key[/code] from [code]obj[/code], this won't send any errors if there is no such key in the object
+## Gets an [param key] from [param obj], and this won't send any errors if there is no such key in the object
 func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
 	return obj[key]
 
 
-## Find a child of [code]ref[/code] by [code]name[/code] of its class and return it or null
+## Finds a child of [param ref] by [param classname] of its class and return it or null
 func get_child_by_class_name(ref: Node, classname: String) -> Node:
 	for child in ref.get_children():
 		if child.is_class(classname): return child
 	return null
 
 
-## Get relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
+## Gets relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
 

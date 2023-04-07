@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://bw7f131nc4fhf"]
+
+[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_w3yqm"]
+[ext_resource type="Texture2D" uid="uid://c4ty5fuc65vlg" path="res://engine/objects/enemies/bullet_bill/bill/textures/bullet_bill.png" id="2_2h53c"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_wg1gp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_iuxfx"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_6v8k6"]
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/bill/bill_gets_killed.gd" id="4_ik838"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="6_dxe3u"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_v7ft1"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_fhq1h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4qhu"]
+size = Vector2(32, 28)
+
+[sub_resource type="Resource" id="Resource_d54bi"]
+script = ExtResource("4_6v8k6")
+creation_nodepack = ExtResource("3_iuxfx")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite")
+}
+custom_script = ExtResource("4_ik838")
+
+[node name="BulletBill" type="CharacterBody2D"]
+script = ExtResource("1_w3yqm")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(195, 0)
+collision = false
+metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_s4qhu")
+disabled = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_s4qhu")
+debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_wg1gp")
+stomping_creation = SubResource("Resource_d54bi")
+stomping_scores = 100
+stomping_sound = ExtResource("6_v7ft1")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_d54bi")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_dxe3u")
+killing_sound_failed = ExtResource("8_fhq1h")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_2h53c")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
