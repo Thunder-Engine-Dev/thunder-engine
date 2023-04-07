@@ -71,14 +71,17 @@ func _prepare_template() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+		
+	if _force_mario_walking:
+		Thunder._current_player.velocity_local.x = 120
+	
+	await get_tree().process_frame
 	
 	if !Thunder.view.screen_bottom(Thunder._current_player.global_position, falling_below_y_offset): # TEMP
 		match falling_below_screen_action:
-			1: Thunder._current_player.kill()
+			1: if Thunder._current_player.states.current_state != "dead": Thunder._current_player.kill()
 			2: Thunder._current_player.position.y -= 608
 	
-	if _force_mario_walking:
-		Thunder._current_player.velocity_local.x = 120
 
 
 func finish(walking: bool = false) -> void:
