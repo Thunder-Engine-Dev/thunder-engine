@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfm7d4qtja67b"]
+[gd_scene load_steps=10 format=3 uid="uid://dfm7d4qtja67b"]
 
 [ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="1_8jdlp"]
 [ext_resource type="Script" path="res://engine/objects/core/finish_line/finish_line.gd" id="1_h4anr"]
 [ext_resource type="Script" path="res://engine/objects/core/finish_line/crossing_bar.gd" id="2_4ss8s"]
 [ext_resource type="Texture2D" uid="uid://bitys6p06gwh6" path="res://engine/objects/core/finish_line/textures/crossingbar.png" id="2_35wvr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b44pc"]
+size = Vector2(256, 288)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wg2sy"]
 size = Vector2(44, 16)
@@ -53,8 +56,18 @@ script = ExtResource("1_h4anr")
 position = Vector2(128, -143)
 texture = ExtResource("1_8jdlp")
 
+[node name="CompletionArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionArea"]
+visible = false
+position = Vector2(128, -144)
+shape = SubResource("RectangleShape2D_b44pc")
+debug_color = Color(0.541176, 0.0823529, 0.560784, 0.419608)
+
 [node name="CrossingBarArea" type="Area2D" parent="."]
 position = Vector2(202, -256)
+collision_layer = 0
 script = ExtResource("2_4ss8s")
 
 [node name="Crossingbar" type="Sprite2D" parent="CrossingBarArea"]

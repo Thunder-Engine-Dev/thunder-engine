@@ -29,6 +29,11 @@ class_name Level
 
 # Forces player to walk forward, used in finish sequence
 var _force_mario_walking: bool = false
+var _force_mario_walking_dir: int = 1:
+	set(dir):
+		_force_mario_walking_dir = clampi(dir, -1, 1)
+		if dir == 0:
+			dir = [-1, 1].pick_random()
 
 
 func _ready() -> void:
@@ -73,7 +78,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	if _force_mario_walking:
-		Thunder._current_player.velocity_local.x = 120
+		Thunder._current_player.velocity_local.x = 120 * _force_mario_walking_dir
 	
 	await get_tree().process_frame
 	
@@ -84,12 +89,14 @@ func _physics_process(delta: float) -> void:
 	
 
 
-func finish(walking: bool = false) -> void:
+func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.states.controls_enabled = false
 	Audio.play_music(completion_music, 1)
 	
-	if walking: _force_mario_walking = true
+	if walking: 
+		_force_mario_walking = true
+		_force_mario_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	
 	await Audio._music_channels[1].finished
