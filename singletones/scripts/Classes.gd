@@ -34,11 +34,12 @@ func get_files(path: String, file := "", files := []):
 		if dir.current_is_dir():
 			files = get_files(dir.get_current_dir().path_join(file_name), file, files)
 		else:
-			if file != "" && file_name.get_file() != file:
+			if file != "" && !file_name.get_file().contains(file):
 				file_name = dir.get_next()
 				continue
 			
-			files.append(dir.get_current_dir().path_join(file_name))
+			var final_path = dir.get_current_dir().path_join(file_name).replace(".remap", "")
+			files.append(final_path)
 		
 		file_name = dir.get_next()
 	
