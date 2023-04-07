@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://dh4kf1w7jyseo"]
 
 [ext_resource type="Script" path="res://engine/objects/warps/pipe_in.gd" id="1_17oxu"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_78r3h"]

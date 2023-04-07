@@ -136,4 +136,4 @@ class WarpTrans extends PathFollow2D:
 		if progress_ratio >= 1:
 			done.emit()
 			player.visible = true
-			free()
+			queue_free()
