@@ -56,7 +56,7 @@ signal result_appeared
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		if !initially_visible:
-			if !Data.values.onetime_blocks: queue_free()
+			if !Data.values.onetime_blocks && !exists_once: queue_free()
 			_collision_shape_2d.disabled = true
 		visible = initially_visible
 

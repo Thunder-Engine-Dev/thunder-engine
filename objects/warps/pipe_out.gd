@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
 		player.states.set_state("default")
-		player.z_index = 0
+		player.z_index = 1
 		player = null
 		Thunder._current_hud.timer.paused = false
 
@@ -58,7 +58,7 @@ func pass_player(new_player: Player) -> void:
 	
 	player.global_position = pos_player.global_position
 	player.states.warp_direction = player_warp_dir
-	Audio.play_sound(warping_sound,self,false)
+	Audio.play_sound(warping_sound, self, false)
 
 
 func _label() -> void:

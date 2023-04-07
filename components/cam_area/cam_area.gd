@@ -22,7 +22,12 @@ func _physics_process(_delta: float) -> void:
 	var camera = Thunder._current_camera
 	var rect = get_rect()
 	
-	if camera.position > rect.position && camera.position < rect.end:
+	if (
+		camera.position.x > rect.position.x &&
+		camera.position.y > rect.position.y &&
+		camera.position.x < rect.end.x &&
+		camera.position.y < rect.end.y
+	):
 		camera.limit_top = rect.position.y
 		camera.limit_left = rect.position.x
 		camera.limit_right = rect.end.x
