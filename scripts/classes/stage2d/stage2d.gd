@@ -9,7 +9,7 @@ class_name Stage2D
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		Scenes.register(self)
+		Scenes.load_scene(self)
 
 
 ## Fast method to call [method Scenes.reload_current_scene] in [Stage2D] and its extended classes

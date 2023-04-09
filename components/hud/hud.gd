@@ -27,7 +27,7 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(5, false).connect("timeout", Scenes.current_scene.restart)
+	get_tree().create_timer(5, false).timeout.connect(Scenes.reload_current_scene)
 
 
 func timer_hurry() -> void:

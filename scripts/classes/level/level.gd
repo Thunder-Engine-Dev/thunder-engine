@@ -11,7 +11,6 @@ class_name Level
 @export var time: int = 360
 
 @export_group("Level Completion")
-
 ## Level completion music
 @export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
 ## Jump to scene after level completion sequence
@@ -23,7 +22,6 @@ class_name Level
 ## 1 = Death[br]
 ## 2 = Wrap from top of the screen
 @export_enum("Nothing", "Death", "Wrap") var falling_below_screen_action: int = 1
-
 ## Modifies the bottom line that detect player as "falling below the screen"
 @export var falling_below_y_offset: float = 64.0
 
