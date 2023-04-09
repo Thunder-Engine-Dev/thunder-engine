@@ -12,5 +12,6 @@ func _ready() -> void:
 	
 	death_node.visible = true
 	if node is GravityBody2D && enemy_attacked.owner is GravityBody2D:
-		node.speed /= 2
+		node.speed = enemy_attacked.owner.speed * 0.5
+		node.gravity_dir = Vector2.DOWN.rotated(-enemy_attacked.owner.global_rotation)
 	node.add_child(death_node)

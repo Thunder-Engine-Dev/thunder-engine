@@ -12,8 +12,10 @@ radius = 8.0
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hkxrj")
+sprite = NodePath("Texture")
 speed = Vector2(387.5, 0)
 gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"sprite"]
 
 [node name="Texture" type="Sprite2D" parent="."]
 texture = ExtResource("2_thdmy")
