@@ -104,7 +104,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 			await get_tree().create_timer(0.5).timeout
 			
 			if jump_to_scene:
-				Scenes.load_scene_from_packed(load(jump_to_scene))
+				Scenes.goto_scene(jump_to_scene)
 			else:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
