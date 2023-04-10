@@ -55,6 +55,16 @@ func _physics_process(delta: float) -> void:
 			_vel = velocity.normalized()
 			motion_process(delta)
 			if is_on_floor():
+				# Breaks Brick
+				var bricks: bool
+				for i in get_slide_collision_count():
+					var j: KinematicCollision2D = get_slide_collision(i)
+					if j.get_collider() is StaticBumpingBlock && j.get_collider().has_method(&"bricks_break"):
+						j.get_collider().bricks_break.call_deferred()
+						bricks = true
+				if bricks:
+					_explosion()
+					return
 				_step = 2
 				_stun()
 				_stunspot = global_position
@@ -74,6 +84,12 @@ func _physics_process(delta: float) -> void:
 func _stun() -> void:
 	stun.emit()
 	Audio.play_sound(stunning_sound, self)
+	_explosion()
+	if Thunder._current_camera.has_method(&"shock"):
+		Thunder._current_camera.shock(0.2, Vector2.ONE * 8)
+
+
+func _explosion() -> void:
 	NodeCreator.prepare_2d(explosion_effect, self).bind_global_transform(left_explosion.position).create_2d().call_method(
 		func(eff: Node2D) -> void:
 			left_explosion.force_raycast_update()
@@ -86,8 +102,6 @@ func _stun() -> void:
 			if !right_explosion.is_colliding():
 				eff.queue_free()
 	)
-	if Thunder._current_camera.has_method(&"shock"):
-		Thunder._current_camera.shock(0.2, Vector2.ONE * 8)
 
 
 func _on_smile() -> void:

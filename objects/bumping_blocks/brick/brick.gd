@@ -29,16 +29,7 @@ func _physics_process(_delta):
 		if Thunder._current_player_state.player_power == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
 			bump(false)
 		else:
-			Audio.play_sound(break_sound, self)
-			var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
-			for i in speeds:
-				NodeCreator.prepare_2d(DEBRIS_EFFECT, self).create_2d(true).call_method(func(eff: Node2D):
-					eff.global_transform = global_transform
-					eff.velocity = i
-				)
-			
-			Data.values.score += 50
-			queue_free()
+			bricks_break()
 		
 		if result && !counter_enabled:
 			counter_enabled = true
@@ -48,3 +39,16 @@ func _physics_process(_delta):
 			counter_enabled = false
 			result_counter_value = 0
 	
+
+
+func bricks_break() -> void:
+	Audio.play_sound(break_sound, self)
+	var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
+	for i in speeds:
+		NodeCreator.prepare_2d(DEBRIS_EFFECT, self).create_2d(true).call_method(func(eff: Node2D):
+			eff.global_transform = global_transform
+			eff.velocity = i
+		)
+			
+	Data.values.score += 50
+	queue_free()
