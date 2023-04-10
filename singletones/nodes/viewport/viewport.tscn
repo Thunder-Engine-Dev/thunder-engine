@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5uo5vjv642ag"]
+
+[ext_resource type="Shader" path="res://engine/singletones/nodes/viewport/bilinear_scaling.gdshader" id="1_sowlm"]
+[ext_resource type="Script" path="res://engine/singletones/nodes/viewport/viewport.gd" id="2_qdvbk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aijpq"]
+shader = ExtResource("1_sowlm")
+shader_parameter/enable = true
+
+[node name="ViewportContainer" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_aijpq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_qdvbk")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+audio_listener_enable_2d = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
