@@ -3,8 +3,6 @@ extends CorrectedCharacterBody2D
 class_name GravityBody2D
 
 ## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion[br]
-## [color=orange][b]Note:[/b][/color] Due to bugs with gravity direction whose angle is not 90°,180°,270° or 0°, you need to manually change up_direction via inspector.
-## We are still trying to fix the bug with GDScript :)
 
 ## Default gravity acceleration
 const GRAVITY: float = 50.0
@@ -165,9 +163,7 @@ func get_global_gravity_dir() -> Vector2:
 # Updaters
 ## Update [memebr up_direction] to suit certain current situation
 func update_up_direction() -> void:
-	up_direction = _up_temp
-	if is_on_slope():
-		up_direction = _up_temp.rotated(global_rotation)
+	up_direction = _up_temp.rotated(global_rotation)
 
 
 # Is-methods
