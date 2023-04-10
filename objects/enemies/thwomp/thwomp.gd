@@ -44,6 +44,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	match _step:
+		# Waiting
 		0:
 			var player: Player = Thunder._current_player
 			if !player: return
@@ -51,6 +52,7 @@ func _physics_process(delta: float) -> void:
 			if trigger_area.has_point(ppos):
 				_origin = global_position
 				_step = 1
+		# Stunning
 		1:
 			_vel = velocity.normalized()
 			motion_process(delta)
@@ -62,13 +64,16 @@ func _physics_process(delta: float) -> void:
 					if j.get_collider() is StaticBumpingBlock && j.get_collider().has_method(&"bricks_break"):
 						j.get_collider().bricks_break.call_deferred()
 						bricks = true
+				# Non-stop for the thwomp who broke the bricks
 				if bricks:
 					_explosion()
 					return
+				# Stops if stunning on the ground
 				_step = 2
 				_stun()
 				_stunspot = global_position
 				timer_waiting.start(waiting_time)
+		# Rising
 		3:
 			velocity = -_vel * rising_speed
 			do_movement(delta)
