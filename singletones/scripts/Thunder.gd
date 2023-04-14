@@ -172,6 +172,14 @@ class View:
 			return screen_right(pos, offset)
 		else:
 			return screen_bottom(pos, offset)
+		
+		
+	static func shows_tool(tool: Node2D) -> bool:
+		var viewport: Transform2D = tool.get_viewport_transform()
+		var size: Vector2 = tool.get_viewport_rect().size
+		var vscale: Vector2 = viewport.get_scale()
+		var pos: Vector2 = -viewport.get_origin() / vscale
+		return Rect2(pos, size / vscale).has_point(tool.global_position)
 
 
 class Math:
