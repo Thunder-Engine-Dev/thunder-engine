@@ -7,14 +7,17 @@ extends Node2D
 	set(to):
 		preview = to
 		switch_preview(preview)
-@export var spell: String:
-	set(to):
-		spell = to
-		match spell:
-			"bar_":
-				spell = ""
-				bar_like()
 
+enum ARRANGE_AS {
+	SELECT_ACTION,
+	BAR
+}
+
+@export var arrange_as: ARRANGE_AS = ARRANGE_AS.SELECT_ACTION:
+	set(to):
+		match to:
+			ARRANGE_AS.BAR:
+				bar_like()
 
 func switch_preview(on: bool) -> void:
 	for i in get_children():
