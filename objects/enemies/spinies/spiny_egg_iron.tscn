@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://xugemt6nrnq"]
+
+[ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_27dq1"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_atwwu"]
+[ext_resource type="PackedScene" uid="uid://crb8jkwa0r1dl" path="res://engine/objects/enemies/spinies/spiny_iron.tscn" id="2_xm4u3"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_g5j4e"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_jp7c6"]
+[ext_resource type="Texture2D" uid="uid://cplqyrqgikdet" path="res://engine/objects/enemies/spinies/textures/spiny_egg_iron.png" id="5_f80mt"]
+
+[sub_resource type="Resource" id="Resource_fa5h4"]
+script = ExtResource("4_jp7c6")
+creation_nodepack = ExtResource("2_xm4u3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_c3pw0"]
+resource_local_to_scene = true
+script = ExtResource("4_jp7c6")
+creation_nodepack = ExtResource("2_atwwu")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_g5j4e")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ru4ok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_f80mt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="SpinyIronEgg" instance=ExtResource("1_27dq1")]
+spiny_creation = SubResource("Resource_fa5h4")
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_creation = SubResource("Resource_c3pw0")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_ru4ok")

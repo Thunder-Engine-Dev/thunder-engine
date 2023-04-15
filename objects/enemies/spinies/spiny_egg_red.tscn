@@ -1,0 +1,114 @@
+[gd_scene load_steps=16 format=3 uid="uid://hqhtm2y4woh0"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/spinies/spiny_egg.gd" id="1_3sw53"]
+[ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="2_cfngx"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_6nh2h"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="4_77u7e"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_x5hqt"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_84axb"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_y7ps8"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="8_3spov"]
+[ext_resource type="Texture2D" uid="uid://ds44e07jvbojq" path="res://engine/objects/enemies/spinies/textures/spiny_egg_red.png" id="9_d72kd"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_5bneu"]
+
+[sub_resource type="Resource" id="Resource_ihim1"]
+script = ExtResource("3_6nh2h")
+creation_nodepack = ExtResource("2_cfngx")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 28)
+
+[sub_resource type="Resource" id="Resource_3i0gh"]
+resource_local_to_scene = true
+script = ExtResource("3_6nh2h")
+creation_nodepack = ExtResource("6_84axb")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("7_y7ps8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdbsm"]
+atlas = ExtResource("9_d72kd")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fmln3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdbsm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="SpinyRedEgg" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_3sw53")
+spiny_creation = SubResource("Resource_ihim1")
+sprite = NodePath("Sprite")
+gravity_scale = 0.2
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("4_77u7e")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_x5hqt")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+killing_creation = SubResource("Resource_3i0gh")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("8_3spov")
+custom_vars = {
+"attachment_killed": NodePath(""),
+"attachment_stomped": NodePath("")
+}
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fmln3")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("10_5bneu")
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
