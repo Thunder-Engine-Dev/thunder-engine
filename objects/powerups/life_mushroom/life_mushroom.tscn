@@ -16,8 +16,10 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_ac6pg")
+appear_speed = 1.0
 speed = Vector2(100, 0)
 gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"appear_speed"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
