@@ -10,6 +10,8 @@ class_name GeneralMovementBody2D
 
 var dir: int
 
+@onready var sprite_node: Node2D = get_node_or_null(sprite)
+
 
 func _ready() -> void:
 	super()
@@ -20,7 +22,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	motion_process(Thunder.get_delta(delta) if collision else delta, slide)
-	var sprite_node = get_node_or_null(sprite)
 	if turn_sprite && sprite_node:
 		sprite_node.flip_h = speed.x < 0
 

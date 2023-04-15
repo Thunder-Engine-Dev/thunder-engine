@@ -47,10 +47,7 @@ func _on_bullet_launched() -> void:
 
 func _on_screen_entered() -> void:
 	interval.paused = false
-	print(1)
 
 
 func _on_screen_exited() -> void:
 	interval.paused = true
-	print(2)
-	

@@ -106,16 +106,17 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_w0eyt")
-deep_snap = false
 set_player_state = ExtResource("2_fck5w")
 gravity_scale = 0.2
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Body" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]

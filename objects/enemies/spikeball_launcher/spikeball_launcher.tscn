@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjroicsm5yiy6"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/spikeball_launcher/spikeball_launcher.gd" id="1_2sd30"]
+[ext_resource type="Texture2D" uid="uid://dlpmv8xrnfj2f" path="res://engine/objects/enemies/spikeball_launcher/spikeballl_launcher.png" id="1_6vb1d"]
+[ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/enemies/spikeball_launcher/spikeball.tscn" id="2_pb4ej"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_j5nq2"]
+
+[sub_resource type="Resource" id="Resource_vtp0b"]
+script = ExtResource("3_j5nq2")
+creation_nodepack = ExtResource("2_pb4ej")
+trans_offset = Vector2(0, -24)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y62x8"]
+size = Vector2(64, 42)
+
+[node name="SpikeballLauncher" type="AnimatableBody2D"]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_2sd30")
+spikeball = SubResource("Resource_vtp0b")
+metadata/_edit_pinned_properties_ = [&"spikeball"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_y62x8")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_6vb1d")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+position = Vector2(1.90735e-06, -8)
+scale = Vector2(3.2, 2.4)
+
+[node name="Interval" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_on_shooting"]

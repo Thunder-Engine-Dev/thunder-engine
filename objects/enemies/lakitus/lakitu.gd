@@ -62,9 +62,9 @@ func _movement_process(delta: float, player: Player) -> void:
 	var dir: int = sign(pposx - posx)
 	
 	if posx > pposx + hovering_margin || posx < pposx - hovering_margin:
-		speed = move_toward(speed, chasing_speed * dir, 15)
+		speed = move_toward(speed, chasing_speed * dir, 5)
 	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.states.dir > 0) || (speed > 100 && player.states.dir < 0)):
-		speed = move_toward(speed, hovering_speed * player.states.dir, 25)
+		speed = move_toward(speed, hovering_speed * player.states.dir, 10)
 
 
 func _leaving_process(delta: float) -> void:
@@ -73,7 +73,7 @@ func _leaving_process(delta: float) -> void:
 
 func _pitch() -> void:
 	if pitched:
-		NodeCreator.prepare_ins_2d(pitched, self).bind_global_transform(Vector2.UP * 8).create_2d().execute_instance_script()
+		NodeCreator.prepare_ins_2d(pitched, self).create_2d().execute_instance_script()
 	Audio.play_sound(sounds.pick_random(), self)
 
 

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhgauar2x61ac"]
-
-[ext_resource type="Texture2D" uid="uid://cyf78e54ml6an" path="res://engine/objects/mario/textures/mario/LuiJump.png" id="1_ikltx"]
-[ext_resource type="Script" path="res://engine/objects/powerups/green_lui/trail.gd" id="2_57ogt"]
-
-[node name="Sprite2D" type="Sprite2D"]
-texture = ExtResource("1_ikltx")
-centered = false
-script = ExtResource("2_57ogt")
