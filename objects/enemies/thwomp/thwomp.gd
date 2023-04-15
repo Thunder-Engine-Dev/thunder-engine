@@ -110,6 +110,7 @@ func _explosion() -> void:
 
 
 func _on_smile() -> void:
+	if sprite.animation == &"smile": return
 	Audio.play_sound(laughing_sound, self)
 	sprite.play(&"smile")
 	timer_smile.start()
