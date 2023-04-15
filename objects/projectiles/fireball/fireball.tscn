@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4jlbnswk5dlw"]
+[gd_scene load_steps=5 format=3 uid="uid://c4jlbnswk5dlw"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_sssv4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0
@@ -34,8 +33,6 @@ collide_with_areas = true
 script = ExtResource("3_po12v")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-script = ExtResource("3_sssv4")
 
 [connection signal="collided_floor" from="." to="." method="jump"]
 [connection signal="collided_wall" from="." to="." method="explode"]

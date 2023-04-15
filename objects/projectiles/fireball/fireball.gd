@@ -31,13 +31,10 @@ func explode():
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	print(1)
 	queue_free()
 
 
 func _exit_tree():
 	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
 		Thunder._current_player.states.projectiles_count += 1
-
-
-func _on_attack_killed_notify():
-	pass # Replace with function body.

@@ -19,7 +19,6 @@ func _ready() -> void:
 				add_sibling(body)
 				body.global_position = center + pos_to.rotated(body.global_rotation) - Vector2.RIGHT * body.leaving_direction * (get_viewport_rect().size.x / 2 + 64)
 				queue_free()
-				print(body.global_position)
 		)
 
 

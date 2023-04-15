@@ -73,7 +73,7 @@ func do_movement(delta: float, slide:bool = false, emit_detection_signal: bool =
 	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if !collision:
-		global_position += velocity * delta
+		global_position += velocity
 		return
 	
 	if correct_collision:

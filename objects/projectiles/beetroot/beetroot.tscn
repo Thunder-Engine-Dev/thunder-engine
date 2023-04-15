@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bc12btlrtjxyl"]
+[gd_scene load_steps=5 format=3 uid="uid://bc12btlrtjxyl"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/beetroot/beetroot.gd" id="1_qd3dy"]
 [ext_resource type="Texture2D" uid="uid://cd4tiiirqgtvi" path="res://engine/objects/projectiles/beetroot/texture.png" id="2_n2mkg"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_3efnn"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_p2s0u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
@@ -34,7 +33,6 @@ killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-script = ExtResource("3_3efnn")
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]
