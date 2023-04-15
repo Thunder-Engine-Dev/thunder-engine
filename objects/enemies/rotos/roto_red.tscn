@@ -201,9 +201,6 @@ animations = [{
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_gq7m4")
-amplitude_changing_speed = null
-amplitude_min = null
-amplitude_max = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

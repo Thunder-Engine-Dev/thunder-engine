@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://oe7i3cief0g"]
 
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_kouot"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="1_w0y84"]
 
 [node name="EnemyKilled" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_kouot")
+script = ExtResource("1_w0y84")
 speed = Vector2(0, -230)
 gravity_scale = 0.2

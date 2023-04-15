@@ -142,7 +142,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 			jumping_min = stomping_player_jumping_min,
 			jumping_max = stomping_player_jumping_max
 		}
-	else:
+	elif stomping_hurtable:
 		stomped_failed.emit()
 		result = {result = false}
 	

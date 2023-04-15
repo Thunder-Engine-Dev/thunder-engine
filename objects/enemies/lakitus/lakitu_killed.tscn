@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgy7tegiodty8"]
+
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="1_8wwuc"]
+[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_corpse.gd" id="2_k5id3"]
+
+[node name="LakituKilled" instance=ExtResource("1_8wwuc")]
+script = ExtResource("2_k5id3")
