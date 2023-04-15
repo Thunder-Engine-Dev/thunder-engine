@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/rotos/roto_center.gd" id="1_6k850"]
 [ext_resource type="Texture2D" uid="uid://cwwn5i5xn7j32" path="res://engine/objects/enemies/rotos/roto_center.png" id="1_fkmos"]
 
-[node name="RotoCenter" type="Sprite2D" groups=["#roto_center"]]
-texture = ExtResource("1_fkmos")
+[node name="RotoCenter" type="Node2D" groups=["#roto_center"]]
 script = ExtResource("1_6k850")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_fkmos")

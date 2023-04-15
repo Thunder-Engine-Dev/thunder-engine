@@ -8,34 +8,49 @@ extends Area2D
 		preview = to
 		if preview:
 			_origin = position
+			_amplitude = amplitude
 			_phase = phase
 			_track_rot = track_rot
+			if amplitude_changing_speed > 0:
+				amplitude = amplitude_min
 		else:
 			position = _origin
+			amplitude = _amplitude
 			phase = _phase
 			track_rot = _track_rot
+			_amplitude_in = false
 @export var circle_line_spot: int = 32
 @export var line_color: Color = Color.ANTIQUE_WHITE
 @export_group("Physics")
+@export_subgroup("Amplitude")
 @export var amplitude: Vector2 = 150 * Vector2.ONE:
 	set(to):
 		amplitude = to
-		oval_pos()
+		if Engine.is_editor_hint() && !preview:
+			oval_pos()
+@export_range(0, 9999, 0.01, "suffix:px/s") var amplitude_changing_speed: float
+@export var amplitude_min: Vector2
+@export var amplitude_max: Vector2 = 200 * Vector2.ONE
+@export_subgroup("Phase")
 @export_range(-180, 180, 0.01, "suffix:°") var phase: float:
 	set(to):
 		phase = to
-		oval_pos()
-@export_range(-21599.94, 21599.94, 0.001, "suffix:°/s") var frequency: float = 60
-@export_group("Physics Rotation")
+		if Engine.is_editor_hint() && !preview:
+			oval_pos()
+@export_range(-21599.94, 21599.94, 0.001, "suffix:°/s") var frequency: float = 50
+@export_subgroup("Track rotation")
 @export var track_rot: float:
 	set(to):
 		track_rot = to
-		oval_pos()
+		if Engine.is_editor_hint() && !preview:
+			oval_pos()
 @export_range(-21599.94, 21599.94, 0.001, "suffix:°/s") var track_rot_speed: float
 
 var _origin: Vector2
 var _phase: float
 var _track_rot: float
+var _amplitude: Vector2
+var _amplitude_in: bool
 
 
 func _draw() -> void:
@@ -56,6 +71,15 @@ func _physics_process(delta: float) -> void:
 		if !preview:
 			return
 	oval_pos()
+	
+	if amplitude_changing_speed > 0:
+		if _amplitude_in:
+			amplitude = amplitude.move_toward(amplitude_min, amplitude_changing_speed * delta)
+			_amplitude_in = !(amplitude == amplitude_min)
+		else:
+			amplitude = amplitude.move_toward(amplitude_max, amplitude_changing_speed * delta)
+			_amplitude_in = (amplitude == amplitude_max)
+	
 	phase = wrapf(phase + frequency * delta, -180, 180)
 	track_rot = wrapf(track_rot + track_rot_speed * delta, -180, 180)
 
