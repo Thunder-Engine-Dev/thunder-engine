@@ -29,6 +29,7 @@ spikeball = SubResource("Resource_vtp0b")
 metadata/_edit_pinned_properties_ = [&"spikeball"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_y62x8")
 
