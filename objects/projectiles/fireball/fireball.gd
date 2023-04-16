@@ -5,7 +5,7 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 @export var jumping_speed: float = -250.0
 @export var belongs_to: Data.PROJECTILE_BELONGS = Data.PROJECTILE_BELONGS.PLAYER
 
-@onready var texture:Sprite2D = $Texture
+@onready var texture: Sprite2D = $Texture
 
 
 func _ready():

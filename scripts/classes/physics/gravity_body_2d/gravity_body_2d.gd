@@ -19,7 +19,7 @@ const GRAVITY: float = 50.0
 ## Defines the scale of [member GRAVITY], then the gravity acceleration = [member GRAVITY] * [member gravity_scale]
 @export var gravity_scale: float
 ## Defines maximum of speed.y affected by gravity
-@export_range(0,100000,0.1) var max_falling_speed: float
+@export_range(0, 100000, 0.1) var max_falling_speed: float
 @export_group("Collision")
 ## Defines if the body enables collision. For those who don't need any collision, it's recommeneded to set this value to [code]false[/code]
 ## to acquire more performance
@@ -49,7 +49,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	speed_previous = speed
 	
-	speed += gravity * gravity_dir * delta
+	speed += gravity * gravity_dir * Thunder.get_delta(delta)
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
 	
@@ -161,7 +161,7 @@ func get_global_gravity_dir() -> Vector2:
 
 
 # Updaters
-## Update [memebr up_direction] to suit certain current situation
+## Update [member up_direction] to suit certain current situation
 func update_up_direction() -> void:
 	up_direction = _up_temp.rotated(global_rotation)
 

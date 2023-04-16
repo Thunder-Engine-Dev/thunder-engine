@@ -26,7 +26,7 @@ func _from_bumping_block() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !appear_distance:
-		motion_process(Thunder.get_delta(delta), slide)
+		motion_process(delta, slide)
 		z_index = 0
 	else:
 		appear_process(Thunder.get_delta(delta))
