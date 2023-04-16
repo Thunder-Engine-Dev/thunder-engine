@@ -38,9 +38,6 @@ position = Vector2(0, -16)
 texture = ExtResource("1_6vb1d")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-position = Vector2(1.90735e-06, -8)
-scale = Vector2(3.2, 2.4)
 
 [node name="Interval" type="Timer" parent="."]
 wait_time = 3.0

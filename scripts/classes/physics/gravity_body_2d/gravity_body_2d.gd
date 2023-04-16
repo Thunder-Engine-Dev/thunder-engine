@@ -49,7 +49,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	speed_previous = speed
 	
-	speed += gravity * gravity_dir * delta
+	speed += gravity * gravity_dir * Thunder.get_delta(delta)
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
 	
@@ -73,7 +73,7 @@ func do_movement(delta: float, slide:bool = false, emit_detection_signal: bool =
 	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if !collision:
-		global_position += velocity
+		global_position += velocity * delta
 		return
 	
 	if correct_collision:

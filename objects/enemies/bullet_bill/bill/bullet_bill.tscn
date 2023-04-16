@@ -73,5 +73,10 @@ metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_2h53c")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+rect = Rect2(-256, -256, 512, 512)
+
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

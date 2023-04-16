@@ -30,6 +30,7 @@ bullet_bill = SubResource("Resource_b3ipg")
 metadata/_edit_pinned_properties_ = [&"bullet_bill"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_abljg")
 
 [node name="Launcher" type="Sprite2D" parent="."]
@@ -44,9 +45,6 @@ texture = ExtResource("2_7a3u8")
 metadata/_edit_lock_ = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-position = Vector2(1.90735e-06, 1.90735e-06)
-scale = Vector2(1.6, 1.6)
 
 [node name="Interval" type="Timer" parent="."]
 wait_time = 0.25
