@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://xeoua1lo68u7"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_jump.gd" id="1_gkjl0"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_e31ma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1dfy"]
+size = Vector2(224, 32)
+
+[node name="KoopaBroJump" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_gkjl0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(112, 16)
+shape = SubResource("RectangleShape2D_k1dfy")
+debug_color = Color(0.866667, 0.352941, 0, 0.419608)
+
+[node name="Text" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("2_e31ma")
+text = "UP"
+uppercase = true
