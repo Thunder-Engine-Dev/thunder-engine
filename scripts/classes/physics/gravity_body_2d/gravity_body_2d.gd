@@ -49,7 +49,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	speed_previous = speed
 	
-	speed += gravity * gravity_dir * Thunder.get_delta(delta)
+	speed += gravity * gravity_dir * delta
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
 	
