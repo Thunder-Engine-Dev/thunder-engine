@@ -21,7 +21,7 @@ const GRAVITY: float = 50.0
 ## Defines maximum of speed.y affected by gravity
 @export_range(0, 100000, 0.1) var max_falling_speed: float
 @export_group("Collision")
-## Defines if the body enables collision. For those who don't need any collision, it's recommeneded to set this value to [code]false[/code]
+## Defines if the body enables collision. For those who don't need any collision, it's recommended to set this value to [code]false[/code]
 ## to acquire more performance
 @export var collision: bool = true
 
