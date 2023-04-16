@@ -1,15 +1,10 @@
-extends GeneralMovementBody2D
+extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
 @export var jumping_speed: float = -250.0
-@export var belongs_to: Data.PROJECTILE_BELONGS = Data.PROJECTILE_BELONGS.PLAYER
 
 @onready var texture: Sprite2D = $Texture
-
-
-func _ready():
-	super()
 
 
 func _physics_process(delta: float) -> void:
@@ -28,12 +23,3 @@ func explode():
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 	queue_free()
-
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
-
-
-func _exit_tree():
-	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
-		Thunder._current_player.states.projectiles_count += 1
