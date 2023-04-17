@@ -45,6 +45,7 @@ texture = ExtResource("2_7a3u8")
 metadata/_edit_lock_ = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
 
 [node name="Interval" type="Timer" parent="."]
 wait_time = 0.25

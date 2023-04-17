@@ -38,6 +38,7 @@ position = Vector2(0, -16)
 texture = ExtResource("1_6vb1d")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
 
 [node name="Interval" type="Timer" parent="."]
 
