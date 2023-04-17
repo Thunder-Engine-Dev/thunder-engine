@@ -135,10 +135,11 @@ position = Vector2(6, -16)
 texture = ExtResource("11_8ytaf")
 
 [node name="PosAttack" type="Marker2D" parent="."]
+visible = false
 position = Vector2(8, -17)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-modulate = Color(1, 1, 1, 0.0980392)
+modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0.5, -8)
 scale = Vector2(1.65, 2.4)
 metadata/_edit_lock_ = true
