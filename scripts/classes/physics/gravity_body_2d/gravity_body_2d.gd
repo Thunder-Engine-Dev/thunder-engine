@@ -5,7 +5,7 @@ class_name GravityBody2D
 ## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion[br]
 
 ## Default gravity acceleration
-const GRAVITY: float = 50.0
+const GRAVITY: float = 2500.0
 
 @export_group("Speed")
 ## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
@@ -49,7 +49,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	speed_previous = speed
 	
-	speed += gravity * gravity_dir * Thunder.get_delta(delta)
+	speed += gravity * gravity_dir * delta
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
 	
