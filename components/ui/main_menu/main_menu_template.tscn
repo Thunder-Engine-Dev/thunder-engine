@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqyitcg1tlsi3"]
+
+[ext_resource type="PackedScene" uid="uid://dkquk2byjeol8" path="res://engine/components/ui/main_menu/main_menu_controls.tscn" id="1_p2k5d"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenuControls" parent="." instance=ExtResource("1_p2k5d")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -144.0
+offset_right = 64.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
