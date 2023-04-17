@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b5tqloaji44l"]
+[gd_scene load_steps=20 format=3 uid="uid://b5tqloaji44l"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hgfia"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_uy00l"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="8_yvu7y"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
 size = Vector2(32, 28)
@@ -125,6 +126,11 @@ metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type",
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2216j")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("11_vu45w")
+metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]

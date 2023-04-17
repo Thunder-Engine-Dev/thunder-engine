@@ -75,3 +75,9 @@ func _on_child_entered_tree(node: Node) -> void:
 	if node.is_in_group(&"#circle"): return
 	
 	node.reparent.call_deferred(get_parent())
+
+
+func _on_child_exiting_tree(node: Node) -> void:
+	if Engine.is_editor_hint(): return
+	if get_child_count() <= 0:
+		queue_free()

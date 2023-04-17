@@ -59,8 +59,9 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 sprite_frames = SubResource("SpriteFrames_1jdnw")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("4_83v4w")
+metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]

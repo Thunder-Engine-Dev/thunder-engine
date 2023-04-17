@@ -111,9 +111,10 @@ visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_lgtb0")
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("12_5lllt")
+metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

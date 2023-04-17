@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bo74r2n7h28l"]
+[gd_scene load_steps=21 format=3 uid="uid://bo74r2n7h28l"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro.gd" id="1_iqn6c"]
 [ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_green.png" id="2_15ck6"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="4_p7yp2"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_bhg7k"]
 [ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="11_8ytaf"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_nviwx"]
 
 [sub_resource type="Resource" id="Resource_naguj"]
 script = ExtResource("3_wqa12")
@@ -139,9 +140,8 @@ visible = false
 position = Vector2(8, -17)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, -8)
-scale = Vector2(1.65, 2.4)
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("12_nviwx")
 metadata/_edit_lock_ = true
 
 [node name="Walk" type="Timer" parent="."]

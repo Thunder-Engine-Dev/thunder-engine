@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c54odffl7xqtn"]
+[gd_scene load_steps=21 format=3 uid="uid://c54odffl7xqtn"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_fjnp1"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_4lk8p"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="9_u6mj2"]
 [ext_resource type="Texture2D" uid="uid://c3iwbjridbirg" path="res://engine/objects/enemies/koopas/textures/koopa.png" id="10_cn3qv"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell.png" id="11_2yxir"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_ytsr5"]
 [ext_resource type="PackedScene" path="res://engine/objects/entities/wing/wing.tscn" id="14_wfoaj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
@@ -128,10 +127,6 @@ position = Vector2(-8, -9)
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_lgtb0")
-
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-script = ExtResource("12_ytsr5")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
