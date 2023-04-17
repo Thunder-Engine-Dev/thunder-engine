@@ -57,7 +57,7 @@ func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	elif !Thunder.View.shows_tool(self): return
 	
-	draw_set_transform(-position, deg_to_rad(track_rot))
+	draw_set_transform(-position, deg_to_rad(track_rot), Vector2.ONE / global_scale)
 	var spots: PackedVector2Array = []
 	for i in circle_line_spot + 1:
 		var dot: Vector2 = Vector2.RIGHT.rotated(float(i) * TAU / float(circle_line_spot)) * amplitude

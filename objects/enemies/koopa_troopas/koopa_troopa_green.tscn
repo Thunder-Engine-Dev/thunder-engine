@@ -86,7 +86,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="KoopaTroopaGreen" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="KoopaTroopaGreen" type="Node2D" node_paths=PackedStringArray("sprite") groups=["#circle"]]
 script = ExtResource("1_fjnp1")
 amplitude = Vector2(0, 50)
 random_phase = true

@@ -53,6 +53,7 @@ func status_update() -> void:
 		
 #		enemy_attacked.add_to_group(&"shell")
 		enemy_attacked.stomping_enabled = true
+		enemy_attacked.stomping_hurtable = true
 		
 	else:
 		animation.stop()
@@ -60,6 +61,7 @@ func status_update() -> void:
 		
 #		enemy_attacked.remove_from_group(&"shell")
 		enemy_attacked.stomping_enabled = false
+		enemy_attacked.stomping_hurtable = false
 		combo.reset_combo()
 
 
