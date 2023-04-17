@@ -1,0 +1,150 @@
+[gd_scene load_steps=23 format=3 uid="uid://c2i5gxcay6xk1"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_jump.gd" id="1_sqyu3"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_bip7p"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_qvtb0"]
+[ext_resource type="PackedScene" uid="uid://c7ndajwed1l1n" path="res://engine/objects/enemies/koopas/koopa_blue.tscn" id="4_2a2de"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_4yg1m"]
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_spawn_koopa.gd" id="5_17vqj"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_qfosp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_adogv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_8mbac"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="9_6psou"]
+[ext_resource type="Texture2D" uid="uid://b8myuvxesg01g" path="res://engine/objects/enemies/koopas/textures/koopa_blue.png" id="10_nf7aw"]
+[ext_resource type="PackedScene" path="res://engine/objects/entities/wing/wing.tscn" id="11_8frr7"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_12bnr"]
+[ext_resource type="Texture2D" uid="uid://b5ru4nrm6iejt" path="res://engine/objects/enemies/koopas/textures/shell_blue.png" id="12_ekxw4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_ikfnt"]
+script = ExtResource("5_4yg1m")
+creation_nodepack = ExtResource("4_2a2de")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = ExtResource("5_17vqj")
+
+[sub_resource type="Resource" id="Resource_llg06"]
+resource_local_to_scene = true
+script = ExtResource("5_4yg1m")
+creation_nodepack = ExtResource("7_adogv")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_8mbac")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8ole"]
+atlas = ExtResource("10_nf7aw")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7n2v"]
+atlas = ExtResource("10_nf7aw")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b04x4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8ole")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7n2v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4g8wi"]
+atlas = ExtResource("12_ekxw4")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8u4jf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4g8wi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="KoopaTroopaBlue" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_sqyu3")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, 0)
+gravity_scale = 0.3
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_bip7p")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_qvtb0")
+stomping_creation = SubResource("Resource_ikfnt")
+stomping_scores = 100
+stomping_sound = ExtResource("6_qfosp")
+killing_creation = SubResource("Resource_llg06")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("9_6psou")
+custom_vars = {
+"attachment_killed": NodePath("../../Sprite/Dead")
+}
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_scores"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_b04x4")
+autoplay = "default"
+
+[node name="Wings" parent="Sprite" instance=ExtResource("11_8frr7")]
+position = Vector2(-8, -8)
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_8u4jf")
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("12_12bnr")
+
+[connection signal="collided_floor" from="." to="." method="jump" binds= [0.0]]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

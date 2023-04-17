@@ -1,7 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://c54odffl7xqtn"]
+[gd_scene load_steps=22 format=3 uid="uid://c54odffl7xqtn"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_fjnp1"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8i1ht"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_4lk8p"]
 [ext_resource type="PackedScene" uid="uid://c4ybecka645y6" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="4_r6713"]
 [ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_spawn_koopa.gd" id="5_8ymg8"]
@@ -99,7 +98,6 @@ metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"
 visible = false
 collision_layer = 2
 collision_mask = 7
-script = ExtResource("2_8i1ht")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 shape = SubResource("RectangleShape2D_w2yun")
@@ -136,6 +134,6 @@ visible = false
 script = ExtResource("12_ytsr5")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

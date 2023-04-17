@@ -1,0 +1,99 @@
+[gd_scene load_steps=16 format=3 uid="uid://d0wvuuont8mw"]
+
+[ext_resource type="PackedScene" uid="uid://c54odffl7xqtn" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_green.tscn" id="1_qayrg"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_m1cbn"]
+[ext_resource type="PackedScene" uid="uid://dmudoi1wowt8f" path="res://engine/objects/enemies/koopas/koopa_yellow.tscn" id="2_svm64"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ijbjv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_spawn_koopa.gd" id="3_nys84"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_gbw3c"]
+[ext_resource type="Texture2D" uid="uid://byht8hd1sml51" path="res://engine/objects/enemies/koopas/textures/koopa_yellow.png" id="5_55c6k"]
+[ext_resource type="Texture2D" uid="uid://of8f6domdmig" path="res://engine/objects/enemies/koopas/textures/yellshell.png" id="8_fhan7"]
+
+[sub_resource type="Resource" id="Resource_yldu8"]
+script = ExtResource("4_gbw3c")
+creation_nodepack = ExtResource("2_svm64")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = ExtResource("3_nys84")
+
+[sub_resource type="Resource" id="Resource_cvupp"]
+resource_local_to_scene = true
+script = ExtResource("4_gbw3c")
+creation_nodepack = ExtResource("2_m1cbn")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_ijbjv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro4yw"]
+atlas = ExtResource("5_55c6k")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imttg"]
+atlas = ExtResource("5_55c6k")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ds46o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro4yw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imttg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_op1qm"]
+atlas = ExtResource("8_fhan7")
+region = Rect2(96, 0, 32, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_soyln"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_op1qm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="KoopaTroopaYellow" instance=ExtResource("1_qayrg")]
+amplitude = Vector2(150, 150)
+frequency = 1.0
+metadata/_edit_pinned_properties_ = [&"amplitude", &"frequency"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_yldu8")
+stomping_scores = 500
+killing_creation = SubResource("Resource_cvupp")
+killing_scores = 500
+metadata/_edit_pinned_properties_ = [&"stomping_creation", &"stomping_scores", &"killing_scores"]
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_ds46o")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Dead" parent="Sprite" index="1"]
+sprite_frames = SubResource("SpriteFrames_soyln")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
