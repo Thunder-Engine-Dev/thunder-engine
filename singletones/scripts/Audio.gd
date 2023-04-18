@@ -47,6 +47,8 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 
 func _fading(delta: float) -> void:
 	for i in _fading_musics:
+		if !is_instance_valid(i.fading_music_player): continue
+		
 		var fading_music_player: AudioStreamPlayer = i.fading_music_player
 		
 		if !fading_music_player: continue
@@ -125,7 +127,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 ## [param method] is the way to fade the music, different [param method] decides different [param weight] calculation. See [enum FadingMethod][br]
 ## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
-	var has_player:bool
+	var has_player: bool
 	
 	for i in _fading_musics:
 		if i.fading_music_player == player:
