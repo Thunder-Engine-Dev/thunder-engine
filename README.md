@@ -16,3 +16,6 @@ Required game engine: Godot 4.0.x
 ------------
 Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) to create a new repository for your game.<br/>
 Join our [Discord Server](https://discord.gg/VwgV6GmwXv) for assistance.
+
+------------
+All of the assets and GFX are all courtesy of Nintendo. This project is free and is not created for any sort of profit. We also do not condone commercial use of our engine.
