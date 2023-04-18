@@ -67,7 +67,10 @@ func _animation() -> void:
 	if _step_attacking > 0:
 		sprite.play(&"attack")
 		sprite_projectile.visible = true
-		sprite_projectile.transform = pos_attack.transform * sprite_projectile_animation_transform[sprite.frame]
+		
+		var trans: Transform2D = sprite_projectile_animation_transform[sprite.frame]
+		trans.origin.x *= dir
+		sprite_projectile.transform = pos_attack.transform * trans
 	else:
 		sprite.play(&"default")
 		sprite_projectile.visible = false

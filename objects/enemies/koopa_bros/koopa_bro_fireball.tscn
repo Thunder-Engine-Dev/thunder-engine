@@ -1,0 +1,111 @@
+[gd_scene load_steps=17 format=3 uid="uid://meawwouii8wi"]
+
+[ext_resource type="PackedScene" uid="uid://bo74r2n7h28l" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer.tscn" id="1_qcr0g"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_gx87h"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_rfsl6"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_1k586"]
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_ra7uf"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_xsrff"]
+[ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_0h1a3"]
+[ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_red.png" id="7_i15aa"]
+[ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="9_7dooi"]
+
+[sub_resource type="Resource" id="Resource_6oa5f"]
+script = ExtResource("4_xsrff")
+creation_nodepack = ExtResource("2_rfsl6")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(387.5, 0),
+"speed_min": Vector2(387.5, 0)
+}
+custom_script = ExtResource("3_ra7uf")
+
+[sub_resource type="Resource" id="Resource_e3k1m"]
+resource_local_to_scene = true
+script = ExtResource("4_xsrff")
+creation_nodepack = ExtResource("2_gx87h")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_1k586")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfwn5"]
+atlas = ExtResource("7_i15aa")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st5bc"]
+atlas = ExtResource("7_i15aa")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ly56"]
+atlas = ExtResource("7_i15aa")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63cqv"]
+atlas = ExtResource("7_i15aa")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sth2a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfwn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st5bc")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ly56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63cqv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="KoopaBroFireball" instance=ExtResource("1_qcr0g")]
+projectile = SubResource("Resource_6oa5f")
+sound = ExtResource("5_0h1a3")
+sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
+metadata/_edit_pinned_properties_ = [&"projectile", &"sound", &"sprite_projectile_animation_transform"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_e3k1m")
+killing_creation = SubResource("Resource_e3k1m")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_sth2a")
+animation = &"attack"
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="SpriteProjectile" parent="." index="3"]
+position = Vector2(14, -4)
+texture = ExtResource("9_7dooi")
+metadata/_edit_pinned_properties_ = [&"texture"]
+
+[node name="PosAttack" parent="." index="4"]
+position = Vector2(14, -4)
+metadata/_edit_pinned_properties_ = [&"position"]
