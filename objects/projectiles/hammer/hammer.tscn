@@ -14,7 +14,8 @@ script = ExtResource("1_iv3kc")
 sprite = NodePath("Texture")
 speed = Vector2(387.5, 0)
 gravity_scale = 0.3
-metadata/_edit_pinned_properties_ = [&"sprite"]
+collision = false
+metadata/_edit_pinned_properties_ = [&"sprite", &"collision"]
 
 [node name="Texture" type="Sprite2D" parent="."]
 texture = ExtResource("2_gucbo")
@@ -29,9 +30,12 @@ collide_with_areas = true
 script = ExtResource("3_05jam")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-64, -64, 128, 128)
+metadata/_edit_lock_ = true
 
 [connection signal="collided_floor" from="." to="." method="jump"]
 [connection signal="collided_wall" from="." to="." method="explode"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
 [connection signal="killed_notify" from="Attack" to="." method="explode"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
