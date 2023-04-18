@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkquk2byjeol8"]
+[gd_scene load_steps=6 format=3 uid="uid://dkquk2byjeol8"]
 
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_67t5y"]
 [ext_resource type="Texture2D" uid="uid://cf48rsepfm4jo" path="res://engine/components/ui/main_menu/textures/start_text.png" id="2_4gh10"]
 [ext_resource type="Texture2D" uid="uid://bloy5vfyv8okk" path="res://engine/components/ui/main_menu/textures/options_text.png" id="3_flajg"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selection.gd" id="3_yb4fj"]
 [ext_resource type="Texture2D" uid="uid://8yrsglnn48ca" path="res://engine/components/ui/main_menu/textures/quit_text.png" id="4_bw6k8"]
 
 [node name="MainMenuControls" type="VBoxContainer"]
@@ -14,13 +15,16 @@ script = ExtResource("1_67t5y")
 layout_mode = 2
 texture = ExtResource("2_4gh10")
 stretch_mode = 3
+script = ExtResource("3_yb4fj")
 
 [node name="Options" type="TextureRect" parent="."]
 layout_mode = 2
 texture = ExtResource("3_flajg")
 stretch_mode = 3
+script = ExtResource("3_yb4fj")
 
 [node name="Quit" type="TextureRect" parent="."]
 layout_mode = 2
 texture = ExtResource("4_bw6k8")
 stretch_mode = 3
+script = ExtResource("3_yb4fj")
