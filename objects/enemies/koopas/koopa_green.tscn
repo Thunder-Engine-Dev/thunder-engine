@@ -1,16 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://c4ybecka645y6"]
+[gd_scene load_steps=18 format=3 uid="uid://cno8qn60lpnvv"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_0f4cl"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_3xxsn"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_t3grt"]
-[ext_resource type="PackedScene" uid="uid://b5tqloaji44l" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="3_arw64"]
+[ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="3_arw64"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_yicjg"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_fhwgb"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_5whu3"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_txdwg"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="9_h7q22"]
 [ext_resource type="SpriteFrames" uid="uid://dowq1cl27iub7" path="res://engine/objects/enemies/koopas/prefabs/koopa_green.tres" id="10_kkq1f"]
-[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell.png" id="11_isk1h"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="11_uf1wh"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_5lllt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
@@ -48,7 +48,7 @@ custom_vars = {
 custom_script = ExtResource("8_txdwg")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4pnlq"]
-atlas = ExtResource("11_isk1h")
+atlas = ExtResource("11_uf1wh")
 region = Rect2(96, 0, 32, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lgtb0"]

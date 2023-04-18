@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://b5tqloaji44l"]
+[gd_scene load_steps=20 format=3 uid="uid://ctpsv143q5pjv"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
-[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell.png" id="2_f45j3"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tulax"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="3_lyc5n"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_v7we4"]
@@ -10,6 +9,7 @@
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hgfia"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_uy00l"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="8_yvu7y"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="10_bsier"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
@@ -37,19 +37,19 @@ custom_script = ExtResource("5_pugg3")
 radius = 8.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86os0"]
-atlas = ExtResource("2_f45j3")
+atlas = ExtResource("10_bsier")
 region = Rect2(96, 0, 32, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ugf7"]
-atlas = ExtResource("2_f45j3")
+atlas = ExtResource("10_bsier")
 region = Rect2(0, 0, 32, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cff2n"]
-atlas = ExtResource("2_f45j3")
+atlas = ExtResource("10_bsier")
 region = Rect2(32, 0, 32, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ilor"]
-atlas = ExtResource("2_f45j3")
+atlas = ExtResource("10_bsier")
 region = Rect2(64, 0, 32, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2216j"]

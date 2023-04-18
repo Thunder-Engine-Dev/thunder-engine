@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfrouvuwj4hk0"
-path="res://.godot/imported/shell.png-092aa23dbb7bae0ab2674c1438c7a2a4.ctex"
+path="res://.godot/imported/shell_green.png-037c5688d1d45dc8d1181c05ab1777c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/enemies/koopas/textures/shell.png"
-dest_files=["res://.godot/imported/shell.png-092aa23dbb7bae0ab2674c1438c7a2a4.ctex"]
+source_file="res://engine/objects/enemies/koopas/textures/shell_green.png"
+dest_files=["res://.godot/imported/shell_green.png-037c5688d1d45dc8d1181c05ab1777c9.ctex"]
 
 [params]
 

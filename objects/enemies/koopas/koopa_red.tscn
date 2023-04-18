@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://b24hnsctae1a0"]
 
-[ext_resource type="PackedScene" uid="uid://c4ybecka645y6" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_tovt6"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_tovt6"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_2j537"]
 [ext_resource type="PackedScene" uid="uid://bcfv3ma44i1dp" path="res://engine/objects/enemies/koopas/koopa_shell_red.tscn" id="2_4lt84"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_okgwa"]

@@ -1,13 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0wvuuont8mw"]
+[gd_scene load_steps=16 format=3 uid="uid://ci6k758aqi3b8"]
 
-[ext_resource type="PackedScene" uid="uid://c54odffl7xqtn" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_green.tscn" id="1_qayrg"]
+[ext_resource type="PackedScene" uid="uid://coayehl4g5icj" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_green.tscn" id="1_qayrg"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_m1cbn"]
-[ext_resource type="PackedScene" uid="uid://dmudoi1wowt8f" path="res://engine/objects/enemies/koopas/koopa_yellow.tscn" id="2_svm64"]
+[ext_resource type="PackedScene" path="res://engine/objects/enemies/koopas/koopa_yellow.tscn" id="2_svm64"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ijbjv"]
 [ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_spawn_koopa.gd" id="3_nys84"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_gbw3c"]
 [ext_resource type="Texture2D" uid="uid://byht8hd1sml51" path="res://engine/objects/enemies/koopas/textures/koopa_yellow.png" id="5_55c6k"]
-[ext_resource type="Texture2D" uid="uid://of8f6domdmig" path="res://engine/objects/enemies/koopas/textures/yellshell.png" id="8_fhan7"]
+[ext_resource type="Texture2D" uid="uid://of8f6domdmig" path="res://engine/objects/enemies/koopas/textures/shell_yellow.png" id="8_fhan7"]
 
 [sub_resource type="Resource" id="Resource_awi2w"]
 script = ExtResource("4_gbw3c")
@@ -93,6 +93,9 @@ metadata/_edit_pinned_properties_ = [&"stomping_creation", &"stomping_scores", &
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_ds46o")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Wings" parent="Sprite" index="0"]
+position = Vector2(-8, -7)
 
 [node name="Dead" parent="Sprite" index="1"]
 sprite_frames = SubResource("SpriteFrames_soyln")
