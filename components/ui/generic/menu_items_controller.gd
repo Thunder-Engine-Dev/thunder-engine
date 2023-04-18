@@ -22,6 +22,7 @@ signal selected(item_index: int, item_node: Control, immediate: bool)
 func _ready() -> void:
 	if trigger_selection_immediately:
 		selected.emit(current_item_index, get_child(current_item_index), true)
+		get_child(current_item_index)._handle_focused(true)
 
 
 func _input(event: InputEvent) -> void:
@@ -47,5 +48,5 @@ func _selection() -> void:
 	item._handle_focused(true)
 	
 	for i in get_children():
-		if !(i != item) && !i.focused:
+		if i != item && i.focused:
 			i._handle_focused(false)
