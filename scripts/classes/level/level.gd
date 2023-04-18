@@ -46,6 +46,10 @@ func _ready() -> void:
 
 # Adding neccessary nodes to our level scene
 func _prepare_template() -> void:
+	var music_loader = load("res://engine/objects/core/music_loader/music_loader.tscn").instantiate()
+	add_child(music_loader)
+	music_loader.set_owner(self)
+	
 	var player = load("res://engine/objects/core/player/player.tscn").instantiate()
 	add_child(player)
 	player.position = Vector2(80, 416)
