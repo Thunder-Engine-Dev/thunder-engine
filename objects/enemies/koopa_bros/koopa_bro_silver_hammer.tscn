@@ -1,0 +1,103 @@
+[gd_scene load_steps=16 format=3 uid="uid://cw08jvxq0on"]
+
+[ext_resource type="PackedScene" uid="uid://bo74r2n7h28l" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer.tscn" id="1_8wu3f"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_a4aet"]
+[ext_resource type="PackedScene" uid="uid://e0knwhbbb2ok" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.tscn" id="2_rsdim"]
+[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_0vxgn"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_v84mi"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3a8oo"]
+[ext_resource type="Texture2D" uid="uid://dvy47ukgpxof5" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_silver.png" id="5_84b2t"]
+[ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="6_fbea0"]
+
+[sub_resource type="Resource" id="Resource_i08cg"]
+script = ExtResource("4_3a8oo")
+creation_nodepack = ExtResource("2_rsdim")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(550, -250),
+"speed_min": Vector2(200, -450)
+}
+custom_script = ExtResource("3_0vxgn")
+
+[sub_resource type="Resource" id="Resource_5jbwk"]
+resource_local_to_scene = true
+script = ExtResource("4_3a8oo")
+creation_nodepack = ExtResource("2_a4aet")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_v84mi")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8evm"]
+atlas = ExtResource("5_84b2t")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxkve"]
+atlas = ExtResource("5_84b2t")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqj8h"]
+atlas = ExtResource("5_84b2t")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhgic"]
+atlas = ExtResource("5_84b2t")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iq2ae"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8evm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxkve")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqj8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhgic")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="KoopaBroSilverHammer" instance=ExtResource("1_8wu3f")]
+attacking_delay = 0.9
+projectile = SubResource("Resource_i08cg")
+metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_5jbwk")
+killing_creation = SubResource("Resource_5jbwk")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_iq2ae")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="SpriteProjectile" parent="." index="3"]
+texture = ExtResource("6_fbea0")
+metadata/_edit_pinned_properties_ = [&"texture"]

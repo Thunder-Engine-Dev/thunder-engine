@@ -1,21 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc12btlrtjxyl"]
+[gd_scene load_steps=5 format=3 uid="uid://e0knwhbbb2ok"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/beetroot/beetroot.gd" id="1_qd3dy"]
-[ext_resource type="Texture2D" uid="uid://cd4tiiirqgtvi" path="res://engine/objects/projectiles/beetroot/texture.png" id="2_n2mkg"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_p2s0u"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.gd" id="1_kg4ub"]
+[ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="2_5fl35"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_7xrok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
 size = Vector2(20, 32)
 
-[node name="Beetroot" type="CharacterBody2D"]
+[node name="SilverHammer" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 64
-script = ExtResource("1_qd3dy")
+script = ExtResource("1_kg4ub")
+sprite = NodePath("Texture")
 speed = Vector2(120, -300)
-gravity_scale = 0.4
+gravity_scale = 0.3
 
 [node name="Texture" type="Sprite2D" parent="."]
-texture = ExtResource("2_n2mkg")
+texture = ExtResource("2_5fl35")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -28,11 +29,13 @@ target_position = Vector2(0, 0)
 max_results = 8
 collision_mask = 67
 collide_with_areas = true
-script = ExtResource("3_p2s0u")
+script = ExtResource("3_7xrok")
 killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+metadata/_edit_lock_ = true
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]

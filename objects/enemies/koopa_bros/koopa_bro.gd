@@ -87,7 +87,7 @@ func _bro_movement(delta: float) -> void:
 			vel_set_x(speed.x * _dir)
 		1:
 			if is_on_wall() || (cposx < posx - _radius && _dir < 0) || (cposx > posx + _radius && _dir > 0):
-				_speed = absf(speed.x)
+				_speed = absf(speed_previous.x)
 				vel_set_x(0)
 				_step_moving = 2
 				timer_walk.start(_duration)

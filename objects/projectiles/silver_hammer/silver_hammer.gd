@@ -1,8 +1,8 @@
 extends Projectile
 
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
-@export var jumping_speed: float = -450.0
-@export var bounces_left: int = 3
+#@export var jumping_speed: float = -450.0
+@export var bounces_left: int = 2
 
 var drown: bool = false
 
@@ -11,16 +11,22 @@ var drown: bool = false
 signal run_out
 
 
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if !sprite_node: return
+	sprite_node.rotation_degrees += 50 * (-1 if speed.x < 0 else 1) * Thunder.get_delta(delta)
+
+
 func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if bounces_left <= 0: return
 	
 	if with_sound:
-		Audio.play_sound(preload("res://engine/objects/projectiles/sounds/stun.wav"), self)
+		Audio.play_sound(preload("res://engine/objects/mario/sounds/kick.wav"), self)
 	
 	turn_x()
-	
-	if !ceiling: jump(jumping_speed)
-	else: vel_set_y(0)
+	turn_y()
+	speed.x *= randf_range(1.1, 1.3)
+	speed.y *= randf_range(0.7, 0.9)
 	
 	bounces_left -= 1
 	
