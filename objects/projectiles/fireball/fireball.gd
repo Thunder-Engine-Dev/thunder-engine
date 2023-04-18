@@ -4,13 +4,11 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 
 @export var jumping_speed: float = -250.0
 
-@onready var texture: Sprite2D = $Texture
-
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	
-	texture.rotation_degrees += 12 * (-1 if speed.x < 0 else 1) * Thunder.get_delta(delta)
+	if !sprite_node: return
+	sprite_node.rotation_degrees += 12 * (-1 if speed.x < 0 else 1) * Thunder.get_delta(delta)
 
 
 func jump(jspeed:float = jumping_speed) -> void:
