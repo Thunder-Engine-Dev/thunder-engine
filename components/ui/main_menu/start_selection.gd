@@ -18,16 +18,16 @@ func _handle_select() -> void:
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
-			.with_speeds(0.015, -0.05)
+			.with_speeds(0.015, -0.1)
 	)
 	
 	Audio.play_1d_sound(transition_sound)
 	
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 	TransitionManager.transition_middle.connect(func():
-		Scenes.goto_scene(sgr_path)
 		TransitionManager.current_transition.paused = true
-		Scenes.scene_changed.connect(func():
+		Scenes.goto_scene(sgr_path)
+		Scenes.scene_changed.connect(func(_current_scene):
 			TransitionManager.current_transition.on(Thunder._current_player)
 			TransitionManager.current_transition.paused = false
 		, CONNECT_ONE_SHOT)

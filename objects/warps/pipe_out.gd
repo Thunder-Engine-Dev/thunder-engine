@@ -5,6 +5,7 @@ extends Area2D
 @export var warp_direction: PlayerStatesManager.WarpDirection = PlayerStatesManager.WarpDirection.UP
 @export var warping_speed: float = 50
 @export var warping_sound: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var trigger_immediately: bool = false
 
 var player: Player
 
@@ -16,6 +17,14 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	$Arrow.queue_free()
 	$TextDir.queue_free()
+	
+	if trigger_immediately:
+		player = Thunder._current_player
+		player.states.set_state("warp")
+		player.states.warp_direction = warp_direction
+		player.global_position = pos_player.global_position
+		player.z_index = -5
+		pass_player(player)
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -58,6 +67,8 @@ func pass_player(new_player: Player) -> void:
 	
 	player.global_position = pos_player.global_position
 	player.states.warp_direction = player_warp_dir
+	
+	await get_tree().process_frame
 	Audio.play_sound(warping_sound, self, false)
 
 
