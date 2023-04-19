@@ -54,6 +54,7 @@ func _physics_process(delta: float) -> void:
 	motion_process(delta)
 
 
+# Facing direction, not walking one
 func _direction() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
@@ -77,14 +78,17 @@ func _animation() -> void:
 
 
 func _bro_movement(delta: float) -> void:
+	# Relative position.x to the coordinate system
 	var cposx: float = global_transform.affine_inverse().basis_xform(global_position).x
 	match _step_moving:
+		# Initial walking
 		0:
 			_dir = dir
 			_radius = moving_radius_max
 			_duration = moving_duration_max
 			_step_moving = 1
 			vel_set_x(speed.x * _dir)
+		# Walking detection
 		1:
 			if is_on_wall() || (cposx < posx - _radius && _dir < 0) || (cposx > posx + _radius && _dir > 0):
 				_speed = absf(speed_previous.x)
@@ -94,9 +98,11 @@ func _bro_movement(delta: float) -> void:
 
 
 func _bro_jump() -> void:
+	# Collision disabling when jumping
 	if _collision_mask > 0 && ((_jump == 1 && speed.y >= 0) || (_jump == 2 && speed.y >= jumping_strength_downward + 90)):
 		collision_mask = _collision_mask
 		_collision_mask = 0
+	# While jumping, stop detection with randomized numbers
 	if _jump in [1, 2]:
 		return
 	
@@ -119,6 +125,7 @@ func _bro_jump() -> void:
 	_jump = 0
 
 
+# Turning back
 func _on_walk_timeout() -> void:
 	_dir *= -1
 	_radius = randf_range(moving_radius_min, moving_radius_max)
@@ -127,14 +134,17 @@ func _on_walk_timeout() -> void:
 	vel_set_x(_speed * _dir)
 
 
+# Attack
 func _on_attack_timeout() -> void:
 	match _step_attacking:
+		# Detection for attack
 		0:
 			var chance: float = randf_range(0, 1)
 			if chance < attacking_chance:
 				_step_attacking = 1
 				timer_attack.start(attacking_delay)
 				timer_attack.one_shot = true
+		# Attack
 		1:
 			_step_attacking = 0
 			timer_attack.start(attacking_count_unit)
