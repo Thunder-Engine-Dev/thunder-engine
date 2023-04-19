@@ -174,12 +174,29 @@ class View:
 			return screen_bottom(pos, offset)
 	
 	
+	## Used for scripts with @tool to limit its process functions running out of screen
 	static func shows_tool(tool: Node2D) -> bool:
 		var viewport: Transform2D = tool.get_viewport_transform()
 		var size: Vector2 = tool.get_viewport_rect().size
 		var vscale: Vector2 = viewport.get_scale()
 		var pos: Vector2 = -viewport.get_origin() / vscale
 		return Rect2(pos, size / vscale).has_point(tool.global_position)
+	
+	
+	## Easier way to get position, relative to the screen, of node2d
+	func get_pos_in_screen(node2d: Node2D) -> Vector2:
+		if !node2d: return Vector2.ZERO
+		var trans: Transform2D = node2d.get_viewport_transform()
+		return trans * node2d.global_position
+	
+	
+	## Easier way to get position ratio, relative to the screen, of node2d
+	func get_pos_ratio_in_screen(node2d: Node2D) -> Vector2:
+		if !node2d: return Vector2.ZERO
+		var pos: Vector2 = get_pos_in_screen(node2d)
+		var size: Vector2 = node2d.get_viewport_rect().size
+		return pos / size
+
 
 
 class Math:
