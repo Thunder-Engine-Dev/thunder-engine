@@ -122,7 +122,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 	
 	var dot: float = by.global_position.direction_to(
 		_center.global_transform.translated(stomping_offset + offset).get_origin()
-	).dot(stomping_standard)
+	).dot(stomping_standard.rotated(_center.global_rotation))
 	
 	if _stomping_delayer: return result
 	

@@ -35,7 +35,7 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	var scene: Node = pck.instantiate()
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
-	scene_changed.emit()
+	scene_changed.emit(current_scene)
 
 ## Loads the scene from the given path and instantiates it
 func goto_scene(path: String) -> void:

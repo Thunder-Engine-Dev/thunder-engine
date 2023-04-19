@@ -3,7 +3,7 @@ extends Node
 ## Singleton that stores general data in the game
 
 ## Defines enemies' type of receiving attack
-const ATTACKERS:Dictionary = {
+const ATTACKERS: Dictionary = {
 	head = &"head",
 	starman = &"starman",
 	shell = &"shell",

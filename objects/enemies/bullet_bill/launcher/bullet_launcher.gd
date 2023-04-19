@@ -40,6 +40,9 @@ func _on_bullet_launched() -> void:
 				bul.look_at_player = false
 				bul.vel_set(Vector2.RIGHT * bullet_speed * dir)
 				bul.z_index -= 1
+				var enemy_attacked: Node = bul.get_node_or_null("EnemyAttacked")
+				if !enemy_attacked: return
+				enemy_attacked.stomping_standard = enemy_attacked.stomping_standard.rotated(-bul.global_rotation)
 	)
 	NodeCreator.prepare_2d(explosion, pos_bullet).create_2d().bind_global_transform(Vector2.RIGHT * 16 * dir)
 	interval.start(randf_range(shooting_delay_min, shooting_delay_max))
