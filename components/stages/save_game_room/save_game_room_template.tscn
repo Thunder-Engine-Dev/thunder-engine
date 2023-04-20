@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=17 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_configuration.gd" id="12_2y7a3"]
 [ext_resource type="AudioStream" uid="uid://duv2iffp4t2vt" path="res://engine/objects/mario/sounds/swim.wav" id="13_71u2i"]
 [ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_camera_2d.gd" id="15_pn7vu"]
-[ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="16_ru5a1"]
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="16_sso43"]
 [ext_resource type="PackedScene" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
@@ -81,8 +80,3 @@ position = Vector2(96, 112)
 rotation = -3.14159
 warp_direction = 4
 trigger_immediately = true
-
-[node name="PipeIn" parent="." instance=ExtResource("16_ru5a1")]
-position = Vector2(336, 400)
-warp_to_scene = "res://level.tscn"
-use_circle_transition = true
