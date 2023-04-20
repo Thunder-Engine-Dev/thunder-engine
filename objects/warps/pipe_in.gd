@@ -5,11 +5,17 @@ extends Area2D
 @export_group("General")
 @export var warp_direction: PlayerStatesManager.WarpDirection = PlayerStatesManager.WarpDirection.DOWN
 @export_node_path("Area2D") var warp_to: NodePath
+@export var warp_to_scene: String
 @export var warping_speed: float = 50
 @export var warping_sound: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
-@export_group("Transition")
+@export_group("Path Transition")
 @export var warp_path: Path2D
 @export var warp_path_speed: float = 400
+@export_group("Circle Transition")
+@export var use_circle_transition: bool = false
+@export var circle_closing_speed: float = 0.1
+@export var circle_opening_speed: float = 0.1
+@export var circle_focus_on_player: bool = true
 @export_group("Editor","warp_editor_")
 @export var warping_editor_display: bool = true
 @export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
@@ -20,6 +26,7 @@ var warp_trans: WarpTrans
 var _on_warp: bool
 var _duration: float
 var _target: float = 1
+var _warp_triggered: bool = false
 
 @onready var target: Area2D = get_node_or_null(warp_to)
 @onready var shape: CollisionShape2D = $CollisionShape2D
@@ -31,6 +38,7 @@ func _ready() -> void:
 	$Arrow.queue_free()
 	$TextDir.queue_free()
 
+
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	
@@ -41,6 +49,7 @@ func _draw() -> void:
 	if !tg.is_in_group("pipe_out"): return
 	
 	draw_line(Vector2.ZERO,tg.global_position - global_position, warping_editor_color,4)
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -80,17 +89,47 @@ func _physics_process(delta: float) -> void:
 	if _duration < _target:
 		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
 		_duration += delta
-	elif target && !warp_trans:
-		if warp_path: 
-			warp_trans = WarpTrans.new(player, warp_path, warp_path_speed)
-			warp_path.add_child(warp_trans)
-			await warp_trans.done
+	elif !warp_trans && !_warp_triggered:
+		_warp_triggered = true
 		
-		_on_warp = false
-		_duration = 0
+		if use_circle_transition:
+			TransitionManager.accept_transition(
+				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+					.instantiate()
+					.with_speeds(circle_closing_speed, -circle_opening_speed)
+			)
+			if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+			await TransitionManager.transition_middle
+			TransitionManager.current_transition.paused = true
+			
+			pass_warp()
+			
+			if warp_to_scene: 
+				Scenes.scene_changed.connect(func(_current_scene):
+					if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+					TransitionManager.current_transition.paused = false
+				, CONNECT_ONE_SHOT)
+			else:
+				if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+				TransitionManager.current_transition.paused = false
+		else: pass_warp()
+
+
+func pass_warp() -> void:
+	if target && warp_path: 
+		warp_trans = WarpTrans.new(player, warp_path, warp_path_speed)
+		warp_path.add_child(warp_trans)
+		await warp_trans.done
+	
+	_on_warp = false
+	_warp_triggered = false
+	_duration = 0
+	if target:
 		target.pass_player(player)
-		player = null
-		warp_trans = null
+	elif warp_to_scene:
+		Scenes.goto_scene(warp_to_scene)
+	player = null
+	warp_trans = null
 
 
 func _label() -> void:

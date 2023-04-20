@@ -31,5 +31,4 @@ func _handle_select() -> void:
 			TransitionManager.current_transition.on(Thunder._current_player)
 			TransitionManager.current_transition.paused = false
 		, CONNECT_ONE_SHOT)
-		, CONNECT_ONE_SHOT
-	)
+	, CONNECT_ONE_SHOT)
