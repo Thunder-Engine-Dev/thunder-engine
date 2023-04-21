@@ -34,8 +34,9 @@ func _on_bullet_launched() -> void:
 	
 	var dir: int = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
 	Audio.play_sound(shooting_sound, pos_bullet, false)
-	NodeCreator.prepare_ins_2d(bullet_bill, pos_bullet).create_2d().bind_global_transform().call_method(
+	NodeCreator.prepare_ins_2d(bullet_bill, self).create_2d().call_method(
 		func(bul: Node2D) -> void:
+			bul.global_transform = pos_bullet.global_transform
 			if bul is GeneralMovementBody2D:
 				bul.look_at_player = false
 				bul.vel_set(Vector2.RIGHT * bullet_speed * dir)

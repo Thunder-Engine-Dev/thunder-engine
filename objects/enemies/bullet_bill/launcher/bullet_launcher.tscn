@@ -39,8 +39,9 @@ metadata/_edit_lock_ = true
 [node name="PosBullet" type="Marker2D" parent="Launcher"]
 visible = false
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
+enable_node_path = NodePath("../Interval")
 
 [node name="Interval" type="Timer" parent="."]
 wait_time = 0.25
