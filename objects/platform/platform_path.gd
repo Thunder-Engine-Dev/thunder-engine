@@ -19,20 +19,20 @@ extends PathFollow2D
 @export var custom_vars: Dictionary
 @export var custom_script: GDScript
 
-var on_path:bool = true
+var on_path: bool = true
 
 var smooth_speed: float
-var smooth_duration:float
-var smooth_next_points:PackedVector2Array
-var smooth_on_continue_point:bool
-var smooth_step:int
+var smooth_duration: float
+var smooth_next_points: PackedVector2Array
+var smooth_on_continue_point: bool
+var smooth_step: int
 
-var players_standing:Array[Node2D]
-var non_players_standing:Array[Node2D]
-var players_have_stood:bool
-var non_players_have_stood:bool
+var players_standing: Array[Node2D]
+var non_players_standing: Array[Node2D]
+var players_have_stood: bool
+var non_players_have_stood: bool
 
-var linear_velocity:Vector2
+var linear_velocity: Vector2
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: AnimatableBody2D = $Block
@@ -79,19 +79,18 @@ func _physics_process(delta: float) -> void:
 	var pregpos:Vector2 = global_position
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
-	linear_velocity = global_position - pregpos
 	
 	if block.sync_to_physics: block.global_position = block.global_position
 
 
 func _on_path_movement_process(delta: float) -> void:
-	if !curve || !on_path: return
-	
-	progress += speed * delta
+	if !on_path: return
 	
 	# Moving
-	if smooth_turning_length > 0: _smooth_movement(delta)
-	else: _sharp_movement()
+	if curve:
+		progress += speed * delta
+		if smooth_turning_length > 0: _smooth_movement(delta)
+		else: _sharp_movement()
 	
 	# Emit Falling
 	if players_have_stood && falling_acceleration > 0:
@@ -101,10 +100,10 @@ func _non_path_movement_process(delta: float) -> void:
 	if on_path: return
 	
 	# Falling
-	if players_have_stood && falling_acceleration > 0:
-		linear_velocity += falling_direction.normalized() * falling_acceleration * delta
+	if players_have_stood && falling_acceleration != 0:
+		linear_velocity += falling_direction.normalized() * falling_acceleration * Thunder.get_delta(delta)
 	
-	global_position += linear_velocity
+	global_position += linear_velocity * delta
 
 
 func _sharp_movement() -> void:

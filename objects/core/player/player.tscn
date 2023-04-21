@@ -57,6 +57,7 @@ editor_description = "This is a reference node for player creation."
 z_index = 1
 collision_mask = 16
 floor_snap_length = 10.0
+platform_on_leave = 1
 script = ExtResource("1_64hux")
 config = SubResource("Resource_p510p")
 default_player_state = ExtResource("5_08kj1")
