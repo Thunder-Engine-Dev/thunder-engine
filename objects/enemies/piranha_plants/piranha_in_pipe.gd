@@ -11,9 +11,9 @@ extends Node2D
 
 var step: int
 
-@onready var vision:VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-@onready var timer_step:Timer = $Step
-@onready var extra_script:Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
+@onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var timer_step: Timer = $Step
+@onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 
 @onready var stretching_end: Vector2 = position
 @onready var stretching_start: Vector2 = stretching_end + (Vector2.DOWN * stretching_length).rotated(rotation)
@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	var player: Node2D = Thunder._current_player
 	var ppos: Vector2 = global_transform.affine_inverse().basis_xform(player.global_position)
 	var spos: Vector2 = global_transform.affine_inverse().basis_xform(global_position)
-	var can_strech_out: bool = !vision.is_on_screen() && player && abs(spos.x - ppos.x) > range_in_pipe
+	var can_strech_out: bool = vision.is_on_screen() && player && abs(spos.x - ppos.x) > range_in_pipe
 	
 	match step:
 		0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene load_steps=17 format=3 uid="uid://oja3uy1y4hpl"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="8_85764"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_dl36v"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
@@ -111,9 +110,10 @@ texture = ExtResource("3_12v5v")
 metadata/_edit_pinned_properties_ = [&"texture"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-script = ExtResource("11_dl36v")
-target_nodepath = NodePath("")
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(2.38419e-07, -24)
+scale = Vector2(1.6, 2.4)
+metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="."]
 one_shot = true
