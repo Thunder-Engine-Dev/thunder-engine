@@ -26,10 +26,10 @@ class_name Level
 @export var falling_below_y_offset: float = 64.0
 
 # Forces player to walk forward, used in finish sequence
-var _force_mario_walking: bool = false
-var _force_mario_walking_dir: int = 1:
+var _force_player_walking: bool = false
+var _force_player_walking_dir: int = 1:
 	set(dir):
-		_force_mario_walking_dir = clampi(dir, -1, 1)
+		_force_player_walking_dir = clampi(dir, -1, 1)
 		if dir == 0:
 			dir = [-1, 1].pick_random()
 
@@ -78,30 +78,35 @@ func _prepare_template() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-		
-	if _force_mario_walking:
-		Thunder._current_player.velocity_local.x = 120 * _force_mario_walking_dir
+	
+	var player: Player = Thunder._current_player
+	if !player: return
+	
+	if _force_player_walking && player.states.current_state != "dead":
+		player.velocity_local.x = 120 * _force_player_walking_dir
 	
 	await get_tree().process_frame
 	
-	if !Thunder.view.screen_bottom(Thunder._current_player.global_position, falling_below_y_offset) && Thunder._current_player.states.current_state != "warp": # TEMP
+	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset) && player.states.current_state != "warp": # TEMP
 		match falling_below_screen_action:
-			1: if Thunder._current_player.states.current_state != "dead": Thunder._current_player.kill()
-			2: Thunder._current_player.position.y -= 608
+			1: if player.states.current_state != "dead": player.kill()
+			2: player.position.y -= 608
 	
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.states.controls_enabled = false
+	Thunder._current_player.states.jump_buffer = false
 	Audio.play_music(completion_music, 1)
 	
 	if walking: 
-		_force_mario_walking = true
-		_force_mario_walking_dir = walking_dir
+		_force_player_walking = true
+		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	
 	await Audio._music_channels[1].finished
+	if Thunder._current_player.states.current_state == "dead": return
 	
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:

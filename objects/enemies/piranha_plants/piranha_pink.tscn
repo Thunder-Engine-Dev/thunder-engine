@@ -59,7 +59,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 20.0
 }]
 
 [node name="PiranhaPink" type="Node2D"]

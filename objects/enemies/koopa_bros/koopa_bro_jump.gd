@@ -28,6 +28,7 @@ func _ready() -> void:
 			bro._jump_up = false
 			bro._jump_down = false
 	)
+	$Text.visible = false
 	$Text.queue_free()
 
 

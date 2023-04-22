@@ -31,10 +31,10 @@ extends Node
 ## Sound triggered when the enemy gets stomped
 @export var stomping_sound: AudioStream
 ## Minimum of player's jumping speed, triggered when player stomps onto
-## the enemy and you [b]aren't[/b] holding on jumping key
-@export var stomping_player_jumping_min: float = 500
+## the enemy and you [b]aren't[/b] holding the jumping key
+@export var stomping_player_jumping_min: float = 450
 ## Maximum of player's jumping speed, triggered when player stomps onto
-## the enemy and you [b]are[/b] holding on jumping key
+## the enemy and you [b]are[/b] holding the jumping key
 @export var stomping_player_jumping_max: float = 700
 @export_group("Killing","killing_")
 ## If [code]true[/code], the enemy will be able to be killed by attackers

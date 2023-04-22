@@ -6,7 +6,7 @@ extends Area2D
 @onready var finish_line = $".."
 @onready var animation_player = $"../AnimationPlayer"
 
-const CHECKER_BAR = preload("res://engine/objects/core/finish_line/checher_bar.tscn")
+const CHECKER_BAR = preload("res://engine/objects/core/finish_line/checker_bar.tscn")
 
 func _physics_process(delta) -> void:
 	if overlaps_body(Thunder._current_player) && animation_player.is_playing():

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://blrlnje7phwjd"]
+
+[ext_resource type="Texture2D" uid="uid://cceply20u1uwi" path="res://engine/objects/core/finish_line/textures/checkerbar.png" id="1_pc6d2"]
+[ext_resource type="Script" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_reimf"]
+
+[node name="CheckerBar" type="Sprite2D"]
+texture = ExtResource("1_pc6d2")
+script = ExtResource("2_reimf")

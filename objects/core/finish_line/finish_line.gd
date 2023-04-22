@@ -15,9 +15,10 @@ func _physics_process(_delta: float) -> void:
 	if triggered: return
 	
 	var player = Thunder._current_player
-	var completion1: bool = (player.global_position.x - global_position.x) * direction_to_complete > 0 && !strict_detection_area
+	var completion1: bool = -20 * direction_to_complete + (player.global_position.x - global_position.x) * direction_to_complete > 0 && !strict_detection_area
 	var completion2: bool = completion_area.overlaps_body(player) && strict_detection_area
 	if player.is_on_floor() && (completion1 || completion2):
+		player.states.controls_enabled = false
 		Scenes.current_scene.finish(true, direction_to_complete)
 		triggered = true
 		animation_player.stop(true)

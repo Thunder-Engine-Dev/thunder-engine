@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var timer = $Timer
 @onready var time_text = $Control/Time
+@onready var time_counter: Label = $Control/TimeCounter
 @onready var gameover = $Control/GameOver
 
 @export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
@@ -22,6 +23,11 @@ func _ready() -> void:
 		elif Data.values.time == 0:
 			Thunder._current_player.kill()
 	)
+	
+	await get_tree().physics_frame
+	if Data.values.time < 0:
+		time_text.visible = false
+		time_counter.visible = false
 
 
 func game_over() -> void:
@@ -37,12 +43,23 @@ func timer_hurry() -> void:
 	tw.tween_property(time_text, "scale:y", 1, 0.125)
 
 
-func time_countdown() -> void:
-	if Data.values.time % 11 == 0: Audio.play_1d_sound(scoring_sound)
-	Data.values.time -= 1
-	Data.values.score += 10
+func time_countdown(_first_time: bool = true) -> void:
+	if _first_time: _time_countdown_sound_loop()
+	
+	if Data.values.time > 6:
+		Data.values.time -= 3
+		Data.values.score += 30
+	
 	if Data.values.time > 0:
-		await get_tree().create_timer(0.005).timeout
-		time_countdown()
+		Data.values.time -= 1
+		Data.values.score += 10
+		await get_tree().create_timer(0.01, false, true).timeout
+		time_countdown(false)
 	else:
 		time_countdown_finished.emit()
+
+func _time_countdown_sound_loop() -> void:
+	if Data.values.time > 0:
+		Audio.play_1d_sound(scoring_sound)
+		await get_tree().create_timer(0.09, false, true).timeout
+		_time_countdown_sound_loop()

@@ -49,6 +49,7 @@ func execute() -> void:
 	history.remove_at(0)
 	history.push_front(input.text)
 	history.push_front("")
+	move_history_to_latest(null)
 	
 	var args = input.text.split(' ')
 	
@@ -70,6 +71,11 @@ func move_history(amount: int) -> void:
 	position_in_history = clamp(position_in_history, 0, history.size() - 1)
 	input.text = history[position_in_history]
 	input.caret_column = input.text.length()
+	if !input.text_changed.is_connected(move_history_to_latest):
+		input.text_changed.connect(move_history_to_latest, CONNECT_ONE_SHOT)
+
+func move_history_to_latest(_new_text) -> void:
+	position_in_history = 0
 
 func print(msg: Variant) -> void:
 	output.text += "%s\n" % msg

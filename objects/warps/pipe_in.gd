@@ -2,6 +2,9 @@
 extends Area2D
 
 @export_category("Warp")
+@export_group("Editor","warping_editor_")
+@export var warping_editor_display_path: bool = true
+@export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
 @export_group("General")
 @export var warp_direction: PlayerStatesManager.WarpDirection = PlayerStatesManager.WarpDirection.DOWN
 @export_node_path("Area2D") var warp_to: NodePath
@@ -16,9 +19,6 @@ extends Area2D
 @export var circle_closing_speed: float = 0.1
 @export var circle_opening_speed: float = 0.1
 @export var circle_focus_on_player: bool = true
-@export_group("Editor","warp_editor_")
-@export var warping_editor_display: bool = true
-@export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
 
 var player: Player
 var warp_trans: WarpTrans
@@ -46,8 +46,14 @@ func _draw() -> void:
 	
 	var tg:Area2D = get_node_or_null(warp_to)
 	if !tg: return
-	if !tg.is_in_group("pipe_out"): return
+	if !tg.is_in_group("pipe_out"):
+		printerr(name, 
+			""": warp_to contains a path to an invalid warp scene. Property has been reset."""
+		)
+		warp_to = ""
+		return
 	
+	if !warping_editor_display_path: return
 	draw_line(Vector2.ZERO,tg.global_position - global_position, warping_editor_color,4)
 
 

@@ -167,7 +167,7 @@ func _movement_default(delta: float) -> void:
 	if _is_action_just_released(config.control_jump):
 		states.jump_buffer = false
 	
-	if (_is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && states.current_state != "crouch":
+	if (_is_action_just_pressed(config.control_jump) || states.jump_buffer) && is_on_floor() && !states.current_state in ["crouch", "stuck"]:
 		velocity_local.y = -config.jump_velocity
 		states.jump_buffer = false
 		Audio.play_sound(config.jump_sound, self, true, {pitch = config.sound_pitch})

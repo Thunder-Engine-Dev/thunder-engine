@@ -1,3 +1,4 @@
+@icon("res://engine/components/ui/generic/textures/icon_selector.png")
 extends Node2D
 class_name MenuSelector
 ## The selection indicator helper script

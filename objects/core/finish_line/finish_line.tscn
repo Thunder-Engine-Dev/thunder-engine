@@ -53,7 +53,7 @@ _data = {
 script = ExtResource("1_h4anr")
 
 [node name="Finishline" type="Sprite2D" parent="."]
-position = Vector2(128, -143)
+position = Vector2(128, -144)
 texture = ExtResource("1_8jdlp")
 
 [node name="CompletionArea" type="Area2D" parent="."]

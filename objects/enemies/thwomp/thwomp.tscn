@@ -111,20 +111,11 @@ animations = [{
 "texture": SubResource("AtlasTexture_vbcpq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_botof")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vbcpq")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_boaq6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vbcpq")
 }],
 "loop": true,
 "name": &"smile",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="Thwomp" type="CharacterBody2D"]
