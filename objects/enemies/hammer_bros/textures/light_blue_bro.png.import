@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dryaolxjr37di"
-path="res://.godot/imported/koopa_bro_green.png-e8d6c5b83b08b85434f127147d7b1f69.ctex"
+uid="uid://ywg0vr64iyos"
+path="res://.godot/imported/light_blue_bro.png-740d9a4957879eb9615760aec77262d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_green.png"
-dest_files=["res://.godot/imported/koopa_bro_green.png-e8d6c5b83b08b85434f127147d7b1f69.ctex"]
+source_file="res://engine/objects/enemies/hammer_bros/textures/light_blue_bro.png"
+dest_files=["res://.godot/imported/light_blue_bro.png-740d9a4957879eb9615760aec77262d3.ctex"]
 
 [params]
 

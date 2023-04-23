@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8dx5qt71uglv"
-path="res://.godot/imported/koopa_bro_pink.png-df8e245bd757816b38212142e245556c.ctex"
+path="res://.godot/imported/pink_bro.png-343d0710ee993da7c2efc32c435d8e7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_pink.png"
-dest_files=["res://.godot/imported/koopa_bro_pink.png-df8e245bd757816b38212142e245556c.ctex"]
+source_file="res://engine/objects/enemies/hammer_bros/textures/pink_bro.png"
+dest_files=["res://.godot/imported/pink_bro.png-343d0710ee993da7c2efc32c435d8e7d.ctex"]
 
 [params]
 

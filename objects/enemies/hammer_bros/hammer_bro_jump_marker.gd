@@ -1,7 +1,7 @@
 @tool
 extends Area2D
 
-@export_enum("Up:0", "Down:1", "Up & Down:2") var koopa_bros_jumping_type: int
+@export_enum("Up:0", "Down:1", "Up & Down:2") var hammer_bros_jumping_type: int
 
 
 func _ready() -> void:
@@ -12,7 +12,7 @@ func _ready() -> void:
 		func(bro: GravityBody2D) -> void:
 			if !bro.is_in_group(&"koopa_bro"):
 				return
-			match koopa_bros_jumping_type:
+			match hammer_bros_jumping_type:
 				0:
 					bro._jump_up = true
 				1:
@@ -36,12 +36,12 @@ func _process(_delta: float) -> void:
 	if !Engine.is_editor_hint(): return
 	if !Thunder.View.shows_tool(self): return
 	
-	var str: String
-	match koopa_bros_jumping_type:
+	var string: String
+	match hammer_bros_jumping_type:
 		0:
-			str = "UP"
+			string = "UP"
 		1:
-			str = "DOWN"
+			string = "DOWN"
 		2:
-			str = "UP & DOWN"
-	$Text.text = str
+			string = "UP & DOWN"
+	$Text.text = string

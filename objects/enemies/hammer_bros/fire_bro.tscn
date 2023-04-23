@@ -1,13 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://meawwouii8wi"]
+[gd_scene load_steps=17 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bo74r2n7h28l" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer.tscn" id="1_qcr0g"]
+[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_qcr0g"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_gx87h"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_rfsl6"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_1k586"]
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_ra7uf"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_76cf1"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_xsrff"]
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_0h1a3"]
-[ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_red.png" id="7_i15aa"]
+[ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/hammer_bros/textures/red_bro.png" id="7_i15aa"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="9_7dooi"]
 
 [sub_resource type="Resource" id="Resource_6oa5f"]
@@ -25,7 +25,7 @@ custom_vars = {
 "speed_max": Vector2(387.5, 0),
 "speed_min": Vector2(387.5, 0)
 }
-custom_script = ExtResource("3_ra7uf")
+custom_script = ExtResource("3_76cf1")
 
 [sub_resource type="Resource" id="Resource_e3k1m"]
 resource_local_to_scene = true
@@ -86,7 +86,7 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="KoopaBroFireball" instance=ExtResource("1_qcr0g")]
+[node name="FireBro" instance=ExtResource("1_qcr0g")]
 projectile = SubResource("Resource_6oa5f")
 sound = ExtResource("5_0h1a3")
 sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])

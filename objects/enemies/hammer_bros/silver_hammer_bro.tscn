@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://cw08jvxq0on"]
+[gd_scene load_steps=16 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bo74r2n7h28l" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer.tscn" id="1_8wu3f"]
+[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_8wu3f"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_a4aet"]
 [ext_resource type="PackedScene" uid="uid://e0knwhbbb2ok" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.tscn" id="2_rsdim"]
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_0vxgn"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0vxgn"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_v84mi"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3a8oo"]
-[ext_resource type="Texture2D" uid="uid://dvy47ukgpxof5" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_silver.png" id="5_84b2t"]
+[ext_resource type="Texture2D" uid="uid://dvy47ukgpxof5" path="res://engine/objects/enemies/hammer_bros/textures/silver_bro.png" id="5_84b2t"]
 [ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="6_fbea0"]
 
 [sub_resource type="Resource" id="Resource_i08cg"]
@@ -85,7 +85,7 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="KoopaBroSilverHammer" instance=ExtResource("1_8wu3f")]
+[node name="SilverHammerBro" instance=ExtResource("1_8wu3f")]
 attacking_delay = 0.9
 projectile = SubResource("Resource_i08cg")
 metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcjv66rihg28l"]
+
+[ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="1_bxwn5"]
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.gd" id="2_lak03"]
+
+[sub_resource type="Animation" id="Animation_qt7bc"]
+resource_name = "default"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1.5, 0.5, 0.5, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_moq1y"]
+_data = {
+"default": SubResource("Animation_qt7bc")
+}
+
+[node name="MissileBill" instance=ExtResource("1_bxwn5")]
+script = ExtResource("2_lak03")
+speed_cap = 200.0
+turn_speed = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_moq1y")
+}

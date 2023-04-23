@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://bykks8ah8d8kt"]
+[gd_scene load_steps=16 format=3 uid="uid://df06nfgxm0bjd"]
 
-[ext_resource type="PackedScene" uid="uid://bo74r2n7h28l" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer.tscn" id="1_kv3gb"]
+[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="2_yc7oa"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yrrx0"]
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_bv4ym"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0uieq"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gee0h"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_2wgy6"]
-[ext_resource type="Texture2D" uid="uid://c8dx5qt71uglv" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_pink.png" id="5_gfyf8"]
+[ext_resource type="Texture2D" uid="uid://c8dx5qt71uglv" path="res://engine/objects/enemies/hammer_bros/textures/pink_bro.png" id="5_gfyf8"]
 [ext_resource type="Texture2D" uid="uid://cd4tiiirqgtvi" path="res://engine/objects/projectiles/beetroot/texture.png" id="6_w2hoc"]
 
 [sub_resource type="Resource" id="Resource_0uga6"]
@@ -24,7 +24,7 @@ custom_vars = {
 "speed_max": Vector2(100, -250),
 "speed_min": Vector2(100, -250)
 }
-custom_script = ExtResource("3_bv4ym")
+custom_script = ExtResource("3_0uieq")
 
 [sub_resource type="Resource" id="Resource_h7jqn"]
 resource_local_to_scene = true
@@ -85,7 +85,7 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="KoopaBroHammer" instance=ExtResource("1_kv3gb")]
+[node name="BeetrootBro" instance=ExtResource("1_kv3gb")]
 attacking_delay = 0.9
 projectile = SubResource("Resource_0uga6")
 metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]

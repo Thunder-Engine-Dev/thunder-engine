@@ -1,15 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://bo74r2n7h28l"]
+[gd_scene load_steps=21 format=3]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro.gd" id="1_iqn6c"]
-[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/koopa_bros/textures/koopa_bro_green.png" id="2_15ck6"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_iqn6c"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_kftl8"]
 [ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="2_mpneg"]
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_bros/koopa_bro_hammer_throwing.gd" id="3_k2opv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_i5uci"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_ti4wd"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_wqa12"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_5lxra"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="4_p7yp2"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_bhg7k"]
+[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="10_m4lvx"]
 [ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="11_8ytaf"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_nviwx"]
 
@@ -28,7 +28,7 @@ custom_vars = {
 "speed_max": Vector2(250, -500),
 "speed_min": Vector2(50, -300)
 }
-custom_script = ExtResource("3_k2opv")
+custom_script = ExtResource("3_i5uci")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iv4"]
 size = Vector2(32, 40)
@@ -52,19 +52,19 @@ custom_vars = {
 custom_script = ExtResource("4_5lxra")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydctw"]
-atlas = ExtResource("2_15ck6")
+atlas = ExtResource("10_m4lvx")
 region = Rect2(0, 0, 33, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h0pkg"]
-atlas = ExtResource("2_15ck6")
+atlas = ExtResource("10_m4lvx")
 region = Rect2(0, 96, 33, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2m03"]
-atlas = ExtResource("2_15ck6")
+atlas = ExtResource("10_m4lvx")
 region = Rect2(0, 0, 33, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22pec"]
-atlas = ExtResource("2_15ck6")
+atlas = ExtResource("10_m4lvx")
 region = Rect2(0, 48, 33, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oe4yc"]
@@ -92,7 +92,7 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="KoopaBroHammer" type="CharacterBody2D" groups=["koopa_bro"]]
+[node name="HammerBro" type="CharacterBody2D" groups=["koopa_bro"]]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_iqn6c")

@@ -1,6 +1,6 @@
 extends GravityBody2D
 
-@export_category("Koopa Bro")
+@export_category("Hammer Bro")
 @export_group("Physics")
 @export var moving_radius_min: float = 16
 @export var moving_radius_max: float = 64
