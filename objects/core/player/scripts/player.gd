@@ -27,6 +27,11 @@ var velocity_local: Vector2
 ## [code]True[/code] if the player is dead and doing movement of death
 var death_movement: bool
 
+var _max_run_speed: float
+var _max_fall_speed: float
+var _fall_speed: float
+var _out_of_water: bool = true
+
 ## [AnimatedSprite2D] used for the player
 @onready var sprite: Node2D = $Sprite
 ## [Sprite2D] used for the player if in debug mode
@@ -35,13 +40,17 @@ var death_movement: bool
 @onready var collision: CollisionShape2D = $Collision
 ## [ShapeCast2D] used for the player to detect stomping
 @onready var stomping_cast: ShapeCast2D = $StompingCast
+## [Area2D] used to detect if the player can jump out of water
+@onready var water_out: Area2D = $WaterOut
+
 
 ## [Callable]s called according to the [member state]
 var movements = {
 	"default": _movement_default,
 	"jump": _movement_default,
 	"crouch": _movement_default,
-	"stuck": _movement_stuck
+	"stuck": _movement_stuck,
+	"swim": _movement_swim,
 }
 
 ## If [code]true[/code], the debug will display
@@ -86,7 +95,6 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	_player_process(Thunder.get_delta(delta))
-	
 
 
 func _player_process(delta: float) -> void:
@@ -104,7 +112,9 @@ func _player_process(delta: float) -> void:
 
 func _movement_generic_fall(delta: float) -> void:
 	# Fall
-	velocity_local.y = move_toward(velocity_local.y, config.max_fall_speed, config.fall_speed * delta)
+	velocity_local.y += config.fall_speed * delta
+	if velocity_local.y > config.max_fall_speed:
+		velocity_local.y = config.max_fall_speed
 	
 func _movement_generic(delta: float) -> void:
 	# Decceleration
@@ -175,6 +185,67 @@ func _movement_default(delta: float) -> void:
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
 	_movement_generic_fall(delta)
+
+
+func _movement_swim(delta: float) -> void:
+	config.max_run_speed = config.swim_max_walk_speed
+	config.max_fall_speed = config.swim_max_fall_speed
+	config.fall_speed = config.swim_fall_speed
+	
+	# Applying initial acceleration
+	if abs(velocity_local.x) < config.initial_accel_trigger && states.left_or_right != 0:
+		velocity_local.x = config.initial_acceleration * states.left_or_right
+	
+	# Direction
+	if velocity_local.x > config.initial_acceleration:
+		states.dir = 1
+	elif velocity_local.x < config.initial_acceleration:
+		states.dir = -1
+	
+	if _is_action_pressed(config.control_down) && Thunder._current_player_state.player_power != Data.PLAYER_POWER.SMALL:
+		states.set_state("crouch")
+	
+	if !_is_action_pressed(config.control_down) && states.current_state == "crouch":
+		states.set_state("default")
+	
+	if _is_action_just_pressed(config.control_jump) && states.current_state != "crouch":
+		states.jump_buffer = false
+		Audio.play_sound(config.swim_sound, self, true, {pitch = config.sound_pitch})
+		if sprite.frame > 2:
+			sprite.frame = 0
+		if !_out_of_water:
+			velocity_local.y = -config.swim_speed
+		else:
+			velocity_local.y = -config.swim_out_speed
+	
+	# Maximum of swimming
+	if !_out_of_water && velocity_local.y < -config.swim_max_speed:
+		velocity_local.y = lerp(velocity_local.y, -config.swim_max_speed, 0.25)
+	
+	# Generic fall velocity, acceleration and deceleration
+	_movement_generic(delta)
+	_movement_generic_fall(delta)
+
+
+## Calls the body to store the config before entering the water
+func in_water() -> void:
+	_max_run_speed = config.max_run_speed
+	_max_fall_speed = config.max_fall_speed
+	_fall_speed = config.fall_speed
+	sprite.animation_looped.connect(_swimming_animation_loop)
+
+
+## Calls the body to load the config before exiting from the water
+func out_of_water() -> void:
+	config.max_run_speed = _max_run_speed
+	config.max_fall_speed = _max_fall_speed
+	config.fall_speed = _fall_speed
+	sprite.animation_looped.disconnect(_swimming_animation_loop)
+
+
+func _swimming_animation_loop() -> void:
+	if sprite.animation == "swim":
+		sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
 
 
 func _movement_stuck(delta: float) -> void:	
@@ -319,7 +390,11 @@ func update_collisions(state: PlayerStateData, crouching: bool) -> bool:
 			):
 				return true
 			collision.shape = config.collision_shape_big
-
+	
+	# Water out
+	if collision.shape is RectangleShape2D:
+		water_out.position.y = collision.position.y - collision.shape.size.y / 2
+	
 	collision.position.y = -collision.shape.size.y / 2 - 1
 	collision_shape_changed.emit()
 	return false
@@ -400,7 +475,7 @@ func _is_action_just_released(action: StringName, exact_match: bool = false) -> 
 
 ## Modified [method Input.get_axis]
 func _get_axis(negative_action: StringName, positive_action: StringName) -> float:
-	return Input.get_axis(negative_action, positive_action) if states.controls_enabled else 0
+	return Input.get_axis(negative_action, positive_action) if states.controls_enabled else 0.0
 
 
 func _debug_info() -> String:
@@ -417,6 +492,7 @@ st: %s""" % [
 
 
 func _debug_info_more() -> String:
+	@warning_ignore("shadowed_global_identifier")
 	var str: String = (
 """, pw: %s
 i: %.2f,

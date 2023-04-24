@@ -1,13 +1,11 @@
 extends VBoxContainer
 
-## Area will be resized along with this control node
-@export_node_path("Area2D") var child_area: NodePath
+@onready var area: Area2D = $TextureRect/Area2D
 
-@onready var area: Area2D = get_node_or_null(child_area)
 
 
 func _ready() -> void:
-	assert(child_area, "[%s]: The child_area node is not set" % get_path())
+	assert(area, "[%s]: The child_area node is not set" % get_path())
 	
 	if !area: return
 	

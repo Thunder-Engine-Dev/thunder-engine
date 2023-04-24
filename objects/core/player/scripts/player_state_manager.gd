@@ -18,6 +18,7 @@ var launch_timer: float = 0
 var controls_enabled: bool = true
 var invincible: bool = false
 
+
 func _init(owner_node: Node2D) -> void:
 	super(owner_node)
 	add_states([
@@ -57,8 +58,9 @@ func _change_state(_new_state: String, _prev_state: String) -> String:
 	
 	return _new_state
 
+
 func update_states(delta: float) -> void:
-	if current_state == "jump" && owner.is_on_floor():
+	if current_state in ["jump", "swim"] && owner.is_on_floor():
 		set_state("default")
 	
 	if !owner.is_on_floor() && (current_state == "default" || current_state == "crouch"):
@@ -72,6 +74,7 @@ func update_states(delta: float) -> void:
 		launch_timer = max(launch_timer - delta, 0)
 	
 	_update_animations()
+
 
 func _update_animations() -> void:
 	if !is_instance_valid(owner.sprite.sprite_frames):
@@ -126,6 +129,7 @@ func _update_animations() -> void:
 	if texture:
 		var size = texture.get_size()
 		owner.sprite.offset = Vector2(-size.x / 2, -size.y)
+
 
 func _set_animation(animation) -> bool:
 	if owner.sprite.sprite_frames.has_animation(animation):

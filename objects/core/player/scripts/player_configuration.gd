@@ -29,12 +29,22 @@ class_name PlayerConfiguration
 
 # Physics, values are defaulted to Mario config
 @export_group("Physics")
+@export_subgroup("Jump")
 @export var jump_speed_stopped: float = 20
 @export var jump_speed_moving: float = 25
 @export var jump_velocity: float = 700
 @export var stomp_multiplicator: float = 1.0
+@export_subgroup("Fall")
 @export var fall_speed: float = 50
 @export var max_fall_speed: float = 550
+@export_subgroup("Swim")
+@export var swim_speed: float = 180
+@export var swim_out_speed: float = 450
+@export var swim_fall_speed: float = 5
+@export var swim_max_fall_speed: float = 180
+@export var swim_max_speed: float = 180
+@export var swim_max_walk_speed: float = 170
+@export_subgroup("Walk")
 @export var acceleration_speed: float = 12.5
 @export var deceleration_speed: float = 5
 @export var initial_acceleration: float = 40

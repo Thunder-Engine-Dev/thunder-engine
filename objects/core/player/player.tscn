@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://de51iqba2y6tu"]
+[gd_scene load_steps=15 format=3 uid="uid://de51iqba2y6tu"]
 
 [ext_resource type="Script" path="res://engine/objects/core/player/scripts/player.gd" id="1_64hux"]
 [ext_resource type="Shape2D" uid="uid://kxicbpkvp83b" path="res://engine/objects/mario/prefabs/collisions/shape_big.tres" id="2_0yhvu"]
@@ -35,6 +35,12 @@ jump_velocity = 700.0
 stomp_multiplicator = 1.0
 fall_speed = 50.0
 max_fall_speed = 550.0
+swim_speed = 180.0
+swim_out_speed = 450.0
+swim_fall_speed = 5.0
+swim_max_fall_speed = 180.0
+swim_max_speed = 180.0
+swim_max_walk_speed = 170.0
 acceleration_speed = 12.5
 deceleration_speed = 5.0
 initial_acceleration = 40.0
@@ -52,6 +58,9 @@ default_life_count = 4
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v8phf"]
 size = Vector2(0, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3if1m"]
+size = Vector2(20, 4)
+
 [node name="Player" type="CharacterBody2D"]
 editor_description = "This is a reference node for player creation."
 z_index = 1
@@ -67,6 +76,7 @@ position = Vector2(0, -13)
 shape = ExtResource("3_8jium")
 
 [node name="StompingCast" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_v8phf")
 target_position = Vector2(0, 0)
@@ -75,6 +85,16 @@ max_results = 8
 collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="WaterOut" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, -28)
+collision_mask = 128
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterOut"]
+shape = SubResource("RectangleShape2D_3if1m")
+debug_color = Color(0.964706, 0, 0.486275, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 centered = false
