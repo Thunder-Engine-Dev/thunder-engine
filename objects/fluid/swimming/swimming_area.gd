@@ -1,6 +1,6 @@
 extends Area2D
 
-const WATER_SPRAY: PackedScene = preload("res://engine/objects/effects/spray/water_spray.tscn")
+const WATER_SPRAY: PackedScene = preload("res://engine/objects/effects/sprays/water_spray.tscn")
 
 
 func _ready() -> void:
