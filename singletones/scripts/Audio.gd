@@ -40,7 +40,7 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.scene_changed.connect(player.queue_free.unbind(1))
+		Scenes.pre_scene_changed.connect(player.queue_free.unbind(1))
 	add_child(player)
 	return player
 

@@ -8,6 +8,9 @@ extends Node
 ## Emitted when the scene is changed
 signal scene_changed(to: Node)
 
+## Emitted right before the new scene is loaded
+signal pre_scene_changed
+
 # Loaded scene buffer for optimization purpose
 var _current_scene_buffer: PackedScene
 ## Current scene
@@ -39,10 +42,12 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 
 ## Loads the scene from the given path and instantiates it
 func goto_scene(path: String) -> void:
+	pre_scene_changed.emit()
 	if !_current_scene_buffer || _current_scene_buffer.resource_path != path:
 		_current_scene_buffer = load(path)
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
 
 ## Reload current scene
 func reload_current_scene() -> void:
+	pre_scene_changed.emit()
 	goto_scene(current_scene.scene_file_path)

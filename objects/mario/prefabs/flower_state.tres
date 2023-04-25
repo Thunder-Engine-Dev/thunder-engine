@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerStateData" load_steps=8 format=3 uid="uid://bgmiyfnr2lo0"]
 
-[ext_resource type="SpriteFrames" uid="uid://dw75jjwbscji0" path="res://engine/objects/mario/prefabs/sprite_frames/flower.tres" id="1_o6ctq"]
+[ext_resource type="SpriteFrames" uid="uid://djlh2f8arxekm" path="res://engine/objects/mario/prefabs/sprite_frames/flower.tres" id="1_o6ctq"]
 [ext_resource type="Script" path="res://engine/scripts/resources/player_state_data/player_state_data.gd" id="1_vykwp"]
 [ext_resource type="Script" path="res://engine/objects/powerups/bullet_action.gd" id="2_b2swh"]
 [ext_resource type="Resource" uid="uid://dkr3ph2e4aw48" path="res://engine/objects/mario/prefabs/big_state.tres" id="2_smgtj"]
@@ -23,11 +23,11 @@ custom_vars = {}
 [resource]
 script = ExtResource("1_vykwp")
 state_name = &"flower"
+player_power = 2
+powerdown_state = ExtResource("2_smgtj")
 player_prefab = ExtResource("1_o6ctq")
 player_state_vars = {
 "bullet": SubResource("Resource_waq3e"),
 "bullet_speed": Vector2(387.5, 0)
 }
 player_script = ExtResource("2_b2swh")
-player_power = 2
-powerdown_state = ExtResource("2_smgtj")
