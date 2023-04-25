@@ -4,7 +4,6 @@ extends StaticBumpingBlock
 
 const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture_null.png")
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var item_displayer = $ItemDisplayer
 var current_displaying_item: String = ""
 
@@ -31,7 +30,7 @@ func _physics_process(delta):
 
 func call_bump() -> void:
 	bump(true)
-	animated_sprite_2d.animation = &"empty"
+	_animated_sprite_2d.animation = &"empty"
 
 
 func _item_display() -> void:

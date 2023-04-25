@@ -46,6 +46,7 @@ var _triggered: bool = false
 var _no_result_appearing_animation: bool = false
 
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var _animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 ## Emitted when getting bumped
 signal bumped
@@ -84,8 +85,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	
 	var init_position = position
 	var tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
-	tw.tween_property(self, "position", init_position + Vector2(0, -6).rotated(deg_to_rad(bump_rotation)), 0.12)#.set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "position", init_position, 0.12)#.set_ease(Tween.EASE_IN)
+	tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -6).rotated(deg_to_rad(bump_rotation)), 0.12)#.set_ease(Tween.EASE_OUT)
+	tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12)#.set_ease(Tween.EASE_IN)
 	tw.tween_callback(_lt.bind(disable))
 	
 	if result:

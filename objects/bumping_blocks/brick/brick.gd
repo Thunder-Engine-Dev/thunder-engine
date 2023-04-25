@@ -7,8 +7,6 @@ const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_d
 @export var result_counter_value: float = 300
 var counter_enabled: bool = false
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
-
 
 func _ready() -> void:
 	super()
@@ -35,7 +33,7 @@ func _physics_process(_delta):
 			counter_enabled = true
 		
 		if result_counter_value == 1:
-			animated_sprite_2d.animation = &"empty"
+			_animated_sprite_2d.animation = &"empty"
 			counter_enabled = false
 			result_counter_value = 0
 	
