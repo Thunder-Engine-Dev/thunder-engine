@@ -1,7 +1,7 @@
 @tool
 extends Node2D
 
-@export_category("Koopa Troopa Circle Generator")
+@export_category("Koopa Paratroopa Circle Generator")
 @export var troopa: PackedScene
 @export var amount: int = 6
 @export_group("Circle")
