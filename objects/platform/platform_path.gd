@@ -7,14 +7,16 @@ extends PathFollow2D
 @export var touching_non_players_enabled:bool
 @export var touching_player_touched_movement:bool # Needs touching_players_enabled = true
 @export_group("Physics")
-@export var speed: float = 50.0
+@export var speed: float = 150.0
 @export_subgroup("Smooth","smooth_")
-@export var smooth_turning_length: float = 8.0
+@export var smooth_enabled: bool = true
+@export var smooth_turning_length: float = 64.0
 @export var smooth_turning_duration_fixer: float = 0.105
 @export var smooth_points:PackedInt32Array
 @export_subgroup("Falling","falling_")
+@export var falling_enabled: bool = false
 @export var falling_direction: Vector2 = Vector2.DOWN
-@export var falling_acceleration: float
+@export var falling_acceleration: float = 10
 @export_group("Extension")
 @export var custom_vars: Dictionary
 @export var custom_script: GDScript
@@ -89,18 +91,18 @@ func _on_path_movement_process(delta: float) -> void:
 	# Moving
 	if curve:
 		progress += speed * delta
-		if smooth_turning_length > 0: _smooth_movement(delta)
+		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
 	
 	# Emit Falling
-	if players_have_stood && falling_acceleration > 0:
+	if players_have_stood && falling_acceleration > 0 && falling_enabled:
 		on_path = false
 
 func _non_path_movement_process(delta: float) -> void:
 	if on_path: return
 	
 	# Falling
-	if players_have_stood && falling_acceleration != 0:
+	if players_have_stood && falling_acceleration != 0 && falling_enabled:
 		linear_velocity += falling_direction.normalized() * falling_acceleration * Thunder.get_delta(delta)
 	
 	global_position += linear_velocity * delta
@@ -127,12 +129,12 @@ func _smooth_movement(delta: float) -> void:
 			
 			if (speed > 0 && progress >= end - smooth_turning_length) || (speed < 0 && progress <= start + smooth_turning_length):
 				smooth_speed = speed
-				smooth_duration = (2 * smooth_turning_length / abs(smooth_speed)) + smooth_turning_duration_fixer
+				smooth_duration = (1 * smooth_turning_length / abs(smooth_speed)) + smooth_turning_duration_fixer
 				smooth_step = 1
 		1:
 			var tw:Tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS).set_trans(Tween.TRANS_SINE)
-			tw.tween_property(self, "speed", 0, smooth_duration).set_ease(Tween.EASE_OUT)
-			tw.tween_property(self, "speed", smooth_speed if smooth_on_continue_point else -smooth_speed, smooth_duration).set_ease(Tween.EASE_IN)
+			tw.tween_property(self, "speed", 0, smooth_duration)
+			tw.tween_property(self, "speed", smooth_speed if smooth_on_continue_point else -smooth_speed, smooth_duration)
 			tw.tween_callback(
 				func() -> void: 
 					if smooth_on_continue_point: smooth_next_points.remove_at(0)
