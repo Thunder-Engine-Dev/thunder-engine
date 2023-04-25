@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://cxhkqao5btkv8"]
+[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://1ni2tyconahu"]
 
 [ext_resource type="Texture2D" uid="uid://ck70hvs2y5omc" path="res://engine/objects/mario/textures/mario/BeetrootClimb.png" id="1_524g4"]
 [ext_resource type="Texture2D" uid="uid://c8nhhuv5d70tb" path="res://engine/objects/mario/textures/mario/BeetrootAppear.png" id="1_mjqy1"]
@@ -180,5 +180,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 5.0
+"speed": 8.0
 }]

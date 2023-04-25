@@ -247,8 +247,9 @@ func in_water() -> void:
 
 ## Calls the body to load the config before exiting from the water
 func out_of_water() -> void:
-	_bubble_interval.timeout.disconnect(_bubble)
-	_bubble_interval = null
+	if _bubble_interval:
+		_bubble_interval.timeout.disconnect(_bubble)
+		_bubble_interval = null
 	config.max_run_speed = _max_run_speed
 	config.max_fall_speed = _max_fall_speed
 	config.fall_speed = _fall_speed

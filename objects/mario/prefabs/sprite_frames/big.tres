@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://bu7ffodj4k8gr"]
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://cd8qlfsbh443a"]
 
 [ext_resource type="Texture2D" uid="uid://b1qo42pdq7ei3" path="res://engine/objects/mario/textures/mario/BigAppear.png" id="1_2inpl"]
 [ext_resource type="Texture2D" uid="uid://l6xbgt8xsgl3" path="res://engine/objects/mario/textures/mario/BigClimb.png" id="1_iybk5"]
@@ -164,5 +164,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 5.0
+"speed": 8.0
 }]

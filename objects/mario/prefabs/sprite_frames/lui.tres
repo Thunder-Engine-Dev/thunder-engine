@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://cowdwu5enurtx"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://by6w2chfyxq5e"]
 
 [ext_resource type="Texture2D" uid="uid://cf1hi0te7u328" path="res://engine/objects/mario/textures/mario/LuiAppear.png" id="1_58il4"]
 [ext_resource type="Texture2D" uid="uid://dpmxnnruljhcp" path="res://engine/objects/mario/textures/mario/LuiClimb.png" id="1_bntqd"]
@@ -171,5 +171,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 5.0
+"speed": 8.0
 }]

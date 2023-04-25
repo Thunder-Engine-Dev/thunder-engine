@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://dw75jjwbscji0"]
+[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://djlh2f8arxekm"]
 
 [ext_resource type="Texture2D" uid="uid://cj2ld2um1ri2k" path="res://engine/objects/mario/textures/mario/FlowerClimb.png" id="1_n1420"]
 [ext_resource type="Texture2D" uid="uid://dlwmyprsu5dop" path="res://engine/objects/mario/textures/mario/FlowerAppear.png" id="1_ofnyn"]
@@ -180,5 +180,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 5.0
+"speed": 8.0
 }]
