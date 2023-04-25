@@ -41,12 +41,13 @@ theme_override_constants/separation = 0
 script = ExtResource("10_veqxg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+z_index = 31
 layout_mode = 2
 size_flags_vertical = 0
 texture = SubResource("AnimatedTexture_cct87")
 stretch_mode = 1
 
-[node name="Area2D" type="Area2D" parent="TextureRect"]
+[node name="Area2D" type="Area2D" parent="TextureRect" groups=["#water"]]
 visible = false
 z_index = 1
 collision_layer = 128
@@ -56,6 +57,7 @@ script = ExtResource("1_378qa")
 shape = SubResource("RectangleShape2D_08xmy")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+z_index = 31
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.345098, 0.533333, 0.878431, 1)

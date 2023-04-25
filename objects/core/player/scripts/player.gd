@@ -4,6 +4,8 @@ class_name Player
 ## Class extended from [CorrectedCharacterBody2D] that defines a player[br]
 ## All players belong to this class
 
+const _BUBBLE: PackedScene = preload("res://engine/objects/effects/bubble/bubble.tscn")
+
 ## Emitted when the [member default_player_state] gets changed
 signal powerup_state_changed
 ## Emitted when the [member collision] gets changed
@@ -31,6 +33,8 @@ var _max_run_speed: float
 var _max_fall_speed: float
 var _fall_speed: float
 var _out_of_water: bool = true
+
+var _bubble_interval: SceneTreeTimer
 
 ## [AnimatedSprite2D] used for the player
 @onready var sprite: Node2D = $Sprite
@@ -225,6 +229,12 @@ func _movement_swim(delta: float) -> void:
 	# Generic fall velocity, acceleration and deceleration
 	_movement_generic(delta)
 	_movement_generic_fall(delta)
+	
+	# Bubble
+	if _bubble_interval:
+		return
+	_bubble_interval = get_tree().create_timer(randf_range(0.5, 4))
+	_bubble_interval.timeout.connect(_bubble)
 
 
 ## Calls the body to store the config before entering the water
@@ -237,10 +247,20 @@ func in_water() -> void:
 
 ## Calls the body to load the config before exiting from the water
 func out_of_water() -> void:
+	_bubble_interval.timeout.disconnect(_bubble)
+	_bubble_interval = null
 	config.max_run_speed = _max_run_speed
 	config.max_fall_speed = _max_fall_speed
 	config.fall_speed = _fall_speed
 	sprite.animation_looped.disconnect(_swimming_animation_loop)
+
+# Bubble
+func _bubble() -> void:
+	NodeCreator.prepare_2d(_BUBBLE, self).bind_global_transform((20 if Thunder._current_player_state.player_power == Data.PLAYER_POWER.SMALL else 54) * Vector2.UP).create_2d().call_method(
+		func(bul: Node2D) -> void:
+			bul.z_index = z_index
+	)
+	_bubble_interval = null
 
 
 func _swimming_animation_loop() -> void:
