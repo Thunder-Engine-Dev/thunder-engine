@@ -30,6 +30,9 @@ custom_vars = {
 }
 custom_script = ExtResource("7_63gk1")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
+size = Vector2(2, 2)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kpu1"]
 atlas = ExtResource("2_sfi0e")
 region = Rect2(0, 0, 31, 32)
@@ -52,9 +55,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
-size = Vector2(2, 2)
-
 [node name="CheepRed" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 32
@@ -71,6 +71,8 @@ disabled = true
 
 [node name="Body" type="Area2D" parent="."]
 visible = false
+collision_layer = 2
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 shape = SubResource("RectangleShape2D_8v3i3")
@@ -80,6 +82,17 @@ script = ExtResource("2_0vv4i")
 stomping_creation = SubResource("Resource_0wfa5")
 stomping_scores = 100
 stomping_sound = ExtResource("5_sgku1")
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
 killing_creation = SubResource("Resource_0wfa5")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_w3gcv")
@@ -87,11 +100,7 @@ custom_vars = {
 "attachment_killed": NodePath("../../Sprite/Dead"),
 "attachment_stomped": NodePath("../../Sprite/Dead")
 }
-metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
-
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_7tauq")
-autoplay = "default"
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
 [node name="SwimX" type="ShapeCast2D" parent="."]
 visible = false
@@ -110,6 +119,10 @@ max_results = 1
 collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7tauq")
+autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)

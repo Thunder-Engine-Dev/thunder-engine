@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://cvfwhq3j5n5k5"]
+
+[ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_c2vrp"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_s3d20"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gvvtk"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_xhp64"]
+[ext_resource type="Texture2D" uid="uid://cydl63kqnyc5t" path="res://engine/objects/enemies/cheeps/textures/cheep_yellow.png" id="5_hjecj"]
+
+[sub_resource type="Resource" id="Resource_tm8dl"]
+resource_local_to_scene = true
+script = ExtResource("4_xhp64")
+creation_nodepack = ExtResource("2_s3d20")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_gvvtk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ek2q"]
+atlas = ExtResource("5_hjecj")
+region = Rect2(0, 0, 31, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r4ur"]
+atlas = ExtResource("5_hjecj")
+region = Rect2(0, 37, 31, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g42wx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ek2q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r4ur")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CheepYellow" instance=ExtResource("1_c2vrp")]
+type = 3
+always_unstompable = true
+metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_tm8dl")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": false,
+"shell_defence": 1,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_tm8dl")
+metadata/_edit_pinned_properties_ = [&"killing_immune"]
+
+[node name="Sprite" parent="." index="4"]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_g42wx")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]

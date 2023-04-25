@@ -32,6 +32,10 @@ enum Type {
 		if type != Type.LEAP:
 			gravity_scale = 0
 			enemy_attacked.stomping_standard = Vector2.ZERO
+		if always_unstompable:
+			enemy_attacked.stomping_standard = Vector2.ZERO
+@export_group("Cheep General")
+@export var always_unstompable: bool
 @export_group("Cheep Swimming", "swimming_")
 @export var swimming_y_speed: float = 15
 @export var swimming_interval: float = 1
@@ -57,6 +61,7 @@ var is_spawned: bool:
 
 
 func _ready() -> void:
+	super()
 	# Call setter
 	type = type
 
