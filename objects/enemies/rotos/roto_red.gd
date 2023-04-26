@@ -23,12 +23,13 @@ extends Area2D
 @export var line_color: Color = Color.ANTIQUE_WHITE
 @export_group("Physics")
 @export_subgroup("Amplitude")
+@export var amplitude_enable: bool = false
 @export var amplitude: Vector2 = 150 * Vector2.ONE:
 	set(to):
 		amplitude = to
 		if Engine.is_editor_hint() && !preview:
 			oval_pos()
-@export_range(0, 9999, 0.01, "suffix:px/s") var amplitude_changing_speed: float
+@export_range(0, 9999, 0.01, "suffix:px/s") var amplitude_changing_speed: float = 350
 @export var amplitude_min: Vector2
 @export var amplitude_max: Vector2 = 200 * Vector2.ONE
 @export_subgroup("Phase")
@@ -72,7 +73,7 @@ func _physics_process(delta: float) -> void:
 			return
 	oval_pos()
 	
-	if amplitude_changing_speed > 0:
+	if amplitude_changing_speed > 0 && amplitude_enable:
 		if _amplitude_in:
 			amplitude = amplitude.move_toward(amplitude_min, amplitude_changing_speed * delta)
 			_amplitude_in = !(amplitude == amplitude_min)
