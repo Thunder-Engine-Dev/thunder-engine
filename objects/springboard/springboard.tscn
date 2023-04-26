@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://dgcgfl28trox0"]
+
+[ext_resource type="Script" path="res://engine/objects/springboard/springboard.gd" id="1_qhuqa"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ed1um"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_vp0le"]
+[ext_resource type="AudioStream" uid="uid://cstsdiler6f0v" path="res://engine/objects/springboard/sounds/springboard.wav" id="4_n438u"]
+[ext_resource type="Texture2D" uid="uid://dhbdb0vketv31" path="res://engine/objects/springboard/textures/springboard.png" id="11_bx2yt"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_0airn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vr3g4"]
+atlas = ExtResource("11_bx2yt")
+region = Rect2(0, 0, 31, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c7hy"]
+atlas = ExtResource("11_bx2yt")
+region = Rect2(0, 48, 31, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8r20i"]
+atlas = ExtResource("11_bx2yt")
+region = Rect2(0, 96, 31, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or225"]
+atlas = ExtResource("11_bx2yt")
+region = Rect2(0, 144, 31, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcpq2"]
+atlas = ExtResource("11_bx2yt")
+region = Rect2(0, 192, 31, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1e01p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vr3g4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c7hy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8r20i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or225")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcpq2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Springboard" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_qhuqa")
+turn_sprite = false
+sprite = NodePath("Sprite")
+gravity_scale = 1.0
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_ed1um")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_vp0le")
+stomping_hurtable = false
+stomping_creation = null
+stomping_scores = 0
+stomping_sound = ExtResource("4_n438u")
+stomping_player_jumping_max = 450.0
+killing_enabled = false
+killing_creation = null
+custom_vars = {
+"attachment_killed": NodePath(""),
+"attachment_stomped": NodePath("")
+}
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_1e01p")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("13_0airn")
+metadata/_edit_lock_ = true
+
+[connection signal="stomped" from="Body/EnemyAttacked" to="." method="trigger"]
