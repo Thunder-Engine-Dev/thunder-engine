@@ -89,10 +89,10 @@ func try_execute(args: Array) -> Variant:
 
 # NOT FOR OVERRIDING
 func get_help() -> String:
-	var result: String = ""
+	var result: String = ":"
 	
 	if params.is_empty():
-		result = "No Params"
+		result = ""
 	else:
 		for k in params.keys():
 			# TODO: replace print intager to print actual type name

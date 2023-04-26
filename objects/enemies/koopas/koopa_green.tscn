@@ -96,9 +96,6 @@ stomping_sound = ExtResource("6_fhwgb")
 killing_creation = SubResource("Resource_llg06")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_h7q22")
-custom_vars = {
-"attachment_killed": NodePath("../../Sprite/Dead")
-}
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

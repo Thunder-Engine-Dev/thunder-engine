@@ -63,3 +63,4 @@ class_name PlayerConfiguration
 @export var powerdown_animation_time: float = 40
 @export var powerdown_invincible_time: float = 100
 @export var default_life_count: int = 4
+@export var dead_power_state: PlayerStateData = preload("res://engine/objects/mario/prefabs/dead_state.tres")

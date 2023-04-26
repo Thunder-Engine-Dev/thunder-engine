@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b8npd4blg0sjy"]
+[gd_scene load_steps=16 format=3]
 
-[ext_resource type="PackedScene" uid="uid://c54odffl7xqtn" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_green.tscn" id="1_ddg2h"]
+[ext_resource type="PackedScene" uid="uid://bxxckxp3b72re" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_ddg2h"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_jcr27"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="2_t0byn"]
-[ext_resource type="Script" path="res://engine/objects/enemies/koopa_troopas/koopa_troopa_spawn_koopa.gd" id="3_qq62u"]
+[ext_resource type="Script" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_qq62u"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_vffgk"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_qby8s"]
 [ext_resource type="Texture2D" uid="uid://bd6t46hxy4085" path="res://engine/objects/enemies/koopas/textures/koopa_red.png" id="5_q8vae"]
@@ -78,7 +78,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="KoopaTroopaRed" instance=ExtResource("1_ddg2h")]
+[node name="KoopaParatroopaRed" instance=ExtResource("1_ddg2h")]
 amplitude = Vector2(50, 0)
 facing_method = 1
 metadata/_edit_pinned_properties_ = [&"amplitude", &"facing_method"]
