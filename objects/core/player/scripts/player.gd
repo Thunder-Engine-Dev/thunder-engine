@@ -448,6 +448,9 @@ func kill() -> void:
 	if states.invincible: return
 	if states.current_state == "dead": return
 	
+	states.invincible_timer = 0
+	states.appear_timer = 0
+	
 	Data.values.onetime_blocks = false
 	
 	states.set_state("dead")
