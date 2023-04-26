@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://rhrex2vth7at"]
+[gd_scene load_steps=3 format=3 uid="uid://ddldd020oordq"]
 
-[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
-[ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="2_cmtwa"]
+[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_3ljp1"]
+[ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="2_05pa6"]
 
-[node name="PlatformPath" type="PathFollow2D"]
+[node name="PlatformPathSmall" type="PathFollow2D"]
 rotates = false
 loop = false
-script = ExtResource("1_p2p8j")
+script = ExtResource("1_3ljp1")
 
 [node name="Block" type="AnimatableBody2D" parent="."]
 collision_layer = 112
@@ -15,7 +15,7 @@ metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
 visible = false
-polygon = PackedVector2Array(-48, 0, 48, 0, 48, 5, -48, 5)
+polygon = PackedVector2Array(-16, 0, 16, 0, 16, 5, -16, 5)
 one_way_collision = true
 
 [node name="Surface" type="Area2D" parent="Block"]
@@ -25,8 +25,10 @@ collision_mask = 7
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
 modulate = Color(0.921569, 0, 0.647059, 1)
-polygon = PackedVector2Array(-48, -1, 48, -1, 48, 0, -48, 0)
+polygon = PackedVector2Array(-16, -1, 16, -1, 16, 0, -16, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Block"]
 position = Vector2(0, 8)
-texture = ExtResource("2_cmtwa")
+texture = ExtResource("2_05pa6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 16)
