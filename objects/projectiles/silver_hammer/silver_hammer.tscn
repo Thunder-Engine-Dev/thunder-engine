@@ -16,6 +16,7 @@ speed = Vector2(120, -300)
 gravity_scale = 0.3
 
 [node name="Texture" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("2_5fl35")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
