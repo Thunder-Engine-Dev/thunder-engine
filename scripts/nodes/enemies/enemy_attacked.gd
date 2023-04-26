@@ -91,6 +91,8 @@ signal killed
 signal killed_succeeded
 ## Emitted when the enemy blocks the attacker
 signal killed_failed
+## Emitted when the type of enemy attack is marked as "signal"
+signal attack_custom_signal
 
 
 func _ready() -> void:

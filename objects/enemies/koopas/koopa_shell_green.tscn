@@ -81,15 +81,17 @@ script = ExtResource("1_4u51b")
 look_at_player = true
 slide = true
 sprite = NodePath("Sprite")
-speed = Vector2(250, 0)
+speed = Vector2(350, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"look_at_player", &"sprite", &"slide"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_dceiv")
 
 [node name="Body" type="Area2D" parent="."]
+position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_tulax")
@@ -125,10 +127,12 @@ special_tags = Array[StringName]([&"shell_attack"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_2216j")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0, 2)
 script = ExtResource("11_vu45w")
 metadata/_edit_lock_ = true
 

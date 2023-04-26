@@ -17,7 +17,7 @@ signal damaged_player
 
 
 func _process(delta: float) -> void:
-	if par is GravityBody2D: 
+	if par is GravityBody2D:
 		velocity = par.velocity
 		target_position = (velocity * get_physics_process_delta_time() * killing_detection_scale).rotated(-global_rotation)
 	

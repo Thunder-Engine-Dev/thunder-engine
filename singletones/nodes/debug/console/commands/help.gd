@@ -7,6 +7,6 @@ func execute(args:Array) -> Command.ExecuteResult:
 	var cmd = Console.commands
 	var message: String = "Help:\n"
 	for c in cmd.keys():
-		message += "\t- %s: %s\n" % [cmd[c].name,cmd[c].get_help()]
+		message += "\t- %s%s\n" % [cmd[c].name,cmd[c].get_help()]
 	return Command.ExecuteResult.new(message)
 

@@ -451,6 +451,7 @@ func kill() -> void:
 	Data.values.onetime_blocks = false
 	
 	states.set_state("dead")
+	Thunder._current_player_state
 	collision_layer = 0
 	collision_mask = 0
 	z_index = 30

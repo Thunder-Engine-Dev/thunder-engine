@@ -75,6 +75,9 @@ func do_movement(delta: float, slide:bool = false, emit_detection_signal: bool =
 	if !collision:
 		global_position += velocity * delta
 		return
+		
+	if is_on_floor() && velocity.y > 0: # fix enemies turning around corners randomly
+		velocity.y = 1
 	
 	if correct_collision:
 		move_and_slide_corrected()
