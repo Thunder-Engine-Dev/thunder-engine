@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cukm2rkdye2sc"]
+[gd_scene load_steps=9 format=3 uid="uid://cukm2rkdye2sc"]
 
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="1_tpiht"]
 [ext_resource type="PackedScene" uid="uid://dcjv66rihg28l" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.tscn" id="2_dbcfg"]
@@ -18,6 +18,44 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
+[sub_resource type="Animation" id="Animation_xejw3"]
+resource_name = "default"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Launcher:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.356863, 0.290196, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_c4s0n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Launcher:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k3typ"]
+_data = {
+"RESET": SubResource("Animation_c4s0n"),
+"default": SubResource("Animation_xejw3")
+}
+
 [node name="MissileBulletLauncher" instance=ExtResource("1_tpiht")]
 bullet_bill = SubResource("Resource_qbi1h")
 bullet_speed = 200.0
@@ -26,3 +64,9 @@ shooting_delay_min = 3.5
 shooting_delay_max = 6.5
 shooting_sound = ExtResource("4_ge0di")
 sound_pitch_max = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_k3typ")
+}
