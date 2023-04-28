@@ -1,7 +1,8 @@
 extends RefCounted
 class_name NodeCreator
 
-## Useful [RefCounted]-extending object for adding 2D nodes[br]
+## Useful [RefCounted]-extending object for adding 2D nodes
+##
 ## You are allowed to directly add a [Node2D], or add it via
 ## [InstanceNode2D]
 

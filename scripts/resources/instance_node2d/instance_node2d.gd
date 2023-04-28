@@ -2,6 +2,7 @@ extends Resource
 class_name InstanceNode2D
 
 ## A kind of [Resource] that stores a [PackedScene], whose root is a [Node2D], that you need to add[br]
+##
 ## You need to call [method NodeCreator.prepare_ins_2d] and input the resource as the first parameter to instantiate
 ## and create the node packed in [member creation_nodepack]
 
