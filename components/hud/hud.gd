@@ -13,7 +13,8 @@ signal time_countdown_finished
 func _ready() -> void:
 	Thunder._current_hud = self
 	
-	timer.timeout.connect(func():
+	timer.timeout.connect(func() -> void:
+		if !Thunder._current_player: return
 		if Data.values.time < 0: return
 		
 		Data.values.time -= 1
@@ -21,7 +22,7 @@ func _ready() -> void:
 		if Data.values.time == 100:
 			timer_hurry()
 		elif Data.values.time == 0:
-			Thunder._current_player.kill()
+			Thunder._current_player.die()
 	)
 	
 	await get_tree().physics_frame
