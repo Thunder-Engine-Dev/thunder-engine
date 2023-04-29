@@ -21,18 +21,23 @@ enum WarpDir {
 
 @export_group("General")
 @export var nickname: StringName = &"MARIO"
+@export var character: StringName = &"Mario"
 @export_group("Suit")
 @export var suit: PlayerSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"):
 	set(to):
 		if (!to || suit == to) && !_force_suit: return
-		suit = to.duplicate(true)
-		if suit.animation_behavior:
+		suit = to.duplicate()
+		
+		if to.animation_sprites:
+			sprite.sprite_frames = to.animation_sprites
+		
+		if suit.animation_behavior && _animation_behavior != suit.animation_behavior:
 			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
-		if suit.physics_behavior:
+		if suit.physics_behavior && _physics_behavior != suit.physics_behavior:
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
-		if suit.behavior_script:
+		if suit.behavior_script && _suit_behavior != suit.behavior_script:
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self)
-		if suit.extra_behavior:
+		if suit.extra_behavior && _extra_behavior != suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
 		if _suit_appear:
 			_suit_appear = false

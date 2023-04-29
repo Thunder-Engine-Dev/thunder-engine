@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://b71msw28e37a"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
+[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="2_1tqft"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
-[ext_resource type="Resource" uid="uid://dkr3ph2e4aw48" path="res://engine/objects/mario/prefabs/big_state.tres" id="2_kw7ck"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_ccgfb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
@@ -14,9 +14,12 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_s8ya2")
-set_player_state = ExtResource("2_kw7ck")
+to_suit = {
+"Mario": ExtResource("2_1tqft")
+}
 speed = Vector2(100, 0)
 gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"to_suit"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false

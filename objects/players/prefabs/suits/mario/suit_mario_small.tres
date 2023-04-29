@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MarioSuit" load_steps=9 format=3 uid="uid://dkrwf64pscu5h"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=9 format=3 uid="uid://dkrwf64pscu5h"]
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_36482"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_4cms1"]

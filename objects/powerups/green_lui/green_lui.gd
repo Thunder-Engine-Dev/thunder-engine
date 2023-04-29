@@ -1,6 +1,6 @@
 extends Powerup
 
-const JUMP_SOUND = preload("res://engine/objects/mario/sounds/kick.wav")
+const JUMP_SOUND = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 
 func _physics_process(delta: float) -> void:
 	super(delta)

@@ -1,24 +1,24 @@
-[gd_resource type="Resource" script_class="MarioConfig" load_steps=2 format=3 uid="uid://rhicphrr05ws"]
+[gd_resource type="Resource" script_class="PlayerConfig" load_steps=4 format=3 uid="uid://rhicphrr05ws"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player_config.gd" id="1_ij5eu"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="2_ecdgy"]
+[ext_resource type="AudioStream" uid="uid://duv2iffp4t2vt" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="3_obdpa"]
 
 [resource]
 script = ExtResource("1_ij5eu")
-jump_speed_stopped = 20.0
-jump_speed_moving = 25.0
-jump_velocity = 700.0
-stomp_multiplicator = 1.0
-fall_speed = 50.0
-max_fall_speed = 550.0
+walk_initial_speed = 50.0
+walk_acceleration = 312.5
+walk_deceleration = 312.5
+walk_turning_acce = 1250.0
+walk_max_walking_speed = 187.5
+walk_max_running_speed = 375.0
+underwater_walk_max_walking_speed = 170.0
+jump_speed = 700.0
+jump_buff_static = 1000.0
+jump_buff_dynamic = 1250.0
+jump_stomp_multiplicator = 1.0
 swim_speed = 180.0
 swim_out_speed = 450.0
-swim_fall_speed = 5.0
-swim_max_fall_speed = 180.0
 swim_max_speed = 180.0
-swim_max_walk_speed = 170.0
-acceleration_speed = 12.5
-deceleration_speed = 5.0
-initial_acceleration = 40.0
-initial_accel_trigger = 20.0
-max_walk_speed = 175.0
-max_run_speed = 350.0
+sound_jump = ExtResource("2_ecdgy")
+sound_swim = ExtResource("3_obdpa")

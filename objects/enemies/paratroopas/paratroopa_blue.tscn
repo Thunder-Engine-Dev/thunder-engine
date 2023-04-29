@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=23 format=3 uid="uid://c02uktgryh3ku"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/paratroopas/paratroopa_jump.gd" id="1_yx1xc"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_vtx1g"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" path="res://engine/objects/entities/wing/wing.tscn" id="12_q8dyn"]
 [ext_resource type="Texture2D" uid="uid://b5ru4nrm6iejt" path="res://engine/objects/enemies/koopas/textures/shell_blue.png" id="13_l8bgk"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="14_02l8i"]
-
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)

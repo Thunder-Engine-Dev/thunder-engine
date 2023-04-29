@@ -11,8 +11,8 @@ func _ready() -> void:
 	player = node as Player
 	suit = node.suit
 	config = suit.physics_config
-	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true))
-	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false))
+	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
+	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false), CONNECT_REFERENCE_COUNTED)
 
 
 func _physics_process(delta: float) -> void:
@@ -21,12 +21,12 @@ func _physics_process(delta: float) -> void:
 	player.control_process()
 	# Shape
 	_shape_process()
-	# Head
-	_head_process()
-	# Body
-	_body_process()
-	# Movement
 	if player.warp == Player.Warp.NONE:
+		# Head
+		_head_process()
+		# Body
+		_body_process()
+		# Movement
 		_movement_x(delta)
 		_movement_y(delta)
 		player.motion_process(delta)
@@ -90,7 +90,8 @@ func _movement_y(delta: float) -> void:
 
 #= Shape
 func _shape_process() -> void:
-	var shaper: Shaper2D = suit.physics_shaper_crouch if player.is_crouching else suit.physics_shaper
+	var shaper: Shaper2D = suit.physics_shaper_crouch if player.is_crouching && player.warp == Player.Warp.NONE else suit.physics_shaper
+	if !shaper: return
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
 	

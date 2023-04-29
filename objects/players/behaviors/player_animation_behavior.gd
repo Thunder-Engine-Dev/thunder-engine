@@ -12,26 +12,26 @@ func _ready() -> void:
 		func() -> void:
 			if !sprite: return
 			sprite.play(&"appear")
-			await player.get_tree().create_timer(1, false, true)
+			await player.get_tree().create_timer(1, false, true).timeout
 			sprite.play(&"default")
-	)
+	, CONNECT_REFERENCE_COUNTED)
 	player.swam.connect(
 		func() -> void:
 			if !sprite: return
 			if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
-	)
+	, CONNECT_REFERENCE_COUNTED)
 	
 	sprite.animation_looped.connect(
 		func() -> void:
 			if !sprite: return
 			match sprite.animation:
 				&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
-	)
+	, CONNECT_REFERENCE_COUNTED)
 	sprite.animation_finished.connect(
 		func() -> void:
 			if !sprite: return
 			if sprite.animation == &"attack": sprite.play(&"default")
-	)
+	, CONNECT_REFERENCE_COUNTED)
 
 
 func _physics_process(delta: float) -> void:

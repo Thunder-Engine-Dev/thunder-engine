@@ -21,7 +21,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if bounces_left <= 0: return
 	
 	if with_sound:
-		Audio.play_sound(preload("res://engine/objects/mario/sounds/kick.wav"), self)
+		Audio.play_sound(preload("res://engine/objects/players/prefabs/sounds/kick.wav"), self)
 	
 	turn_x()
 	turn_y()

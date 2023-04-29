@@ -3,7 +3,9 @@ class_name Powerup
 
 @export_group("PowerupSettings")
 @export var slide: bool = true
-@export var set_player_state: PlayerStateData
+@export var to_suit: Dictionary = {
+	Mario = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres")
+}
 @export var force_powerup_state: bool = false
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
@@ -13,8 +15,8 @@ class_name Powerup
 @export_group("SFX")
 @export_subgroup("Sounds")
 @export var appearing_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
-@export var pickup_powerup_sound: AudioStream = preload("res://engine/objects/mario/sounds/powerup.wav")
-@export var pickup_neutral_sound: AudioStream = preload("res://engine/objects/mario/sounds/powerup.wav")
+@export var pickup_powerup_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
+@export var pickup_neutral_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
 @export_subgroup("Sound Settings")
 @export var sound_pitch: float = 1.0
 
@@ -51,24 +53,26 @@ func collect() -> void:
 	queue_free()
 
 func _change_state_logic(force_powerup: bool) -> void:
+	var player: Player = Thunder._current_player
+	var to: PlayerSuit = to_suit[player.character]
 	if force_powerup:
-		if set_player_state.state_name != Thunder._current_player_state.state_name:
-			Thunder._current_player.powerup(set_player_state)
+		if to != Thunder._current_player_state:
+			player.change_suit(to)
 			Audio.play_sound(pickup_powerup_sound, self, true, {pitch = sound_pitch})
 		else:
 			Audio.play_sound(pickup_neutral_sound, self, true, {pitch = sound_pitch})
 		return
 	
 	if (
-		set_player_state.player_power > Thunder._current_player_state.player_power || (
-			set_player_state.state_name != Thunder._current_player_state.state_name && 
-			set_player_state.player_power == Thunder._current_player_state.player_power
+		to.type > Thunder._current_player_state.type || (
+			to != Thunder._current_player_state && 
+			to.type == Thunder._current_player_state.type
 		)
 	):
-		if Thunder._current_player_state.player_power < set_player_state.player_power - 1:
-			Thunder._current_player.powerup(set_player_state.powerdown_state)
+		if Thunder._current_player_state.type < to.type - 1:
+			player.change_suit(to.gets_hurt_to)
 		else:
-			Thunder._current_player.powerup(set_player_state)
+			player.change_suit(to)
 		Audio.play_sound(pickup_powerup_sound, self, true, {pitch = sound_pitch})
 	else:
 		Audio.play_sound(pickup_neutral_sound, self, true, {pitch = sound_pitch})

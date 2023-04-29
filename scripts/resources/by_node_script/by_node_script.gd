@@ -38,9 +38,9 @@ func _init(by: Node, new_vars: Dictionary = {}) -> void:
 	if !by: return
 	node = by
 	vars = new_vars
-	_ready()
 	node.tree_entered.connect(_enter_tree)
 	node.tree_exited.connect(_exit_tree)
+	_ready()
 	if !node.is_inside_tree(): await node.ready
 	node.get_tree().process_frame.connect(_process.bind(node.get_process_delta_time()))
 	node.get_tree().physics_frame.connect(_physics_process.bind(node.get_physics_process_delta_time()))

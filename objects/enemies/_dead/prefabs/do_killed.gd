@@ -12,6 +12,7 @@ func _ready() -> void:
 	if !death_node: return
 	
 	death_node.visible = true
+	death_node.set(&"speed_scale", 0)
 	if &"flip_v" in death_node: death_node.flip_v = true
 	if node is GravityBody2D: node.speed = speed
 	node.add_child(death_node)

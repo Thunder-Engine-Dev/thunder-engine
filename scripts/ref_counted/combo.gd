@@ -1,7 +1,7 @@
 class_name Combo
 extends RefCounted
 
-const LIFE_UP_SOUND: AudioStream = preload("res://engine/objects/mario/sounds/1up.wav")
+const LIFE_UP_SOUND: AudioStream = preload("res://engine/objects/players/prefabs/sounds/1up.wav")
 const DEFAULT_COMBO_ARRAY: Array[int] = [100, 200, 500, 1000, 2000, 5000]
 const STOMP_COMBO_ARRAY: Array[int] = [100, 200, 400, 500, 800, 1000, 2000, 5000, 8000]
 

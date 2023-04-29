@@ -17,7 +17,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
 
-[sub_resource type="Resource" id="Resource_u62j1"]
+[sub_resource type="Resource" id="Resource_n7w23"]
 resource_local_to_scene = true
 script = ExtResource("3_5ceaa")
 creation_nodepack = ExtResource("3_jc1xp")
@@ -34,7 +34,7 @@ custom_vars = {
 }
 custom_script = ExtResource("4_y4itd")
 
-[sub_resource type="Resource" id="Resource_llg06"]
+[sub_resource type="Resource" id="Resource_rnnrp"]
 resource_local_to_scene = true
 script = ExtResource("3_5ceaa")
 creation_nodepack = ExtResource("6_xq6j8")
@@ -102,16 +102,12 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_21cco")
-stomping_creation = SubResource("Resource_u62j1")
+stomping_creation = SubResource("Resource_n7w23")
 stomping_scores = 100
 stomping_sound = ExtResource("5_7gn8m")
-killing_creation = SubResource("Resource_llg06")
+killing_creation = SubResource("Resource_rnnrp")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("7_sc4cc")
-custom_vars = {
-"attachment_killed": NodePath("../../Sprite/Dead"),
-"attachment_stomped": NodePath("../../Sprite/Dead")
-}
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -129,6 +125,4 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_visible" binds= [true]]

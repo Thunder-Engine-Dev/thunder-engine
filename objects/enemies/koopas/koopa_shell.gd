@@ -8,8 +8,8 @@ const Shell: Script = preload("./koopa_shell.gd")
 @export_subgroup("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
-@export var kicked_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
-@export var combo_sound: AudioStream = preload("res://engine/objects/mario/sounds/kick.wav")
+@export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+@export var combo_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 
 var _delayer: SceneTreeTimer
 
@@ -95,7 +95,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 func _on_body_entered(player: Node2D) -> void:
 	if !stopping: return
 	if player != Thunder._current_player: return
-	if Thunder._current_player.states.current_state == "warp": return
+	if Thunder._current_player.warp > Player.Warp.NONE: return
 	if is_instance_valid(_delayer) || enemy_attacked.get_stomping_delayer(): return
 	status_swap(false)
 	sound()
