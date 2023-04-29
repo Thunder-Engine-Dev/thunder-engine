@@ -1,83 +1,36 @@
-[gd_scene load_steps=17 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=8 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
-[ext_resource type="PackedScene" uid="uid://de51iqba2y6tu" path="res://engine/objects/core/player/player.tscn" id="4_jbulp"]
-[ext_resource type="Shape2D" uid="uid://kxicbpkvp83b" path="res://engine/objects/mario/prefabs/collisions/shape_big.tres" id="6_mgxv6"]
-[ext_resource type="Shape2D" uid="uid://dmb1hdy0mt1dk" path="res://engine/objects/mario/prefabs/collisions/shape_small.tres" id="7_pj72m"]
-[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_ldmra"]
-[ext_resource type="AudioStream" uid="uid://cas2ld31gvw6h" path="res://engine/objects/players/prefabs/sounds/music-gameover.ogg" id="9_0st4b"]
-[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="10_q7qwq"]
-[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="11_n4mrv"]
-[ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_configuration.gd" id="12_2y7a3"]
-[ext_resource type="AudioStream" uid="uid://duv2iffp4t2vt" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="13_71u2i"]
-[ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_camera_2d.gd" id="15_pn7vu"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_oesw4"]
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="16_sso43"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
-
-
-[sub_resource type="Resource" id="Resource_p510p"]
-script = ExtResource("12_2y7a3")
-control_left = &"m_left"
-control_right = &"m_right"
-control_up = &"m_up"
-control_down = &"m_down"
-control_jump = &"m_jump"
-control_run = &"m_run"
-state_animations = {}
-state_scripts = {}
-jump_sound = ExtResource("10_q7qwq")
-swim_sound = ExtResource("13_71u2i")
-pipe_sound = ExtResource("11_n4mrv")
-powerdown_sound = ExtResource("11_n4mrv")
-die_music = ExtResource("8_ldmra")
-gameover_music = ExtResource("9_0st4b")
-sound_pitch = 1.0
-jump_speed_stopped = 20.0
-jump_speed_moving = 25.0
-jump_velocity = 700.0
-stomp_multiplicator = 1.0
-fall_speed = 50.0
-max_fall_speed = 550.0
-acceleration_speed = 12.5
-deceleration_speed = 5.0
-initial_acceleration = 40.0
-initial_accel_trigger = 20.0
-max_walk_speed = 175.0
-max_run_speed = 350.0
-collision_shape_small = ExtResource("7_pj72m")
-collision_shape_big = ExtResource("6_mgxv6")
-collision_shape_crouch = ExtResource("7_pj72m")
-powerup_animation_time = 40.0
-powerdown_animation_time = 40.0
-powerdown_invincible_time = 100.0
-default_life_count = 4
 
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_gva46")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_4qycq")]
 
-[node name="Player" parent="." instance=ExtResource("4_jbulp")]
-position = Vector2(80, 416)
-config = SubResource("Resource_p510p")
+[node name="Mario" parent="." instance=ExtResource("7_oesw4")]
+position = Vector2(96, 112)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
 limit_top = 0
 limit_bottom = 480
-script = ExtResource("15_pn7vu")
+script = ExtResource("4_a46rj")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("16_sso43")
 format = 2
-layer_0/tile_data = PackedInt32Array(851970, 1, 0, 851968, 1, 0, 851969, 1, 0, 851971, 1, 0, 851972, 1, 0, 851973, 1, 0, 851974, 1, 0, 851975, 1, 0, 851976, 1, 0, 851977, 1, 0, 851978, 1, 0, 851979, 1, 0, 851980, 1, 0, 851981, 1, 0, 851982, 1, 0, 851983, 1, 0, 851984, 1, 0, 851985, 1, 0, 851986, 1, 0, 851987, 1, 0, 196610, 1, 0, 196611, 1, 0, 131075, 1, 0, 65539, 1, 0, 3, 1, 0, 2, 1, 0, 65538, 1, 0, 131074, 1, 0, -262142, 1, 0, -196606, 1, 0, -131070, 1, 0, -65534, 1, 0, -262141, 1, 0, -196605, 1, 0, -131069, 1, 0, -65533, 1, 0)
+layer_0/tile_data = PackedInt32Array(851970, 2, 0, 851968, 2, 0, 851969, 2, 0, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851978, 2, 0, 851979, 2, 0, 851980, 2, 0, 851981, 2, 0, 851982, 2, 0, 851983, 2, 0, 851984, 2, 0, 851985, 2, 0, 851986, 2, 0, 851987, 2, 0, 196610, 2, 0, 196611, 2, 0, 131075, 2, 0, 65539, 2, 0, 3, 2, 0, 2, 2, 0, 65538, 2, 0, 131074, 2, 0, -262142, 2, 0, -196606, 2, 0, -131070, 2, 0, -65534, 2, 0, -262141, 2, 0, -196605, 2, 0, -131069, 2, 0, -65533, 2, 0)
 
 [node name="HUD" parent="." instance=ExtResource("17_f33dw")]
 
 [node name="PipeOut" parent="." instance=ExtResource("19_pdlhx")]
 position = Vector2(96, 112)
 rotation = -3.14159
-warp_direction = 4
+warp_direction = 3
 trigger_immediately = true

@@ -51,7 +51,7 @@ func _prepare_template() -> void:
 	add_child(music_loader)
 	music_loader.set_owner(self)
 	
-	var player = load("res://engine/objects/core/player/player.tscn").instantiate()
+	var player = load("res://engine/objects/players/mario/mario.tscn").instantiate()
 	add_child(player)
 	player.position = Vector2(80, 416)
 	player.set_owner(self)
