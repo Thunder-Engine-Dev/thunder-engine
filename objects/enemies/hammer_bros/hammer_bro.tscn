@@ -8,10 +8,11 @@
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_wqa12"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_5lxra"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="4_p7yp2"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="7_bhg7k"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_bhg7k"]
 [ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="10_m4lvx"]
 [ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="11_8ytaf"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_nviwx"]
+
 
 [sub_resource type="Resource" id="Resource_naguj"]
 script = ExtResource("3_wqa12")

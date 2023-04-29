@@ -8,6 +8,7 @@ enum Type {
 }
 
 @export var type: Type = Type.SMALL
+@export var gets_hurt_to: MarioSuit
 @export_group("Physics", "physics_")
 @export var physics_config: MarioConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
 @export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/mario_physics_behavior.gd")
@@ -23,6 +24,7 @@ enum Type {
 @export var extra_vars: Dictionary
 @export var extra_behavior: GDScript
 @export_group("Sound", "sound_")
-@export var sound_hurt: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var sound_hurt: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+@export var sound_death: AudioStream = preload("res://engine/objects/players/prefabs/sounds/music-die.ogg")
 @export var sound_pitch: float = 1
 

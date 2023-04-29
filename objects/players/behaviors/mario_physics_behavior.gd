@@ -1,6 +1,6 @@
 extends ByNodeScript
 
-var player: PlayerMario
+var player: Mario
 var suit: MarioSuit
 var config: MarioConfig
 
@@ -8,7 +8,7 @@ var _has_jumped: bool
 
 
 func _ready() -> void:
-	player = node as PlayerMario
+	player = node as Mario
 	suit = node.suit
 	config = suit.physics_config
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true))
@@ -21,6 +21,10 @@ func _physics_process(delta: float) -> void:
 	player.control_process()
 	# Shape
 	_shape_process()
+	# Head
+	_head_process()
+	# Body
+	_body_process()
 	# Movement
 	_movement_x(delta)
 	_movement_y(delta)
@@ -64,9 +68,10 @@ func _movement_y(delta: float) -> void:
 	if player.is_underwater:
 		if player.jumped:
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
-		if player.speed.y < -abs(config.swim_max_speed):
-			player.speed.y = abs(config.swim_max_speed)
-		Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
+			player.swam.emit()
+			Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
+		if player.speed.y < -abs(config.swim_max_speed) && !player.is_underwater_out:
+			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
 		if player.is_on_floor():
@@ -88,4 +93,18 @@ func _shape_process() -> void:
 	shaper.install_shape_for_caster(player.body)
 	
 	if player.collision_shape.shape is RectangleShape2D:
-		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2
+		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
+
+
+#= Head
+func _head_process() -> void:
+	player.is_underwater_out = true
+	for i in player.head.get_collision_count():
+		var collider: Node2D = player.head.get_collider(i) as Node2D
+		if collider.is_in_group(&"#water"):
+			player.is_underwater_out = false
+
+#= Body
+func _body_process() -> void:
+	for i in player.body.get_collision_count():
+		var collider: Node2D = player.body.get_collider(i)

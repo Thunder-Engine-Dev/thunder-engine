@@ -5,6 +5,7 @@ signal got_out_of_water
 
 @export var gravity_scale_override: float
 @export var max_falling_speed_override: float
+@export var spray_offset: Vector2
 
 var _gravity_scale: float
 var _max_falling_speed: float

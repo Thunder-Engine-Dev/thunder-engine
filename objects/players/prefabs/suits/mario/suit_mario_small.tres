@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MarioSuit" load_steps=7 format=3 uid="uid://dkrwf64pscu5h"]
+[gd_resource type="Resource" script_class="MarioSuit" load_steps=9 format=3 uid="uid://dkrwf64pscu5h"]
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/mario_animation_behavior.gd" id="1_36482"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_4cms1"]
@@ -6,6 +6,8 @@
 [ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="4_8yoqk"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="5_gkp4p"]
 [ext_resource type="Script" path="res://engine/objects/players/prefabs/suits/mario_suit.gd" id="6_2y0gn"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="7_p8pjw"]
+[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="8_f2g7m"]
 
 [resource]
 script = ExtResource("6_2y0gn")
@@ -17,3 +19,6 @@ physics_shaper_crouch = ExtResource("5_gkp4p")
 animation_sprites = ExtResource("2_4cms1")
 animation_behavior = ExtResource("1_36482")
 extra_vars = {}
+sound_hurt = ExtResource("8_f2g7m")
+sound_death = ExtResource("7_p8pjw")
+sound_pitch = 1.0

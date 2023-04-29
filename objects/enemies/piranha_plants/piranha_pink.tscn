@@ -8,7 +8,8 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="3_l5y0h"]
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="8_85764"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_85764"]
+
 
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")

@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_fd8dp"]
 [ext_resource type="Texture2D" uid="uid://bc63sqiltulom" path="res://engine/objects/enemies/piranha_plants/textures/stem_orange.png" id="3_blccl"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_eemo7"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="9_wsasv"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_wsasv"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(32, 32)

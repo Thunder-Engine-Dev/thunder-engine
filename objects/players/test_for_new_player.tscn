@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce60kw3vucm17"]
+[gd_scene load_steps=6 format=3 uid="uid://ce60kw3vucm17"]
 
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="1_ga55i"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="2_0e0wf"]
+[ext_resource type="PackedScene" uid="uid://hkhy751lpyx5" path="res://engine/objects/fluid/water_area.tscn" id="3_pah30"]
 
 [sub_resource type="GDScript" id="GDScript_42vaj"]
 script/source = "extends Camera2D
 
 func _ready() -> void:
 	Thunder._current_camera = self
+"
+
+[sub_resource type="GDScript" id="GDScript_bw1js"]
+script/source = "extends Button
+
+
+func _ready() -> void:
+	button_down.connect(
+		func() -> void:
+			$\"../Mario\".die()
+	)
 "
 
 [node name="Test" type="Node2D"]
@@ -19,6 +31,17 @@ layer_0/tile_data = PackedInt32Array(851977, 0, 0, 851975, 0, 0, 851974, 0, 0, 8
 
 [node name="Mario" parent="." instance=ExtResource("2_0e0wf")]
 position = Vector2(112, 400)
+nickname = null
+suit = null
+direction = null
+death_body = null
+speed = null
+gravity_dir = null
+gravity_dir_rotation = null
+collision = null
+vertical_correction_amount = null
+horizontal_correction_amount = null
+correct_collision = null
 
 [node name="PlayerCamera2D" type="Camera2D" parent="Mario"]
 position = Vector2(-112, -400)
@@ -26,3 +49,17 @@ limit_left = 0
 limit_top = 0
 limit_bottom = 480
 script = SubResource("GDScript_42vaj")
+
+[node name="Water" parent="." instance=ExtResource("3_pah30")]
+offset_left = 176.0
+offset_top = 176.0
+offset_right = 544.0
+offset_bottom = 416.0
+
+[node name="Button" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 96.0
+offset_right = 96.0
+offset_bottom = 128.0
+text = "death"
+script = SubResource("GDScript_bw1js")

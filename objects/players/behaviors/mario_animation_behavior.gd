@@ -1,12 +1,37 @@
 extends ByNodeScript
 
-var player: PlayerMario
+var player: Mario
 var sprite: AnimatedSprite2D
 
 
 func _ready() -> void:
-	player = node as PlayerMario
+	player = node as Mario
 	sprite = node.sprite as AnimatedSprite2D
+	
+	player.suit_appeared.connect(
+		func() -> void:
+			if !sprite: return
+			sprite.play(&"appear")
+			await player.get_tree().create_timer(1, false, true)
+			sprite.play(&"default")
+	)
+	player.swam.connect(
+		func() -> void:
+			if !sprite: return
+			if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
+	)
+	
+	sprite.animation_looped.connect(
+		func() -> void:
+			if !sprite: return
+			match sprite.animation:
+				&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
+	)
+	sprite.animation_finished.connect(
+		func() -> void:
+			if !sprite: return
+			if sprite.animation == &"attack": sprite.play(&"default")
+	)
 
 
 func _physics_process(delta: float) -> void:

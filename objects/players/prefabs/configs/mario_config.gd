@@ -20,5 +20,5 @@ class_name MarioConfig
 @export var swim_out_speed: float = 450
 @export var swim_max_speed: float = 150
 @export_group("Sound", "sound_")
-@export var sound_jump: AudioStream = preload("res://engine/objects/mario/sounds/jump.wav")
-@export var sound_swim: AudioStream = preload("res://engine/objects/mario/sounds/swim.wav")
+@export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
+@export var sound_swim: AudioStream = preload("res://engine/objects/players/prefabs/sounds/swim.wav")

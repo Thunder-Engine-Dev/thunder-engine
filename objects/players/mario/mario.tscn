@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=8 format=3 uid="uid://1do11cr84k7y"]
 
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
+[ext_resource type="Script" path="res://engine/objects/players/mario.gd" id="1_a0hs6"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
+[ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="3_qpqdp"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
@@ -13,12 +14,13 @@ size = Vector2(1, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
 size = Vector2(18, 2)
 
-[node name="Mario" type="CharacterBody2D"]
+[node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
 collision_mask = 16
-script = ExtResource("1_ofdvu")
+script = ExtResource("1_a0hs6")
+death_sprite = NodePath("SpriteDeath")
 gravity_scale = 1.0
 max_falling_speed = 500.0
-metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale", &"death_sprite"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -30,20 +32,32 @@ shape = SubResource("RectangleShape2D_ctk1r")
 target_position = Vector2(0, 0)
 max_results = 8
 collision_mask = 6
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Head" type="ShapeCast2D" parent="."]
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_k6hxb")
-target_position = Vector2(0, -4)
+target_position = Vector2(0, -2)
 max_results = 8
 collision_mask = 144
+collide_with_areas = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -15)
 sprite_frames = ExtResource("2_eqact")
+
+[node name="SpriteDeath" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(1, 2)
+texture = ExtResource("3_qpqdp")
 
 [node name="Underwater" type="Node" parent="."]
 script = ExtResource("3_vybsq")
+gravity_scale_override = 0.1
+max_falling_speed_override = 150.0
+spray_offset = Vector2(0, 8)
+metadata/_edit_pinned_properties_ = [&"max_falling_speed_override", &"gravity_scale_override"]
 
 [node name="Invincible" type="Timer" parent="."]
 process_callback = 0

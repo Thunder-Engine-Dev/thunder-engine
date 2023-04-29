@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
 [ext_resource type="Texture2D" uid="uid://baq22nmp1wdol" path="res://engine/objects/enemies/podoboo/podoboo.png" id="2_wcyj0"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="3_aerwt"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_aerwt"]
+
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8kc8x"]
 radius = 16.0

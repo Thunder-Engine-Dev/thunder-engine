@@ -5,16 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://de51iqba2y6tu" path="res://engine/objects/core/player/player.tscn" id="4_jbulp"]
 [ext_resource type="Shape2D" uid="uid://kxicbpkvp83b" path="res://engine/objects/mario/prefabs/collisions/shape_big.tres" id="6_mgxv6"]
 [ext_resource type="Shape2D" uid="uid://dmb1hdy0mt1dk" path="res://engine/objects/mario/prefabs/collisions/shape_small.tres" id="7_pj72m"]
-[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/mario/sounds/music-die.ogg" id="8_ldmra"]
-[ext_resource type="AudioStream" uid="uid://cas2ld31gvw6h" path="res://engine/objects/mario/sounds/music-gameover.ogg" id="9_0st4b"]
-[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/mario/sounds/jump.wav" id="10_q7qwq"]
-[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/mario/sounds/pipe.wav" id="11_n4mrv"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="8_ldmra"]
+[ext_resource type="AudioStream" uid="uid://cas2ld31gvw6h" path="res://engine/objects/players/prefabs/sounds/music-gameover.ogg" id="9_0st4b"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="10_q7qwq"]
+[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="11_n4mrv"]
 [ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_configuration.gd" id="12_2y7a3"]
-[ext_resource type="AudioStream" uid="uid://duv2iffp4t2vt" path="res://engine/objects/mario/sounds/swim.wav" id="13_71u2i"]
+[ext_resource type="AudioStream" uid="uid://duv2iffp4t2vt" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="13_71u2i"]
 [ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_camera_2d.gd" id="15_pn7vu"]
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="16_sso43"]
-[ext_resource type="PackedScene" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
+
 
 [sub_resource type="Resource" id="Resource_p510p"]
 script = ExtResource("12_2y7a3")

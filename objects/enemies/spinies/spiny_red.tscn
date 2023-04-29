@@ -6,9 +6,10 @@
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_wxq5y"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_vul36"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="10_oumu7"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_oumu7"]
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="11_achxa"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_jqids"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 28)

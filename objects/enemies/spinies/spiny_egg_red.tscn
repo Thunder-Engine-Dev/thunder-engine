@@ -7,9 +7,10 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_x5hqt"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_84axb"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_y7ps8"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/mario/sounds/kick.wav" id="8_3spov"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_3spov"]
 [ext_resource type="Texture2D" uid="uid://ds44e07jvbojq" path="res://engine/objects/enemies/spinies/textures/spiny_egg_red.png" id="9_d72kd"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_5bneu"]
+
 
 [sub_resource type="Resource" id="Resource_ihim1"]
 script = ExtResource("3_6nh2h")

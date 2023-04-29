@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3r3j0pgil67"]
+
+[ext_resource type="Script" path="res://engine/objects/players/deaths/player_death.gd" id="1_tmjdt"]
+
+[node name="PlayerDeath" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_tmjdt")
+gravity_scale = 0.5
+max_falling_speed = 500.0
+collision = false
+metadata/_edit_pinned_properties_ = [&"collision", &"gravity_scale", &"max_falling_speed"]
