@@ -16,14 +16,19 @@ class_name Level
 ## Jump to scene after level completion sequence
 @export var jump_to_scene: String
 
-@export_group("Player's Falling Below")
+@export_group("Player's Falling Below", "falling_below_")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
 ## 0 = Nothing[br]
 ## 1 = Death[br]
-## 2 = Wrap from top of the screen
-@export_enum("Nothing", "Death", "Wrap") var falling_below_screen_action: int = 1
+## 2 = Wrap from top of the screen[br]
+## 3 = Trigger pipe warp
+@export_enum("Nothing", "Death", "Wrap", "Pipe Warp") var falling_below_screen_action: int = 1
 ## Modifies the bottom line that detect player as "falling below the screen"
 @export var falling_below_y_offset: float = 64.0
+## Warp out node, if Screen Action is set to Pipe Warp
+@export_node_path("Area2D") var falling_below_warp_to: NodePath
+
+@onready var falling_below_warp_target: Area2D = get_node_or_null(falling_below_warp_to)
 
 # Forces player to walk forward, used in finish sequence
 var _force_player_walking: bool = false
@@ -98,7 +103,12 @@ func _physics_process(delta: float) -> void:
 		match falling_below_screen_action:
 			1: player.die()
 			2: player.position.y -= 608
-	
+			3: 
+				assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
+				"ERROR: falling_below_warp_target contains an invalid Out Warp")
+				
+				player.speed = Vector2.ZERO
+				falling_below_warp_target.pass_player(player)
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:

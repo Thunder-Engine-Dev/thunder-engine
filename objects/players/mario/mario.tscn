@@ -44,11 +44,13 @@ collision_mask = 144
 collide_with_areas = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 5
 position = Vector2(0, -15)
 sprite_frames = ExtResource("2_eqact")
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false
+z_index = 15
 position = Vector2(1, 2)
 texture = ExtResource("3_qpqdp")
 

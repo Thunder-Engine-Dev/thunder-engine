@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="11_uf1wh"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_5lllt"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
 

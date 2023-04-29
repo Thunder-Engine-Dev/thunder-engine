@@ -12,6 +12,7 @@ func _from_bumping_block() -> void:
 	queue_free()
 
 func _physics_process(delta):
+	if !Thunder._current_player: return
 	if overlaps_body(Thunder._current_player):
 		collect()
 

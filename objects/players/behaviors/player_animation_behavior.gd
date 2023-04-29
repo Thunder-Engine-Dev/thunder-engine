@@ -56,7 +56,7 @@ func _animation_process(delta: float) -> void:
 		if player.is_on_floor():
 			if player.speed.x != 0:
 				sprite.play(&"walk")
-				sprite.speed_scale = clampf(abs(player.speed.x) * delta * 1.5, 1, 6)
+				sprite.speed_scale = clampf(abs(player.speed.x) * delta * 1.5, 1, 5)
 			else:
 				sprite.play(&"default")
 			if player.is_crouching:
@@ -76,4 +76,5 @@ func _animation_process(delta: float) -> void:
 				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
 				sprite.play(&"walk")
 				sprite.speed_scale = 2
-				
+	
+	player.sprite.visible = (int(player.timer_invincible.time_left / 2) % 2 == 0) 

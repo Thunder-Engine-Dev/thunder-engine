@@ -24,7 +24,7 @@ func _physics_process(_delta):
 	
 	var player = Thunder._current_player
 	if is_player_colliding(cast_below) && player.speed.y <= 50 && !player.is_on_floor() && result_counter_value:
-		if Thunder._current_player_state.player_power == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
+		if Thunder._current_player_state.type == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
 			bump(false)
 		else:
 			bricks_break()

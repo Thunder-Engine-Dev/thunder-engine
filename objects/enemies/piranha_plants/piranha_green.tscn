@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_eemo7"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_wsasv"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(32, 32)
 

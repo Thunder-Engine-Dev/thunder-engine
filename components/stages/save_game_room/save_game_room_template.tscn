@@ -1,15 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=9 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_oesw4"]
+[ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="8_38gig"]
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="16_sso43"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
 
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_gva46")
+falling_below_screen_action = 3
+falling_below_warp_to = NodePath("PipeOut")
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_4qycq")]
 
@@ -34,3 +37,9 @@ position = Vector2(96, 112)
 rotation = -3.14159
 warp_direction = 3
 trigger_immediately = true
+
+[node name="FireFlower" parent="." instance=ExtResource("8_38gig")]
+position = Vector2(288, 400)
+
+[node name="FireFlower2" parent="." instance=ExtResource("8_38gig")]
+position = Vector2(352, 352)

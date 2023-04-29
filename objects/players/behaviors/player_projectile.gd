@@ -13,6 +13,7 @@ func _physics_process(_delta: float) -> void:
 	if !player || !resource: return
 	var bulls: StringName = StringName("bul" + resource.resource_name)
 	var bull_count: int = player.get_tree().get_nodes_in_group(bulls).size()
+	if player.is_crouching: return
 	if player.attacked && bull_count < resource.amount:
 		Audio.play_sound(resource.sound_attack, player, false)
 		player.shot.emit()

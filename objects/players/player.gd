@@ -38,8 +38,10 @@ enum WarpDir {
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
 		if suit.behavior_script && _suit_behavior != suit.behavior_script:
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
+		else: _suit_behavior = null
 		if suit.extra_behavior && _extra_behavior != suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
+		else: _extra_behavior = null
 		if _suit_appear:
 			_suit_appear = false
 			suit_appeared.emit()
@@ -139,7 +141,7 @@ func hurt(tags: Dictionary = {}) -> void:
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
 	if suit.gets_hurt_to:
-		suit = suit.gets_hurt_to
+		change_suit(suit.gets_hurt_to)
 		invincible(tags.get(&"hurt_duration", 2))
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
 	else:

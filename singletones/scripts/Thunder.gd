@@ -114,7 +114,7 @@ func add_score(count: int):
 
 ## Compare current player power with [member power]
 func is_player_power(power: Data.PLAYER_POWER) -> bool:
-	return _current_player_state.player_power == power
+	return _current_player_state.type == power
 
 
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them

@@ -35,7 +35,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var speed: float = stretching_speed * delta
 	var player: Node2D = Thunder._current_player
-	var ppos: Vector2 = global_transform.affine_inverse().basis_xform(player.global_position)
+	var ppos: Vector2 = global_transform.affine_inverse().basis_xform(player.global_position if player else Vector2.ZERO)
 	var spos: Vector2 = global_transform.affine_inverse().basis_xform(global_position)
 	var can_strech_out: bool = vision.is_on_screen() && player && abs(spos.x - ppos.x) > range_in_pipe
 	

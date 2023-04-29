@@ -104,7 +104,7 @@ func _head_process() -> void:
 	player.is_underwater_out = true
 	for i in player.head.get_collision_count():
 		var collider: Node2D = player.head.get_collider(i) as Node2D
-		if collider.is_in_group(&"#water"):
+		if collider && collider.is_in_group(&"#water"):
 			player.is_underwater_out = false
 
 #= Body
