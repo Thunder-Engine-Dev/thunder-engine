@@ -13,6 +13,7 @@
 
 [resource]
 script = ExtResource("6_q0aqj")
+name = &"super"
 type = 1
 gets_hurt_to = ExtResource("3_l2urb")
 physics_config = ExtResource("4_7kp5j")

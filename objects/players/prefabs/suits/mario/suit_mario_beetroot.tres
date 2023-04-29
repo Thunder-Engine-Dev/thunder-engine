@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=18 format=3 uid="uid://b0rssfuuqiai6"]
+
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_ap2rb"]
+[ext_resource type="SpriteFrames" uid="uid://ciq78opwuq6ft" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_beetroot.tres" id="2_33nsf"]
+[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="3_3nggd"]
+[ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="3_715m3"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_svefp"]
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="4_y3kia"]
+[ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="5_ofqfp"]
+[ext_resource type="Script" path="res://engine/objects/players/prefabs/suits/mario/player_projectile_resource.gd" id="5_ysgl2"]
+[ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_mario_super.tres" id="6_ayx7l"]
+[ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_m5gcq"]
+[ext_resource type="Script" path="res://engine/objects/players/prefabs/suits/mario/player_projectile.gd" id="7_53kjs"]
+[ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="7_d7ol3"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="8_mhcy7"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_rnv6k"]
+[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_cvv72"]
+
+[sub_resource type="Resource" id="Resource_xpeqw"]
+script = ExtResource("4_svefp")
+creation_nodepack = ExtResource("3_715m3")
+trans_offset = Vector2(0, -20)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_af60k"]
+script = ExtResource("5_ysgl2")
+projectile = SubResource("Resource_xpeqw")
+speed = Vector2(100, -250)
+amount = 2
+sound_attack = ExtResource("6_m5gcq")
+
+[resource]
+script = ExtResource("8_mhcy7")
+name = &"beetroot"
+type = 2
+gets_hurt_to = ExtResource("3_3nggd")
+physics_config = ExtResource("5_ofqfp")
+physics_behavior = ExtResource("4_y3kia")
+physics_shaper = ExtResource("6_ayx7l")
+physics_shaper_crouch = ExtResource("7_d7ol3")
+animation_sprites = ExtResource("2_33nsf")
+animation_behavior = ExtResource("1_ap2rb")
+behavior_resource = SubResource("Resource_af60k")
+behavior_script = ExtResource("7_53kjs")
+extra_vars = {}
+sound_hurt = ExtResource("10_cvv72")
+sound_death = ExtResource("9_rnv6k")
+sound_pitch = 1.0

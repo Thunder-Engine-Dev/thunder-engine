@@ -6,8 +6,3 @@ class_name Projectile
 
 func _ready():
 	super()
-
-
-func _exit_tree():
-	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
-		Thunder._current_player.states.projectiles_count += 1

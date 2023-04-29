@@ -3,6 +3,7 @@ class_name Player
 
 signal suit_appeared
 signal swam
+signal shot
 signal damaged
 signal died
 
@@ -25,7 +26,7 @@ enum WarpDir {
 @export_group("Suit")
 @export var suit: PlayerSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"):
 	set(to):
-		if (!to || suit == to) && !_force_suit: return
+		if (!to || suit.name == to.name) && !_force_suit: return
 		suit = to.duplicate()
 		
 		if to.animation_sprites:
@@ -36,12 +37,13 @@ enum WarpDir {
 		if suit.physics_behavior && _physics_behavior != suit.physics_behavior:
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
 		if suit.behavior_script && _suit_behavior != suit.behavior_script:
-			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self)
+			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
 		if suit.extra_behavior && _extra_behavior != suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
 		if _suit_appear:
 			_suit_appear = false
 			suit_appeared.emit()
+		Thunder._current_player_state = suit
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
 	set(to):
@@ -116,8 +118,8 @@ func control_process() -> void:
 	jumping = int(Input.is_action_pressed(control.jump)) + int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)
 	running = Input.is_action_pressed(control.run)
-	attacked = Input.is_action_just_pressed(control.jump)
-	attacking = Input.is_action_pressed(control.jump)
+	attacked = Input.is_action_just_pressed(control.attack)
+	attacking = Input.is_action_pressed(control.attack)
 	is_crouching = Input.is_action_pressed(control.down) && is_on_floor()
 
 

@@ -20,6 +20,11 @@ func _ready() -> void:
 			if !sprite: return
 			if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
 	, CONNECT_REFERENCE_COUNTED)
+	player.shot.connect(
+		func() -> void:
+			if !sprite: return
+			sprite.play(&"attack")
+	)
 	
 	sprite.animation_looped.connect(
 		func() -> void:

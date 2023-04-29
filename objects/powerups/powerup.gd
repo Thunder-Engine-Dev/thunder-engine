@@ -52,6 +52,7 @@ func collect() -> void:
 	
 	queue_free()
 
+
 func _change_state_logic(force_powerup: bool) -> void:
 	var player: Player = Thunder._current_player
 	var to: PlayerSuit = to_suit[player.character]

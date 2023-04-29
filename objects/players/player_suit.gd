@@ -7,6 +7,7 @@ enum Type {
 	POWERED
 }
 
+@export var name: StringName = &"small"
 @export var type: Type = Type.SMALL
 @export var gets_hurt_to: PlayerSuit
 @export_group("Physics", "physics_")

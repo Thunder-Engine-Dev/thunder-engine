@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://8a7nemgi0b6q"]
+[gd_scene load_steps=11 format=3 uid="uid://8a7nemgi0b6q"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_elpo1"]
+[ext_resource type="Resource" uid="uid://b0rssfuuqiai6" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_beetroot.tres" id="2_h2k1r"]
 [ext_resource type="Texture2D" uid="uid://3y6dl3ecp4ph" path="res://engine/objects/powerups/beetroot/texture.png" id="3_scld5"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_tk2ye"]
 
@@ -49,7 +50,11 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_elpo1")
+to_suit = {
+"Mario": ExtResource("2_h2k1r")
+}
 gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"to_suit"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
