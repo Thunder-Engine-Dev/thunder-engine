@@ -1,13 +1,18 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("power").add_param("state", TYPE_STRING).set_description("Set current player power state. Only built-in states for now")
+	return new().set_name("power").add_param("character", TYPE_STRING).add_param("state", TYPE_STRING).set_description("Set current player power state. Only built-in states for now")
 
 func execute(args:Array) -> Command.ExecuteResult:
-	var state = load("res://engine/objects/players/prefabs/prefabs/%s_state.tres" % args[0])
-	if !state:
-		return Command.ExecuteResult.new("Try one of these: beetroot, big, flower, lui, small")
+	var character: String = args[0]
+	var suit = load("res://engine/objects/players/prefabs/suits/%s/suit_%s_%s.tres" % [character, character, args[1]])
+	if !suit:
+		return Command.ExecuteResult.new(
+			"""Try one of these: 
+			For \"character\": mario.
+			For \"power\": beetroot, big, flower, green_lui, small"""
+		)
 	
-	Thunder._current_player_state = state
+	Thunder._current_player.suit = suit
 	return Command.ExecuteResult.new("Success")
 
