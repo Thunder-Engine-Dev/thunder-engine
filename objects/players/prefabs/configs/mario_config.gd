@@ -14,7 +14,7 @@ class_name MarioConfig
 @export var jump_speed: float = 700
 @export var jump_buff_static: float = 1000
 @export var jump_buff_dynamic: float = 1250
-@export var stomp_multiplicator: float = 1.0
+@export var jump_stomp_multiplicator: float = 1.0
 @export_group("Swim")
 @export var swim_speed: float = 150
 @export var swim_out_speed: float = 450

@@ -113,10 +113,10 @@ func _lkf():
 ## by the player[br]
 ## If [param offset] set, the actual offset will be [member stomping_offset]
 ## + [param offset]
-func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
+func got_stomped(by: Node2D, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
 	var result: Dictionary
 	
-	if !stomping_enabled: return result
+	if !stomping_enabled || _stomping_delayer: return result
 	
 	if !_center:
 		push_error("[No Center Node Error] No _center node set. Please check if you have set the _center node of EnemyAttacked. At " + str(get_path()))
@@ -126,10 +126,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2.ZERO) -> Dictionary:
 		_center.global_transform.translated(stomping_offset + offset).get_origin()
 	).dot(stomping_standard.rotated(_center.global_rotation))
 	
-	if _stomping_delayer: return result
-	
 	stomped.emit()
-	
 	if dot > 0:
 		stomping_delay()
 		stomped_succeeded.emit()

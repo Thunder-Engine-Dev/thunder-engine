@@ -14,7 +14,6 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_sc4cc"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_8ylwv"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
 

@@ -2,12 +2,13 @@
 extends Area2D
 
 @export_category("PipeOut")
-@export var warp_direction: PlayerStatesManager.WarpDirection = PlayerStatesManager.WarpDirection.UP
+@export var warp_direction: Player.WarpDir = Player.WarpDir.UP
 @export var warping_speed: float = 50
-@export var warping_sound: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export var trigger_immediately: bool = false
 
 var player: Player
+var player_z_index: int
 
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
@@ -20,8 +21,8 @@ func _ready() -> void:
 	
 	if trigger_immediately:
 		player = Thunder._current_player
-		player.states.set_state("warp")
-		player.states.warp_direction = warp_direction
+		player.warp = Player.Warp.OUT
+		player.warp_dir = warp_direction
 		player.global_position = pos_player.global_position
 		player.z_index = -5
 		pass_player(player)
@@ -37,10 +38,12 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
-		player.states.set_state("default")
-		player.z_index = 1
+		player.warp = Player.Warp.NONE
+		player.z_index = player_z_index
 		player = null
 		Thunder._current_hud.timer.paused = false
+		
+		player_z_index = 0
 
 
 func pass_player(new_player: Player) -> void:
@@ -49,24 +52,24 @@ func pass_player(new_player: Player) -> void:
 	
 	player = new_player
 	
-	var player_warp_dir: PlayerStatesManager.WarpDirection
+	var player_warp_dir: Player.WarpDir
 	
 	match warp_direction:
-		PlayerStatesManager.WarpDirection.RIGHT:
-			pos_player.position = Vector2((shape.shape as RectangleShape2D).size.x,0)
-			player_warp_dir = PlayerStatesManager.WarpDirection.RIGHT
-		PlayerStatesManager.WarpDirection.LEFT:
-			pos_player.position = Vector2(-(shape.shape as RectangleShape2D).size.x,0)
-			player_warp_dir = PlayerStatesManager.WarpDirection.LEFT
-		PlayerStatesManager.WarpDirection.DOWN:
-			pos_player.position = Vector2(0,(shape.shape as RectangleShape2D).size.y - (player.collision.shape as RectangleShape2D).size.y)
-			player_warp_dir = PlayerStatesManager.WarpDirection.UP
-		PlayerStatesManager.WarpDirection.UP:
-			pos_player.position = Vector2(0,(shape.shape as RectangleShape2D).size.y)
-			player_warp_dir = PlayerStatesManager.WarpDirection.DOWN
+		Player.WarpDir.RIGHT:
+			pos_player.position = Vector2(0, 0)
+			player_warp_dir = Player.WarpDir.RIGHT
+		Player.WarpDir.LEFT:
+			pos_player.position = Vector2(0, 0)
+			player_warp_dir = Player.WarpDir.LEFT
+		Player.WarpDir.DOWN:
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y)
+			player_warp_dir = Player.WarpDir.UP
+		Player.WarpDir.UP:
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y)
+			player_warp_dir = Player.WarpDir.DOWN
 	
 	player.global_position = pos_player.global_position
-	player.states.warp_direction = player_warp_dir
+	player.warp_dir = player_warp_dir
 	
 	await get_tree().process_frame
 	Audio.play_sound(warping_sound, self, false)
@@ -77,8 +80,8 @@ func _label() -> void:
 	text.rotation = -global_rotation
 	text.scale = Vector2.ONE / 1.5
 	match warp_direction:
-		PlayerStatesManager.WarpDirection.RIGHT: text.text = "right"
-		PlayerStatesManager.WarpDirection.LEFT: text.text = "left"
-		PlayerStatesManager.WarpDirection.UP: text.text = "up"
-		PlayerStatesManager.WarpDirection.DOWN: text.text = "down"
+		Player.WarpDir.RIGHT: text.text = "right"
+		Player.WarpDir.LEFT: text.text = "left"
+		Player.WarpDir.UP: text.text = "up"
+		Player.WarpDir.DOWN: text.text = "down"
 		_: ""

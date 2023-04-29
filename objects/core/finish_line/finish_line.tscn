@@ -50,6 +50,7 @@ _data = {
 }
 
 [node name="FinishLine" type="Node2D"]
+z_index = -1
 script = ExtResource("1_h4anr")
 
 [node name="Finishline" type="Sprite2D" parent="."]

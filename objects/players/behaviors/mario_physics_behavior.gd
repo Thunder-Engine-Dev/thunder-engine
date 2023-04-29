@@ -1,6 +1,6 @@
 extends ByNodeScript
 
-var player: Mario
+var player: Player
 var suit: MarioSuit
 var config: MarioConfig
 
@@ -8,7 +8,7 @@ var _has_jumped: bool
 
 
 func _ready() -> void:
-	player = node as Mario
+	player = node as Player
 	suit = node.suit
 	config = suit.physics_config
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true))
@@ -26,11 +26,12 @@ func _physics_process(delta: float) -> void:
 	# Body
 	_body_process()
 	# Movement
-	_movement_x(delta)
-	_movement_y(delta)
-	player.motion_process(delta)
-	if player.is_on_wall():
-		player.speed.x = 0
+	if player.warp == Player.Warp.NONE:
+		_movement_x(delta)
+		_movement_y(delta)
+		player.motion_process(delta)
+		if player.is_on_wall():
+			player.speed.x = 0
 
 
 #= Movement
@@ -43,7 +44,7 @@ func _decelerate(dece: float, delta: float) -> void:
 
 
 func _movement_x(delta: float) -> void:
-	if player.is_crouching || player.left_right == 0:
+	if player.is_crouching || player.left_right == 0 || player.completed:
 		_decelerate(config.walk_deceleration, delta)
 		return
 	# Initial speed
@@ -63,6 +64,7 @@ func _movement_x(delta: float) -> void:
 func _movement_y(delta: float) -> void:
 	if player.is_crouching && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
 		return
+	if player.completed: return
 	
 	# Swimming
 	if player.is_underwater:
@@ -106,5 +108,21 @@ func _head_process() -> void:
 
 #= Body
 func _body_process() -> void:
+	if !player.body.shape: return
+	
+	player.body.target_position = player.speed.normalized() * 4
 	for i in player.body.get_collision_count():
-		var collider: Node2D = player.body.get_collider(i)
+		var collider: Node2D = player.body.get_collider(i) as Node2D
+		if !is_instance_valid(collider):
+			continue
+		if collider.has_node("EnemyAttacked"):
+			var enemy_attacked: Node = collider.get_node("EnemyAttacked")
+			var result: Dictionary = enemy_attacked.got_stomped(player)
+			if result.is_empty(): return
+			if result.result == true:
+				if player.jumping > 0:
+					player.speed.y = -result.jumping_max * config.jump_stomp_multiplicator
+				else:
+					player.speed.y = -result.jumping_min * config.jump_stomp_multiplicator
+			else:
+				player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))

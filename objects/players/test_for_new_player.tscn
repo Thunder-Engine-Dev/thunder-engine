@@ -31,17 +31,6 @@ layer_0/tile_data = PackedInt32Array(851977, 0, 0, 851975, 0, 0, 851974, 0, 0, 8
 
 [node name="Mario" parent="." instance=ExtResource("2_0e0wf")]
 position = Vector2(112, 400)
-nickname = null
-suit = null
-direction = null
-death_body = null
-speed = null
-gravity_dir = null
-gravity_dir_rotation = null
-collision = null
-vertical_correction_amount = null
-horizontal_correction_amount = null
-correct_collision = null
 
 [node name="PlayerCamera2D" type="Camera2D" parent="Mario"]
 position = Vector2(-112, -400)

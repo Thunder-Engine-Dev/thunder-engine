@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://1do11cr84k7y"]
 
-[ext_resource type="Script" path="res://engine/objects/players/mario.gd" id="1_a0hs6"]
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="3_qpqdp"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
@@ -16,11 +16,11 @@ size = Vector2(18, 2)
 
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
 collision_mask = 16
-script = ExtResource("1_a0hs6")
+script = ExtResource("1_ofdvu")
 death_sprite = NodePath("SpriteDeath")
 gravity_scale = 1.0
 max_falling_speed = 500.0
-metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale", &"death_sprite"]
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
