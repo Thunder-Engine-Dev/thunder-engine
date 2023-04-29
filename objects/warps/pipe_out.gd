@@ -21,6 +21,7 @@ func _ready() -> void:
 	
 	if trigger_immediately:
 		player = Thunder._current_player
+		player.speed = Vector2.ZERO
 		player.warp = Player.Warp.OUT
 		player.warp_dir = warp_direction
 		player.global_position = pos_player.global_position

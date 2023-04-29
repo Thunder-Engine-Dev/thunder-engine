@@ -13,6 +13,7 @@ enum Type {
 @export_group("Physics", "physics_")
 @export var physics_config: PlayerConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
 @export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_physics_behavior.gd")
+@export var physics_crouchable: bool = true
 @export var physics_shaper: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
 @export var physics_shaper_crouch: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
 @export_group("Animation", "animation_")

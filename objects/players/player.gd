@@ -120,7 +120,7 @@ func control_process() -> void:
 	running = Input.is_action_pressed(control.run)
 	attacked = Input.is_action_just_pressed(control.attack)
 	attacking = Input.is_action_pressed(control.attack)
-	is_crouching = Input.is_action_pressed(control.down) && is_on_floor()
+	is_crouching = Input.is_action_pressed(control.down) && is_on_floor() && suit && suit.physics_crouchable
 
 
 #= Status
