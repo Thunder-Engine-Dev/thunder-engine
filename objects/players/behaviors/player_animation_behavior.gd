@@ -42,11 +42,11 @@ func _physics_process(delta: float) -> void:
 func _animation_process(delta: float) -> void:
 	if !sprite: return
 	
+	if player.direction != 0:
+		sprite.flip_h = (player.direction < 0)
 	sprite.speed_scale = 1
 	# Non-warping
 	if player.warp == Player.Warp.NONE:
-		if player.direction != 0:
-			sprite.flip_h = (player.direction < 0)
 		if sprite.animation in [&"appear", &"attack"]: return
 		if player.is_on_floor():
 			if player.speed.x != 0:
@@ -68,6 +68,7 @@ func _animation_process(delta: float) -> void:
 			Player.WarpDir.DOWN:
 				sprite.play(&"crouch")
 			Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
-				sprite.flip_h = (player.warp_dir == Player.WarpDir.LEFT)
+				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
 				sprite.play(&"walk")
 				sprite.speed_scale = 2
+				

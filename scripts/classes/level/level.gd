@@ -32,6 +32,7 @@ var _force_player_walking_dir: int = 1:
 		_force_player_walking_dir = clampi(dir, -1, 1)
 		if dir == 0:
 			dir = [-1, 1].pick_random()
+var _forced_player_on_wall: bool
 
 
 func _ready() -> void:
@@ -82,22 +83,27 @@ func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	
-	if _force_player_walking && player.states.current_state != "dead":
-		player.velocity_local.x = 120 * _force_player_walking_dir
+	if _force_player_walking && !_forced_player_on_wall:
+		player.direction = _force_player_walking_dir
+		player.speed.x = 120 * player.direction
+		_forced_player_on_wall = player.is_on_wall()
+		if _forced_player_on_wall:
+			player.speed.x = 0
 	
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	
-	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset) && player.states.current_state != "warp": # TEMP
+	if !player:
+		return
+	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset):
 		match falling_below_screen_action:
-			1: if player.states.current_state != "dead": player.kill()
+			1: player.die()
 			2: player.position.y -= 608
 	
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_hud.timer.paused = true
-	Thunder._current_player.states.controls_enabled = false
-	Thunder._current_player.states.jump_buffer = false
+	Thunder._current_player.completed = true
 	Audio.play_music(completion_music, 1)
 	
 	if walking: 
@@ -106,7 +112,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Data.values.onetime_blocks = true
 	
 	await Audio._music_channels[1].finished
-	if Thunder._current_player.states.current_state == "dead": return
+	if !Thunder._current_player: return
 	
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:

@@ -1,5 +1,5 @@
 extends Resource
-class_name MarioConfig
+class_name PlayerConfig
 
 @export_subgroup("Walk")
 @export var walk_initial_speed: float = 50

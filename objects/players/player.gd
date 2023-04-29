@@ -22,7 +22,7 @@ enum WarpDir {
 @export_group("General")
 @export var nickname: StringName = &"MARIO"
 @export_group("Suit")
-@export var suit: MarioSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"):
+@export var suit: PlayerSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"):
 	set(to):
 		if (!to || suit == to) && !_force_suit: return
 		suit = to.duplicate(true)
@@ -98,7 +98,7 @@ func _ready() -> void:
 	
 
 
-func change_suit(to: MarioSuit, appear: bool = true, forced: bool = false) -> void:
+func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
 	_suit_appear = appear
 	suit = to

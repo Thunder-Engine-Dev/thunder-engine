@@ -89,6 +89,7 @@ func _physics_process(delta: float) -> void:
 			player.warp_dir = warp_direction
 			player.global_position = pos_player.global_position
 			player.z_index = -5
+			player.speed = Vector2.ZERO
 			Audio.play_sound(warping_sound, self, false)
 			Thunder._current_hud.timer.paused = true
 	

@@ -23,13 +23,10 @@ var _current_player: Player: # Reference to the current player
 		assert(is_instance_valid(node) && (node is Player), "Player node is invalid")
 		_current_player = node
 	get:
-		assert(is_instance_valid(_current_player) && (_current_player is Player), "Player node is invalid or not set")
+		if !is_instance_valid(_current_player): return null
 		return _current_player
 
-var _current_player_state: PlayerStateData: # Current state of the player
-	set(data):
-		_current_player_state = data
-		_current_player._on_power_state_change(data)
+var _current_player_state: PlayerSuit # Current state of the player
 
 var _current_hud: CanvasLayer: # Reference to level HUD
 	set(node):

@@ -1,5 +1,5 @@
 extends Resource
-class_name MarioSuit
+class_name PlayerSuit
 
 enum Type {
 	SMALL,
@@ -8,15 +8,15 @@ enum Type {
 }
 
 @export var type: Type = Type.SMALL
-@export var gets_hurt_to: MarioSuit
+@export var gets_hurt_to: PlayerSuit
 @export_group("Physics", "physics_")
-@export var physics_config: MarioConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
-@export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/mario_physics_behavior.gd")
+@export var physics_config: PlayerConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
+@export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_physics_behavior.gd")
 @export var physics_shaper: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
 @export var physics_shaper_crouch: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
 @export_group("Animation", "animation_")
 @export var animation_sprites: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres")
-@export var animation_behavior: GDScript = preload("res://engine/objects/players/behaviors/mario_animation_behavior.gd")
+@export var animation_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_animation_behavior.gd")
 @export_group("Behavior", "behavior_")
 @export var behavior_resource: Resource
 @export var behavior_script: GDScript

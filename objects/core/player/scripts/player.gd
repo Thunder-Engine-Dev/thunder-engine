@@ -1,5 +1,5 @@
 extends CorrectedCharacterBody2D
-class_name Player
+class_name Player2
 
 ## Class extended from [CorrectedCharacterBody2D] that defines a player[br]
 ## All players belong to this class
@@ -68,7 +68,7 @@ func _ready() -> void:
 	
 	extra_script = ByNodeScript.activate_script(custom_script, self)
 	
-	Thunder._current_player = self
+#	Thunder._current_player = self
 	
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = default_player_state

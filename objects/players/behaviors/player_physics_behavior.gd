@@ -1,8 +1,8 @@
 extends ByNodeScript
 
 var player: Player
-var suit: MarioSuit
-var config: MarioConfig
+var suit: PlayerSuit
+var config: PlayerConfig
 
 var _has_jumped: bool
 
