@@ -101,7 +101,7 @@ func _ready() -> void:
 	Thunder._current_player = self
 	
 	if Data.values.lives == -1:
-		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives")
+		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 	
 
 

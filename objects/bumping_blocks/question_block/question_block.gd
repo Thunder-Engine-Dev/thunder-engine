@@ -4,12 +4,20 @@ extends StaticBumpingBlock
 
 const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture_null.png")
 
-@onready var item_displayer = $ItemDisplayer
 var current_displaying_item: String = ""
+
+var _initialized: bool
+
+@onready var item_displayer = $ItemDisplayer
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint(): 
+		if !_initialized:
+			result.creation_fallback_node = load("res://engine/objects/items/coin/coin.tscn")
+			result.creation_nodepack = load("res://engine/objects/items/coin/coin.tscn")
+			_initialized = true
+		return
 	
 	item_displayer.queue_free()
 	super()
@@ -24,7 +32,7 @@ func _physics_process(delta):
 	if _triggered: return
 	
 	var player = Thunder._current_player
-	if is_player_colliding(cast_below) && player.velocity_local.y <= 50 && !player.is_on_floor():
+	if is_player_colliding(cast_below) && player.speed.y <= 50 && !player.is_on_floor():
 		call_bump()
 
 
