@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://1do11cr84k7y"]
+
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
+size = Vector2(20, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctk1r"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
+size = Vector2(18, 2)
+
+[node name="Mario" type="CharacterBody2D"]
+collision_mask = 16
+script = ExtResource("1_ofdvu")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_5emkl")
+debug_color = Color(0, 0.643137, 0.305882, 0.419608)
+
+[node name="Body" type="ShapeCast2D" parent="."]
+shape = SubResource("RectangleShape2D_ctk1r")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 6
+
+[node name="Head" type="ShapeCast2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_k6hxb")
+target_position = Vector2(0, -4)
+max_results = 8
+collision_mask = 144
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+sprite_frames = ExtResource("2_eqact")
+
+[node name="Underwater" type="Node" parent="."]
+script = ExtResource("3_vybsq")
+
+[node name="Invincible" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[node name="Starman" type="Timer" parent="."]
+process_callback = 0
+wait_time = 10.0
+one_shot = true

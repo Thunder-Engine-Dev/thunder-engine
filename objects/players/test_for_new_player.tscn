@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce60kw3vucm17"]
+
+[ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="1_ga55i"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="2_0e0wf"]
+
+[sub_resource type="GDScript" id="GDScript_42vaj"]
+script/source = "extends Camera2D
+
+func _ready() -> void:
+	Thunder._current_camera = self
+"
+
+[node name="Test" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_ga55i")
+format = 2
+layer_0/tile_data = PackedInt32Array(851977, 0, 0, 851975, 0, 0, 851974, 0, 0, 851973, 0, 0, 851972, 0, 0, 851971, 0, 0, 851970, 0, 0, 851969, 0, 0, 786433, 0, 0, 720897, 0, 0, 655361, 0, 0, 589825, 0, 0, 524289, 0, 0, 458753, 0, 0, 393217, 0, 0, 327681, 0, 0, 262145, 0, 0, 196609, 0, 0, 131073, 0, 0, 851978, 0, 0, 851979, 0, 0, 851980, 0, 0, 851981, 0, 0, 851982, 0, 0, 851983, 0, 0, 851984, 0, 0, 851985, 0, 0, 786449, 0, 0, 720913, 0, 0, 655377, 0, 0, 589841, 0, 0, 524305, 0, 0, 458769, 0, 0, 393233, 0, 0, 327697, 0, 0, 262161, 0, 0, 196625, 0, 0, 131089, 0, 0)
+
+[node name="Mario" parent="." instance=ExtResource("2_0e0wf")]
+position = Vector2(112, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="Mario"]
+position = Vector2(-112, -400)
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = SubResource("GDScript_42vaj")

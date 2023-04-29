@@ -1,0 +1,28 @@
+extends Resource
+class_name MarioSuit
+
+enum Type {
+	SMALL,
+	SUPER,
+	POWERED
+}
+
+@export var type: Type = Type.SMALL
+@export_group("Physics", "physics_")
+@export var physics_config: MarioConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
+@export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/mario_physics_behavior.gd")
+@export var physics_shaper: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
+@export var physics_shaper_crouch: Shaper2D = preload("res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres")
+@export_group("Animation", "animation_")
+@export var animation_sprites: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres")
+@export var animation_behavior: GDScript = preload("res://engine/objects/players/behaviors/mario_animation_behavior.gd")
+@export_group("Behavior", "behavior_")
+@export var behavior_resource: Resource
+@export var behavior_script: GDScript
+@export_group("Extra", "extra_")
+@export var extra_vars: Dictionary
+@export var extra_behavior: GDScript
+@export_group("Sound", "sound_")
+@export var sound_hurt: AudioStream = preload("res://engine/objects/mario/sounds/pipe.wav")
+@export var sound_pitch: float = 1
+

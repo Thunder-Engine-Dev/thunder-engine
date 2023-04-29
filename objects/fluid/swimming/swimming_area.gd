@@ -13,6 +13,8 @@ func _ready() -> void:
 				_spray(body, Vector2.UP * 16)
 			elif body.is_in_group(&"#spray_body"):
 				_spray(body, Vector2.ZERO)
+			if body.has_node("Underwater"):
+				body.get_node("Underwater").in_water()
 	)
 	
 	body_exited.connect(
@@ -23,6 +25,8 @@ func _ready() -> void:
 				_spray(body, Vector2.UP * 16)
 			elif body.is_in_group(&"#spray_body"):
 				_spray(body, Vector2.ZERO)
+			if body.has_node("Underwater"):
+				body.get_node("Underwater").out_of_water()
 	)
 	# Player's head in/out of water
 	area_entered.connect(
