@@ -51,6 +51,7 @@ stretch_mode = 1
 visible = false
 z_index = 1
 collision_layer = 128
+collision_mask = 7
 script = ExtResource("1_378qa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/Area2D"]

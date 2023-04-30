@@ -50,7 +50,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 40.0
+"speed": 25.0
 }]
 
 [node name="LavaSpray" instance=ExtResource("1_q3hua")]

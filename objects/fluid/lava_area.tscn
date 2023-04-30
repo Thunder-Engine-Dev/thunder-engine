@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0121yqkw7b6i"]
+
+[ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_uxlj0"]
+[ext_resource type="Texture2D" uid="uid://c0af6se3xgu6n" path="res://engine/objects/fluid/textures/lava_1.png" id="2_142ux"]
+[ext_resource type="Texture2D" uid="uid://df810y1jol8am" path="res://engine/objects/fluid/textures/lava_2.png" id="3_u3gbk"]
+[ext_resource type="Texture2D" uid="uid://dmk6mhhdr84bf" path="res://engine/objects/fluid/textures/lava_3.png" id="4_mkm1j"]
+[ext_resource type="Texture2D" uid="uid://cxe1py701b8yc" path="res://engine/objects/fluid/textures/lava_4.png" id="5_xlbac"]
+[ext_resource type="Texture2D" uid="uid://ddyxhsdkme088" path="res://engine/objects/fluid/textures/lava_5.png" id="6_bhtxx"]
+[ext_resource type="Texture2D" uid="uid://bd54l3c07s1cq" path="res://engine/objects/fluid/textures/lava_6.png" id="7_3sk6y"]
+[ext_resource type="Texture2D" uid="uid://cera40cx2nakg" path="res://engine/objects/fluid/textures/lava_7.png" id="8_fctt5"]
+[ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_vgprf"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
+frames = 7
+frame_0/texture = ExtResource("2_142ux")
+frame_0/duration = 0.15
+frame_1/texture = ExtResource("3_u3gbk")
+frame_1/duration = 0.15
+frame_2/texture = ExtResource("4_mkm1j")
+frame_2/duration = 0.15
+frame_3/texture = ExtResource("5_xlbac")
+frame_3/duration = 0.15
+frame_4/texture = ExtResource("6_bhtxx")
+frame_4/duration = 0.15
+frame_5/texture = ExtResource("7_3sk6y")
+frame_5/duration = 0.15
+frame_6/texture = ExtResource("8_fctt5")
+frame_6/duration = 0.15
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
+size = Vector2(1, 1)
+
+[node name="Water" type="VBoxContainer"]
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_constants/separation = 0
+script = ExtResource("1_uxlj0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 0
+texture = SubResource("AnimatedTexture_cct87")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="TextureRect" groups=["#water"]]
+visible = false
+z_index = 1
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("9_vgprf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/Area2D"]
+shape = SubResource("RectangleShape2D_08xmy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 31
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
