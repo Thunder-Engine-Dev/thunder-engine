@@ -15,7 +15,6 @@ name = &"small"
 type = 0
 physics_config = ExtResource("4_8yoqk")
 physics_behavior = ExtResource("3_r451b")
-physics_crouchable = false
 physics_shaper = ExtResource("5_gkp4p")
 physics_shaper_crouch = ExtResource("5_gkp4p")
 animation_sprites = ExtResource("2_4cms1")

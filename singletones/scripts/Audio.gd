@@ -22,6 +22,7 @@ var _calculate_player_position = _lcpp.bind()
 func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
+
 func _process(delta: float) -> void:
 	_fading(delta)
 
@@ -40,7 +41,7 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.pre_scene_changed.connect(player.queue_free.unbind(1))
+		Scenes.pre_scene_changed.connect(player.queue_free)
 	add_child(player)
 	return player
 
@@ -79,6 +80,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
 
+
 ## Play a sound with given [AudioStream] resource[br]
 ## [b]Note:[/b] This method creates [AudioStreamPlayer], and please see [method play_sound] to learn their differences.[br]
 ## [param resource] is the sound stream you are going to install[br]
@@ -94,6 +96,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
+
 
 ## Play a [b]music[/b] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
 ## [b]Note:[/b] Musics played are [b][u]GLOBAL[/u][/b]![br]
@@ -119,6 +122,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 	_music_channels[channel_id].play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch
+
 
 ## Fade a music player that is playing, and you can choose it's way to fade.[br]
 ## [param player] is the music player that is playing[br]
