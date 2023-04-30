@@ -4,6 +4,8 @@ class_name Player
 signal suit_appeared
 signal swam
 signal shot
+signal invinciblized(dur: float)
+signal starmaned(dur: float)
 signal damaged
 signal died
 
@@ -128,11 +130,13 @@ func control_process() -> void:
 #= Status
 func invincible(duration: float = 2) -> void:
 	timer_invincible.start(duration)
+	invinciblized.emit(duration)
 
 
 func starman(duration: float = 10) -> void:
 	invincible(duration)
 	timer_starman.start(duration)
+	starmaned.emit(duration)
 
 
 func hurt(tags: Dictionary = {}) -> void:

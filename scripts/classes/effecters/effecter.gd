@@ -1,5 +1,5 @@
 extends RefCounted
-class_name Trail
+class_name Effect
 
 const TRAIL: PackedScene = preload("res://engine/objects/effects/trail/trail.tscn")
 
@@ -18,3 +18,12 @@ static func trail(on: Node2D, texture: Texture2D = null, offset: Vector2 = Vecto
 			tra.fade_out_strength = fade_out_strength
 			tra.z_index = on.z_index - 1
 	).create_2d().get_node() as Sprite2D
+
+
+static func flash(on: Node2D, duration: float, interval: float = 0.06) -> void:
+	if !on:
+		return
+	var alpha: float = on.modulate.a
+	var tw: Tween = on.create_tween().set_loops(int(ceilf(duration / interval)))
+	tw.tween_property(on, "modulate:a", 0, interval / 2)
+	tw.tween_property(on, "modulate:a", alpha, interval / 2)

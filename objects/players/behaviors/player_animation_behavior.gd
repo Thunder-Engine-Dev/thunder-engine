@@ -25,6 +25,12 @@ func _ready() -> void:
 			if !sprite: return
 			sprite.play(&"attack")
 	)
+	player.invinciblized.connect(
+		func(duration: float) -> void:
+			if !sprite:
+				return
+			Effect.flash(sprite, duration)
+	, CONNECT_REFERENCE_COUNTED)
 	
 	sprite.animation_looped.connect(
 		func() -> void:
@@ -76,5 +82,3 @@ func _animation_process(delta: float) -> void:
 				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
 				sprite.play(&"walk")
 				sprite.speed_scale = 2
-	
-	player.sprite.visible = (int(player.timer_invincible.time_left / 2) % 2 == 0) 
