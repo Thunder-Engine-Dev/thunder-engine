@@ -21,17 +21,18 @@ func _physics_process(delta: float) -> void:
 	player.control_process()
 	# Shape
 	_shape_process()
-	if player.warp == Player.Warp.NONE:
-		# Head
-		_head_process()
-		# Body
-		_body_process()
-		# Movement
-		_movement_x(delta)
-		_movement_y(delta)
-		player.motion_process(delta)
-		if player.is_on_wall():
-			player.speed.x = 0
+	if player.warp != Player.Warp.NONE: return
+	
+	# Head
+	_head_process()
+	# Body
+	_body_process()
+	# Movement
+	_movement_x(delta)
+	_movement_y(delta)
+	player.motion_process(delta)
+	if player.is_on_wall():
+		player.speed.x = 0
 
 
 #= Movement
@@ -116,14 +117,15 @@ func _body_process() -> void:
 		var collider: Node2D = player.body.get_collider(i) as Node2D
 		if !is_instance_valid(collider):
 			continue
-		if collider.has_node("EnemyAttacked"):
-			var enemy_attacked: Node = collider.get_node("EnemyAttacked")
-			var result: Dictionary = enemy_attacked.got_stomped(player)
-			if result.is_empty(): return
-			if result.result == true:
-				if player.jumping > 0:
-					player.speed.y = -result.jumping_max * config.jump_stomp_multiplicator
-				else:
-					player.speed.y = -result.jumping_min * config.jump_stomp_multiplicator
+		if !collider.has_node("EnemyAttacked"): return
+		
+		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
+		var result: Dictionary = enemy_attacked.got_stomped(player)
+		if result.is_empty(): return
+		if result.result == true:
+			if player.jumping > 0:
+				player.speed.y = -result.jumping_max * config.jump_stomp_multiplicator
 			else:
-				player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
+				player.speed.y = -result.jumping_min * config.jump_stomp_multiplicator
+		else:
+			player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))

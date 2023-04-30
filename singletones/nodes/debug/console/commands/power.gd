@@ -10,7 +10,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 		return Command.ExecuteResult.new(
 			"""Try one of these: 
 			For \"character\": mario.
-			For \"power\": beetroot, big, flower, green_lui, small"""
+			For \"power\": beetroot, super, fireball, green_lui, small"""
 		)
 	
 	Thunder._current_player.suit = suit
