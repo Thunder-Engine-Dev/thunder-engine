@@ -6,18 +6,11 @@ const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture
 
 var current_displaying_item: String = ""
 
-var _initialized: bool
-
 @onready var item_displayer = $ItemDisplayer
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint(): 
-		if !_initialized:
-			result.creation_fallback_node = load("res://engine/objects/items/coin/coin.tscn")
-			result.creation_nodepack = load("res://engine/objects/items/coin/coin.tscn")
-			_initialized = true
-		return
+	if Engine.is_editor_hint(): return
 	
 	item_displayer.queue_free()
 	super()
