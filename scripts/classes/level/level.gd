@@ -63,7 +63,7 @@ func _prepare_template() -> void:
 	player.set_owner(self)
 	
 	var camera = Camera2D.new()
-	camera.set_script(load("res://engine/objects/core/player/scripts/player_camera_2d.gd"))
+	camera.set_script(load("res://engine/objects/players/player_camera_2d.gd"))
 	camera.limit_left = 0
 	camera.limit_bottom = 480
 	camera.limit_top = 0
