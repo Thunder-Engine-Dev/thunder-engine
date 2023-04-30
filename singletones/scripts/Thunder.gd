@@ -66,6 +66,8 @@ func _init() -> void:
 	else:
 		Engine.physics_ticks_per_second = rate
 	
+	Engine.max_fps = ceili(DisplayServer.screen_get_refresh_rate())
+	
 	# Setting minimum window dimensions
 	DisplayServer.window_set_min_size(Vector2i(640, 480))
 
