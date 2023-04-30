@@ -8,52 +8,23 @@ func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
-	# Clear signals from previous powerups
-	for _signal in player.get_signal_list() as Array[Dictionary]:
-		if _signal.name in [&"tree_entered", &"tree_exiting"]: continue
-		
-		var con_list: Array[Dictionary] = player.get_signal_connection_list(_signal.name)
-		if con_list.is_empty(): continue
-		for con in con_list:
-			con[&"signal"].disconnect(con.callable)
+#	# Clear signals from previous powerups
+#	for i in player.get_signal_list():
+#		if i.name in [&"tree_entered", &"tree_exiting"]: continue
+#
+#		var con_list: Array[Dictionary] = player.get_signal_connection_list(i.name)
+#		if con_list.is_empty(): continue
+#		for con in con_list:
+#			con[&"signal"].disconnect(con.callable)
 	
 	# Connect animation signals for the current powerup
-	player.suit_appeared.connect(
-		func() -> void:
-			if !sprite: return
-			sprite.play(&"appear")
-			await player.get_tree().create_timer(1, false, true).timeout
-			sprite.play(&"default")
-	, CONNECT_REFERENCE_COUNTED)
-	player.swam.connect(
-		func() -> void:
-			if !sprite: return
-			if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
-	, CONNECT_REFERENCE_COUNTED)
-	player.shot.connect(
-		func() -> void:
-			if !sprite: return
-			sprite.play(&"attack")
-	)
-	player.invinciblized.connect(
-		func(duration: float) -> void:
-			if !sprite:
-				return
-			sprite.modulate.a = 1
-			Effect.flash(sprite, duration)
-	, CONNECT_REFERENCE_COUNTED)
+	player.suit_appeared.connect(_suit_appeared)
+	player.swam.connect(_swam)
+	player.shot.connect(_shot)
+	player.invinciblized.connect(_invincible)
 	
-	sprite.animation_looped.connect(
-		func() -> void:
-			if !sprite: return
-			match sprite.animation:
-				&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
-	, CONNECT_REFERENCE_COUNTED)
-	sprite.animation_finished.connect(
-		func() -> void:
-			if !sprite: return
-			if sprite.animation == &"attack": sprite.play(&"default")
-	, CONNECT_REFERENCE_COUNTED)
+	sprite.animation_looped.connect(_sprite_loop)
+	sprite.animation_finished.connect(_sprite_finish)
 
 
 func _physics_process(delta: float) -> void:
@@ -61,6 +32,42 @@ func _physics_process(delta: float) -> void:
 	_animation_process(delta)
 
 
+#= Connected
+func _suit_appeared() -> void:
+	if !sprite: return
+	sprite.play(&"appear")
+	await player.get_tree().create_timer(1, false, true).timeout
+	if sprite.animation == &"appear": sprite.play(&"default")
+
+
+func _swam() -> void:
+	if !sprite: return
+	if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
+
+
+func _shot() -> void:
+	if !sprite: return
+	sprite.play(&"attack")
+
+
+func _invincible(duration: float) -> void:
+	if !sprite: return
+	sprite.modulate.a = 1
+	Effect.flash(sprite, duration)
+
+
+func _sprite_loop() -> void:
+	if !sprite: return
+	match sprite.animation:
+		&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
+
+
+func _sprite_finish() -> void:
+	if !sprite: return
+	if sprite.animation == &"attack": sprite.play(&"default")
+
+
+#= Main
 func _animation_process(delta: float) -> void:
 	if !sprite: return
 	

@@ -31,8 +31,8 @@ enum WarpDir {
 		if (!to || suit.name == to.name) && !_force_suit: return
 		suit = to.duplicate()
 		
-		if to.animation_sprites:
-			sprite.sprite_frames = to.animation_sprites
+		if suit.animation_sprites:
+			sprite.sprite_frames = suit.animation_sprites
 		
 		_animation_behavior = null
 		_physics_behavior = null
