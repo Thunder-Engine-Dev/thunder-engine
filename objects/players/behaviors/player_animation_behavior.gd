@@ -39,6 +39,7 @@ func _ready() -> void:
 		func(duration: float) -> void:
 			if !sprite:
 				return
+			sprite.modulate.a = 1
 			Effect.flash(sprite, duration)
 	, CONNECT_REFERENCE_COUNTED)
 	
