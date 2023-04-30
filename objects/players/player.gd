@@ -34,16 +34,18 @@ enum WarpDir {
 		if to.animation_sprites:
 			sprite.sprite_frames = to.animation_sprites
 		
-		if suit.animation_behavior && _animation_behavior != suit.animation_behavior:
+		_animation_behavior = null
+		_physics_behavior = null
+		_suit_behavior = null
+		_extra_behavior = null
+		if suit.animation_behavior:
 			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
-		if suit.physics_behavior && _physics_behavior != suit.physics_behavior:
+		if suit.physics_behavior:
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
-		if suit.behavior_script && _suit_behavior != suit.behavior_script:
+		if suit.behavior_script:
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
-		else: _suit_behavior = null
-		if suit.extra_behavior && _extra_behavior != suit.extra_behavior:
+		if suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
-		else: _extra_behavior = null
 		if _suit_appear:
 			_suit_appear = false
 			suit_appeared.emit()
