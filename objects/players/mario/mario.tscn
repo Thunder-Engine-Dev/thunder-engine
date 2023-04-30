@@ -23,11 +23,13 @@ max_falling_speed = 500.0
 metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_5emkl")
 debug_color = Color(0, 0.643137, 0.305882, 0.419608)
 
 [node name="Body" type="ShapeCast2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ctk1r")
 target_position = Vector2(0, 0)
 max_results = 8
@@ -36,6 +38,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Head" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_k6hxb")
 target_position = Vector2(0, -2)

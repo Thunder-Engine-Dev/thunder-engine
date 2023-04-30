@@ -102,6 +102,7 @@ func _ready() -> void:
 		Thunder._current_player_state = suit
 	else:
 		suit = Thunder._current_player_state
+	
 	change_suit(suit, false, true)
 	
 	Thunder._current_player = self
@@ -146,6 +147,7 @@ func hurt(tags: Dictionary = {}) -> void:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
+	if warp != Warp.NONE: return
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)
 		invincible(tags.get(&"hurt_duration", 2))
@@ -155,6 +157,8 @@ func hurt(tags: Dictionary = {}) -> void:
 
 
 func die(tags: Dictionary = {}) -> void:
+	if warp != Warp.NONE: return
+	
 	Audio.play_music(suit.sound_death, 1, {pitch = suit.sound_pitch})
 	
 	if death_body:

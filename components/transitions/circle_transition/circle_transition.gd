@@ -20,16 +20,6 @@ func _ready() -> void:
 
 ## Sets the center of transition on some node
 func on(ref: Node2D) -> Transition:
-#	var window_size = DisplayServer.window_get_size()
-#	var pos = ref.global_position
-#	var window_pos_x = int(pos.x / window_size.x) * window_size.x #+ (window_size.x / 2)
-#	var window_pos_y = int(pos.y / window_size.y) * window_size.y #+ (window_size.y / 2)
-#	print(window_pos_x)
-#	print(window_pos_y)
-#	var final_pos = (pos - Vector2(window_pos_x, window_pos_y)) / (window_size * 1.0)
-#	print(final_pos)
-#	color_rect.material.set_shader_parameter("center", pos)
-# TBI
 	if !ref: return self
 	color_rect.material.set_shader_parameter("center", Thunder.view.get_pos_ratio_in_screen(ref))
 	return self
