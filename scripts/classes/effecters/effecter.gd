@@ -20,7 +20,7 @@ static func trail(on: Node2D, texture: Texture2D = null, offset: Vector2 = Vecto
 	).create_2d().get_node() as Sprite2D
 
 
-static func flash(on: Node2D, duration: float, interval: float = 0.06) -> void:
+static func flash(on: CanvasItem, duration: float, interval: float = 0.06) -> void:
 	if !on:
 		return
 	var alpha: float = on.modulate.a
