@@ -43,6 +43,7 @@ type = 2
 gets_hurt_to = ExtResource("3_3nggd")
 physics_config = ExtResource("5_ofqfp")
 physics_behavior = ExtResource("4_y3kia")
+physics_crouchable = true
 physics_shaper = ExtResource("6_ayx7l")
 physics_shaper_crouch = ExtResource("7_d7ol3")
 animation_sprites = ExtResource("2_33nsf")

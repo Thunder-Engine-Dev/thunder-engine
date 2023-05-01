@@ -56,7 +56,7 @@ func _hurt_player() -> void:
 	for i in get_collision_count():
 		var ins:PhysicsBody2D = get_collider(i) as PhysicsBody2D
 		if !ins: continue
-		elif ins is Player && ins.states.invincible_timer <= 0:
+		elif ins is Player:
 			damaged_player.emit()
 			ins.powerdown()
 			break

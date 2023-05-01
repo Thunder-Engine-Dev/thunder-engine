@@ -25,16 +25,15 @@ func _ready() -> void:
 		get_child(current_item_index)._handle_focused(true)
 
 
-func _input(event: InputEvent) -> void:
+func _physics_process(delta: float) -> void:
 	if !focused: return
-	if !event.is_pressed(): return
 	
-	if event.is_action(control_forward) && current_item_index < get_child_count() - 1:
+	if Input.is_action_just_pressed(control_forward) && current_item_index < get_child_count() - 1:
 		current_item_index += 1
 		_selection()
 		return
 	
-	if event.is_action(control_backward) && current_item_index > 0:
+	if Input.is_action_just_pressed(control_backward) && current_item_index > 0:
 		current_item_index -= 1
 		_selection()
 		return

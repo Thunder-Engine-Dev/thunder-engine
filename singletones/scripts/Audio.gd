@@ -19,6 +19,10 @@ var _music_channels: Dictionary = {}
 var _calculate_player_position = _lcpp.bind()
 
 
+func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
 func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
@@ -47,7 +51,9 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 
 
 func _fading(delta: float) -> void:
-	for i in _fading_musics:
+	for l in range(len(_fading_musics)):
+		var i = _fading_musics[l]
+		
 		if !is_instance_valid(i.fading_music_player): continue
 		
 		var fading_music_player: AudioStreamPlayer = i.fading_music_player
@@ -62,6 +68,8 @@ func _fading(delta: float) -> void:
 		if fading_music_player.volume_db == i.fading_to:
 			if bool(i.fading_stop_after_fading):
 				fading_music_player.stop()
+			
+			_fading_musics.pop_at(l)
 			continue
 
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
@@ -79,6 +87,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	player.play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
+	if &"ignore_pause" in other_keys && other_keys.ignore_pause: player.process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 ## Play a sound with given [AudioStream] resource[br]
@@ -96,6 +105,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
+	if &"ignore_pause" in other_keys && other_keys.ignore_pause: player.process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 ## Play a [b]music[/b] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
@@ -122,6 +132,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 	_music_channels[channel_id].play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch
+	if &"ignore_pause" in other_keys && other_keys.ignore_pause:_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS
 
 
 ## Fade a music player that is playing, and you can choose it's way to fade.[br]

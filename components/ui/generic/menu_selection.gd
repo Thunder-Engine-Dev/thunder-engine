@@ -19,9 +19,8 @@ func _handle_select() -> void:
 		Audio.play_1d_sound(selected_sound)
 
 
-func _input(event: InputEvent) -> void:
-	if !focused: return
-	if !event.is_pressed(): return
+func _physics_process(delta: float) -> void:
+	if !focused || !get_parent().focused: return
 	
-	if event.is_action(trigger_action):
+	if Input.is_action_just_pressed(trigger_action):
 		_handle_select()
