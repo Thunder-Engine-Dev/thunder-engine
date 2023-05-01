@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if player.get_tree().paused: return
 	delta = player.get_physics_process_delta_time()
 	_animation_process(delta)
 

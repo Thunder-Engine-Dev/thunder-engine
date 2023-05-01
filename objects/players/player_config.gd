@@ -6,10 +6,10 @@ class_name PlayerConfig
 @export var walk_acceleration: float = 312.5
 @export var walk_deceleration: float = 312.5
 @export var walk_turning_acce: float = 1250
-@export var walk_max_walking_speed: float = 187.5
-@export var walk_max_running_speed: float = 375
+@export var walk_max_walking_speed: float = 175
+@export var walk_max_running_speed: float = 350
 @export_group("Underwater Walk")
-@export var underwater_walk_max_walking_speed: float = 170
+@export var underwater_walk_max_walking_speed: float = 175
 @export_group("Jump")
 @export var jump_speed: float = 700
 @export var jump_buff_static: float = 1000
