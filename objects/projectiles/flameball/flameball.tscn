@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddl8refhx7slj"]
+
+[ext_resource type="Script" path="res://engine/objects/projectiles/flameball/flameball.gd" id="1_llrrp"]
+[ext_resource type="Texture2D" uid="uid://c5psoqn3vq5sr" path="res://engine/objects/projectiles/flameball/flameball.png" id="2_kcu3t"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_vvj6o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
+radius = 12.0
+
+[node name="Fiameball" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_llrrp")
+sprite = NodePath("Texture")
+speed = Vector2(387.5, 0)
+gravity_scale = 0.18
+metadata/_edit_pinned_properties_ = [&"sprite"]
+
+[node name="Texture" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_kcu3t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_eyugj")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_eyugj")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_vvj6o")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+metadata/_edit_lock_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

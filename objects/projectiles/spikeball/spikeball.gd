@@ -1,4 +1,4 @@
-extends GeneralMovementBody2D
+extends Projectile
 
 
 func _on_trail() -> void:

@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://s1e7n1cfnhy8"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher.gd" id="1_de4dl"]
+[ext_resource type="PackedScene" uid="uid://ddl8refhx7slj" path="res://engine/objects/projectiles/flameball/flameball.tscn" id="2_poow3"]
+[ext_resource type="Texture2D" uid="uid://m7o2o516igqo" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_head.png" id="2_srod3"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_ccoqt"]
+[ext_resource type="Texture2D" uid="uid://rv1bs4wcepxs" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_body.png" id="3_i5wos"]
+[ext_resource type="Texture2D" uid="uid://c71b0gndx1o47" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_tail.png" id="4_da7u6"]
+[ext_resource type="Script" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher_obstacle.gd" id="5_y1sec"]
+
+[sub_resource type="Resource" id="Resource_rtj67"]
+script = ExtResource("3_ccoqt")
+creation_nodepack = ExtResource("2_poow3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 4
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sx3tf"]
+size = Vector2(2, 2)
+
+[node name="FlameballLauncher" type="HBoxContainer"]
+clip_contents = true
+offset_right = 64.0
+offset_bottom = 32.0
+pivot_offset = Vector2(16, 16)
+size_flags_horizontal = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_de4dl")
+flameball = SubResource("Resource_rtj67")
+metadata/_edit_pinned_properties_ = [&"flameball"]
+
+[node name="Obstacle" type="AnimatableBody2D" parent="."]
+visible = false
+position = Vector2(1, 1)
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("5_y1sec")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+shape = SubResource("RectangleShape2D_sx3tf")
+
+[node name="Head" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_srod3")
+
+[node name="Body" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_i5wos")
+
+[node name="Tail" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("4_da7u6")
+
+[node name="PosFlameball" type="Marker2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="Interval" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="IntervalFlame" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="IntervalSound" type="Timer" parent="."]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(9.53674e-07, 9.53674e-07)
+scale = Vector2(0.8, 0.8)
+metadata/_edit_lock_ = true
+
+[connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]
+[connection signal="timeout" from="IntervalFlame" to="." method="_on_interval_flame_timeout"]
+[connection signal="timeout" from="IntervalSound" to="." method="_on_interval_sound_timeout"]

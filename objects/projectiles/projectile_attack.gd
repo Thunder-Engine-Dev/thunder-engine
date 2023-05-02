@@ -58,5 +58,5 @@ func _hurt_player() -> void:
 		if !ins: continue
 		elif ins is Player:
 			damaged_player.emit()
-			ins.powerdown()
+			ins.hurt()
 			break

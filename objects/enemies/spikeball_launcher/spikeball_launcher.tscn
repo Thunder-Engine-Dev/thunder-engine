@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://engine/objects/enemies/spikeball_launcher/spikeball_launcher.gd" id="1_2sd30"]
 [ext_resource type="Texture2D" uid="uid://dlpmv8xrnfj2f" path="res://engine/objects/enemies/spikeball_launcher/spikeballl_launcher.png" id="1_6vb1d"]
-[ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/enemies/spikeball_launcher/spikeball.tscn" id="2_pb4ej"]
+[ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/projectiles/spikeball/spikeball.tscn" id="2_pb4ej"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_j5nq2"]
 
 [sub_resource type="Resource" id="Resource_vtp0b"]

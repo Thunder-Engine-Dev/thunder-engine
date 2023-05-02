@@ -133,7 +133,8 @@ func turn_y() -> void:
 	if speed_previous.y == 0:
 		speed.y *= -1
 		return
-	speed.y = -speed_previous.y
+	speed_previous.y *= -1
+	speed.y = speed_previous.y
 
 
 ## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always negative(upwards)

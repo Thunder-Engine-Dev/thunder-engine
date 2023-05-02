@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://wgf8bo5dyeik"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/spikeball_launcher/spikeball.gd" id="1_o7ocy"]
-[ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/enemies/spikeball_launcher/spikeball.png" id="2_cx84u"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_h4r6w"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/spikeball/spikeball.gd" id="1_o7ocy"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_5bgjq"]
+[ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/projectiles/spikeball/spikeball.png" id="2_cx84u"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_sprite_rotator.gd" id="4_5dc7u"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xaf3d"]
-radius = 16.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_5oa0m"]
+radius = 12.0
 
 [node name="Spikeball" type="CharacterBody2D"]
 collision_layer = 2
@@ -17,19 +17,16 @@ gravity_scale = 0.12
 collision = false
 metadata/_edit_pinned_properties_ = [&"sprite", &"collision"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="."]
 visible = false
-collision_layer = 2
-collision_mask = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CircleShape2D_xaf3d")
-
-[node name="EnemyAttacked" type="Node" parent="Body"]
-script = ExtResource("2_h4r6w")
-stomping_standard = Vector2(0, 0)
-killing_enabled = false
-metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_enabled"]
+shape = SubResource("CircleShape2D_5oa0m")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("2_5bgjq")
+killer_type = &"hammer"
+metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_cx84u")
