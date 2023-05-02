@@ -8,15 +8,6 @@ func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
-#	# Clear signals from previous powerups
-#	for i in player.get_signal_list():
-#		if i.name in [&"tree_entered", &"tree_exiting"]: continue
-#
-#		var con_list: Array[Dictionary] = player.get_signal_connection_list(i.name)
-#		if con_list.is_empty(): continue
-#		for con in con_list:
-#			con[&"signal"].disconnect(con.callable)
-	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
 	player.swam.connect(_swam)
