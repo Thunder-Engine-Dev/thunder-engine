@@ -121,12 +121,18 @@ func accelerate_y(to: float, a: float) -> void:
 
 ## Reverse [member speed].x
 func turn_x() -> void:
-	speed_previous.x = -speed_previous.x
+	if speed_previous.x == 0:
+		speed.x *= -1
+		return
+	speed_previous.x *= -1
 	speed.x = speed_previous.x
 
 
 ## Reverse [member speed].y
 func turn_y() -> void:
+	if speed_previous.y == 0:
+		speed.y *= -1
+		return
 	speed.y = -speed_previous.y
 
 
