@@ -66,6 +66,7 @@ var _suit_behavior: ByNodeScript
 var _extra_behavior: ByNodeScript
 
 var left_right: int
+var up_down: int
 var jumping: int
 var jumped: bool
 var running: bool
@@ -122,6 +123,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 func control_process() -> void:
 	left_right = int(Input.get_axis(control.left, control.right))
+	up_down = int(Input.get_axis(control.up, control.down))
 	jumping = int(Input.is_action_pressed(control.jump)) + int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)
 	running = Input.is_action_pressed(control.run)

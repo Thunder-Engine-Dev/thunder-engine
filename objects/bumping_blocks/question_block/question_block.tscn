@@ -1,15 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnr3rfhkdf6j2"]
+[gd_scene load_steps=11 format=3 uid="uid://bnr3rfhkdf6j2"]
 
 [ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
 [ext_resource type="PackedScene" uid="uid://fq0xf7e2fvfm" path="res://engine/objects/items/coin/coin.tscn" id="2_72rpd"]
 [ext_resource type="SpriteFrames" uid="uid://ctc2d4okn2gdd" path="res://engine/objects/bumping_blocks/question_block/question_block.tres" id="2_t2orr"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_ujakj"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_560s2"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="5_21kjl"]
 
 [sub_resource type="Resource" id="Resource_j6lvo"]
 resource_local_to_scene = true
 script = ExtResource("3_560s2")
-creation_fallback_node = ExtResource("2_72rpd")
+creation_fallback_node = ExtResource("2_ujakj")
 creation_nodepack = ExtResource("2_72rpd")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
