@@ -9,7 +9,9 @@ extends Area2D
 const CHECKER_BAR = preload("res://engine/objects/core/finish_line/checker_bar.tscn")
 
 func _physics_process(delta) -> void:
-	if overlaps_body(Thunder._current_player) && animation_player.is_playing():
+	var player: Player = Thunder._current_player
+	if !player: return
+	if overlaps_body(player) && animation_player.is_playing():
 		Scenes.current_scene.finish(true)
 		finish_line.triggered = true
 		_add_score()

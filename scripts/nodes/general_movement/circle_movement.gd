@@ -34,7 +34,9 @@ func _physics_process(delta: float) -> void:
 	
 	match facing_method:
 		FacingMethod.LOOK_AT_PLAYER:
-			facing = Thunder.Math.look_at(global_position, Thunder._current_player.global_position, global_transform)
+			var player: Player = Thunder._current_player
+			if player:
+				facing = Thunder.Math.look_at(global_position, player.global_position, global_transform)
 		FacingMethod.X_SINE:
 			facing = -sin(deg_to_rad(phase))
 		FacingMethod.Y_COSINE:

@@ -91,6 +91,7 @@ func _on_path_movement_process(delta: float) -> void:
 	# Moving
 	if curve:
 		progress += speed * delta
+		if loop: return
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
 	

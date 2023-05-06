@@ -27,6 +27,7 @@ func _physics_process(_delta):
 		if Thunder._current_player_state.type == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
 			bump(false)
 		else:
+			hit_attack()
 			bricks_break()
 		
 		if result && !counter_enabled:

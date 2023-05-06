@@ -17,7 +17,7 @@ extends Area2D
 
 func _ready() -> void:
 	if Data.values.checkpoint == id:
-		Thunder._current_player.global_position = global_position
+		Thunder._current_player.global_position = global_position - Vector2.UP.rotated(global_rotation) * 8
 		text.modulate.a = 1
 		animation_player.play("checkpoint")
 
@@ -27,7 +27,8 @@ func _physics_process(delta) -> void:
 	if permanent_checked && id in Data.values.checked_cps:
 		return
 	# Activation
-	if overlaps_body(Thunder._current_player) && Data.values.checkpoint != id:
+	var player: Player = Thunder._current_player
+	if player && overlaps_body(player) && Data.values.checkpoint != id:
 		Data.values.checkpoint = id
 		activate()
 	# Deactivation

@@ -102,9 +102,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		if cast_right: cast_right.enabled = false
 	
 	bumped.emit()
-	
-	var hitter: float = -_collision_shape_2d.shape.size.y / 2  if _collision_shape_2d.shape is RectangleShape2D else -16
-	NodeCreator.prepare_2d(_HITTER, self).create_2d().bind_global_transform(Vector2(0, hitter - 1))
+	hit_attack()
 
 func _lt(disable):
 	if !disable:
@@ -143,3 +141,8 @@ func is_player_colliding(shape_cast: ShapeCast2D) -> bool:
 			
 			return collider is Player
 	return false
+
+
+func hit_attack() -> void:
+	var hitter: float = -_collision_shape_2d.shape.size.y / 2  if _collision_shape_2d.shape is RectangleShape2D else -16
+	NodeCreator.prepare_2d(_HITTER, self).create_2d().bind_global_transform(Vector2(0, hitter - 1))
