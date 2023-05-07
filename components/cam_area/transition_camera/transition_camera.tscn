@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cujdvprpi3nub"]
+
+[ext_resource type="Script" path="res://engine/components/cam_area/transition_camera/transition_camera.gd" id="1_sn8qk"]
+
+[node name="TransitionCamera" type="Camera2D"]
+limit_smoothed = true
+position_smoothing_speed = 15.0
+script = ExtResource("1_sn8qk")
