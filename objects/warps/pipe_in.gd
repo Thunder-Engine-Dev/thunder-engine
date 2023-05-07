@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y)
 		elif input_y < 0 && warp_direction == Player.WarpDir.UP:
 			_on_warp = true
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
 		
 		if _on_warp:
 			player_z_index = player.z_index
