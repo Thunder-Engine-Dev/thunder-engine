@@ -113,7 +113,6 @@ func _head_process() -> void:
 func _body_process() -> void:
 	if !player.body.shape: return
 	
-	player.body.target_position = player.speed.normalized() * 4
 	for i in player.body.get_collision_count():
 		var collider: Node2D = player.body.get_collider(i) as Node2D
 		if !is_instance_valid(collider):
