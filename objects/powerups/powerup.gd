@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		z_index = 0
 	else:
 		appear_process(Thunder.get_delta(delta))
-		z_index = -99
+		z_index = -1
 	
 	if body.overlaps_body(Thunder._current_player):
 		collect()

@@ -1,6 +1,8 @@
 @tool
 extends Control
 
+## Enable smooth transition
+@export var smooth_transition: bool = false
 @export_group("Music Control")
 ## Should it automatically change the music index (useful for different level areas)
 @export var change_music: bool = false
@@ -8,8 +10,6 @@ extends Control
 @export var set_music_index: int = 1
 ## MusicLoader node reference
 @export var music_loader_ref: NodePath
-## Enable smooth transition
-@export var smooth_transition: bool = false
 
 
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")

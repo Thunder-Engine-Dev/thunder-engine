@@ -16,6 +16,7 @@ size = Vector2(18, 2)
 
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
 collision_mask = 16
+floor_snap_length = 8.0
 platform_on_leave = 2
 script = ExtResource("1_ofdvu")
 death_sprite = NodePath("SpriteDeath")

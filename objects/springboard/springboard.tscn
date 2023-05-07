@@ -83,6 +83,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_vp0le")
 stomping_hurtable = false
+stomping_offset = Vector2(0, -10)
 stomping_creation = null
 stomping_scores = 0
 stomping_sound = ExtResource("4_n438u")
@@ -93,7 +94,7 @@ custom_vars = {
 "attachment_killed": NodePath(""),
 "attachment_stomped": NodePath("")
 }
-metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"stomping_offset"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
