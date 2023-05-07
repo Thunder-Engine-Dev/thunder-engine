@@ -7,8 +7,8 @@
 shader = ExtResource("1_sowlm")
 shader_parameter/enable = true
 
-[node name="ViewportContainer" type="SubViewportContainer"]
-material = SubResource("ShaderMaterial_aijpq")
+[node name="ViewportControl" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,7 +16,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_qdvbk")
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_aijpq")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 audio_listener_enable_2d = true

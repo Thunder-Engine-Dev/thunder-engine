@@ -1,6 +1,9 @@
-extends SubViewportContainer
+extends Control
 
-@onready var vp = $SubViewport
+@onready var container = $ViewportContainer
+@onready var vp = $ViewportContainer/SubViewport
+
+@onready var keep_aspect = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
 
 func _ready() -> void:
 	resized.connect(_on_window_resized)
@@ -16,10 +19,13 @@ func _update_view() -> void:
 	if !vp: return
 	
 	var window_size = DisplayServer.window_get_size()
-	scale.x = float(window_size.y) / float(vp.size.y)
-	scale.y = float(window_size.y) / float(vp.size.y)
-	material.set_shader_parameter(&"enable", scale.y != 1)
-	vp.size.x = 480 * (float(window_size.x) / float(window_size.y))
+	container.scale.x = float(window_size.y) / float(vp.size.y)
+	container.scale.y = float(window_size.y) / float(vp.size.y)
+	container.material.set_shader_parameter(&"enable", container.scale.y != 1)
+	if !keep_aspect:
+		vp.size.x = 480 * (float(window_size.x) / float(window_size.y))
+	else:
+		container.position.x = (window_size.x / 2) - (vp.size.x * container.scale.x / 2)
 	
 	_update_sound_function()
 
