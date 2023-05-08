@@ -10,7 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_cdkox"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_58bjx"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdt3b"]
 size = Vector2(47, 64)
 

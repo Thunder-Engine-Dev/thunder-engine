@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c58i0gaq0il4o"]
+[gd_scene load_steps=14 format=3 uid="uid://c58i0gaq0il4o"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
@@ -8,8 +8,6 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_oumu7"]
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="11_achxa"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_jqids"]
-
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 28)
@@ -98,9 +96,11 @@ metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 sprite_frames = SubResource("SpriteFrames_gedlg")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-script = ExtResource("13_jqids")
+[node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0.5, 2.38419e-07)
+scale = Vector2(1.55, 1.6)
+metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

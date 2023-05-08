@@ -4,7 +4,7 @@ signal stun
 
 @export_category("Thwomp")
 @export_group("Basic")
-@export var trigger_area: Rect2 = Rect2(Vector2(-64, -32), Vector2(128, 480))
+@export var trigger_area: Rect2 = Rect2(Vector2(-80, -32), Vector2(160, 480))
 @export var waiting_time: float = 1
 @export var rising_speed: float = 50
 @export_group("Effect and Sound")
@@ -48,7 +48,6 @@ func _physics_process(delta: float) -> void:
 		0:
 			var player: Player = Thunder._current_player
 			if !player: return
-			if player.states.current_state == "dead": return
 			var ppos: Vector2 = global_transform.affine_inverse() * player.global_position
 			if trigger_area.has_point(ppos):
 				_origin = global_position

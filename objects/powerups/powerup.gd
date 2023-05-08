@@ -34,7 +34,9 @@ func _physics_process(delta: float) -> void:
 		appear_process(Thunder.get_delta(delta))
 		z_index = -1
 	
-	if body.overlaps_body(Thunder._current_player):
+	var player: Player = Thunder._current_player
+	if !player: return
+	if body.overlaps_body(player):
 		collect()
 
 

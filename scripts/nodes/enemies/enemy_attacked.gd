@@ -142,6 +142,7 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
 			jumping_max = stomping_player_jumping_max
 		}
 	elif stomping_hurtable:
+		if by is Player && by.is_invincible(): return result
 		stomped_failed.emit()
 		result = {result = false}
 	

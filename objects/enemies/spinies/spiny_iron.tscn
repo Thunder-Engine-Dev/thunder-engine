@@ -66,3 +66,10 @@ metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_l71n6")
+
+[node name="Vision" parent="." index="3"]
+visible = true
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 1.43051e-06)
+scale = Vector2(1.6, 1.6)
+metadata/_edit_lock_ = true
