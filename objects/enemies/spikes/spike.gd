@@ -5,8 +5,9 @@ extends Area2D
 
 
 func _physics_process(delta: float) -> void:
-	for i in get_overlapping_bodies():
-		if i == Thunder._current_player:
-			match type:
-				1: i.hurt()
-				2: i.die()
+	var player: Player = Thunder._current_player
+	if !player: return
+	if overlaps_body(player):
+		match type:
+			1: player.hurt()
+			2: player.die()
