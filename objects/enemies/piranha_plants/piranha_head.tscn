@@ -66,7 +66,18 @@ shape = SubResource("RectangleShape2D_bbf7c")
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_kfaj4")
 stomping_standard = Vector2(0, 0)
-metadata/_edit_pinned_properties_ = [&"stomping_standard"]
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune"]
 
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)

@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_85764"]
 
-
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
 creation_nodepack = ExtResource("2_3i2bd")
@@ -92,9 +91,20 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("7_pt4ko")
 stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": false,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_85764")
-metadata/_edit_pinned_properties_ = [&"stomping_standard"]
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune"]
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = -1
