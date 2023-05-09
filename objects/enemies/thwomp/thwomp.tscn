@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_58bjx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdt3b"]
-size = Vector2(47, 64)
+size = Vector2(47, 62)
 
 [sub_resource type="Resource" id="Resource_j7a5f"]
 script = ExtResource("4_iejvm")
@@ -126,7 +126,7 @@ gravity_scale = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0.5, 0)
+position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_wdt3b")
 
 [node name="Body" type="Area2D" parent="."]
@@ -135,7 +135,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-position = Vector2(0.5, 0)
+position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_wdt3b")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]

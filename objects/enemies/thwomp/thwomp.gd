@@ -77,13 +77,14 @@ func _physics_process(delta: float) -> void:
 		3:
 			velocity = -_vel * rising_speed
 			do_movement(delta)
-			if (_origin - global_position).dot(_origin - _stunspot) <= 0:
+			if (_origin - global_position).dot(_origin - _stunspot) <= 0 && global_position.distance_squared_to(_origin) <= 1:
 				velocity = Vector2.ZERO
 				speed = velocity
 				global_position = _origin
 				_stunspot = Vector2.ZERO
 				_vel = Vector2.ZERO
 				_step = 0
+				print(name)
 
 
 func _stun() -> void:
