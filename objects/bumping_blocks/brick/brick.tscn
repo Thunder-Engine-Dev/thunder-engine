@@ -12,6 +12,7 @@ size = Vector2(32, 1)
 [node name="Brick" type="AnimatableBody2D" node_paths=PackedStringArray("cast_below")]
 z_index = 1
 collision_layer = 112
+sync_to_physics = false
 script = ExtResource("1_5y3xv")
 cast_below = NodePath("ShapeCast2D")
 

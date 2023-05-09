@@ -84,7 +84,6 @@ func _physics_process(delta: float) -> void:
 				_stunspot = Vector2.ZERO
 				_vel = Vector2.ZERO
 				_step = 0
-				print(name)
 
 
 func _stun() -> void:

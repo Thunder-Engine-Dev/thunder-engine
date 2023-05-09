@@ -25,6 +25,7 @@ size = Vector2(32, 32)
 z_index = 2
 collision_layer = 112
 collision_mask = 0
+sync_to_physics = false
 script = ExtResource("1_3oj3x")
 bullet_bill = SubResource("Resource_b3ipg")
 metadata/_edit_pinned_properties_ = [&"bullet_bill"]
