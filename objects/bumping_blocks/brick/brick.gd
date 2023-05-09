@@ -19,25 +19,6 @@ func _physics_process(_delta):
 	
 	if counter_enabled:
 		result_counter_value = max(result_counter_value - delta, 1)
-	
-	if _triggered: return
-	
-	var player = Thunder._current_player
-	if is_player_colliding(cast_below) && player.speed.y <= 50 && !player.is_on_floor() && result_counter_value:
-		if Thunder._current_player_state.type == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
-			bump(false)
-		else:
-			hit_attack()
-			bricks_break()
-		
-		if result && !counter_enabled:
-			counter_enabled = true
-		
-		if result_counter_value == 1:
-			_animated_sprite_2d.animation = &"empty"
-			counter_enabled = false
-			result_counter_value = 0
-	
 
 
 func bricks_break() -> void:
@@ -51,3 +32,25 @@ func bricks_break() -> void:
 			
 	Data.values.score += 50
 	queue_free()
+
+
+func got_bumped(by: Node2D) -> void:
+	if _triggered: return
+	if by is Player:
+		if by.speed.y <= 50 && !by.is_on_floor() && by.warp == Player.Warp.NONE && result_counter_value:
+			if by.suit.type == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
+				bump(false)
+			else:
+				hit_attack()
+				bricks_break()
+			
+			if result && !counter_enabled:
+				counter_enabled = true
+			
+			if result_counter_value == 1:
+				_animated_sprite_2d.animation = &"empty"
+				counter_enabled = false
+				result_counter_value = 0
+	else: 
+		hit_attack()
+		bricks_break()

@@ -21,11 +21,12 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		_item_display()
 		return
-	
+
+
+func got_bumped(by: Node2D) -> void:
 	if _triggered: return
 	
-	var player = Thunder._current_player
-	if is_player_colliding(cast_below) && player.speed.y <= 50 && !player.is_on_floor():
+	if by is Player && by.speed.y <= 50 && !by.is_on_floor() && by.warp == Player.Warp.NONE:
 		call_bump()
 
 

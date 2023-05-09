@@ -12,7 +12,7 @@ size = Vector2(20, 28)
 size = Vector2(1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
-size = Vector2(18, 2)
+size = Vector2(16, 2)
 
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
 collision_mask = 16

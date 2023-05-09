@@ -27,16 +27,6 @@ var _triggered: bool = false
 ## The sound when the block breaks (if possible)
 @export var break_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 
-@export_group("Bump Detection")
-## Bottom detector of bumping
-@export var cast_below: ShapeCast2D #if cast_below: cast_below.body_entered.connect()
-## Top detector of bumping
-@export var cast_above: ShapeCast2D
-## Left-side detector of bumping
-@export var cast_left: ShapeCast2D
-## Right-side detector of bumping
-@export var cast_right: ShapeCast2D
-
 @export_group("Block Visibility")
 ## Is initially visible
 @export var initially_visible: bool = true
@@ -94,12 +84,6 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		result_appeared.emit()
 	else:
 		Audio.play_sound(bump_sound, self)
-	
-	if disable:
-		if cast_below: cast_below.enabled = false
-		if cast_above: cast_above.enabled = false
-		if cast_left: cast_left.enabled = false
-		if cast_right: cast_right.enabled = false
 	
 	bumped.emit()
 	hit_attack()
