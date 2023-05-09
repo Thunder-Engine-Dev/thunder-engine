@@ -25,9 +25,7 @@ func _physics_process(delta):
 
 func got_bumped(by: Node2D) -> void:
 	if _triggered: return
-	
-	if by is Player && by.speed.y <= 50 && !by.is_on_floor() && by.warp == Player.Warp.NONE:
-		call_bump()
+	call_bump()
 
 
 func call_bump() -> void:

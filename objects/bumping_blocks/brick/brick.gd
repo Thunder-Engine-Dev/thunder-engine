@@ -37,7 +37,7 @@ func bricks_break() -> void:
 func got_bumped(by: Node2D) -> void:
 	if _triggered: return
 	if by is Player:
-		if by.speed.y <= 50 && !by.is_on_floor() && by.warp == Player.Warp.NONE && result_counter_value:
+		if !by.is_on_floor() && by.warp == Player.Warp.NONE && result_counter_value:
 			if by.suit.type == Data.PLAYER_POWER.SMALL || (result && result.creation_nodepack):
 				bump(false)
 			else:
