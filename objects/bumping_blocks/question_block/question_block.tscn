@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnr3rfhkdf6j2"]
+[gd_scene load_steps=9 format=3 uid="uid://bnr3rfhkdf6j2"]
 
 [ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
 [ext_resource type="PackedScene" uid="uid://fq0xf7e2fvfm" path="res://engine/objects/items/coin/coin.tscn" id="2_72rpd"]
@@ -27,9 +27,6 @@ size = Vector2(32, 32)
 atlas = ExtResource("5_21kjl")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lk56e"]
-size = Vector2(32, 1)
-
 [node name="QuestionBlock" type="AnimatableBody2D"]
 z_index = 1
 collision_layer = 112
@@ -57,10 +54,3 @@ position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_3yo0u")
 metadata/_edit_lock_ = true
-
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_lk56e")
-target_position = Vector2(0, 2)
-max_results = 8

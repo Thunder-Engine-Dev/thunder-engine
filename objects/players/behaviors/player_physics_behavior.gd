@@ -126,7 +126,7 @@ func _body_process() -> void:
 		if !collider.has_node("EnemyAttacked"): return
 		
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
-		var result: Dictionary = enemy_attacked.got_stomped(player)
+		var result: Dictionary = enemy_attacked.got_stomped(player, player.velocity.normalized())
 		if result.is_empty(): return
 		if result.result == true:
 			if player.jumping > 0:

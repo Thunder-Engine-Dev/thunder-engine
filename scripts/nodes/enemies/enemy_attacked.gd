@@ -113,7 +113,7 @@ func _lkf():
 ## by the player[br]
 ## If [param offset] set, the actual offset will be [member stomping_offset]
 ## + [param offset]
-func got_stomped(by: Node2D, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
+func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
 	var result: Dictionary
 	
 	if !stomping_enabled || _stomping_delayer: return result
@@ -125,9 +125,10 @@ func got_stomped(by: Node2D, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
 	var dot: float = by.global_position.direction_to(
 		_center.global_transform.translated(stomping_offset + offset).get_origin()
 	).dot(stomping_standard.rotated(_center.global_rotation))
+	var dotdown: float = vel.dot(stomping_standard.rotated(_center.global_rotation))
 	
 	stomped.emit()
-	if dot > 0:
+	if dot > 0 && dotdown >= 0:
 		stomping_delay()
 		stomped_succeeded.emit()
 		if stomping_scores > 0:
