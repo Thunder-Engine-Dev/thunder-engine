@@ -11,6 +11,8 @@ extends Control
 ## MusicLoader node reference
 @export var music_loader_ref: NodePath
 
+# Switch to prevent transition activating at the beginning
+var use_smooth_transition: bool = false
 
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
 var is_current: bool = false
@@ -18,7 +20,7 @@ var is_current: bool = false
 func _ready() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
-	if get_rect().has_point(player.global_position): is_current = true
+	if get_rect().has_point(player.global_position): _switch_bounds()
 
 
 func _draw() -> void:
@@ -34,8 +36,6 @@ func _physics_process(_delta: float) -> void:
 	var rect = get_rect()
 	
 	var is_in_bounds: bool = (
-		camera.has_meta(&"cam_area") && 
-		camera.get_meta(&"cam_area", null) != self && 
 		camera.position.x > rect.position.x &&
 		camera.position.y > rect.position.y &&
 		camera.position.x < rect.end.x &&
@@ -44,10 +44,6 @@ func _physics_process(_delta: float) -> void:
 	
 	if is_in_bounds:
 		if is_current: return
-		is_current = true
-		
-		# Prevent from doing it again in the same area
-		camera.set_meta(&"cam_area", self)
 		
 		if smooth_transition:
 			var cam = transition_camera.instantiate() as Camera2D
@@ -58,20 +54,28 @@ func _physics_process(_delta: float) -> void:
 			cam.limit_bottom = camera.limit_bottom
 			add_child(cam)
 		
-		camera.limit_top = rect.position.y
-		camera.limit_left = rect.position.x
-		camera.limit_right = rect.end.x
-		camera.limit_bottom = rect.end.y
-		
-		
-		if change_music:
-			var music_loader = get_node_or_null(music_loader_ref)
-			
-			if !music_loader:
-				printerr("[CamArea] Can't resolve the MusicLoader node")
-				return
-			
-			music_loader.index = set_music_index
+		_switch_bounds()
 	
 	if !is_in_bounds && is_current:
 		is_current = false
+
+
+func _switch_bounds() -> void:
+	var camera = Thunder._current_camera
+	var rect = get_rect()
+	
+	camera.limit_top = rect.position.y
+	camera.limit_left = rect.position.x
+	camera.limit_right = rect.end.x
+	camera.limit_bottom = rect.end.y
+	
+	if change_music:
+		var music_loader = get_node_or_null(music_loader_ref)
+		
+		if !music_loader:
+			printerr("[CamArea] Can't resolve the MusicLoader node")
+			return
+		
+		music_loader.index = set_music_index
+	
+	is_current = true
