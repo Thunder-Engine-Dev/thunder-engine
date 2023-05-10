@@ -8,6 +8,7 @@ extends CanvasLayer
 @export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
 
 signal time_countdown_finished
+signal game_over_finished
 
 
 func _ready() -> void:
@@ -34,7 +35,7 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(5, false).timeout.connect(Scenes.reload_current_scene)
+	get_tree().create_timer(7, false).timeout.connect(emit_signal.bind("game_over_finished"))
 
 
 func timer_hurry() -> void:
