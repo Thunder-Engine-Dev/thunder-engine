@@ -27,7 +27,8 @@ func _physics_process(_delta: float) -> void:
 	var camera = Thunder._current_camera
 	var rect = get_rect()
 	
-	var is_in_bounds: bool = (
+	var is_in_bounds: bool = camera.get_meta(&"cam_area", null) != self && \
+	(
 		camera.position.x > rect.position.x &&
 		camera.position.y > rect.position.y &&
 		camera.position.x < rect.end.x &&
@@ -37,6 +38,7 @@ func _physics_process(_delta: float) -> void:
 	if is_in_bounds:
 		if is_current: return
 		is_current = true
+		camera.set_meta(&"cam_area", self)
 		
 		if smooth_transition:
 			var cam = transition_camera.instantiate() as Camera2D
