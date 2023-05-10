@@ -36,6 +36,8 @@ func _physics_process(_delta: float) -> void:
 	var rect = get_rect()
 	
 	var is_in_bounds: bool = (
+		camera.has_meta(&"cam_area") && 
+		camera.get_meta(&"cam_area", null) != self && 
 		camera.position.x > rect.position.x &&
 		camera.position.y > rect.position.y &&
 		camera.position.x < rect.end.x &&
@@ -79,3 +81,4 @@ func _switch_bounds() -> void:
 		music_loader.index = set_music_index
 	
 	is_current = true
+	camera.set_meta(&"cam_area", self)
