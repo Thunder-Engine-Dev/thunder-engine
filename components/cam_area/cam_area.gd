@@ -15,6 +15,12 @@ extends Control
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
 var is_current: bool = false
 
+func _ready() -> void:
+	var player: Player = Thunder._current_player
+	if !player: return
+	if get_rect().has_point(player.global_position): is_current = true
+
+
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	draw_set_transform(-global_position, rotation, Vector2.ONE)
@@ -27,8 +33,9 @@ func _physics_process(_delta: float) -> void:
 	var camera = Thunder._current_camera
 	var rect = get_rect()
 	
-	var is_in_bounds: bool = camera.get_meta(&"cam_area", null) != self && \
-	(
+	var is_in_bounds: bool = (
+		camera.has_meta(&"cam_area") && 
+		camera.get_meta(&"cam_area", null) != self && 
 		camera.position.x > rect.position.x &&
 		camera.position.y > rect.position.y &&
 		camera.position.x < rect.end.x &&
@@ -38,6 +45,8 @@ func _physics_process(_delta: float) -> void:
 	if is_in_bounds:
 		if is_current: return
 		is_current = true
+		
+		# Prevent from doing it again in the same area
 		camera.set_meta(&"cam_area", self)
 		
 		if smooth_transition:
