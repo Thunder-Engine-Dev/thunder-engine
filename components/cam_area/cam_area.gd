@@ -18,6 +18,7 @@ var transition_camera = preload("res://engine/components/cam_area/transition_cam
 var is_current: bool = false
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	var player: Player = Thunder._current_player
 	if !player: return
 	if get_rect().has_point(player.global_position): _switch_bounds()
