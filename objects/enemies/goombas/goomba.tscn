@@ -78,6 +78,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
+floor_max_angle = 0.802851
 floor_snap_length = 20.0
 script = ExtResource("1_ltt83")
 look_at_player = true
@@ -88,7 +89,6 @@ gravity_scale = 0.5
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 2
