@@ -104,16 +104,18 @@ func _shape_process() -> void:
 #= Head
 func _head_process() -> void:
 	player.is_underwater_out = true
+	
+	# Hit block
 	for i in player.head.get_collision_count():
 		var collider: Node2D = player.head.get_collider(i) as Node2D
 		if !collider: continue
 		# Water
 		if collider.is_in_group(&"#water"): player.is_underwater_out = false
 		# Bumpable Block
-		if \
-		collider is StaticBumpingBlock && \
+		if collider is StaticBumpingBlock && \
 		collider.has_method(&"got_bumped") && \
-		player.speed.y < 0: collider.got_bumped.call_deferred(player)
+		((player.speed.y < 0 && !collider.initially_visible) || (player.is_on_ceiling() && collider.initially_visible)):
+			collider.got_bumped.call_deferred(player)
 
 #= Body
 func _body_process() -> void:

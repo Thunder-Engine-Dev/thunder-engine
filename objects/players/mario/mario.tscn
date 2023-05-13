@@ -45,7 +45,7 @@ visible = false
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_k6hxb")
 target_position = Vector2(0, -2)
-max_results = 8
+max_results = 16
 collision_mask = 144
 collide_with_areas = true
 
