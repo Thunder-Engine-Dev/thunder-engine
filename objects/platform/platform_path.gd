@@ -88,6 +88,7 @@ func _physics_process(delta: float) -> void:
 func _on_path_movement_process(delta: float) -> void:
 	if !on_path: return
 	
+	var pos: Vector2 = global_position
 	# Moving
 	if curve:
 		progress += speed * delta
@@ -95,8 +96,9 @@ func _on_path_movement_process(delta: float) -> void:
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
 	
+	linear_velocity = (global_position - pos) / delta
 	# Emit Falling
-	if players_have_stood && falling_acceleration > 0 && falling_enabled:
+	if on_path && players_have_stood && falling_acceleration > 0 && falling_enabled:
 		on_path = false
 
 func _non_path_movement_process(delta: float) -> void:
