@@ -44,7 +44,6 @@ func _ready() -> void:
 	super()
 	if Engine.is_editor_hint():
 		if get_child_count() == 0:
-			print(1)
 			_prepare_template()
 		
 		return

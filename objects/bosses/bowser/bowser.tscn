@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=27 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ertde"]
 [ext_resource type="Texture2D" uid="uid://dgjk0q20w38ud" path="res://engine/objects/bosses/bowser/texture/bowser_flame.png" id="3_ohwn1"]
 [ext_resource type="Texture2D" uid="uid://yhdouckulds5" path="res://engine/objects/bosses/bowser/texture/bowser_jump.png" id="4_tfgcq"]
+[ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmd6v"]
 size = Vector2(64, 64)
@@ -50,13 +51,13 @@ region = Rect2(0, 72, 64, 72)
 atlas = ExtResource("4_tfgcq")
 region = Rect2(0, 0, 64, 74)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rj8m"]
-atlas = ExtResource("2_72iau")
-region = Rect2(0, 0, 64, 72)
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn808"]
+atlas = ExtResource("7_pwf7x")
+region = Rect2(0, 0, 80, 72)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_alt3f"]
-atlas = ExtResource("2_72iau")
-region = Rect2(0, 72, 64, 72)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qttev"]
+atlas = ExtResource("7_pwf7x")
+region = Rect2(0, 72, 80, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0ddoy"]
 animations = [{
@@ -117,7 +118,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"flame_pre",
-"speed": 12.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -129,10 +130,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rj8m")
+"texture": SubResource("AtlasTexture_yn808")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_alt3f")
+"texture": SubResource("AtlasTexture_qttev")
 }],
 "loop": true,
 "name": &"throw",
@@ -141,68 +142,95 @@ animations = [{
 
 [sub_resource type="Animation" id="Animation_bqdyw"]
 resource_name = "idle"
-length = 0.001
+length = 0.1
 loop_mode = 1
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath("Sprite")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
+"values": [{
+"args": [&"default", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_xml0l"]
 resource_name = "jump"
-length = 0.001
+length = 0.1
 loop_mode = 1
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath("Sprite")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"jump"]
+"values": [{
+"args": [&"jump", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_6qfym"]
 resource_name = "RESET"
 length = 0.001
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath("Animations")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"default"]
+"values": [{
+"args": [&"bowser/idle", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_nhmfv"]
 resource_name = "flame"
-length = 0.7
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:animation")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0.8, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [&"flame_pre", &"flame_on"]
+"values": [{
+"args": [&"flame_sound"],
+"method": &"play_sound"
+}, {
+"args": [],
+"method": &"reset_animation"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"flame_pre", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"flame_on", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cho8p"]
@@ -213,15 +241,16 @@ _data = {
 "jump": SubResource("Animation_xml0l")
 }
 
-[node name="Bowser" type="CharacterBody2D"]
+[node name="Bowser" type="CharacterBody2D" groups=["#bowser"]]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.802851
-floor_snap_length = 20.0
+floor_snap_length = 12.0
 script = ExtResource("1_xvg05")
+speed = Vector2(100, 0)
 gravity_scale = 0.2
-metadata/_edit_pinned_properties_ = [&"gravity_scale"]
+metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -244,6 +273,7 @@ metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_0ddoy")
+animation = &"flame_pre"
 autoplay = "default"
 
 [node name="PosFlame" type="Marker2D" parent="."]
@@ -251,9 +281,9 @@ visible = false
 position = Vector2(16, -11)
 
 [node name="Animations" type="AnimationPlayer" parent="."]
-autoplay = "idle"
+autoplay = "bowser/idle"
 libraries = {
-"": SubResource("AnimationLibrary_cho8p")
+"bowser": SubResource("AnimationLibrary_cho8p")
 }
 
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]
