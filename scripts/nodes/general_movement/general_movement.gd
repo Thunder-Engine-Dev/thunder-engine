@@ -15,6 +15,9 @@ var dir: int
 
 func _ready() -> void:
 	super()
+	# Fix misdetection of being on wall when sloping down
+	floor_max_angle += PI/180
+	
 	if look_at_player && Thunder._current_player:
 		update_dir()
 		speed_to_dir()

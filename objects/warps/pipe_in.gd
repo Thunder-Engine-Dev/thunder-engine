@@ -77,7 +77,7 @@ func _physics_process(delta: float) -> void:
 			pos_player.position = Vector2((shape.shape as RectangleShape2D).size.x / 2, 0)
 		if input_y > 0 && warp_direction == Player.WarpDir.DOWN:
 			_on_warp = true
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y)
+			pos_player.position = Vector2(0, 0)
 		elif input_y < 0 && warp_direction == Player.WarpDir.UP:
 			_on_warp = true
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
