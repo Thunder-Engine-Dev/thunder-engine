@@ -114,14 +114,14 @@ func _physics_process(delta: float) -> void:
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
-	Audio.play_music(completion_music, 1)
+	Audio.play_music(completion_music, -1)
 	
 	if walking: 
 		_force_player_walking = true
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	
-	await Audio._music_channels[1].finished
+	await Audio._music_channels[-1].finished
 	if !Thunder._current_player: return
 	
 	Thunder._current_hud.time_countdown_finished.connect(

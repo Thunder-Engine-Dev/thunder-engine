@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://8yrsglnn48ca" path="res://engine/scenes/main_menu/textures/quit_text.png" id="4_bw6k8"]
 [ext_resource type="AudioStream" uid="uid://bi0m6xn5201en" path="res://engine/scenes/main_menu/sounds/lets.wav" id="4_jtmrc"]
 
-
 [node name="MainMenuControls" type="VBoxContainer"]
 offset_right = 104.0
 offset_bottom = 76.0

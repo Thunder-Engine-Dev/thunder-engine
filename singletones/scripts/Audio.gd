@@ -52,9 +52,12 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 
 func _fading(delta: float) -> void:
 	for l in range(len(_fading_musics)):
+		if l > len(_fading_musics) - 1: continue
 		var i = _fading_musics[l]
 		
-		if !is_instance_valid(i.fading_music_player): continue
+		if !is_instance_valid(i.fading_music_player):
+			_fading_musics.pop_at(l)
+			continue
 		
 		var fading_music_player: AudioStreamPlayer = i.fading_music_player
 		
