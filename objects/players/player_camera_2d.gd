@@ -1,18 +1,36 @@
 extends Camera2D
 class_name PlayerCamera2D
 
+@export_category("Camera Player")
+@export var sectional_area: Rect2
+
+@onready var par: Node2D = get_parent()
+
 
 func _ready():
 	Thunder._current_camera = self
 	make_current()
 	teleport()
 
-func _physics_process(_delta): teleport()
+
+func _physics_process(_delta):
+	teleport()
+
 
 func teleport() -> void:
-	if !Thunder._current_player: return
-	global_position = Vector2i(Thunder._current_player.global_position)
+	var player: Player = Thunder._current_player
+	if !par is PathFollow2D && player:
+		global_position = Vector2i(Thunder._current_player.global_position)
 	Thunder.view.cam_border()
+	
+	if par is PathFollow2D:
+		if !player: return
+		while !Thunder.view.screen_left(player.global_position, -16):
+			player.global_position += Vector2.RIGHT.rotated(global_rotation)
+			player.vel_set_x(0)
+		while !Thunder.view.screen_right(player.global_position, -16):
+			player.global_position += Vector2.LEFT.rotated(global_rotation)
+			player.vel_set_x(0)
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
