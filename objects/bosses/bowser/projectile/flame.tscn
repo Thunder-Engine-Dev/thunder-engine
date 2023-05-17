@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://yreeufpqjft1"]
+
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
+[ext_resource type="Texture2D" uid="uid://1bnxo3a5rbrn" path="res://engine/objects/bosses/bowser/texture/Flame.png" id="2_khrfp"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_qukhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
+size = Vector2(46, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l13ct"]
+atlas = ExtResource("2_khrfp")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8pwm"]
+atlas = ExtResource("2_khrfp")
+region = Rect2(0, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_js2pf"]
+atlas = ExtResource("2_khrfp")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfn7i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l13ct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8pwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js2pf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="Flame" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_vrg5a")
+belongs_to = 1
+sprite = NodePath("Sprite")
+speed = Vector2(200, 0)
+collision = false
+metadata/_edit_pinned_properties_ = [&"collision", &"belongs_to"]
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+collision_layer = 2
+collision_mask = 5
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_3yefo")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_g8g0o")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"fireball": true,
+"iceball": false
+}
+killing_sound_failed = ExtResource("3_qukhs")
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qfn7i")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(4.76837e-06, 9.53674e-07)
+scale = Vector2(4.8, 3.2)
+metadata/_edit_lock_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

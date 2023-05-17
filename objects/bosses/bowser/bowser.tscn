@@ -1,12 +1,28 @@
-[gd_scene load_steps=27 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=35 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
 [ext_resource type="Texture2D" uid="uid://bhern0i54yn7v" path="res://engine/objects/bosses/bowser/texture/bowser_idle.png" id="2_72iau"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ertde"]
+[ext_resource type="PackedScene" uid="uid://yreeufpqjft1" path="res://engine/objects/bosses/bowser/projectile/flame.tscn" id="2_inlg6"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_8kobe"]
 [ext_resource type="Texture2D" uid="uid://dgjk0q20w38ud" path="res://engine/objects/bosses/bowser/texture/bowser_flame.png" id="3_ohwn1"]
 [ext_resource type="Texture2D" uid="uid://yhdouckulds5" path="res://engine/objects/bosses/bowser/texture/bowser_jump.png" id="4_tfgcq"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
+[ext_resource type="Texture2D" uid="uid://bt6e8nxjbyago" path="res://engine/objects/bosses/bowser/texture/bowser_triple_flame.png" id="8_pk18g"]
+
+[sub_resource type="Resource" id="Resource_5jupm"]
+script = ExtResource("3_8kobe")
+creation_nodepack = ExtResource("2_inlg6")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmd6v"]
 size = Vector2(64, 64)
@@ -46,6 +62,18 @@ region = Rect2(0, 0, 64, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fiyrs"]
 atlas = ExtResource("3_ohwn1")
 region = Rect2(0, 72, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijvb0"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(0, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nx0v1"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(0, 72, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dn15"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(0, 144, 64, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_osf36"]
 atlas = ExtResource("4_tfgcq")
@@ -122,6 +150,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ijvb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nx0v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dn15")
+}],
+"loop": true,
+"name": &"flame_pre_multiple",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_osf36")
 }],
 "loop": false,
@@ -139,6 +181,64 @@ animations = [{
 "name": &"throw",
 "speed": 20.0
 }]
+
+[sub_resource type="Animation" id="Animation_6qfym"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"bowser/idle", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nhmfv"]
+resource_name = "flame"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [&"flame_sound"],
+"method": &"play_sound"
+}, {
+"args": [],
+"method": &"attack_flame"
+}, {
+"args": [],
+"method": &"reset_animation"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"flame_pre", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"flame_on", 1.0, false],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_bqdyw"]
 resource_name = "idle"
@@ -178,58 +278,44 @@ tracks/0/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_6qfym"]
-resource_name = "RESET"
-length = 0.001
+[sub_resource type="Animation" id="Animation_5hbvf"]
+resource_name = "multiple_flames"
+length = 1.7
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Animations")
+tracks/0/path = NodePath("Sprite")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"bowser/idle", -1, 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_nhmfv"]
-resource_name = "flame"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.8, 1),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
-"args": [&"flame_sound"],
-"method": &"play_sound"
+"args": [&"flame_pre_multiple", 1.0, false],
+"method": &"play"
 }, {
-"args": [],
-"method": &"reset_animation"
+"args": [&"flame_on", 1.0, false],
+"method": &"play"
 }]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(1.5, 1.6, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
-"args": [&"flame_pre", 1.0, false],
-"method": &"play"
+"args": [&"flame_sound"],
+"method": &"play_sound"
 }, {
-"args": [&"flame_on", 1.0, false],
-"method": &"play"
+"args": [],
+"method": &"multiple_flames"
+}, {
+"args": [],
+"method": &"reset_animation"
 }]
 }
 
@@ -238,7 +324,8 @@ _data = {
 "RESET": SubResource("Animation_6qfym"),
 "flame": SubResource("Animation_nhmfv"),
 "idle": SubResource("Animation_bqdyw"),
-"jump": SubResource("Animation_xml0l")
+"jump": SubResource("Animation_xml0l"),
+"multiple_flames": SubResource("Animation_5hbvf")
 }
 
 [node name="Bowser" type="CharacterBody2D" groups=["#bowser"]]
@@ -248,9 +335,12 @@ floor_constant_speed = true
 floor_max_angle = 0.802851
 floor_snap_length = 12.0
 script = ExtResource("1_xvg05")
+status = Array[StringName]([&"flame", &"multiflames"])
+status_interval = Array[float]([3.0, 3.0])
+flame = SubResource("Resource_5jupm")
 speed = Vector2(100, 0)
 gravity_scale = 0.2
-metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed"]
+metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -273,7 +363,6 @@ metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_0ddoy")
-animation = &"flame_pre"
 autoplay = "default"
 
 [node name="PosFlame" type="Marker2D" parent="."]

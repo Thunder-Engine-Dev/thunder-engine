@@ -23,6 +23,7 @@ const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.
 @export var status_interval: Array[float] = [3]
 @export_subgroup("Projectiles")
 @export var flame: InstanceNode2D
+@export var multiple_flames_amount: int = 3
 @export var hammer: InstanceNode2D
 @export var burst_fireball: InstanceNode2D
 @export_subgroup("Sounds")
@@ -42,6 +43,7 @@ var lock_movement: bool
 var current_status: StringName
 var next_status: Array[StringName]
 var status_halt: bool
+var pos_y_on_floor: float
 
 var _speed: float
 var _walking_pausing_factor: float
@@ -89,14 +91,16 @@ func _physics_process(delta: float) -> void:
 					attack(status[i])
 			)
 			tween_status.tween_interval(0.0 if !status_halt else animations.current_animation_length)
-			tween_status.tween_callback(
-				func() -> void:
-					status_halt = false
-					tween_status.kill()
-					tween_status = null
-			)
+		tween_status.tween_callback(
+			func() -> void:
+				status_halt = false
+				tween_status.kill()
+				tween_status = null
+		)
 	# Physics
 	motion_process(delta)
+	if is_on_floor():
+		pos_y_on_floor = global_transform.affine_inverse().basis_xform(global_position).y
 
 
 func activate() -> void:
@@ -120,6 +124,28 @@ func attack(state: StringName) -> void:
 			status_halt = true
 			if animations.current_animation == &"bowser/flame": return
 			animations.play(&"bowser/flame")
+		&"multiflames":
+			status_halt = true
+			if animations.current_animation == &"bowser/multiple_flames": return
+			animations.play(&"bowser/multiple_flames")
+
+
+# Bowser's flame
+func attack_flame(offset_by_32: int = -1) -> void:
+	if !flame: return
+	NodeCreator.prepare_ins_2d(flame, self).create_2d().call_method(
+		func(flm: Node2D) -> void:
+			flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 4) if offset_by_32 < 0 else offset_by_32)
+			flm.global_position = pos_flame.global_position
+			if flm is GravityBody2D:
+				flm.speed *= facing
+	)
+
+
+# Bowser's multiple flames
+func multiple_flames() -> void:
+	for i in multiple_flames_amount:
+		attack_flame(i)
 
 
 # Bowser's hurt
@@ -154,22 +180,26 @@ func hurt() -> void:
 	)
 
 
-func reset_animation() -> void:
-	animations.play(&"bowser/idle")
-
-
-func play_sound(sound_name: StringName) -> void:
-	if get(sound_name) is AudioStream: Audio.play_sound(get(sound_name), self)
-
-
+# Bowser's death
 func die() -> void:
 	queue_free()
 
 
+# Gets the facing of the bowser
 func get_facing(dir: int) -> int:
 	var player: Player = Thunder._current_player
 	if !player: return dir
 	return Thunder.Math.look_at(global_position, player.global_position, global_transform)
+
+
+# Reset the current_animation of Animations node to "bowser/idle"
+func reset_animation() -> void:
+	animations.play(&"bowser/idle")
+
+
+# Play a sound via property name
+func play_sound(sound_name: StringName) -> void:
+	if get(sound_name) is AudioStream: Audio.play_sound(get(sound_name), self)
 
 
 # Bowser's movement
