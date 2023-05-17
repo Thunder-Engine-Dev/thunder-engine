@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1bnxo3a5rbrn"
-path="res://.godot/imported/flame.png-13ed3478d550d18a7cccf450b0245f40.ctex"
+uid="uid://3b6nw4w6kymm"
+path="res://.godot/imported/bowser_burst_flameball.png-cfa70ff0efce92e57c55df49fe0ce32a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/bosses/bowser/texture/flame.png"
-dest_files=["res://.godot/imported/flame.png-13ed3478d550d18a7cccf450b0245f40.ctex"]
+source_file="res://engine/objects/bosses/bowser/texture/bowser_burst_flameball.png"
+dest_files=["res://.godot/imported/bowser_burst_flameball.png-cfa70ff0efce92e57c55df49fe0ce32a.ctex"]
 
 [params]
 

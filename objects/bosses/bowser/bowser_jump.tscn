@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds7djsmp0wtrq"]
+
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_jump.gd" id="1_3uk8d"]
+[ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_2ekbx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4j8"]
+size = Vector2(384, 32)
+
+[node name="BowserJump" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_3uk8d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gs4j8")
+debug_color = Color(0.67451, 0.431373, 0.85098, 0.419608)
+
+[node name="Text" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -16.0
+offset_right = 64.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("2_2ekbx")
+text = "BOWSER'S
+JUMP"
+horizontal_alignment = 1

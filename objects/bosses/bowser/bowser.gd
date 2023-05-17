@@ -19,25 +19,30 @@ const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.
 @export var falling_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_fall.wav")
 @export var in_lava_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_in_lava.wav")
 @export_group("Status")
+@export var status_interval: Array[float] = [3]
 ## There are the status you can input: [br]
 ## [b]flame[/b]: shoot single flame [br]
 ## [b]multiflames[/b]: shoot multiple flames, see [member multiple_flames_amount] [br]
 ## [b]hammer[/b]: throw hammers, see [member hammer_amount] and [member hammer_interval] [br]
 ## [b]burst_fireball[/b]: burst out flameballs, see [member burst_fireball_amount]
 @export var status: Array[StringName] = [&"flame"]
-@export var status_interval: Array[float] = [3]
 @export_subgroup("Projectiles")
 @export var flame: InstanceNode2D
 @export var multiple_flames_amount: int = 3
 @export var hammer: InstanceNode2D
-@export var hammer_amount: int = 50
+@export var hammer_amount: int = 20
 @export var hammer_interval: float = 0.08
 @export var burst_fireball: InstanceNode2D
-@export var burst_fireball_amount: int = 20
+@export var burst_fireball_amount: int = 30
 @export_subgroup("Sounds")
 @export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
 @export var hammer_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
 @export var burst_sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
+@export_group("Jumping")
+@export var jumping_interval: float = 0.22
+@export var jumping_speed: float = 300
+@export_group("Level Setting")
+@export var final_boss: bool = true
 
 var tween_hurt: Tween
 var tween_status: Tween
@@ -47,16 +52,18 @@ var direction: int
 var facing: int
 var lock_direction: bool
 var lock_movement: bool
+var jump_enabled: bool
 
 var current_status: StringName
 var next_status: Array[StringName]
-var status_halt: bool
 var pos_y_on_floor: float
 
-var _animation_length: float
 var _speed: float
 var _walking_pausing_factor: float
 var _walking_paused: bool
+var _jump_factor: float
+
+var _bullet_received: int
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var animations: AnimationPlayer = $Animations
@@ -95,8 +102,11 @@ func _physics_process(delta: float) -> void:
 	if !lock_movement:
 		_movement(delta)
 	elif speed.x != 0:
-		_speed = speed.x
+		_speed = abs(speed.x)
 		vel_set_x(0)
+	# Jump
+	if jump_enabled:
+		_jumping(delta)
 	# Attack
 	if !tween_status:
 		tween_status = create_tween()
@@ -108,7 +118,6 @@ func _physics_process(delta: float) -> void:
 			)
 		tween_status.tween_callback(
 			func() -> void:
-				status_halt = false
 				tween_status.kill()
 				tween_status = null
 		)
@@ -136,18 +145,18 @@ func activate() -> void:
 func attack(state: StringName) -> void:
 	match state:
 		&"flame":
-			status_halt = true
 			if animations.current_animation == &"bowser/flame": return
 			animations.play(&"bowser/flame")
 			tween_status.pause()
 		&"multiflames":
-			status_halt = true
 			if animations.current_animation == &"bowser/multiple_flames": return
 			animations.play(&"bowser/multiple_flames")
 			tween_status.pause()
 		&"hammer":
-			status_halt = true
 			attack_hammer()
+			tween_status.pause()
+		&"burst":
+			attack_burst()
 			tween_status.pause()
 
 
@@ -198,7 +207,7 @@ func attack_hammer() -> void:
 						hm.global_position = pos_hammer.global_position
 						if hm is Projectile:
 							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							hm.vel_set(Vector2(randf_range(100, 400) * facing, randf_range(-1000, -600)))
+							hm.vel_set(Vector2(randf_range(100, 400) * facing, randf_range(-1000, -200)))
 				)
 		).set_delay(hammer_interval)
 	tween_hammer.tween_callback(
@@ -212,7 +221,50 @@ func attack_hammer() -> void:
 		func() -> void:
 			sprite.offset.x = 0
 			sprite.speed_scale = 1
+			sprite.play(&"default")
 			lock_movement = false
+			animations.play(&"bowser/idle")
+			tween_status.play()
+	)
+
+
+# Bowser's burst flameball
+func attack_burst() -> void:
+	lock_movement = true
+	lock_direction = true
+	
+	# Animation modification
+	if sprite.animation != &"burst": sprite.play(&"burst")
+	sprite.speed_scale = 0
+	
+	# Lock the animation player from running
+	animations.pause()
+	
+	# Tween for processing attack
+	var tween_hammer: Tween = create_tween()
+	tween_hammer.tween_interval(2)
+	for i in burst_fireball_amount:
+		tween_hammer.tween_callback(
+			func() -> void:
+				sprite.speed_scale = 1
+				if !burst_fireball: return
+				
+				Audio.play_sound(burst_sound, self, false)
+				NodeCreator.prepare_ins_2d(burst_fireball, self).create_2d().call_method(
+					func(bf: Node2D) -> void:
+						bf.global_position = pos_flame.global_position
+						if bf is Projectile:
+							bf.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
+							bf.vel_set(Vector2(randf_range(200, 800) * facing, randf_range(-700, -100)))
+				)
+		).set_delay(0.1)
+	# Tween to end the process and restore data
+	tween_hammer.tween_callback(
+		func() -> void:
+			sprite.speed_scale = 1
+			sprite.play(&"default")
+			lock_movement = false
+			lock_direction = false
 			animations.play(&"bowser/idle")
 			tween_status.play()
 	)
@@ -223,8 +275,10 @@ func hurt() -> void:
 	if tween_hurt: return
 	
 	if health > 0:
+		Audio.play_sound(hurt_sound, self)
 		health -= 1
-	else:
+	if health <= 0:
+		Audio.play_sound(death_sound, self)
 		die()
 		return
 	
@@ -248,6 +302,15 @@ func hurt() -> void:
 			modulate.a = alpha
 			enemy_attacked.stomping_standard = stomp_standard
 	)
+
+# Hurt from bullets
+func bullet_hurt() -> void:
+	if tween_hurt: return
+	
+	_bullet_received += 1
+	if _bullet_received >= hardness:
+		_bullet_received = 0
+		hurt()
 
 
 # Bowser's death
@@ -276,18 +339,29 @@ func play_sound(sound_name: StringName) -> void:
 func _movement(delta: float) -> void:
 	# Random pausing
 	_walking_pausing_factor += delta
-	if _walking_pausing_factor >= 0.12:
-		_walking_pausing_factor = 0
-		# Pausing
-		var chance1: float = randf_range(0, 1)
-		if chance1 < 0.1 && !_walking_paused:
-			_walking_paused = true
-			_speed = abs(speed.x)
-			vel_set_x(0)
-		# Resuming
-		var chance2: float = randf_range(0, 1)
-		if chance2 < 0.16 && _walking_paused:
-			_walking_paused = false
+	if _walking_pausing_factor < 0.12: return
+	_walking_pausing_factor = 0
+	# Pausing
+	var chance1: float = randf_range(0, 1)
+	if chance1 < 0.1 && !_walking_paused:
+		_walking_paused = true
+		_speed = abs(speed.x)
+		vel_set_x(0)
+	# Resuming
+	var chance2: float = randf_range(0, 1)
+	if chance2 < 0.16 && _walking_paused:
+		_walking_paused = false
 	
 	# Keeps moving
 	if !_walking_paused: vel_set_x(_speed * direction)
+
+
+# Bowser's Jumping
+func _jumping(delta: float) -> void:
+	if !is_on_floor(): return
+	_jump_factor += delta
+	if _jump_factor <= jumping_interval: return
+	_jump_factor = 0
+	# Jumping
+	var chance: float = randf_range(0, 1)
+	if chance < 0.25: jump(jumping_speed)

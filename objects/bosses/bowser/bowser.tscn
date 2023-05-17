@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=40 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dgjk0q20w38ud" path="res://engine/objects/bosses/bowser/texture/bowser_flame.png" id="3_ohwn1"]
 [ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="4_0j30w"]
 [ext_resource type="Texture2D" uid="uid://yhdouckulds5" path="res://engine/objects/bosses/bowser/texture/bowser_jump.png" id="4_tfgcq"]
+[ext_resource type="PackedScene" uid="uid://b24l0bhd2wshk" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.tscn" id="5_u4pxf"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_i07i2"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
 [ext_resource type="Texture2D" uid="uid://bt6e8nxjbyago" path="res://engine/objects/bosses/bowser/texture/bowser_triple_flame.png" id="8_pk18g"]
 
@@ -28,6 +30,19 @@ custom_vars = {}
 [sub_resource type="Resource" id="Resource_obl6r"]
 script = ExtResource("3_8kobe")
 creation_nodepack = ExtResource("4_0j30w")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_gr117"]
+script = ExtResource("3_8kobe")
+creation_nodepack = ExtResource("5_u4pxf")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -349,13 +364,14 @@ floor_constant_speed = true
 floor_max_angle = 0.802851
 floor_snap_length = 12.0
 script = ExtResource("1_xvg05")
-status = Array[StringName]([&"flame", &"hammer"])
-status_interval = Array[float]([3.0, 1.0])
+status_interval = Array[float]([3.0, 1.0, 2.0])
+status = Array[StringName]([&"flame", &"hammer", &"burst"])
 flame = SubResource("Resource_5jupm")
 hammer = SubResource("Resource_obl6r")
+burst_fireball = SubResource("Resource_gr117")
 speed = Vector2(100, 0)
 gravity_scale = 0.2
-metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer"]
+metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer", &"burst_fireball"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -373,7 +389,8 @@ shape = SubResource("RectangleShape2D_dmd6v")
 script = ExtResource("2_ertde")
 stomping_player_jumping_min = 500.0
 stomping_player_jumping_max = 750.0
-metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_player_jumping_max"]
+killing_sound_succeeded = ExtResource("7_i07i2")
+metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_player_jumping_max", &"killing_sound_succeeded"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -4)
@@ -394,4 +411,5 @@ libraries = {
 "bowser": SubResource("AnimationLibrary_cho8p")
 }
 
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]
