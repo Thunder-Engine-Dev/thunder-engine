@@ -19,13 +19,21 @@ const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.
 @export var falling_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_fall.wav")
 @export var in_lava_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_in_lava.wav")
 @export_group("Status")
+## There are the status you can input: [br]
+## [b]flame[/b]: shoot single flame [br]
+## [b]multiflames[/b]: shoot multiple flames, see [member multiple_flames_amount] [br]
+## [b]hammer[/b]: throw hammers, see [member hammer_amount] and [member hammer_interval] [br]
+## [b]burst_fireball[/b]: burst out flameballs, see [member burst_fireball_amount]
 @export var status: Array[StringName] = [&"flame"]
 @export var status_interval: Array[float] = [3]
 @export_subgroup("Projectiles")
 @export var flame: InstanceNode2D
 @export var multiple_flames_amount: int = 3
 @export var hammer: InstanceNode2D
+@export var hammer_amount: int = 50
+@export var hammer_interval: float = 0.08
 @export var burst_fireball: InstanceNode2D
+@export var burst_fireball_amount: int = 20
 @export_subgroup("Sounds")
 @export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
 @export var hammer_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
@@ -45,6 +53,7 @@ var next_status: Array[StringName]
 var status_halt: bool
 var pos_y_on_floor: float
 
+var _animation_length: float
 var _speed: float
 var _walking_pausing_factor: float
 var _walking_paused: bool
@@ -54,6 +63,8 @@ var _walking_paused: bool
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 @onready var pos_flame: Marker2D = $PosFlame
 @onready var pos_flame_x: float = pos_flame.position.x
+@onready var pos_hammer: Marker2D = $PosHammer
+@onready var pos_hammer_x: float = pos_hammer.position.x
 
 
 func _ready() -> void:
@@ -79,8 +90,13 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor(): animations.play(&"bowser/idle")
 	# Pos markers
 	pos_flame.position.x = pos_flame_x * facing
+	pos_hammer.position.x = pos_hammer_x * facing
 	# Movement
-	_movement(delta)
+	if !lock_movement:
+		_movement(delta)
+	elif speed.x != 0:
+		_speed = speed.x
+		vel_set_x(0)
 	# Attack
 	if !tween_status:
 		tween_status = create_tween()
@@ -90,7 +106,6 @@ func _physics_process(delta: float) -> void:
 				func() -> void:
 					attack(status[i])
 			)
-			tween_status.tween_interval(0.0 if !status_halt else animations.current_animation_length)
 		tween_status.tween_callback(
 			func() -> void:
 				status_halt = false
@@ -124,10 +139,16 @@ func attack(state: StringName) -> void:
 			status_halt = true
 			if animations.current_animation == &"bowser/flame": return
 			animations.play(&"bowser/flame")
+			tween_status.pause()
 		&"multiflames":
 			status_halt = true
 			if animations.current_animation == &"bowser/multiple_flames": return
 			animations.play(&"bowser/multiple_flames")
+			tween_status.pause()
+		&"hammer":
+			status_halt = true
+			attack_hammer()
+			tween_status.pause()
 
 
 # Bowser's flame
@@ -137,15 +158,64 @@ func attack_flame(offset_by_32: int = -1) -> void:
 		func(flm: Node2D) -> void:
 			flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 4) if offset_by_32 < 0 else offset_by_32)
 			flm.global_position = pos_flame.global_position
-			if flm is GravityBody2D:
+			if flm is Projectile:
+				flm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
 				flm.speed *= facing
 	)
+	if !tween_status.is_running(): tween_status.play()
 
 
 # Bowser's multiple flames
 func multiple_flames() -> void:
 	for i in multiple_flames_amount:
 		attack_flame(i)
+
+
+# Bowser's hammer
+func attack_hammer() -> void:
+	lock_movement = true
+	
+	# Animation modification
+	if sprite.animation != &"throw": sprite.play(&"throw")
+	sprite.speed_scale = 0
+	sprite.offset.x = 7 * facing
+	
+	# Lock the animation player from running
+	animations.pause()
+	
+	# Tween for processing attack
+	var tween_hammer: Tween = create_tween()
+	tween_hammer.tween_interval(2)
+	for i in hammer_amount:
+		tween_hammer.tween_callback(
+			func() -> void:
+				sprite.speed_scale = 1
+				if !hammer: return
+				
+				Audio.play_sound(hammer_sound, self, false)
+				NodeCreator.prepare_ins_2d(hammer, self).create_2d().call_method(
+					func(hm: Node2D) -> void:
+						hm.global_position = pos_hammer.global_position
+						if hm is Projectile:
+							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
+							hm.vel_set(Vector2(randf_range(100, 400) * facing, randf_range(-1000, -600)))
+				)
+		).set_delay(hammer_interval)
+	tween_hammer.tween_callback(
+		func() -> void:
+			sprite.frame = 0
+			sprite.speed_scale = 0
+	)
+	tween_hammer.tween_interval(1)
+	# Tween to end the process and restore data
+	tween_hammer.tween_callback(
+		func() -> void:
+			sprite.offset.x = 0
+			sprite.speed_scale = 1
+			lock_movement = false
+			animations.play(&"bowser/idle")
+			tween_status.play()
+	)
 
 
 # Bowser's hurt
@@ -204,8 +274,6 @@ func play_sound(sound_name: StringName) -> void:
 
 # Bowser's movement
 func _movement(delta: float) -> void:
-	if lock_movement: return
-	
 	# Random pausing
 	_walking_pausing_factor += delta
 	if _walking_pausing_factor >= 0.12:
