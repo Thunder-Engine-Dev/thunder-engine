@@ -4,7 +4,7 @@ extends Camera2D
 func _ready() -> void:
 	var camera = Thunder._current_camera
 	position_smoothing_enabled = true
-	global_position = camera.global_position
+	global_position = camera.get_screen_center_position()
 	
 	await get_tree().physics_frame
 	make_current()

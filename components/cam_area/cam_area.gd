@@ -50,7 +50,7 @@ func _physics_process(_delta: float) -> void:
 		
 		if smooth_transition:
 			var cam = transition_camera.instantiate() as Camera2D
-			cam.global_position = Thunder._current_camera.global_position
+			cam.global_position = Thunder._current_camera.get_screen_center_position()
 			cam.limit_top = camera.limit_top
 			cam.limit_left = camera.limit_left
 			cam.limit_right = camera.limit_right
