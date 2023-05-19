@@ -1,9 +1,6 @@
 extends Camera2D
 class_name PlayerCamera2D
 
-@export_category("Camera Player")
-@export var sectional_area: Rect2
-
 @onready var par: Node2D = get_parent()
 
 
