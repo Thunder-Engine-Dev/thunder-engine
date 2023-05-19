@@ -3,6 +3,7 @@ extends ByNodeScript
 var player: Player
 var sprite: AnimatedSprite2D
 
+var _climb_progress: float
 
 func _ready() -> void:
 	player = node as Player
@@ -63,12 +64,22 @@ func _sprite_finish() -> void:
 func _animation_process(delta: float) -> void:
 	if !sprite: return
 	
-	if player.direction != 0:
+	if player.direction != 0 && !player.is_climbing:
 		sprite.flip_h = (player.direction < 0)
 	sprite.speed_scale = 1
 	# Non-warping
 	if player.warp == Player.Warp.NONE:
 		if sprite.animation in [&"appear", &"attack"]: return
+		# Climbing
+		if player.is_climbing:
+			sprite.play(&"climb")
+			if player.speed != Vector2.ZERO:
+				_climb_progress += abs(player.speed.length() * delta)
+				if _climb_progress > 20:
+					_climb_progress = 0
+					sprite.flip_h = !sprite.flip_h
+			return
+		# Non-climbing
 		if player.is_on_floor():
 			if player.speed.x != 0:
 				sprite.play(&"walk")

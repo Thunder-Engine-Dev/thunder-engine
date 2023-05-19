@@ -29,8 +29,13 @@ func _physics_process(delta: float) -> void:
 	# Body
 	_body_process()
 	# Movement
-	_movement_x(delta)
-	_movement_y(delta)
+	if player.is_climbing:
+		_movement_climbing(delta)
+	else:
+		if player.gravity_scale == 0 && player._gravity_before_climb != 0:
+			player.gravity_scale = player._gravity_before_climb
+		_movement_x(delta)
+		_movement_y(delta)
 	player.motion_process(delta)
 	if player.is_on_wall():
 		player.speed.x = 0
@@ -88,6 +93,14 @@ func _movement_y(delta: float) -> void:
 			player.speed.y -= abs(buff) * delta
 	if !player.jumping:
 		_has_jumped = false
+
+
+#= Climbing
+func _movement_climbing(delta: float) -> void:
+	if player.gravity_scale != 0:
+		player._gravity_before_climb = player.gravity_scale
+		player.gravity_scale = 0
+	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
 
 
 #= Shape

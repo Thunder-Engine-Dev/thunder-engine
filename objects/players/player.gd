@@ -73,6 +73,7 @@ var running: bool
 var attacked: bool
 var attacking: bool
 
+var is_climbing: bool
 var is_crouching: bool
 var is_underwater: bool
 var is_underwater_out: bool
@@ -81,6 +82,8 @@ var completed: bool
 
 var warp: Warp
 var warp_dir: WarpDir
+
+var _gravity_before_climb: float
 
 var _force_suit: bool
 var _suit_appear: bool

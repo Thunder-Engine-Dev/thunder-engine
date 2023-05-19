@@ -8,7 +8,6 @@ func _ready() -> void:
 	
 	await get_tree().physics_frame
 	make_current()
-	
 	limit_top = camera.limit_top
 	limit_left = camera.limit_left
 	limit_right = camera.limit_right

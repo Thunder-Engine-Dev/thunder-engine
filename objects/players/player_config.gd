@@ -19,6 +19,8 @@ class_name PlayerConfig
 @export var swim_speed: float = 150
 @export var swim_out_speed: float = 450
 @export var swim_max_speed: float = 150
+@export_group("Climb", "climb_")
+@export var climb_speed: float = 150
 @export_group("Sound", "sound_")
 @export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 @export var sound_swim: AudioStream = preload("res://engine/objects/players/prefabs/sounds/swim.wav")
