@@ -83,8 +83,6 @@ var completed: bool
 var warp: Warp
 var warp_dir: WarpDir
 
-var _gravity_before_climb: float
-
 var _force_suit: bool
 var _suit_appear: bool
 

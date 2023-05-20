@@ -18,7 +18,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 32)
 
-[sub_resource type="Resource" id="Resource_ikfnt"]
+[sub_resource type="Resource" id="Resource_y4dty"]
 script = ExtResource("6_c3xf2")
 creation_nodepack = ExtResource("4_5hn3v")
 trans_offset = Vector2(0, 0)
@@ -115,7 +115,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_252y6")
-stomping_creation = SubResource("Resource_ikfnt")
+stomping_creation = SubResource("Resource_y4dty")
 stomping_scores = 100
 stomping_sound = ExtResource("7_h6ok4")
 killing_creation = SubResource("Resource_llg06")

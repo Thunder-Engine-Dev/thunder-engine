@@ -32,8 +32,6 @@ func _physics_process(delta: float) -> void:
 	if player.is_climbing:
 		_movement_climbing(delta)
 	else:
-		if player.gravity_scale == 0 && player._gravity_before_climb != 0:
-			player.gravity_scale = player._gravity_before_climb
 		_movement_x(delta)
 		_movement_y(delta)
 	player.motion_process(delta)
@@ -97,10 +95,17 @@ func _movement_y(delta: float) -> void:
 
 #= Climbing
 func _movement_climbing(delta: float) -> void:
-	if player.gravity_scale != 0:
-		player._gravity_before_climb = player.gravity_scale
-		player.gravity_scale = 0
+	if player.is_crouching || player.completed: return
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
+	# Resist to gravity
+	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta
+	
+	# Jump from climbing
+	if player.jumping > 0 && !_has_jumped:
+		_has_jumped = true
+		player.is_climbing = false
+		player.jump(config.jump_speed)
+		Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 
 
 #= Shape

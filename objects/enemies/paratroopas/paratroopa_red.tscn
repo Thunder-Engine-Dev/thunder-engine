@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=16 format=3 uid="uid://r3wtvvkcepce"]
 
-[ext_resource type="PackedScene" uid="uid://bxxckxp3b72re" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_ddg2h"]
+[ext_resource type="PackedScene" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_ddg2h"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_jcr27"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="2_t0byn"]
 [ext_resource type="Script" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_qq62u"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bd6t46hxy4085" path="res://engine/objects/enemies/koopas/textures/koopa_red.png" id="5_q8vae"]
 [ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="6_brjlx"]
 
-[sub_resource type="Resource" id="Resource_u0gsf"]
+[sub_resource type="Resource" id="Resource_u6rt5"]
 script = ExtResource("4_qby8s")
 creation_nodepack = ExtResource("2_t0byn")
 trans_offset = Vector2(0, 0)
@@ -84,7 +84,7 @@ facing_method = 1
 metadata/_edit_pinned_properties_ = [&"amplitude", &"facing_method"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_u0gsf")
+stomping_creation = SubResource("Resource_u6rt5")
 killing_creation = SubResource("Resource_nghi6")
 metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
