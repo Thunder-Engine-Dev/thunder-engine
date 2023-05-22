@@ -1,7 +1,6 @@
 extends VBoxContainer
 
-@onready var area: Area2D = $TextureRect/Area2D
-
+@onready var area: Area2D = $Area2D
 
 
 func _ready() -> void:
@@ -12,6 +11,7 @@ func _ready() -> void:
 	resized.connect(_set_scale)
 	_set_scale()
 
+
 func _set_scale() -> void:
 	area.scale = get_rect().size
-	area.position = make_canvas_position_local(get_rect().get_center())
+	area.position = get_rect().size / 2

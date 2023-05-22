@@ -47,14 +47,14 @@ size_flags_vertical = 0
 texture = SubResource("AnimatedTexture_cct87")
 stretch_mode = 1
 
-[node name="Area2D" type="Area2D" parent="TextureRect" groups=["#water"]]
+[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
 visible = false
 z_index = 1
 collision_layer = 128
 collision_mask = 7
 script = ExtResource("1_378qa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_08xmy")
 
 [node name="ColorRect" type="ColorRect" parent="."]
