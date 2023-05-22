@@ -30,7 +30,7 @@ frame_6/duration = 0.15
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
 
-[node name="Water" type="VBoxContainer"]
+[node name="Lava" type="VBoxContainer"]
 offset_right = 32.0
 offset_bottom = 32.0
 theme_override_constants/separation = 0
