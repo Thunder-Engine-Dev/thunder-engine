@@ -14,6 +14,7 @@ class_name CorrectedCharacterBody2D
 @export var correct_collision: bool = true
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	_correct_collision()
 
 func _correct_collision() -> void:

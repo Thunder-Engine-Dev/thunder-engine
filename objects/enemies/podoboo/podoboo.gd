@@ -19,6 +19,7 @@ var _pos: Vector2
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
+	if !owner: return
 	if !Thunder.View.shows_tool(self): return
 	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE / global_scale)
 	draw_line(Vector2.ZERO, Vector2.UP * jumping_height, Color.DARK_ORANGE, 4)
