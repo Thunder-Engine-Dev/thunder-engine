@@ -2,6 +2,8 @@ extends Area2D
 
 const LAVA_SPRAY: PackedScene = preload("res://engine/objects/effects/sprays/lava_spray.tscn")
 
+var get_ready: bool
+
 
 func _ready() -> void:
 	# Body in/out of water
@@ -18,9 +20,12 @@ func _ready() -> void:
 			if body.is_in_group(&"#lava_body"):
 				_spray(body, Vector2.ZERO)
 	)
+	await get_tree().physics_frame
+	get_ready = true
 
 
 func _spray(on: Node2D, offset: Vector2) -> void:
+	if !get_ready: return
 	NodeCreator.prepare_2d(LAVA_SPRAY, on).bind_global_transform(offset).create_2d().call_method(
 		func(spray: Node2D) -> void:
 			if on is GravityBody2D:
