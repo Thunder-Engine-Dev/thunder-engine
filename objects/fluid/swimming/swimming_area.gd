@@ -2,8 +2,6 @@ extends Area2D
 
 const WATER_SPRAY: PackedScene = preload("res://engine/objects/effects/sprays/water_spray.tscn")
 
-var get_ready: bool
-
 
 func _ready() -> void:
 	# Body in/out of water
@@ -12,21 +10,18 @@ func _ready() -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.in_water()
-				_spray(body, underwater.spray_offset)
+				_spray.call_deferred(body, underwater.spray_offset)
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
-				_spray(body, underwater.spray_offset)
+				_spray.call_deferred(body, underwater.spray_offset)
 	)
-	await get_tree().physics_frame
-	get_ready = true
 
 
 func _spray(on: Node2D, offset: Vector2) -> void:
-	if !get_ready: return
 	NodeCreator.prepare_2d(WATER_SPRAY, on).bind_global_transform(offset).create_2d().call_method(
 		func(spray: Node2D) -> void:
 			if on is GravityBody2D:
