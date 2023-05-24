@@ -22,8 +22,8 @@ func _ready() -> void:
 
 
 func _spray(on: Node2D, offset: Vector2) -> void:
-	NodeCreator.prepare_2d(WATER_SPRAY, on).bind_global_transform(offset).call_method(
+	NodeCreator.prepare_2d(WATER_SPRAY, on).bind_global_transform(offset).create_2d().call_method(
 		func(spray: Node2D) -> void:
 			if on is GravityBody2D:
 				spray.translate(Vector2.UP * on.speed.y * on.get_physics_process_delta_time())
-	).create_2d.call_deferred()
+	)

@@ -19,6 +19,7 @@ func _ready() -> void:
 	Thunder._current_player_state = null
 	Scenes.reload_current_scene()
 	Data.values.lives -= 1
+	Data.values.onetime_blocks = false
 
 
 func _physics_process(delta: float) -> void:
