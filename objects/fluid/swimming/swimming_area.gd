@@ -10,20 +10,20 @@ func _ready() -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.in_water()
-				call_deferred(&"_spray", body, underwater.spray_offset)
+				_spray(body, underwater.spray_offset)
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
-				call_deferred(&"_spray", body, underwater.spray_offset)
+				_spray(body, underwater.spray_offset)
 	)
 
 
 func _spray(on: Node2D, offset: Vector2) -> void:
-	NodeCreator.prepare_2d(WATER_SPRAY, on).bind_global_transform(offset).create_2d().call_method(
+	NodeCreator.prepare_2d(WATER_SPRAY, on).bind_global_transform(offset).call_method(
 		func(spray: Node2D) -> void:
 			if on is GravityBody2D:
 				spray.translate(Vector2.UP * on.speed.y * on.get_physics_process_delta_time())
-	)
+	).create_2d.call_deferred()
