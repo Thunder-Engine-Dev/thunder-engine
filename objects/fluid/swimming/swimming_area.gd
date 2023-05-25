@@ -10,14 +10,14 @@ func _ready() -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.in_water()
-				_spray(body, underwater.spray_offset)
+				self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
-				_spray(body, underwater.spray_offset)
+				self._spray.call_deferred(body, underwater.spray_offset)
 	)
 
 

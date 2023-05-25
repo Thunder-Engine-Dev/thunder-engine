@@ -62,11 +62,3 @@ func _on_jump() -> void:
 	
 	if !sprite_node: return
 	sprite_node.flip_v = false
-
-
-func _on_screen_entered() -> void:
-	timer_interval.paused = false
-
-
-func _on_screen_exited() -> void:
-	timer_interval.paused = true

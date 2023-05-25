@@ -14,7 +14,9 @@ var dir: int
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	super()
+	
 	# Fix misdetection of being on wall when sloping down
 	floor_max_angle += PI/180
 	

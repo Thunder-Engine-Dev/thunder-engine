@@ -10,13 +10,13 @@ func _ready() -> void:
 			if body == Thunder._current_player:
 				body.die()
 			if body.is_in_group(&"#lava_body"):
-				_spray(body, Vector2.ZERO)
+				self._spray.call_deferred(body, Vector2.ZERO)
 	)
 	
 	body_exited.connect(
 		func(body: Node2D) -> void:
 			if body.is_in_group(&"#lava_body"):
-				_spray(body, Vector2.ZERO)
+				self._spray.call_deferred(body, Vector2.ZERO)
 	)
 
 
