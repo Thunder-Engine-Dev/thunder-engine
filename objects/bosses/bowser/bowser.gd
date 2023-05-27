@@ -54,6 +54,8 @@ var lock_direction: bool
 var lock_movement: bool
 var jump_enabled: bool
 
+var trigger: Node2D
+
 var current_status: StringName
 var next_status: Array[StringName]
 var pos_y_on_floor: float
@@ -79,7 +81,6 @@ func _ready() -> void:
 	facing = get_facing(facing)
 	direction = facing
 	vel_set_x(0)
-	activate()
 
 
 func _physics_process(delta: float) -> void:
@@ -315,6 +316,7 @@ func bullet_hurt() -> void:
 
 # Bowser's death
 func die() -> void:
+	if trigger.has_method(&"stop_music"): trigger.stop_music()
 	queue_free()
 
 

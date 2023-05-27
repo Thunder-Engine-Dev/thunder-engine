@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://diivlwjl0y1i7"]
+
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_trigger.gd" id="1_qucnd"]
+
+[node name="BowserTrigger" type="Path2D"]
+editor_description = "This should be placed ONLY as DIRECT CHILD of the level, and just under the camera"
+script = ExtResource("1_qucnd")
+trigger_area = Rect2(-16, -240, 32, 480)
+
+[node name="RouteFollower" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
+
+[node name="BossMusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

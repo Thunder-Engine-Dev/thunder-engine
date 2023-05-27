@@ -13,7 +13,6 @@ enum FadingMethod {
 	SMOOTH_STEP ## Fading musics with [method @GlobalScope.smoothstep] [i](Experimental!)[/i]
 }
 
-var _fading_musics: Array[Dictionary]
 var _music_channels: Dictionary = {}
 
 var _calculate_player_position = _lcpp.bind()
@@ -25,10 +24,6 @@ func _init() -> void:
 
 func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
-
-
-func _process(delta: float) -> void:
-	_fading(delta)
 
 
 func _create_2d_player(pos: Vector2, is_global: bool) -> AudioStreamPlayer2D:
@@ -49,31 +44,6 @@ func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
 	add_child(player)
 	return player
 
-
-func _fading(delta: float) -> void:
-	for l in range(len(_fading_musics)):
-		if l > len(_fading_musics) - 1: continue
-		var i = _fading_musics[l]
-		
-		if !is_instance_valid(i.fading_music_player):
-			_fading_musics.pop_at(l)
-			continue
-		
-		var fading_music_player: AudioStreamPlayer = i.fading_music_player
-		
-		if !fading_music_player: continue
-		
-		match i.fading_method:
-			FadingMethod.LINEAR: fading_music_player.volume_db = move_toward(fading_music_player.volume_db,i.fading_to,i.fading_weight)
-			FadingMethod.LERP: fading_music_player.volume_db = lerp(fading_music_player.volume_db,i.fading_to,i.fading_weight)
-			FadingMethod.SMOOTH_STEP: fading_music_player.volume_db = smoothstep(fading_music_player.volume_db,i.fading_to,i.fading_weight)
-		
-		if fading_music_player.volume_db == i.fading_to:
-			if bool(i.fading_stop_after_fading):
-				fading_music_player.stop()
-			
-			_fading_musics.pop_at(l)
-			continue
 
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
 ## [b]Note:[/b] This method creates [AudioStreamPlayer2D] which plays sound with pan changed according to its position to the center of screen, rather than [AudioStreamPlayer].[br]
@@ -135,6 +105,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 	_music_channels[channel_id].play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch
+	if &"volume" in other_keys && other_keys.volume is float: _music_channels[channel_id].volume_db = other_keys.volume
 	if &"ignore_pause" in other_keys && other_keys.ignore_pause:_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS
 
 
@@ -144,22 +115,30 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 ## [param weight] is the strength/delta-value to fade the music[br]
 ## [param method] is the way to fade the music, different [param method] decides different [param weight] calculation. See [enum FadingMethod][br]
 ## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
-func fade_music_1d_player(player: AudioStreamPlayer, to: float, weight: float, method: FadingMethod = FadingMethod.LINEAR, stop_after_fading: bool = false) -> void:
-	var has_player: bool
-	
-	for i in _fading_musics:
-		if i.fading_music_player == player:
-			has_player = true
-			continue
-	
-	if has_player: return
-	
-	_fading_musics.append(
-		{
-			fading_music_player = player,
-			fading_to = to, 
-			fading_weight = weight, 
-			fading_method = method, 
-			fading_stop_after_fading = stop_after_fading
-		}
+func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false) -> void:
+	if !player: return
+	var tween: Tween = create_tween().set_trans(method)
+	tween.tween_property(player, "volume_db", to, duration)
+	tween.tween_callback(
+		func() -> void:
+			if stop_after_fading: player.stop()
+			tween.kill()
 	)
+
+
+## Stop a channel from playing
+func stop_music_channel(channel_id: int, fade: bool) -> void:
+	if !_music_channels[channel_id]: return
+	if !fade:
+		_music_channels[channel_id].stop()
+	else:
+		fade_music_1d_player(_music_channels[channel_id], -40, 1.5, Tween.TRANS_LINEAR, true)
+
+
+## Stop all musics from playing
+func stop_all_musics(fade: bool) -> void:
+	for i in _music_channels:
+		if !fade:
+			_music_channels[i].stop()
+		else:
+			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
