@@ -22,7 +22,7 @@ func teleport() -> void:
 	Thunder.view.cam_border()
 	
 	if par is PathFollow2D:
-		if !player: return
+		if !player || player.completed: return
 		while !Thunder.view.screen_left(player.global_position, -16):
 			player.global_position += Vector2.RIGHT.rotated(global_rotation)
 			player.vel_set_x(0)

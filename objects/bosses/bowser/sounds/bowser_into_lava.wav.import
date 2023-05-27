@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://8ktedmjgjgx1"
-path="res://.godot/imported/bowser_in_lava.wav-a1a74e6c53f7b779ad468509a451dfbd.sample"
+path="res://.godot/imported/bowser_into_lava.wav-7f6095ac1bdb3871680938716569b774.sample"
 
 [deps]
 
-source_file="res://engine/objects/bosses/bowser/sounds/bowser_in_lava.wav"
-dest_files=["res://.godot/imported/bowser_in_lava.wav-a1a74e6c53f7b779ad468509a451dfbd.sample"]
+source_file="res://engine/objects/bosses/bowser/sounds/bowser_into_lava.wav"
+dest_files=["res://.godot/imported/bowser_into_lava.wav-7f6095ac1bdb3871680938716569b774.sample"]
 
 [params]
 

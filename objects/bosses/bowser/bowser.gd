@@ -2,7 +2,8 @@ extends GravityBody2D
 
 signal health_changed(to: int)
 
-const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.tscn")
+const HUD: PackedScene = preload("./bowser_hud.tscn")
+const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 
 @export_category("Bowser")
 @export_group("Health")
@@ -17,7 +18,7 @@ const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.
 @export var hurt_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav")
 @export var death_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
 @export var falling_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_fall.wav")
-@export var in_lava_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_in_lava.wav")
+@export var into_lava_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_into_lava.wav")
 @export_group("Status")
 @export var status_interval: Array[float] = [3]
 ## There are the status you can input: [br]
@@ -42,6 +43,7 @@ const HUD: PackedScene = preload("res://engine/objects/bosses/bowser/bowser_hud.
 @export var jumping_interval: float = 0.22
 @export var jumping_speed: float = 300
 @export_group("Level Setting")
+@export_enum("Left: -1", "Right: 1") var complete_direction: int = 1
 @export var final_boss: bool = true
 
 var tween_hurt: Tween
@@ -68,6 +70,7 @@ var _jump_factor: float
 var _bullet_received: int
 
 @onready var sprite: AnimatedSprite2D = $Sprite
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var animations: AnimationPlayer = $Animations
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 @onready var pos_flame: Marker2D = $PosFlame
@@ -84,13 +87,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if !active: return
 	# Direction
 	if !lock_direction:
 		facing = get_facing(facing)
 	# Animation
 	if facing != 0:
 		sprite.flip_h = (facing < 0)
+	
+	if !active: return
+	
 	match sprite.animation:
 		&"default":
 			if !is_on_floor(): animations.play(&"bowser/jump")
@@ -110,18 +115,13 @@ func _physics_process(delta: float) -> void:
 		_jumping(delta)
 	# Attack
 	if !tween_status:
-		tween_status = create_tween()
+		tween_status = create_tween().set_loops()
 		for i in status.size():
 			tween_status.tween_interval(status_interval[i])
 			tween_status.tween_callback(
 				func() -> void:
 					attack(status[i])
 			)
-		tween_status.tween_callback(
-			func() -> void:
-				tween_status.kill()
-				tween_status = null
-		)
 	# Physics
 	motion_process(delta)
 	if is_on_floor():
@@ -279,7 +279,6 @@ func hurt() -> void:
 		Audio.play_sound(hurt_sound, self)
 		health -= 1
 	if health <= 0:
-		Audio.play_sound(death_sound, self)
 		die()
 		return
 	
@@ -316,7 +315,18 @@ func bullet_hurt() -> void:
 
 # Bowser's death
 func die() -> void:
+	Audio.play_sound(death_sound, self)
 	if trigger.has_method(&"stop_music"): trigger.stop_music()
+	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(
+		func(cps: Node2D) -> void:
+			var spr: AnimatedSprite2D = sprite.duplicate()
+			cps.add_child(spr)
+			spr.play.call_deferred(&"death")
+			cps.add_child(collision_shape.duplicate())
+			cps.falling_sound = falling_sound
+			cps.into_lava_sound = into_lava_sound
+			cps.direction_to_complete = complete_direction
+	)
 	queue_free()
 
 

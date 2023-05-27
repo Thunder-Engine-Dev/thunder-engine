@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 
 
 func stop_music(fade: bool = true) -> void:
-	if fade:
+	if !fade:
 		boss_music_player.stop()
 	else:
 		Audio.fade_music_1d_player(boss_music_player, -40, 1.5, Tween.TRANS_LINEAR, true)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=43 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_i07i2"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
 [ext_resource type="Texture2D" uid="uid://bt6e8nxjbyago" path="res://engine/objects/bosses/bowser/texture/bowser_triple_flame.png" id="8_pk18g"]
+[ext_resource type="Texture2D" uid="uid://diyylloivtfrr" path="res://engine/objects/bosses/bowser/texture/killed.png" id="9_sofua"]
 
 [sub_resource type="Resource" id="Resource_5jupm"]
 script = ExtResource("3_8kobe")
@@ -67,6 +68,14 @@ region = Rect2(0, 72, 64, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_djpit"]
 atlas = ExtResource("2_2ap45")
 region = Rect2(0, 144, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkff0"]
+atlas = ExtResource("9_sofua")
+region = Rect2(0, 0, 64, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa123"]
+atlas = ExtResource("9_sofua")
+region = Rect2(64, 0, 64, 76)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33ya3"]
 atlas = ExtResource("2_72iau")
@@ -134,6 +143,17 @@ animations = [{
 "loop": true,
 "name": &"burst",
 "speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkff0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wa123")
+}],
+"loop": true,
+"name": &"death",
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,

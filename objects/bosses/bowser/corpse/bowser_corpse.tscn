@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu1ie186qs336"]
+
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/corpse/bowser_corpse.gd" id="1_a5dlx"]
+
+[node name="BowserCorpse" type="Area2D"]
+collision_layer = 0
+collision_mask = 128
+script = ExtResource("1_a5dlx")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(4.76837e-06, 4.76837e-06)
+scale = Vector2(4.8, 4.8)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

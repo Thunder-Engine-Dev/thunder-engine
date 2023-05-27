@@ -7,6 +7,9 @@ class_name Level
 ## Once you selected this node via [b]Create Node Pannel[/b] it will automatically deploy the basic template
 ## of a level, which is more convenient to structure a level from zero.
 
+## Emitted when player completes the level
+signal level_completed
+
 ## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.
 @export var time: int = 360
 
@@ -38,6 +41,8 @@ var _force_player_walking_dir: int = 1:
 		if dir == 0:
 			dir = [-1, 1].pick_random()
 var _forced_player_on_wall: bool
+
+var completed: bool
 
 
 func _ready() -> void:
@@ -112,6 +117,8 @@ func _physics_process(delta: float) -> void:
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
+	level_completed.emit()
+	
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
 	Audio._music_channels[1].stop()
