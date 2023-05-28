@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://01suy3utgv57"]
 
 [ext_resource type="FontFile" uid="uid://dva6dn1umvs5p" path="res://engine/components/score/fonts/score.fnt" id="1_cixxs"]
 [ext_resource type="Script" path="res://engine/components/score/score_text.gd" id="1_tt3sk"]
-
 
 [sub_resource type="LabelSettings" id="LabelSettings_rs55w"]
 font = ExtResource("1_cixxs")
 
 [node name="score_text" type="Label"]
+z_index = 5
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
