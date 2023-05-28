@@ -23,35 +23,45 @@ var target_position: Vector2 = Vector2.ZERO
 ## Position side padding array (works per item and adds to the global padding value)
 @export var position_paddings_array: Array[float] = []
 
+var _current_item_index: int = -1
+var _current_item_node: Control = null
+var _immediate: bool
+
 ## Handles the selection change, used as a signal handler
 func handle_selection(item_index: int, item_node: Control, immediate: bool) -> void:
+	_current_item_index = item_index
+	_current_item_node = item_node
+	_immediate = immediate
+
+
+func _update_pos() -> void:
 	match position_side:
 		POSITION_SIDE.LEFT:
-			target_position = item_node.global_position
-			target_position.y += item_node.get_rect().size.y / 2
+			target_position = _current_item_node.global_position
+			target_position.y += _current_item_node.get_rect().size.y / 2
 			target_position.x -= position_padding
-			if len(position_paddings_array) > item_index:
-				target_position.x -= position_paddings_array[item_index]
+			if len(position_paddings_array) > _current_item_index:
+				target_position.x -= position_paddings_array[_current_item_index]
 		POSITION_SIDE.RIGHT:
-			target_position = item_node.global_position
-			target_position.y += item_node.get_rect().size.y / 2
-			target_position.x += position_padding + item_node.get_rect().size.x
-			if len(position_paddings_array) > item_index:
-				target_position.x += position_paddings_array[item_index]
+			target_position = _current_item_node.global_position
+			target_position.y += _current_item_node.get_rect().size.y / 2
+			target_position.x += position_padding + _current_item_node.get_rect().size.x
+			if len(position_paddings_array) > _current_item_index:
+				target_position.x += position_paddings_array[_current_item_index]
 		POSITION_SIDE.TOP:
-			target_position = item_node.global_position
-			target_position.x += item_node.get_rect().size.x / 2
+			target_position = _current_item_node.global_position
+			target_position.x += _current_item_node.get_rect().size.x / 2
 			target_position.y += position_padding
-			if len(position_paddings_array) > item_index:
-				target_position.y += position_paddings_array[item_index]
+			if len(position_paddings_array) > _current_item_index:
+				target_position.y += position_paddings_array[_current_item_index]
 		POSITION_SIDE.BOTTOM:
-			target_position = item_node.global_position
-			target_position.x += item_node.get_rect().size.x / 2
-			target_position.y += position_padding + item_node.get_rect().size.y
-			if len(position_paddings_array) >= item_index:
-				target_position.y += position_paddings_array[item_index]
+			target_position = _current_item_node.global_position
+			target_position.x += _current_item_node.get_rect().size.x / 2
+			target_position.y += position_padding + _current_item_node.get_rect().size.y
+			if len(position_paddings_array) >= _current_item_index:
+				target_position.y += position_paddings_array[_current_item_index]
 	
-	if immediate:
+	if _immediate:
 		global_position = target_position
 
 
@@ -60,3 +70,6 @@ func _physics_process(delta: float) -> void:
 		global_position = global_position.lerp(target_position, smooth_speed * Thunder.get_delta(delta))
 	else:
 		global_position = target_position
+	
+	if is_instance_valid(_current_item_node):
+		_update_pos()
