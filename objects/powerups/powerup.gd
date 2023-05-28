@@ -1,7 +1,7 @@
 extends GravityBody2D
 class_name Powerup
 
-@export_group("PowerupSettings")
+@export_group("Powerup Settings")
 @export var slide: bool = true
 @export var to_suit: Dictionary = {
 	Mario = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres")
@@ -10,6 +10,11 @@ class_name Powerup
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
 @export var score: int = 1000
+
+
+@export_group("Supply Behavior")
+@export var supply_behavior: bool = false
+@export var supply_modify_lives: int = 0
 
 
 @export_group("SFX")
@@ -27,12 +32,13 @@ func _from_bumping_block() -> void:
 	Audio.play_sound(appearing_sound, self)
 
 func _physics_process(delta: float) -> void:
-	if !appear_distance:
-		motion_process(delta, slide)
-		z_index = 0
-	else:
-		appear_process(Thunder.get_delta(delta))
-		z_index = -1
+	if !supply_behavior:
+		if !appear_distance:
+			motion_process(delta, slide)
+			z_index = 0
+		else:
+			appear_process(Thunder.get_delta(delta))
+			z_index = -1
 	
 	var player: Player = Thunder._current_player
 	if !player: return
@@ -48,6 +54,10 @@ func appear_process(delta: float) -> void:
 func collect() -> void:
 	_change_state_logic(force_powerup_state)
 	
+	if supply_behavior:
+		Data.values.lives = ProjectSettings.get("application/thunder_settings/player/default_lives") + supply_modify_lives
+		return
+	
 	if score > 0:
 		ScoreText.new(str(score), self)
 		Data.values.score += score
@@ -59,7 +69,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 	var player: Player = Thunder._current_player
 	var to: PlayerSuit = to_suit[player.character]
 	if force_powerup:
-		if to != Thunder._current_player_state:
+		if to.name != Thunder._current_player_state.name:
 			player.change_suit(to)
 			Audio.play_sound(pickup_powerup_sound, self, true, {pitch = sound_pitch})
 		else:
@@ -68,7 +78,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 	
 	if (
 		to.type > Thunder._current_player_state.type || (
-			to != Thunder._current_player_state && 
+			to.name != Thunder._current_player_state.name && 
 			to.type == Thunder._current_player_state.type
 		)
 	):
