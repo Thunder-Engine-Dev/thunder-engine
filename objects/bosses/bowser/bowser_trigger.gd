@@ -43,7 +43,6 @@ func _physics_process(delta: float) -> void:
 				cam.force_update_transform()
 				cam.force_update_scroll()
 			if boss_music:
-				boss_music_player.stream
 				Audio.stop_all_musics(boss_music_fading)
 				if boss_music_fading:
 					var tween: Tween = create_tween()
@@ -56,6 +55,9 @@ func _physics_process(delta: float) -> void:
 								boss_music_player.volume_db = -40
 								Audio.fade_music_1d_player(boss_music_player, 0, 1.5)
 					)
+				else:
+					boss_music_player.stream = boss_music
+					boss_music_player.play()
 			triggered = true
 	else:
 		if route_follower.progress_ratio < 1.0: 
