@@ -25,6 +25,6 @@ func _physics_process(delta: float) -> void:
 		is_equal_approx(get_screen_center_position().y, camera.get_screen_center_position().y)
 	) || position_smoothing_speed > 35:
 		camera.make_current()
-		queue_free()
 		await get_tree().physics_frame
 		Scenes.current_scene.falling_below_y_offset /= 10
+		queue_free()
