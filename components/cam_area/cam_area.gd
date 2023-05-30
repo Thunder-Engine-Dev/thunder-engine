@@ -55,6 +55,7 @@ func _physics_process(_delta: float) -> void:
 			cam.limit_right = camera.limit_right
 			cam.limit_bottom = camera.limit_bottom
 			add_child(cam)
+			Scenes.current_scene.falling_below_y_offset *= 10
 		
 		_switch_bounds()
 	

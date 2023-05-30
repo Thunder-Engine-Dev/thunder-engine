@@ -26,3 +26,5 @@ func _physics_process(delta: float) -> void:
 	) || position_smoothing_speed > 35:
 		camera.make_current()
 		queue_free()
+		await get_tree().physics_frame
+		Scenes.current_scene.falling_below_y_offset /= 10

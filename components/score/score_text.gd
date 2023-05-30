@@ -10,6 +10,7 @@ func _init(string: String, ref: Node2D):
 	Scenes.current_scene.add_child(self)
 	var pos = size / 2
 	global_position = ref.global_position - pos
+	z_index = 1000
 	# godot developers forgot to implement global_rotation in control nodes :skull:
 	#global_rotation = Thunder._current_player.global_rotation
 	
