@@ -90,8 +90,6 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	print(falling_below_y_offset)
-	
 	var player: Player = Thunder._current_player
 	if !player: return
 	
