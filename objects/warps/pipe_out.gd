@@ -21,11 +21,8 @@ func _ready() -> void:
 	
 	if trigger_immediately:
 		player = Thunder._current_player
+		player_z_index = player.z_index
 		player.speed = Vector2.ZERO
-		player.warp = Player.Warp.OUT
-		player.warp_dir = warp_direction
-		player.global_position = pos_player.global_position
-		player.z_index = -5
 		pass_player(player)
 
 func _physics_process(delta: float) -> void:
@@ -50,8 +47,10 @@ func _on_body_exited(body: Node2D) -> void:
 func pass_player(new_player: Player) -> void:
 	if Engine.is_editor_hint(): return
 	if !is_instance_valid(new_player): return
-	
 	player = new_player
+	
+	# Recover z_index if called directly
+	player_z_index = player.z_index
 	
 	var player_warp_dir: Player.WarpDir
 	
@@ -71,6 +70,8 @@ func pass_player(new_player: Player) -> void:
 	
 	player.global_position = pos_player.global_position
 	player.warp_dir = player_warp_dir
+	player.z_index = -5
+	player.warp = Player.Warp.OUT
 	
 	await get_tree().process_frame
 	Audio.play_sound(warping_sound, self, false)
