@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://chn8d8bjrm7eu"]
+
+[ext_resource type="Script" path="res://engine/objects/fluid/whirlpool.gd" id="1_j0csg"]
+[ext_resource type="Material" uid="uid://etb8ev74nvyf" path="res://engine/objects/fluid/particle/bubbles.tres" id="2_syd7u"]
+[ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="3_vn1cs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqykc"]
+size = Vector2(32, 32)
+
+[node name="Whirlpool" type="Area2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_j0csg")
+sucking_motion = Vector2(100, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_hqykc")
+debug_color = Color(0.403922, 0.890196, 1, 0.521569)
+metadata/_edit_lock_ = true
+
+[node name="Bubbles" type="GPUParticles2D" parent="."]
+position = Vector2(16, 0)
+amount = 15
+process_material = ExtResource("2_syd7u")
+texture = ExtResource("3_vn1cs")
+lifetime = 0.5
+fixed_fps = 60
+visibility_rect = Rect2(-16, 0, 32, 32)
+metadata/_edit_lock_ = true
+
+[node name="PosSuck" type="Marker2D" parent="."]
+visible = false
+position = Vector2(16, 32)
+metadata/_edit_lock_ = true
