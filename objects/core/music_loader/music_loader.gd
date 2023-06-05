@@ -15,7 +15,6 @@ func _ready() -> void:
 
 
 func _change_music(index: int, channel_id: int) -> void:
-	if len(music) <= index: return
 	Audio.play_music(music[index], channel_id, { "ignore_pause": true })
 
 
