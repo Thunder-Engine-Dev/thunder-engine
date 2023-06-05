@@ -14,6 +14,7 @@ enum FadingMethod {
 }
 
 var _music_channels: Dictionary = {}
+var _music_tweens: Array[Tween]
 
 var _calculate_player_position = _lcpp.bind()
 
@@ -117,13 +118,17 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 ## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false) -> void:
 	if !player: return
+	if player in _music_tweens: return
 	var tween: Tween = create_tween().set_trans(method)
 	tween.tween_property(player, "volume_db", to, duration)
 	tween.tween_callback(
 		func() -> void:
 			if stop_after_fading: player.stop()
 			tween.kill()
+			if tween in _music_tweens:
+				_music_tweens.erase(tween)
 	)
+	_music_tweens.append(tween)
 
 
 ## Stop a channel from playing
