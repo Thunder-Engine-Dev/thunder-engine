@@ -147,7 +147,7 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 
 
 ## Stop all musics from playing
-func stop_all_musics(fade: bool) -> void:
+func stop_all_musics(fade: bool = false) -> void:
 	for i in _music_channels:
 		if !fade:
 			_music_channels[i].stop()

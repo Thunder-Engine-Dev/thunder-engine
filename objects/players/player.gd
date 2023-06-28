@@ -162,6 +162,7 @@ func hurt(tags: Dictionary = {}) -> void:
 func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
 	
+	Audio.stop_all_musics()
 	Audio.play_music(suit.sound_death, 1, {pitch = suit.sound_pitch})
 	
 	if death_body:
