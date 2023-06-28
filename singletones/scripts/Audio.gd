@@ -27,21 +27,27 @@ func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
 
-func _create_2d_player(pos: Vector2, is_global: bool) -> AudioStreamPlayer2D:
+func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
 	player.global_position = pos
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.scene_changed.connect(player.queue_free.unbind(1))
+		if !on_scene_ready:
+			Scenes.scene_changed.connect(player.queue_free.unbind(1))
+		else:
+			Scenes.scene_ready.connect(func() -> void: Scenes.scene_changed.connect(player.queue_free.unbind(1)))
 	add_child(player)
 	return player
 
 
-func _create_1d_player(is_global: bool) -> AudioStreamPlayer:
+func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.pre_scene_changed.connect(player.queue_free)
+		if !on_scene_ready:
+			Scenes.scene_changed.connect(player.queue_free.unbind(1))
+		else:
+			Scenes.scene_ready.connect(func() -> void: Scenes.scene_changed.connect(player.queue_free.unbind(1)))
 	add_child(player)
 	return player
 
@@ -100,7 +106,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
 func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary = {}) -> void:
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
-		_music_channels[channel_id] = _create_1d_player(false)
+		_music_channels[channel_id] = _create_1d_player(false, true)
 	
 	_music_channels[channel_id].stream = resource
 	_music_channels[channel_id].play()

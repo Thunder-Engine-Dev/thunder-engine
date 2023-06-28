@@ -4,7 +4,6 @@ extends Node
 @export var index: int = 0:
 	set(i):
 		if index == i: return
-		
 		index = i
 		_change_music(i, channel_id)
 

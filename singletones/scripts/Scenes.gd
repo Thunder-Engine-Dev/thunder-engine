@@ -11,6 +11,9 @@ signal scene_changed(to: Node)
 ## Emitted right before the new scene is loaded
 signal pre_scene_changed
 
+## Emitted when the current scene is ready
+signal scene_ready
+
 # Loaded scene buffer for optimization purpose
 var _current_scene_buffer: PackedScene
 ## Current scene
@@ -31,6 +34,7 @@ func load_scene_deferred(scene: Node) -> void:
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit()
+	scene_ready.emit()
 
 
 ## Load a [PackedScene] and instantiate it as [Node], and then call [method load_scene] to make it current and shown
@@ -42,6 +46,7 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
+	scene_ready.emit()
 
 
 ## Loads the scene from the given path and instantiates it
