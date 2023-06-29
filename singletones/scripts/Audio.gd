@@ -35,7 +35,10 @@ func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = fal
 		if !on_scene_ready:
 			Scenes.scene_changed.connect(player.queue_free.unbind(1))
 		else:
-			Scenes.scene_ready.connect(func() -> void: Scenes.scene_changed.connect(player.queue_free.unbind(1)))
+			Scenes.scene_ready.connect(func() -> void:
+				if !is_instance_valid(player): return 
+				Scenes.scene_changed.connect(player.queue_free.unbind(1))
+			)
 	add_child(player)
 	return player
 
@@ -47,7 +50,10 @@ func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioSt
 		if !on_scene_ready:
 			Scenes.scene_changed.connect(player.queue_free.unbind(1))
 		else:
-			Scenes.scene_ready.connect(func() -> void: Scenes.scene_changed.connect(player.queue_free.unbind(1)))
+			Scenes.scene_ready.connect(func() -> void:
+				if !is_instance_valid(player): return 
+				Scenes.scene_changed.connect(player.queue_free.unbind(1))
+			)
 	add_child(player)
 	return player
 
