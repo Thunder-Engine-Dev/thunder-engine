@@ -104,6 +104,7 @@ func _movement_climbing(delta: float) -> void:
 	if player.jumping > 0 && !_has_jumped:
 		_has_jumped = true
 		player.is_climbing = false
+		player.direction = player.left_right
 		player.jump(config.jump_speed)
 		Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 
