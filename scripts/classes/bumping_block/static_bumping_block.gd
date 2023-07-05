@@ -28,8 +28,8 @@ var _triggered: bool = false
 @export var break_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 
 @export_group("Block Visibility")
-## Is initially visible
-@export var initially_visible: bool = true
+## Is initially visible and solid
+@export var initially_visible_and_solid: bool = true
 ## Exists only before player dies
 @export var exists_once: bool = false
 
@@ -46,10 +46,10 @@ signal result_appeared
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		if !initially_visible:
-			if !Data.values.onetime_blocks && exists_once: queue_free()
+		if !Data.values.onetime_blocks && exists_once: return queue_free()
+		if !initially_visible_and_solid:
 			_collision_shape_2d.disabled = true
-		visible = initially_visible
+		visible = initially_visible_and_solid
 
 func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
@@ -70,6 +70,9 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	
 	_collision_shape_2d.disabled = false
 	visible = true
+	
+	if initially_visible_and_solid && _collision_shape_2d.disabled:
+		_collision_shape_2d.set_deferred(&"disabled", false)
 	
 	_triggered = true
 	
