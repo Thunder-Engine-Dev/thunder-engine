@@ -29,11 +29,30 @@ var _triggered: bool = false
 
 @export_group("Block Visibility")
 ## Is initially visible and solid
-@export var initially_visible_and_solid: bool = true
+@export var initially_visible_and_solid: bool = true:
+	set(to):
+		initially_visible_and_solid = to
+		if !Engine.is_editor_hint(): return
+		if !initially_visible_and_solid:
+			if _editor_alpha == 0: 
+				_editor_alpha = modulate.a
+				modulate.a = 0.25
+				print(1)
+		elif _editor_alpha > 0:
+			modulate.a = _editor_alpha
+			_editor_alpha = 0
 ## Exists only before player dies
 @export var exists_once: bool = false
 
+var _editor_alpha: float = 0
+
+var _unsolid_layer: int = 16
+var _unsolid_mask: int = 1
+
 var _no_result_appearing_animation: bool = false
+
+@onready var collision_layer_ori: int = collision_layer
+@onready var collision_mask_ori: int = collision_mask
 
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var _animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -48,7 +67,9 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		if !Data.values.onetime_blocks && exists_once: return queue_free()
 		if !initially_visible_and_solid:
-			_collision_shape_2d.disabled = true
+			collision_layer = _unsolid_layer
+			collision_mask = _unsolid_mask
+			_collision_shape_2d.set_deferred(&"disabled", true)
 		visible = initially_visible_and_solid
 
 func _physics_process(delta) -> void:
@@ -57,7 +78,7 @@ func _physics_process(delta) -> void:
 		return
 
 func _editor_process() -> void:
-	return
+	pass
 
 
 ## Make the block bumped. If the block was just now got or is being bumped, then nothing will happen[br]
@@ -68,10 +89,10 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if _triggered: return
 	if !active: return
 	
-	_collision_shape_2d.disabled = false
 	visible = true
-	
-	if initially_visible_and_solid && _collision_shape_2d.disabled:
+	if !initially_visible_and_solid:
+		collision_layer = collision_layer_ori
+		collision_mask = collision_mask_ori
 		_collision_shape_2d.set_deferred(&"disabled", false)
 	
 	_triggered = true
