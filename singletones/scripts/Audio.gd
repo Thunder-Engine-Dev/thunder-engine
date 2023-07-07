@@ -156,6 +156,6 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 func stop_all_musics(fade: bool = false) -> void:
 	for i in _music_channels:
 		if !fade:
-			_music_channels[i].stop()
+			_music_channels[i].free()
 		else:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
