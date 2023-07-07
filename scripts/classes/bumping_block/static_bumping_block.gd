@@ -34,17 +34,11 @@ var _triggered: bool = false
 		initially_visible_and_solid = to
 		if !Engine.is_editor_hint(): return
 		if !initially_visible_and_solid:
-			if _editor_alpha == 0: 
-				_editor_alpha = modulate.a
-				modulate.a = 0.25
-				print(1)
-		elif _editor_alpha > 0:
-			modulate.a = _editor_alpha
-			_editor_alpha = 0
+			modulate.a = 0.25
+		else:
+			modulate.a = 1
 ## Exists only before player dies
 @export var exists_once: bool = false
-
-var _editor_alpha: float = 0
 
 var _unsolid_layer: int = 16
 var _unsolid_mask: int = 1
@@ -65,6 +59,7 @@ signal result_appeared
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
+		modulate.a = 1
 		if !Data.values.onetime_blocks && exists_once: return queue_free()
 		if !initially_visible_and_solid:
 			collision_layer = _unsolid_layer
