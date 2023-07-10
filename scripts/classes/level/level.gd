@@ -46,7 +46,6 @@ var completed: bool
 
 
 func _ready() -> void:
-	super()
 	if Engine.is_editor_hint():
 		if get_child_count() == 0:
 			_prepare_template()
@@ -54,6 +53,8 @@ func _ready() -> void:
 		return
 	
 	Data.values.time = time
+	
+	super()
 
 # Adding neccessary nodes to our level scene
 func _prepare_template() -> void:
@@ -93,6 +94,7 @@ func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	
+	# Force player walking when completed
 	if _force_player_walking && !_forced_player_on_wall:
 		player.direction = _force_player_walking_dir
 		player.speed.x = 120 * player.direction
@@ -100,8 +102,7 @@ func _physics_process(delta: float) -> void:
 		if _forced_player_on_wall:
 			player.speed.x = 0
 	
-	await get_tree().physics_frame
-	
+	# Falling behavior
 	if !player:
 		return
 	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset):
