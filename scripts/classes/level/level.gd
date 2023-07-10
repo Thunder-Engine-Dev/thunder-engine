@@ -103,7 +103,7 @@ func _physics_process(delta: float) -> void:
 			player.speed.x = 0
 	
 	# Falling behavior
-	if !player:
+	if !player || !_is_stage_ready:
 		return
 	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset):
 		match falling_below_screen_action:
