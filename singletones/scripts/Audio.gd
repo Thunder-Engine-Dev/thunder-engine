@@ -24,7 +24,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	Scenes.pre_scene_changed.connect(_stop_all_musics_scene_changed.unbind(1))
+	Scenes.pre_scene_changed.connect(_stop_all_musics_scene_changed)
 
 
 func _lcpp(ref: Node2D) -> Vector2:
