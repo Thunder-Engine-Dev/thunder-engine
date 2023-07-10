@@ -23,6 +23,10 @@ func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
+func _ready() -> void:
+	Scenes.pre_scene_changed.connect(_stop_all_musics_scene_changed.unbind(1))
+
+
 func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
@@ -32,13 +36,7 @@ func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = fal
 	player.global_position = pos
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		if !on_scene_ready:
-			Scenes.scene_changed.connect(player.queue_free.unbind(1))
-		else:
-			Scenes.scene_ready.connect(func() -> void:
-				if !is_instance_valid(player): return 
-				Scenes.scene_changed.connect(player.queue_free.unbind(1))
-			)
+		player.set_meta(&"stop_when_scene_changed", true)
 	add_child(player)
 	return player
 
@@ -47,13 +45,7 @@ func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioSt
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		if !on_scene_ready:
-			Scenes.scene_changed.connect(player.queue_free.unbind(1))
-		else:
-			Scenes.scene_ready.connect(func() -> void:
-				if !is_instance_valid(player): return 
-				Scenes.scene_changed.connect(player.queue_free.unbind(1))
-			)
+		player.set_meta(&"stop_when_scene_changed", true)
 	add_child(player)
 	return player
 
@@ -162,3 +154,11 @@ func stop_all_musics(fade: bool = false) -> void:
 			_music_channels.erase(i)
 		else:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
+
+
+func _stop_all_musics_scene_changed() -> void:
+	for i in _music_channels:
+		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"stop_when_scene_changed", false):
+			continue
+		_music_channels[i].free()
+		_music_channels.erase(i)
