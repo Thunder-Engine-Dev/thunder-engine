@@ -174,6 +174,7 @@ func die(tags: Dictionary = {}) -> void:
 					dsdup.visible = true
 		).create_2d()
 	
+	died.emit()
 	queue_free()
 
 
