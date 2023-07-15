@@ -5,6 +5,9 @@ extends Node
 ## Since the management of scenes in Godot is vague, it's recommended to use this
 ## singleton to implement scene management
 
+## Emitted when the scene is reloaded
+signal scene_reloaded
+
 ## Emitted when the scene is changed
 signal scene_changed(to: Node)
 
@@ -59,5 +62,6 @@ func goto_scene(path: String) -> void:
 
 ## Reload current scene
 func reload_current_scene() -> void:
+	scene_reloaded.emit()
 	pre_scene_changed.emit()
 	goto_scene(current_scene.scene_file_path)

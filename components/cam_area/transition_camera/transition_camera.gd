@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var camera = Thunder._current_camera
+	Thunder.view.cam_border()
 	global_position = camera.global_position
 	
 	position_smoothing_speed += 1 * Thunder.get_delta(delta)
