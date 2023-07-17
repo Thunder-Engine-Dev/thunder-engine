@@ -27,3 +27,8 @@ static func flash(on: CanvasItem, duration: float, interval: float = 0.06) -> vo
 	var tw: Tween = on.create_tween().set_loops(int(ceilf(duration / interval)))
 	tw.tween_property(on, "modulate:a", 0, interval / 2)
 	tw.tween_property(on, "modulate:a", alpha, interval / 2)
+	tw.tween_callback(
+		func() -> void:
+			if tw.get_loops_left() <= 0:
+				on.modulate.a = alpha
+	)

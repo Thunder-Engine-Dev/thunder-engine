@@ -2,6 +2,7 @@ extends GravityBody2D
 class_name Player
 
 signal suit_appeared
+signal suit_changed(to: PlayerSuit)
 signal swam
 signal shot
 signal invinciblized(dur: float)
@@ -50,6 +51,7 @@ enum WarpDir {
 			_suit_appear = false
 			suit_appeared.emit()
 		Thunder._current_player_state = suit
+		suit_changed.emit(suit)
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
 	set(to):
@@ -151,12 +153,15 @@ func hurt(tags: Dictionary = {}) -> void:
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
 	if warp != Warp.NONE: return
+	
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)
 		invincible(tags.get(&"hurt_duration", 2))
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
 	else:
 		die(tags)
+	
+	damaged.emit()
 
 
 func die(tags: Dictionary = {}) -> void:
