@@ -14,3 +14,4 @@ dest_files=["res://.godot/imported/life.fnt-222376c32956debdb9f0664302d73094.fon
 
 fallbacks=[]
 compress=true
+scaling_mode=2

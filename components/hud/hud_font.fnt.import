@@ -14,3 +14,4 @@ dest_files=["res://.godot/imported/hud_font.fnt-dd4daaf9f4c3e5419a6957f996f4e3bc
 
 fallbacks=[]
 compress=true
+scaling_mode=1
