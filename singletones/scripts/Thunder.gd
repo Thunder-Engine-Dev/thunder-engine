@@ -119,6 +119,11 @@ func is_player_power(power: Data.PLAYER_POWER) -> bool:
 	return _current_player_state.type == power
 
 
+## Pauses game
+func set_pause_game(pause: bool) -> void:
+	get_tree().paused = pause
+
+
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them
 class View:
 	## Current screen border, used [Rect2i] because the size and position of screen border don't support [float]
@@ -128,7 +133,7 @@ class View:
 	
 	
 	## Update [member border] and [member trans] for detectional functions, you need to call this method
-	## in [method Node._process] or [method Node.__physics_process] to get better use of it
+	## in [method Node._process] or [method Node._physics_process] to get better use of it
 	func cam_border() -> void:
 		var cam: Camera2D = Thunder._current_camera
 		if !cam:

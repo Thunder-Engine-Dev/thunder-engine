@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://w4jc7nb1lcsy"]
+
+[ext_resource type="SpriteFrames" uid="uid://b1mklmn2aqcx8" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres" id="1_et5ts"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_view.gd" id="2_2hlka"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmk0a"]
+
+[node name="Player" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("1_et5ts")
+animation = &"walk"
+offset = Vector2(0, -32)
+script = ExtResource("2_2hlka")
+
+[node name="hitbox" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("RectangleShape2D_wmk0a")
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

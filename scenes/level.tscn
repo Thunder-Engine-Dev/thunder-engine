@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i4f1f"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_yq3n0"]
-[ext_resource type="Script" path="res://engine/objects/core/player/scripts/player_camera_2d.gd" id="6_titgq"]
+[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_titgq"]
 [ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="7_kk41r"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bquqhbqux15rr"]
+[gd_scene load_steps=5 format=3 uid="uid://bquqhbqux15rr"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_seusf"]
 action = &"ui_accept"
@@ -6,6 +6,24 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_8ddje"]
 events = [SubResource("InputEventAction_seusf")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4nxa3"]
+
+[sub_resource type="GDScript" id="GDScript_j5f7y"]
+script/source = "extends Label
+
+@onready
+var timer: Timer = Timer.new()
+
+func _ready() -> void:
+	add_child(timer)
+	timer.wait_time = 0.5
+	timer.timeout.connect(update_fps)
+	timer.start()
+
+func update_fps() -> void:
+	text = \"%s FPS\" % str(Engine.get_frames_per_second())
+"
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -62,7 +80,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
-offset_top = 6.0
+offset_top = 33.0
 offset_right = -5.0
 offset_bottom = -39.0
 grow_horizontal = 2
@@ -83,3 +101,24 @@ grow_vertical = 2
 bbcode_enabled = true
 scroll_following = true
 threaded = true
+metadata/_edit_lock_ = true
+
+[node name="Paused" type="CheckBox" parent="."]
+layout_mode = 0
+offset_right = 85.0
+offset_bottom = 31.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4nxa3")
+button_pressed = true
+text = "Paused"
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "FPS"
+horizontal_alignment = 2
+script = SubResource("GDScript_j5f7y")

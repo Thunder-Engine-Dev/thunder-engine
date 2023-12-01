@@ -143,4 +143,6 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
 	
+	ProfileManager.current_profile.complete_level(scene_file_path)
+	
 	Thunder._current_hud.time_countdown()

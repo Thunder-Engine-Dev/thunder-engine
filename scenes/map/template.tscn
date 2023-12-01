@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqed2mxnku1t3"]
+
+[ext_resource type="Texture2D" uid="uid://b346b0vx83wno" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
+[ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="2_b6p1j"]
+[ext_resource type="Texture2D" uid="uid://2as00o6kxy2m" path="res://engine/scenes/map/textures/mario_icon.png" id="2_eo2rt"]
+[ext_resource type="Texture2D" uid="uid://cn8jgiig60q5u" path="res://engine/scenes/map/textures/press_start.png" id="3_jqf35"]
+[ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="5_rcbgg"]
+[ext_resource type="Texture2D" uid="uid://di0s33q8kpkfa" path="res://engine/scenes/map/textures/x.png" id="5_xsryg"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="8_ej4v3"]
+
+[sub_resource type="GDScript" id="GDScript_kgw68"]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	ProfileManager.load_profile(\"TEST\")
+	print(ProfileManager.current_profile.data[\"TEST\"])
+"
+
+[sub_resource type="Curve2D" id="Curve2D_n71ee"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 16, 192, 0, 0, 0, 0, 96, 192, 0, 0, 0, 0, 96, 64, 0, 0, 0, 0, 368, 64, 0, 0, 0, 0, 368, 192)
+}
+point_count = 5
+
+[node name="Map" type="Node2D"]
+script = SubResource("GDScript_kgw68")
+
+[node name="Bg" type="Sprite2D" parent="."]
+texture = ExtResource("1_jlx25")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 3333, 480)
+region_filter_clip_enabled = true
+
+[node name="Bg2" type="Sprite2D" parent="."]
+position = Vector2(3333, 0)
+texture = ExtResource("1_jlx25")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 480, 3333, 480)
+region_filter_clip_enabled = true
+
+[node name="Bg3" type="Sprite2D" parent="."]
+position = Vector2(6666, 0)
+texture = ExtResource("1_jlx25")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 960, 3333, 480)
+region_filter_clip_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_b6p1j")]
+z_index = 5
+z_as_relative = false
+position = Vector2(12, 192)
+speed = 5000.0
+dots = ExtResource("5_rcbgg")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="MarioIcon" type="Sprite2D" parent="GUI"]
+position = Vector2(581, 436)
+texture = ExtResource("2_eo2rt")
+metadata/_edit_lock_ = true
+
+[node name="PressStart" type="Sprite2D" parent="."]
+position = Vector2(328, 510)
+texture = ExtResource("3_jqf35")
+
+[node name="MoveTrigger" type="Area2D" parent="."]
+z_as_relative = false
+position = Vector2(92, 192)
+rotation = -1.57068
+monitoring = false
+script = ExtResource("8_ej4v3")
+marker = ExtResource("5_xsryg")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_n71ee")

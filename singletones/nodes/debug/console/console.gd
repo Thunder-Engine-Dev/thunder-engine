@@ -8,15 +8,17 @@ var commands: Dictionary
 var history: Array = ['']
 var position_in_history: int
 
+
 func _ready():
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
 	
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
 	$"UI/Enter".pressed.connect(execute)
+	$"UI/Paused".pressed.connect(func(): Thunder.set_pause_game($"UI/Paused".button_pressed))
 	close_requested.connect(
 		func():
-			get_tree().paused = false
+			Thunder.set_pause_game(false)
 			hide()
 	)
 
@@ -32,9 +34,10 @@ func load_commands(dir: String) -> void:
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("a_console"):
 		visible = !visible
-		get_tree().paused = visible
-	if visible:
+		$UI/Paused.button_pressed = visible
+		Thunder.set_pause_game(visible)
 		
+	if visible:
 		if Input.is_key_pressed(KEY_ESCAPE):
 			grab_focus()
 		
@@ -43,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down"):
 			move_history(-1)
 
-func execute() -> void:	
+func execute() -> void:
 	self.print("[b]> %s[/b]" % input.text)
 	
 	history.remove_at(0)
@@ -79,11 +82,12 @@ func move_history_to_latest(_new_text) -> void:
 
 func print(msg: Variant) -> void:
 	output.text += "%s\n" % msg
-	print(msg)
+	
+	print_rich(msg)
 
 func col_print(msg: String, col:Color) -> void:
 	output.text += "[color=%s]%s[/color]\n" % [col.to_html(), msg]
-	print(msg)
+	print_rich(msg)
 
 func _on_visibility_changed():
 	input.grab_focus()
