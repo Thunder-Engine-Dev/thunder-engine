@@ -1,3 +1,4 @@
+@icon("res://engine/objects/warps/icons/pipe_in.svg")
 @tool
 extends Area2D
 
@@ -33,9 +34,12 @@ var _warp_triggered: bool = false
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
 
+signal player_enter
+signal player_exit 
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	
 	$Arrow.queue_free()
 	$TextDir.queue_free()
 
@@ -43,7 +47,7 @@ func _ready() -> void:
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	
-	draw_set_transform(Vector2.ZERO, -global_rotation, Vector2(1/global_scale.x, 1/global_scale.y))
+	draw_set_transform(Vector2.ZERO, -global_rotation, Vector2.ONE / global_scale)
 	
 	var tg:Area2D = get_node_or_null(warp_to)
 	if !tg: return
@@ -158,11 +162,15 @@ func _label() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if Engine.is_editor_hint(): return
-	if body == Thunder._current_player: player = body
+	if body == Thunder._current_player:
+		player = body
+		player_enter.emit()
 
 func _on_body_exited(body: Node2D) -> void:
 	if Engine.is_editor_hint(): return
-	if body == Thunder._current_player && !_on_warp: player = null
+	if body == Thunder._current_player && !_on_warp:
+		player = null
+		player_exit.emit()
 
 
 class WarpTrans extends PathFollow2D:

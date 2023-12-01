@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_sxwr1"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_fo208"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="7_tym7w"]
-[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="8_ib3k0"]
+[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="8_ib3k0"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_u1nrf"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_w8s7l"]
 

@@ -1,5 +1,7 @@
+@icon("res://engine/objects/warps/icons/pipe_out.svg")
 @tool
 extends Area2D
+
 
 @export_category("PipeOut")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.UP

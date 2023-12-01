@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqed2mxnku1t3"]
+[gd_scene load_steps=9 format=3 uid="uid://cqed2mxnku1t3"]
 
 [ext_resource type="Texture2D" uid="uid://b346b0vx83wno" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="2_b6p1j"]
@@ -15,12 +15,6 @@ func _ready() -> void:
 	ProfileManager.load_profile(\"TEST\")
 	print(ProfileManager.current_profile.data[\"TEST\"])
 "
-
-[sub_resource type="Curve2D" id="Curve2D_n71ee"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 16, 192, 0, 0, 0, 0, 96, 192, 0, 0, 0, 0, 96, 64, 0, 0, 0, 0, 368, 64, 0, 0, 0, 0, 368, 192)
-}
-point_count = 5
 
 [node name="Map" type="Node2D"]
 script = SubResource("GDScript_kgw68")
@@ -73,6 +67,3 @@ rotation = -1.57068
 monitoring = false
 script = ExtResource("8_ej4v3")
 marker = ExtResource("5_xsryg")
-
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_n71ee")
