@@ -48,11 +48,13 @@ region = Rect2(96, 0, 93, 29)
 script/source = "extends MenuSelection
 
 func _handle_select() -> void:
+	var scene = get_parent().get_parent().get_parent()
+	
 	super()
-	GlobalViewport.vp.get_camera_2d().position.x += 640
+	scene.offset.x -= 640
 	await get_tree().physics_frame
-	Scenes.current_scene.get_node(\"Settings/Options\").focused = false
-	Scenes.current_scene.get_node(\"Controls/Options\").focused = true
+	scene.get_node(\"Settings/Options\").focused = false
+	scene.get_node(\"Controls/Options\").focused = true
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iu4wi"]
