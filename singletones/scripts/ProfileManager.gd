@@ -84,6 +84,7 @@ func save_current_profile() -> void:
 	var file: FileAccess = FileAccess.open(convert_to_path(current_profile.name),FileAccess.WRITE)
 	file.store_string(data)
 	file.close()
+	print("[Profile Manager] Profile %s saved!" % current_profile.name)
 
 static func convert_to_path(file: StringName) -> StringName:
 	if file.ends_with(SAVE_FILE_EX):

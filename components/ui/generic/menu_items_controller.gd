@@ -7,9 +7,9 @@ class_name MenuItemsController
 ## Currently selected item
 @export var current_item_index: int = 0
 ## Control name that triggers the forward selection
-@export var control_forward: StringName = "m_down"
+@export var control_forward: StringName = "ui_down"
 ## Control name that triggers the backward selection
-@export var control_backward: StringName = "m_up"
+@export var control_backward: StringName = "ui_up"
 ## Sound of selection
 @export var control_sound: AudioStream = preload("res://engine/components/ui/_sounds/select_main.wav")
 ## Whether to fire the selected event once immediately to update the selector's position
@@ -45,9 +45,18 @@ func _physics_process(delta: float) -> void:
 		return
 
 
+func move_selector(index: int) -> void:
+	current_item_index = index
+	_selection_update()
+
+
 func _selection() -> void:
 	if control_sound:
 		Audio.play_1d_sound(control_sound)
+	_selection_update()
+
+
+func _selection_update() -> void:
 	var item = selectors[current_item_index] as MenuSelection
 	selected.emit(current_item_index, item, false)
 	item._handle_focused(true)

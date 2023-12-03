@@ -61,6 +61,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	if resource == null: return
 	
 	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
+	player.bus = "Sound"
 	player.stream = resource
 	player.play()
 	
@@ -79,6 +80,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	if resource == null: return
 	
 	var player = _create_1d_player(is_global)
+	player.bus = "Sound"
 	player.stream = resource
 	player.play()
 	
@@ -107,6 +109,7 @@ func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary =
 		_music_channels[channel_id] = _create_1d_player(false, true)
 	
 	_music_channels[channel_id].stream = resource
+	_music_channels[channel_id].bus = "Music"
 	_music_channels[channel_id].play()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch

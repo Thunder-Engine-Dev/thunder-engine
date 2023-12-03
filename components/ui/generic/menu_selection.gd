@@ -20,8 +20,6 @@ func _handle_select() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed(trigger_action) && focused:
-		print(!focused, !get_parent().focused)
 	if !focused || !get_parent().focused: return
 	
 	if Input.is_action_just_pressed(trigger_action):
