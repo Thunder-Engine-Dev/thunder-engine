@@ -10,7 +10,7 @@ It allows you to create games with previously unseen level of flexibility and st
 
 <h3 align="center">
 Current state: WORK IN PROGRESS<br/>
-Required game engine: Godot 4.0.x
+Required game engine: Godot 4.2 and above
 </h3>
 
 ------------
