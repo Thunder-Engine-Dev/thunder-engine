@@ -21,6 +21,9 @@ var current_profile: Profile
 const SAVE_FILE_EX = ".ths"
 
 func _ready() -> void:
+	if !DirAccess.dir_exists_absolute("user://saves/"):
+		DirAccess.make_dir_absolute("user://saves/")
+	
 	var dir: DirAccess = DirAccess.open("user://saves/")
 	
 	for file in dir.get_files():
