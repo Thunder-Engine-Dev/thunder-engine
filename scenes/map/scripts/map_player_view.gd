@@ -1,15 +1,17 @@
 extends AnimatedSprite2D
 
-@export
-var speed: float = 20
-@export
-var dots: PackedScene
+@export var speed: float = 40
+@export var faster_ex: int = 15
+@export var dots: PackedScene
+@export var x: PackedScene = preload("res://engine/scenes/map/prefabs/x.tscn")
 
 var movement_dir: Vector2 = Vector2.RIGHT
 var reached: bool = false
 
 var current_marker: MapPlayerMarker
 
+var has_put_dot: bool = false
+var ex: int = 1
 
 func _ready() -> void:
 	# Sets powerup state to sprite
@@ -23,7 +25,13 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !reached:
-		move(delta)
+		for i in range(ex):
+			move(delta)
+	
+	animate()
+	
+	if Input.is_action_just_pressed("m_jump") && !reached:
+		ex = faster_ex
 
 
 func move(delta: float) -> void:
@@ -38,21 +46,40 @@ func move(delta: float) -> void:
 		if !current_marker.is_level() && reached:
 			current_marker = null
 			reached = false
+			put_dot()
+		
+		if reached:
+			var marker = x.instantiate()
+			marker.position = position - Vector2(0, 8)
+			owner.add_child(marker)
 	else:
-		position = position.move_toward(position + movement_dir * 2, speed * delta)
+		position = position.move_toward(position + movement_dir * 10, speed * delta)
 		# Puts Dots every 16 px on x or y 
 		# (x % 16 == 0) == !(x % 16) cuz (0 = false, 1 = true)
 		if abs(movement_dir.y) > 0.5:
-			if !(int(position.y) % 16):
+			if !(int(position.y) % 16) && !has_put_dot:
+				has_put_dot = true
 				put_dot()
+			if int(position.y) % 16:
+				has_put_dot = false
 		elif abs(movement_dir.x) > 0.5:
-			if !(int(position.x) % 16):
+			if !(int(position.x) % 16) && !has_put_dot:
+				has_put_dot = true
 				put_dot()
+			if int(position.x) % 16:
+				has_put_dot = false
 
 
-func put_dot() -> void:
+func animate() -> void:
+	if !reached:
+		speed_scale = 3
+	else:
+		speed_scale = 1
+
+
+func put_dot(pos: Vector2 = position) -> void:
 	var dot = dots.instantiate() as Node2D
-	dot.position = position + Vector2.UP * 8
+	dot.position = pos + Vector2.UP * 8
 	owner.add_child.call_deferred(dot)
 
 

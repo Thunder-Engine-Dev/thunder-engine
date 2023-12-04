@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://beu6ovtvrvpfc"]
 
-[ext_resource type="Texture2D" uid="uid://xwcnl1wmive5" path="res://engine/scenes/map/textures/dot.png" id="1_y7pm0"]
+[ext_resource type="Texture2D" uid="uid://bi4frsxctilkh" path="res://engine/scenes/map/textures/dot.png" id="1_y7pm0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2pjgg"]
 atlas = ExtResource("1_y7pm0")
@@ -49,10 +49,9 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 20.0
 }]
 
 [node name="Dot" type="AnimatedSprite2D"]
-position = Vector2(-11, 6)
 sprite_frames = SubResource("SpriteFrames_fett5")
 autoplay = "default"

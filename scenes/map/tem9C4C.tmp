@@ -39,6 +39,8 @@ metadata/_edit_lock_ = true
 z_index = 5
 z_as_relative = false
 position = Vector2(-16, 192)
+speed = null
+faster_ex = null
 dots = ExtResource("5_rcbgg")
 
 [node name="GUI" type="CanvasLayer" parent="."]
@@ -49,7 +51,7 @@ texture = ExtResource("2_eo2rt")
 metadata/_edit_lock_ = true
 
 [node name="PressStart" type="Sprite2D" parent="."]
-position = Vector2(320, 448)
+position = Vector2(328, 510)
 texture = ExtResource("3_jqf35")
 
 [node name="MoveTrigger" type="Area2D" parent="."]

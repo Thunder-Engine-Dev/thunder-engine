@@ -1,15 +1,10 @@
 @tool
 class_name MapPlayerMarker extends Area2D
 
-@export
-var level: StringName
-
-@export
-var marker: Texture2D
-
+@export var level: StringName
 var angle: float
-
 var shape: CollisionShape2D
+
 
 func _ready() -> void:
 	add_to_group("map_marker")
@@ -37,5 +32,3 @@ func is_level_completed() -> bool:
 func _draw() -> void:
 	if Engine.is_editor_hint():
 		draw_char(ThemeDB.fallback_font,Vector2(-3,6),'>')
-	elif is_level():
-		draw_texture(marker,Vector2(-marker.get_width()/2,-marker.get_height()))
