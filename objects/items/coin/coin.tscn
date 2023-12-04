@@ -46,3 +46,9 @@ shape = SubResource("RectangleShape2D_b06tt")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_v64cq")
 autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0392157)
+position = Vector2(0, 2.38419e-07)
+scale = Vector2(1, 1.6)
+metadata/_edit_lock_ = true
