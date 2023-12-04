@@ -21,5 +21,7 @@ position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
 sprite_frames = ExtResource("2_p1ujx")

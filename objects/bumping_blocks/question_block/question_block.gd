@@ -6,7 +6,7 @@ const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture
 
 var current_displaying_item: String = ""
 
-@onready var item_displayer = $ItemDisplayer
+@onready var item_displayer = $Sprites/ItemDisplayer
 
 
 func _ready() -> void:

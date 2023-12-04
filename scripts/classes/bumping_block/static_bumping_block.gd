@@ -34,22 +34,24 @@ var _triggered: bool = false
 		initially_visible_and_solid = to
 		if !Engine.is_editor_hint(): return
 		if !initially_visible_and_solid:
-			modulate.a = 0.25
+			$Sprites.modulate.a = 0.25
 		else:
-			modulate.a = 1
+			$Sprites.modulate.a = 1
 ## Exists only before player dies
 @export var exists_once: bool = false
 
 var _unsolid_layer: int = 16
 var _unsolid_mask: int = 1
 
+var _self_modulate_alpha: float
 var _no_result_appearing_animation: bool = false
 
 @onready var collision_layer_ori: int = collision_layer
 @onready var collision_mask_ori: int = collision_mask
 
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var _animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _sprites: Node2D = $Sprites
+@onready var _animated_sprite_2d: AnimatedSprite2D = $Sprites/AnimatedSprite2D
 
 ## Emitted when getting bumped
 signal bumped
@@ -65,7 +67,8 @@ func _ready() -> void:
 			collision_layer = _unsolid_layer
 			collision_mask = _unsolid_mask
 			_collision_shape_2d.set_deferred(&"disabled", true)
-		visible = initially_visible_and_solid
+		_sprites.visible = initially_visible_and_solid
+
 
 func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
@@ -84,7 +87,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if _triggered: return
 	if !active: return
 	
-	visible = true
+	_sprites.visible = true
 	if !initially_visible_and_solid:
 		collision_layer = collision_layer_ori
 		collision_mask = collision_mask_ori

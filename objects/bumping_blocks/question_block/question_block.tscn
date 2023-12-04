@@ -50,11 +50,13 @@ position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
 sprite_frames = ExtResource("2_t2orr")
 autoplay = "default"
 
-[node name="ItemDisplayer" type="Sprite2D" parent="."]
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
 position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_3yo0u")
