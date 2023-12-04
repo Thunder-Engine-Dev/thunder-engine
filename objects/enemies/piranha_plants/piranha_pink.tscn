@@ -107,7 +107,7 @@ killing_sound_succeeded = ExtResource("8_85764")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune"]
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
-z_index = -1
+z_index = -2
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_2q2vw")
 autoplay = "default"
@@ -115,7 +115,6 @@ metadata/_edit_group_ = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="Stem" type="Sprite2D" parent="Head"]
-z_index = -1
 position = Vector2(1, 24)
 texture = ExtResource("3_12v5v")
 metadata/_edit_pinned_properties_ = [&"texture"]
@@ -132,4 +131,4 @@ one_shot = true
 [node name="Fire" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=18]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
