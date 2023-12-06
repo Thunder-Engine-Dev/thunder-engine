@@ -50,6 +50,24 @@ func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioSt
 	return player
 
 
+func _create_openmpt_player(is_global: bool) -> OpenMPT:
+	var openmpt = OpenMPT.new()
+	add_child(openmpt)
+	print(openmpt)
+	return openmpt
+	
+	
+	
+	
+	#var openmpt = preload("res://engine/gdextension/libopenmpt/openmpt.gdextension").new()
+	#openmpt.finished.connect(openmpt.free)
+	#openmpt.initialize_library(GDExtension.INITIALIZATION_LEVEL_SCENE)
+
+
+#func _init_openmpt_data(audio: Resource):
+	
+
+
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
 ## [b]Note:[/b] This method creates [AudioStreamPlayer2D] which plays sound with pan changed according to its position to the center of screen, rather than [AudioStreamPlayer].[br]
 ## [param resource] is the sound stream you are going to install[br]
@@ -104,13 +122,44 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## # The result would be: music2 is playing
 ## [/codeblock][br]
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
-func play_music(resource: AudioStream, channel_id: int, other_keys: Dictionary = {}) -> void:
+func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}) -> void:
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
 		_music_channels[channel_id] = _create_1d_player(false, true)
+	var music_player = _music_channels[channel_id]
 	
-	_music_channels[channel_id].stream = resource
-	_music_channels[channel_id].bus = "Music"
-	_music_channels[channel_id].play()
+	if ClassDB.get_parent_class(resource.get_class()) == "AudioStream":
+		music_player.stream = resource
+		music_player.bus = "Music"
+		music_player.play()
+	elif "data" in resource:
+		var openmpt = _create_openmpt_player(false)
+		if !openmpt:
+			return
+		
+		openmpt.load_module_data(resource.data)
+		if !openmpt.is_module_loaded():
+			printerr("[Audio] Failed to load file using tracker loader")
+			openmpt.queue_free()
+			music_player.queue_free()
+			return
+		music_player.set_meta("openmpt", openmpt)
+		
+		var generator = AudioStreamGenerator.new()
+		#generator.buffer_length = 0.5
+		generator.mix_rate = 44100
+		
+		music_player.stream = generator
+		music_player.bus = "Music"
+		music_player.play()
+		openmpt.set_audio_generator_playback(music_player)
+		openmpt.set_render_interpolation(resource.interpolation)
+		openmpt.set_repeat_count(0 if !resource.loop else -1)
+		#_music_channels[channel_id].volume_db = resource.volume_offset
+		openmpt.start(true)
+	else:
+		printerr("Invalid data provided in method Audio.play_music")
+		return
+	
 	
 	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch
 	if &"volume" in other_keys && other_keys.volume is float: _music_channels[channel_id].volume_db = other_keys.volume
@@ -154,15 +203,24 @@ func stop_all_musics(fade: bool = false) -> void:
 		if !is_instance_valid(_music_channels[i]):
 			continue
 		if !fade:
+			if _music_channels[i].has_meta("openmpt"):
+				var openmpt = _music_channels[i].get_meta("openmpt")
+				if is_instance_valid(openmpt):
+					openmpt.queue_free()
+			
 			_music_channels[i].free()
 			_music_channels.erase(i)
 		else:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
 
-
 func _stop_all_musics_scene_changed() -> void:
 	for i in _music_channels:
 		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"stop_when_scene_changed", false):
 			continue
+		if _music_channels[i].has_meta("openmpt"):
+			var openmpt = _music_channels[i].get_meta("openmpt")
+			if is_instance_valid(openmpt):
+				openmpt.queue_free()
+		
 		_music_channels[i].free()
 		_music_channels.erase(i)

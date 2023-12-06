@@ -1,6 +1,6 @@
 extends Node
 
-@export var music: Array[AudioStream]
+@export var music: Array[Resource]
 @export var index: int = 0:
 	set(i):
 		if index == i: return

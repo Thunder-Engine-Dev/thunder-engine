@@ -1,12 +1,12 @@
 [gd_scene load_steps=37 format=3 uid="uid://cpme7ixwwuc2p"]
 
-[ext_resource type="Texture2D" uid="uid://b7mnvsybc3geb" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
-[ext_resource type="Texture2D" uid="uid://2nghoyof6atn" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
+[ext_resource type="Texture2D" uid="uid://fevwjjxpf85d" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
+[ext_resource type="Texture2D" uid="uid://bs45ymmihcet0" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
-[ext_resource type="AudioStream" uid="uid://c5gapk42o1rs7" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
+[ext_resource type="AudioStream" uid="uid://bewojv2lb4tnb" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
-[ext_resource type="Texture2D" uid="uid://bwhra5gl5v3gp" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
-[ext_resource type="FontFile" uid="uid://cq1v0aed00sdd" path="res://engine/fonts/LoliPop.ttf" id="7_qxkcl"]
+[ext_resource type="Texture2D" uid="uid://ciupwq8nq5w6i" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
+[ext_resource type="FontFile" uid="uid://b0rm8t2600s7l" path="res://engine/fonts/LoliPop.ttf" id="7_qxkcl"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
 
