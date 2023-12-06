@@ -85,6 +85,5 @@ func put_dot(pos: Vector2 = position) -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("map_marker"):
-		current_marker = area as MapPlayerMarker
-		movement_dir = Vector2.RIGHT.rotated(area.angle).round()
-		print(movement_dir)
+		#current_marker = area as MapPlayerMarker
+		movement_dir = Vector2.RIGHT.rotated(area.rotation).round()
