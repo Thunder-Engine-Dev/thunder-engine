@@ -8,7 +8,7 @@ extends Path2D
 @export_group("Camera", "camera_")
 @export var camera_speed: float = 50
 @export_group("Music")
-@export var boss_music: AudioStream = preload("./music/music_bowser_battle.mp3")
+@export var boss_music: Resource = preload("./music/music_bowser_battle.mp3")
 @export var boss_music_fading: bool = true
 
 var triggered: bool

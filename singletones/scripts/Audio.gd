@@ -55,17 +55,6 @@ func _create_openmpt_player(is_global: bool) -> OpenMPT:
 	add_child(openmpt)
 	print(openmpt)
 	return openmpt
-	
-	
-	
-	
-	#var openmpt = preload("res://engine/gdextension/libopenmpt/openmpt.gdextension").new()
-	#openmpt.finished.connect(openmpt.free)
-	#openmpt.initialize_library(GDExtension.INITIALIZATION_LEVEL_SCENE)
-
-
-#func _init_openmpt_data(audio: Resource):
-	
 
 
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
@@ -193,6 +182,10 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 	if !_music_channels[channel_id]: return
 	if !fade:
 		_music_channels[channel_id].stop()
+		if _music_channels[channel_id].has_meta("openmpt"):
+			var openmpt = _music_channels[channel_id].get_meta("openmpt")
+			if is_instance_valid(openmpt):
+				openmpt.queue_free()
 	else:
 		fade_music_1d_player(_music_channels[channel_id], -40, 1.5, Tween.TRANS_LINEAR, true)
 

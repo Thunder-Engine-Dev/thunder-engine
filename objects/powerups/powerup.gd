@@ -9,6 +9,7 @@ class_name Powerup
 @export var force_powerup_state: bool = false
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
+@export var appear_visible: float = 28
 @export var score: int = 1000
 
 
@@ -35,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	if !supply_behavior:
 		if !appear_distance:
 			motion_process(delta, slide)
+			modulate.a = 1
 			z_index = 0
 		else:
 			appear_process(Thunder.get_delta(delta))
@@ -48,6 +50,7 @@ func _physics_process(delta: float) -> void:
 
 func appear_process(delta: float) -> void:
 	appear_distance = max(appear_distance - appear_speed * delta, 0)
+	modulate.a = 0.01 if (appear_distance > appear_visible) else 1
 	position -= Vector2(0, appear_speed).rotated(global_rotation) * delta
 
 
