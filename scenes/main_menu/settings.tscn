@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=52 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://c2t0hh13awaij" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -18,7 +18,9 @@
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
+[ext_resource type="Texture2D" uid="uid://bouwjbufhqiwc" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -58,15 +60,31 @@ region = Rect2(0, 0, 64, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ys5h5"]
 atlas = ExtResource("4_wobiu")
-region = Rect2(1, 142, 96, 30)
+region = Rect2(0, 142, 95, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6e80b"]
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_85kfo"]
+atlas = ExtResource("4_wobiu")
+region = Rect2(156, 29, 95, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqgwl"]
+atlas = ExtResource("17_xqi2q")
+region = Rect2(0, 0, 140, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df7ul"]
+atlas = ExtResource("4_wobiu")
+region = Rect2(95, 143, 86, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prb1w"]
+atlas = ExtResource("9_0v236")
+region = Rect2(0, 0, 64, 36)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5licj"]
 atlas = ExtResource("4_wobiu")
-region = Rect2(121, 58, 110, 27)
+region = Rect2(120, 58, 112, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uxvvb"]
 atlas = ExtResource("4_wobiu")
@@ -207,7 +225,7 @@ anchor_bottom = 1.0
 offset_left = -444.0
 offset_top = 13.0
 offset_right = -59.0
-offset_bottom = -107.0
+offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("3_0fdie")
@@ -220,6 +238,7 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "sound"
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Sound"]
 layout_mode = 2
@@ -239,6 +258,7 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "music"
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Music"]
 layout_mode = 2
@@ -270,6 +290,7 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("7_str7j")
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Quality"]
 layout_mode = 2
@@ -291,6 +312,7 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("12_mwq53")
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/GameSpeed"]
 layout_mode = 2
@@ -312,6 +334,7 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "autopause"
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/AutoPause"]
 layout_mode = 2
@@ -333,6 +356,7 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "vsync"
+selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/VSync"]
 layout_mode = 2
@@ -346,6 +370,49 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6e80b")
+stretch_mode = 2
+
+[node name="Scale" type="HBoxContainer" parent="Options"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("16_hdnp7")
+selected_sound = null
+
+[node name="Text" type="TextureRect" parent="Options/Scale"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_85kfo")
+stretch_mode = 2
+
+[node name="Value" type="TextureRect" parent="Options/Scale"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_lqgwl")
+stretch_mode = 2
+
+[node name="Filter" type="HBoxContainer" parent="Options"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("8_8cp54")
+setting_name = "filter"
+selected_sound = null
+
+[node name="Text" type="TextureRect" parent="Options/Filter"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_df7ul")
+stretch_mode = 2
+
+[node name="Value" type="TextureRect" parent="Options/Filter"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_prb1w")
 stretch_mode = 2
 
 [node name="Credits" type="HBoxContainer" parent="Options"]

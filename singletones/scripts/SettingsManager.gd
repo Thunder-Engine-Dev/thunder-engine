@@ -15,6 +15,8 @@ var default_settings = {
 	"game_speed": 1,
 	"autopause": true,
 	"vsync": true,
+	"scale": 1,
+	"filter": true,
 	"controls": {
 		"m_up": _get_current_key(&"m_up"),
 		"m_down": _get_current_key(&"m_down"),
@@ -82,8 +84,14 @@ func load_settings() -> void:
 		return
 	
 	settings = dict
+	_check_for_validity()
 	_process_settings()
 	print("[Settings Manager] Loaded settings from file.")
+
+func _check_for_validity() -> void:
+	for i in default_settings.keys():
+		if !i in settings:
+			settings[i] = default_settings[i]
 
 ## Processes certain settings and applies their effects
 func _process_settings() -> void:
@@ -91,7 +99,22 @@ func _process_settings() -> void:
 	Engine.time_scale = settings.game_speed
 	
 	# Vsync
-	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if settings.vsync else DisplayServer.VSYNC_DISABLED)
+	DisplayServer.window_set_vsync_mode(
+		DisplayServer.VSYNC_ENABLED if settings.vsync else DisplayServer.VSYNC_DISABLED
+	)
+	
+	# Scale
+	_window_scale_logic()
+	
+	# Filter
+	GlobalViewport.container.material.set_shader_parameter(
+		&"enable",
+		settings.filter && fmod(GlobalViewport.container.scale.y, 1) != 0
+	)
+	ProjectSettings.set_setting(
+		&"rendering/textures/canvas_textures/default_texture_filter",
+		int(settings.filter)
+	)
 	
 	# Music Volume
 	AudioServer.set_bus_volume_db(
@@ -104,3 +127,24 @@ func _process_settings() -> void:
 		AudioServer.get_bus_index("Sound"),
 		linear_to_db(settings.sound)
 	)
+
+var old_scale: float
+func _window_scale_logic() -> void:
+	if settings.scale == 0: return
+	if old_scale == settings.scale: return
+	
+	var current_screen: int = DisplayServer.window_get_current_screen()
+	var screen_size: Vector2i = DisplayServer.screen_get_usable_rect(current_screen).size
+	var screen_center: Vector2i = screen_size / 2
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_size(Vector2i(
+		ProjectSettings.get_setting("display/window/size/viewport_width"),
+		ProjectSettings.get_setting("display/window/size/viewport_height")
+	) * settings.scale)
+	if old_scale != 0:
+		DisplayServer.window_set_position(
+			screen_center - (DisplayServer.window_get_size() / 2)
+		)
+		GlobalViewport._update_view()
+	
+	old_scale = settings.scale
