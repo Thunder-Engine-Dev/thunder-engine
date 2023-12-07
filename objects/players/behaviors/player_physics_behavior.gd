@@ -89,7 +89,7 @@ func _movement_y(delta: float) -> void:
 		elif player.jumping > 0 && player.speed.y < 0:
 			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 10 else config.jump_buff_static
 			player.speed.y -= abs(buff) * delta
-	if !player.jumping:
+	if !player.jumping && player.speed.y >= 0:
 		_has_jumped = false
 
 
