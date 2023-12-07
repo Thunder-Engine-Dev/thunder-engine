@@ -14,6 +14,11 @@ class_name MenuItemsController
 @export var control_sound: AudioStream = preload("res://engine/components/ui/_sounds/select_main.wav")
 ## Whether to fire the selected event once immediately to update the selector's position
 @export var trigger_selection_immediately: bool = true
+@export_group("Previous Screen", "prev_screen")
+## NodePath to a MenuSelection node with Exit selection behaviour
+@export var prev_screen_node_path: NodePath
+## Control name that triggers the transition to the previous screen
+@export var prev_screen_control_cancel: StringName = "ui_cancel"
 
 ## Emitted when a selection occurs to update the position of selector
 signal selected(item_index: int, item_node: Control, immediate: bool)
@@ -34,15 +39,19 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !focused: return
 	
-	if Input.is_action_just_pressed(control_forward) && current_item_index < selectors.size() - 1:
-		current_item_index += 1
+	var sel = current_item_index
+	if Input.is_action_just_pressed(control_forward):
+		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
 		_selection()
 		return
 	
-	if Input.is_action_just_pressed(control_backward) && current_item_index > 0:
-		current_item_index -= 1
+	if Input.is_action_just_pressed(control_backward):
+		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
 		_selection()
 		return
+	
+	if has_node(prev_screen_node_path) && Input.is_action_just_pressed(prev_screen_control_cancel):
+		get_node(prev_screen_node_path)._handle_select()
 
 
 func move_selector(index: int) -> void:

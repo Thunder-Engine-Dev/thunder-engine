@@ -1,40 +1,24 @@
 [gd_scene load_steps=46 format=3 uid="uid://1jfyfq3ty6g1"]
 
-[ext_resource type="Texture2D" uid="uid://fevwjjxpf85d" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
-[ext_resource type="Texture2D" uid="uid://buqdre8cr3hex" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
+[ext_resource type="Texture2D" uid="uid://c2t0hh13awaij" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
+[ext_resource type="Texture2D" uid="uid://dbw5r0srvultn" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_icon.gd" id="4_8cb2v"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
-[ext_resource type="Texture2D" uid="uid://m48nukl77vrc" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
+[ext_resource type="Texture2D" uid="uid://jbsgfb0a4kjy" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
-[ext_resource type="Texture2D" uid="uid://pt3pev7ouomc" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
-[ext_resource type="Texture2D" uid="uid://j344iaq2avqn" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
+[ext_resource type="Texture2D" uid="uid://c3aq7cfk50hr" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
+[ext_resource type="Texture2D" uid="uid://bemag0a6byc4r" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
-[ext_resource type="Texture2D" uid="uid://llgub1fr2kib" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
+[ext_resource type="Texture2D" uid="uid://c7qon2ukwihb7" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="10_x0efh"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
-
-[sub_resource type="GDScript" id="GDScript_h68ac"]
-script/source = "extends Control
-
-@export var hide_bg: bool
-@export var main_menu_controls: String
-
-func _ready() -> void:
-	if hide_bg:
-		$Bg.queue_free()
-"
-
-[sub_resource type="GDScript" id="GDScript_voxqh"]
-script/source = "extends TextureRect
-
-var posY = position.y
-var timer: float = 0
-
-func _physics_process(delta):
-	position.y = posY + sin(timer) * 10
-	timer += 0.2 * Thunder.get_delta(delta)
-"
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -43,19 +27,6 @@ region = Rect2(0, 0, 97, 28)
 [sub_resource type="AtlasTexture" id="AtlasTexture_e5ton"]
 atlas = ExtResource("4_wobiu")
 region = Rect2(96, 0, 93, 29)
-
-[sub_resource type="GDScript" id="GDScript_4p5ft"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	var scene = get_parent().get_parent().get_parent()
-	
-	super()
-	scene.offset.x -= 640
-	await get_tree().physics_frame
-	scene.get_node(\"Settings/Options\").focused = false
-	scene.get_node(\"Controls/Options\").focused = true
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iu4wi"]
 atlas = ExtResource("4_wobiu")
@@ -68,29 +39,6 @@ region = Rect2(0, 57, 119, 30)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydqdk"]
 atlas = ExtResource("6_b6bjk")
 region = Rect2(0, 0, 82, 32)
-
-[sub_resource type="GDScript" id="GDScript_j5or8"]
-script/source = "extends MenuSelection
-
-@onready var value = $Value
-
-var toggle_sound = preload(\"res://engine/scenes/main_menu/sounds/change.wav\")
-
-func _physics_process(delta: float) -> void:
-	super(delta)
-	
-	if SettingsManager.settings[\"game_speed\"] == 1:
-		value.texture.region.position.y = 36
-	else:
-		value.texture.region.position.y = 0
-	
-	if !focused: return
-	
-	if Input.is_action_just_pressed(\"ui_right\") || Input.is_action_just_pressed(\"ui_left\"):
-		SettingsManager.settings[\"game_speed\"] = 1.2 if SettingsManager.settings[\"game_speed\"] == 1 else 1
-		Audio.play_1d_sound(toggle_sound)
-		SettingsManager._process_settings()
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tl721"]
 atlas = ExtResource("4_wobiu")
@@ -116,27 +64,9 @@ region = Rect2(1, 142, 96, 30)
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
-[sub_resource type="GDScript" id="GDScript_hlnup"]
-script/source = "extends MenuSelection
-"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_5licj"]
 atlas = ExtResource("4_wobiu")
 region = Rect2(121, 58, 110, 27)
-
-[sub_resource type="GDScript" id="GDScript_wl7qq"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	super()
-	GlobalViewport.vp.get_camera_2d().position.y -= 480
-	await get_tree().physics_frame
-	get_parent().move_selector(0)
-	Scenes.current_scene.get_node(get_parent().get_parent().main_menu_controls).focused = true
-	Scenes.current_scene.get_node(\"Settings/Options\").focused = false
-	
-	SettingsManager.save_settings()
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uxvvb"]
 atlas = ExtResource("4_wobiu")
@@ -246,7 +176,7 @@ offset_top = 480.0
 offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_h68ac")
+script = ExtResource("1_n4qx7")
 
 [node name="Bg" type="TextureRect" parent="."]
 z_index = -5
@@ -266,7 +196,7 @@ offset_top = 21.0
 offset_right = 129.0
 offset_bottom = 142.0
 texture = ExtResource("2_lauxo")
-script = SubResource("GDScript_voxqh")
+script = ExtResource("4_8cb2v")
 
 [node name="Options" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -282,6 +212,7 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("3_0fdie")
 focused = false
+prev_screen_node_path = NodePath("Exit")
 
 [node name="Sound" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -325,7 +256,7 @@ size_flags_vertical = 1
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
-script = SubResource("GDScript_4p5ft")
+script = ExtResource("9_xcp42")
 
 [node name="Text" type="TextureRect" parent="Options/Controls"]
 layout_mode = 2
@@ -359,7 +290,7 @@ clip_contents = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
-script = SubResource("GDScript_j5or8")
+script = ExtResource("12_mwq53")
 
 [node name="Text" type="TextureRect" parent="Options/GameSpeed"]
 layout_mode = 2
@@ -421,7 +352,7 @@ stretch_mode = 2
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
-script = SubResource("GDScript_hlnup")
+script = ExtResource("16_8lg85")
 
 [node name="Text" type="TextureRect" parent="Options/Credits"]
 layout_mode = 2
@@ -434,7 +365,7 @@ stretch_mode = 2
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
-script = SubResource("GDScript_wl7qq")
+script = ExtResource("17_67g7y")
 
 [node name="Text" type="TextureRect" parent="Options/Exit"]
 layout_mode = 2
