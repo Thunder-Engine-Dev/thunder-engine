@@ -81,6 +81,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 		!target_enemy_attacked.owner.stopping && \
 		sharpness <= target_enemy_attacked.killing_immune.shell_defence:
 			enemy_attacked.got_killed(&"shell_forced")
+			target_enemy_attacked.got_killed(&"shell_forced")
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
 		if !combo.get_combo() <= 0:

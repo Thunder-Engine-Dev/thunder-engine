@@ -124,6 +124,16 @@ func set_pause_game(pause: bool) -> void:
 	get_tree().paused = pause
 
 
+## Fullscreen toggle
+func _unhandled_input(event: InputEvent) -> void:
+	if !event is InputEventKey or event.echo or !event.is_pressed(): return
+	if event.keycode == KEY_F11:
+		if DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_WINDOWED:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+
+
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them
 class View:
 	## Current screen border, used [Rect2i] because the size and position of screen border don't support [float]

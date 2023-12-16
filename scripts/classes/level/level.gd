@@ -79,7 +79,7 @@ func _prepare_template() -> void:
 	var tilemap = TileMap.new()
 	tilemap.tile_set = load("res://engine/tilesets/placeholder/placeholder_tileset.tres")
 	add_child(tilemap, true)
-	tilemap.set_cell(0, Vector2i(2, 13), 1, Vector2i.ZERO)
+	tilemap.set_cell(0, Vector2i(2, 13), 2, Vector2i.ZERO)
 	tilemap.set_owner(self)
 	
 	var hud = load("res://engine/components/hud/hud.tscn").instantiate()

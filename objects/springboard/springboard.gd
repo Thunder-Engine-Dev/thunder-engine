@@ -8,6 +8,7 @@ extends GeneralMovementBody2D
 func trigger() -> void:
 	var spr = get_node(sprite) as AnimatedSprite2D
 	spr.play(&"default")
+	spr.frame = 0
 
 
 func _input(event: InputEvent) -> void:

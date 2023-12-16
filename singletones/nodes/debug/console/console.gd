@@ -10,6 +10,9 @@ var position_in_history: int
 
 
 func _ready():
+	if !OS.is_debug_build():
+		queue_free()
+		return
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
 	
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
@@ -23,6 +26,7 @@ func _ready():
 	)
 
 func _input(event) -> void:
+	if !OS.is_debug_build(): return
 	if event.is_action_pressed("ui_accept"):
 		execute()
 
@@ -32,6 +36,7 @@ func load_commands(dir: String) -> void:
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
+	if !OS.is_debug_build(): return
 	if Input.is_action_just_pressed("a_console"):
 		visible = !visible
 		$UI/Paused.button_pressed = visible

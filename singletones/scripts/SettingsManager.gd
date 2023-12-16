@@ -128,7 +128,7 @@ func _process_settings() -> void:
 		linear_to_db(settings.sound)
 	)
 
-var old_scale: float
+var old_scale: float = -1
 func _window_scale_logic() -> void:
 	if settings.scale == 0: return
 	if old_scale == settings.scale: return
@@ -141,7 +141,7 @@ func _window_scale_logic() -> void:
 		ProjectSettings.get_setting("display/window/size/viewport_width"),
 		ProjectSettings.get_setting("display/window/size/viewport_height")
 	) * settings.scale)
-	if old_scale != 0:
+	if old_scale != 0 || settings.scale > 1:
 		DisplayServer.window_set_position(
 			screen_center - (DisplayServer.window_get_size() / 2)
 		)

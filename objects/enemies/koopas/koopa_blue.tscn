@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://c7ndajwed1l1n"]
 
-[ext_resource type="PackedScene" uid="uid://c4ybecka645y6" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_pttp4"]
+[ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_pttp4"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_e8jgh"]
 [ext_resource type="PackedScene" uid="uid://8ev66yfvs6dr" path="res://engine/objects/enemies/koopas/koopa_shell_blue.tscn" id="2_ja3b3"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ku3ef"]
@@ -78,7 +78,7 @@ animations = [{
 
 [node name="KoopaBlue" instance=ExtResource("1_pttp4")]
 position = Vector2(0, -1)
-speed = Vector2(100, 0)
+speed = Vector2(50, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
