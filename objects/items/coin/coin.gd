@@ -18,10 +18,7 @@ func _physics_process(delta):
 
 
 func collect() -> void:
-	Data.values.coins += 1
-	if Data.values.coins > 99:
-		Data.values.coins = 0
-		Thunder.add_lives(1)
+	Data.add_coin()
 	
 	NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
 		eff.explode()

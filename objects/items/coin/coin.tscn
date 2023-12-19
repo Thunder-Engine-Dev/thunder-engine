@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://fq0xf7e2fvfm"]
+[gd_scene load_steps=12 format=3 uid="uid://fq0xf7e2fvfm"]
 
 [ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
+[ext_resource type="Texture2D" uid="uid://cpvupcw3aa53c" path="res://engine/objects/items/coin/textures/texture_1.png" id="3_0x7vx"]
+[ext_resource type="Texture2D" uid="uid://yfvf87ayx4ib" path="res://engine/objects/items/coin/textures/texture_2.png" id="4_12a3s"]
+[ext_resource type="Texture2D" uid="uid://dyxw5g6kddo3s" path="res://engine/objects/items/coin/textures/texture_3.png" id="5_4n4vo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b06tt"]
 size = Vector2(20, 32)
@@ -35,6 +38,15 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_ngnim"]
+frames = 3
+speed_scale = 10.0
+frame_0/texture = ExtResource("3_0x7vx")
+frame_1/texture = ExtResource("4_12a3s")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("5_4n4vo")
+frame_2/duration = 1.0
+
 [node name="Coin" type="Area2D"]
 collision_layer = 4
 script = ExtResource("1_exjvk")
@@ -44,11 +56,17 @@ visible = false
 shape = SubResource("RectangleShape2D_b06tt")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_v64cq")
 autoplay = "default"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AnimatedTexture_ngnim")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(0, 2.38419e-07)
 scale = Vector2(1, 1.6)
 metadata/_edit_lock_ = true
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_entered"]

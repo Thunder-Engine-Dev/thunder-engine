@@ -1,0 +1,14 @@
+[gd_resource type="AnimatedTexture" load_steps=4 format=3 uid="uid://b2oy01owui0vu"]
+
+[ext_resource type="Texture2D" uid="uid://34ooq38xlgvx" path="res://engine/objects/bumping_blocks/question_block/textures/question_1.png" id="1_qtrj2"]
+[ext_resource type="Texture2D" uid="uid://cmrk0jii6f1mk" path="res://engine/objects/bumping_blocks/question_block/textures/question_2.png" id="2_luw3w"]
+[ext_resource type="Texture2D" uid="uid://d0ptptksyoxlu" path="res://engine/objects/bumping_blocks/question_block/textures/question_3.png" id="3_q4i6c"]
+
+[resource]
+frames = 3
+speed_scale = 4.5
+frame_0/texture = ExtResource("1_qtrj2")
+frame_1/texture = ExtResource("2_luw3w")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("3_q4i6c")
+frame_2/duration = 1.0
