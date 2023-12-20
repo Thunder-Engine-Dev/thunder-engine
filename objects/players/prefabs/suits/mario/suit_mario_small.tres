@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="7_p8pjw"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="8_f2g7m"]
 
-
 [resource]
 script = ExtResource("6_2y0gn")
 name = &"small"

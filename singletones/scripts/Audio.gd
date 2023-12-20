@@ -116,11 +116,11 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		_music_channels[channel_id] = _create_1d_player(false, true)
 	var music_player = _music_channels[channel_id]
 	
-	if ClassDB.get_parent_class(resource.get_class()) == "AudioStream":
+	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
-		music_player.bus = "Music"
+		music_player.bus = &"Music"
 		music_player.play()
-	elif "data" in resource:
+	elif &"data" in resource:
 		var openmpt = _create_openmpt_player(false)
 		if !openmpt:
 			return
@@ -138,7 +138,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		generator.mix_rate = 44100
 		
 		music_player.stream = generator
-		music_player.bus = "Music"
+		music_player.bus = &"Music"
 		music_player.play()
 		openmpt.set_audio_generator_playback(music_player)
 		openmpt.set_render_interpolation(resource.interpolation)
