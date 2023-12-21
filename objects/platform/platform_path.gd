@@ -75,7 +75,7 @@ func _ready() -> void:
 				non_players_have_stood = true
 	)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if !on_moving: return
 	
 	var pregpos:Vector2 = global_position

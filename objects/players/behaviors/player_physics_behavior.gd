@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 		_movement_climbing(delta)
 	elif player.is_sliding:
 		_movement_sliding(delta)
+		_movement_y(delta)
 	else:
 		_movement_x(delta)
 		_movement_y(delta)
@@ -51,6 +52,12 @@ func _decelerate(dece: float, delta: float) -> void:
 
 
 func _movement_x(delta: float) -> void:
+	if player.slided:
+		var do_slide = true if \
+			suit.physics_crouchable else true if player.left_right == 0 else false
+		if do_slide:
+			player.is_sliding = true
+			return
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		_decelerate(config.walk_deceleration, delta)
 		return
@@ -122,7 +129,34 @@ func _movement_sliding(delta: float) -> void:
 	if !player.is_on_floor():
 		player.is_sliding = false
 		return
+	var floor_normal = Vector2(
+		rad_to_deg(player.get_floor_normal().x),
+		rad_to_deg(player.get_floor_normal().y)
+	)
+	#print(floor_normal)
+	# Acceleration
+	if abs(floor_normal.x) >= 40.0:
+		var max_speed: float = config.slide_max_speed
+		_accelerate(max_speed, config.slide_acceleration, delta)
+	else:
+		_decelerate(config.walk_deceleration, delta)
+		if player.speed.x == 0 || player.left_right != 0:
+			player.is_sliding = false
 	
+	if player.left_right != 0 && player.left_right != player.direction && !player.slided:
+		player.is_sliding = false
+
+	if floor_normal.x < -40.0:
+		player.direction = -1
+		if player.speed.x > 0: player.speed.x = player.direction
+	if floor_normal.x > 40.0:
+		player.direction = 1
+		if player.speed.x < 0: player.speed.x = player.direction
+	
+	
+		#_decelerate(config.walk_turning_acce, delta)
+		#if player.speed.x == 0:
+		#	player.direction *= -1
 
 
 #= Shape

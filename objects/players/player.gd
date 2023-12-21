@@ -74,6 +74,7 @@ var jumped: bool
 var running: bool
 var attacked: bool
 var attacking: bool
+var slided: bool
 
 var is_climbing: bool
 var is_sliding: bool
@@ -128,12 +129,16 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 func control_process() -> void:
 	left_right = int(Input.get_axis(control.left, control.right))
 	up_down = int(Input.get_axis(control.up, control.down))
-	jumping = int(Input.is_action_pressed(control.jump)) + int(Input.is_action_just_pressed(control.jump))
+	jumping = int(Input.is_action_pressed(control.jump)) \
+		+ int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)
 	running = Input.is_action_pressed(control.run)
 	attacked = Input.is_action_just_pressed(control.attack)
 	attacking = Input.is_action_pressed(control.attack)
-	is_crouching = Input.is_action_pressed(control.down) && is_on_floor() && suit && suit.physics_crouchable
+	is_crouching = Input.is_action_pressed(control.down) \
+		&& is_on_floor() && suit && suit.physics_crouchable && !is_sliding
+	slided = Input.is_action_pressed(control.down) \
+		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39
 
 
 #= Status

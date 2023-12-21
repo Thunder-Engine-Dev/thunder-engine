@@ -5,6 +5,7 @@ class_name PlayerConfig
 @export var walk_initial_speed: float = 50
 @export var walk_acceleration: float = 312.5
 @export var walk_deceleration: float = 312.5
+@export var walk_crouch_deceleration: float = 625
 @export var walk_turning_acce: float = 1250
 @export var walk_max_walking_speed: float = 175
 @export var walk_max_running_speed: float = 350
@@ -22,7 +23,9 @@ class_name PlayerConfig
 @export_group("Climb", "climb_")
 @export var climb_speed: float = 150
 @export_group("Slide", "slide_")
-@export var slide_max_speed: float = 350
+@export var slide_max_speed: float = 450
+@export var slide_acceleration: float = 468.75
+@export var slide_deceleration: float = 468.75
 @export_group("Sound", "sound_")
 @export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 @export var sound_swim: AudioStream = preload("res://engine/objects/players/prefabs/sounds/swim.wav")
