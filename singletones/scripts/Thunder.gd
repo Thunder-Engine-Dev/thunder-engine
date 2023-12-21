@@ -70,6 +70,9 @@ func _init() -> void:
 	
 	# Setting minimum window dimensions
 	DisplayServer.window_set_min_size(Vector2i(640, 480))
+	
+	# Set default background in-game from solid gray to solid black
+	RenderingServer.set_default_clear_color(Color.BLACK)
 
 
 ## Discarded, see [method "engine/singletones/scripts/Scenes.gd".switch_to_scene]

@@ -91,7 +91,7 @@ func _stun() -> void:
 	Audio.play_sound(stunning_sound, self)
 	_explosion()
 	if Thunder._current_camera.has_method(&"shock"):
-		Thunder._current_camera.shock(0.2, Vector2.ONE * 8)
+		Thunder._current_camera.shock(0.2, Vector2.ONE * 4)
 
 
 func _explosion() -> void:

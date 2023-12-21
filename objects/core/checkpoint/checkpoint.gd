@@ -45,7 +45,9 @@ func activate() -> void:
 	tween.tween_property(text, "modulate:a", 1.0, 0.2)
 	animation_player.play("checkpoint")
 	
-	Audio.play_1d_sound(voice_lines[randi_range(0, len(voice_lines) - 1)])
+	get_tree().create_timer(0.5, false, true).timeout.connect(func() -> void:
+		Audio.play_1d_sound(voice_lines[randi_range(0, len(voice_lines) - 1)])
+	)
 	
 	if permanent_checked && !id in Data.values.checked_cps:
 		Data.values.checked_cps.append(id)
