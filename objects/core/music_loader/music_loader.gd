@@ -23,7 +23,6 @@ func _change_music(index: int, ch_id: int) -> void:
 		Audio.play_music(options[0], options[1], options[2])
 	else:
 		buffered_to_play = options
-		print(buffered_to_play)
 
 
 func _stop_music(channel_id: int) -> void:

@@ -11,6 +11,16 @@ func _ready() -> void:
 	_update_view()
 
 
+## Fullscreen toggle
+func _unhandled_input(event: InputEvent) -> void:
+	if !event is InputEventKey or event.echo or !event.is_pressed(): return
+	if event.keycode == KEY_F11:
+		if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+
+
 func _on_window_resized():
 	_update_view()
 
@@ -27,7 +37,7 @@ func _update_view() -> void:
 	container.scale.y = container.scale.x
 	container.material.set_shader_parameter(
 		&"enable",
-		SettingsManager.settings.filter && fmod(container.scale.y, 1) != 0
+		!SettingsManager.settings.filter && container.scale.y != 1
 	)
 	if !keep_aspect:
 		vp.size.x = 480 * (float(window_size.x) / float(window_size.y))

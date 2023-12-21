@@ -109,7 +109,7 @@ func _process_settings() -> void:
 	# Filter
 	GlobalViewport.container.material.set_shader_parameter(
 		&"enable",
-		settings.filter && fmod(GlobalViewport.container.scale.y, 1) != 0
+		!settings.filter && GlobalViewport.container.scale.y != 1
 	)
 	ProjectSettings.set_setting(
 		&"rendering/textures/canvas_textures/default_texture_filter",

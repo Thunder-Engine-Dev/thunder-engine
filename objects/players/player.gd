@@ -76,6 +76,7 @@ var attacked: bool
 var attacking: bool
 
 var is_climbing: bool
+var is_sliding: bool
 var is_crouching: bool
 var is_underwater: bool
 var is_underwater_out: bool

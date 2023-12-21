@@ -31,6 +31,8 @@ func _physics_process(delta: float) -> void:
 	# Movement
 	if player.is_climbing:
 		_movement_climbing(delta)
+	elif player.is_sliding:
+		_movement_sliding(delta)
 	else:
 		_movement_x(delta)
 		_movement_y(delta)
@@ -58,12 +60,17 @@ func _movement_x(delta: float) -> void:
 		player.speed.x = player.direction * config.walk_initial_speed
 	# Acceleration
 	if player.left_right == player.direction:
-		var max_speed: float = config.underwater_walk_max_walking_speed if player.is_underwater else (config.walk_max_running_speed if player.running else config.walk_max_walking_speed)
+		var max_speed: float = (
+			config.underwater_walk_max_walking_speed if player.is_underwater else (
+				config.walk_max_running_speed if player.running else \
+				config.walk_max_walking_speed
+			)
+		)
 		_accelerate(max_speed, config.walk_acceleration, delta)
 	elif player.left_right == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)
 		if player.speed.x == 0:
-			player.direction *= -1 
+			player.direction *= -1
 
 
 func _movement_y(delta: float) -> void:
@@ -109,9 +116,20 @@ func _movement_climbing(delta: float) -> void:
 		Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 
 
+#= Sliding from slopes
+func _movement_sliding(delta: float) -> void:
+	if player.completed: return
+	if !player.is_on_floor():
+		player.is_sliding = false
+		return
+	
+
+
 #= Shape
 func _shape_process() -> void:
-	var shaper: Shaper2D = suit.physics_shaper_crouch if player.is_crouching && player.warp == Player.Warp.NONE else suit.physics_shaper
+	var shaper: Shaper2D = (
+		suit.physics_shaper_crouch if player.is_crouching && player.warp == Player.Warp.NONE else suit.physics_shaper
+	)
 	if !shaper: return
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
@@ -133,7 +151,8 @@ func _head_process() -> void:
 		# Bumpable Block
 		if collider is StaticBumpingBlock && \
 		collider.has_method(&"got_bumped") && \
-		((player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || (player.is_on_ceiling() && collider.initially_visible_and_solid)):
+		((player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
+		(player.is_on_ceiling() && collider.initially_visible_and_solid)):
 			collider.got_bumped.call_deferred(player)
 
 #= Body

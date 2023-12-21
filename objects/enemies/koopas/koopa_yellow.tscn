@@ -87,6 +87,9 @@ killing_creation = SubResource("Resource_gvklt")
 killing_scores = 500
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"killing_scores", &"killing_creation", &"stomping_creation"]
 
+[node name="Turner" parent="." index="2"]
+script = null
+
 [node name="Sprite" parent="." index="3"]
 sprite_frames = SubResource("SpriteFrames_eu4gx")
 

@@ -8,11 +8,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctk1r"]
-size = Vector2(1, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
 size = Vector2(16, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctk1r"]
+size = Vector2(1, 1)
 
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
 collision_mask = 16
@@ -31,24 +31,6 @@ position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_5emkl")
 debug_color = Color(0, 0.643137, 0.305882, 0.419608)
 
-[node name="Body" type="ShapeCast2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_ctk1r")
-target_position = Vector2(0, 0)
-max_results = 8
-collision_mask = 6
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="Head" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, -12)
-shape = SubResource("RectangleShape2D_k6hxb")
-target_position = Vector2(0, -2)
-max_results = 16
-collision_mask = 144
-collide_with_areas = true
-
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
 position = Vector2(0, -15)
@@ -59,6 +41,24 @@ visible = false
 z_index = 15
 position = Vector2(1, 2)
 texture = ExtResource("3_qpqdp")
+
+[node name="Head" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_k6hxb")
+target_position = Vector2(0, -2)
+max_results = 16
+collision_mask = 144
+collide_with_areas = true
+
+[node name="Body" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ctk1r")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 6
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Underwater" type="Node" parent="."]
 script = ExtResource("3_vybsq")

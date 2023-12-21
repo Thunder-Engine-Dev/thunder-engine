@@ -141,13 +141,13 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		music_player.stream = generator
 		music_player.bus = &"Music"
 		music_player.play()
-		music_player.seek(0.0)
+		#music_player.seek(0.0)
 		openmpt.set_audio_generator_playback(music_player)
 		openmpt.set_render_interpolation(resource.interpolation)
 		openmpt.set_repeat_count(0 if !resource.loop else -1)
 		#_music_channels[channel_id].volume_db = resource.volume_offset
 		openmpt.start(true)
-		openmpt.set_position_seconds(0.0)
+		#openmpt.set_position_seconds(0.0)
 	else:
 		printerr("Invalid data provided in method Audio.play_music")
 		return

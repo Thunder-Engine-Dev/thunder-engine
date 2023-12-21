@@ -8,6 +8,7 @@ shader = ExtResource("1_sowlm")
 shader_parameter/enable = true
 
 [node name="ViewportControl" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
+process_mode = 1
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 audio_listener_enable_2d = true
