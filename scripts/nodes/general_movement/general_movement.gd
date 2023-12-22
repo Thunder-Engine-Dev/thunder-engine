@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 func update_dir() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
-	dir = Thunder.Math.look_at(global_position, Thunder._current_player.global_position, global_transform)
+	dir = Thunder.Math.look_at(global_position, player.global_position, global_transform)
 
 
 func speed_to_dir() -> void:

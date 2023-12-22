@@ -1,17 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=12 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
+[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_kdm1n"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="3_qpqdp"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdes3"]
+shader = ExtResource("2_kdm1n")
+shader_parameter/mixing = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
 size = Vector2(16, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ctk1r"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82odo"]
 size = Vector2(1, 1)
 
 [node name="Mario" type="CharacterBody2D" node_paths=PackedStringArray("death_sprite")]
@@ -33,6 +42,7 @@ debug_color = Color(0, 0.643137, 0.305882, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
+material = SubResource("ShaderMaterial_kdes3")
 position = Vector2(0, -15)
 sprite_frames = ExtResource("2_eqact")
 
@@ -76,3 +86,20 @@ one_shot = true
 process_callback = 0
 wait_time = 10.0
 one_shot = true
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+enabled = false
+shape = SubResource("RectangleShape2D_82odo")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("5_tgx46")
+killer_type = &"fireball"
+killing_detection_scale = 1.0
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[connection signal="timeout" from="Starman" to="." method="_on_starman_timeout"]
+[connection signal="killed" from="Attack" to="." method="_on_starman_killed"]

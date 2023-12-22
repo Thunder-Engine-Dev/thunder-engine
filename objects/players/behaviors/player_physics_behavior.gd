@@ -127,7 +127,7 @@ func _movement_climbing(delta: float) -> void:
 func _movement_sliding(delta: float) -> void:
 	if player.completed: return
 	if !player.is_on_floor():
-		player.is_sliding = false
+		_stop_sliding_movement()
 		return
 	var floor_normal = Vector2(
 		rad_to_deg(player.get_floor_normal().x),
@@ -141,10 +141,10 @@ func _movement_sliding(delta: float) -> void:
 	else:
 		_decelerate(config.walk_deceleration, delta)
 		if player.speed.x == 0 || player.left_right != 0:
-			player.is_sliding = false
+			_stop_sliding_movement()
 	
 	if player.left_right != 0 && player.left_right != player.direction && !player.slided:
-		player.is_sliding = false
+		_stop_sliding_movement()
 
 	if floor_normal.x < -40.0:
 		player.direction = -1
@@ -154,9 +154,10 @@ func _movement_sliding(delta: float) -> void:
 		if player.speed.x < 0: player.speed.x = player.direction
 	
 	
-		#_decelerate(config.walk_turning_acce, delta)
-		#if player.speed.x == 0:
-		#	player.direction *= -1
+func _stop_sliding_movement() -> void:
+	player.is_sliding = false
+	player.attack.enabled = player.is_starman()
+	if !player.is_starman(): player.starman_combo.reset_combo()
 
 
 #= Shape
@@ -167,6 +168,7 @@ func _shape_process() -> void:
 	if !shaper: return
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
+	shaper.install_shape_for_caster(player.attack)
 	
 	if player.collision_shape.shape is RectangleShape2D:
 		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2

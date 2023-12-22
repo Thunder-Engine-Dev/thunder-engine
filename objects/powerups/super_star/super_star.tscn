@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://12ak5pa7cf8u"]
+
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/super_star.gd" id="1_4vonc"]
+[ext_resource type="Texture2D" uid="uid://crq3fax60u2kt" path="res://engine/objects/powerups/super_star/texture.png" id="2_i7lwt"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_o2iew"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxynq"]
+size = Vector2(31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7xci"]
+atlas = ExtResource("2_i7lwt")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw1b0"]
+atlas = ExtResource("2_i7lwt")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7bk4"]
+atlas = ExtResource("2_i7lwt")
+region = Rect2(66, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wip2"]
+atlas = ExtResource("2_i7lwt")
+region = Rect2(99, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_65afj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7xci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw1b0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7bk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wip2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SuperStar" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 8.0
+script = ExtResource("1_4vonc")
+speed = Vector2(125, 0)
+gravity_scale = 0.2
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_oxynq")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_oxynq")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_65afj")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+script = ExtResource("3_o2iew")
+metadata/_edit_lock_ = true

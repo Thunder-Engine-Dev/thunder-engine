@@ -101,6 +101,9 @@ var _suit_appear: bool
 @onready var underwater: Node = $Underwater
 @onready var timer_invincible: Timer = $Invincible
 @onready var timer_starman: Timer = $Starman
+@onready var attack: ShapeCast2D = $Attack
+
+@onready var starman_combo: Combo = Combo.new(self)
 
 
 func _ready() -> void:
@@ -115,7 +118,18 @@ func _ready() -> void:
 	
 	if Data.values.lives == -1:
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
-	
+
+
+var _starman_faded: bool
+
+func _physics_process(delta: float) -> void:
+	if is_starman && (
+		timer_starman.time_left > 0.0 &&
+		timer_starman.time_left < 1.5 &&
+		!_starman_faded
+	):
+		_starman_faded = true
+		Audio.stop_music_channel(98, true)
 
 
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
@@ -149,6 +163,8 @@ func invincible(duration: float = 2) -> void:
 
 func starman(duration: float = 10) -> void:
 	invincible(duration)
+	sprite.material.set_shader_parameter(&"mixing", true)
+	attack.enabled = true
 	timer_starman.start(duration)
 	starmaned.emit(duration)
 
@@ -195,3 +211,31 @@ func is_invincible() -> bool:
 
 func is_starman() -> bool:
 	return !timer_starman.is_stopped()
+
+
+func _on_starman_timeout() -> void:
+	starman_combo.reset_combo()
+	sprite.material.set_shader_parameter(&"mixing", false)
+	attack.enabled = is_sliding
+	_starman_faded = false
+	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
+	if mus_loader:
+		if mus_loader.is_paused:
+			mus_loader.unpause_music()
+			mus_loader.play_immediately = true
+			print("unpaused")
+		elif !mus_loader.buffer.is_empty():
+			mus_loader.play_immediately = true
+			mus_loader.play_buffered()
+			print("Played buffered")
+
+
+func _on_starman_killed(what: Node, result: Dictionary) -> void:
+	if what == self: return
+	# Combo
+	if result.result:
+		if !starman_combo.get_combo() <= 0:
+			what.sound_pitch = 1 + starman_combo.get_combo() * 0.135
+		#what.got_killed(&"starman", [&"no_score"])
+		starman_combo.combo()
+

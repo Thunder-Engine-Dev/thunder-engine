@@ -46,7 +46,8 @@ func _shot() -> void:
 func _invincible(duration: float) -> void:
 	if !sprite: return
 	sprite.modulate.a = 1
-	Effect.flash(sprite, duration)
+	if !player.is_starman():
+		Effect.flash(sprite, duration)
 
 
 func _sprite_loop() -> void:

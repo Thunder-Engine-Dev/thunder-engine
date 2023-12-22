@@ -70,7 +70,8 @@ killing_immune = {
 "beetroot": false,
 "boomerang": false,
 "fireball": false,
-"iceball": false
+"iceball": false,
+"starman": true
 }
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune"]
 

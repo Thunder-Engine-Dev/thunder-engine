@@ -54,7 +54,6 @@ func _create_openmpt_player(is_global: bool) -> OpenMPT:
 	var openmpt = OpenMPT.new()
 	add_child(openmpt)
 	openmpt.stop()
-	print(openmpt)
 	return openmpt
 
 
@@ -73,8 +72,11 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	player.stream = resource
 	player.play()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
-	if &"ignore_pause" in other_keys && other_keys.ignore_pause: player.process_mode = Node.PROCESS_MODE_ALWAYS
+	if &"pitch" in other_keys && other_keys.pitch is float:
+		player.pitch_scale = other_keys.pitch
+	player.process_mode = Node.PROCESS_MODE_ALWAYS \
+		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
+		else Node.PROCESS_MODE_PAUSABLE
 
 
 ## Play a sound with given [AudioStream] resource[br]
@@ -92,8 +94,11 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.stream = resource
 	player.play()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float: player.pitch_scale = other_keys.pitch
-	if &"ignore_pause" in other_keys && other_keys.ignore_pause: player.process_mode = Node.PROCESS_MODE_ALWAYS
+	if &"pitch" in other_keys && other_keys.pitch is float:
+		player.pitch_scale = other_keys.pitch
+	player.process_mode = Node.PROCESS_MODE_ALWAYS \
+		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
+		else Node.PROCESS_MODE_PAUSABLE
 
 
 ## Play a [b]music[/b] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
@@ -153,9 +158,13 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		return
 	
 	
-	if &"pitch" in other_keys && other_keys.pitch is float: _music_channels[channel_id].pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float: _music_channels[channel_id].volume_db = other_keys.volume
-	if &"ignore_pause" in other_keys && other_keys.ignore_pause:_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS
+	if &"pitch" in other_keys && other_keys.pitch is float:
+		_music_channels[channel_id].pitch_scale = other_keys.pitch
+	if &"volume" in other_keys && other_keys.volume is float:
+		_music_channels[channel_id].volume_db = other_keys.volume
+	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
+		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
+		else Node.PROCESS_MODE_PAUSABLE
 
 
 ## Fade a music player that is playing, and you can choose it's way to fade.[br]
@@ -172,7 +181,13 @@ func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float,
 	tween.tween_property(player, "volume_db", to, duration)
 	tween.tween_callback(
 		func() -> void:
-			if stop_after_fading: player.stop()
+			if stop_after_fading && is_instance_valid(player):
+				player.stop()
+				if player.has_meta("openmpt"):
+					var openmpt = player.get_meta("openmpt")
+					if is_instance_valid(openmpt):
+						openmpt.queue_free()
+				player.free()
 			tween.kill()
 			if tween in _music_tweens:
 				_music_tweens.erase(tween)
