@@ -4,7 +4,7 @@ const Shell: Script = preload("./koopa_shell.gd")
 
 @export_category("KoopaShell")
 @export var stopping: bool = true
-@export var restoring_damage_delay: float = 0.8
+@export var restoring_damage_delay: float = 0.6
 @export_subgroup("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")

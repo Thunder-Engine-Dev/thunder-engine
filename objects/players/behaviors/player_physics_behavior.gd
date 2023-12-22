@@ -57,6 +57,8 @@ func _movement_x(delta: float) -> void:
 			suit.physics_crouchable else true if player.left_right == 0 else false
 		if do_slide:
 			player.is_sliding = true
+			player.attack.killing_detection_scale = 8
+			player.attack.enabled = true
 			return
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		_decelerate(config.walk_deceleration, delta)
@@ -158,6 +160,7 @@ func _stop_sliding_movement() -> void:
 	player.is_sliding = false
 	player.attack.enabled = player.is_starman()
 	if !player.is_starman(): player.starman_combo.reset_combo()
+	player.attack.killing_detection_scale = 2
 
 
 #= Shape
