@@ -8,7 +8,7 @@ var movement: bool
 func _ready() -> void:
 	await get_tree().create_timer(0.5, false, true).timeout
 	movement = true
-	vel_set_y(-650)
+	vel_set_y(-550)
 	await get_tree().create_timer(4, false, true).timeout
 	# After death
 	if Data.values.lives == 0:

@@ -16,7 +16,7 @@ enum FacingMethod {
 			phase = randf_range(0, 360)
 @export var frequency: float = 1
 @export_group("Sprite")
-@export var sprite: Node2D
+@export var sprite_path: NodePath
 @export var facing_method: FacingMethod = FacingMethod.LOOK_AT_PLAYER
 
 var dir: int
@@ -29,8 +29,9 @@ func _physics_process(delta: float) -> void:
 	position = Thunder.Math.oval(center, amplitude, deg_to_rad(phase))
 	phase = wrapf(phase + frequency * Thunder.get_delta(delta), 0, 360)
 	
-	if !sprite:
+	if !sprite_path || !has_node(sprite_path):
 		return
+	var sprite = get_node(sprite_path)
 	
 	match facing_method:
 		FacingMethod.LOOK_AT_PLAYER:

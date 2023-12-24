@@ -37,13 +37,21 @@ func _shoot() -> void:
 	for i in vars.attack_amount:
 		NodeCreator.prepare_ins_2d(vars.attack_thrower, node).call_method(func(ball: Node2D) -> void:
 			if ball is GravityBody2D:
+				
 				var ball_speed: Vector2 = Vector2(
-					randf_range(vars.projectile_speed_min.x,vars.projectile_speed_max.x),
-					randf_range(vars.projectile_speed_min.y,vars.projectile_speed_max.y),
+					randf_range(
+						vars.projectile_speed_min.x,
+						vars.projectile_speed_max.x
+					),
+					randf_range(
+						vars.projectile_speed_min.y,
+						vars.projectile_speed_max.y
+					),
 				)
 				
 				ball.rotation = 0.0
 				ball.speed = ball_speed.rotated(node.rotation)
+				#ball.speed.y = cos(node.rotation)
 				ball.gravity_scale = vars.projectile_gravity_scale
 			
 			if &"belongs_to" in ball: ball.belongs_to = Data.PROJECTILE_BELONGS.ENEMY

@@ -85,12 +85,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="KoopaParatroopaGreen" type="Node2D" node_paths=PackedStringArray("sprite") groups=["#circle"]]
+[node name="KoopaParatroopaGreen" type="Node2D" groups=["#circle"]]
 script = ExtResource("1_1t3xj")
 amplitude = Vector2(0, 50)
 random_phase = true
 frequency = 2.0
-sprite = NodePath("Sprite")
+sprite_path = NodePath("Sprite")
 metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"]
 
 [node name="Body" type="Area2D" parent="."]

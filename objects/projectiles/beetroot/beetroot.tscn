@@ -13,6 +13,7 @@ collision_mask = 64
 script = ExtResource("1_qd3dy")
 speed = Vector2(120, -300)
 gravity_scale = 0.4
+correct_collision = false
 
 [node name="Texture" type="Sprite2D" parent="."]
 z_index = 1
