@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var stay_in_pipe_at_first: bool = true
-@export var range_in_pipe: float = 70.0
+@export var range_in_pipe: float = 80.0
 @export var stay_in_interval: float = 1.0
 @export var stay_out_interval: float = 0.9
 @export var stretching_speed: float = 50.0

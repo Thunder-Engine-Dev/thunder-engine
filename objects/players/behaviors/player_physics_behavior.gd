@@ -56,9 +56,7 @@ func _movement_x(delta: float) -> void:
 		var do_slide = true if \
 			suit.physics_crouchable else true if player.left_right == 0 else false
 		if do_slide:
-			player.is_sliding = true
-			player.attack.killing_detection_scale = 8
-			player.attack.enabled = true
+			_start_sliding_movement()
 			return
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		_decelerate(config.walk_deceleration, delta)
@@ -131,31 +129,46 @@ func _movement_sliding(delta: float) -> void:
 	if !player.is_on_floor():
 		_stop_sliding_movement()
 		return
-	var floor_normal = Vector2(
-		rad_to_deg(player.get_floor_normal().x),
-		rad_to_deg(player.get_floor_normal().y)
-	)
-	#print(floor_normal)
+	var floor_normal = rad_to_deg(player.get_floor_normal().x)
+	var dir: bool = player.direction == 1
 	# Acceleration
-	if abs(floor_normal.x) >= 40.0:
-		var max_speed: float = config.slide_max_speed
-		_accelerate(max_speed, config.slide_acceleration, delta)
-	else:
+	var accel: Callable = func() -> void:
+		_accelerate(config.slide_max_speed, config.slide_acceleration, delta)
+	# Deceleration
+	var decel: Callable = func() -> void:
 		_decelerate(config.walk_deceleration, delta)
+	
+	# Sliding towards right
+	if floor_normal >= 40.0:
+		accel.call() if dir else decel.call()
+		if player.speed.x == 0: _start_sliding_movement()
+	# Sliding towards left
+	elif floor_normal <= -40.0:
+		accel.call() if !dir else decel.call()
+		if player.speed.x == 0: _start_sliding_movement()
+	# 
+	else:
+		decel.call()
 		if player.speed.x == 0 || player.left_right != 0:
 			_stop_sliding_movement()
 	
 	if player.left_right != 0 && player.left_right != player.direction && !player.slided:
 		_stop_sliding_movement()
 
-	if floor_normal.x < -40.0:
+
+func _start_sliding_movement() -> void:
+	player.attack.killing_detection_scale = 8
+	player.attack.enabled = true
+	var floor_norm = rad_to_deg(player.get_floor_normal().x)
+	if floor_norm <= -40.0:
+		player.speed.x = 0
 		player.direction = -1
-		if player.speed.x > 0: player.speed.x = player.direction
-	if floor_normal.x > 40.0:
+	if floor_norm >= 40.0:
+		player.speed.x = 0
 		player.direction = 1
-		if player.speed.x < 0: player.speed.x = player.direction
-	
-	
+	player.is_sliding = true
+
+
 func _stop_sliding_movement() -> void:
 	player.is_sliding = false
 	player.attack.enabled = player.is_starman()

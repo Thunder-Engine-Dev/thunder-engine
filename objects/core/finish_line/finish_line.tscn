@@ -79,10 +79,10 @@ visible = false
 shape = SubResource("RectangleShape2D_wg2sy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "bar"
 libraries = {
 "": SubResource("AnimationLibrary_3bes0")
 }
+autoplay = "bar"
 
 [node name="ScoreTextMarker" type="Marker2D" parent="."]
 visible = false

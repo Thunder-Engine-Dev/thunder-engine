@@ -3,6 +3,8 @@ class_name GeneralMovementBody2D
 
 @export_category("GeneralMovement")
 @export var look_at_player: bool
+## -1 is Left, 1 is Right.
+@export_enum("Disabled: 0", "Left: -1", "Right: 1") var force_direction: int = 0
 @export var turn_sprite: bool = true
 @export var slide: bool
 @export_category("References")
@@ -19,6 +21,11 @@ func _ready() -> void:
 	
 	# Fix misdetection of being on wall when sloping down
 	floor_max_angle += PI/180
+	
+	if force_direction:
+		dir = force_direction
+		speed_to_dir()
+		return
 	
 	if look_at_player && Thunder._current_player:
 		update_dir()

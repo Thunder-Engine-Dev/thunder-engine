@@ -8,6 +8,7 @@ extends PathFollow2D
 @export var touching_player_touched_movement:bool # Needs touching_players_enabled = true
 @export_group("Physics")
 @export var speed: float = 150.0
+@export var loop_backwards: bool = true
 @export_subgroup("Smooth","smooth_")
 @export var smooth_enabled: bool = true
 @export var smooth_turning_length: float = 64.0
@@ -113,7 +114,7 @@ func _non_path_movement_process(delta: float) -> void:
 
 func _sharp_movement() -> void:
 	if !curve: return
-	if progress_ratio <= 0 || progress_ratio >= 1: speed *= -1
+	if loop_backwards && (progress_ratio <= 0 || progress_ratio >= 1): speed *= -1
 
 func _smooth_movement(delta: float) -> void:
 	if !curve: return
