@@ -146,7 +146,7 @@ func _movement_sliding(delta: float) -> void:
 	elif floor_normal <= -40.0:
 		accel.call() if !dir else decel.call()
 		if player.speed.x == 0: _start_sliding_movement()
-	# 
+	# Momentum on flat surface after sliding
 	else:
 		decel.call()
 		if player.speed.x == 0 || player.left_right != 0:
@@ -161,10 +161,10 @@ func _start_sliding_movement() -> void:
 	player.attack.enabled = true
 	var floor_norm = rad_to_deg(player.get_floor_normal().x)
 	if floor_norm <= -40.0:
-		player.speed.x = 0
+		player.speed.x = 1
 		player.direction = -1
 	if floor_norm >= 40.0:
-		player.speed.x = 0
+		player.speed.x = -1
 		player.direction = 1
 	player.is_sliding = true
 

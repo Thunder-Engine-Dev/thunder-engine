@@ -17,5 +17,5 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
 		SettingsManager.settings[setting_name] = !SettingsManager.settings[setting_name]
-		Audio.play_1d_sound(toggle_sound)
+		Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
 		SettingsManager._process_settings()

@@ -10,12 +10,12 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_right"):
 		SettingsManager.settings[type] = clamp(SettingsManager.settings[type] + 0.1, 0, 1)
-		Audio.play_1d_sound(change_sound)
+		Audio.play_1d_sound(change_sound, true, { "ignore_pause": true })
 		SettingsManager._process_settings()
 		
 	if Input.is_action_just_pressed("ui_left"):
 		SettingsManager.settings[type] = clamp(SettingsManager.settings[type] - 0.1, 0, 1)
-		Audio.play_1d_sound(change_sound)
+		Audio.play_1d_sound(change_sound, true, { "ignore_pause": true })
 		SettingsManager._process_settings()
 	
 	$Value.value = SettingsManager.settings[type] * 10

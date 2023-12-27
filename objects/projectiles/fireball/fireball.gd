@@ -5,6 +5,15 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 @export var jumping_speed: float = -250.0
 
 
+func _ready() -> void:
+	await get_tree().physics_frame
+	if (
+		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&
+		!$VisibleOnScreenNotifier2D.is_on_screen()
+	):
+		queue_free()
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !sprite_node: return

@@ -33,7 +33,7 @@ func _input(event) -> void:
 			var scancode = event.as_text()
 			SettingsManager.settings.controls[action_name] = scancode
 			SettingsManager._load_keys()
-			Audio.play_1d_sound(change_sound)
+			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true })
 		changing = false
 		
 		# should be changed, crutch.

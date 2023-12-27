@@ -22,11 +22,11 @@ func _physics_process(delta: float) -> void:
 			SettingsManager.settings.scale = 1
 		else:
 			SettingsManager.settings.scale = clamp(SettingsManager.settings.scale + 0.5, 1, 4)
-		Audio.play_1d_sound(toggle_sound)
+		Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
 		SettingsManager._process_settings()
 		
 	if Input.is_action_just_pressed("ui_left"):
 		SettingsManager.settings.scale = clamp(SettingsManager.settings.scale - 0.5, 1, 4)
-		Audio.play_1d_sound(toggle_sound)
+		Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
 		SettingsManager._process_settings()
 	

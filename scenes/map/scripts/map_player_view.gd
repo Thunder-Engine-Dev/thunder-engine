@@ -5,7 +5,7 @@ extends AnimatedSprite2D
 @export var dots: PackedScene
 @export var x: PackedScene = preload("res://engine/scenes/map/prefabs/x.tscn")
 
-var movement_dir: Vector2 = Vector2.RIGHT
+var direction: float
 var reached: bool = false
 
 var current_marker: MapPlayerMarker
@@ -53,21 +53,22 @@ func move(delta: float) -> void:
 			marker.position = position - Vector2(0, 8)
 			owner.add_child(marker)
 	else:
-		position = position.move_toward(position + movement_dir * 10, speed * delta)
+		position = position.move_toward(position.rotated(direction), speed * delta)
+		#position = position.move_toward(position + movement_dir * 10, speed * delta)
 		# Puts Dots every 16 px on x or y 
 		# (x % 16 == 0) == !(x % 16) cuz (0 = false, 1 = true)
-		if abs(movement_dir.y) > 0.5:
-			if !(int(position.y) % 16) && !has_put_dot:
-				has_put_dot = true
-				put_dot()
-			if int(position.y) % 16:
-				has_put_dot = false
-		elif abs(movement_dir.x) > 0.5:
-			if !(int(position.x) % 16) && !has_put_dot:
-				has_put_dot = true
-				put_dot()
-			if int(position.x) % 16:
-				has_put_dot = false
+		#if abs(movement_dir.y) > 0.5:
+			#if !(int(position.y) % 16) && !has_put_dot:
+				#has_put_dot = true
+				#put_dot()
+			#if int(position.y) % 16:
+				#has_put_dot = false
+		#elif abs(movement_dir.x) > 0.5:
+			#if !(int(position.x) % 16) && !has_put_dot:
+				#has_put_dot = true
+				#put_dot()
+			#if int(position.x) % 16:
+				#has_put_dot = false
 
 
 func animate() -> void:
@@ -85,5 +86,7 @@ func put_dot(pos: Vector2 = position) -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("map_marker"):
+		pass
 		#current_marker = area as MapPlayerMarker
-		movement_dir = Vector2.RIGHT.rotated(area.rotation).round()
+		
+		#movement_dir = Vector2.RIGHT.rotated(area.rotation).round()

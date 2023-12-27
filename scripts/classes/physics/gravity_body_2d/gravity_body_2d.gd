@@ -165,7 +165,7 @@ func stop_notify(wall_notify:bool = true, ceiling_notify:bool = true, floor_noti
 
 
 # Getters
-## Get globalized [member gravity_dir], if [memebr gravity_dir_rotation] is [code]false[/code], the globalized one equals [memeber gravity_dir]
+## Get globalized [member gravity_dir], if [member gravity_dir_rotation] is [code]false[/code], the globalized one equals [member gravity_dir]
 func get_global_gravity_dir() -> Vector2:
 	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
 

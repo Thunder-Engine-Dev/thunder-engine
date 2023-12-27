@@ -37,6 +37,10 @@ func _shoot() -> void:
 	for i in vars.attack_amount:
 		NodeCreator.prepare_ins_2d(vars.attack_thrower, node).call_method(func(ball: Node2D) -> void:
 			if ball is GravityBody2D:
+				var speed_corrected: Vector2 = Vector2.ONE
+				if vars.projectile_speed_correction:
+					speed_corrected.x = cos(node.rotation) / 4 + 0.35
+					speed_corrected.y = cos(node.rotation) / 4 + 0.75
 				
 				var ball_speed: Vector2 = Vector2(
 					randf_range(
@@ -44,19 +48,19 @@ func _shoot() -> void:
 						vars.projectile_speed_max.x
 					),
 					randf_range(
-						vars.projectile_speed_min.y,
-						vars.projectile_speed_max.y
+						vars.projectile_speed_min.y * speed_corrected.x,
+						vars.projectile_speed_max.y * speed_corrected.y
 					),
 				)
 				
 				ball.rotation = 0.0
 				ball.speed = ball_speed.rotated(node.rotation)
-				#ball.speed.y = cos(node.rotation)
 				ball.gravity_scale = vars.projectile_gravity_scale
 			
 			if &"belongs_to" in ball: ball.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
 			
-			if !vars.projectile_collision && ball is CollisionObject2D: ball.set_collision_mask_value(7,false)
+			if !vars.projectile_collision && ball is CollisionObject2D:
+				ball.set_collision_mask_value(7, false)
 		).create_2d()
 	
 	Audio.play_sound(vars.attack_sound, node)

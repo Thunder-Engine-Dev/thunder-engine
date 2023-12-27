@@ -61,7 +61,7 @@ func move_selector(index: int) -> void:
 
 func _selection() -> void:
 	if control_sound:
-		Audio.play_1d_sound(control_sound)
+		Audio.play_1d_sound(control_sound, true, { "ignore_pause": true })
 	_selection_update()
 
 

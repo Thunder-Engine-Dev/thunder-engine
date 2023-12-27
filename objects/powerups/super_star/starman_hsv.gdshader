@@ -60,7 +60,5 @@ void fragment() {
     }
     f_color.a = col_a.a;
     COLOR = f_color;
-  } else {
-    COLOR = texture(TEXTURE, UV);
   }
 }
