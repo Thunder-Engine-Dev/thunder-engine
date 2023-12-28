@@ -17,6 +17,9 @@ func _ready() -> void:
 	)
 
 
-func _input(event: InputEvent) -> void:
-	if player && event.is_action_pressed(player.control.up):
+func _physics_process(delta: float) -> void:
+	if player && (
+		Input.is_action_pressed(player.control.up) ||
+		(Input.is_action_pressed(player.control.down) && !player.is_on_floor())
+	):
 		player.is_climbing = true
