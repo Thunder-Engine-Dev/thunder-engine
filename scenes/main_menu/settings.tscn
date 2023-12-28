@@ -1,18 +1,18 @@
 [gd_scene load_steps=52 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
-[ext_resource type="Texture2D" uid="uid://c2t0hh13awaij" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
-[ext_resource type="Texture2D" uid="uid://dbw5r0srvultn" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
+[ext_resource type="Texture2D" uid="uid://b7mnvsybc3geb" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
+[ext_resource type="Texture2D" uid="uid://c7j15vrd8070k" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_icon.gd" id="4_8cb2v"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
-[ext_resource type="Texture2D" uid="uid://jbsgfb0a4kjy" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
+[ext_resource type="Texture2D" uid="uid://jxw214adhf6r" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
-[ext_resource type="Texture2D" uid="uid://c3aq7cfk50hr" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
-[ext_resource type="Texture2D" uid="uid://bemag0a6byc4r" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
+[ext_resource type="Texture2D" uid="uid://cwybhlurf4kao" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
+[ext_resource type="Texture2D" uid="uid://dcu682q2h3p0g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
-[ext_resource type="Texture2D" uid="uid://c7qon2ukwihb7" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
+[ext_resource type="Texture2D" uid="uid://dvrtov7152lc" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="10_x0efh"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
-[ext_resource type="Texture2D" uid="uid://bouwjbufhqiwc" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
+[ext_resource type="Texture2D" uid="uid://crsne51crvag3" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -238,7 +238,6 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "sound"
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Sound"]
 layout_mode = 2
@@ -258,7 +257,6 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "music"
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Music"]
 layout_mode = 2
@@ -290,7 +288,6 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("7_str7j")
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Quality"]
 layout_mode = 2
@@ -312,7 +309,6 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("12_mwq53")
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/GameSpeed"]
 layout_mode = 2
@@ -334,7 +330,6 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "autopause"
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/AutoPause"]
 layout_mode = 2
@@ -356,7 +351,6 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "vsync"
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/VSync"]
 layout_mode = 2
@@ -377,7 +371,6 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("16_hdnp7")
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Scale"]
 layout_mode = 2
@@ -399,7 +392,6 @@ layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "filter"
-selected_sound = null
 
 [node name="Text" type="TextureRect" parent="Options/Filter"]
 layout_mode = 2
