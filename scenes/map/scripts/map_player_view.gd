@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+extends Node2D
 
 @export var speed: float = 40
 @export var faster_ex: int = 15
@@ -13,15 +13,16 @@ var current_marker: MapPlayerMarker
 var ex: int = 1
 
 @onready var map = Scenes.current_scene
+@onready var player: AnimatedSprite2D = $Player
 
 func _ready() -> void:
 	# Sets powerup state to sprite
 	if Thunder._current_player_state != null:
-		sprite_frames = Thunder._current_player_state.animation_sprites
+		player.sprite_frames = Thunder._current_player_state.animation_sprites
 	else:
 		printerr("[Map] Thunder._current_player_state is null")
 	
-	play("walk")
+	player.play("walk")
 	
 	initial_pos()
 
@@ -47,15 +48,13 @@ func move(delta: float) -> void:
 	if current_marker != null:
 		# If it level player doll stops at marker
 		if global_position.is_equal_approx(current_marker.global_position):
+			global_position = current_marker.global_position
 			reached = true # When done movement we can show start label and etc.
 			
 		if !reached:
 			position = position.move_toward(current_marker.position, speed * delta)
 		
 		if current_marker.is_level() && reached:
-			current_marker = null
-			reached = false
-
 			map.to_level = current_marker.level
 		
 		if !current_marker.is_level() && reached:
@@ -65,9 +64,9 @@ func move(delta: float) -> void:
 
 func animate() -> void:
 	if !reached:
-		speed_scale = 3
+		player.speed_scale = 3
 	else:
-		speed_scale = 1
+		player.speed_scale = 1
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

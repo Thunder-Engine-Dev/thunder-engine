@@ -30,7 +30,7 @@ func _ready() -> void:
 
 
 func get_next_marker() -> MapPlayerMarker:
-	if !marker_space.get_last_marker().get_index() != get_index():
+	if marker_space.get_last_marker().get_index() != get_index():
 		return marker_space.get_child(get_index() + 1)
 	else:
 		return Scenes.current_scene.get_child(marker_space.get_index() + 1).get_first_marker()

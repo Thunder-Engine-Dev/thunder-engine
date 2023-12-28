@@ -114,7 +114,7 @@ func _draw() -> void:
 			if Engine.is_editor_hint():
 				draw_texture(dot_texture,(dot - dot_texture.get_size()/2) - global_position)
 			else:
-				make_dot(dot - dot_texture.get_size()/2)
+				make_dot(dot)
 	
 	changed.emit()
 
@@ -125,7 +125,7 @@ func if_level_draw_x(mark: MapPlayerMarker) -> void:
 func if_level_make_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
 		var m = map.get_node(map.player).x.instantiate()
-		m.global_position = mark.global_position - Vector2(8, 8)
+		m.global_position = mark.global_position
 		map.add_child.call_deferred(m)
 
 func make_dot(pos: Vector2) -> void:
