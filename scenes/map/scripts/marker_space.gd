@@ -17,14 +17,12 @@ var _next_space: MarkerSpace
 
 var dots: Array
 
+@onready var map = Scenes.current_scene
+
 
 signal changed
 
 func _ready() -> void:
-	# Make sure that we in the editor
-	if !Engine.is_editor_hint():
-		return
-	
 	# Connect the signals to redraw connecting
 	child_entered_tree.connect(_child_enter)
 	child_exiting_tree.connect(_child_exited)
@@ -64,9 +62,6 @@ func _enter_tree() -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	if !Engine.is_editor_hint():
-		return
-	
 	# Current child
 	var child: Node2D
 	
@@ -85,9 +80,13 @@ func _draw() -> void:
 			
 			
 			# draw line
-			draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
+			if Engine.is_editor_hint():
+				draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
 			
-			if_level_draw_x(child)
+			if Engine.is_editor_hint():
+				if_level_draw_x(child)
+			else:
+				if_level_make_x(child)
 			
 			child = next_child
 			
@@ -101,24 +100,51 @@ func _draw() -> void:
 		var incorrect: bool = roundi(rad_to_deg(abs(rot))) % 90
 		var modul: Color = Color.GREEN if !incorrect else Color.RED
 		
-		draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
+		if Engine.is_editor_hint():
+			draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
 		
-		if_level_draw_x(child)
+		if Engine.is_editor_hint():
+			if_level_draw_x(child)
+		else:
+			if_level_make_x(child)
 		
 	if draw_dots && dot_texture != null:
 		build_dots()
 		for dot in dots:
-			draw_texture(dot_texture,(dot - dot_texture.get_size()/2) - global_position)
+			if Engine.is_editor_hint():
+				draw_texture(dot_texture,(dot - dot_texture.get_size()/2) - global_position)
+			else:
+				make_dot(dot - dot_texture.get_size()/2)
 	
 	changed.emit()
 
 func if_level_draw_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
 		draw_texture(x_texture,(mark.global_position - (x_texture.get_size()/2)) - global_position)
+		
+func if_level_make_x(mark: MapPlayerMarker) -> void:
+	if mark.is_level() && x_texture != null:
+		var m = map.get_node(map.player).x.instantiate()
+		m.global_position = mark.global_position - Vector2(8, 8)
+		map.add_child.call_deferred(m)
+
+func make_dot(pos: Vector2) -> void:
+	var m = map.get_node(map.player).dots.instantiate()
+	m.global_position = pos
+	map.add_child.call_deferred(m)
 
 # Returns first marker
 func get_first_marker() -> MapPlayerMarker:
 	for child in get_children():
+		if child.is_in_group("map_marker"):
+			return child
+	
+	return null
+
+func get_last_marker() -> MapPlayerMarker:
+	var children = get_children()
+	children.reverse()
+	for child in children:
 		if child.is_in_group("map_marker"):
 			return child
 	

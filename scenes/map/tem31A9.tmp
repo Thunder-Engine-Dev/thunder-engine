@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cqed2mxnku1t3"]
+[gd_scene load_steps=11 format=3 uid="uid://cqed2mxnku1t3"]
 
 [ext_resource type="Texture2D" uid="uid://c50gq8jcq57b7" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_qgvjo"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dulnjx7vlfoba" path="res://engine/scenes/map/textures/press_start.png" id="3_jqf35"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="5_rcbgg"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="7_5g461"]
-[ext_resource type="Script" path="res://engine/scenes/map/start_text.gd" id="7_qvjo1"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="8_ej4v3"]
 [ext_resource type="Texture2D" uid="uid://bx0661odghrmq" path="res://engine/scenes/map/textures/debug.png" id="8_p16np"]
 [ext_resource type="Texture2D" uid="uid://emk1sl077o4j" path="res://engine/scenes/map/textures/x.png" id="9_xmlgv"]
@@ -58,7 +57,6 @@ metadata/_edit_lock_ = true
 [node name="PressStart" type="Sprite2D" parent="."]
 position = Vector2(320, 448)
 texture = ExtResource("3_jqf35")
-script = ExtResource("7_qvjo1")
 
 [node name="MarkerSpace" type="Node2D" parent="." node_paths=PackedStringArray("next_space")]
 editor_description = "Use this as World"

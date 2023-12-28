@@ -10,8 +10,9 @@ var reached: bool = false
 
 var current_marker: MapPlayerMarker
 
-var has_put_dot: bool = false
 var ex: int = 1
+
+@onready var map = Scenes.current_scene
 
 func _ready() -> void:
 	# Sets powerup state to sprite
@@ -21,6 +22,14 @@ func _ready() -> void:
 		printerr("[Map] Thunder._current_player_state is null")
 	
 	play("walk")
+	
+	initial_pos()
+
+
+func initial_pos() -> void:
+	var first_space = Scenes.current_scene.get_first_marker_space()
+	var first_marker = first_space.get_first_marker()
+	current_marker = first_marker
 
 
 func _physics_process(delta: float) -> void:
@@ -37,38 +46,21 @@ func _physics_process(delta: float) -> void:
 func move(delta: float) -> void:
 	if current_marker != null:
 		# If it level player doll stops at marker
-		if position == current_marker.position:
+		if global_position.is_equal_approx(current_marker.global_position):
 			reached = true # When done movement we can show start label and etc.
 			
 		if !reached:
 			position = position.move_toward(current_marker.position, speed * delta)
 		
-		if !current_marker.is_level() && reached:
+		if current_marker.is_level() && reached:
 			current_marker = null
 			reached = false
-			put_dot()
+
+			map.to_level = current_marker.level
 		
-		if reached:
-			var marker = x.instantiate()
-			marker.position = position - Vector2(0, 8)
-			owner.add_child(marker)
-	else:
-		position = position.move_toward(position.rotated(direction), speed * delta)
-		#position = position.move_toward(position + movement_dir * 10, speed * delta)
-		# Puts Dots every 16 px on x or y 
-		# (x % 16 == 0) == !(x % 16) cuz (0 = false, 1 = true)
-		#if abs(movement_dir.y) > 0.5:
-			#if !(int(position.y) % 16) && !has_put_dot:
-				#has_put_dot = true
-				#put_dot()
-			#if int(position.y) % 16:
-				#has_put_dot = false
-		#elif abs(movement_dir.x) > 0.5:
-			#if !(int(position.x) % 16) && !has_put_dot:
-				#has_put_dot = true
-				#put_dot()
-			#if int(position.x) % 16:
-				#has_put_dot = false
+		if !current_marker.is_level() && reached:
+			current_marker = current_marker.get_next_marker()
+			reached = false
 
 
 func animate() -> void:
@@ -76,12 +68,6 @@ func animate() -> void:
 		speed_scale = 3
 	else:
 		speed_scale = 1
-
-
-func put_dot(pos: Vector2 = position) -> void:
-	var dot = dots.instantiate() as Node2D
-	dot.position = pos + Vector2.UP * 8
-	owner.add_child.call_deferred(dot)
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

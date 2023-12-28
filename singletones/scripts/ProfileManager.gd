@@ -32,6 +32,9 @@ func _ready() -> void:
 			load_profile(file)
 	
 	print("[Profile Manager] All profiles loaded!")
+	
+	create_new_profile("debug")
+	print("[Profile Manager] Dummy profile set for testing")
 
 func create_new_profile(name: StringName) -> void:
 	current_profile = Profile.new()
