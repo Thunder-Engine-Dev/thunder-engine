@@ -5,17 +5,20 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wmk0a"]
 
-[node name="Player" type="AnimatedSprite2D"]
+[node name="Player" type="Node2D"]
+script = ExtResource("2_2hlka")
+
+[node name="Player" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8)
 scale = Vector2(0.5, 0.5)
 sprite_frames = ExtResource("1_et5ts")
 animation = &"walk"
 offset = Vector2(0, -32)
-script = ExtResource("2_2hlka")
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="Player"]
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
 shape = SubResource("RectangleShape2D_wmk0a")
 
-[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="Player/hitbox" to="Player" method="_on_hitbox_area_entered"]
