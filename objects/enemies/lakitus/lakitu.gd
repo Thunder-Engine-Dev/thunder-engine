@@ -2,6 +2,8 @@ extends Node2D
 
 @export_category("Lakitu")
 @export var movement_area: Rect2
+@export var area_in_local_pos: bool
+@export var draw_area_rect: bool
 @export var respawn_delay: float = 6
 @export_group("Physics")
 @export var hovering_margin: float = 50
@@ -37,9 +39,10 @@ var _movement: bool:
 
 func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
+	var area: Rect2 = Rect2(movement_area.position + (global_position if area_in_local_pos else Vector2.ZERO), movement_area.size)
 	if !player:
 		_movement = false
-	elif !movement_area.has_point(player.global_position):
+	elif !movement_area.has_point(player.global_position if area_in_local_pos else player.position):
 		_movement = false
 	else:
 		_movement = true
@@ -63,8 +66,8 @@ func _movement_process(delta: float, player: Player) -> void:
 	
 	if posx > pposx + hovering_margin || posx < pposx - hovering_margin:
 		speed = move_toward(speed, chasing_speed * dir, 5)
-	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.states.dir > 0) || (speed > 100 && player.states.dir < 0)):
-		speed = move_toward(speed, hovering_speed * player.states.dir, 10)
+	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.direction > 0) || (speed > 100 && player.direction < 0)):
+		speed = move_toward(speed, hovering_speed * player.direction, 10)
 
 
 func _leaving_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3]
+[gd_scene load_steps=50 format=3 uid="uid://j4f2gd3x20bj"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_rfja5"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_wpj0n"]
@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="7_hqpcj"]
 [ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_died.gd" id="7_v5tr1"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_pwsn6"]
-
+[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_rect_draw.gd" id="11_wdi2v"]
 
 [sub_resource type="Resource" id="Resource_etq5v"]
 script = ExtResource("3_rbrl7")
@@ -344,6 +344,9 @@ metadata/_edit_pinned_properties_ = [&"stomping_hurtable", &"stomping_scores", &
 sprite_frames = SubResource("SpriteFrames_kg3wr")
 animation = &"pitch"
 autoplay = "default"
+
+[node name="RectDraw" type="Node2D" parent="."]
+script = ExtResource("11_wdi2v")
 
 [node name="Animation" type="Timer" parent="."]
 wait_time = 0.5
