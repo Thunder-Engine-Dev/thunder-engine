@@ -2,7 +2,6 @@ extends Node2D
 
 @export_category("Lakitu")
 @export var movement_area: Rect2
-@export var area_in_local_pos: bool
 @export var draw_area_rect: bool
 @export var respawn_delay: float = 6
 @export_group("Physics")
@@ -35,21 +34,23 @@ var _movement: bool:
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
+@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
-	var area: Rect2 = Rect2(movement_area.position + (global_position if area_in_local_pos else Vector2.ZERO), movement_area.size)
 	if !player:
 		_movement = false
-	elif !movement_area.has_point(player.global_position if area_in_local_pos else player.position):
+	elif movement_area && !movement_area.has_point(player.global_position):
 		_movement = false
 	else:
 		_movement = true
 	
 	if _movement:
+		visible_on_screen_enabler_2d.visible = false
 		_movement_process(delta, player)
 	else:
+		visible_on_screen_enabler_2d.visible = true
 		_leaving_process(delta)
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
