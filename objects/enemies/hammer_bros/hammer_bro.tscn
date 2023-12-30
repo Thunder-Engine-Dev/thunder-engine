@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=21 format=3 uid="uid://b1aibpt7836h7"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_iqn6c"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_kftl8"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="10_m4lvx"]
 [ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="11_8ytaf"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_nviwx"]
-
 
 [sub_resource type="Resource" id="Resource_naguj"]
 script = ExtResource("3_wqa12")

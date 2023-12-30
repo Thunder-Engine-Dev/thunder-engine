@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 
 func appear_process(delta: float) -> void:
 	appear_distance = max(appear_distance - appear_speed * delta, 0)
-	modulate.a = 0.01 if (appear_distance > appear_visible) else 1
+	modulate.a = 0.01 if (appear_distance > appear_visible) else 1.0
 	position -= Vector2(0, appear_speed).rotated(global_rotation) * delta
 
 

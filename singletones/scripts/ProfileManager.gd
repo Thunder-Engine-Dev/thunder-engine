@@ -13,7 +13,7 @@ class Profile:
 		if !data.has(&"completed_levels"):
 			data[&"completed_levels"] = []
 		
-		data[&"completed_levels"].push(level_name)
+		data[&"completed_levels"].append(level_name)
 
 var profiles: Dictionary
 var current_profile: Profile
@@ -36,44 +36,44 @@ func _ready() -> void:
 	create_new_profile("debug")
 	print("[Profile Manager] Dummy profile set for testing")
 
-func create_new_profile(name: StringName) -> void:
+func create_new_profile(_name: StringName) -> void:
 	current_profile = Profile.new()
-	current_profile.name = name
+	current_profile.name = _name
 	save_current_profile()
-	print("[Profile Manager] Profile ", name, " created!")
+	print("[Profile Manager] Profile ", _name, " created!")
 
 #func profile_exists(name: StringName) -> bool:
 	#return FileAccess.file_exists("user://%s.ths" % name)
 
 ## Use this to set current profile
-func set_current_profile(name: StringName) -> void:
-	if profiles.has(name):
-		current_profile = profiles[name]
+func set_current_profile(_name: StringName) -> void:
+	if profiles.has(_name):
+		current_profile = profiles[_name]
 	else:
-		create_new_profile(name)
+		create_new_profile(_name)
 
 
-func load_profile(name: StringName) -> void:
-	var path: String = convert_to_path(name)
+func load_profile(_name: StringName) -> void:
+	var path: String = convert_to_path(_name)
 	if !FileAccess.file_exists(path):
-		create_new_profile(name)
+		create_new_profile(_name)
 		return
 	
 	var data: String = FileAccess.get_file_as_string(path)
 	var dict = JSON.parse_string(data)
 	
 	if dict == null:
-		OS.alert("Failed to load save " + name, "Can't load save file!")
+		OS.alert("Failed to load save " + _name, "Can't load save file!")
 		return
 	
 	var profile: Profile = Profile.new()
-	profile.name = name
+	profile.name = _name
 	profile.data = dict
 	
 	profiles[name] = profile
 
-func delete_profile(name: StringName) -> void:
-	var path: String = convert_to_path(name)
+func delete_profile(_name: StringName) -> void:
+	var path: String = convert_to_path(_name)
 	if !FileAccess.file_exists(path):
 		return
 	

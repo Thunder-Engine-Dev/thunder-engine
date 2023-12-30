@@ -39,7 +39,7 @@ func _physics_process(delta) -> void:
 
 
 func activate() -> void:
-	Audio.play_1d_sound(sound)
+	Audio.play_1d_sound(sound, false)
 	
 	var tween = create_tween()
 	tween.tween_property(text, "modulate:a", 1.0, 0.2)
