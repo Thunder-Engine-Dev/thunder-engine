@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://cem1tcrhqrauj"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_jump_marker.gd" id="1_gkjl0"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_e31ma"]

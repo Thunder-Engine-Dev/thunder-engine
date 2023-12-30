@@ -15,6 +15,6 @@ func _physics_process(delta: float) -> void:
 	if !focused: return
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		SettingsManager.settings["game_speed"] = 1.2 if SettingsManager.settings["game_speed"] == 1 else 1
-		Audio.play_1d_sound(toggle_sound)
+		SettingsManager.settings["game_speed"] = 1.2 if SettingsManager.settings["game_speed"] == 1.0 else 1.0
+		Audio.play_1d_sound(toggle_sound, true, { &"ignore_pause": true })
 		SettingsManager._process_settings()

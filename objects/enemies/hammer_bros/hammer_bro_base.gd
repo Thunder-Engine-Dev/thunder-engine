@@ -158,3 +158,4 @@ func _on_attack_timeout() -> void:
 
 func _on_jump() -> void:
 	_bro_jump()
+
