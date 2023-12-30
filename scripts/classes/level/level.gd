@@ -44,7 +44,6 @@ var _forced_player_on_wall: bool
 
 var completed: bool
 
-
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		if get_child_count() == 0:

@@ -5,6 +5,7 @@ const Lakitu := preload("res://engine/objects/enemies/lakitus/lakitu.gd")
 
 
 func _draw() -> void:
+	return
 	var parent: Lakitu = get_parent()
 	if !parent.area_in_local_pos:
 		draw_set_transform(-global_position, -global_rotation, Vector2.ONE / global_scale)
