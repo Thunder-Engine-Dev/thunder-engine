@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
-[ext_resource type="Texture2D" uid="uid://cjvmns1kaueu3" path="res://engine/objects/items/coin/textures/texture_1.png" id="3_0x7vx"]
-[ext_resource type="Texture2D" uid="uid://dofbt63xmnvub" path="res://engine/objects/items/coin/textures/texture_2.png" id="4_12a3s"]
-[ext_resource type="Texture2D" uid="uid://c73136eh47q4x" path="res://engine/objects/items/coin/textures/texture_3.png" id="5_4n4vo"]
+[ext_resource type="Texture2D" uid="uid://cel4fc6agrn3a" path="res://engine/objects/items/coin/textures/texture_1.png" id="3_0x7vx"]
+[ext_resource type="Texture2D" uid="uid://cr2hqhmuqwtsl" path="res://engine/objects/items/coin/textures/texture_2.png" id="4_12a3s"]
+[ext_resource type="Texture2D" uid="uid://cx1tq6p5dd5qr" path="res://engine/objects/items/coin/textures/texture_3.png" id="5_4n4vo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b06tt"]
 size = Vector2(20, 32)
@@ -47,7 +47,7 @@ frame_1/duration = 1.0
 frame_2/texture = ExtResource("5_4n4vo")
 frame_2/duration = 1.0
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" groups=["coin"]]
 collision_layer = 4
 script = ExtResource("1_exjvk")
 
