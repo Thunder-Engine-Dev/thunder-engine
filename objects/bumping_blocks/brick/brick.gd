@@ -8,6 +8,16 @@ const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_d
 var counter_enabled: bool = false
 
 
+func _ready() -> void:
+	super()
+	
+	var level = Scenes.current_scene
+	
+	if level is Level:
+		level.p_switch_activeates.connect(toggle_coin)
+		level.p_switch_deactivates.connect(toggle_coin)
+
+
 func _physics_process(_delta):
 	super(_delta)
 	
@@ -50,3 +60,15 @@ func got_bumped(by: Node2D) -> void:
 	else: 
 		hit_attack()
 		bricks_break()
+
+
+## Activates when p switch pressed
+func toggle_coin() -> void:
+	if result != null:
+		return
+		
+	var coin = preload("res://engine/objects/items/coin/coin.tscn").instantiate()
+	Scenes.current_scene.add_child.call_deferred(coin)
+	coin.global_position = global_position
+	queue_free()
+	

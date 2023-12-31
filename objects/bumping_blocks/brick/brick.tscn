@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
 size = Vector2(32, 32)
 
-[node name="Brick" type="AnimatableBody2D" groups=["brick"]]
+[node name="Brick" type="AnimatableBody2D"]
 z_index = 1
 collision_layer = 112
 sync_to_physics = false

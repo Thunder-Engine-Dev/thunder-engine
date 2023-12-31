@@ -4,7 +4,6 @@ const coin_effect: PackedScene = preload("res://engine/objects/effects/coin_effe
 
 @export var sound: AudioStream = preload("res://engine/objects/items/coin/coin.wav")
 
-<<<<<<< HEAD
 func _ready() -> void:
 	var level = Scenes.current_scene
 	
@@ -12,15 +11,12 @@ func _ready() -> void:
 		level.p_switch_activeates.connect(toggle_brick)
 		level.p_switch_deactivates.connect(toggle_brick)
 
-=======
->>>>>>> pswitch
 
 func _from_bumping_block() -> void:
 	Audio.play_sound(sound, self)
 	NodeCreator.prepare_2d(coin_effect, self).create_2d().bind_global_transform()
 	Data.add_coin()
 	queue_free()
-
 
 func _physics_process(delta):
 	if !Thunder._current_player: return
@@ -36,4 +32,11 @@ func collect() -> void:
 	).create_2d().bind_global_transform()
 	
 	Audio.play_sound(sound, self)
+	queue_free()
+
+## Activates when p switch pressed
+func toggle_brick() -> void:
+	var brick = preload("res://engine/objects/bumping_blocks/brick/brick.tscn").instantiate()
+	Scenes.current_scene.add_child.call_deferred(brick)
+	brick.global_position = global_position
 	queue_free()
