@@ -10,8 +10,6 @@ func _ready() -> void:
 	if level is Level:
 		level.p_switch_activeates.connect(toggle_brick)
 		level.p_switch_deactivates.connect(toggle_brick)
-	
-	
 
 
 func _from_bumping_block() -> void:
