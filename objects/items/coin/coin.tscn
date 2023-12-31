@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
+<<<<<<< HEAD
+=======
+[ext_resource type="Texture2D" uid="uid://cel4fc6agrn3a" path="res://engine/objects/items/coin/textures/texture_1.png" id="3_0x7vx"]
+[ext_resource type="Texture2D" uid="uid://cr2hqhmuqwtsl" path="res://engine/objects/items/coin/textures/texture_2.png" id="4_12a3s"]
+[ext_resource type="Texture2D" uid="uid://cx1tq6p5dd5qr" path="res://engine/objects/items/coin/textures/texture_3.png" id="5_4n4vo"]
+>>>>>>> pswitch
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcllp"]
 size = Vector2(20, 28)
@@ -38,7 +44,20 @@ animations = [{
 "speed": 15.0
 }]
 
+<<<<<<< HEAD
 [node name="Coin" type="Area2D"]
+=======
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_ngnim"]
+frames = 3
+speed_scale = 10.0
+frame_0/texture = ExtResource("3_0x7vx")
+frame_1/texture = ExtResource("4_12a3s")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("5_4n4vo")
+frame_2/duration = 1.0
+
+[node name="Coin" type="Area2D" groups=["coin"]]
+>>>>>>> pswitch
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_exjvk")
