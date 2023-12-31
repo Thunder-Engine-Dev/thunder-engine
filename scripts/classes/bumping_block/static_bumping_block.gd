@@ -10,9 +10,6 @@ const _HITTER: PackedScene = preload("res://engine/objects/bumping_blocks/_hitte
 
 ## The item you want to let the block spawn when the block gets bumped
 @export var result: InstancePowerup
-#	get:
-#		if Engine.is_editor_hint(): return result
-#		return result.prepare()
 ## If [code]true[/code], the result added will be a sibling node of the block
 @export var result_as_sibling_node: bool = true
 ## If [code]false[/code], the block won't react to any kind of bumping
@@ -57,6 +54,10 @@ var _no_result_appearing_animation: bool = false
 signal bumped
 ## Emitted when the item gets spawned
 signal result_appeared
+
+
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint(): return
 
 
 func _ready() -> void:

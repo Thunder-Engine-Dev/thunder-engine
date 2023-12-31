@@ -1,30 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnr3rfhkdf6j2"]
+[gd_scene load_steps=7 format=3 uid="uid://bnr3rfhkdf6j2"]
 
 [ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
-[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_72rpd"]
+[ext_resource type="Resource" uid="uid://d14ntnfciec1v" path="res://engine/objects/bumping_blocks/question_block/item_resources/question_default_item.tres" id="2_3xrsj"]
 [ext_resource type="SpriteFrames" uid="uid://ctc2d4okn2gdd" path="res://engine/objects/bumping_blocks/question_block/question_block.tres" id="2_t2orr"]
-[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_560s2"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="5_21kjl"]
-
-
-[sub_resource type="Resource" id="Resource_j6lvo"]
-resource_local_to_scene = true
-script = ExtResource("3_560s2")
-creation_nodepack = ExtResource("2_72rpd")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
 size = Vector2(32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3yo0u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3wug"]
 atlas = ExtResource("5_21kjl")
 region = Rect2(0, 0, 32, 32)
 
@@ -33,7 +17,7 @@ z_index = 1
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_cty0g")
-result = SubResource("Resource_j6lvo")
+result = ExtResource("2_3xrsj")
 metadata/_edit_pinned_properties_ = [&"result"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -60,5 +44,5 @@ autoplay = "default"
 [node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
 position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
-texture = SubResource("AtlasTexture_3yo0u")
+texture = SubResource("AtlasTexture_t3wug")
 metadata/_edit_lock_ = true
