@@ -28,14 +28,12 @@ func _physics_process(delta):
 		var collider: = kc.get_collider()
 		if collider is Player:
 			player = collider
-			print(player.suit.physics_config.walk_turning_acce)
 	
 	if !player && prev_state && is_slippery:
 		_remove_slippery(prev_state)
 
 
 func _add_slippery(_player) -> void:
-	print(_player)
 	if !_player: return
 	old_config = _player.suit.physics_config
 	_player.suit.physics_config = old_config.duplicate(true)
@@ -56,4 +54,3 @@ func _remove_slippery(_player) -> void:
 	_player.suit.physics_config.walk_deceleration = old_config.walk_deceleration
 	_player.suit.physics_config.walk_turning_acce = old_config.walk_turning_acce
 	is_slippery = false
-	print("Slippery removed")
