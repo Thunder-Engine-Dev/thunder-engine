@@ -23,3 +23,4 @@ func _physics_process(delta: float) -> void:
 		(Input.is_action_pressed(player.control.down) && !player.is_on_floor())
 	):
 		player.is_climbing = true
+		player._physics_behavior._has_jumped = false

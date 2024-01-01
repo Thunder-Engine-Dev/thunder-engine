@@ -23,20 +23,20 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	var player: Player = Thunder._current_player
 	if !player: return
-	if get_rect().has_point(player.global_position): _switch_bounds()
+	if get_rect().abs().has_point(player.global_position): _switch_bounds()
 
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	draw_set_transform(-global_position, rotation, Vector2.ONE)
-	draw_rect(get_rect(), Color.AQUA, false, 4)
+	draw_rect(get_rect().abs(), Color.AQUA, false, 4)
 
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	var camera = Thunder._current_camera
-	var rect = get_rect()
+	var rect = get_rect().abs()
 	
 	var is_in_bounds: bool = (
 		camera.has_meta(&"cam_area") && 
@@ -67,7 +67,7 @@ func _physics_process(_delta: float) -> void:
 
 func _switch_bounds() -> void:
 	var camera = Thunder._current_camera
-	var rect = get_rect()
+	var rect = get_rect().abs()
 	
 	camera.limit_top = rect.position.y
 	camera.limit_left = rect.position.x
