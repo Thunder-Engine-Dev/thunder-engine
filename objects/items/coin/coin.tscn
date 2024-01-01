@@ -38,7 +38,7 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" groups=["coin"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_exjvk")
@@ -53,6 +53,6 @@ sprite_frames = SubResource("SpriteFrames_j5osl")
 autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-visible = false
+self_modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 6.19888e-07)
 scale = Vector2(1, 1.4)
