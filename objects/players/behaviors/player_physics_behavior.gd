@@ -9,14 +9,15 @@ var _has_jumped: bool
 
 func _ready() -> void:
 	player = node as Player
-	suit = node.suit
-	config = suit.physics_config
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
 	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false), CONNECT_REFERENCE_COUNTED)
 
 
 func _physics_process(delta: float) -> void:
 	if player.get_tree().paused: return
+	suit = node.suit
+	config = suit.physics_config
+	
 	delta = player.get_physics_process_delta_time()
 	# Control
 	player.control_process()
