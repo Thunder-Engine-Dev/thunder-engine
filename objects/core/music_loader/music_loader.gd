@@ -9,17 +9,24 @@ extends Node
 
 @export var channel_id: int = 1
 @export var play_immediately: bool = true
+@export var volume_db: Array[float]
 
 var buffer: Array = []
 var is_paused: bool = false
 
 func _ready() -> void:
+	if volume_db.size() < music.size():
+		volume_db.resize(music.size())
+	for i in range(volume_db.size()):
+		if volume_db[i] == null: volume_db[i] = 0
 	_change_music(index, channel_id)
 
 
 func _change_music(ind: int, ch_id: int) -> void:
 	if music.size() <= ind: return
-	var options = [music[index], ch_id, { "ignore_pause": true }]
+	var options = [music[ind], ch_id, {
+		"ignore_pause": true, "volume": volume_db[ind] if volume_db.size() >= ind else 0.0
+	}]
 	if play_immediately:
 		Audio.play_music(options[0], options[1], options[2])
 		is_paused = false

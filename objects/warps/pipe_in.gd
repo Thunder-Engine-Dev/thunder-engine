@@ -10,6 +10,7 @@ extends Area2D
 @export var warp_direction: Player.WarpDir = Player.WarpDir.DOWN
 @export_node_path("Area2D") var warp_to: NodePath
 @export var warp_to_scene: String
+@export var trigger_finish: bool = false
 @export var warping_speed: float = 50
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export_group("Path Transition")
@@ -144,6 +145,8 @@ func pass_warp() -> void:
 		target.player_z_index = player_z_index
 	elif warp_to_scene:
 		Scenes.goto_scene(warp_to_scene)
+	elif trigger_finish:
+		Scenes.current_scene.finish(true)
 	player = null
 	warp_trans = null
 

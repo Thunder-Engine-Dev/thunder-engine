@@ -24,6 +24,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	if is_level_completed():
 		player.current_marker = self
 		player.global_position = global_position

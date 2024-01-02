@@ -23,6 +23,8 @@ var _current_scene_buffer: PackedScene
 var current_scene: Node
 ## Name of previous scene
 var previous_scene_name: StringName
+## Custom project-wise scenes, push them to this Dict in their own _ready method
+var custom_scenes: Dictionary = {}
 
 
 # Moves the current scene to viewport
