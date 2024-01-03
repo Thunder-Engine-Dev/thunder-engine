@@ -28,6 +28,8 @@ class_name Powerup
 
 @onready var body: Area2D = $Body
 
+var one_overlap: bool = false
+
 
 func _from_bumping_block() -> void:
 	Audio.play_sound(appearing_sound, self)
@@ -44,8 +46,11 @@ func _physics_process(delta: float) -> void:
 	
 	var player: Player = Thunder._current_player
 	if !player: return
-	if body.overlaps_body(player):
+	var overlaps: bool = body.overlaps_body(player)
+	if overlaps && !one_overlap:
 		collect()
+	if !overlaps && one_overlap:
+		one_overlap = false
 
 
 func appear_process(delta: float) -> void:
@@ -59,6 +64,7 @@ func collect() -> void:
 	
 	if supply_behavior:
 		Data.values.lives = ProjectSettings.get("application/thunder_settings/player/default_lives") + supply_modify_lives
+		one_overlap = true
 		return
 	
 	if score > 0:

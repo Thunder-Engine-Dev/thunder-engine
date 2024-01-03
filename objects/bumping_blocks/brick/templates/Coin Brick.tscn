@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6e661f0ry38p"]
+
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="1_v57m0"]
+[ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_7h62e"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_1cey7"]
+
+[sub_resource type="Resource" id="Resource_v1n70"]
+script = ExtResource("3_1cey7")
+creation_nodepack = ExtResource("2_7h62e")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="Brick" instance=ExtResource("1_v57m0")]
+result = SubResource("Resource_v1n70")

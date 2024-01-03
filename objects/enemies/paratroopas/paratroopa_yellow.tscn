@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=16 format=3 uid="uid://bhv4emxagkyao"]
 
-[ext_resource type="PackedScene" uid="uid://bxxckxp3b72re" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_qayrg"]
+[ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_qayrg"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_m1cbn"]
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/koopas/koopa_yellow.tscn" id="2_svm64"]
+[ext_resource type="PackedScene" uid="uid://cit8vdoqn0xoo" path="res://engine/objects/enemies/koopas/koopa_yellow.tscn" id="2_svm64"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ijbjv"]
 [ext_resource type="Script" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_nys84"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_gbw3c"]

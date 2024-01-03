@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://brkhmn6vdf25a"]
+
+[ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_2xrqx"]
+[ext_resource type="PackedScene" uid="uid://d3x5itop6w8qu" path="res://engine/objects/powerups/poisonous_mushroom/poisonous_mushroom.tscn" id="2_j2bm5"]
+[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_s3jav"]
+[ext_resource type="Texture2D" uid="uid://2nahs8sqdrc" path="res://engine/objects/powerups/poisonous_mushroom/texture.png" id="4_5igve"]
+
+[sub_resource type="Resource" id="Resource_kn2q8"]
+resource_local_to_scene = true
+script = ExtResource("3_s3jav")
+creation_nodepack = ExtResource("2_j2bm5")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekaoo"]
+atlas = ExtResource("4_5igve")
+region = Rect2(0, 0, 32, 32)
+
+[node name="QuestionBlock" instance=ExtResource("1_2xrqx")]
+result = SubResource("Resource_kn2q8")
+
+[node name="ItemDisplayer" parent="Sprites" index="1"]
+texture = SubResource("AtlasTexture_ekaoo")

@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_yy2kv"]
 [ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_0ahs0"]
 
-
 [resource]
 script = ExtResource("8_28no2")
 name = &"green_lui"
@@ -20,6 +19,7 @@ type = 2
 gets_hurt_to = ExtResource("3_nhpdy")
 physics_config = ExtResource("5_unf8j")
 physics_behavior = ExtResource("4_2cjuv")
+physics_crouchable = true
 physics_shaper = ExtResource("6_8ed37")
 physics_shaper_crouch = ExtResource("7_yb3hc")
 animation_sprites = ExtResource("2_l6to3")
