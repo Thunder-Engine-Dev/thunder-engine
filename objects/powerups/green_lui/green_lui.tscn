@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://o3k018cbex8g"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/green_lui/green_lui.gd" id="1_w0eyt"]
-[ext_resource type="Resource" uid="uid://cu4hn1lxvb8ui" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_green_lui.tres" id="2_bqapr"]
+[ext_resource type="Resource" uid="uid://cu4hn1lxvb8ui" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_green_lui.tres" id="2_52wlu"]
 [ext_resource type="Texture2D" uid="uid://skeuracpsv2p" path="res://engine/objects/powerups/green_lui/texture.png" id="3_7ksfc"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_wvem1"]
 
@@ -107,7 +107,7 @@ floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_w0eyt")
 to_suit = {
-"Mario": ExtResource("2_bqapr")
+"Mario": ExtResource("2_52wlu")
 }
 gravity_scale = 0.2
 metadata/_edit_pinned_properties_ = [&"to_suit"]

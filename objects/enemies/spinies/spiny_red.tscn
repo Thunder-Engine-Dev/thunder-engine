@@ -56,6 +56,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
+floor_max_angle = 0.837758
 floor_snap_length = 20.0
 script = ExtResource("1_vksuw")
 look_at_player = true
