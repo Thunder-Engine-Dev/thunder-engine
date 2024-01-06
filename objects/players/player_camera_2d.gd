@@ -6,6 +6,7 @@ class_name PlayerCamera2D
 
 func _ready():
 	Thunder._current_camera = self
+	process_callback = CAMERA2D_PROCESS_PHYSICS
 	make_current()
 	teleport()
 
@@ -18,7 +19,7 @@ func teleport() -> void:
 	if !is_current(): return
 	var player: Player = Thunder._current_player
 	if !par is PathFollow2D && player:
-		global_position = Vector2i(Thunder._current_player.global_position)
+		global_position = Vector2(Thunder._current_player.global_position)
 	Thunder.view.cam_border()
 	
 	if par is PathFollow2D:
