@@ -17,12 +17,15 @@ var _next_space: MarkerSpace
 
 var dots: Array
 
-@onready var map = Scenes.current_scene
+var map: Node2D
 
 
 signal changed
 
 func _ready() -> void:
+	if !Engine.is_editor_hint():
+		map = Scenes.current_scene
+	
 	# Connect the signals to redraw connecting
 	child_entered_tree.connect(_child_enter)
 	child_exiting_tree.connect(_child_exited)

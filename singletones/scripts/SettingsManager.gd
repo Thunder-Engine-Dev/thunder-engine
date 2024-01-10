@@ -17,6 +17,8 @@ var default_settings = {
 	"vsync": true,
 	"scale": 1,
 	"filter": true,
+	"fullscreen": false,
+	"first_launch": true,
 	"controls": {
 		"m_up": _get_current_key(&"m_up"),
 		"m_down": _get_current_key(&"m_down"),
@@ -60,8 +62,7 @@ func _load_keys() -> void:
 
 ## Saves the settings variable to file
 func save_settings() -> void:
-	var json: JSON = JSON.new()
-	var data = json.stringify(settings)
+	var data = JSON.stringify(settings)
 	
 	var file: FileAccess = FileAccess.open(settings_path, FileAccess.WRITE)
 	file.store_string(data)
@@ -99,9 +100,11 @@ func _process_settings() -> void:
 	Engine.time_scale = settings.game_speed
 	
 	# Vsync
-	DisplayServer.window_set_vsync_mode(
-		DisplayServer.VSYNC_ENABLED if settings.vsync else DisplayServer.VSYNC_DISABLED
-	)
+	var current_vsync = DisplayServer.window_get_vsync_mode(0)
+	if settings.vsync && current_vsync != DisplayServer.VSYNC_ENABLED:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+	elif !settings.vsync && current_vsync != DisplayServer.VSYNC_DISABLED:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
 	# Scale
 	_window_scale_logic()

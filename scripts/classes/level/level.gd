@@ -12,6 +12,7 @@ signal level_completed
 
 ## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.
 @export var time: int = 360
+@export var enable_restart_in_pause: bool = true
 
 @export_group("Level Completion")
 ## Level completion music

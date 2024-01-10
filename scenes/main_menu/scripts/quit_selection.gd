@@ -8,5 +8,7 @@ func _handle_select() -> void:
 			.with_speeds(0.015, -1)
 	)
 	
+	get_parent().focused = false
+	Audio.fade_music_1d_player(Audio._music_channels[0], -1000, 0.15)
 	TransitionManager.transition_middle.connect(get_tree().quit)
 

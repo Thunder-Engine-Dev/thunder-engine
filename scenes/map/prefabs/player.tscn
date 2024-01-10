@@ -16,6 +16,7 @@ animation = &"walk"
 offset = Vector2(0, -32)
 
 [node name="hitbox" type="Area2D" parent="Player"]
+visible = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]

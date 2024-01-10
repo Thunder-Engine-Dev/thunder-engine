@@ -6,7 +6,7 @@ class_name PlayerCamera2D
 
 func _ready():
 	Thunder._current_camera = self
-	process_callback = CAMERA2D_PROCESS_PHYSICS
+	process_callback = CAMERA2D_PROCESS_IDLE #CAMERA2D_PROCESS_PHYSICS
 	make_current()
 	teleport()
 

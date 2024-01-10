@@ -15,6 +15,7 @@ enum FadingMethod {
 
 var _music_channels: Dictionary = {}
 var _music_tweens: Array[Tween]
+var _duplicated_sounds: Array[AudioStream]
 
 var _calculate_player_position = _lcpp.bind()
 
@@ -25,6 +26,11 @@ func _init() -> void:
 
 func _ready() -> void:
 	Scenes.pre_scene_changed.connect(_stop_all_musics_scene_changed)
+
+
+func _physics_process(delta):
+	if !_duplicated_sounds.is_empty():
+		_duplicated_sounds.clear()
 
 
 func _lcpp(ref: Node2D) -> Vector2:
@@ -67,6 +73,8 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
+	if _duplicated_sounds.has(resource): return
+	_duplicated_sounds.append(resource)
 	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
 	player.bus = "Sound"
 	player.stream = resource
@@ -89,6 +97,8 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
+	if _duplicated_sounds.has(resource): return
+	_duplicated_sounds.append(resource)
 	var player = _create_1d_player(is_global)
 	player.bus = "Sound"
 	player.stream = resource

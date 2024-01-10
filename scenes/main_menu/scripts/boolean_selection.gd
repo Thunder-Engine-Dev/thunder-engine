@@ -5,6 +5,10 @@ extends MenuSelection
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
+func _handle_select() -> void:
+	return
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	

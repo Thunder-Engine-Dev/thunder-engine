@@ -12,7 +12,7 @@ var shape: CollisionShape2D
 var last_position: Vector2
 
 @onready var marker_space: MarkerSpace = get_parent()
-@onready var player = Scenes.current_scene.get_node(Scenes.current_scene.player)
+var player
 
 signal changed
 
@@ -25,6 +25,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 	if is_level_completed():
 		player.current_marker = self
 		player.global_position = global_position

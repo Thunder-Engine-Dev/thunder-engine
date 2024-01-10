@@ -11,18 +11,20 @@ var reached: bool = false
 var current_marker: MapPlayerMarker
 
 var ex: int = 1
+var is_faster: bool = false
 
 @onready var map = Scenes.current_scene
 @onready var player: AnimatedSprite2D = $Player
+@onready var camera: Camera2D = $Camera2D
 
 func _ready() -> void:
 	# Sets powerup state to sprite
 	if Thunder._current_player_state != null:
 		player.sprite_frames = Thunder._current_player_state.animation_sprites
 	else:
-		printerr("[Map] Thunder._current_player_state is null")
+		printerr(&"[Map] Thunder._current_player_state is null")
 	
-	player.play("walk")
+	player.play(&"walk")
 	
 	initial_pos()
 
@@ -40,8 +42,12 @@ func _physics_process(delta: float) -> void:
 	
 	animate()
 	
-	if Input.is_action_just_pressed("m_jump") && !reached:
+	if is_faster:
 		ex = faster_ex
+	
+	if reached: return
+	if Input.is_action_just_pressed(&"m_jump") || Input.is_action_just_pressed(&"m_attack"):
+		is_faster = true
 
 
 func move(delta: float) -> void:
@@ -70,7 +76,7 @@ func animate() -> void:
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("map_marker"):
+	if area.is_in_group(&"map_marker"):
 		pass
 		#current_marker = area as MapPlayerMarker
 		

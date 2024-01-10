@@ -66,6 +66,11 @@ func _draw() -> void:
 	draw_polyline(spots, line_color, 2)
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	z_index = 5
+
+
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
