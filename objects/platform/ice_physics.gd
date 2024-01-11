@@ -47,6 +47,7 @@ func _add_slippery(_player) -> void:
 
 func _remove_slippery(_player) -> void:
 	if !_player: _player = Thunder._current_player
+	if !is_instance_valid(_player): return
 	if !old_config: return
 	
 	_player.suit.physics_config = old_config

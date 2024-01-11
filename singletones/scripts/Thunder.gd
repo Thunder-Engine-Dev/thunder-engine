@@ -181,6 +181,18 @@ class View:
 			return screen_bottom(pos, offset)
 	
 	
+	## crutch
+	func is_getting_closer(pos: Vector2, offset: float) -> bool:
+		var cam: Camera2D = Thunder._current_camera
+		var campos = cam.get_screen_center_position()
+		return (
+			pos.x > campos.x - 320 + offset and
+			pos.x < campos.x + 320 - offset and
+			pos.y > campos.y - 240 + offset and
+			pos.y < campos.y + 240 - offset
+		)
+	
+	
 	## Used for scripts with @tool to limit its process functions running out of screen
 	static func shows_tool(tool: Node2D) -> bool:
 		var viewport: Transform2D = tool.get_viewport_transform()

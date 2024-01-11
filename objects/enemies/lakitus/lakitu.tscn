@@ -219,7 +219,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"blink1",
-"speed": 30.0
+"speed": 50.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -257,7 +257,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"blink2",
-"speed": 30.0
+"speed": 50.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -303,7 +303,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"pitch",
-"speed": 30.0
+"speed": 50.0
 }]
 
 [node name="Lakitu" type="Node2D"]
@@ -355,11 +355,6 @@ autostart = true
 [node name="Pitching" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
-
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-modulate = Color(1, 1, 1, 0.0392157)
-rect = Rect2(-32, -32, 64, 64)
-metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

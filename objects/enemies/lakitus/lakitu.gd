@@ -34,7 +34,6 @@ var _movement: bool:
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
-@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _physics_process(delta: float) -> void:
@@ -47,10 +46,8 @@ func _physics_process(delta: float) -> void:
 		_movement = true
 	
 	if _movement:
-		visible_on_screen_enabler_2d.visible = false
 		_movement_process(delta, player)
 	else:
-		visible_on_screen_enabler_2d.visible = true
 		_leaving_process(delta)
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
@@ -69,10 +66,15 @@ func _movement_process(delta: float, player: Player) -> void:
 		speed = move_toward(speed, chasing_speed * dir, 5)
 	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.direction > 0) || (speed > 100 && player.direction < 0)):
 		speed = move_toward(speed, hovering_speed * player.direction, 10)
+	
+	timer_pitching.paused = Thunder.view.is_getting_closer(global_position, -32)
 
 
 func _leaving_process(delta: float) -> void:
-	speed = move_toward(speed, 100 * leaving_direction, 50)
+	if Thunder.view.is_getting_closer(global_position, -32):
+		speed = move_toward(speed, 100 * leaving_direction, 50)
+	else:
+		speed = 0
 
 
 func _pitch() -> void:
@@ -100,7 +102,7 @@ func _on_pitching() -> void:
 	sprite.play(&"pitch")
 	await sprite.animation_finished
 	if sprite.animation == &"pitch":
-		await get_tree().create_timer(0.25, false).timeout
+		await get_tree().create_timer(0.4, false).timeout
 		sprite.play_backwards(&"pitch")
 		await sprite.animation_finished
 		sprite.play(&"default")
