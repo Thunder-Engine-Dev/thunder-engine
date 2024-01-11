@@ -2,9 +2,15 @@ extends StaticBody2D
 ## Make a new StaticBody2D, attach this script, and add collision shapes to have the player
 ## slide on it, like on ice. Put in place of the ground.
 
+@export var sliding_effect: PackedScene = preload("res://engine/objects/effects/slide/slide_effect.tscn")
+@export var sound_sliding: AudioStream = preload("res://engine/objects/platform/sound/sliding.mp3")
+
 var is_slippery: bool
 var old_config: PlayerConfig
 var player: Player = null
+
+var sliding_sound_interval: SceneTreeTimer
+var sliding_effect_emitter: GPUParticles2D
 
 
 func _ready():
@@ -19,6 +25,7 @@ func _physics_process(delta):
 	
 	if prev_state && !is_slippery:
 		if !is_instance_valid(prev_state):
+			sliding_effect_emitter = null
 			return
 		_add_slippery(prev_state)
 	
@@ -28,9 +35,21 @@ func _physics_process(delta):
 		var collider: = kc.get_collider()
 		if collider is Player:
 			player = collider
+			if player.left_right == -player.direction:
+				if !sliding_effect_emitter && sliding_effect:
+					sliding_effect_emitter = sliding_effect.instantiate()
+					sliding_effect_emitter.z_index = 2
+					add_sibling.call_deferred(sliding_effect_emitter)
+				_slide()
+			elif sliding_effect_emitter:
+				sliding_effect_emitter.queue_free()
+				sliding_effect_emitter = null
 	
 	if !player && prev_state && is_slippery:
 		_remove_slippery(prev_state)
+		if sliding_effect_emitter:
+			sliding_effect_emitter.queue_free()
+			sliding_effect_emitter = null
 
 
 func _add_slippery(_player) -> void:
@@ -55,3 +74,15 @@ func _remove_slippery(_player) -> void:
 	_player.suit.physics_config.walk_deceleration = old_config.walk_deceleration
 	_player.suit.physics_config.walk_turning_acce = old_config.walk_turning_acce
 	is_slippery = false
+
+
+func _slide() -> void:
+	if !is_instance_valid(player): return
+	if sliding_sound_interval: return
+	if sliding_effect_emitter:
+		sliding_effect_emitter.global_position = player.global_transform.translated_local(Vector2.DOWN * 16).get_origin()
+	sliding_sound_interval = get_tree().create_timer(0.15, false)
+	await sliding_sound_interval.timeout
+	sliding_sound_interval = null
+	if player:
+		Audio.play_sound(sound_sliding, player)

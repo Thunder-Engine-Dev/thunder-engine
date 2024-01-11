@@ -67,11 +67,11 @@ func _movement_process(delta: float, player: Player) -> void:
 	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.direction > 0) || (speed > 100 && player.direction < 0)):
 		speed = move_toward(speed, hovering_speed * player.direction, 10)
 	
-	timer_pitching.paused = Thunder.view.is_getting_closer(global_position, -32)
+	timer_pitching.paused = !Thunder.view.is_getting_closer(self, -32)
 
 
 func _leaving_process(delta: float) -> void:
-	if Thunder.view.is_getting_closer(global_position, -32):
+	if Thunder.view.is_getting_closer(self, -32):
 		speed = move_toward(speed, 100 * leaving_direction, 50)
 	else:
 		speed = 0

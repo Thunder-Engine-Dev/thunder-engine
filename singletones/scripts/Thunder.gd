@@ -182,15 +182,10 @@ class View:
 	
 	
 	## crutch
-	func is_getting_closer(pos: Vector2, offset: float) -> bool:
-		var cam: Camera2D = Thunder._current_camera
-		var campos = cam.get_screen_center_position()
-		return (
-			pos.x > campos.x - 320 + offset and
-			pos.x < campos.x + 320 - offset and
-			pos.y > campos.y - 240 + offset and
-			pos.y < campos.y + 240 - offset
-		)
+	func is_getting_closer(canvas_item: CanvasItem, margin: float) -> bool:
+		var pos: Vector2 = canvas_item.get_global_transform_with_canvas().get_origin()
+		var rect: Rect2 = canvas_item.get_viewport_rect()
+		return rect.grow(margin).has_point(pos)
 	
 	
 	## Used for scripts with @tool to limit its process functions running out of screen
