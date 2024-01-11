@@ -34,7 +34,6 @@ var _movement: bool:
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
-@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _physics_process(delta: float) -> void:
@@ -47,10 +46,8 @@ func _physics_process(delta: float) -> void:
 		_movement = true
 	
 	if _movement:
-		visible_on_screen_enabler_2d.visible = false
 		_movement_process(delta, player)
 	else:
-		visible_on_screen_enabler_2d.visible = true
 		_leaving_process(delta)
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
