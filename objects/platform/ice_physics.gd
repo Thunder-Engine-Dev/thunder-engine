@@ -36,20 +36,16 @@ func _physics_process(delta):
 		if collider is Player:
 			player = collider
 			if player.left_right == -player.direction:
-				if !sliding_effect_emitter && sliding_effect:
+				if !is_instance_valid(sliding_effect_emitter) && sliding_effect:
 					sliding_effect_emitter = sliding_effect.instantiate()
 					sliding_effect_emitter.z_index = 2
 					add_sibling.call_deferred(sliding_effect_emitter)
 				_slide()
-			elif sliding_effect_emitter:
-				sliding_effect_emitter.queue_free()
-				sliding_effect_emitter = null
+			else: _end_slide()
 	
 	if !player && prev_state && is_slippery:
 		_remove_slippery(prev_state)
-		if sliding_effect_emitter:
-			sliding_effect_emitter.queue_free()
-			sliding_effect_emitter = null
+		_end_slide()
 
 
 func _add_slippery(_player) -> void:
@@ -79,10 +75,21 @@ func _remove_slippery(_player) -> void:
 func _slide() -> void:
 	if !is_instance_valid(player): return
 	if sliding_sound_interval: return
-	if sliding_effect_emitter:
+	if is_instance_valid(sliding_effect_emitter):
 		sliding_effect_emitter.global_position = player.global_transform.translated_local(Vector2.DOWN * 16).get_origin()
 	sliding_sound_interval = get_tree().create_timer(0.15, false)
 	await sliding_sound_interval.timeout
 	sliding_sound_interval = null
-	if player:
-		Audio.play_sound(sound_sliding, player)
+	if player: Audio.play_sound(sound_sliding, player)
+
+
+func _end_slide() -> void:
+	if !is_instance_valid(sliding_effect_emitter): return
+	elif sliding_effect_emitter.one_shot: return
+	sliding_effect_emitter.one_shot = true
+	sliding_effect_emitter.restart()
+	sliding_effect_emitter.finished.connect(
+		func() -> void:
+			sliding_effect_emitter.queue_free()
+			sliding_effect_emitter = null
+	)
