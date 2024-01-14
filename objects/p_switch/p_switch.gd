@@ -25,7 +25,7 @@ func active() -> void:
 	_swap_coins_and_bricks.call_deferred()
 	
 	if is_once:
-		await get_tree().create_timer(1.5).timeout
+		await duration.timeout
 		queue_free()
 
 
