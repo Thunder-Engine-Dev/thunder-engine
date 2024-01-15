@@ -85,11 +85,14 @@ func _slide() -> void:
 
 func _end_slide() -> void:
 	if !is_instance_valid(sliding_effect_emitter): return
-	elif sliding_effect_emitter.one_shot: return
-	sliding_effect_emitter.one_shot = true
-	sliding_effect_emitter.restart()
-	sliding_effect_emitter.finished.connect(
+	var dupeff := sliding_effect_emitter.duplicate() as GPUParticles2D
+	get_parent().add_sibling.call_deferred(dupeff)
+	dupeff.global_transform = sliding_effect_emitter.global_transform
+	dupeff.one_shot = true
+	dupeff.restart()
+	dupeff.finished.connect(
 		func() -> void:
-			sliding_effect_emitter.queue_free()
-			sliding_effect_emitter = null
+			dupeff.queue_free()
 	)
+	sliding_effect_emitter.queue_free()
+	sliding_effect_emitter = null
