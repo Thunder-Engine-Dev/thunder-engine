@@ -15,6 +15,10 @@ extends GravityBody2D
 @onready var duration: Timer = $Duration
 
 
+func _ready() -> void:
+	activator.body_entered.connect(_on_activator_body_entered)
+
+
 func _physics_process(delta: float) -> void:
 	motion_process(delta)
 
@@ -40,6 +44,7 @@ func _on_activator_body_entered(body: Node2D):
 	if !duration.is_stopped(): return
 	if body == Thunder._current_player:
 		while !body.is_on_floor():
+			if !activator.overlaps_body(body): return # Stops executing rest code if the mario has left the activator
 			await get_tree().process_frame
 		active()
 		var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")

@@ -85,5 +85,4 @@ metadata/_edit_lock_ = true
 wait_time = 11.4
 one_shot = true
 
-[connection signal="body_entered" from="Activator" to="." method="_on_activator_body_entered"]
 [connection signal="timeout" from="Duration" to="." method="_on_duration_timeout"]
