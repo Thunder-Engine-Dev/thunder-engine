@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b61ivtew2u0gb"]
+[gd_scene load_steps=10 format=3 uid="uid://b61ivtew2u0gb"]
 
 [ext_resource type="Script" path="res://engine/objects/p_switch/p_switch.gd" id="1_ko4hk"]
-[ext_resource type="Texture2D" uid="uid://cnqmnsr2sornt" path="res://engine/objects/p_switch/texture.png" id="1_u4da8"]
+[ext_resource type="Texture2D" uid="uid://7ngifs5kgtq6" path="res://engine/objects/p_switch/texture.png" id="1_u4da8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_se3ij"]
 size = Vector2(24, 18.5)
@@ -24,10 +24,6 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("1_u4da8")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h53ik"]
-atlas = ExtResource("1_u4da8")
-region = Rect2(64, 0, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_4ycii"]
 animations = [{
 "frames": [{
@@ -44,13 +40,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nj3rt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h53ik")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 4.0
 }]
 
 [node name="PSwitch" type="CharacterBody2D"]
@@ -89,7 +82,7 @@ autoplay = "default"
 metadata/_edit_lock_ = true
 
 [node name="Duration" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 11.4
 one_shot = true
 
 [connection signal="body_entered" from="Activator" to="." method="_on_activator_body_entered"]

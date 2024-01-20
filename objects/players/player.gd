@@ -223,7 +223,6 @@ func _on_starman_timeout() -> void:
 		if mus_loader.is_paused:
 			mus_loader.unpause_music()
 			mus_loader.play_immediately = true
-			print("unpaused")
 		elif !mus_loader.buffer.is_empty():
 			mus_loader.play_immediately = true
 			mus_loader.play_buffered()
