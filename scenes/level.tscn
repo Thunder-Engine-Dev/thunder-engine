@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i4f1f"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_yq3n0"]
-[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="5_3rea4"]
+[ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="5_ku4q4"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_titgq"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
 
@@ -22,8 +22,8 @@ limit_bottom = 480
 script = ExtResource("6_titgq")
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource("5_3rea4")
+tile_set = ExtResource("5_ku4q4")
 format = 2
-layer_0/tile_data = PackedInt32Array(851970, 65536, 3, 131073, 196608, 0, 196609, 196608, 1, 262145, 196608, 1, 327681, 196608, 1, 393217, 196608, 1, 458753, 196608, 1, 524289, 196608, 1, 589825, 196608, 1, 655361, 196608, 1, 720897, 196608, 1, 786433, 196608, 1, 851969, 458752, 3, 851971, 65536, 3, 851972, 65536, 3, 851973, 65536, 3, 851974, 65536, 3, 851975, 65536, 3, 851976, 65536, 3, 851977, 65536, 3, 851978, 65536, 3, 851979, 65536, 3, 851980, 65536, 3, 851981, 65536, 3, 851982, 65536, 3, 851983, 65536, 3, 851984, 65536, 3, 851985, 524288, 3, 786449, 196608, 1, 196625, 196608, 1, 262161, 196608, 1, 327697, 196608, 1, 393233, 196608, 1, 458769, 196608, 1, 524305, 196608, 1, 589841, 196608, 1, 655377, 196608, 1, 720913, 196608, 1, 131089, 196608, 0)
+layer_0/tile_data = PackedInt32Array(851970, 2, 0, 131073, 2, 0, 196609, 2, 0, 262145, 2, 0, 327681, 2, 0, 393217, 2, 0, 458753, 2, 0, 524289, 2, 0, 589825, 2, 0, 655361, 2, 0, 720897, 2, 0, 786433, 2, 0, 851969, 2, 0, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851978, 2, 0, 851979, 2, 0, 851980, 2, 0, 851981, 2, 0, 851982, 2, 0, 851983, 2, 0, 851984, 2, 0, 851985, 2, 0, 786449, 2, 0, 196625, 2, 0, 262161, 2, 0, 327697, 2, 0, 393233, 2, 0, 458769, 2, 0, 524305, 2, 0, 589841, 2, 0, 655377, 2, 0, 720913, 2, 0, 131089, 2, 0)
 
 [node name="HUD" parent="." instance=ExtResource("8_b1hjx")]
