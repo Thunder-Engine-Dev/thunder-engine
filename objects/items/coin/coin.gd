@@ -25,5 +25,5 @@ func collect() -> void:
 		eff.explode()
 	).create_2d().bind_global_transform()
 	
-	Audio.play_sound(sound, self)
+	Audio.play_sound(sound, self, false)
 	queue_free()

@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 ## Singleton that manages musics and sounds for your game[br]
 ##
@@ -40,21 +40,21 @@ func _lcpp(ref: Node2D) -> Vector2:
 func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
 	player.finished.connect(player.queue_free)
-	if !is_global:
-		Scenes.current_scene.add_child.call_deferred(player)
-	else:
-		get_tree().root.add_child.call_deferred(player)
-	player.global_position = pos
+	(func() -> void:
+		if !is_global: Scenes.current_scene.add_child(player)
+		else: get_tree().root.add_child(player)
+		player.global_position = pos
+	).call_deferred()
 	return player
 
 
 func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
-	if !is_global:
-		Scenes.current_scene.add_child.call_deferred(player)
-	else:
-		get_tree().root.add_child.call_deferred(player)
+	(func() -> void:
+		if !is_global: Scenes.current_scene.add_child(player)
+		else: get_tree().root.add_child(player)
+	).call_deferred()
 	return player
 
 
@@ -157,14 +157,16 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		
 		music_player.stream = generator
 		music_player.bus = &"Music"
-		music_player.play.call_deferred()
-		#music_player.seek(0.0)
-		openmpt.set_audio_generator_playback.call_deferred(music_player)
-		openmpt.set_render_interpolation.call_deferred(resource.interpolation)
-		openmpt.set_repeat_count.call_deferred(0 if !resource.loop else -1)
-		#_music_channels[channel_id].volume_db = resource.volume_offset
-		openmpt.start.call_deferred(true)
-		#openmpt.set_position_seconds(0.0)
+		(func() -> void:
+			music_player.play()
+			#music_player.seek(0.0)
+			openmpt.set_audio_generator_playback(music_player)
+			openmpt.set_render_interpolation(resource.interpolation)
+			openmpt.set_repeat_count(0 if !resource.loop else -1)
+			#_music_channels[channel_id].volume_db = resource.volume_offset
+			openmpt.start(true)
+			#openmpt.set_position_seconds(0.0)
+		).call_deferred()
 	else:
 		printerr("Invalid data provided in method Audio.play_music")
 		return

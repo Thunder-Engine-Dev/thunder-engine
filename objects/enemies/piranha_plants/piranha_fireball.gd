@@ -63,6 +63,6 @@ func _shoot() -> void:
 				ball.set_collision_mask_value(7, false)
 		).create_2d()
 	
-	Audio.play_sound(vars.attack_sound, node)
+	Audio.play_sound(vars.attack_sound, node, false)
 	
 	timer_fire.start(vars.attack_interval)
