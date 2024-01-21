@@ -74,8 +74,6 @@ func pass_player(new_player: Player) -> void:
 	player.warp_dir = player_warp_dir
 	player.z_index = -5
 	player.warp = Player.Warp.OUT
-	
-	await get_tree().physics_frame
 	Audio.play_sound(warping_sound, self, false)
 
 

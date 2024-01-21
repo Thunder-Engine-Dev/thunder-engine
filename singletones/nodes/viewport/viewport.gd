@@ -9,7 +9,7 @@ func _ready() -> void:
 	vp.audio_listener_enable_2d = true
 	vp.audio_listener_enable_3d = true
 	resized.connect(_on_window_resized)
-	_update_sound_function()
+	#_update_sound_function()
 	_update_view()
 
 
@@ -46,15 +46,15 @@ func _update_view() -> void:
 	else:
 		container.position.x = (window_size.x / 2) - (vp.size.x * container.scale.x / 2)
 		container.position.y = (window_size.y / 2) - (vp.size.y * container.scale.y / 2)
-	
-	_update_sound_function()
-
-
-func _update_sound_function() -> void:
-	var window_size = DisplayServer.window_get_size()
-	Audio._calculate_player_position = func(ref: Node2D) -> Vector2:
-		return (
-			ref.global_position -
-			Thunder._current_camera.global_position +
-			Vector2(window_size / 2)
-		)
+	#
+	#_update_sound_function()
+#
+#
+#func _update_sound_function() -> void:
+	#var window_size = DisplayServer.window_get_size()
+	#Audio._calculate_player_position = func(ref: Node2D) -> Vector2:
+		#return (
+			#ref.global_position -
+			#Thunder._current_camera.global_position +
+			#Vector2(window_size / 2)
+		#)

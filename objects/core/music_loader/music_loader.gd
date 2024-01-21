@@ -24,9 +24,14 @@ func _ready() -> void:
 
 func _change_music(ind: int, ch_id: int) -> void:
 	if music.size() <= ind: return
-	var options = [music[ind], ch_id, {
-		"ignore_pause": true, "volume": volume_db[ind] if volume_db.size() >= ind else 0.0
-	}]
+	var options = [
+		music[ind], 
+		ch_id, 
+		{
+			"ignore_pause": true, 
+			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0
+		}
+	]
 	if play_immediately:
 		Audio.play_music(options[0], options[1], options[2])
 		is_paused = false

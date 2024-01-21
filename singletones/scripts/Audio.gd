@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 ## Singleton that manages musics and sounds for your game[br]
 ##
@@ -37,24 +37,22 @@ func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
 
-func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer2D:
+func _create_2d_player(pos: Vector2, is_global: bool, is_permanent: bool = false) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
-	player.finished.connect(player.queue_free)
+	if !is_permanent: player.finished.connect(player.queue_free)
 	(func() -> void:
 		if !is_global: Scenes.current_scene.add_child(player)
-		else: get_tree().root.add_child(player)
+		else: GlobalViewport.add_child(player)
 		player.global_position = pos
 	).call_deferred()
 	return player
 
 
-func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioStreamPlayer:
+func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStreamPlayer:
 	var player = AudioStreamPlayer.new()
-	player.finished.connect(player.queue_free)
-	(func() -> void:
-		if !is_global: Scenes.current_scene.add_child(player)
-		else: get_tree().root.add_child(player)
-	).call_deferred()
+	if !is_permanent: player.finished.connect(player.queue_free)
+	if !is_global: Scenes.pre_scene_changed.connect(player.queue_free)
+	add_child.call_deferred(player)
 	return player
 
 
