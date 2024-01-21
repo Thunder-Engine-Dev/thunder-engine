@@ -26,6 +26,10 @@ class_name PlayerConfig
 @export var slide_max_speed: float = 450
 @export var slide_acceleration: float = 468.75
 @export var slide_deceleration: float = 468.75
+@export_group("Animation", "animation_")
+@export var animation_walking_speed: float = 1.5
+@export var animation_max_walking_speed: float = 5
+@export var animation_min_walking_speed: float = 1
 @export_group("Sound", "sound_")
 @export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 @export var sound_swim: AudioStream = preload("res://engine/objects/players/prefabs/sounds/swim.wav")

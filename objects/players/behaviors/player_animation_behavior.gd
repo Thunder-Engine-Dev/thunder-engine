@@ -2,6 +2,7 @@ extends ByNodeScript
 
 var player: Player
 var sprite: AnimatedSprite2D
+var config: PlayerConfig
 
 var _climb_progress: float
 
@@ -21,6 +22,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if player.get_tree().paused: return
+	config = node.suit.physics_config
+	
 	delta = player.get_physics_process_delta_time()
 	_animation_process(delta)
 
@@ -88,7 +91,11 @@ func _animation_process(delta: float) -> void:
 		if player.is_on_floor():
 			if player.speed.x != 0:
 				sprite.play(&"walk")
-				sprite.speed_scale = clampf(abs(player.speed.x) * delta * 1.5, 1, 5)
+				sprite.speed_scale = (
+					clampf(abs(player.speed.x) * delta * config.animation_walking_speed,
+					config.animation_min_walking_speed,
+					config.animation_max_walking_speed)
+				)
 			else:
 				sprite.play(&"default")
 			if player.is_crouching:
