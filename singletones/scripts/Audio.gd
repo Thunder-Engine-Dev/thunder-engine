@@ -41,9 +41,9 @@ func _create_2d_player(pos: Vector2, is_global: bool, on_scene_ready: bool = fal
 	var player = AudioStreamPlayer2D.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.current_scene.add_child(player)
+		Scenes.current_scene.add_child.call_deferred(player)
 	else:
-		get_tree().root.add_child(player)
+		get_tree().root.add_child.call_deferred(player)
 	player.global_position = pos
 	return player
 
@@ -52,9 +52,9 @@ func _create_1d_player(is_global: bool, on_scene_ready: bool = false) -> AudioSt
 	var player = AudioStreamPlayer.new()
 	player.finished.connect(player.queue_free)
 	if !is_global:
-		Scenes.current_scene.add_child(player)
+		Scenes.current_scene.add_child.call_deferred(player)
 	else:
-		get_tree().root.add_child(player)
+		get_tree().root.add_child.call_deferred(player)
 	return player
 
 
@@ -75,12 +75,12 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
-	#if _duplicated_sounds.has(resource): return
-	#_duplicated_sounds.append(resource)
+	if _duplicated_sounds.has(resource): return
+	_duplicated_sounds.append(resource)
 	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
 	player.bus = "Sound"
 	player.stream = resource
-	player.play()
+	player.play.call_deferred()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float:
 		player.pitch_scale = other_keys.pitch
@@ -99,12 +99,12 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	# Stop on empty sound to avoid crashes
 	if resource == null: return
 	
-	#if _duplicated_sounds.has(resource): return
-	#_duplicated_sounds.append(resource)
+	if _duplicated_sounds.has(resource): return
+	_duplicated_sounds.append(resource)
 	var player = _create_1d_player(is_global)
 	player.bus = "Sound"
 	player.stream = resource
-	player.play()
+	player.play.call_deferred()
 	
 	if &"pitch" in other_keys && other_keys.pitch is float:
 		player.pitch_scale = other_keys.pitch
@@ -137,7 +137,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
 		music_player.bus = &"Music"
-		music_player.play()
+		music_player.play.call_deferred()
 	elif &"data" in resource:
 		var openmpt = _create_openmpt_player(false)
 		if !openmpt:
