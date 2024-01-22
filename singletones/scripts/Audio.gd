@@ -41,8 +41,7 @@ func _create_2d_player(pos: Vector2, is_global: bool, is_permanent: bool = false
 	var player = AudioStreamPlayer2D.new()
 	if !is_permanent: player.finished.connect(player.queue_free)
 	(func() -> void:
-		if !is_global: Scenes.current_scene.add_child(player)
-		else: GlobalViewport.add_child(player)
+		GlobalViewport.add_child(player)
 		player.global_position = pos
 	).call_deferred()
 	return player
