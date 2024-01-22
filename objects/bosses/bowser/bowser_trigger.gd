@@ -11,6 +11,7 @@ extends Path2D
 @export var boss_music: Resource = preload("./music/music_bowser_battle.mp3")
 @export var boss_music_fading: bool = true
 
+var drawn_rect: Rect2
 var triggered: bool
 var triggered_bowser: bool
 
@@ -21,21 +22,25 @@ var triggered_bowser: bool
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	draw_set_transform(Vector2.ZERO, -global_rotation, Vector2.ONE/global_scale)
-	draw_rect(trigger_area, Color.SLATE_BLUE, false, 4)
+	draw_rect(drawn_rect, Color.SLATE_BLUE, false, 4)
 
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
 		if curve:
-			trigger_area.position = curve.get_point_position(0) - trigger_area.size / 2
+			drawn_rect.position = global_position + curve.get_point_position(0) - trigger_area.size / 2
+			drawn_rect.size = trigger_area.size
 		return
 	
 	var player: Player = Thunder._current_player
 	if !player: return
 	
 	if !triggered:
-		if trigger_area.has_point(player.global_position):
+		if !curve: return
+		if !curve.point_count: return
+		var actual_area: Rect2 = Rect2(global_position + curve.get_point_position(0) + trigger_area.position - trigger_area.size / 2, trigger_area.size)
+		if actual_area.has_point(player.global_position):
 			var cam: Camera2D = Thunder._current_camera
 			if cam: 
 				cam.reparent(route_follower)
