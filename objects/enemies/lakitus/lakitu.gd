@@ -71,7 +71,7 @@ func _movement_process(delta: float, player: Player) -> void:
 
 
 func _leaving_process(delta: float) -> void:
-	if Thunder.view.is_getting_closer(self, -32):
+	if !Thunder.view.is_getting_closer(self, leaving_direction * 128):
 		speed = move_toward(speed, 100 * leaving_direction, 50)
 	else:
 		speed = 0

@@ -130,6 +130,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	
+	await get_tree().process_frame
 	await Audio._music_channels[-1].finished
 	if !Thunder._current_player: return
 	
