@@ -127,6 +127,8 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## [/codeblock][br]
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
 func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}) -> void:
+	await get_tree().process_frame
+	
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
 		_music_channels[channel_id] = _create_1d_player(false, true)
 	var music_player = _music_channels[channel_id]
