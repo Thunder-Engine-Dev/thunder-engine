@@ -2,7 +2,7 @@
 extends StaticBumpingBlock
 
 const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture_null.png")
-const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
+@export var DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
 
 @export var result_counter_value: float = 300
 var counter_enabled: bool = false
