@@ -73,6 +73,8 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_ed1um")
+solid = false
+turn_back = false
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false
