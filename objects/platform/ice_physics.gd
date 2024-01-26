@@ -35,7 +35,7 @@ func _physics_process(delta):
 		var collider: = kc.get_collider()
 		if collider is Player:
 			player = collider
-			if player.left_right == -player.direction:
+			if player.left_right == -player.direction && abs(player.speed.x) > 0:
 				if !is_instance_valid(sliding_effect_emitter) && sliding_effect:
 					sliding_effect_emitter = sliding_effect.instantiate()
 					sliding_effect_emitter.z_index = 2
