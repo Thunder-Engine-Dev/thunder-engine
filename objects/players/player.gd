@@ -76,6 +76,8 @@ var attacked: bool
 var attacking: bool
 var slided: bool
 
+var _has_jumped: bool
+
 var is_climbing: bool
 var is_sliding: bool
 var is_crouching: bool

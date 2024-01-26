@@ -4,8 +4,6 @@ var player: Player
 var suit: PlayerSuit
 var config: PlayerConfig
 
-var _has_jumped: bool
-
 
 func _ready() -> void:
 	player = node as Player
@@ -97,15 +95,15 @@ func _movement_y(delta: float) -> void:
 	# Jumping
 	else:
 		if player.is_on_floor():
-			if player.jumping > 0 && !_has_jumped:
-				_has_jumped = true
+			if player.jumping > 0 && !player._has_jumped:
+				player._has_jumped = true
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0 && player.speed.y < 0:
 			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 10 else config.jump_buff_static
 			player.speed.y -= abs(buff) * delta
 	if !player.jumping && player.speed.y >= 0:
-		_has_jumped = false
+		player._has_jumped = false
 
 
 #= Climbing
@@ -116,8 +114,8 @@ func _movement_climbing(delta: float) -> void:
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta
 	
 	# Jump from climbing
-	if player.jumping > 0 && !_has_jumped:
-		_has_jumped = true
+	if player.jumping > 0 && !player._has_jumped:
+		player._has_jumped = true
 		player.is_climbing = false
 		player.direction = player.left_right
 		player.jump(config.jump_speed)
