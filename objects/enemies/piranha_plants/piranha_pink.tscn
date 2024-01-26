@@ -13,7 +13,7 @@
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
 creation_nodepack = ExtResource("2_3i2bd")
-trans_offset = Vector2(0, -24)
+trans_offset = Vector2(0, -28)
 trans_inheritances = 6
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
