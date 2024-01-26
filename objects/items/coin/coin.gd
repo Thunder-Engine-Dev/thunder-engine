@@ -20,6 +20,7 @@ func _physics_process(delta):
 
 func collect() -> void:
 	Data.add_coin()
+	Data.values.score += 100
 	
 	NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
 		eff.explode()
