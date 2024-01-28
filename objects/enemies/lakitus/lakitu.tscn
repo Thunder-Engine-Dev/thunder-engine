@@ -356,6 +356,12 @@ autostart = true
 wait_time = 4.0
 one_shot = true
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0392157)
+position = Vector2(3.57627e-08, 4.76837e-07)
+scale = Vector2(1.6, 2.4)
+metadata/_edit_lock_ = true
+
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="animation_finished" from="Sprite" to="." method="_on_animation_finished"]

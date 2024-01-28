@@ -34,16 +34,20 @@ var _movement: bool:
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
+@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player:
 		_movement = false
+		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_INHERIT
 	elif movement_area && !movement_area.has_point(player.global_position):
 		_movement = false
+		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_INHERIT
 	else:
 		_movement = true
+		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	if _movement:
 		_movement_process(delta, player)
