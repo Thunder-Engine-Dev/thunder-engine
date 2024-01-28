@@ -41,13 +41,13 @@ func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player:
 		_movement = false
-		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_INHERIT
+		visible_on_screen_enabler_2d.enable_node_path = ^".."
 	elif movement_area && !movement_area.has_point(player.global_position):
 		_movement = false
-		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_INHERIT
+		visible_on_screen_enabler_2d.enable_node_path = ^".."
 	else:
 		_movement = true
-		visible_on_screen_enabler_2d.process_mode = Node.PROCESS_MODE_DISABLED
+		visible_on_screen_enabler_2d.enable_node_path = ^"."
 	
 	if _movement:
 		_movement_process(delta, player)

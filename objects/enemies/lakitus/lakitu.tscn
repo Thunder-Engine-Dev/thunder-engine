@@ -360,6 +360,7 @@ one_shot = true
 modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(3.57627e-08, 4.76837e-07)
 scale = Vector2(1.6, 2.4)
+enable_node_path = NodePath(".")
 metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
