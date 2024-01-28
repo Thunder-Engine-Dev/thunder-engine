@@ -20,16 +20,17 @@ func teleport() -> void:
 	var player: Player = Thunder._current_player
 	if !par is PathFollow2D && player:
 		global_position = Vector2(Thunder._current_player.global_position)
-	Thunder.view.cam_border()
 	
 	if par is PathFollow2D:
-		if !player || player.completed: return
-		while !Thunder.view.screen_left(player.global_position, -16):
-			player.global_position += Vector2.RIGHT.rotated(global_rotation)
+		if !player: return
+		while player.get_global_transform_with_canvas().get_origin().x < 16:
+			player.global_position += Vector2.RIGHT.rotated(player.global_rotation)
 			player.vel_set_x(0)
-		while !Thunder.view.screen_right(player.global_position, -16):
-			player.global_position += Vector2.LEFT.rotated(global_rotation)
+		while player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
+			player.global_position += Vector2.LEFT.rotated(player.global_rotation)
 			player.vel_set_x(0)
+	
+	Thunder.view.cam_border.call_deferred()
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
