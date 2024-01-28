@@ -202,6 +202,7 @@ func _head_process() -> void:
 		# Bumpable Block
 		if collider is StaticBumpingBlock && \
 		collider.has_method(&"got_bumped") && \
+		collider.global_position.direction_to(player.head.global_position).dot(Vector2.DOWN.rotated(collider.global_rotation)) > cos(PI/4) && \
 		((player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
 		(player.is_on_ceiling() && collider.initially_visible_and_solid)):
 			collider.got_bumped.call_deferred(player)
