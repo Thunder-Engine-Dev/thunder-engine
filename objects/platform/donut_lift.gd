@@ -46,6 +46,6 @@ func _physics_process(delta):
 	test_move(global_transform, Vector2.UP.rotated(global_rotation), kc)
 	if kc:
 		var collider: = kc.get_collider()
-		if collider is Player:
+		if collider is Player && collider.is_on_floor():
 			counting = true
 	
