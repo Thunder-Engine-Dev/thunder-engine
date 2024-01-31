@@ -58,7 +58,12 @@ func _movement_x(delta: float) -> void:
 			_start_sliding_movement()
 			return
 	if player.is_crouching || player.left_right == 0 || player.completed:
-		_decelerate(config.walk_deceleration, delta)
+		var deceleration: float = (
+			config.walk_crouch_deceleration if (
+				player.is_crouching && player.left_right == 0
+			) else config.walk_deceleration
+		)
+		_decelerate(deceleration, delta)
 		return
 	# Initial speed
 	if player.left_right != 0 && player.speed.x == 0:

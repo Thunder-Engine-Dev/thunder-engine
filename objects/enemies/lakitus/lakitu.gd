@@ -4,6 +4,7 @@ extends Node2D
 @export var movement_area: Rect2
 @export var draw_area_rect: bool
 @export var respawn_delay: float = 6
+@export var respawn_offset: float = 0
 @export_group("Physics")
 @export var hovering_margin: float = 50
 @export var hovering_range: float = 100

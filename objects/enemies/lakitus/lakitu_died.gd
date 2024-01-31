@@ -6,6 +6,7 @@ func _ready() -> void:
 	node.body = body.duplicate()
 	node.pos = body.global_position
 	node.respawn_delay = body.respawn_delay
+	node.respawn_offset = body.respawn_offset
 	
 	if vars.get(&"dead_sprite", ^"") != ^"":
 		var dspr: Node2D = vars.enemy_attacked.get_node_or_null(vars.dead_sprite).duplicate()

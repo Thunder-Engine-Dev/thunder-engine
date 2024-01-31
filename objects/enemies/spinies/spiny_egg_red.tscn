@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://hqhtm2y4woh0"]
+[gd_scene load_steps=18 format=3 uid="uid://hqhtm2y4woh0"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/spinies/spiny_egg.gd" id="1_3sw53"]
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="2_cfngx"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_3spov"]
 [ext_resource type="Texture2D" uid="uid://ds44e07jvbojq" path="res://engine/objects/enemies/spinies/textures/spiny_egg_red.png" id="9_d72kd"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_5bneu"]
+[ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="10_6slpf"]
 
 [sub_resource type="Resource" id="Resource_ihim1"]
 script = ExtResource("3_6nh2h")
@@ -27,7 +28,7 @@ custom_vars = {}
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 28)
 
-[sub_resource type="Resource" id="Resource_3i0gh"]
+[sub_resource type="Resource" id="Resource_2cclf"]
 resource_local_to_scene = true
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("6_84axb")
@@ -40,7 +41,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Sprite"),
+"death": NodePath("../../Sprite/Killed"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("7_y7ps8")
@@ -59,6 +60,10 @@ animations = [{
 "name": &"default",
 "speed": 6.0
 }]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igr41"]
+atlas = ExtResource("10_6slpf")
+region = Rect2(0, 33, 31, 31)
 
 [node name="SpinyRedEgg" type="CharacterBody2D"]
 collision_layer = 2
@@ -90,7 +95,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("5_x5hqt")
 stomping_standard = Vector2(0, 0)
-killing_creation = SubResource("Resource_3i0gh")
+killing_creation = SubResource("Resource_2cclf")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_3spov")
 custom_vars = {
@@ -103,6 +108,11 @@ metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 sprite_frames = SubResource("SpriteFrames_fmln3")
 autoplay = "default"
 
+[node name="Killed" type="Sprite2D" parent="Sprite"]
+visible = false
+texture = SubResource("AtlasTexture_igr41")
+flip_v = true
+
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("10_5bneu")
@@ -110,4 +120,4 @@ metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Killed" method="show"]
