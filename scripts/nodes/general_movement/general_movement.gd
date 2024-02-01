@@ -34,7 +34,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	motion_process(delta, slide)
-	if turn_sprite && sprite_node:
+	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
 		sprite_node.flip_h = speed.x < 0
 
 
