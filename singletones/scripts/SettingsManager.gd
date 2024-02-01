@@ -146,6 +146,7 @@ func _window_scale_logic() -> void:
 		ProjectSettings.get_setting("display/window/size/viewport_width"),
 		ProjectSettings.get_setting("display/window/size/viewport_height")
 	) * settings.scale)
+	await get_tree().process_frame
 	if old_scale != 0 || settings.scale > 1:
 		DisplayServer.window_set_position(
 			screen_center - (DisplayServer.window_get_size() / 2)
