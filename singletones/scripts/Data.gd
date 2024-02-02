@@ -39,6 +39,9 @@ var values: Dictionary = {
 	onetime_blocks = true
 }
 
+@warning_ignore("unused_private_class_variable")
+@onready var _default_values: Dictionary = values
+
 
 func add_coin(amount: int = 1) -> void:
 	Data.values.coins += 1
