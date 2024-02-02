@@ -56,8 +56,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_jump() -> void:
 	var gravity: float = gravity_scale * GRAVITY
-	var speed: float = sqrt(2 * gravity * jumping_height)
-	jump(speed)
+	var _speed: float = sqrt(2 * gravity * jumping_height)
+	jump(_speed)
 	jumping = true
 	
 	if !sprite_node: return

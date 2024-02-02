@@ -54,6 +54,7 @@ func set_current_profile(_name: StringName) -> void:
 
 
 func load_profile(_name: StringName) -> void:
+	@warning_ignore("static_called_on_instance")
 	var path: String = convert_to_path(_name)
 	if !FileAccess.file_exists(path):
 		create_new_profile(_name)
@@ -73,6 +74,7 @@ func load_profile(_name: StringName) -> void:
 	profiles[name] = profile
 
 func delete_profile(_name: StringName) -> void:
+	@warning_ignore("static_called_on_instance")
 	var path: String = convert_to_path(_name)
 	if !FileAccess.file_exists(path):
 		return
@@ -82,8 +84,10 @@ func delete_profile(_name: StringName) -> void:
 
 func save_current_profile() -> void:
 	var json: JSON = JSON.new()
+	@warning_ignore("static_called_on_instance")
 	var data = json.stringify(current_profile.data)
 	
+	@warning_ignore("static_called_on_instance")
 	var file: FileAccess = FileAccess.open(convert_to_path(current_profile.name),FileAccess.WRITE)
 	file.store_string(data)
 	file.close()

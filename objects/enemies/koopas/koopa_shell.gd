@@ -100,3 +100,13 @@ func _on_body_entered(player: Node2D) -> void:
 	if is_instance_valid(_delayer) || enemy_attacked.get_stomping_delayer(): return
 	status_swap(false)
 	sound()
+
+
+func _on_collided_wall() -> void:
+	for i in get_slide_collision_count():
+		var j: KinematicCollision2D = get_slide_collision(i)
+		if j.get_collider() is StaticBumpingBlock:
+			if j.get_collider().has_method(&"got_bumped"):
+				j.get_collider().got_bumped.call_deferred(self)
+			elif j.get_collider().has_method(&"bricks_break"):
+				j.get_collider().bricks_break.call_deferred()

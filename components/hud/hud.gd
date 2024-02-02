@@ -63,5 +63,5 @@ func time_countdown(_first_time: bool = true) -> void:
 func _time_countdown_sound_loop() -> void:
 	if Data.values.time > 0:
 		Audio.play_1d_sound(scoring_sound)
-		await get_tree().create_timer(0.09, false, true).timeout
+		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()

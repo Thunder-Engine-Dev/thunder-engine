@@ -76,6 +76,7 @@ var attacked: bool
 var attacking: bool
 var slided: bool
 
+@warning_ignore("unused_private_class_variable")
 var _has_jumped: bool
 
 var is_climbing: bool
@@ -92,6 +93,7 @@ var warp_dir: WarpDir
 var _force_suit: bool
 var _suit_appear: bool
 
+@warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
 
 @onready var control: PlayerControl = PlayerControl.new()

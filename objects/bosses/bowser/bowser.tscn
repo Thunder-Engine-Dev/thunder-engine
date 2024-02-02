@@ -389,6 +389,7 @@ status = Array[StringName]([&"flame", &"hammer", &"burst"])
 flame = SubResource("Resource_5jupm")
 hammer = SubResource("Resource_obl6r")
 burst_fireball = SubResource("Resource_gr117")
+final_boss = false
 speed = Vector2(100, 0)
 gravity_scale = 0.2
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer", &"burst_fireball"]
@@ -408,7 +409,7 @@ shape = SubResource("RectangleShape2D_dmd6v")
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_ertde")
 stomping_player_jumping_min = 500.0
-stomping_player_jumping_max = 750.0
+stomping_player_jumping_max = 700.0
 killing_sound_succeeded = ExtResource("7_i07i2")
 metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_player_jumping_max", &"killing_sound_succeeded"]
 
@@ -426,10 +427,10 @@ visible = false
 position = Vector2(21, -7)
 
 [node name="Animations" type="AnimationPlayer" parent="."]
-autoplay = "bowser/idle"
 libraries = {
 "bowser": SubResource("AnimationLibrary_cho8p")
 }
+autoplay = "bowser/idle"
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]

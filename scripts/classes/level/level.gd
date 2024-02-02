@@ -122,7 +122,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
-	Audio._music_channels[1].stop()
+	if is_instance_valid(Audio._music_channels[1]):
+		Audio._music_channels[1].stop()
 	Audio.play_music(completion_music, -1)
 	
 	if walking: 
@@ -136,7 +137,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
-			await get_tree().create_timer(0.5).timeout
+			await get_tree().create_timer(0.8, false, false).timeout
 			
 			if jump_to_scene:
 				Scenes.goto_scene(jump_to_scene)

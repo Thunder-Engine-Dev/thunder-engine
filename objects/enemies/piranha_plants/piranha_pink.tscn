@@ -74,8 +74,8 @@ custom_vars = {
 "projectile_collision": false,
 "projectile_gravity_scale": "0.18",
 "projectile_speed_correction": true,
-"projectile_speed_max": Vector2(200, -300),
-"projectile_speed_min": Vector2(-200, -550)
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
 }
 custom_script = ExtResource("3_l5y0h")
 

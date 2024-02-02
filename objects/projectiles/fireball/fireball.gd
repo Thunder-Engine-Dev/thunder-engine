@@ -2,6 +2,7 @@ extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
+@onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var jumping_speed: float = -250.0
 
 
@@ -9,7 +10,7 @@ func _ready() -> void:
 	await get_tree().physics_frame
 	if (
 		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&
-		!$VisibleOnScreenNotifier2D.is_on_screen()
+		!vision.is_on_screen()
 	):
 		queue_free()
 
@@ -31,3 +32,9 @@ func explode():
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 	queue_free()
+
+
+func expand_vision(_scale: Vector2) -> void:
+	await ready
+	print(vision)
+	if vision: vision.scale = _scale

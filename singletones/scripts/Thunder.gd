@@ -36,6 +36,7 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 		assert(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer), "HUD node is invalid or not set")
 		return _current_hud
 
+@warning_ignore("unused_private_class_variable")
 var _current_camera: Camera2D
 
 
@@ -200,8 +201,8 @@ class View:
 	## Easier way to get position, relative to the screen, of node2d
 	func get_pos_in_screen(node2d: Node2D) -> Vector2:
 		if !node2d: return Vector2.ZERO
-		var trans: Transform2D = node2d.get_viewport_transform()
-		return trans * node2d.global_position
+		var _trans: Transform2D = node2d.get_viewport_transform()
+		return _trans * node2d.global_position
 	
 	
 	## Easier way to get position ratio, relative to the screen, of node2d

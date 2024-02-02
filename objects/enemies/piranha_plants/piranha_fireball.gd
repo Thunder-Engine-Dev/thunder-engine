@@ -39,7 +39,7 @@ func _shoot() -> void:
 			if ball is GravityBody2D:
 				var speed_corrected: Vector2 = Vector2.ONE
 				if vars.projectile_speed_correction:
-					speed_corrected.x = cos(node.rotation) / 4 + 0.35
+					speed_corrected.x = cos(node.rotation) / 2 + 0.5
 					speed_corrected.y = cos(node.rotation) / 4 + 0.75
 				
 				var ball_speed: Vector2 = Vector2(
@@ -61,6 +61,9 @@ func _shoot() -> void:
 			
 			if !vars.projectile_collision && ball is CollisionObject2D:
 				ball.set_collision_mask_value(7, false)
+			
+			if &"vision" in ball:
+				ball.expand_vision(Vector2(8, 8))
 		).create_2d()
 	
 	Audio.play_sound(vars.attack_sound, node, false)

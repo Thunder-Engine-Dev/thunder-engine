@@ -5,6 +5,7 @@ extends MenuSelection
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 func _ready():
+	await get_tree().physics_frame
 	_update_string()
 
 

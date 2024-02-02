@@ -1,7 +1,8 @@
 extends MenuSelection
 
 func _handle_select() -> void:
-	var scene = get_parent().get_parent().get_parent()
+	# :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: 
+	#var scene = get_parent().get_parent().get_parent()
 	
 	super()
 	GlobalViewport.vp.get_camera_2d().position.x += 640

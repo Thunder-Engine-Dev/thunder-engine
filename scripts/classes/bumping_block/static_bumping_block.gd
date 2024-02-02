@@ -40,7 +40,7 @@ var _triggered: bool = false
 var _unsolid_layer: int = 16
 var _unsolid_mask: int = 1
 
-var _self_modulate_alpha: float
+#var _self_modulate_alpha: float
 var _no_result_appearing_animation: bool = false
 
 @onready var collision_layer_ori: int = collision_layer
@@ -96,7 +96,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	
 	_triggered = true
 	
-	var init_position = position
+#	var init_position = position
 	var tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
 	tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -8).rotated(deg_to_rad(bump_rotation)), 0.12).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12).set_ease(Tween.EASE_IN)
