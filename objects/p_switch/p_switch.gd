@@ -1,5 +1,7 @@
 extends GravityBody2D
 
+signal activated
+signal timed_out
 
 @export var is_once: bool
 @export var source_coins: Array[PackedScene] = [preload("res://engine/objects/items/coin/coin.tscn")]
@@ -46,6 +48,7 @@ func _on_activator_body_entered(body: Node2D):
 		while !body.is_on_floor():
 			if !activator.overlaps_body(body): return # Stops executing rest code if the mario has left the activator
 			await get_tree().process_frame
+		activated.emit()
 		active()
 		var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 		if !mus_loader: return
@@ -57,6 +60,7 @@ func _on_activator_body_entered(body: Node2D):
 func _on_duration_timeout() -> void:
 	collision_shape.set_deferred(&"disabled", false)
 	collision_shape_stomped.set_deferred(&"disabled", true)
+	timed_out.emit()
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
 	Audio.stop_music_channel(98, false)
@@ -69,7 +73,7 @@ func _on_duration_timeout() -> void:
 		mus_loader.play_immediately = true
 		mus_loader.play_buffered()
 		print("Played buffered")
-	queue_free()
+	#queue_free()
 
 
 func _swap_coins_and_bricks() -> void:
