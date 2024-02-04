@@ -35,7 +35,7 @@ var _movement: bool:
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
-@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
+@onready var visible_on_screen_2d: VisibleOnScreenNotifier2D = $VisibleOnScreen2D
 @onready var solid_checker: Area2D = $SolidChecker
 
 
@@ -43,18 +43,17 @@ func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player:
 		_movement = false
-		visible_on_screen_enabler_2d.enable_node_path = ^".."
 	elif movement_area && !movement_area.has_point(player.global_position):
 		_movement = false
-		visible_on_screen_enabler_2d.enable_node_path = ^".."
 	else:
 		_movement = true
-		visible_on_screen_enabler_2d.enable_node_path = ^"."
 	
 	if _movement:
 		_movement_process(delta, player)
 	else:
 		_leaving_process(delta)
+	
+	timer_pitching.paused = !visible_on_screen_2d.is_on_screen() || !_movement
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
 
@@ -72,12 +71,10 @@ func _movement_process(delta: float, player: Player) -> void:
 		speed = move_toward(speed, chasing_speed * dir, 5)
 	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.direction > 0) || (speed > 100 && player.direction < 0)):
 		speed = move_toward(speed, hovering_speed * player.direction, 10)
-	
-	timer_pitching.paused = !Thunder.view.is_getting_closer(self, -32)
 
 
 func _leaving_process(delta: float) -> void:
-	if !Thunder.view.is_getting_closer(self, leaving_direction * 128):
+	if visible_on_screen_2d.is_on_screen():
 		speed = move_toward(speed, 100 * leaving_direction, 50)
 	else:
 		speed = 0

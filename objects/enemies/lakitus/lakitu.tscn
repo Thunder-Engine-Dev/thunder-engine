@@ -359,11 +359,10 @@ autostart = true
 wait_time = 4.0
 one_shot = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreen2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(3.57627e-08, 4.76837e-07)
 scale = Vector2(1.6, 2.4)
-enable_node_path = NodePath(".")
 metadata/_edit_lock_ = true
 
 [node name="SolidChecker" type="Area2D" parent="."]

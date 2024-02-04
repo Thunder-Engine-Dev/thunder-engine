@@ -28,8 +28,8 @@ func _ready() -> void:
 		return
 	
 	if look_at_player && Thunder._current_player:
-		update_dir()
-		speed_to_dir()
+		update_dir.call_deferred()
+		speed_to_dir.call_deferred()
 
 
 func _physics_process(delta: float) -> void:
@@ -42,7 +42,6 @@ func update_dir() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	dir = Thunder.Math.look_at(global_position, player.global_position, global_transform)
-
 
 func speed_to_dir() -> void:
 	speed.x *= dir
