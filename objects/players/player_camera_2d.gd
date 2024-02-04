@@ -24,7 +24,7 @@ func teleport() -> void:
 		global_position = Vector2(Thunder._current_player.global_position)
 	
 	if par is PathFollow2D:
-		if player && stop_blocking_edges: 
+		if player && !stop_blocking_edges: 
 			while player.get_global_transform_with_canvas().get_origin().x < 16:
 				player.global_position += Vector2.RIGHT.rotated(player.global_rotation)
 				player.vel_set_x(0)
