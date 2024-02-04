@@ -122,7 +122,6 @@ func _ready() -> void:
 	
 	if Data.values.lives == -1:
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
-		
 
 
 var _starman_faded: bool

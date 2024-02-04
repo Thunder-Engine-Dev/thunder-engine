@@ -9,6 +9,7 @@ func _handle_select() -> void:
 	)
 	
 	get_parent().focused = false
-	Audio.fade_music_1d_player(Audio._music_channels[0], -1000, 0.15)
+	var music = Audio._music_channels[0]
+	Audio.fade_music_1d_player(music, -40, 2.4, Tween.TRANS_LINEAR, true)
 	TransitionManager.transition_middle.connect(get_tree().quit)
 

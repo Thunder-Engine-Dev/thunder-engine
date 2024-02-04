@@ -40,7 +40,7 @@ var values: Dictionary = {
 }
 
 @warning_ignore("unused_private_class_variable")
-@onready var _default_values: Dictionary = values
+@onready var _default_values: Dictionary = values.duplicate()
 
 
 func add_coin(amount: int = 1) -> void:

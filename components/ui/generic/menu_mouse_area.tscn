@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://jn7cw7puu5do"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h3qbb"]
+resource_local_to_scene = true
+
+[node name="MenuMouseArea" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h3qbb")

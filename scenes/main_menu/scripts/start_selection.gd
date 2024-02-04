@@ -1,19 +1,34 @@
 extends MenuSelection
 
+#const MENU_MOUSE_AREA = preload("res://engine/components/ui/generic/menu_mouse_area.tscn")
+#var mouse_inside: bool
+
 var starting: bool = false
 @export var wait_time: float = 2.5
 @export var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
+
+#func _ready() -> void:
+	#var area = MENU_MOUSE_AREA.instantiate()
+	#add_child(area)
+	#area.get_child(0).shape.size = size
+	#area.mouse_entered.connect(func():
+		#mouse_inside = true
+	#)
+	#area.mouse_exited.connect(func():
+		#mouse_inside = false
+	#)
 
 func _handle_select() -> void:
 	if starting: return
 	super()
 	starting = true
 	get_parent().focused = false
-	Audio.fade_music_1d_player(Audio._music_channels[0], -1000, 0.15)
+	var music = Audio._music_channels[0]
+	Audio.fade_music_1d_player(music, -40, 2.4, Tween.TRANS_LINEAR, true)
 	
 	await get_tree().create_timer(wait_time).timeout
 	
-	Audio._music_channels[0].stop()
+	if is_instance_valid(music): music.stop()
 	
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
