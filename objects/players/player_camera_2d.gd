@@ -24,13 +24,17 @@ func teleport() -> void:
 		global_position = Vector2(Thunder._current_player.global_position)
 	
 	if par is PathFollow2D:
-		if player && !stop_blocking_edges: 
-			while player.get_global_transform_with_canvas().get_origin().x < 16:
-				player.global_position += Vector2.RIGHT.rotated(player.global_rotation)
+		if player && !stop_blocking_edges:
+			var rot: float = get_viewport_transform().affine_inverse().get_rotation()
+			var kc: KinematicCollision2D 
+			while !kc && player.get_global_transform_with_canvas().get_origin().x < 16:
+				kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
 				player.vel_set_x(0)
-			while player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
-				player.global_position += Vector2.LEFT.rotated(player.global_rotation)
+			while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
+				kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
 				player.vel_set_x(0)
+			if kc && kc.get_collider():
+				player.die()
 	
 	Thunder.view.cam_border.call_deferred()
 
