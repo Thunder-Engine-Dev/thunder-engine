@@ -170,11 +170,13 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		printerr("Invalid data provided in method Audio.play_music")
 		return
 	
-	
 	if &"pitch" in other_keys && other_keys.pitch is float:
 		_music_channels[channel_id].pitch_scale = other_keys.pitch
 	if &"volume" in other_keys && other_keys.volume is float:
 		_music_channels[channel_id].volume_db = other_keys.volume
+	if &"fade_duration" in other_keys && other_keys.fade_duration is float:
+		if &"fade_to" in other_keys && other_keys.fade_to is float:
+			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration)
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE

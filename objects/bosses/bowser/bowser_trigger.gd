@@ -11,12 +11,13 @@ extends Path2D
 @export var boss_music: Resource = preload("./music/music_bowser_battle.mp3")
 @export var boss_music_fading: bool = true
 
+var _cam_parent: Node
+
 var drawn_rect: Rect2
 var triggered: bool
 var triggered_bowser: bool
 
 @onready var route_follower: PathFollow2D = $RouteFollower
-@onready var boss_music_player: AudioStreamPlayer = $BossMusicPlayer
 
 
 func _draw() -> void:
@@ -43,30 +44,26 @@ func _physics_process(delta: float) -> void:
 		if actual_area.has_point(player.global_position):
 			var cam: Camera2D = Thunder._current_camera
 			if cam: 
+				_cam_parent = cam.get_parent()
 				cam.reparent(route_follower)
 				cam.par = cam.get_parent()
 				cam.force_update_transform()
 				cam.force_update_scroll()
 			if boss_music:
 				Audio.stop_all_musics(boss_music_fading)
-				if boss_music_fading:
-					var tween: Tween = create_tween()
-					tween.tween_interval(1.5)
-					tween.tween_callback(
-						func() -> void:
-							boss_music_player.stream = boss_music
-							boss_music_player.play()
-							if boss_music_fading:
-								boss_music_player.volume_db = -40
-								Audio.fade_music_1d_player(boss_music_player, 0, 1.5)
-					)
-				else:
-					boss_music_player.stream = boss_music
-					boss_music_player.play()
+				Audio.play_music(boss_music, 32, {} if !boss_music_fading else {
+					volume = -40,
+					fade_duration = 1.5,
+					fade_to = 0
+				})
 			triggered = true
 	else:
 		if route_follower.progress_ratio < 1.0: 
 			route_follower.progress += camera_speed * delta
+		else:
+			var cam: Camera2D = Thunder._current_camera
+			if cam && _cam_parent:
+				cam.stop_blocking_edges = true
 		var view: Rect2 = Rect2(get_viewport_transform().affine_inverse().get_origin(), get_viewport_rect().size)
 		if !triggered_bowser && trigger_bowser && trigger_bowser.is_in_group(&"#bowser") && view.has_point(trigger_bowser.global_position):
 			triggered_bowser = true
@@ -75,7 +72,4 @@ func _physics_process(delta: float) -> void:
 
 
 func stop_music(fade: bool = true) -> void:
-	if !fade:
-		boss_music_player.stop()
-	else:
-		Audio.fade_music_1d_player(boss_music_player, -40, 1.5, Tween.TRANS_LINEAR, true)
+	Audio.stop_music_channel(32, true)

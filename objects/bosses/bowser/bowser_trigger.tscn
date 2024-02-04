@@ -10,6 +10,3 @@ trigger_area = Rect2(-16, -240, 32, 480)
 [node name="RouteFollower" type="PathFollow2D" parent="."]
 rotates = false
 loop = false
-
-[node name="BossMusicPlayer" type="AudioStreamPlayer" parent="."]
-bus = &"Music"
