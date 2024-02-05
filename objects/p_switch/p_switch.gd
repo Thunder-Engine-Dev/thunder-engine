@@ -16,6 +16,8 @@ signal timed_out
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var duration: Timer = $Duration
 
+var player: Player
+
 
 func _ready() -> void:
 	activator.body_entered.connect(_on_activator_body_entered)
@@ -48,12 +50,15 @@ func _on_activator_body_entered(body: Node2D):
 		while !body.is_on_floor():
 			if !activator.overlaps_body(body): return # Stops executing rest code if the mario has left the activator
 			await get_tree().process_frame
-		activated.emit()
-		active()
 		var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 		if !mus_loader: return
 		mus_loader.play_immediately = false
 		mus_loader.pause_music()
+		player = body
+		if !player.died.is_connected(_stop_music):
+			player.died.connect(_stop_music, CONNECT_ONE_SHOT)
+		activated.emit()
+		active()
 		Audio.play_music(p_switch_music, 98)
 
 
@@ -64,6 +69,8 @@ func _on_duration_timeout() -> void:
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
 	Audio.stop_music_channel(98, false)
+	if player.died.is_connected(_stop_music):
+		player.died.disconnect(_stop_music)
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if !mus_loader: return
 	if mus_loader.is_paused:
@@ -74,6 +81,10 @@ func _on_duration_timeout() -> void:
 		mus_loader.play_buffered()
 		print("Played buffered")
 	#queue_free()
+
+
+func _stop_music() -> void:
+	Audio.stop_music_channel(98, false)
 
 
 func _swap_coins_and_bricks() -> void:
@@ -98,6 +109,7 @@ func _swap_coins_and_bricks() -> void:
 		if !k is Node2D:
 			continue
 		var coin: PackedScene = null
+		if &"result" in k && k.result != null: continue
 		for l in source_bricks:
 			if k.scene_file_path == l.resource_path:
 				coin = source_coins[source_bricks.find(l)]
