@@ -4,7 +4,17 @@ class_name Effect
 const TRAIL: PackedScene = preload("res://engine/objects/effects/trail/trail.tscn")
 
 
-static func trail(on: Node2D, texture: Texture2D = null, offset: Vector2 = Vector2.ZERO, flip_h: bool = false, flip_v: bool = false, centered: bool = true, fade_out_strength: float = 0.05) -> Sprite2D:
+static func trail(
+	on: Node2D,
+	texture: Texture2D = null,
+	offset: Vector2 = Vector2.ZERO,
+	flip_h: bool = false,
+	flip_v: bool = false,
+	centered: bool = true,
+	fade_out_strength: float = 0.05,
+	duration: float = 1.0,
+	material: Material = null
+) -> Sprite2D:
 	if !on:
 		return null
 	
@@ -16,6 +26,8 @@ static func trail(on: Node2D, texture: Texture2D = null, offset: Vector2 = Vecto
 			tra.flip_v = flip_v
 			tra.centered = centered
 			tra.fade_out_strength = fade_out_strength
+			tra.lifetime = duration
+			tra.material = material
 			tra.z_index = on.z_index - 1
 	).create_2d().get_node() as Sprite2D
 
