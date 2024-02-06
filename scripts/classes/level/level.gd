@@ -105,7 +105,7 @@ func _physics_process(delta: float) -> void:
 	# Falling behavior
 	if !player || !_is_stage_ready:
 		return
-	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset):
+	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset - 16):
 		match falling_below_screen_action:
 			1: player.die()
 			2: player.position.y -= 608
