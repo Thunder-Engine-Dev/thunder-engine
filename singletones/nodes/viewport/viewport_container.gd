@@ -8,6 +8,6 @@ func _input(event):
 		if event is InputEventMouse:
 			var mouseEvent = event.duplicate()
 			mouseEvent.position = get_global_transform_with_canvas().affine_inverse() * event.position
-			child.push_unhandled_input(mouseEvent)
+			child.push_input(mouseEvent)
 		else:
-			child.push_unhandled_input(event)
+			child.push_input(event)

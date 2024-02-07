@@ -35,7 +35,7 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(7, false).timeout.connect(emit_signal.bind("game_over_finished"))
+	get_tree().create_timer(6, false).timeout.connect(emit_signal.bind("game_over_finished"))
 
 
 func timer_hurry() -> void:
