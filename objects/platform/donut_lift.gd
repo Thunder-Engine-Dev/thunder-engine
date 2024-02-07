@@ -1,5 +1,6 @@
 extends AnimatableBody2D
 
+@export var respawnable: bool = false
 @export var delay: float = 50
 @export var force_fall: bool = false
 @export var fall_speed: float = 0.2
@@ -10,6 +11,7 @@ var counter: float = 0
 var speed_y: float
 
 @onready var sprite: AnimatedSprite2D = $Sprite
+@onready var first_pos: Vector2 = position
 
 
 func _physics_process(delta):
@@ -29,6 +31,15 @@ func _physics_process(delta):
 	if counter > delay:
 		speed_y += fall_speed * delta
 		position += Vector2(0, speed_y).rotated(global_rotation) * delta
+		if !Thunder.view.screen_dir(
+			global_position, Vector2.DOWN.rotated(global_rotation), 256
+		):
+			if respawnable:
+				reset_vars()
+				sprite.scale = Vector2.ZERO
+				var tw = create_tween().tween_property(sprite, ^"scale", Vector2.ONE, 0.4)
+			else:
+				queue_free()
 		return
 	
 	var prev_count: bool = counting
@@ -48,4 +59,12 @@ func _physics_process(delta):
 		var collider: = kc.get_collider()
 		if collider is Player && collider.is_on_floor():
 			counting = true
+
+
+func reset_vars() -> void:
+	counting = false
+	sprite.animation = &"default"
+	counter = 0
+	speed_y = 0
+	position = first_pos
 	

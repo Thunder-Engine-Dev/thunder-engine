@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://h3wdek115xb4"]
+[gd_scene load_steps=8 format=3 uid="uid://h3wdek115xb4"]
 
 [ext_resource type="Script" path="res://engine/objects/platform/donut_lift.gd" id="1_1ug7h"]
 [ext_resource type="Texture2D" uid="uid://yvn3a727bofo" path="res://engine/objects/platform/donut_lift.png" id="1_bisko"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_qomtk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkmyh"]
 size = Vector2(32, 4)
@@ -50,6 +51,6 @@ autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)
-position = Vector2(1.43051e-06, 1.43051e-06)
-scale = Vector2(8, 8)
+script = ExtResource("3_qomtk")
+new_rect = Rect2(-128, -512, 256, 768)
 metadata/_edit_lock_ = true
