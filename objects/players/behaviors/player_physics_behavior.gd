@@ -101,6 +101,7 @@ func _movement_y(delta: float) -> void:
 	else:
 		if player.is_on_floor():
 			if player.jumping > 0 && !player._has_jumped:
+				_stop_sliding_movement()
 				player._has_jumped = true
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
@@ -114,6 +115,7 @@ func _movement_y(delta: float) -> void:
 #= Climbing
 func _movement_climbing(delta: float) -> void:
 	if player.is_crouching || player.completed: return
+	if player.is_sliding: _stop_sliding_movement()
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
 	# Resist to gravity
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta
@@ -130,9 +132,9 @@ func _movement_climbing(delta: float) -> void:
 #= Sliding from slopes
 func _movement_sliding(delta: float) -> void:
 	if player.completed: return
-	if !player.is_on_floor():
-		_stop_sliding_movement()
-		return
+	#if !player.is_on_floor():
+	#	_stop_sliding_movement()
+	#	return
 	var floor_normal = rad_to_deg(player.get_floor_normal().x)
 	var dir: bool = player.direction == 1
 	# Acceleration

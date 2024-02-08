@@ -26,5 +26,5 @@ region = Rect2(0, 0, 32, 32)
 [node name="QuestionBlock" instance=ExtResource("1_pcr4a")]
 result = SubResource("Resource_nll4y")
 
-[node name="ItemDisplayer" parent="Sprites" index="1"]
+[node name="ItemDisplayer" parent="Sprites" index="2"]
 texture = SubResource("AtlasTexture_t3wug")

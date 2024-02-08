@@ -8,3 +8,4 @@ collision_mask = 0
 script = ExtResource("1_w0y84")
 speed = Vector2(0, -230)
 gravity_scale = 0.2
+max_falling_speed = 500.0

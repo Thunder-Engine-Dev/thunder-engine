@@ -172,6 +172,12 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 			type = &"shell"
 		}
 	else:
+#		if get_meta(&"attacker_speed") == Vector2.ZERO:
+#			await get_tree().physics_frame
+#			if &"attacked_from_right" in special_tags:
+#				set_meta(&"attacker_speed", Vector2.LEFT)
+#			elif &"attacked_from_left" in special_tags:
+#				set_meta(&"attacker_speed", Vector2.RIGHT)
 		killed_succeeded.emit()
 		
 		_creation(killing_creation)
@@ -191,7 +197,10 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 func _creation(creation: InstanceNode2D) -> void:
 	if !creation: return
 	
-	var vars: Dictionary = {enemy_attacked = self}
+	var vars: Dictionary = {
+		enemy_attacked = self,
+		#attacker_speed = get_meta(&"attacker_speed") if has_meta(&"attacker_speed") else Vector2.ZERO
+	}
 	NodeCreator.prepare_ins_2d(creation, _center).execute_instance_script(vars).create_2d()
 
 

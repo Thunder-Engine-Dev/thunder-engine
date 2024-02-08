@@ -15,7 +15,7 @@ trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
-visi_z_index = 0
+visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
@@ -68,8 +68,5 @@ metadata/_edit_pinned_properties_ = [&"killing_immune"]
 sprite_frames = SubResource("SpriteFrames_l71n6")
 
 [node name="Vision" parent="." index="3"]
-visible = true
-modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
-metadata/_edit_lock_ = true

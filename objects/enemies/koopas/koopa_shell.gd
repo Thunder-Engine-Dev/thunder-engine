@@ -80,16 +80,25 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	if is_instance_of(target_enemy_attacked.owner, Shell) && \
 		!target_enemy_attacked.owner.stopping && \
 		sharpness <= target_enemy_attacked.killing_immune.shell_defence:
+			enemy_attacked.set_meta(
+				&"attacker_speed", target_enemy_attacked.owner.speed
+			)
 			enemy_attacked.got_killed(&"shell_forced")
+			target_enemy_attacked.set_meta(&"attacker_speed", speed)
 			target_enemy_attacked.got_killed(&"shell_forced")
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
 		if !combo.get_combo() <= 0:
 			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
+		target_enemy_attacked.set_meta(&"attacker_speed", speed)
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		combo.combo()
 	# Gets blocked
 	else:
+		if &"speed" in target_enemy_attacked.owner:
+			enemy_attacked.set_meta(
+				&"attacker_speed", target_enemy_attacked.owner.speed
+			)
 		enemy_attacked.got_killed(&"shell_forced")
 
 
