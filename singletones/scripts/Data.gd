@@ -55,3 +55,8 @@ func add_score(amount: int) -> void:
 
 func add_lives(amount: int = 1) -> void:
 	Data.values.lives += amount
+
+
+func reset_all_values() -> void:
+	Thunder._current_player_state = null
+	values = _default_values.duplicate(true)

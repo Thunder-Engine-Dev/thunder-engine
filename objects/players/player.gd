@@ -35,16 +35,16 @@ enum WarpDir {
 		if suit.animation_sprites:
 			sprite.sprite_frames = suit.animation_sprites
 		
-		_animation_behavior = null
 		_physics_behavior = null
 		_suit_behavior = null
+		_animation_behavior = null
 		_extra_behavior = null
-		if suit.animation_behavior:
-			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
 		if suit.physics_behavior:
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
 		if suit.behavior_script:
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
+		if suit.animation_behavior:
+			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
 		if suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
 		if _suit_appear:
@@ -62,9 +62,9 @@ enum WarpDir {
 @export var death_sprite: Node2D
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
 
-var _animation_behavior: ByNodeScript
 var _physics_behavior: ByNodeScript
 var _suit_behavior: ByNodeScript
+var _animation_behavior: ByNodeScript
 var _extra_behavior: ByNodeScript
 
 var left_right: int

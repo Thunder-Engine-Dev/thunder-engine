@@ -10,6 +10,7 @@ func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
+	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
 	player.swam.connect(_swam)

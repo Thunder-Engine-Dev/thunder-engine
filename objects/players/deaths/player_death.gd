@@ -42,11 +42,13 @@ func _ready() -> void:
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
 		Scenes.reload_current_scene.call_deferred()
-		Scenes.scene_changed.connect(func(_current_scene):
+		Scenes.scene_ready.connect(func():
+			cam = Thunder._current_camera
+			cam.force_update_scroll()
 			TransitionManager.current_transition.on(Thunder._current_player)
 			TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
-	, CONNECT_ONE_SHOT)
+		, CONNECT_ONE_SHOT + CONNECT_DEFERRED)
+	, CONNECT_ONE_SHOT + CONNECT_DEFERRED)
 
 
 func _physics_process(delta: float) -> void:

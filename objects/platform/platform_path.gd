@@ -9,6 +9,7 @@ extends PathFollow2D
 @export_group("Physics")
 @export var speed: float = 150.0
 @export var loop_backwards: bool = true
+@export var warp_objects_on_end: bool = true
 @export_subgroup("Smooth","smooth_")
 @export var smooth_enabled: bool = true
 @export var smooth_turning_length: float = 64.0
@@ -57,6 +58,7 @@ var linear_velocity: Vector2
 		progress_ratio = current
 		return max_length
 ).call()
+@onready var init_collision_layer: int = block.collision_layer
 
 
 func _ready() -> void:
@@ -79,7 +81,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !on_moving: return
 	
-	var pregpos:Vector2 = global_position
+	#var pregpos:Vector2 = global_position
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
 	
@@ -93,7 +95,12 @@ func _on_path_movement_process(delta: float) -> void:
 	# Moving
 	if curve:
 		progress += speed * delta
-		if loop: return
+		if loop:
+			if warp_objects_on_end: return
+			block.set_deferred(
+				&"collision_layer", 0 if progress > max_progress - 8 else init_collision_layer
+			)
+			return
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
 	

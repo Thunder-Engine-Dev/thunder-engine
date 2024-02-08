@@ -13,7 +13,8 @@ static func trail(
 	centered: bool = true,
 	fade_out_strength: float = 0.05,
 	duration: float = 1.0,
-	material: Material = null
+	material: Material = null,
+	z_index: int = -1
 ) -> Sprite2D:
 	if !on:
 		return null
@@ -28,7 +29,7 @@ static func trail(
 			tra.fade_out_strength = fade_out_strength
 			tra.lifetime = duration
 			tra.material = material
-			tra.z_index = on.z_index - 1
+			tra.z_index = on.z_index + z_index
 	).create_2d().get_node() as Sprite2D
 
 
