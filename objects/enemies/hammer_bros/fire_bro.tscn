@@ -1,6 +1,6 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=19 format=3 uid="uid://diu2ipea3k8qy"]
 
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_qcr0g"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_qcr0g"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_gx87h"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_rfsl6"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_1k586"]
@@ -86,6 +86,18 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_x4r1h"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nrsay"]
+gradient = SubResource("Gradient_x4r1h")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
 [node name="FireBro" instance=ExtResource("1_qcr0g")]
 projectile = SubResource("Resource_6oa5f")
 sound = ExtResource("5_0h1a3")
@@ -105,6 +117,11 @@ metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 position = Vector2(14, -4)
 texture = ExtResource("9_7dooi")
 metadata/_edit_pinned_properties_ = [&"texture"]
+
+[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0"]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_nrsay")
 
 [node name="PosAttack" parent="." index="4"]
 position = Vector2(14, -4)

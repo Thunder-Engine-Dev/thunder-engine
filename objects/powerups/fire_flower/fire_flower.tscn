@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bsdcxwngf5hru"]
+[gd_scene load_steps=13 format=3 uid="uid://bsdcxwngf5hru"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_a0bpr"]
 [ext_resource type="Resource" uid="uid://bs6nsxnb62dn4" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_fireball.tres" id="2_xstsq"]
 [ext_resource type="Texture2D" uid="uid://dr27m02d1hglo" path="res://engine/objects/powerups/fire_flower/texture.png" id="3_46su7"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_vlrwj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(31, 31)
@@ -43,6 +44,18 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_jy2tl"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmgen"]
+gradient = SubResource("Gradient_jy2tl")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
 [node name="FireFlower" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 64
@@ -77,3 +90,10 @@ autoplay = "default"
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_cmgen")
+script = ExtResource("4_vlrwj")
+duration = 0.3

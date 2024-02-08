@@ -115,7 +115,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"smile",
-"speed": 10.0
+"speed": 6.0
 }]
 
 [node name="Thwomp" type="CharacterBody2D"]

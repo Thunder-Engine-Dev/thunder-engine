@@ -9,12 +9,12 @@ var middle_switch: bool = false
 
 
 func _ready() -> void:
-	resized.connect(func():
-		if !color_rect: return
-		var rect = get_rect()
-		color_rect.material.set_shader_parameter("screen_width", rect.size.x)
-		color_rect.material.set_shader_parameter("screen_height", rect.size.y)
-	)
+	#resized.connect(func():
+	#	if !color_rect: return
+	#	var rect = get_rect()
+	#	color_rect.material.set_shader_parameter("screen_width", rect.size.x)
+	#	color_rect.material.set_shader_parameter("screen_height", rect.size.y)
+	#)
 	
 	start.emit()
 

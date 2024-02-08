@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg1q2ryf5r2ky"]
+
+[ext_resource type="Script" path="res://engine/objects/projectiles/iceball/iceball.gd" id="1_cfamg"]
+[ext_resource type="Texture2D" uid="uid://dpuat766jhqbd" path="res://engine/objects/projectiles/iceball/texture.png" id="2_xpnjf"]
+[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_46ix7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wrgei"]
+radius = 8.0
+
+[node name="Iceball" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+script = ExtResource("1_cfamg")
+sprite = NodePath("Texture")
+speed = Vector2(387.5, 0)
+gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale"]
+
+[node name="Texture" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_xpnjf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_wrgei")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_wrgei")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_46ix7")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+metadata/_edit_lock_ = true
+
+[connection signal="collided_floor" from="." to="." method="jump"]
+[connection signal="collided_wall" from="." to="." method="explode"]
+[connection signal="damaged_player" from="Attack" to="." method="explode"]
+[connection signal="killed_notify" from="Attack" to="." method="explode"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

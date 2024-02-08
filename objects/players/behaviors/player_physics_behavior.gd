@@ -211,7 +211,8 @@ func _head_process() -> void:
 		collider.has_method(&"got_bumped") && \
 		collider.global_position.direction_to(player.head.global_position + 8 * Vector2.DOWN.rotated(player.global_rotation)).dot(Vector2.DOWN.rotated(collider.global_rotation)) > cos(PI/4) && \
 		((player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
-		(player.is_on_ceiling() && collider.initially_visible_and_solid)):
+		(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
+		(player.is_crouching)):
 			collider.got_bumped.call_deferred(player)
 
 #= Body

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene load_steps=19 format=3 uid="uid://oja3uy1y4hpl"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
@@ -62,8 +62,17 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_h4xr3"]
+colors = PackedColorArray(1, 1, 1, 0.203922, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g3ldy"]
+gradient = SubResource("Gradient_h4xr3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
 [node name="PiranhaPink" type="Node2D"]
-self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_2qrva")
 custom_vars = {
 "attack_amount": 1,
@@ -131,5 +140,11 @@ one_shot = true
 
 [node name="Fire" type="Timer" parent="."]
 one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -32)
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_g3ldy")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

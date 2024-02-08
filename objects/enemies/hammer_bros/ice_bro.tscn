@@ -1,0 +1,102 @@
+[gd_scene load_steps=16 format=3 uid="uid://c6d4uggddmb7d"]
+
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_wbqkn"]
+[ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="2_0n4f2"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_3y6bv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_62bxd"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_u4j0k"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_fcu4k"]
+[ext_resource type="Texture2D" uid="uid://ywg0vr64iyos" path="res://engine/objects/enemies/hammer_bros/textures/light_blue_bro.png" id="5_ofvda"]
+[ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_rgifn"]
+[ext_resource type="Texture2D" uid="uid://dpuat766jhqbd" path="res://engine/objects/projectiles/iceball/texture.png" id="9_l2ugf"]
+
+[sub_resource type="Resource" id="Resource_1srv3"]
+script = ExtResource("4_fcu4k")
+creation_nodepack = ExtResource("2_0n4f2")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(387.5, 0),
+"speed_min": Vector2(387.5, 0)
+}
+custom_script = ExtResource("3_62bxd")
+
+[sub_resource type="Resource" id="Resource_ibnma"]
+resource_local_to_scene = true
+script = ExtResource("4_fcu4k")
+creation_nodepack = ExtResource("2_3y6bv")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_u4j0k")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abo6h"]
+atlas = ExtResource("5_ofvda")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1g4s"]
+atlas = ExtResource("5_ofvda")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va0pj"]
+atlas = ExtResource("5_ofvda")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yf8kn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abo6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1g4s")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va0pj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1g4s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="IceBro" instance=ExtResource("1_wbqkn")]
+projectile = SubResource("Resource_1srv3")
+sound = ExtResource("5_rgifn")
+sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_ibnma")
+killing_creation = SubResource("Resource_ibnma")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_yf8kn")
+
+[node name="SpriteProjectile" parent="." index="3"]
+position = Vector2(14, -4)
+texture = ExtResource("9_l2ugf")
+
+[node name="PosAttack" parent="." index="4"]
+position = Vector2(14, -4)

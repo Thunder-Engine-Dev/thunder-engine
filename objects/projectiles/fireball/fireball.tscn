@@ -1,11 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4jlbnswk5dlw"]
+[gd_scene load_steps=8 format=3 uid="uid://c4jlbnswk5dlw"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ki2u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0
+
+[sub_resource type="Gradient" id="Gradient_mmb4h"]
+colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xbek7"]
+gradient = SubResource("Gradient_mmb4h")
+width = 160
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
 
 [node name="Fireball" type="CharacterBody2D"]
 collision_layer = 4
@@ -13,7 +26,7 @@ collision_mask = 64
 script = ExtResource("1_hkxrj")
 sprite = NodePath("Texture")
 speed = Vector2(387.5, 0)
-gravity_scale = 0.5
+gravity_scale = 0.4
 metadata/_edit_pinned_properties_ = [&"sprite"]
 
 [node name="Texture" type="Sprite2D" parent="."]
@@ -36,6 +49,13 @@ script = ExtResource("3_po12v")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
 metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_xbek7")
+texture_scale = 0.01
+script = ExtResource("4_5ki2u")
 
 [connection signal="collided_floor" from="." to="." method="jump"]
 [connection signal="collided_wall" from="." to="." method="explode"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cforx4e0v73a7"]
+[gd_scene load_steps=34 format=3 uid="uid://cforx4e0v73a7"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/rotos/roto_red.gd" id="1_gq7m4"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3420r"]
@@ -197,11 +197,22 @@ animations = [{
 "speed": 40.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_mmb4h"]
+colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_25p2b"]
+gradient = SubResource("Gradient_mmb4h")
+width = 160
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
 [node name="RotoRed" type="Area2D" groups=["#roto"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_gq7m4")
-amplitude_enable = null
 amplitude_changing_speed = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -211,6 +222,11 @@ shape = SubResource("CircleShape2D_pi0fq")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rg5pr")
 autoplay = "default"
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_25p2b")
 
 [node name="EnemyAttacked" type="Node" parent="."]
 script = ExtResource("2_3420r")

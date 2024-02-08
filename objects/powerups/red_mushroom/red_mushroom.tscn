@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://b71msw28e37a"]
+[gd_scene load_steps=9 format=3 uid="uid://b71msw28e37a"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
 [ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="2_1tqft"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_ccgfb"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(31, 31)
+
+[sub_resource type="Gradient" id="Gradient_a34eq"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmgen"]
+gradient = SubResource("Gradient_a34eq")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
 
 [node name="RedMushroom" type="CharacterBody2D"]
 collision_layer = 4
@@ -42,5 +55,12 @@ texture = ExtResource("2_crlg7")
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("3_ccgfb")
 metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_cmgen")
+script = ExtResource("5_s7dmu")
+duration = 0.3
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
