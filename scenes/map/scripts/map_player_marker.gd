@@ -20,6 +20,7 @@ func _enter_tree() -> void:
 	if !is_in_group("map_marker"):
 		add_to_group("map_marker")
 	
+	if !Engine.is_editor_hint(): return
 	set_notify_transform(true)
 
 
@@ -39,6 +40,7 @@ func get_next_marker() -> MapPlayerMarker:
 
 
 func _notification(what: int) -> void:
+	if !Engine.is_editor_hint(): return
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		changed.emit()
 

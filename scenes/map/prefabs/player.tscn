@@ -17,9 +17,10 @@ offset = Vector2(0, -32)
 
 [node name="hitbox" type="Area2D" parent="Player"]
 visible = false
+position = Vector2(0, -16)
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
 shape = SubResource("RectangleShape2D_wmk0a")
 
-[connection signal="area_entered" from="Player/hitbox" to="Player" method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="Player/hitbox" to="." method="_on_hitbox_area_entered"]

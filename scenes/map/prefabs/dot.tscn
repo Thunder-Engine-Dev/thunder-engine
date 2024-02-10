@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://beu6ovtvrvpfc"]
+[gd_scene load_steps=10 format=3 uid="uid://beu6ovtvrvpfc"]
 
 [ext_resource type="Texture2D" uid="uid://b7mpvpiw66wdu" path="res://engine/scenes/map/textures/dot.png" id="1_y7pm0"]
 
@@ -52,6 +52,15 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="Dot" type="AnimatedSprite2D" groups=["map_dot"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ry1p5"]
+radius = 6.0
+
+[node name="Dot" type="AnimatedSprite2D" groups=["map_marker"]]
 sprite_frames = SubResource("SpriteFrames_fett5")
 autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_ry1p5")

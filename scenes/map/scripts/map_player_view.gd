@@ -77,6 +77,7 @@ func animate() -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group(&"map_marker"):
+		print('s')
 		pass
 		#current_marker = area as MapPlayerMarker
 		

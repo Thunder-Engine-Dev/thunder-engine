@@ -31,7 +31,8 @@ func _ready() -> void:
 	child_exiting_tree.connect(_child_exited)
 	
 	# When seted to true '_notification' function will recive NOTIFICATION_TRANSFORM_CHANGED in message a.k.a "what"
-	set_notify_transform(true)
+	if !Engine.is_editor_hint():
+		set_notify_transform(true)
 	
 	# Connects all childs position chainging for redrawing in editor lines
 	for child in get_children():
@@ -48,6 +49,7 @@ func _ready() -> void:
 
 # Recive events
 func _notification(what: int) -> void:
+	if !Engine.is_editor_hint(): return
 	if what == NOTIFICATION_TRANSFORM_CHANGED:
 		changed.emit()
 
@@ -95,7 +97,7 @@ func _draw() -> void:
 			
 	
 	# same but with next Marker Space
-	if next_space != null:
+	if next_space != null && next_space != self:
 		var next_child = next_space.get_first_marker()
 		if next_child == null: return
 		
@@ -205,9 +207,17 @@ func build_dots() -> void:
 func set_next_space(value: MarkerSpace) -> void:
 	# Avoid recursive
 	if value == self:
-		push_warning("[MarkerSpace] Trying assign next marker space to self - rejected")
+		push_warning(
+			"[MarkerSpace] Trying to assign next marker space to itself - rejected"
+		)
 		return
 	
+	if value != null && &"next_space" in value && value.next_space == self:
+		push_warning(
+			"[MarkerSpace] Trying to recursively assign next marker space - rejected"
+		)
+		return
+	 
 	if _next_space != null:
 		if _next_space.changed.is_connected(queue_redraw):
 			_next_space.changed.disconnect(queue_redraw)

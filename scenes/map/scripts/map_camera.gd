@@ -11,5 +11,6 @@ func _physics_process(delta: float) -> void:
 	var run: int = 1 + int(Input.is_action_pressed("m_run"))
 	position += speed * delta * run * Vector2(left_right, up_down)
 	position = position.clamp(
-			Vector2(limit_left, limit_top), Vector2(limit_bottom, limit_right)
+			Vector2(limit_left + 320, limit_top + 240) - player.position,
+			Vector2(limit_right - 320, limit_bottom - 240) - player.position
 		)
