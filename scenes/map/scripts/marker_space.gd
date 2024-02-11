@@ -131,11 +131,13 @@ func if_level_make_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
 		var m = map.get_node(map.player).x.instantiate()
 		m.global_position = mark.global_position
+		m.visible = false
 		map.add_child.call_deferred(m)
 
 func make_dot(pos: Vector2) -> void:
 	var m = map.get_node(map.player).dots.instantiate()
 	m.global_position = pos
+	m.visible = false
 	map.add_child.call_deferred(m)
 
 # Returns first marker

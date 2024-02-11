@@ -60,6 +60,7 @@ sprite_frames = SubResource("SpriteFrames_fett5")
 autoplay = "default"
 
 [node name="Area2D" type="Area2D" parent="."]
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -1)

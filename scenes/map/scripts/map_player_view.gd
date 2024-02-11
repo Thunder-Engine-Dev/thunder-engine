@@ -12,6 +12,7 @@ var current_marker: MapPlayerMarker
 
 var ex: int = 1
 var is_faster: bool = false
+var fast_forwarding: bool = false
 
 @onready var map = Scenes.current_scene
 @onready var player: AnimatedSprite2D = $Player
@@ -76,9 +77,18 @@ func animate() -> void:
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group(&"map_marker"):
-		print('s')
-		pass
+	var par = area.get_parent()
+	if par.is_in_group(&"map_marker"):
+		par.set_meta(&"is_appearing", true)
+		if fast_forwarding:
+			par.visible = true
+		else:
+			get_tree().create_timer(0.01 * speed / ex, false).timeout.connect(func():
+				par.visible = true
+				par.set_meta(&"is_appearing", false)
+			)
+		return
+	
 		#current_marker = area as MapPlayerMarker
 		
 		#movement_dir = Vector2.RIGHT.rotated(area.rotation).round()
