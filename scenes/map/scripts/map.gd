@@ -1,4 +1,6 @@
-extends Node2D
+class_name Map2D extends Node2D
+
+signal player_entered_level ## Emitted when the player enters a level.
 
 @export
 var player: NodePath
@@ -30,6 +32,8 @@ func _physics_process(delta: float) -> void:
 			&"Unknown level: " + to_level + &". Add it to Level Paths dictionary in root Map."
 		)
 		return
+	
+	player_entered_level.emit()
 	
 	var music = Audio._music_channels[1] if 1 in Audio._music_channels else null
 	if music: Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
