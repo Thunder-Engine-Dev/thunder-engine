@@ -11,8 +11,12 @@ func accept_transition(trans: Transition) -> void:
 	GlobalViewport.container.add_child(trans)
 	current_transition = trans
 	
-	trans.start.connect(func(): transition_start.emit())
-	trans.middle.connect(func(): transition_middle.emit())
+	trans.start.connect(func():
+		transition_start.emit()
+	)
+	trans.middle.connect(func():
+		transition_middle.emit()
+	)
 	trans.end.connect(func():
 		transition_end.emit()
 		trans.queue_free()

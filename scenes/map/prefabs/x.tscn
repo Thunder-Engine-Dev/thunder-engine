@@ -1,18 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5j7avvs6gxbp"]
 
-[ext_resource type="Texture2D" uid="uid://emk1sl077o4j" path="res://engine/scenes/map/textures/x.png" id="1_y1ote"]
-
-[sub_resource type="GDScript" id="GDScript_tmv4u"]
-script/source = "extends Sprite2D
-
-@onready var posY = position.y
-var timer: float = 0
-
-func _physics_process(delta):
-	position.y = posY + sin(timer) * 1.5
-	timer += 0.25 * Thunder.get_delta(delta)
-"
+[ext_resource type="Texture2D" uid="uid://c667qxsfpodt2" path="res://engine/scenes/map/textures/x.png" id="1_y1ote"]
+[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_x_marker.gd" id="2_s5auh"]
 
 [node name="X" type="Sprite2D"]
 texture = ExtResource("1_y1ote")
-script = SubResource("GDScript_tmv4u")
+script = ExtResource("2_s5auh")

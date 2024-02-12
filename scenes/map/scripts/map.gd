@@ -15,6 +15,7 @@ var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/
 var to_level: String
 var is_fading: bool
 
+
 func get_first_marker_space() -> MarkerSpace:
 	var children = get_children()
 	for child in children:
@@ -22,6 +23,7 @@ func get_first_marker_space() -> MarkerSpace:
 			return child
 	
 	return null
+
 
 func _physics_process(delta: float) -> void:
 	if !to_level: return

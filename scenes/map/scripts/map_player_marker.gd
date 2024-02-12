@@ -48,7 +48,10 @@ func is_level() -> bool:
 	return !_level.is_empty()
 
 func is_level_completed() -> bool:
-	return ProfileManager.current_profile.data.has(&"completed_levels") && ProfileManager.current_profile.data[&"completed_levels"].has(level)
+	return (
+		ProfileManager.current_profile.data.has(&"completed_levels") &&
+		ProfileManager.current_profile.data[&"completed_levels"].has(level)
+	)
 
 func set_level_path(value: StringName) -> void:
 	changed.emit()

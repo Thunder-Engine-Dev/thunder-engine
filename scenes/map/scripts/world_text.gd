@@ -22,7 +22,6 @@ func _physics_process(delta: float) -> void:
 	speed += 0.4 * delta
 	
 	if global_position.y >= marker_pos.y - texture.get_height() / 2.0 && speed > 0:
-		#position.y -= speed * delta
 		speed *= -1
 		if speed < -3:
 			speed /= 2

@@ -78,7 +78,7 @@ func animate() -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	var par = area.get_parent()
-	if par.is_in_group(&"map_marker"):
+	if par.is_in_group(&"map_dot"):
 		par.set_meta(&"is_appearing", true)
 		if fast_forwarding:
 			par.visible = true
