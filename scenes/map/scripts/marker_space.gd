@@ -164,6 +164,14 @@ func get_last_marker() -> MapPlayerMarker:
 	
 	return null
 
+func get_next_marker_id() -> int:
+	var i: int = 0
+	for child in get_children():
+		if !child.is_in_group("map_marker"): continue
+		if child.is_level() && child.is_level_completed():
+			i += 1
+	return i
+
 func item_changed() -> void:
 	if !Engine.is_editor_hint(): return
 	queue_redraw()

@@ -31,6 +31,9 @@ func _ready() -> void:
 		player.current_marker = get_next_marker()
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()
+		Scenes.current_scene.next_level_ready.emit(
+			marker_space.get_next_marker_id()
+		)
 
 
 func get_next_marker() -> MapPlayerMarker:

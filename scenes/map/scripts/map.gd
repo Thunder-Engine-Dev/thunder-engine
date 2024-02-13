@@ -1,5 +1,6 @@
 class_name Map2D extends Node2D
 
+signal next_level_ready(index: int) ## Emitted with the next level index on ready
 signal player_entered_level ## Emitted when the player enters a level.
 
 @export
