@@ -37,6 +37,8 @@ func _physics_process(delta: float) -> void:
 	if circle >= 0:
 		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
 	
+	color_rect.material.set_shader_parameter("circle_size", circle)
+	
 	if circle == 0 && !middle_switch:
 		middle_switch = true
 		speed_closing = speed_opening
@@ -45,4 +47,3 @@ func _physics_process(delta: float) -> void:
 	if middle_switch && circle > 2:
 		end.emit()
 	
-	color_rect.material.set_shader_parameter("circle_size", circle)

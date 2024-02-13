@@ -27,7 +27,9 @@ func _ready() -> void:
 	
 	player.play(&"walk")
 	
-	initial_pos()
+	await get_tree().physics_frame
+	if !current_marker:
+		initial_pos.call_deferred()
 
 
 func initial_pos() -> void:
@@ -83,7 +85,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if fast_forwarding:
 			par.visible = true
 		else:
-			get_tree().create_timer(0.01 * speed / ex, false).timeout.connect(func():
+			get_tree().create_timer(0.3 / ex, false).timeout.connect(func():
+				if !is_instance_valid(par): return
 				par.visible = true
 				par.set_meta(&"is_appearing", false)
 			)

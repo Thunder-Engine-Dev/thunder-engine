@@ -61,6 +61,7 @@ enum WarpDir {
 @export_group("Death", "death_")
 @export var death_sprite: Node2D
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
+@export var death_music_override: AudioStream
 
 var _physics_behavior: ByNodeScript
 var _suit_behavior: ByNodeScript
@@ -127,6 +128,8 @@ func _ready() -> void:
 var _starman_faded: bool
 
 func _physics_process(delta: float) -> void:
+	if !Thunder._current_player_state:
+		Thunder._current_player_state = suit
 	if is_starman && (
 		timer_starman.time_left > 0.0 &&
 		timer_starman.time_left < 1.5 &&
@@ -194,7 +197,11 @@ func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
 	
 	Audio.stop_all_musics()
-	Audio.play_music(suit.sound_death, 1, {pitch = suit.sound_pitch})
+	Audio.play_music(
+		suit.sound_death if !death_music_override else death_music_override,
+		1,
+		{pitch = suit.sound_pitch}
+	)
 	
 	if death_body:
 		NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(

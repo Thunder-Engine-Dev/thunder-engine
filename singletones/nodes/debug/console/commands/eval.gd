@@ -9,7 +9,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 		msg += w + ' '
 	
 	var expression = Expression.new()
-	var error = expression.parse(msg)
+	var error = expression.parse(msg, [])
 	
 	if error != OK:
 		return Command.ExecuteResult.new("[color=red]Failed to parse the snippet[/color]\n%s" % expression.get_error_text())

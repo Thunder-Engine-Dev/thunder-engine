@@ -13,6 +13,8 @@ var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
 
 var _dot_draw: bool = false
 
+var _dots_drawn: bool = false
+
 var _next_space: MarkerSpace
 
 var dots: Array
@@ -31,7 +33,7 @@ func _ready() -> void:
 	child_exiting_tree.connect(_child_exited)
 	
 	# When seted to true '_notification' function will recive NOTIFICATION_TRANSFORM_CHANGED in message a.k.a "what"
-	if !Engine.is_editor_hint():
+	if Engine.is_editor_hint():
 		set_notify_transform(true)
 	
 	# Connects all childs position chainging for redrawing in editor lines
@@ -54,12 +56,14 @@ func _notification(what: int) -> void:
 		changed.emit()
 
 func _child_enter(child: Node) -> void:
+	if !Engine.is_editor_hint(): return
 	if child.is_in_group("map_marker"):
 		if !child.changed.is_connected(item_changed):
 			child.changed.connect(item_changed)
 	queue_redraw()
 
 func _child_exited(child: Node) -> void:
+	if !Engine.is_editor_hint(): return
 	if child.is_in_group("map_marker"):
 		queue_redraw()
 
@@ -67,6 +71,7 @@ func _enter_tree() -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	if _dots_drawn: return
 	# Current child
 	var child: Node2D
 	
@@ -120,6 +125,8 @@ func _draw() -> void:
 				draw_texture(dot_texture,(dot - dot_texture.get_size()/2) - global_position)
 			else:
 				make_dot(dot)
+		if !Engine.is_editor_hint():
+			_dots_drawn = true
 	
 	changed.emit()
 
@@ -131,7 +138,7 @@ func if_level_make_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
 		var m = map.get_node(map.player).x.instantiate()
 		m.global_position = mark.global_position
-		m.visible = false
+		m.visible = mark.is_level_completed()
 		map.add_child.call_deferred(m)
 
 func make_dot(pos: Vector2) -> void:
@@ -158,6 +165,7 @@ func get_last_marker() -> MapPlayerMarker:
 	return null
 
 func item_changed() -> void:
+	if !Engine.is_editor_hint(): return
 	queue_redraw()
 
 func build_dots() -> void:

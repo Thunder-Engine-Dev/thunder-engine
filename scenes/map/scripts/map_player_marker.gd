@@ -28,8 +28,9 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 	if is_level_completed():
-		player.current_marker = self
+		player.current_marker = get_next_marker()
 		player.global_position = global_position
+		player.camera.reset_smoothing.call_deferred()
 
 
 func get_next_marker() -> MapPlayerMarker:

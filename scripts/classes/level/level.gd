@@ -118,6 +118,7 @@ func _physics_process(delta: float) -> void:
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
+	if !Thunder._current_player: return
 	level_completed.emit()
 	
 	Thunder._current_hud.timer.paused = true
@@ -133,7 +134,6 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	await get_tree().process_frame
 	await Audio._music_channels[-1].finished
-	if !Thunder._current_player: return
 	
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
@@ -146,5 +146,6 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	)
 	
 	ProfileManager.current_profile.complete_level(scene_file_path)
+	ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()

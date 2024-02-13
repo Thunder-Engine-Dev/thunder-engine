@@ -17,6 +17,8 @@ signal pre_scene_changed
 ## Emitted when the current scene is ready
 signal scene_ready
 
+const LOADING_SCREEN = preload("res://engine/components/loading_screen/loading_screen.tscn")
+
 # Loaded scene buffer for optimization purpose
 var _current_scene_buffer: PackedScene
 ## Current scene
@@ -41,7 +43,7 @@ func load_scene_deferred(scene: Node) -> void:
 	current_scene.free()
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
-	scene_changed.emit()
+	scene_changed.emit(current_scene)
 	scene_ready.emit()
 
 
@@ -68,6 +70,16 @@ func goto_scene(path: String) -> void:
 	if !_current_scene_buffer || _current_scene_buffer.resource_path != path:
 		_current_scene_buffer = load(path)
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
+
+
+func goto_scene_with_loading(path: String) -> void:
+	if _current_scene_buffer && _current_scene_buffer.resource_path == path:
+		reload_current_scene()
+		return
+	pre_scene_changed.emit()
+	var loading: Control = LOADING_SCREEN.instantiate()
+	loading.scene = path
+	load_scene_deferred.call_deferred(loading)
 
 
 ## Reload current scene
