@@ -1,11 +1,11 @@
 @tool
 class_name MapPlayerMarker extends Marker2D
 
-@export
-var level: StringName : set = set_level_path, get = get_level_path
+@export_file("*.tscn", "*.scn") var level: String: 
+	set = set_level_path, get = get_level_path
 
-## DO NOT USE OUTSIDE THIS SCRIPT
-var _level: StringName
+# DO NOT USE OUTSIDE THIS SCRIPT
+var _level: String
 
 var shape: CollisionShape2D
 
@@ -57,9 +57,10 @@ func is_level_completed() -> bool:
 		ProfileManager.current_profile.data[&"completed_levels"].has(level)
 	)
 
-func set_level_path(value: StringName) -> void:
+func set_level_path(value: String) -> void:
 	changed.emit()
 	_level = value
+	level = value
 
-func get_level_path() -> StringName:
+func get_level_path() -> String:
 	return _level

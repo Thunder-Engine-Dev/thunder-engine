@@ -11,6 +11,7 @@ extends Area2D
 
 @onready var text = $Text
 @onready var animation_player = $AnimationPlayer
+@onready var animation_text_flying: AnimationPlayer = $TextFlying/AnimationTextFlying
 
 @onready var alpha: float = text.modulate.a
 
@@ -19,7 +20,7 @@ func _ready() -> void:
 	if Data.values.checkpoint == id:
 		Thunder._current_player.global_position = global_position + Vector2.UP.rotated(global_rotation) * 16
 		text.modulate.a = 1
-		animation_player.play("checkpoint")
+		animation_player.play(&"checkpoint")
 
 
 func _physics_process(delta) -> void:
@@ -33,17 +34,18 @@ func _physics_process(delta) -> void:
 		activate()
 	# Deactivation
 	if Data.values.checkpoint != id && animation_player.current_animation == "checkpoint":
-		animation_player.play("RESET")
+		animation_player.play(&"RESET")
 		var tween = create_tween()
-		tween.tween_property(text, "modulate:a", alpha, 0.2)
+		tween.tween_property(text, ^"modulate:a", alpha, 0.2)
 
 
 func activate() -> void:
 	Audio.play_1d_sound(sound, false)
 	
 	var tween = create_tween()
-	tween.tween_property(text, "modulate:a", 1.0, 0.2)
-	animation_player.play("checkpoint")
+	tween.tween_property(text, ^"modulate:a", 1.0, 0.2)
+	animation_player.play(&"checkpoint")
+	animation_text_flying.play(&"triggered")
 	
 	get_tree().create_timer(0.5, false, true).timeout.connect(func() -> void:
 		Audio.play_1d_sound(voice_lines[randi_range(0, len(voice_lines) - 1)])

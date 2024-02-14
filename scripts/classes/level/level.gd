@@ -18,7 +18,7 @@ signal level_completed
 ## Level completion music
 @export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
 ## Jump to scene after level completion sequence
-@export var jump_to_scene: String
+@export_file("*.tscn", "*.scn") var jump_to_scene: String
 
 @export_group("Player's Falling Below", "falling_below_")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]

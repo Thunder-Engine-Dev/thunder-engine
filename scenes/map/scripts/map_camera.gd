@@ -1,7 +1,19 @@
 extends Camera2D
 
-@onready var player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 @export var speed: float = 250
+
+@onready var player = Scenes.current_scene.get_node(Scenes.current_scene.player)
+
+func _ready() -> void:
+	var map := Scenes.current_scene as Map2D
+	if !map:
+		return
+	
+	map.player_entered_level.connect(
+		func() -> void:
+			var tw: Tween = create_tween().set_trans(Tween.TRANS_SINE)
+			tw.tween_property(self, ^"position", Vector2.ZERO, 0.25)
+	)
 
 
 func _physics_process(delta: float) -> void:

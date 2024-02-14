@@ -1,8 +1,174 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddwxc43m3q1c6"]
+[gd_scene load_steps=18 format=3 uid="uid://ddwxc43m3q1c6"]
 
 [ext_resource type="Script" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
+[ext_resource type="Texture2D" uid="uid://dh17t2mup6ebl" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bp6fk"]
+
+[sub_resource type="Curve" id="Curve_tpfwp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_btes4"]
+curve = SubResource("Curve_tpfwp")
+
+[sub_resource type="Curve" id="Curve_hm1ix"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
+curve = SubResource("Curve_hm1ix")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_opcst"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 16.0
+angle_min = -180.0
+angle_max = 180.0
+radial_velocity_min = 10.0
+radial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_ro0d7")
+color = Color(1, 0.843137, 0.792157, 1)
+alpha_curve = SubResource("CurveTexture_btes4")
+
+[sub_resource type="Animation" id="Animation_4yr7j"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -86)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_2cdhs"]
+resource_name = "triggered"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -84), Vector2(0, -160)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.5, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dmaa8"]
+_data = {
+"RESET": SubResource("Animation_4yr7j"),
+"triggered": SubResource("Animation_2cdhs")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ta5g1"]
 size = Vector2(90, 111)
@@ -55,6 +221,26 @@ texture = ExtResource("1_uqans")
 modulate = Color(1, 1, 1, 0.188235)
 position = Vector2(0, -85)
 texture = ExtResource("2_13hdd")
+
+[node name="TextFlying" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_bp6fk")
+position = Vector2(0, -86)
+texture = ExtResource("2_13hdd")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="TextFlying"]
+show_behind_parent = true
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_opcst")
+texture = ExtResource("4_wmifw")
+lifetime = 0.5
+
+[node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying"]
+libraries = {
+"": SubResource("AnimationLibrary_dmaa8")
+}
+autoplay = "RESET"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
