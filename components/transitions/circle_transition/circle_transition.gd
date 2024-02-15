@@ -21,7 +21,7 @@ func _ready() -> void:
 ## Sets the center of transition on some node
 func on(ref: Node2D) -> Transition:
 	if !ref: return self
-	color_rect.material.set_shader_parameter("center", Thunder.view.get_pos_ratio_in_screen(ref))
+	color_rect.material.set_shader_parameter(&"center", Thunder.view.get_pos_ratio_in_screen(ref))
 	return self
 
 ## Sets the speeds

@@ -207,7 +207,7 @@ class View:
 	## Easier way to get position ratio, relative to the screen, of node2d
 	func get_pos_ratio_in_screen(node2d: Node2D) -> Vector2:
 		if !node2d: return Vector2.ZERO
-		var pos: Vector2 = get_pos_in_screen(node2d)
+		var pos: Vector2 = node2d.get_global_transform_with_canvas().get_origin()
 		var size: Vector2 = node2d.get_viewport_rect().size
 		return pos / size
 

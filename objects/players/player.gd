@@ -112,6 +112,19 @@ var _suit_appear: bool
 
 
 func _ready() -> void:
+	# Transition center at the beginning of the level
+	Scenes.scene_ready.connect(func():
+		var cam := Thunder._current_camera
+		if cam:
+			cam.force_update_scroll()
+		
+		for i in 2: # Deferred 2 process frames to ensure the transition works after the player touches checkpoint
+			await get_tree().process_frame
+		
+		TransitionManager.current_transition.on(self)
+		TransitionManager.current_transition.paused = false
+	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = suit
 	else:
