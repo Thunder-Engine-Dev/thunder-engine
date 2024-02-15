@@ -15,6 +15,12 @@ var to_level: String
 var is_fading: bool
 
 
+func _ready() -> void:
+	Data.values.checkpoint = -1
+	Data.values.checked_cps = []
+	Data.values.onetime_blocks = true
+
+
 func get_first_marker_space() -> MarkerSpace:
 	var children = get_children()
 	for child in children:
