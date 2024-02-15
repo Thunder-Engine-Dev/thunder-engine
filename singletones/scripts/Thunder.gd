@@ -183,33 +183,43 @@ class View:
 	
 	## crutch
 	func is_getting_closer(canvas_item: CanvasItem, margin: float) -> bool:
-		var pos: Vector2 = canvas_item.get_global_transform_with_canvas().get_origin()
-		var rect: Rect2 = canvas_item.get_viewport_rect()
+		var pos := canvas_item.get_global_transform_with_canvas().get_origin()
+		var rect := canvas_item.get_viewport_rect()
+		
 		return rect.grow(margin).has_point(pos)
 	
 	
 	## Used for scripts with @tool to limit its process functions running out of screen
 	static func shows_tool(tool: Node2D) -> bool:
-		var viewport: Transform2D = tool.get_viewport_transform()
-		var size: Vector2 = tool.get_viewport_rect().size
-		var vscale: Vector2 = viewport.get_scale()
-		var pos: Vector2 = -viewport.get_origin() / vscale
+		var viewport := tool.get_viewport_transform()
+		var size := tool.get_viewport_rect().size
+		var vscale := viewport.get_scale()
+		var pos := -viewport.get_origin() / vscale
+		
 		return Rect2(pos, size / vscale).has_point(tool.global_position)
 	
 	
 	## Easier way to get position, relative to the screen, of node2d
 	func get_pos_in_screen(node2d: Node2D) -> Vector2:
-		if !node2d: return Vector2.ZERO
-		var _trans: Transform2D = node2d.get_viewport_transform()
-		return _trans * node2d.global_position
+		if !node2d: 
+			return Vector2.ZERO
+		
+		return node2d.get_global_transform_with_canvas().get_origin()
 	
 	
 	## Easier way to get position ratio, relative to the screen, of node2d
 	func get_pos_ratio_in_screen(node2d: Node2D) -> Vector2:
-		if !node2d: return Vector2.ZERO
-		var pos: Vector2 = node2d.get_global_transform_with_canvas().get_origin()
-		var size: Vector2 = node2d.get_viewport_rect().size
+		if !node2d: 
+			return Vector2.ZERO
+		
+		var pos := node2d.get_global_transform_with_canvas().get_origin()
+		var size := node2d.get_viewport_rect().size
+		
 		return pos / size
+	
+	## Easier way to get position ratio, relative to the screen, of [param global_position]. A [param vp_transform] and a [param vp_size] should be provided.
+	func get_pos_ratio_in_screen_by_pos(vp_trans: Transform2D, vp_size: Vector2, global_position: Vector2) -> Vector2:
+		return (vp_trans * global_position) / vp_size
 
 
 

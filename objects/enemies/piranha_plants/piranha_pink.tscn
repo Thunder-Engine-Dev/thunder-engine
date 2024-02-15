@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene load_steps=22 format=3 uid="uid://oja3uy1y4hpl"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="3_l5y0h"]
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_t6vqd"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_85764"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_pik1k"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
@@ -25,6 +27,23 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_hukh6"]
+script = ExtResource("2_m1eaf")
+creation_nodepack = ExtResource("7_t6vqd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Head"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_pik1k")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wvqc"]
 atlas = ExtResource("2_7expw")
@@ -112,9 +131,10 @@ killing_immune = {
 "shell_forced": false,
 "starman": false
 }
+killing_creation = SubResource("Resource_hukh6")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_85764")
-metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune"]
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation"]
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = -2
@@ -148,3 +168,4 @@ range_layer_min = -100
 texture = SubResource("GradientTexture2D_g3ldy")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]

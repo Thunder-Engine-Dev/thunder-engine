@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://3lhn1v4tm4e3"]
+[gd_scene load_steps=12 format=3 uid="uid://3lhn1v4tm4e3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i4f1f"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="4_yq3n0"]
-[ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://engine/tilesets/placeholder/placeholder_tileset.tres" id="5_mbpi7"]
+[ext_resource type="TileSet" uid="uid://rvb7tmwo31fd" path="res://tilesets/levelcs.tres" id="5_mbpi7"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_titgq"]
+[ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="7_p0nj6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
+[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="8_s5hxa"]
+[ext_resource type="PackedScene" uid="uid://da0fmncf7ksxc" path="res://engine/objects/enemies/piranha_plants/piranha_ice.tscn" id="9_1343o"]
+[ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="10_sl285"]
+[ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="11_edn1f"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_rohf5")
@@ -13,7 +18,7 @@ script = ExtResource("1_rohf5")
 [node name="MusicLoader" parent="." instance=ExtResource("2_i4f1f")]
 
 [node name="Mario" parent="." instance=ExtResource("4_yq3n0")]
-position = Vector2(80, 400)
+position = Vector2(144, 400)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -24,6 +29,21 @@ script = ExtResource("6_titgq")
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("5_mbpi7")
 format = 2
-layer_0/tile_data = PackedInt32Array(851970, 2, 0, 131073, 2, 0, 196609, 2, 0, 262145, 2, 0, 327681, 2, 0, 393217, 2, 0, 458753, 2, 0, 524289, 2, 0, 589825, 2, 0, 655361, 2, 0, 720897, 2, 0, 786433, 2, 0, 851969, 2, 0, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851978, 2, 0, 851979, 2, 0, 851980, 2, 0, 851981, 2, 0, 851982, 2, 0, 851983, 2, 0, 851984, 2, 0, 851985, 2, 0, 786449, 2, 0, 196625, 2, 0, 262161, 2, 0, 327697, 2, 0, 393233, 2, 0, 458769, 2, 0, 524305, 2, 0, 589841, 2, 0, 655377, 2, 0, 720913, 2, 0, 131089, 2, 0)
+layer_0/tile_data = PackedInt32Array(851970, 2, 0, 131073, 2, 0, 196609, 2, 0, 262145, 2, 0, 327681, 2, 0, 393217, 2, 0, 458753, 2, 0, 524289, 2, 0, 589825, 2, 0, 655361, 2, 0, 720897, 2, 0, 786433, 2, 0, 851969, 2, 0, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851979, 2, 0, 851980, 2, 0, 851981, 2, 0, 851982, 2, 0, 851983, 2, 0, 851984, 2, 0, 851985, 2, 0, 851986, 2, 0, 851987, 2, 0, 851988, 2, 0, 851989, 2, 0, 851990, 2, 0, 851991, 2, 0, 851992, 2, 0, 851993, 2, 0, 851994, 2, 0, 851995, 2, 0, 851996, 2, 0, 851998, 2, 0, 851999, 2, 0, 852000, 2, 0, 852001, 2, 0, 852002, 2, 0, 852003, 2, 0, 852004, 2, 0, 852005, 2, 0, 852006, 2, 0, 852007, 2, 0, 852008, 2, 0, 852009, 2, 0, 852010, 2, 0, 852011, 2, 0, 852012, 2, 0, 852013, 2, 0, 852014, 2, 0, 852015, 2, 0, 852016, 2, 0, 852017, 2, 0, 852018, 2, 0, 852019, 2, 0, 852020, 2, 0, 852021, 2, 0, 852022, 2, 0, 852023, 2, 0, 851978, 2, 0, 851997, 2, 0, 786487, 2, 0, 720951, 2, 0, 655415, 2, 0, 589879, 2, 0, 524343, 2, 0, 458807, 2, 0, 393271, 2, 0, 327735, 2, 0, 262199, 2, 0, 196663, 2, 0, 131127, 2, 0, 65591, 2, 0, 55, 2, 0, 1, 2, 0, 65537, 2, 0)
 
 [node name="HUD" parent="." instance=ExtResource("8_b1hjx")]
+
+[node name="KoopaShellGreen" parent="." instance=ExtResource("7_p0nj6")]
+position = Vector2(272, 400)
+
+[node name="PiranhaHead" parent="." instance=ExtResource("8_s5hxa")]
+position = Vector2(400, 400)
+
+[node name="PiranhaIce" parent="." instance=ExtResource("9_1343o")]
+position = Vector2(592, 416)
+
+[node name="PiranhaGreen" parent="." instance=ExtResource("10_sl285")]
+position = Vector2(464, 416)
+
+[node name="PiranhaPink" parent="." instance=ExtResource("11_edn1f")]
+position = Vector2(528, 416)

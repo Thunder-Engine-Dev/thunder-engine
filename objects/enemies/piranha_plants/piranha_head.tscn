@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dt52xvrtre8h3"]
+[gd_scene load_steps=16 format=3 uid="uid://dt52xvrtre8h3"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
-[ext_resource type="PackedScene" uid="uid://ces7bytc0ugus" path="res://engine/objects/effects/explosion/explosion.tscn" id="4_xyb0r"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_pqqwo"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_kcsna"]
 
@@ -49,18 +50,22 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3w104"]
 size = Vector2(30, 30)
 
-[sub_resource type="Resource" id="Resource_nl0eg"]
+[sub_resource type="Resource" id="Resource_l87kq"]
 script = ExtResource("5_vl2am")
-creation_nodepack = ExtResource("4_xyb0r")
+creation_nodepack = ExtResource("4_pqqwo")
 trans_offset = Vector2(0, 0)
-trans_inheritances = 0
+trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
-visi_z_index = 0
+visi_z_index = 1
 visi_z_as_relative = true
 visi_y_sort_enabled = false
-custom_vars = {}
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_pl4g3")
 
 [node name="PiranhaHead" type="Node2D"]
 script = ExtResource("1_x0p8k")
@@ -92,12 +97,12 @@ killing_immune = {
 "hammer": false,
 "head": false,
 "iceball": false,
-"shell": true,
+"shell": false,
 "shell_defence": 0,
 "shell_forced": false,
 "starman": true
 }
-killing_creation = SubResource("Resource_nl0eg")
+killing_creation = SubResource("Resource_l87kq")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_kcsna")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
@@ -109,3 +114,4 @@ scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="AnimatedSprite2D" method="stop"]

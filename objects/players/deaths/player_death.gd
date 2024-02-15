@@ -3,16 +3,22 @@ extends GravityBody2D
 var circle_closing_speed: float = 0.05
 var circle_opening_speed: float = 0.1
 
+var death_spot: Vector2
 var movement: bool
 
 @onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 
 
 func _ready() -> void:
+	death_spot = global_position
+	
 	await get_tree().create_timer(0.5, false, true).timeout
+	
 	movement = true
 	vel_set_y(-550)
+	
 	await get_tree().create_timer(3.5, false, true).timeout
+	
 	# After death
 	if Data.values.lives == 0:
 		if is_instance_valid(Thunder._current_hud):
@@ -23,22 +29,25 @@ func _ready() -> void:
 	Data.values.lives -= 1
 	Data.values.onetime_blocks = false
 	
+	# Transition
 	TransitionManager.accept_transition(
 	load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 		.instantiate()
 		.with_speeds(circle_closing_speed, -circle_opening_speed)
 	)
-	var cam: Camera2D = Thunder._current_camera
-	var marker: Marker2D
-	if cam:
-		var cam_pos = cam.get_screen_center_position()
-		marker = Marker2D.new()
-		marker.position = Vector2(
-			global_position.x,
-			clamp(global_position.x, cam_pos.y - 248, cam_pos.y + 248)
-		)
-		Scenes.current_scene.add_child(marker)
-	TransitionManager.current_transition.on(marker)
+	
+	#var cam: Camera2D = Thunder._current_camera
+	#var marker: Marker2D
+	#if cam:
+		#var cam_pos = cam.get_screen_center_position()
+		#marker = Marker2D.new()
+		#marker.position = Vector2(
+			#global_position.x,
+			#clamp(global_position.x, cam_pos.y - 248, cam_pos.y + 248)
+		#)
+		#Scenes.current_scene.add_child(marker)
+	
+	TransitionManager.current_transition.on(death_spot) # Supports a Node2D or a Vector2
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
 		Scenes.reload_current_scene.call_deferred()

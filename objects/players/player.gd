@@ -118,11 +118,13 @@ func _ready() -> void:
 		if cam:
 			cam.force_update_scroll()
 		
-		for i in 2: # Deferred 2 process frames to ensure the transition works after the player touches checkpoint
+		for i in 2: # Deferred 2 frames to ensure the transition works after the player touches checkpoint
 			await get_tree().process_frame
 		
-		TransitionManager.current_transition.on(self)
-		TransitionManager.current_transition.paused = false
+		var trans := TransitionManager.current_transition
+		if is_instance_valid(trans):
+			trans.on(self)
+			trans.paused = false
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	
 	if !Thunder._current_player_state:

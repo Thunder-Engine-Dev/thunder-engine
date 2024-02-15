@@ -22,7 +22,6 @@ func _ready() -> void:
 	
 	death_node.visible = true
 	death_node.set(&"speed_scale", 0)
-	if &"flip_v" in death_node: death_node.flip_v = true
 	if attacker_speed != Vector2.ZERO && node is GravityBody2D:
 		fancy_death_effect()
 	else:
