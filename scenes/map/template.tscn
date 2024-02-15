@@ -1,16 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://cqed2mxnku1t3"]
 
-[ext_resource type="Texture2D" uid="uid://cv4kn5t24nhf" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
+[ext_resource type="Texture2D" uid="uid://ctj206881p21a" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map.gd" id="1_qgvjo"]
 [ext_resource type="PackedScene" uid="uid://w4jc7nb1lcsy" path="res://engine/scenes/map/prefabs/player.tscn" id="2_b6p1j"]
-[ext_resource type="Texture2D" uid="uid://db7m43ukndw44" path="res://engine/scenes/map/textures/mario_icon.png" id="2_eo2rt"]
-[ext_resource type="Texture2D" uid="uid://boetxa3e4ntfm" path="res://engine/scenes/map/textures/press_start.png" id="3_jqf35"]
+[ext_resource type="Texture2D" uid="uid://d0ajiglyk7ra2" path="res://engine/scenes/map/textures/mario_icon.png" id="2_eo2rt"]
+[ext_resource type="Texture2D" uid="uid://cejfkq7jcyj5r" path="res://engine/scenes/map/textures/press_start.png" id="3_jqf35"]
 [ext_resource type="PackedScene" uid="uid://beu6ovtvrvpfc" path="res://engine/scenes/map/prefabs/dot.tscn" id="5_rcbgg"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/marker_space.gd" id="7_5g461"]
 [ext_resource type="Script" path="res://engine/scenes/map/start_text.gd" id="7_qvjo1"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_marker.gd" id="8_ej4v3"]
-[ext_resource type="Texture2D" uid="uid://on3a5rbd5vel" path="res://engine/scenes/map/textures/debug.png" id="8_p16np"]
-[ext_resource type="Texture2D" uid="uid://bkyeefk0ev25m" path="res://engine/scenes/map/textures/x.png" id="9_xmlgv"]
+[ext_resource type="Texture2D" uid="uid://cycdqt5vuavoq" path="res://engine/scenes/map/textures/debug.png" id="8_p16np"]
+[ext_resource type="Texture2D" uid="uid://blgsgahlbcxk8" path="res://engine/scenes/map/textures/x.png" id="9_xmlgv"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_qgvjo")
@@ -56,7 +56,7 @@ texture = ExtResource("2_eo2rt")
 metadata/_edit_lock_ = true
 
 [node name="PressStart" type="Sprite2D" parent="."]
-position = Vector2(320, 448)
+position = Vector2(320, 443)
 texture = ExtResource("3_jqf35")
 script = ExtResource("7_qvjo1")
 
@@ -97,7 +97,7 @@ show_behind_parent = true
 z_as_relative = false
 position = Vector2(328, 176)
 script = ExtResource("8_ej4v3")
-level = &"testlevel"
+level = "testlevel"
 
 [node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
 show_behind_parent = true
@@ -126,7 +126,7 @@ z_as_relative = false
 position = Vector2(576, 320)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
-level = &"testlevel 2"
+level = "testlevel 2"
 
 [node name="MarkerSpace2" type="Node2D" parent="."]
 editor_description = "Use this as World"
