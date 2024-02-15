@@ -13,6 +13,6 @@ func _on_killed(what: Node, result: Dictionary) -> void:
 	special_tags.clear()
 	special_tags.append(
 		&"attacked_from_right" if \
-			global_position > what.owner.global_position else \
+			Thunder.Math.look_at(global_position, what.owner.global_position, global_transform) > 0 else \
 		&"attacked_from_left"
 	)

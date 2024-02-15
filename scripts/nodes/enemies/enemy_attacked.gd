@@ -94,6 +94,8 @@ signal killed_failed
 ## Emitted when the type of enemy attack is marked as "signal"
 signal attack_custom_signal
 
+var _on_killed: bool # To prevent multiple creation by multiple attackers
+
 
 func _ready() -> void:
 	stomped_succeeded.connect(_lss)
@@ -156,7 +158,10 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 	var result: Dictionary
 	
-	if !killing_enabled || !by in killing_immune: return result
+	if !killing_enabled || !by in killing_immune || _on_killed: 
+		return result
+	
+	_on_killed = true
 	
 	if killing_immune[by]:
 		killed_failed.emit()
@@ -190,6 +195,11 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 			result = true,
 			attackee = self
 		}
+	
+	# Reset _on_killed status to allow killing
+	get_tree().physics_frame.connect(func():
+		_on_killed = false
+	, CONNECT_ONE_SHOT)
 	
 	return result
 
