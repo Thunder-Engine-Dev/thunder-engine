@@ -105,6 +105,10 @@ class NodeCreation extends RefCounted:
 		_node.global_scale = _ins2d.trans_scale
 		_node.global_skew = _ins2d.trans_skew
 		
+		_node.z_index = _ins2d.visi_z_index
+		_node.z_as_relative = _ins2d.visi_z_as_relative
+		_node.y_sort_enabled = _ins2d.visi_y_sort_enabled
+		
 		if _ins2d.trans_inheritances & 001 == 001:
 			_node.global_rotation += _on.global_rotation
 		if _ins2d.trans_inheritances & 010 == 010:
