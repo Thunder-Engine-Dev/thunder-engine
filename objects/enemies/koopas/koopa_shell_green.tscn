@@ -124,7 +124,7 @@ collide_with_bodies = false
 script = ExtResource("8_yvu7y")
 killer_type = &"shell"
 killing_detection_scale = 8.0
-special_tags = Array[StringName]([&"shell_attack"])
+special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -137,8 +137,8 @@ position = Vector2(0, 2)
 script = ExtResource("11_vu45w")
 metadata/_edit_lock_ = true
 
-[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]

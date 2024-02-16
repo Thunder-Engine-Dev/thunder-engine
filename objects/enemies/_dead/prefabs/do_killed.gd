@@ -38,7 +38,6 @@ func fancy_death_effect() -> void:
 	node.speed = Vector2(125, -300)
 	dir = sign(attacker_speed.x)
 	node.speed.x *= dir
-	node.gravity_scale *= 2.5
 	if &"rotating_dir" in node:
 		node.rotating_dir = dir
 	

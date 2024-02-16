@@ -162,6 +162,7 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 		return result
 	
 	_on_killed = true
+	var shell_attack := false
 	
 	if killing_immune[by]:
 		killed_failed.emit()
@@ -170,24 +171,18 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 			result = false,
 			attackee = self
 		}
-	elif &"shell_attack" in special_tags:
-		result = {
-			result = true,
-			attackee = self,
-			type = &"shell"
-		}
 	else:
-#		if get_meta(&"attacker_speed") == Vector2.ZERO:
-#			await get_tree().physics_frame
-#			if &"attacked_from_right" in special_tags:
-#				set_meta(&"attacker_speed", Vector2.LEFT)
-#			elif &"attacked_from_left" in special_tags:
-#				set_meta(&"attacker_speed", Vector2.RIGHT)
+		if &"shell_attack" in special_tags:
+			shell_attack = true
+		
 		killed_succeeded.emit()
 		
 		_creation(killing_creation)
 		
-		if killing_scores > 0 && !&"no_score" in special_tags:
+		var no_score: bool = &"no_score" in special_tags
+		print(no_score)
+		print(special_tags)
+		if killing_scores > 0 && !no_score:
 			ScoreText.new(str(killing_scores), _center)
 			Data.values.score += killing_scores
 		
@@ -195,6 +190,8 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 			result = true,
 			attackee = self
 		}
+		if shell_attack:
+			result.type = &"shell"
 	
 	# Reset _on_killed status to allow killing
 	get_tree().physics_frame.connect(func():
