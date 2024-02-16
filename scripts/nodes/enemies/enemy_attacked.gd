@@ -180,8 +180,6 @@ func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
 		_creation(killing_creation)
 		
 		var no_score: bool = &"no_score" in special_tags
-		print(no_score)
-		print(special_tags)
 		if killing_scores > 0 && !no_score:
 			ScoreText.new(str(killing_scores), _center)
 			Data.values.score += killing_scores

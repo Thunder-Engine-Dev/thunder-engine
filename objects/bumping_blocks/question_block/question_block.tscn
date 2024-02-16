@@ -47,6 +47,7 @@ metadata/_edit_lock_ = true
 occluder = SubResource("OccluderPolygon2D_fygbc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+process_mode = 3
 sprite_frames = ExtResource("2_t2orr")
 autoplay = "default"
 
