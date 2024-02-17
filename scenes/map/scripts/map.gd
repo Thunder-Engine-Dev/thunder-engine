@@ -1,5 +1,6 @@
 class_name Map2D extends Node2D
 
+signal player_fast_forwarded
 signal next_level_ready(index: int) ## Emitted with the next level index on ready
 signal player_entered_level ## Emitted when the player enters a level.
 
@@ -38,12 +39,14 @@ func _physics_process(delta: float) -> void:
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
 	
+	is_fading = true
 	player_entered_level.emit()
 	
 	var music = Audio._music_channels[1] if 1 in Audio._music_channels else null
 	if music && is_instance_valid(music):
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 	
+	await get_tree().create_timer(0.4, true).timeout
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
@@ -51,7 +54,6 @@ func _physics_process(delta: float) -> void:
 	)
 	
 	Audio.play_1d_sound(transition_sound)
-	is_fading = true
 	
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()

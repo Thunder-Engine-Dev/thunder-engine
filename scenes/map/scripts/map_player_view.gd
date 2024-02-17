@@ -51,6 +51,7 @@ func _physics_process(delta: float) -> void:
 	if reached: return
 	if Input.is_action_just_pressed(&"m_jump") || Input.is_action_just_pressed(&"m_attack"):
 		is_faster = true
+		map.player_fast_forwarded.emit()
 
 
 func move(delta: float) -> void:
