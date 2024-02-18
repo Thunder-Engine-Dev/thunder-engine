@@ -69,6 +69,7 @@ func _on_duration_timeout() -> void:
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
 	Audio.stop_music_channel(98, false)
+	if !is_instance_valid(player): return
 	if player.died.is_connected(_stop_music):
 		player.died.disconnect(_stop_music)
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")

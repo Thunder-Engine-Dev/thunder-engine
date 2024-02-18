@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
-[ext_resource type="Texture2D" uid="uid://bp2bbro65f0ug" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
+[ext_resource type="Texture2D" uid="uid://8rcid1w278qb" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bp6fk"]
 
