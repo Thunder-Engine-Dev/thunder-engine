@@ -212,6 +212,7 @@ func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float,
 
 ## Stop a channel from playing
 func stop_music_channel(channel_id: int, fade: bool) -> void:
+	if !channel_id in _music_channels: return
 	if !_music_channels[channel_id]: return
 	if !fade:
 		_music_channels[channel_id].stop()
@@ -233,6 +234,8 @@ func stop_all_musics(fade: bool = false) -> void:
 				var openmpt = _music_channels[i].get_meta("openmpt")
 				if is_instance_valid(openmpt):
 					openmpt.queue_free()
+			if &"OpenMPT" in _music_channels[i].name:
+				i.queue_free()
 			
 			_music_channels[i].free()
 			_music_channels.erase(i)
@@ -247,6 +250,8 @@ func _stop_all_musics_scene_changed() -> void:
 			var openmpt = _music_channels[i].get_meta("openmpt")
 			if is_instance_valid(openmpt):
 				openmpt.queue_free()
+		if &"OpenMPT" in _music_channels[i].name:
+			i.queue_free()
 		
 		_music_channels[i].free()
 		_music_channels.erase(i)

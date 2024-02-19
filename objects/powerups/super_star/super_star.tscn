@@ -75,3 +75,5 @@ autoplay = "default"
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("3_o2iew")
 metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]

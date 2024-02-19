@@ -55,6 +55,7 @@ func _on_activator_body_entered(body: Node2D):
 		mus_loader.play_immediately = false
 		mus_loader.pause_music()
 		player = body
+		if !is_instance_valid(player): return
 		if !player.died.is_connected(_stop_music):
 			player.died.connect(_stop_music, CONNECT_ONE_SHOT)
 		activated.emit()
@@ -63,6 +64,8 @@ func _on_activator_body_entered(body: Node2D):
 
 
 func _on_duration_timeout() -> void:
+	if sprite.animation == &"default":
+		return
 	collision_shape.set_deferred(&"disabled", false)
 	collision_shape_stomped.set_deferred(&"disabled", true)
 	timed_out.emit()
@@ -81,7 +84,6 @@ func _on_duration_timeout() -> void:
 		mus_loader.play_immediately = true
 		mus_loader.play_buffered()
 		print("Played buffered")
-	#queue_free()
 
 
 func _stop_music() -> void:

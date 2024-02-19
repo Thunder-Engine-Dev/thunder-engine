@@ -4,7 +4,6 @@ var player: Player
 var suit: PlayerSuit
 var config: PlayerConfig
 
-
 func _ready() -> void:
 	player = node as Player
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
@@ -91,7 +90,7 @@ func _movement_y(delta: float) -> void:
 	
 	# Swimming
 	if player.is_underwater:
-		if player.jumped:
+		if player.jumped && player.up_down != 1:
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
 			player.swam.emit()
 			Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
@@ -99,7 +98,7 @@ func _movement_y(delta: float) -> void:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
-		if player.is_on_floor():
+		if player.is_on_floor() && player.up_down != 1:
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()
 				player._has_jumped = true
@@ -121,7 +120,7 @@ func _movement_climbing(delta: float) -> void:
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta
 	
 	# Jump from climbing
-	if player.jumping > 0 && !player._has_jumped:
+	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:
 		player._has_jumped = true
 		player.is_climbing = false
 		player.direction = player.left_right
@@ -167,10 +166,12 @@ func _start_sliding_movement() -> void:
 	player.attack.enabled = true
 	var floor_norm = rad_to_deg(player.get_floor_normal().x)
 	if floor_norm <= -40.0:
-		player.speed.x = 1
+		if player.speed.x > 0:
+			player.speed.x = 1
 		player.direction = -1
 	if floor_norm >= 40.0:
-		player.speed.x = -1
+		if player.speed.x < 0:
+			player.speed.x = -1
 		player.direction = 1
 	player.is_sliding = true
 
@@ -223,7 +224,7 @@ func _body_process() -> void:
 		var collider: Node2D = player.body.get_collider(i) as Node2D
 		if !is_instance_valid(collider):
 			continue
-		if !collider.has_node("EnemyAttacked"): return
+		if !collider.has_node("EnemyAttacked"): continue
 		
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
 		var result: Dictionary = enemy_attacked.got_stomped(player, player.velocity.normalized())

@@ -1,7 +1,7 @@
 extends Powerup
 
 @export var starman_duration: float = 10
-@export var starman_music: Resource = preload("res://engine/objects/powerups/super_star/music-starman.ogg")
+@export var starman_music: Resource = preload("res://engine/objects/powerups/super_star/music-starman.it")
 
 var player = Thunder._current_player
 
@@ -13,7 +13,15 @@ func _physics_process(delta: float) -> void:
 		$Sprite.speed_scale = 5
 
 func collect() -> void:
-	super()
+	if appear_distance: return
+	
+	if score > 0:
+		ScoreText.new(str(score), self)
+		Data.values.score += score
+	
+	queue_free()
+	
+	Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch})
 	player.starman(starman_duration)
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if !mus_loader: return

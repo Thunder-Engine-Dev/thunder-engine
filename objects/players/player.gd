@@ -136,6 +136,9 @@ func _ready() -> void:
 	
 	Thunder._current_player = self
 	
+	if !is_starman():
+		sprite.material.set_shader_parameter(&"mixing", false)
+	
 	if Data.values.lives == -1:
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 
@@ -247,8 +250,8 @@ func _on_starman_timeout() -> void:
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if mus_loader:
 		if mus_loader.is_paused:
-			mus_loader.unpause_music()
 			mus_loader.play_immediately = true
+			mus_loader.unpause_music()
 		elif !mus_loader.buffer.is_empty():
 			mus_loader.play_immediately = true
 			mus_loader.play_buffered()
