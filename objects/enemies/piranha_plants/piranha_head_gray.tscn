@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4wmfm3xdu1g0"]
+
+[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_1osc4"]
+[ext_resource type="Texture2D" uid="uid://vbx1vtigtxfk" path="res://engine/objects/enemies/piranha_plants/textures/head_gray.png" id="2_ml3lo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m1fw"]
+atlas = ExtResource("2_ml3lo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e2o5"]
+atlas = ExtResource("2_ml3lo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqxqu"]
+atlas = ExtResource("2_ml3lo")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_schhw"]
+atlas = ExtResource("2_ml3lo")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s8bx5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m1fw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e2o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqxqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_schhw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaHeadGray" instance=ExtResource("1_1osc4")]
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_s8bx5")
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_immune = {
+"beetroot": true,
+"boomerang": true,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": true
+}
