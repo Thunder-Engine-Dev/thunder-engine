@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="2"]
 shader = ExtResource("2_bmeim")
-shader_parameter/size = 0.008
+shader_parameter/size = 0.001
 
 [sub_resource type="Animation" id="5"]
 resource_name = "Fade"
@@ -29,7 +29,7 @@ length = 1.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_param/size")
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {

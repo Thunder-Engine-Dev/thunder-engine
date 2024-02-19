@@ -21,6 +21,10 @@ extends Area2D
 @export var circle_closing_speed: float = 0.1
 @export var circle_opening_speed: float = 0.1
 @export var circle_focus_on_player: bool = true
+@export_group("Blur Transition")
+@export var use_blur_transition: bool = false
+@export var blur_closing_speed: float = 2.2
+@export var blur_opening_speed: float = 2.2
 
 var player: Player
 var player_z_index: int
@@ -127,6 +131,26 @@ func _physics_process(delta: float) -> void:
 				, CONNECT_ONE_SHOT)
 			else:
 				if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+				TransitionManager.current_transition.paused = false
+		elif use_blur_transition:
+			var trans = load(
+				"res://engine/components/transitions/blur_transition/blur_transition.tscn"
+			).instantiate()
+			trans.speed_closing = blur_closing_speed
+			trans.speed_opening = -blur_opening_speed
+			
+			TransitionManager.accept_transition(trans)
+			await TransitionManager.transition_middle
+			TransitionManager.current_transition.paused = true
+			
+			pass_warp()
+			await get_tree().physics_frame
+			
+			if warp_to_scene: 
+				Scenes.scene_changed.connect(func(_current_scene):
+					TransitionManager.current_transition.paused = false
+				, CONNECT_ONE_SHOT)
+			else:
 				TransitionManager.current_transition.paused = false
 		else: pass_warp()
 

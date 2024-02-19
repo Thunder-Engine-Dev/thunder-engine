@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://dt52xvrtre8h3"]
+[gd_scene load_steps=17 format=3 uid="uid://dt52xvrtre8h3"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="3_6cy8f"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_pqqwo"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
@@ -83,6 +84,7 @@ autoplay = "default"
 visible = false
 collision_layer = 2
 collision_mask = 7
+script = ExtResource("3_6cy8f")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
 shape = SubResource("RectangleShape2D_3w104")

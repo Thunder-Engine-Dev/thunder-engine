@@ -98,7 +98,7 @@ collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("5_tgx46")
 killer_type = &"starman"
-killing_detection_scale = 2.0
+killing_detection_scale = 1.0
 special_tags = Array[StringName]([&"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 

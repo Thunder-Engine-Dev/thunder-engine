@@ -39,6 +39,6 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		var collider: Node2D = _collision.get_collider() as Node2D
 		if (
 			collider is StaticBumpingBlock &&
-			collider.has_method(&"bricks_break")
+			collider.has_method(&"got_bumped")
 		):
 			collider.got_bumped(self)
