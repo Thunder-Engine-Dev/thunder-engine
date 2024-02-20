@@ -16,7 +16,7 @@
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("2_cfngx")
 trans_offset = Vector2(0, 0)
-trans_inheritances = 0
+trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0

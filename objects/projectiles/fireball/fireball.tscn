@@ -8,11 +8,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0
 
-[sub_resource type="Gradient" id="Gradient_mmb4h"]
+[sub_resource type="Gradient" id="Gradient_j7rb0"]
 colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xbek7"]
-gradient = SubResource("Gradient_mmb4h")
+gradient = SubResource("Gradient_j7rb0")
 width = 160
 height = 160
 fill = 1

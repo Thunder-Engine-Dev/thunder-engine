@@ -41,7 +41,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Head"),
-"death_speed": Vector2(0, -250)
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
 }
 custom_script = ExtResource("8_25a05")
 

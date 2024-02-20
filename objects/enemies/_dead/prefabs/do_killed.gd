@@ -4,8 +4,14 @@ var dir: int
 var enemy_attacked: Node
 var attacker_speed: Vector2
 
+
 func _ready() -> void:
 	enemy_attacked = vars.enemy_attacked as Node
+	var quality: SettingsManager.QUALITY = SettingsManager.settings.quality
+	if &"fast_death_effect" in vars && vars.fast_death_effect:
+		if quality == SettingsManager.QUALITY.MIN:
+			return
+	
 	if enemy_attacked.has_meta(&"attacker_speed"):
 		attacker_speed = enemy_attacked.get_meta(&"attacker_speed")
 	var death: NodePath = vars.death as NodePath
@@ -35,7 +41,7 @@ func _ready() -> void:
 #		fancy_death_effect()
 
 func fancy_death_effect() -> void:
-	node.speed = Vector2(125, -300)
+	#node.speed = Vector2(125, -300)
 	dir = sign(attacker_speed.x)
 	node.speed.x *= dir
 	if &"rotating_dir" in node:

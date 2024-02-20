@@ -33,6 +33,10 @@ var default_settings = {
 
 var settings = default_settings.duplicate(true)
 
+signal settings_updated
+signal settings_saved
+signal settings_loaded
+
 func _ready() -> void:
 	load_settings()
 
@@ -68,6 +72,7 @@ func save_settings() -> void:
 	file.store_string(data)
 	file.close()
 	
+	settings_saved.emit()
 	print("[Settings Manager] Settings saved!")
 
 ## Loads the settings variable from file
@@ -87,6 +92,7 @@ func load_settings() -> void:
 	settings = dict
 	_check_for_validity()
 	_process_settings()
+	settings_loaded.emit()
 	print("[Settings Manager] Loaded settings from file.")
 
 func _check_for_validity() -> void:
@@ -132,6 +138,9 @@ func _process_settings() -> void:
 		AudioServer.get_bus_index("Sound"),
 		linear_to_db(settings.sound)
 	)
+	
+	settings_updated.emit()
+
 
 var old_scale: float = -1
 func _window_scale_logic() -> void:

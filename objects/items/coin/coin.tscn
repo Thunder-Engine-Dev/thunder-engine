@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8kgbn8f7lvf0"]
+[gd_scene load_steps=14 format=3 uid="uid://b8kgbn8f7lvf0"]
 
 [ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o0ga7"]
+[ext_resource type="PackedScene" uid="uid://ch646rieriyyu" path="res://engine/objects/effects/coin_effect/coin_effect.tscn" id="4_8py2g"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mg6wf"]
+[ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_v73xb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcllp"]
 size = Vector2(20, 28)
@@ -38,6 +42,27 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="GDScript" id="GDScript_twjsq"]
+script/source = "extends ByNodeScript
+
+func _ready():
+	Data.add_coin()
+"
+
+[sub_resource type="Resource" id="Resource_223t5"]
+script = ExtResource("5_mg6wf")
+creation_nodepack = ExtResource("4_8py2g")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = SubResource("GDScript_twjsq")
+
 [node name="Coin" type="Area2D" groups=["coin"]]
 collision_layer = 4
 collision_mask = 5
@@ -56,3 +81,26 @@ autoplay = "default"
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 6.19888e-07)
 scale = Vector2(1, 1.4)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_xcllp")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_o0ga7")
+stomping_enabled = false
+killing_immune = {
+"boomerang": false,
+"head": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false
+}
+killing_creation = SubResource("Resource_223t5")
+killing_sound_succeeded = ExtResource("6_v73xb")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

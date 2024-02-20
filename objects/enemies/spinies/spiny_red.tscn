@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://c58i0gaq0il4o"]
+[gd_scene load_steps=21 format=3 uid="uid://c58i0gaq0il4o"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_ne3q7"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_wxq5y"]
+[ext_resource type="Texture2D" uid="uid://c04n1tivb0f5h" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="8_b2lnc"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_vul36"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_oumu7"]
@@ -30,6 +31,30 @@ custom_vars = {
 }
 custom_script = ExtResource("9_hcfit")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_v57uq"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpycm"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 31, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3w6q8"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 62, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mp26"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 93, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx4ph"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 124, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvse4"]
+atlas = ExtResource("8_b2lnc")
+region = Rect2(0, 155, 31, 31)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nbqoh"]
 atlas = ExtResource("11_achxa")
 region = Rect2(0, 0, 31, 32)
@@ -40,6 +65,29 @@ region = Rect2(0, 32, 31, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gedlg"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v57uq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpycm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3w6q8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mp26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx4ph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvse4")
+}],
+"loop": false,
+"name": &"appear",
+"speed": 25.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nbqoh")
@@ -106,3 +154,4 @@ metadata/_edit_lock_ = true
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="animation_finished" from="Sprite" to="Sprite" method="set_animation" binds= ["default"]]

@@ -8,6 +8,8 @@ extends GeneralMovementBody2D
 var _sprite_rot_init: bool
 var _rotating_dir: int
 
+@onready var quality: SettingsManager.QUALITY = SettingsManager.settings.quality
+
 
 func _ready() -> void:
 	# Sprite setting
@@ -21,6 +23,11 @@ func _ready() -> void:
 			_rotating_dir = [-1, 1].pick_random()
 		if is_zero_approx(speed.x):
 			speed.x = _rotating_dir * randf_range(default_speed_x_min, default_speed_x_max)
+		if !_fancy_effects_enabled():
+			scale.y = -scale.y
+			speed.y /= 1.5
+			speed.x /= 2
+			gravity_scale /= 2.5
 	).call_deferred()
 
 
@@ -31,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		if _sprite_rot_init:
 			_sprite_rot_init = true
 			sprite_node.rotation += _original_global_rot - _get_gravity_angle()
-		if _rotating_dir:
+		if _rotating_dir && _fancy_effects_enabled():
 			sprite_node.rotation_degrees += 12 * 50 * _rotating_dir * delta
 	
 	if !Thunder.view.screen_dir(global_position, get_global_gravity_dir(), 512):
@@ -39,6 +46,9 @@ func _physics_process(delta: float) -> void:
 	
 	global_rotation = _get_gravity_angle()
 
+
+func _fancy_effects_enabled() -> bool:
+	return SettingsManager.settings.quality != SettingsManager.QUALITY.MIN
 
 func _get_gravity_angle() -> float:
 	return PhysicsServer2D.body_get_direct_state(get_rid()).total_gravity.angle() - PI/2

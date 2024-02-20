@@ -3,7 +3,7 @@ extends MenuSelection
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 func _ready():
-	_update_string()
+	_update_string.call_deferred()
 
 
 func _handle_select() -> void:
