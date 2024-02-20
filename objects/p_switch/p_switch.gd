@@ -16,6 +16,10 @@ signal timed_out
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var duration: Timer = $Duration
 
+@export var appear_distance: float = 32
+@export var appear_speed: float = 0.5
+@export var appear_visible: float = 28
+
 var player: Player
 
 
@@ -24,7 +28,19 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	motion_process(delta)
+	if !appear_distance:
+		motion_process(delta)
+		modulate.a = 1
+		z_index = 0
+	else:
+		appear_process(Thunder.get_delta(delta))
+		z_index = -1
+
+
+func appear_process(delta: float) -> void:
+	appear_distance = max(appear_distance - appear_speed * delta, 0)
+	modulate.a = 0.01 if (appear_distance > appear_visible) else 1.0
+	position -= Vector2(0, appear_speed).rotated(global_rotation) * delta
 
 
 func active() -> void:

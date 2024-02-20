@@ -42,3 +42,13 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 			collider.has_method(&"got_bumped")
 		):
 			collider.got_bumped(self)
+
+
+func _on_level_end() -> void:
+	if !Thunder.view.is_getting_closer(self, 32):
+		if Thunder.view.is_getting_closer(self, 320):
+			queue_free()
+		return
+	Data.values.score += 200
+	ScoreText.new(str(200), self)
+	queue_free()

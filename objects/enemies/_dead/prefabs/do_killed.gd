@@ -12,13 +12,13 @@ func _ready() -> void:
 		if quality == SettingsManager.QUALITY.MIN:
 			return
 	
+	if !enemy_attacked: return
 	if enemy_attacked.has_meta(&"attacker_speed"):
 		attacker_speed = enemy_attacked.get_meta(&"attacker_speed")
 	var death: NodePath = vars.death as NodePath
 	var speed: Vector2 = vars.death_speed as Vector2
 	
-	if !enemy_attacked || death.is_empty(): return
-	
+	if death.is_empty(): return
 	var death_node: Node2D = enemy_attacked.get_node_or_null(death).duplicate()
 	if !death_node: return
 	

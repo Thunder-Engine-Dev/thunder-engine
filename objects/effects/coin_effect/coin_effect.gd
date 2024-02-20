@@ -1,5 +1,6 @@
 extends AnimatedSprite2D
 
+@export var score_given: int = 100
 var exploded: bool
 
 
@@ -20,8 +21,8 @@ func _fall() -> void:
 	tw.tween_property(self,"position",(pos + Vector2(0,16)).rotated(rotation),0.2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	tw.tween_callback(func():
 		explode()
-		Data.values.score += 100
-		ScoreText.new("100", self)
+		Data.values.score += score_given
+		ScoreText.new(str(score_given), self)
 	)
 
 

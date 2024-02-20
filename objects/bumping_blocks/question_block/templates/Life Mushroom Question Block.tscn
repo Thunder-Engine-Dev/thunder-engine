@@ -19,8 +19,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[node name="QuestionBlock" instance=ExtResource("1_8v0v5")]
+[node name="QuestionBlockLife" instance=ExtResource("1_8v0v5")]
 result = SubResource("Resource_5tgm3")
 
-[node name="ItemDisplayer" parent="Sprites" index="1"]
+[node name="ItemDisplayer" parent="Sprites" index="2"]
 texture = ExtResource("4_76n3r")

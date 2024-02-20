@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dt52xvrtre8h3"]
+[gd_scene load_steps=18 format=3 uid="uid://dt52xvrtre8h3"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_kcsna"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_yihn6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbf7c"]
 size = Vector2(31, 30)
@@ -107,6 +108,7 @@ killing_immune = {
 killing_creation = SubResource("Resource_l87kq")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_kcsna")
+killing_sound_failed = ExtResource("9_yihn6")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]

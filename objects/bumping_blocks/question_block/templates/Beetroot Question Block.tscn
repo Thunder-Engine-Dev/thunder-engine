@@ -25,8 +25,8 @@ custom_vars = {}
 atlas = ExtResource("5_wne5t")
 region = Rect2(0, 0, 27, 33)
 
-[node name="QuestionBlock" instance=ExtResource("1_6idoa")]
+[node name="QuestionBlockBeetroot" instance=ExtResource("1_6idoa")]
 result = SubResource("Resource_3rd74")
 
-[node name="ItemDisplayer" parent="Sprites" index="1"]
+[node name="ItemDisplayer" parent="Sprites" index="2"]
 texture = SubResource("AtlasTexture_br1rb")

@@ -37,3 +37,13 @@ func explode():
 func expand_vision(_scale: Vector2) -> void:
 	await ready
 	if vision: vision.scale = _scale
+
+
+func _on_level_end() -> void:
+	if !Thunder.view.is_getting_closer(self, 32):
+		if Thunder.view.is_getting_closer(self, 320):
+			queue_free()
+		return
+	Data.values.score += 100
+	ScoreText.new(str(100), self)
+	queue_free()

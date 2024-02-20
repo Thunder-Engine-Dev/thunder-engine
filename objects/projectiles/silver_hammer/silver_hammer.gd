@@ -39,9 +39,19 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		return
 	
 	for i in get_slide_collision_count():
-		var collision: KinematicCollision2D = get_slide_collision(i)
-		if !collision: continue
+		var _collision: KinematicCollision2D = get_slide_collision(i)
+		if !_collision: continue
 		
-		var collider: Node2D = collision.get_collider() as Node2D
+		var collider: Node2D = _collision.get_collider() as Node2D
 		if collider is StaticBumpingBlock && collider.has_method(&"bricks_break"):
 			collider.bricks_break()
+
+
+func _on_level_end() -> void:
+	if !Thunder.view.is_getting_closer(self, 32):
+		if Thunder.view.is_getting_closer(self, 320):
+			queue_free()
+		return
+	Data.values.score += 200
+	ScoreText.new(str(200), self)
+	queue_free()

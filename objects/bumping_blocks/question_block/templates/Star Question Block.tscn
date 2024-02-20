@@ -23,8 +23,8 @@ custom_vars = {}
 atlas = ExtResource("4_8ajty")
 region = Rect2(0, 0, 33, 32)
 
-[node name="QuestionBlock" instance=ExtResource("1_5wltk")]
+[node name="QuestionBlockStar" instance=ExtResource("1_5wltk")]
 result = SubResource("Resource_wtshe")
 
-[node name="ItemDisplayer" parent="Sprites" index="1"]
+[node name="ItemDisplayer" parent="Sprites" index="2"]
 texture = SubResource("AtlasTexture_v7xci")

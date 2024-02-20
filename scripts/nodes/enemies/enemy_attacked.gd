@@ -6,6 +6,9 @@ extends Node
 ## This node is used in objectial scenes, like enemies, to give them capability of being damaged
 ## via attackers like projectiles, shells, the starman, etc.
 
+const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effect.tscn")
+const COIN = preload("res://engine/objects/items/coin/coin.wav")
+
 @export_category("EnemyAttacked")
 @export_group("General")
 ## The node that you are going to define as an enemy capable to be damaged
@@ -64,6 +67,8 @@ extends Node
 @export var killing_sound_succeeded: AudioStream
 ## Sound triggered when the enemy blocks the attacker
 @export var killing_sound_failed: AudioStream
+## Will turn the enemy on screen into a coin upon touching the goal gate
+@export var turn_into_coin_on_level_end: bool = true
 @export_group("Sound", "sound_")
 @export var sound_pitch: float = 1.0
 @export_group("Extra")
@@ -101,6 +106,8 @@ func _ready() -> void:
 	stomped_succeeded.connect(_lss)
 	killed_succeeded.connect(_lks)
 	killed_failed.connect(_lkf)
+	if turn_into_coin_on_level_end:
+		add_to_group(&"end_level_sequence")
 
 
 func _lss():
@@ -219,3 +226,16 @@ func stomping_delay() -> void:
 
 func get_stomping_delayer() -> SceneTreeTimer:
 	return _stomping_delayer
+
+
+func _on_level_end() -> void:
+	if !Thunder.view.is_getting_closer(_center, 32):
+		if Thunder.view.is_getting_closer(_center, 320):
+			_center.queue_free.call_deferred()
+		return
+	Audio.play_1d_sound(COIN)
+	NodeCreator.prepare_2d(COIN_EFFECT, _center).bind_global_transform().create_2d().call_method(func(node):
+		node.score_given = 1000
+	)
+	Data.add_coin()
+	_center.queue_free.call_deferred()

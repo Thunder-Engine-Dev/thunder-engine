@@ -30,6 +30,8 @@ func _on_bullet_launched() -> void:
 		interval.start(0.1)
 		return
 	
+	if player.completed: return
+	
 	if player.global_position.distance_squared_to(global_position) <= stop_shooting_radius ** 2:
 		interval.start(0.1)
 		return

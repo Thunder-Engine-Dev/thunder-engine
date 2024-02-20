@@ -27,6 +27,7 @@ func _physics_process(delta: float) -> void:
 func delete_save() -> void:
 	ProfileManager.delete_profile(profile_name)
 	save_deleted.emit()
+	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
 
 func pass_warp() -> void:
 	ProfileManager.set_current_profile(profile_name)

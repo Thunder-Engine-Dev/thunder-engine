@@ -132,6 +132,12 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	
+	get_tree().call_group_flags(
+		get_tree().GROUP_CALL_DEFERRED,
+		&"end_level_sequence",
+		&"_on_level_end"
+	)
+	
 	await get_tree().process_frame
 	await Audio._music_channels[-1].finished
 	

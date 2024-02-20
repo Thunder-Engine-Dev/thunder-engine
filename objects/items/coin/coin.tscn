@@ -102,5 +102,6 @@ killing_immune = {
 }
 killing_creation = SubResource("Resource_223t5")
 killing_sound_succeeded = ExtResource("6_v73xb")
+turn_into_coin_on_level_end = false
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
