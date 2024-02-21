@@ -14,7 +14,7 @@
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="7_d7ol3"]
 [ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="8_mhcy7"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_rnv6k"]
-[ext_resource type="AudioStream" uid="uid://c4mxnbmb5vv2u" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_cvv72"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_cvv72"]
 
 [sub_resource type="Resource" id="Resource_xpeqw"]
 script = ExtResource("4_svefp")

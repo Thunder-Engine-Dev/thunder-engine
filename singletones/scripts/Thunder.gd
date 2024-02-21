@@ -119,7 +119,7 @@ func add_score(count: int):
 
 ## Compare current player power with [member power]
 func is_player_power(power: Data.PLAYER_POWER) -> bool:
-	return _current_player_state.type == power
+	return _current_player_state && _current_player_state.type == power
 
 
 ## Pauses game

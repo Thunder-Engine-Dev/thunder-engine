@@ -1,5 +1,8 @@
 extends GravityBody2D
 
+@export var wait_time: float = 3.5
+@export var check_for_lives: bool = true
+
 var circle_closing_speed: float = 0.05
 var circle_opening_speed: float = 0.1
 
@@ -14,14 +17,15 @@ func _ready() -> void:
 	movement = true
 	vel_set_y(-550)
 	
-	await get_tree().create_timer(3.5, false, true).timeout
+	await get_tree().create_timer(wait_time, false, true).timeout
 	
 	# After death
-	if Data.values.lives == 0:
-		if is_instance_valid(Thunder._current_hud):
-			Thunder._current_hud.game_over()
-			Audio.play_music(game_over_music, 1, { "ignore_pause": true })
-		return
+	if check_for_lives:
+		if Data.values.lives == 0:
+			if is_instance_valid(Thunder._current_hud):
+				Thunder._current_hud.game_over()
+				Audio.play_music(game_over_music, 1, { "ignore_pause": true })
+			return
 	Thunder._current_player_state = null
 	Data.values.lives -= 1
 	Data.values.onetime_blocks = false

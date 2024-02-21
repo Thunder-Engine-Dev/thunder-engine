@@ -62,6 +62,9 @@ enum WarpDir {
 @export var death_sprite: Node2D
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
 @export var death_music_override: AudioStream
+@export var death_wait_time: float = 3.5
+@export var death_check_for_lives: bool = true
+@export var death_stop_music: bool = true
 
 var _physics_behavior: ByNodeScript
 var _suit_behavior: ByNodeScript
@@ -139,7 +142,7 @@ func _ready() -> void:
 	if !is_starman():
 		sprite.material.set_shader_parameter(&"mixing", false)
 	
-	if Data.values.lives == -1:
+	if Data.values.lives == -1 && death_check_for_lives:
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 
 
@@ -214,7 +217,8 @@ func hurt(tags: Dictionary = {}) -> void:
 func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
 	
-	Audio.stop_all_musics()
+	if death_stop_music:
+		Audio.stop_all_musics()
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1,
@@ -224,6 +228,8 @@ func die(tags: Dictionary = {}) -> void:
 	if death_body:
 		NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
 			func(db: Node2D) -> void:
+				db.wait_time = death_wait_time
+				db.check_for_lives = death_check_for_lives
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					db.add_child(dsdup)

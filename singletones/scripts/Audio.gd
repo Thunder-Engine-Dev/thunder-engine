@@ -126,7 +126,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## # The result would be: music2 is playing
 ## [/codeblock][br]
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
-func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}) -> void:
+func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}) -> AudioStreamPlayer:
 	await get_tree().process_frame
 	
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
@@ -140,14 +140,14 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	elif &"data" in resource:
 		var openmpt = _create_openmpt_player(false)
 		if !openmpt:
-			return
+			return null
 		
 		openmpt.load_module_data(resource.data)
 		if !openmpt.is_module_loaded():
 			printerr("[Audio] Failed to load file using tracker loader")
 			openmpt.queue_free()
 			music_player.queue_free()
-			return
+			return null
 		music_player.set_meta(&"openmpt", openmpt)
 		
 		var generator = AudioStreamGenerator.new()
@@ -168,7 +168,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		).call_deferred()
 	else:
 		printerr("Invalid data provided in method Audio.play_music")
-		return
+		return null
 	
 	if &"pitch" in other_keys && other_keys.pitch is float:
 		_music_channels[channel_id].pitch_scale = other_keys.pitch
@@ -180,7 +180,8 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
-
+	
+	return music_player if is_instance_valid(music_player) else null
 
 ## Fade a music player that is playing, and you can choose it's way to fade.[br]
 ## [param player] is the music player that is playing[br]
@@ -244,7 +245,7 @@ func stop_all_musics(fade: bool = false) -> void:
 
 func _stop_all_musics_scene_changed() -> void:
 	for i in _music_channels:
-		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"stop_when_scene_changed", false):
+		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"play_when_scene_changed", true):
 			continue
 		if _music_channels[i].has_meta("openmpt"):
 			var openmpt = _music_channels[i].get_meta("openmpt")

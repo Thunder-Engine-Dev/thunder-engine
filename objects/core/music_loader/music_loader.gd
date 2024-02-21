@@ -15,6 +15,7 @@ signal music_resumed_buffered()
 
 @export var channel_id: int = 1
 @export var play_immediately: bool = true
+@export var play_globally: bool = false
 @export var volume_db: Array[float]
 @export_group(&"Custom Script")
 @export var custom_vars: Dictionary
@@ -30,6 +31,9 @@ func _ready() -> void:
 		volume_db.resize(music.size())
 	for i in range(volume_db.size()):
 		if volume_db[i] == null: volume_db[i] = 0
+		
+	if play_globally && !Data.values.onetime_blocks:
+		return
 	_change_music(index, channel_id)
 
 
@@ -45,7 +49,11 @@ func _change_music(ind: int, ch_id: int) -> void:
 	]
 	if play_immediately:
 		music_started.emit(ind)
-		Audio.play_music(options[0], options[1], options[2])
+		var player = await Audio.play_music(options[0], options[1], options[2])
+		(func():
+			if play_globally && player:
+				player.set_meta(&"play_when_scene_changed", true)
+		).call_deferred()
 		is_paused = false
 	else:
 		music_buffered.emit(ind)

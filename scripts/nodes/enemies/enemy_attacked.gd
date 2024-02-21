@@ -162,7 +162,7 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 ## Makes the enemy killed by a certain attacker[br]
 ## [param by] is type of the attacker, see [member killing_immune][br]
 ## You can give the extra behavior by inputting [param special_tags]
-func got_killed(by: StringName, special_tags:Array = []) -> Dictionary:
+func got_killed(by: StringName, special_tags: Array = []) -> Dictionary:
 	var result: Dictionary
 	
 	if !killing_enabled || !by in killing_immune || _on_killed: 
