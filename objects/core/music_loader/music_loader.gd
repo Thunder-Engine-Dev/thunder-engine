@@ -26,14 +26,26 @@ signal music_resumed_buffered()
 var buffer: Array = []
 var is_paused: bool = false
 
+
 func _ready() -> void:
 	if volume_db.size() < music.size():
 		volume_db.resize(music.size())
-	for i in range(volume_db.size()):
-		if volume_db[i] == null: volume_db[i] = 0
-		
+	for i in volume_db.size():
+		if volume_db[i] == null: 
+			volume_db[i] = 0
+	
+	(func() -> void:
+		var pre_scene_change := Scenes.pre_scene_changed
+		var stop_all_musics := Audio._stop_all_musics_scene_changed
+		if play_globally && pre_scene_change.is_connected(stop_all_musics):
+			pre_scene_change.disconnect(stop_all_musics)
+		if !play_globally && !pre_scene_change.is_connected(stop_all_musics):
+			pre_scene_change.connect(stop_all_musics)
+	).call_deferred() # To ensure the connection/disconnection is successful
+	
 	if play_globally && !Data.values.onetime_blocks:
 		return
+	
 	_change_music(index, channel_id)
 
 
@@ -49,7 +61,7 @@ func _change_music(ind: int, ch_id: int) -> void:
 	]
 	if play_immediately:
 		music_started.emit(ind)
-		var player = await Audio.play_music(options[0], options[1], options[2])
+		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
 		(func():
 			if play_globally && player:
 				player.set_meta(&"play_when_scene_changed", true)
@@ -103,7 +115,7 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	if buffered_to_play.size() < 3: return false
 	if is_paused:
 		Audio.stop_all_musics()
-	Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2])
+	Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
 	music_resumed_buffered.emit()
 	buffered_to_play = []
 	is_paused = false

@@ -57,6 +57,7 @@ func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStre
 
 func _create_openmpt_player(is_global: bool) -> OpenMPT:
 	var openmpt = OpenMPT.new()
+	if !is_global: Scenes.pre_scene_changed.connect(openmpt.queue_free)
 	add_child(openmpt)
 	openmpt.stop()
 	return openmpt
@@ -126,11 +127,11 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## # The result would be: music2 is playing
 ## [/codeblock][br]
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
-func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}) -> AudioStreamPlayer:
+func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}, is_global: bool = false) -> AudioStreamPlayer:
 	await get_tree().process_frame
 	
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
-		_music_channels[channel_id] = _create_1d_player(false, true)
+		_music_channels[channel_id] = _create_1d_player(is_global, true)
 	var music_player = _music_channels[channel_id]
 	
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
@@ -138,7 +139,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		music_player.bus = &"Music"
 		music_player.play.call_deferred()
 	elif &"data" in resource:
-		var openmpt = _create_openmpt_player(false)
+		var openmpt = _create_openmpt_player(is_global)
 		if !openmpt:
 			return null
 		

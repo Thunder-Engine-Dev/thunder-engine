@@ -49,7 +49,6 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		if get_child_count() == 0:
 			_prepare_template()
-		
 		return
 	
 	Data.values.time = time
