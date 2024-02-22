@@ -221,7 +221,7 @@ func die(tags: Dictionary = {}) -> void:
 		Audio.stop_all_musics()
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
-		1,
+		1 if death_stop_music else 2,
 		{pitch = suit.sound_pitch}
 	)
 	
