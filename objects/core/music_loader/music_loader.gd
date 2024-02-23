@@ -35,12 +35,10 @@ func _ready() -> void:
 			volume_db[i] = 0
 	
 	(func() -> void:
-		var pre_scene_change := Scenes.pre_scene_changed
-		var stop_all_musics := Audio._stop_all_musics_scene_changed
-		if play_globally && pre_scene_change.is_connected(stop_all_musics):
-			pre_scene_change.disconnect(stop_all_musics)
-		if !play_globally && !pre_scene_change.is_connected(stop_all_musics):
-			pre_scene_change.connect(stop_all_musics)
+		if play_globally && Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
+			Scenes.pre_scene_changed.disconnect(Audio._stop_all_musics_scene_changed)
+		if !play_globally && !Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
+			Scenes.pre_scene_changed.connect(Audio._stop_all_musics_scene_changed)
 	).call_deferred() # To ensure the connection/disconnection is successful
 	
 	if play_globally && !Data.values.onetime_blocks:
