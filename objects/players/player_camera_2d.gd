@@ -29,10 +29,12 @@ func teleport() -> void:
 			var kc: KinematicCollision2D 
 			while !kc && player.get_global_transform_with_canvas().get_origin().x < 16:
 				kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
-				player.vel_set_x(0)
+				if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
+					player.vel_set_x(0)
 			while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
 				kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
-				player.vel_set_x(0)
+				if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
+					player.vel_set_x(0)
 			if kc && kc.get_collider():
 				player.die()
 	
