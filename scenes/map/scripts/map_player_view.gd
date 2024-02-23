@@ -87,13 +87,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if fast_forwarding:
 			par.visible = true
 		else:
-			get_tree().create_timer(0.3 / ex, false).timeout.connect(func():
-				if !is_instance_valid(par): return
-				par.visible = true
-				par.set_meta(&"is_appearing", false)
-			)
+			await get_tree().create_timer(0.3 / ex, false).timeout
+			if !is_instance_valid(par): return
+			par.visible = true
+			par.set_meta(&"is_appearing", false)
 		return
-	
-		#current_marker = area as MapPlayerMarker
-		
-		#movement_dir = Vector2.RIGHT.rotated(area.rotation).round()

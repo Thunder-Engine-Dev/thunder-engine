@@ -6,9 +6,7 @@ class_name MapPlayerMarker extends Marker2D
 
 # DO NOT USE OUTSIDE THIS SCRIPT
 var _level: String
-
 var shape: CollisionShape2D
-
 var last_position: Vector2
 
 @onready var marker_space: MarkerSpace = get_parent()
@@ -28,9 +26,11 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 	if is_level_completed():
+		await get_tree().process_frame
 		player.current_marker = get_next_marker()
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()
+		marker_space.make_dots_visible_before(global_position)
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.get_next_marker_id()
 		)

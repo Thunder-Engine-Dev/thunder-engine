@@ -18,6 +18,7 @@ var _dots_drawn: bool = false
 var _next_space: MarkerSpace
 
 var dots: Array
+var dots_mapping = []
 
 var map: Node2D
 
@@ -146,6 +147,36 @@ func make_dot(pos: Vector2) -> void:
 	m.global_position = pos
 	m.visible = false
 	map.add_child.call_deferred(m)
+	
+	var found: int = -1
+	
+	for i in len(dots_mapping):
+		if dots_mapping[i][0].x == pos.x && dots_mapping[i][0].y == pos.y:
+			found = i
+	
+	if found != -1:
+		dots_mapping[found][1] = m
+
+func make_dots_visible_before(pos: Vector2) -> void:
+	var found: int = -1
+	
+	for i in len(dots_mapping):
+		var dot_pos = dots_mapping[i][0]
+		print(floor(dot_pos.x / 32), floor(pos.x / 32))
+		
+		if (
+			floor(dot_pos.x / 32) == floor(pos.x / 32) &&
+			floor(dot_pos.y / 32) == floor(pos.y / 32) &&
+			dots_mapping[i][1] is AnimatedSprite2D
+		):
+			found = i
+			print('found', i)
+			break
+	
+	while found >= 0:
+		dots_mapping[found][1].visible = true
+		found -= 1
+	
 
 # Returns first marker
 func get_first_marker() -> MapPlayerMarker:
@@ -189,19 +220,17 @@ func build_dots() -> void:
 			child = next_child as MapPlayerMarker
 		
 		var length = child.global_position.distance_to(next_child.global_position)
-		
 		var amount = roundi(length / dot_intrval)
-		
 		var direction = child.global_position.direction_to(next_child.global_position)
-		
 		var computed_interval = length / amount
 		
 		for dot in range(amount):
 			if dot == 0:
 				if child.is_level():
 					continue
-			#var f_pos = child.global_position + direction * (dot * computed_interval)
-			dots.push_back(child.global_position + direction * (dot * computed_interval))
+			var f_pos = child.global_position + direction * (dot * computed_interval)
+			dots.push_back(f_pos)
+			dots_mapping.append([f_pos, child])
 		
 		child = next_child as MapPlayerMarker
 	
@@ -218,8 +247,9 @@ func build_dots() -> void:
 			if dot == 0:
 				if child.is_level():
 					continue
-			#var f_pos = child.global_position + direction * (dot * computed_interval)
-			dots.push_back(child.global_position + direction * (dot * computed_interval))
+			var f_pos = child.global_position + direction * (dot * computed_interval)
+			dots.push_back(f_pos)
+			dots_mapping.push([f_pos, child])
 
 # Updates lines
 func set_next_space(value: MarkerSpace) -> void:
