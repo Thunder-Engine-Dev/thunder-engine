@@ -20,6 +20,17 @@ func _ready() -> void:
 	Data.values.checkpoint = -1
 	Data.values.checked_cps = []
 	Data.values.onetime_blocks = true
+	
+	var music := _get_music()
+	TransitionManager.transition_middle.connect(func():
+		if is_instance_valid(music): music.stop()
+		TransitionManager.current_transition.paused = true
+		Scenes.goto_scene(get_node(player).current_marker.level)
+		Scenes.scene_ready.connect(func():
+			TransitionManager.current_transition.on(Thunder._current_player)
+			TransitionManager.current_transition.paused = false
+		, CONNECT_ONE_SHOT)
+	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
 
 func get_first_marker_space() -> MarkerSpace:
@@ -42,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	is_fading = true
 	player_entered_level.emit()
 	
-	var music = Audio._music_channels[1] if 1 in Audio._music_channels else null
+	var music := _get_music()
 	if music && is_instance_valid(music):
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 	
@@ -54,14 +65,7 @@ func _physics_process(delta: float) -> void:
 	)
 	
 	Audio.play_1d_sound(transition_sound)
-	
-	TransitionManager.transition_middle.connect(func():
-		if is_instance_valid(music): music.stop()
-		TransitionManager.current_transition.paused = true
-		Scenes.goto_scene(get_node(player).current_marker.level)
-		Scenes.scene_ready.connect(func():
-			TransitionManager.current_transition.on(Thunder._current_player)
-			TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
-	, CONNECT_ONE_SHOT)
 
+
+func _get_music() -> Node:
+	return Audio._music_channels[1] if 1 in Audio._music_channels else null
