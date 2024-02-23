@@ -66,6 +66,7 @@ func move(delta: float) -> void:
 		
 		if current_marker.is_level() && reached:
 			map.to_level = current_marker.level
+			
 		
 		if !current_marker.is_level() && reached:
 			current_marker = current_marker.get_next_marker()

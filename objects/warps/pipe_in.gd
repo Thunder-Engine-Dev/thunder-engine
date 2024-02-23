@@ -122,8 +122,6 @@ func _physics_process(delta: float) -> void:
 			await TransitionManager.transition_middle
 			TransitionManager.current_transition.paused = true
 			
-			pass_warp()
-			
 			if warp_to_scene: 
 				Scenes.scene_changed.connect(func(_current_scene):
 					if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
@@ -132,6 +130,9 @@ func _physics_process(delta: float) -> void:
 			else:
 				if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
 				TransitionManager.current_transition.paused = false
+			
+			pass_warp.call_deferred()
+			
 		elif use_blur_transition:
 			var trans = load(
 				"res://engine/components/transitions/blur_transition/blur_transition.tscn"
@@ -143,15 +144,16 @@ func _physics_process(delta: float) -> void:
 			await TransitionManager.transition_middle
 			TransitionManager.current_transition.paused = true
 			
-			pass_warp()
-			await get_tree().physics_frame
 			
 			if warp_to_scene: 
 				Scenes.scene_changed.connect(func(_current_scene):
 					TransitionManager.current_transition.paused = false
-				, CONNECT_ONE_SHOT)
+				, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 			else:
 				TransitionManager.current_transition.paused = false
+			
+			await get_tree().physics_frame
+			pass_warp()
 		else: pass_warp()
 
 

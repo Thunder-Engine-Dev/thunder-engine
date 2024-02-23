@@ -14,6 +14,14 @@ class Profile:
 			data[&"completed_levels"] = []
 		
 		data[&"completed_levels"].append(level_name)
+	
+	func get_next_level_name() -> StringName:
+		if data.has(&"next_level"):
+			return data.next_level
+		return &""
+	
+	func set_next_level_name(level_name: StringName) -> void:
+		data.next_level = level_name
 
 var profiles: Dictionary
 var current_profile: Profile
@@ -47,8 +55,8 @@ func create_new_profile(_name: StringName) -> void:
 
 ## Use this to set current profile
 func set_current_profile(_name: StringName) -> void:
-	if profiles.has(_name):
-		current_profile = profiles[_name]
+	if profiles.has(_name + SAVE_FILE_EX):
+		current_profile = profiles[_name + SAVE_FILE_EX]
 	else:
 		create_new_profile(_name)
 
@@ -71,7 +79,7 @@ func load_profile(_name: StringName) -> void:
 	profile.name = _name
 	profile.data = dict
 	
-	profiles[name] = profile
+	profiles[_name] = profile
 
 func delete_profile(_name: StringName) -> void:
 	@warning_ignore("static_called_on_instance")
