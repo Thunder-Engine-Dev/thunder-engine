@@ -49,15 +49,20 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	speed_previous = speed
 	
-	speed += gravity * gravity_dir * delta
+	speed += gravity * gravity_dir * delta * 0.5
+	#speed += gravity * gravity_dir * delta
+	var is_speed_capped: bool
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
+		is_speed_capped = true
 	
 	update_up_direction()
 	
 	velocity = speed.rotated(global_rotation)
 	do_movement(delta, slide, false)
 	speed = velocity.rotated(-global_rotation)
+	if !is_speed_capped:
+		speed += gravity * gravity_dir * delta * 0.5
 	
 	if slide && floor_constant_speed && !is_on_wall():
 		speed.x = speed_previous.x

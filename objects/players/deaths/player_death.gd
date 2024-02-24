@@ -17,7 +17,8 @@ func _ready() -> void:
 	movement = true
 	vel_set_y(-550)
 	
-	await get_tree().create_timer(wait_time, false, true).timeout
+	if wait_time > 0.0:
+		await get_tree().create_timer(wait_time, false, true).timeout
 	
 	# After death
 	if check_for_lives:

@@ -95,6 +95,7 @@ func _movement_y(delta: float) -> void:
 			player.swam.emit()
 			Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
 		if player.speed.y < -abs(config.swim_max_speed) && !player.is_underwater_out:
+			# TODO: lerp function requires delta!!!
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
@@ -104,7 +105,7 @@ func _movement_y(delta: float) -> void:
 				player._has_jumped = true
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
-		elif player.jumping > 0 && player.speed.y < 6.25:
+		elif player.jumping > 0 && player.speed.y < 0.0:
 			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 10 else config.jump_buff_static
 			player.speed.y -= abs(buff) * delta
 	if !player.jumping && player.speed.y >= 0:

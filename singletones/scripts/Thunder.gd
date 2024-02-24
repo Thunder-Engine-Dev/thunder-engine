@@ -62,6 +62,7 @@ func _init() -> void:
 	var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
 	if rate < 119:
 		Engine.physics_ticks_per_second = rate * 2
+		#Engine.physics_ticks_per_second = 20 # For testing delta time
 		print(&"Using double fps for physics")
 	else:
 		Engine.physics_ticks_per_second = rate
