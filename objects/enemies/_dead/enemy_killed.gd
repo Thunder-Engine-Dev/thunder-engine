@@ -35,16 +35,12 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 	
 	if sprite_node:
-		if _sprite_rot_init:
-			_sprite_rot_init = true
-			sprite_node.rotation += _original_global_rot - _get_gravity_angle()
 		if _rotating_dir && _fancy_effects_enabled():
-			sprite_node.rotation_degrees += 12 * 50 * _rotating_dir * delta
+			pass
+			#sprite_node.rotation_degrees += 12 * 50 * _rotating_dir * delta
 	
 	if !Thunder.view.screen_dir(global_position, get_global_gravity_dir(), 512):
 		queue_free()
-	
-	global_rotation = _get_gravity_angle()
 
 
 func _fancy_effects_enabled() -> bool:

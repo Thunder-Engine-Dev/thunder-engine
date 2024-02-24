@@ -58,9 +58,10 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	
 	update_up_direction()
 	
-	velocity = speed.rotated(global_rotation)
+	var rot: = get_global_gravity_dir().angle()
+	velocity = speed.rotated(rot - PI/2)
 	do_movement(delta, slide, false)
-	speed = velocity.rotated(-global_rotation)
+	speed = velocity.rotated(-rot + PI/2)
 	if !is_speed_capped:
 		speed += gravity * gravity_dir * delta * 0.5
 	

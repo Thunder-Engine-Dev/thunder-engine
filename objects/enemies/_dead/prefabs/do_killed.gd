@@ -31,7 +31,11 @@ func _ready() -> void:
 	if attacker_speed != Vector2.ZERO && node is GravityBody2D:
 		fancy_death_effect()
 	else:
-		if node is GravityBody2D: node.speed = speed
+		if node is GravityBody2D: 
+			node.speed = speed
+			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
+			if root:
+				node.gravity_dir = root.gravity_dir
 	node.add_child(death_node)
 	
 #func _wait_for_meta() -> void:
