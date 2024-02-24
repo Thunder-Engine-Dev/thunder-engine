@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=21 format=3 uid="uid://br1851e3gt1xr"]
+[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://br1851e3gt1xr"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_hq665"]
 
@@ -77,6 +77,10 @@ region = Rect2(96, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5tu4a"]
 atlas = ExtResource("1_hq665")
 region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oehf2"]
+atlas = ExtResource("1_hq665")
+region = Rect2(624, 0, 48, 64)
 
 [resource]
 animations = [{
@@ -181,4 +185,12 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oehf2")
+}],
+"loop": true,
+"name": &"warp",
+"speed": 5.0
 }]

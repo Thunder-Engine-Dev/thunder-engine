@@ -108,10 +108,8 @@ func _animation_process(delta: float) -> void:
 	# Warping
 	else:
 		match player.warp_dir:
-			Player.WarpDir.UP:
-				sprite.play(&"jump")
-			Player.WarpDir.DOWN:
-				sprite.play(&"crouch")
+			Player.WarpDir.UP, Player.WarpDir.DOWN:
+				sprite.play(&"warp")
 			Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
 				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
 				sprite.play(&"walk")

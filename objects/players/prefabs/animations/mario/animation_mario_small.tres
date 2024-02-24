@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://cp03ve7ed68js"]
+[gd_resource type="SpriteFrames" load_steps=23 format=3 uid="uid://cp03ve7ed68js"]
 
 [ext_resource type="Texture2D" uid="uid://d1vkaab2ewmjq" path="res://engine/objects/players/prefabs/textures/mario/mario_small.png" id="1_j7ix7"]
 
@@ -81,6 +81,10 @@ region = Rect2(64, 0, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1tob1"]
 atlas = ExtResource("1_j7ix7")
 region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be3k5"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(448, 0, 32, 64)
 
 [resource]
 animations = [{
@@ -188,4 +192,12 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_be3k5")
+}],
+"loop": true,
+"name": &"warp",
+"speed": 5.0
 }]

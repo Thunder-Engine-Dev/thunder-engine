@@ -73,3 +73,4 @@ func _physics_process(delta: float) -> void:
 
 func stop_music(fade: bool = true) -> void:
 	Audio.stop_music_channel(32, true)
+	Thunder._current_hud.timer.paused = true

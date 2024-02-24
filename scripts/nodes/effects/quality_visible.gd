@@ -17,7 +17,7 @@ func _update_visibility() -> void:
 	quality = SettingsManager.settings.quality
 	visible = (
 		(maximum && quality == QUALITY.MAX) ||
-		(medium && quality == QUALITY.MED) ||
+		(medium && quality == QUALITY.MID) ||
 		(minimum && quality == QUALITY.MIN)
 	)
 	

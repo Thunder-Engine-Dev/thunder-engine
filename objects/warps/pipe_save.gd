@@ -33,5 +33,7 @@ func delete_save() -> void:
 
 func pass_warp() -> void:
 	ProfileManager.set_current_profile(profile_name)
+	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
+		warp_to_scene = ProfileManager.current_profile.data.current_world
 	await get_tree().physics_frame
 	super()

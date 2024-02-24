@@ -48,6 +48,8 @@ func create_new_profile(_name: StringName) -> void:
 	current_profile = Profile.new()
 	current_profile.name = _name
 	save_current_profile()
+	#await get_tree().process_frame
+	#load_profile(_name)
 	print("[Profile Manager] Profile ", _name, " created!")
 
 #func profile_exists(name: StringName) -> bool:
@@ -86,6 +88,8 @@ func delete_profile(_name: StringName) -> void:
 	var path: String = convert_to_path(_name)
 	if !FileAccess.file_exists(path):
 		return
+	if profiles.has(_name + SAVE_FILE_EX):
+		profiles.erase(_name + SAVE_FILE_EX)
 	
 	DirAccess.remove_absolute(path)
 	print("[Profile Manager] Profile deleted!")
@@ -98,7 +102,7 @@ func save_current_profile() -> void:
 	@warning_ignore("static_called_on_instance")
 	var file: FileAccess = FileAccess.open(convert_to_path(current_profile.name),FileAccess.WRITE)
 	file.store_string(data)
-	file.close()
+	file = null
 	print("[Profile Manager] Profile %s saved!" % current_profile.name)
 
 static func convert_to_path(file: StringName) -> StringName:

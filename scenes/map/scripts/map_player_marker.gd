@@ -34,6 +34,8 @@ func _ready() -> void:
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.get_next_marker_id()
 		)
+	elif is_level():
+		marker_space.uncompleted_levels.append(level)
 
 
 func get_next_marker() -> MapPlayerMarker:

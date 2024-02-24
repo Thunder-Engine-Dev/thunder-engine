@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c58i0gaq0il4o"]
+[gd_scene load_steps=22 format=3 uid="uid://c58i0gaq0il4o"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c04n1tivb0f5h" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="8_b2lnc"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_vul36"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_bx7fb"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_oumu7"]
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="11_achxa"]
 
@@ -147,8 +148,8 @@ autoplay = "default"
 
 [node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, 2.38419e-07)
-scale = Vector2(1.55, 1.6)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("10_bx7fb")
 metadata/_edit_lock_ = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]

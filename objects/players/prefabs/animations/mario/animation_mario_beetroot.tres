@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=21 format=3 uid="uid://ciq78opwuq6ft"]
+[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://ciq78opwuq6ft"]
 
 [ext_resource type="Texture2D" uid="uid://deisknysdnd03" path="res://engine/objects/players/prefabs/textures/mario/mario_beetroot.png" id="1_ri41b"]
 
@@ -77,6 +77,10 @@ region = Rect2(96, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_605kr"]
 atlas = ExtResource("1_ri41b")
 region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dalqs"]
+atlas = ExtResource("1_ri41b")
+region = Rect2(624, 0, 48, 64)
 
 [resource]
 animations = [{
@@ -181,4 +185,12 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dalqs")
+}],
+"loop": true,
+"name": &"warp",
+"speed": 5.0
 }]

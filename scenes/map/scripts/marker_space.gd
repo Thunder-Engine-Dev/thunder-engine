@@ -12,13 +12,13 @@ var next_space: MarkerSpace : set = set_next_space, get = get_next_space
 var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
 
 var _dot_draw: bool = false
-
 var _dots_drawn: bool = false
 
 var _next_space: MarkerSpace
 
 var dots: Array
 var dots_mapping = []
+var uncompleted_levels: Array[StringName] = []
 
 var map: Node2D
 
@@ -49,6 +49,14 @@ func _ready() -> void:
 	
 	if draw_dots:
 		build_dots()
+	
+	if !Engine.is_editor_hint():
+		await get_tree().process_frame
+		if !uncompleted_levels.is_empty():
+			ProfileManager.current_profile.set_next_level_name(
+				uncompleted_levels[0].get_file().get_slice(".", 0)
+			)
+			ProfileManager.save_current_profile()
 
 # Recive events
 func _notification(what: int) -> void:
@@ -162,7 +170,7 @@ func make_dots_visible_before(pos: Vector2) -> void:
 	
 	for i in len(dots_mapping):
 		var dot_pos = dots_mapping[i][0]
-		print(floor(dot_pos.x / 32), floor(pos.x / 32))
+		#print(floor(dot_pos.x / 32), floor(pos.x / 32))
 		
 		if (
 			floor(dot_pos.x / 32) == floor(pos.x / 32) &&
@@ -170,7 +178,7 @@ func make_dots_visible_before(pos: Vector2) -> void:
 			dots_mapping[i][1] is AnimatedSprite2D
 		):
 			found = i
-			print('found', i)
+			#print('found', i)
 			break
 	
 	while found >= 0:
