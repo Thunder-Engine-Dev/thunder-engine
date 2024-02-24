@@ -6,8 +6,8 @@
 size = Vector2(32, 64)
 
 [node name="BowserCorpse" type="Area2D" groups=["#lava_body"]]
-collision_layer = 0
-collision_mask = 128
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_a5dlx")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

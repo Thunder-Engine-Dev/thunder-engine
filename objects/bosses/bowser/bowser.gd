@@ -274,6 +274,7 @@ func attack_burst() -> void:
 # Bowser's hurt
 func hurt() -> void:
 	if tween_hurt: return
+	if !trigger: return
 	
 	if health > 0:
 		Audio.play_sound(hurt_sound, self)

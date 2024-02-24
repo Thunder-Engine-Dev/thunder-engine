@@ -118,7 +118,7 @@ func _movement_climbing(delta: float) -> void:
 	if player.is_sliding: _stop_sliding_movement()
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
 	# Resist to gravity
-	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta
+	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta * 0.5
 	
 	# Jump from climbing
 	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:

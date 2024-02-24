@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		if route_follower.progress_ratio < 1.0: 
 			route_follower.progress += camera_speed * delta
-		else:
+		if player.completed:
 			var cam: Camera2D = Thunder._current_camera
 			if cam && _cam_parent:
 				cam.stop_blocking_edges = true

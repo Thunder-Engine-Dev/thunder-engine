@@ -94,6 +94,7 @@ stomping_player_jumping_min = 550.0
 stomping_player_jumping_max = 550.0
 killing_enabled = false
 killing_creation = null
+turn_into_coin_on_level_end = false
 custom_vars = {
 "attachment_killed": NodePath(""),
 "attachment_stomped": NodePath("")
