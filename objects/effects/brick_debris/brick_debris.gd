@@ -1,8 +1,8 @@
 extends Sprite2D
 
-var velocity: Vector2
-var fall_speed: float = 0.4
-var rotation_speed: float = 12
+@export var velocity: Vector2
+@export var fall_speed: float = 0.4
+@export var rotation_speed: float = 12
 
 func _physics_process(_delta: float) -> void:
 	var delta = Thunder.get_delta(_delta)
