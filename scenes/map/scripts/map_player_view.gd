@@ -5,7 +5,7 @@ extends Node2D
 @export var dots: PackedScene
 @export var x: PackedScene = preload("res://engine/scenes/map/prefabs/x.tscn")
 
-var direction: float
+var direction: Vector2
 var reached: bool = false
 
 var current_marker: MapPlayerMarker
@@ -62,7 +62,11 @@ func move(delta: float) -> void:
 			reached = true # When done movement we can show start label and etc.
 			
 		if !reached:
+			var old_pos: Vector2 = position
 			position = position.move_toward(current_marker.position, speed * delta)
+			direction = old_pos.direction_to(position)
+			if !is_zero_approx(direction.x):
+				player.flip_h = direction.x < 0.0
 		
 		if current_marker.is_level() && reached:
 			map.to_level = current_marker.level

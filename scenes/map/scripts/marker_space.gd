@@ -257,7 +257,7 @@ func build_dots() -> void:
 					continue
 			var f_pos = child.global_position + direction * (dot * computed_interval)
 			dots.push_back(f_pos)
-			dots_mapping.push([f_pos, child])
+			dots_mapping.append([f_pos, child])
 
 # Updates lines
 func set_next_space(value: MarkerSpace) -> void:
