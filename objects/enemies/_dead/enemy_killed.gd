@@ -29,6 +29,12 @@ func _ready() -> void:
 			speed.x /= 2
 			gravity_scale /= 2.5
 	).call_deferred()
+	
+	var tw: Tween = create_tween()
+	tw.tween_interval(6)
+	tw.tween_property(self, ^"modulate:a", 0, 0.5)
+	await tw.finished
+	queue_free()
 
 
 func _physics_process(delta: float) -> void:
