@@ -214,8 +214,11 @@ func hurt(tags: Dictionary = {}) -> void:
 	damaged.emit()
 
 
+var is_dying: bool = false
 func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
+	if is_dying: return
+	is_dying = true
 	
 	if death_stop_music:
 		Audio.stop_all_musics()

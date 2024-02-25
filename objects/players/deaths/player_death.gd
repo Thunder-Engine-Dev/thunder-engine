@@ -52,7 +52,7 @@ func _ready() -> void:
 	TransitionManager.current_transition.on(marker) # Supports a Node2D or a Vector2
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
-		Scenes.reload_current_scene.call_deferred()
+		Scenes.reload_current_scene()
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
 
