@@ -40,6 +40,7 @@ script = ExtResource("3_q8t3s")
 [node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
 process_mode = 1
 disable_3d = true
+own_world_3d = true
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 audio_listener_enable_2d = true
