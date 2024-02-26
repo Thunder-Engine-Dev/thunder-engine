@@ -1,7 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ces7bytc0ugus"]
 
 [ext_resource type="SpriteFrames" uid="uid://bed8whmi8m02a" path="res://engine/objects/effects/explosion/explosion.tres" id="1_dslx6"]
-[ext_resource type="PackedScene" uid="uid://ctmr062xovc0y" path="res://stages/world_1/scripts/sprite_2d.tscn" id="2_g2b67"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ca7ba"]
+blend_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_ng1pj"]
 colors = PackedColorArray(1, 1, 1, 0.329412, 1, 1, 1, 0)
@@ -22,7 +24,9 @@ z_index = 5
 sprite_frames = ExtResource("1_dslx6")
 autoplay = "default"
 
-[node name="PointLight2D" parent="." instance=ExtResource("2_g2b67")]
+[node name="PointLight2D" type="PointLight2D" parent="."]
+material = SubResource("CanvasItemMaterial_ca7ba")
+blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_ky1lf")
 
