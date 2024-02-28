@@ -1,0 +1,91 @@
+[gd_scene load_steps=14 format=3 uid="uid://cdfqlkg8w5yc8"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
+[ext_resource type="Texture2D" uid="uid://cqg1u2jkhsv6o" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
+[ext_resource type="Texture2D" uid="uid://djaad2q4bchog" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfhbt"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ww34y"]
+size = Vector2(34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jpx2"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kio5u"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qmxv"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnwrd"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wk0jj"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3tif"]
+atlas = ExtResource("1_ef6v0")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0523r"]
+atlas = ExtResource("2_sedtj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hnaah"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jpx2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kio5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qmxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnwrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wk0jj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3tif")
+}, {
+"duration": 40.0,
+"texture": SubResource("AtlasTexture_0523r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 40.0
+}]
+
+[node name="ElectricCoral" type="AnimatableBody2D"]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_55khj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_rfhbt")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 112
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ww34y")
+debug_color = Color(0.976471, 0.152941, 0, 0.419608)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hnaah")
+autoplay = "default"
+frame_progress = 0.716038

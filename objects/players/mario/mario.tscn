@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=14 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
 [ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_kdm1n"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="3_qpqdp"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
+[ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="4_2mkq8"]
+[ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_633ve"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
@@ -46,6 +48,15 @@ z_index = 5
 material = SubResource("ShaderMaterial_kdes3")
 position = Vector2(0, -15)
 sprite_frames = ExtResource("2_eqact")
+
+[node name="Bubble" type="GPUParticles2D" parent="Sprite"]
+position = Vector2(0, 15)
+emitting = false
+amount = 4
+process_material = ExtResource("4_633ve")
+texture = ExtResource("4_2mkq8")
+lifetime = 5.0
+randomness = 0.5
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false
