@@ -173,6 +173,7 @@ func pass_warp() -> void:
 		Scenes.goto_scene(warp_to_scene)
 	elif trigger_finish:
 		Scenes.current_scene.finish(true)
+		player.modulate.a = 0
 	player = null
 	warp_trans = null
 

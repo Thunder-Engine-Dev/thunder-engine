@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://5ssr5jwpsldi"]
+[gd_scene load_steps=5 format=3 uid="uid://5ssr5jwpsldi"]
 
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_pcr4a"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_1mhyk"]
 [ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_33lcd"]
-[ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="4_alpnq"]
 
 [sub_resource type="Resource" id="Resource_nll4y"]
 resource_local_to_scene = true
@@ -19,12 +18,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3wug"]
-atlas = ExtResource("4_alpnq")
-region = Rect2(0, 0, 32, 32)
-
 [node name="QuestionBlock" instance=ExtResource("1_pcr4a")]
 result = SubResource("Resource_nll4y")
 
-[node name="ItemDisplayer" parent="Sprites" index="2"]
-texture = SubResource("AtlasTexture_t3wug")
+[node name="Area2D" parent="." index="4"]
+collision_mask = 96
