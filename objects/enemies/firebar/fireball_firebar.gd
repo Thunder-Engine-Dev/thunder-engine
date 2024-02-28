@@ -22,7 +22,7 @@ extends Node2D
 		if is_node_ready():
 			_set_position_angular()
 @export_group("Animation")
-@export_range(-18000, 18000, 0.001, "suffix:°/s") var sprite_rotation_speed: float = 300:
+@export_range(-18000, 18000, 0.001, "suffix:°/s") var sprite_rotation_speed: float = 500:
 	set(value):
 		sprite_rotation_speed = value
 		$Sprite.flip_h = sprite_rotation_speed < 0

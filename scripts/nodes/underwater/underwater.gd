@@ -11,6 +11,7 @@ var _gravity_scale: float
 var _max_falling_speed: float
 
 @onready var par: Node2D = get_parent() as Node2D
+@onready var bubble: GPUParticles2D = $"../Sprite/Bubble"
 
 
 func in_water() -> void:
@@ -19,6 +20,7 @@ func in_water() -> void:
 	par.set(&"gravity_scale", gravity_scale_override)
 	par.set(&"max_falling_speed", max_falling_speed_override)
 	got_into_water.emit()
+	bubble.emitting = true
 
 
 func out_of_water() -> void:
@@ -27,3 +29,4 @@ func out_of_water() -> void:
 	_gravity_scale = 0
 	_max_falling_speed = 0
 	got_out_of_water.emit()
+	bubble.emitting = false
