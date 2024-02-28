@@ -25,7 +25,6 @@ extends Node2D
 @export_range(-18000, 18000, 0.001, "suffix:°/s") var sprite_rotation_speed: float = 500:
 	set(value):
 		sprite_rotation_speed = value
-		$Sprite.flip_h = sprite_rotation_speed < 0
 
 @onready var _origin: Vector2 = position
 @onready var _sprite: Sprite2D = $Sprite

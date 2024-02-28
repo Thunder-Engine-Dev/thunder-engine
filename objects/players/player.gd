@@ -110,6 +110,7 @@ var _suit_appear: bool
 @onready var timer_invincible: Timer = $Invincible
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
+@onready var bubble: GPUParticles2D = $Sprite/Bubble
 
 @onready var starman_combo: Combo = Combo.new(self)
 
