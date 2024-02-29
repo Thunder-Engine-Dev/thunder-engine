@@ -78,10 +78,10 @@ func _physics_process(delta: float) -> void:
 	var input_y: int = int(Input.get_axis(player.control.up, player.control.down))
 	
 	if !_on_warp && player.warp == Player.Warp.NONE:
-		if input_x > 0 && warp_direction == Player.WarpDir.RIGHT:
+		if input_x > 0 && warp_direction == Player.WarpDir.RIGHT && player.is_on_floor():
 			_on_warp = true
 			pos_player.position = Vector2(-(shape.shape as RectangleShape2D).size.x / 2, 0)
-		elif input_x < 0 && warp_direction == Player.WarpDir.LEFT:
+		elif input_x < 0 && warp_direction == Player.WarpDir.LEFT && player.is_on_floor():
 			_on_warp = true
 			pos_player.position = Vector2((shape.shape as RectangleShape2D).size.x / 2, 0)
 		if input_y > 0 && warp_direction == Player.WarpDir.DOWN:

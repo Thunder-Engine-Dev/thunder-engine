@@ -1,15 +1,11 @@
 @tool
 class_name MarkerSpace extends Node2D
 
-@export
-var dot_texture: Texture2D
-@export
-var x_texture: Texture2D
-@export
-var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
-
-@export
-var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
+@export var space_name: StringName
+@export var dot_texture: Texture2D
+@export var x_texture: Texture2D
+@export var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
+@export var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -53,8 +49,13 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		await get_tree().process_frame
 		if !uncompleted_levels.is_empty():
-			ProfileManager.current_profile.set_next_level_name(
+			var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
+			prof.set_next_level_name(
 				uncompleted_levels[0].get_file().get_slice(".", 0)
+			)
+			prof.set_world_numbers(
+				space_name,
+				str(get_next_marker_id() + 1)
 			)
 			ProfileManager.save_current_profile()
 

@@ -6,6 +6,7 @@ extends Camera2D
 var is_fading: bool
 
 func _ready() -> void:
+	Thunder._current_camera = self
 	var map := Scenes.current_scene as Map2D
 	if !map:
 		return

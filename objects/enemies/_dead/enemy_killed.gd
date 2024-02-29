@@ -3,9 +3,9 @@ extends GeneralMovementBody2D
 @export_range(0, 1, 0.001, "or_greater", "hide_slider", "suffix:px/s") var default_speed_x_min: float = 50
 @export_range(0, 1, 0.001, "or_greater", "hide_slider", "suffix:px/s") var default_speed_x_max: float = 125
 
-@onready var _original_global_rot: float = global_rotation
+#@onready var _original_global_rot: float = global_rotation
 
-var _sprite_rot_init: bool
+#var _sprite_rot_init: bool
 var _rotating_dir: int
 
 @onready var quality: SettingsManager.QUALITY = SettingsManager.settings.quality

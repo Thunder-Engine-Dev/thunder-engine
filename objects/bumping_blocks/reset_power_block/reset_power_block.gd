@@ -1,5 +1,6 @@
 extends StaticBumpingBlock
 
+@export var change_to_suit: PlayerSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres")
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -24,5 +25,5 @@ func got_bumped(by: Node2D) -> void:
 func call_bump() -> void:
 	bump(false)
 	_animated_sprite_2d.animation = &"empty"
-	Thunder._current_player.change_suit(preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"))
+	Thunder._current_player.change_suit(change_to_suit)
 	Data.values.lives = ProjectSettings.get_setting(&"application/thunder_settings/player/default_lives", 4)

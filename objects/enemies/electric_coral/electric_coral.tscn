@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdfqlkg8w5yc8"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
-[ext_resource type="Texture2D" uid="uid://cqg1u2jkhsv6o" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
-[ext_resource type="Texture2D" uid="uid://djaad2q4bchog" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
+[ext_resource type="Texture2D" uid="uid://cy3ci8bt5m1o6" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
+[ext_resource type="Texture2D" uid="uid://cww8wcusbrxnk" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfhbt"]
-size = Vector2(32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdrb"]
+size = Vector2(30, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ww34y"]
-size = Vector2(34, 34)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83umb"]
+size = Vector2(32, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4jpx2"]
 atlas = ExtResource("1_ef6v0")
@@ -74,7 +74,7 @@ script = ExtResource("1_55khj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_rfhbt")
+shape = SubResource("RectangleShape2D_rmdrb")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -82,7 +82,7 @@ collision_layer = 112
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_ww34y")
+shape = SubResource("RectangleShape2D_83umb")
 debug_color = Color(0.976471, 0.152941, 0, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

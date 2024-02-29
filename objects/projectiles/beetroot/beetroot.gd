@@ -24,7 +24,9 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	
 	bounces_left -= 1
 	
-	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
+	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform().call_method(func(node):
+		node.position.y += 12
+	)
 	
 	if bounces_left == 0:
 		run_out.emit()
