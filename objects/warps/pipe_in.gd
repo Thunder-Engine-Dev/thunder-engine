@@ -40,7 +40,9 @@ var _warp_triggered: bool = false
 @onready var pos_player: Marker2D = $PosPlayer
 
 signal player_enter
-signal player_exit 
+signal player_exit
+signal warp_started
+signal warp_ended
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -94,6 +96,7 @@ func _physics_process(delta: float) -> void:
 		if _on_warp:
 			player_z_index = player.z_index
 			
+			warp_started.emit()
 			player.warp = Player.Warp.IN
 			player.warp_dir = warp_direction
 			player.global_position = pos_player.global_position
@@ -111,6 +114,7 @@ func _physics_process(delta: float) -> void:
 	# Warping Transition
 	elif !warp_trans && !_warp_triggered:
 		_warp_triggered = true
+		warp_ended.emit()
 		
 		if use_circle_transition:
 			TransitionManager.accept_transition(
