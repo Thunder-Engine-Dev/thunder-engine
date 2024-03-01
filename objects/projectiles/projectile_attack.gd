@@ -7,7 +7,7 @@ extends ShapeCast2D
 var velocity: Vector2
 var belongs_to: Data.PROJECTILE_BELONGS
 
-@onready var par: Node2D = get_parent()
+@onready var par: Node = get_parent()
 
 signal killed(what: Node, result: Dictionary)
 signal killed_notify
