@@ -8,7 +8,6 @@
 radius = 8.0
 
 [node name="FireballFirebar" type="Node2D"]
-position = Vector2(50, 0)
 script = ExtResource("1_8r468")
 sprite_rotation_speed = 300.0
 

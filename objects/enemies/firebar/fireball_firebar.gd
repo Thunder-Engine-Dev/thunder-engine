@@ -14,7 +14,7 @@ extends Node2D
 		set_process(preview)
 		set_physics_process(preview)
 @export_group("Physics")
-@export_range(0, 1, 0.001, "or_greater", "hide_slider", "suffix:px") var radius: float = 50
+@export_range(0, 1, 0.001, "or_greater", "hide_slider", "suffix:px") var radius: float
 @export_range(-18000, 18000, 0.001, "suffix:°/s") var angular_speed: float = 50
 @export_range(-180, 180, 0.001, "degrees") var angle: float:
 	set(value):
