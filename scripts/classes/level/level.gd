@@ -17,6 +17,8 @@ signal level_completed
 @export_group("Level Completion")
 ## Level completion music
 @export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
+## Write info about level completion to save file
+@export var completion_write_save: bool = true
 ## Jump to scene after level completion sequence
 @export_file("*.tscn", "*.scn") var jump_to_scene: String
 
@@ -164,7 +166,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
 	
-	ProfileManager.current_profile.complete_level(scene_file_path)
-	ProfileManager.save_current_profile()
+	if completion_write_save:
+		ProfileManager.current_profile.complete_level(scene_file_path)
+		ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()
