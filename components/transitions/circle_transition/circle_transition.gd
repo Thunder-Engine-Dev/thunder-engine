@@ -37,16 +37,18 @@ func with_speeds(s_closing: float, s_opening: float) -> Transition:
 func _physics_process(delta: float) -> void:
 	if paused: return
 	
-	if circle >= 0:
-		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
-	
 	color_rect.material.set_shader_parameter("circle_size", circle)
 	
 	if circle == 0 && !middle_switch:
+		await get_tree().physics_frame
+		middle.emit()
+		await get_tree().physics_frame
 		middle_switch = true
 		speed_closing = speed_opening
-		middle.emit()
 	
 	if middle_switch && circle > 2:
 		end.emit()
+	
+	if circle >= 0:
+		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
 	
