@@ -65,7 +65,7 @@ func _movement_x(delta: float) -> void:
 		_decelerate(deceleration, delta)
 		return
 	# Initial speed
-	if player.left_right != 0 && player.speed.x == 0:
+	if player.left_right != 0 && abs(player.speed.x) < 1:
 		player.direction = player.left_right
 		player.speed.x = player.direction * config.walk_initial_speed
 	# Acceleration
@@ -79,7 +79,7 @@ func _movement_x(delta: float) -> void:
 		_accelerate(max_speed, config.walk_acceleration, delta)
 	elif player.left_right == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)
-		if player.speed.x == 0:
+		if abs(player.speed.x) < 1:
 			player.direction *= -1
 
 
@@ -106,7 +106,7 @@ func _movement_y(delta: float) -> void:
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0 && player.speed.y < 0.0:
-			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 10 else config.jump_buff_static
+			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 50 else config.jump_buff_static
 			player.speed.y -= abs(buff) * delta
 	if !player.jumping && player.speed.y >= 0:
 		player._has_jumped = false
@@ -147,15 +147,15 @@ func _movement_sliding(delta: float) -> void:
 	# Sliding towards right
 	if floor_normal >= 40.0:
 		accel.call() if dir else decel.call()
-		if player.speed.x == 0: _start_sliding_movement()
+		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Sliding towards left
 	elif floor_normal <= -40.0:
 		accel.call() if !dir else decel.call()
-		if player.speed.x == 0: _start_sliding_movement()
+		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Momentum on flat surface after sliding
 	else:
 		decel.call()
-		if player.speed.x == 0 || player.left_right != 0:
+		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
 	
 	if player.left_right != 0 && player.left_right != player.direction && !player.slided:

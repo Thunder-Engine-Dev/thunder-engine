@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	if music && is_instance_valid(music):
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 	
-	await get_tree().create_timer(0.4, true).timeout
+	await get_tree().create_timer(0.4, false).timeout
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
