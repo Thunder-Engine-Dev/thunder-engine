@@ -64,28 +64,52 @@ var linear_velocity: Vector2
 func _ready() -> void:
 	if smooth_turning_length > 0: _sign_up_points()
 	
-	surface.body_entered.connect(
-		func(body: Node2D) -> void:
-			body = body as CharacterBody2D
-			if !body: return
-			if !body.is_on_floor(): return
-			if body is Player && !body in players_standing:
-				players_standing.append(body)
-				players_have_stood = true
-				on_moving = true
-			elif !body is Player && !body in non_players_standing:
-				non_players_standing.append(body)
-				non_players_have_stood = true
-	)
+	#surface.body_entered.connect(
+		#func(body: Node2D) -> void:
+			#body = body as CharacterBody2D
+			#if !body: return
+			#if !body.is_on_floor(): return
+			#if body is Player && !body in players_standing:
+				#players_standing.append(body)
+				#players_have_stood = true
+				#on_moving = true
+			#elif !body is Player && !body in non_players_standing:
+				#non_players_standing.append(body)
+				#non_players_have_stood = true
+	#)
 
 func _physics_process(delta: float) -> void:
+	_bodies_standing_check()
+	
 	if !on_moving: return
 	
-	#var pregpos:Vector2 = global_position
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
 	
 	if block.sync_to_physics: block.global_position = block.global_position
+
+
+func _bodies_standing_check() -> void:
+	for body in surface.get_overlapping_bodies():
+		_body_check(body)
+
+
+func _body_check(body: CharacterBody2D) -> void:
+	if !body: return
+	if !body.is_on_floor(): return
+	#if body is Player && !body in players_standing:
+		#players_standing.append(body)
+		#players_have_stood = true
+		#on_moving = true
+	if !body is Player && !body in non_players_standing:
+		non_players_standing.append(body)
+		non_players_have_stood = true
+
+
+func _player_landed(player: Player) -> void:
+	players_standing.append(player)
+	players_have_stood = true
+	on_moving = true
 
 
 func _on_path_movement_process(delta: float) -> void:

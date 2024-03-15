@@ -26,6 +26,8 @@ func _physics_process(delta: float) -> void:
 	_head_process()
 	# Body
 	_body_process()
+	# Floor
+	_floor_process()
 	# Movement
 	if player.is_climbing:
 		_movement_climbing(delta)
@@ -240,3 +242,21 @@ func _body_process() -> void:
 				player.speed.y = -result.jumping_min * config.jump_stomp_multiplicator
 		else:
 			player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
+
+#= Floor
+func _floor_process() -> void:
+	# We process landing on things here
+	# If we land on something and function "_player_landed" exists there, we call it.
+	
+	if !is_instance_valid(player): return
+	if !player.is_on_floor(): return
+	
+	for i in player.get_slide_collision_count():
+		var collision: KinematicCollision2D = player.get_slide_collision(i)
+		if !collision: continue
+		
+		var collider = collision.get_collider()
+		if !is_instance_valid(collider): return
+		
+		if collider.has_method('_player_landed'):
+			collider._player_landed(player)
