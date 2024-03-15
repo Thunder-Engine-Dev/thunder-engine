@@ -22,11 +22,6 @@ signal timed_out
 
 var player: Player
 
-
-func _ready() -> void:
-	activator.body_entered.connect(_on_activator_body_entered)
-
-
 func _physics_process(delta: float) -> void:
 	if !appear_distance:
 		motion_process(delta)
@@ -60,23 +55,19 @@ func active() -> void:
 		gravity_scale = 0
 
 
-func _on_activator_body_entered(body: Node2D):
+func _player_landed(player: Player) -> void:
 	if !duration.is_stopped(): return
-	if body == Thunder._current_player:
-		while !body.is_on_floor():
-			if !activator.overlaps_body(body): return # Stops executing rest code if the mario has left the activator
-			await get_tree().process_frame
-		var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
-		if !mus_loader: return
-		mus_loader.play_immediately = false
-		mus_loader.pause_music()
-		player = body
-		if !is_instance_valid(player): return
-		if !player.died.is_connected(_stop_music):
-			player.died.connect(_stop_music, CONNECT_ONE_SHOT)
-		activated.emit()
-		active()
-		Audio.play_music(p_switch_music, 98)
+	
+	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
+	if !mus_loader: return
+	mus_loader.play_immediately = false
+	mus_loader.pause_music()
+	if !is_instance_valid(player): return
+	if !player.died.is_connected(_stop_music):
+		player.died.connect(_stop_music, CONNECT_ONE_SHOT)
+	activated.emit()
+	active()
+	Audio.play_music(p_switch_music, 98)
 
 
 func _on_duration_timeout() -> void:
