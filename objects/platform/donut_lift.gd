@@ -52,13 +52,10 @@ func _physics_process(delta):
 	
 	if speed_y != 0: return
 	if force_fall && counting: return
-	
-	var kc: = KinematicCollision2D.new()
-	test_move(global_transform, Vector2.UP.rotated(global_rotation), kc)
-	if kc:
-		var collider: = kc.get_collider()
-		if collider is Player && collider.is_on_floor():
-			counting = true
+
+
+func _player_landed(player: Player) -> void:
+	counting = true
 
 
 func reset_vars() -> void:
