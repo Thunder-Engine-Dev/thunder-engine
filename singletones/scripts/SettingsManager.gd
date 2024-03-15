@@ -32,6 +32,7 @@ var default_settings = {
 }
 
 var settings = default_settings.duplicate(true)
+var no_saved_settings: bool = false
 
 signal settings_updated
 signal settings_saved
@@ -80,6 +81,7 @@ func load_settings() -> void:
 	var path: String = settings_path
 	if !FileAccess.file_exists(path):
 		print("[Settings Manager] Using the default settings, no saved ones.")
+		no_saved_settings = true
 		return
 	
 	var data: String = FileAccess.get_file_as_string(path)
@@ -144,6 +146,7 @@ func _process_settings() -> void:
 
 var old_scale: float = -1
 func _window_scale_logic() -> void:
+	if no_saved_settings: return
 	if settings.scale == 0: return
 	if old_scale == settings.scale: return
 	

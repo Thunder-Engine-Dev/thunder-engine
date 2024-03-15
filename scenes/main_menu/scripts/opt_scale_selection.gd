@@ -39,5 +39,6 @@ func _physics_process(delta: float) -> void:
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
 	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
+	SettingsManager.no_saved_settings = false
 	SettingsManager._process_settings()
 	
