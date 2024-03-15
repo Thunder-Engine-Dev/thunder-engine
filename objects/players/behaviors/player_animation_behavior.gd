@@ -96,7 +96,7 @@ func _animation_process(delta: float) -> void:
 			if player.speed.x != 0:
 				sprite.play(&"walk")
 				sprite.speed_scale = (
-					clampf(abs(player.speed.x) * 0.01 * config.animation_walking_speed,
+					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
 					config.animation_min_walking_speed,
 					config.animation_max_walking_speed)
 				)
