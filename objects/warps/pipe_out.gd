@@ -20,6 +20,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	$Arrow.queue_free()
 	$TextDir.queue_free()
+	body_exited.connect(_on_body_exited)
 	
 	if trigger_immediately:
 		player = Thunder._current_player

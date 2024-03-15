@@ -16,7 +16,7 @@ var default_settings = {
 	"autopause": true,
 	"vsync": true,
 	"scale": 1,
-	"filter": true,
+	"filter": false,
 	"fullscreen": false,
 	"first_launch": true,
 	"controls": {

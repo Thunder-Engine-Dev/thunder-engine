@@ -35,5 +35,3 @@ text = "up"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
-
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -412,6 +412,7 @@ custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("16_8lg85")
+credits_behavior = 1
 
 [node name="Text" type="TextureRect" parent="Options/Credits"]
 layout_mode = 2
