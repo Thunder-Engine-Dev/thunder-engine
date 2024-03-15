@@ -135,3 +135,6 @@ autoplay = "default"
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("4_wvem1")
 metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sound"

@@ -9,10 +9,10 @@ var was_paused: bool
 
 func _handle_select() -> void:
 	super()
-	SettingsManager.save_settings()
 	var cred_path = ProjectSettings.get_setting("application/thunder_settings/credits_path")
 	match credits_behavior:
 		CREDITS_OPTION.JumpToScene:
+			SettingsManager.save_settings()
 			Scenes.goto_scene(cred_path)
 		CREDITS_OPTION.AddSceneAsChild:
 			add_scene_to_child(cred_path)
