@@ -5,7 +5,7 @@ enum CREDITS_OPTION {
 	AddSceneAsChild
 }
 @export var credits_behavior: CREDITS_OPTION = CREDITS_OPTION.JumpToScene
-var old_process_mode: ProcessMode
+var was_paused: bool
 
 func _handle_select() -> void:
 	super()
@@ -18,8 +18,9 @@ func _handle_select() -> void:
 			add_scene_to_child(cred_path)
 
 func add_scene_to_child(cred_path) -> void:
-	old_process_mode = Scenes.current_scene.process_mode
-	Scenes.current_scene.process_mode = Node.PROCESS_MODE_DISABLED
+	was_paused = get_tree().paused
+	if !get_tree().paused:
+		get_tree().paused = true
 	for i in Audio._music_channels:
 		if !is_instance_valid(Audio._music_channels[i]): continue
 		if Audio._music_channels[i].process_mode == Node.PROCESS_MODE_ALWAYS:
@@ -38,7 +39,8 @@ func _add_scene_tree_entered(credits: Node) -> void:
 func _add_scene_tree_exited(canvas_layer: CanvasLayer) -> void:
 	canvas_layer.queue_free()
 	if !is_instance_valid(Scenes.current_scene): return
-	Scenes.current_scene.process_mode = old_process_mode
+	if !was_paused:
+		get_tree().paused = was_paused
 	for i in Audio._music_channels:
 		if !is_instance_valid(Audio._music_channels[i]): continue
 		if Audio._music_channels[i].process_mode == Node.PROCESS_MODE_DISABLED:
