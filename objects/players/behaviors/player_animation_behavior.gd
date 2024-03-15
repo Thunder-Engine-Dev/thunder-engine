@@ -44,6 +44,9 @@ func _swam() -> void:
 
 func _shot() -> void:
 	if !sprite: return
+	if sprite.animation == &"swim":
+		sprite.frame = 3
+		return
 	sprite.play(&"attack")
 
 

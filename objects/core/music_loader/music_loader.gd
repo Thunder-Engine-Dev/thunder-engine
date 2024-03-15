@@ -6,6 +6,12 @@ signal music_unpaused
 signal music_buffered(music_id: int)
 signal music_resumed_buffered()
 
+enum GLOBAL_TYPE {
+	NO,
+	CHECK_FOR_ONETIME_BLOCKS,
+	ALWAYS_PLAY_GLOBALLY
+}
+
 @export var music: Array[Resource]
 @export var index: int = 0:
 	set(i):
@@ -15,7 +21,7 @@ signal music_resumed_buffered()
 
 @export var channel_id: int = 1
 @export var play_immediately: bool = true
-@export var play_globally: bool = false
+@export var play_globally: GLOBAL_TYPE = GLOBAL_TYPE.NO
 @export var volume_db: Array[float]
 @export_group(&"Custom Script")
 @export var custom_vars: Dictionary
@@ -41,7 +47,7 @@ func _ready() -> void:
 			Scenes.pre_scene_changed.connect(Audio._stop_all_musics_scene_changed)
 	).call_deferred() # To ensure the connection/disconnection is successful
 	
-	if play_globally && !Data.values.onetime_blocks:
+	if play_globally == GLOBAL_TYPE.CHECK_FOR_ONETIME_BLOCKS && !Data.values.onetime_blocks:
 		return
 	
 	_change_music(index, channel_id)

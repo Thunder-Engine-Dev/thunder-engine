@@ -37,6 +37,7 @@ func _add_scene_tree_entered(credits: Node) -> void:
 	credits.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _add_scene_tree_exited(canvas_layer: CanvasLayer) -> void:
+	if !is_inside_tree(): return
 	canvas_layer.queue_free()
 	if !is_instance_valid(Scenes.current_scene): return
 	if !was_paused:
