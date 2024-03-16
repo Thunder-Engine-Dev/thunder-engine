@@ -11,6 +11,8 @@ var player: NodePath
 var dot_style: SpriteFrames
 @export
 var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
+@export
+var jump_button_sound: AudioStream = preload("res://engine/objects/items/coin/coin.wav")
 
 var to_level: String
 var is_fading: bool
@@ -49,6 +51,7 @@ func _physics_process(delta: float) -> void:
 	if !get_node(player).current_marker.level: return
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
+	Audio.play_1d_sound(jump_button_sound)
 	
 	is_fading = true
 	player_entered_level.emit()
