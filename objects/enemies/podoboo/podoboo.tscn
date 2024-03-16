@@ -1,12 +1,32 @@
-[gd_scene load_steps=10 format=3 uid="uid://uhf6frao7p1m"]
+[gd_scene load_steps=15 format=3 uid="uid://uhf6frao7p1m"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
 [ext_resource type="Texture2D" uid="uid://baq22nmp1wdol" path="res://engine/objects/enemies/podoboo/podoboo.png" id="2_wcyj0"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_aerwt"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="3_yf87x"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_8xlh0"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_bdac7"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_i6ttr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8kc8x"]
 radius = 16.0
+
+[sub_resource type="Resource" id="Resource_0b8qp"]
+script = ExtResource("5_bdac7")
+creation_nodepack = ExtResource("3_yf87x")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 2
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"amount": 15
+}
+custom_script = ExtResource("4_8xlh0")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6l6h7"]
 atlas = ExtResource("2_wcyj0")
@@ -67,9 +87,10 @@ killing_immune = {
 "hammer": false,
 "iceball": false
 }
-killing_scores = 500
+killing_creation = SubResource("Resource_0b8qp")
+killing_scores = 400
 killing_sound_succeeded = ExtResource("3_aerwt")
-killing_sound_failed = ExtResource("3_aerwt")
+killing_sound_failed = ExtResource("7_i6ttr")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_scores", &"killing_immune", &"killing_sound_succeeded", &"killing_sound_failed"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

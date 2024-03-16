@@ -61,6 +61,7 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Activator"]
+visible = false
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_se3ij")
 one_way_collision = true

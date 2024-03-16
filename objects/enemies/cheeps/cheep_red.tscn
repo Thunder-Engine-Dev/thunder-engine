@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_63gk1"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_w3gcv"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
 size = Vector2(32, 32)
 
@@ -138,5 +137,9 @@ autostart = true
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]
 [connection signal="collided_floor" from="." to="." method="turn_y"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/EnemyAttacked" method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
 [connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]

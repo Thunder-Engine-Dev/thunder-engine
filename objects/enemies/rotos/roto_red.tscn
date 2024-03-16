@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d1rtgrsfyf0pj" path="res://engine/objects/enemies/rotos/roto_red.png" id="2_ib7bh"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="4_rm4x7"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_g8kvb"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="5_rhdfg"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_ile01"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pi0fq"]
@@ -212,14 +213,6 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[sub_resource type="GDScript" id="GDScript_m8kkj"]
-script/source = "extends ByNodeScript
-
-func _ready() -> void:
-	if node is GPUParticles2D:
-		node.one_shot = true
-"
-
 [sub_resource type="Resource" id="Resource_caaoh"]
 script = ExtResource("5_g8kvb")
 creation_nodepack = ExtResource("4_rm4x7")
@@ -231,8 +224,10 @@ trans_skew = 0.0
 visi_z_index = 3
 visi_z_as_relative = true
 visi_y_sort_enabled = false
-custom_vars = {}
-custom_script = SubResource("GDScript_m8kkj")
+custom_vars = {
+"amount": 15
+}
+custom_script = ExtResource("5_rhdfg")
 
 [node name="RotoRed" type="Area2D" groups=["#roto"]]
 collision_layer = 2
@@ -262,7 +257,7 @@ killing_immune = {
 "boomerang": false,
 "hammer": false,
 "iceball": false,
-"starman": false
+"starman": true
 }
 killing_creation = SubResource("Resource_caaoh")
 killing_scores = 400

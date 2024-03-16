@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnyk0ph5vd52a"]
+[gd_scene load_steps=11 format=3 uid="uid://dnyk0ph5vd52a"]
 
 [ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_6qc7h"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_v5g86"]
@@ -7,6 +7,24 @@
 [ext_resource type="Texture2D" uid="uid://0e2teiyyxcty" path="res://engine/objects/enemies/cheeps/textures/cheep_blue.png" id="5_bk5m6"]
 
 [sub_resource type="Resource" id="Resource_0lvi6"]
+resource_local_to_scene = true
+script = ExtResource("4_4jm17")
+creation_nodepack = ExtResource("2_v5g86")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_6ab3g")
+
+[sub_resource type="Resource" id="Resource_03s2a"]
 resource_local_to_scene = true
 script = ExtResource("4_4jm17")
 creation_nodepack = ExtResource("2_v5g86")
@@ -64,7 +82,7 @@ killing_immune = {
 "shell_forced": false,
 "starman": false
 }
-killing_creation = SubResource("Resource_0lvi6")
+killing_creation = SubResource("Resource_03s2a")
 killing_scores = 200
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_scores", &"stomping_scores"]
 

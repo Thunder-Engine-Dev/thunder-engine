@@ -11,7 +11,7 @@ extends Area2D
 @export_node_path("Area2D") var warp_to: NodePath
 @export var warp_to_scene: String
 @export var trigger_finish: bool = false
-@export var warping_speed: float = 50
+@export var warping_speed: float = 60
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export_group("Path Transition")
 @export var warp_path: Path2D
@@ -32,7 +32,7 @@ var warp_trans: WarpTrans
 
 var _on_warp: bool
 var _duration: float
-var _target: float = 1
+var _target: float = 1.2
 var _warp_triggered: bool = false
 
 @onready var target: Area2D = get_node_or_null(warp_to)

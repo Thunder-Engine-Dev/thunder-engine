@@ -78,12 +78,15 @@ var _bullet_received: int
 @onready var pos_hammer: Marker2D = $PosHammer
 @onready var pos_hammer_x: float = pos_hammer.position.x
 
+@onready var initial_killing_immune: Dictionary = enemy_attacked.killing_immune.duplicate(true)
+
 
 func _ready() -> void:
 	_speed = speed.x
 	facing = get_facing(facing)
 	direction = facing
 	vel_set_x(0)
+	enemy_attacked.killing_immune = {}
 
 
 func _physics_process(delta: float) -> void:
@@ -140,6 +143,7 @@ func activate() -> void:
 	add_sibling.call_deferred(hud)
 	# Emit the signal
 	health = health
+	enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
 
 
 # Bowser's attack
@@ -274,7 +278,7 @@ func attack_burst() -> void:
 # Bowser's hurt
 func hurt() -> void:
 	if tween_hurt: return
-	if !trigger: return
+	enemy_attacked.killing_immune = {}
 	
 	if health > 0:
 		Audio.play_sound(hurt_sound, self)
@@ -302,6 +306,7 @@ func hurt() -> void:
 			tween_hurt = null
 			modulate.a = alpha
 			enemy_attacked.stomping_standard = stomp_standard
+			enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
 	)
 
 # Hurt from bullets

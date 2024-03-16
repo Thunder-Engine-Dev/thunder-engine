@@ -256,7 +256,7 @@ func _floor_process() -> void:
 		if !collision: continue
 		
 		var collider = collision.get_collider()
-		if !is_instance_valid(collider): return
+		if !is_instance_valid(collider): continue
 		
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)
