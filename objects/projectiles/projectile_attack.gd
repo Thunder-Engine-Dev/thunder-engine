@@ -2,6 +2,10 @@ extends ShapeCast2D
 
 @export var killer_type: StringName = Data.ATTACKERS.fireball
 @export var killing_detection_scale: float = 1.0
+## Means that it would not hurt the player with Hammer or Boomerang suit etc.,
+## but instead, it would just destroy the projectile
+@export var is_reflectable: bool = false
+@export var trigger_enemy_failed_signal: bool = true
 @export var special_tags: Array[StringName]
 
 var velocity: Vector2
@@ -14,6 +18,7 @@ signal killed_notify
 signal killed_succeeded
 signal killed_failed
 signal damaged_player
+signal damaged_player_failed
 
 
 func _process(delta: float) -> void:
@@ -39,7 +44,9 @@ func _kill_enemy() -> void:
 		if !enemy_attacked: continue
 		
 		enemy_attacked.set_meta(&"attacker_speed", velocity)
-		result = await enemy_attacked.got_killed(killer_type, special_tags)
+		result = await enemy_attacked.got_killed(
+			killer_type, special_tags, trigger_enemy_failed_signal
+		)
 	if result.is_empty(): return
 	var attackee: Node = result.attackee if &"attackee" in result else null
 	if result.result:
@@ -49,8 +56,9 @@ func _kill_enemy() -> void:
 		return
 	else:
 		killed_notify.emit()
-		killed.emit(attackee, result)
-		killed_failed.emit()
+		if trigger_enemy_failed_signal == true:
+			killed.emit(attackee, result)
+			killed_failed.emit()
 		if enemy_attacked:
 			enemy_attacked.set_meta(&"attacker_speed", Vector2.ZERO)
 		return
@@ -60,6 +68,14 @@ func _hurt_player() -> void:
 		var ins:PhysicsBody2D = get_collider(i) as PhysicsBody2D
 		if !ins: continue
 		elif ins is Player:
+			if (
+				"suit" in ins && ins.suit &&
+				"behavior_crouch_reflect_fireballs" in ins.suit &&
+				ins.suit.behavior_crouch_reflect_fireballs == true &&
+				ins.is_crouching == true
+			):
+				damaged_player_failed.emit()
+				break
 			damaged_player.emit()
 			ins.hurt()
 			break

@@ -62,7 +62,9 @@ shape = SubResource("CircleShape2D_8kc8x")
 script = ExtResource("2_8l667")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
+"boomerang": false,
 "fireball": true,
+"hammer": false,
 "iceball": false
 }
 killing_scores = 500

@@ -25,3 +25,5 @@ process_material = SubResource("ParticleProcessMaterial_4jdto")
 texture = ExtResource("1_yfmkj")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
+
+[connection signal="finished" from="." to="." method="queue_free"]

@@ -22,6 +22,7 @@ enum Type {
 @export_group("Behavior", "behavior_")
 @export var behavior_resource: Resource
 @export var behavior_script: GDScript
+@export var behavior_crouch_reflect_fireballs: bool = false
 @export_group("Extra", "extra_")
 @export var extra_vars: Dictionary
 @export var extra_behavior: GDScript

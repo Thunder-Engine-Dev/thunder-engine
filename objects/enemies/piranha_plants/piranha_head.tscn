@@ -87,7 +87,7 @@ script = ExtResource("3_kfaj4")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
 "beetroot": true,
-"boomerang": true,
+"boomerang": false,
 "fireball": true,
 "hammer": false,
 "head": false,

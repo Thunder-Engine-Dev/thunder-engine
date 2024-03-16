@@ -45,6 +45,7 @@ max_results = 8
 collision_mask = 3
 collide_with_areas = true
 script = ExtResource("3_po12v")
+is_reflectable = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
@@ -60,5 +61,6 @@ script = ExtResource("4_5ki2u")
 [connection signal="collided_floor" from="." to="." method="jump"]
 [connection signal="collided_wall" from="." to="." method="explode"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
+[connection signal="damaged_player_failed" from="Attack" to="." method="explode"]
 [connection signal="killed_notify" from="Attack" to="." method="explode"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
