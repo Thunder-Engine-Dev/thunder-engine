@@ -25,7 +25,7 @@ func _ready() -> void:
 		if Data.values.lives == 0:
 			if is_instance_valid(Thunder._current_hud):
 				Thunder._current_hud.game_over()
-				Audio.play_music(game_over_music, 1, { "ignore_pause": true })
+				Audio.play_music(game_over_music, 1, { "ignore_pause": true }, false, false)
 			return
 	Thunder._current_player_state = null
 	Data.values.lives -= 1

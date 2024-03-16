@@ -7,6 +7,7 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 
 
 func _ready() -> void:
+	add_to_group(&"end_level_sequence")
 	await get_tree().physics_frame
 	if (
 		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&

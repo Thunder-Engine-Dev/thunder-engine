@@ -8,6 +8,7 @@ var bounces_left: int = 2
 
 
 func _ready() -> void:
+	add_to_group(&"end_level_sequence")
 	await get_tree().physics_frame
 	if (
 		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&

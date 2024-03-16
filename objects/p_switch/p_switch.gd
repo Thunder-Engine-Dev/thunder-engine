@@ -9,7 +9,6 @@ signal timed_out
 @export var explosion_effect: PackedScene = preload("res://engine/objects/effects/smoke/smoke.tscn")
 @export var p_switch_music = preload("res://engine/objects/p_switch/p_switch_music.mp3")
 
-@onready var activator: Area2D = $Activator
 @onready var collision_shape: CollisionShape2D = $Collision
 @onready var collision_shape_stomped: CollisionShape2D = $Collision2
 @onready var collision_shape_activator: CollisionShape2D = $Activator/CollisionShape2D
@@ -19,8 +18,6 @@ signal timed_out
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
 @export var appear_visible: float = 28
-
-var player: Player
 
 func _physics_process(delta: float) -> void:
 	if !appear_distance:
@@ -41,6 +38,7 @@ func appear_process(delta: float) -> void:
 func active() -> void:
 	collision_shape.set_deferred(&"disabled", true)
 	collision_shape_stomped.set_deferred(&"disabled", false)
+	collision_shape_activator.set_deferred(&"disabled", true)
 	
 	sprite.play(&"activated")
 	Audio.play_sound(preload("res://engine/objects/core/checkpoint/sounds/switch.wav"), self)
@@ -55,7 +53,7 @@ func active() -> void:
 		gravity_scale = 0
 
 
-func _player_landed(player: Player) -> void:
+func _on_activation(player: Player) -> void:
 	if !duration.is_stopped(): return
 	
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
@@ -67,7 +65,7 @@ func _player_landed(player: Player) -> void:
 		player.died.connect(_stop_music, CONNECT_ONE_SHOT)
 	activated.emit()
 	active()
-	Audio.play_music(p_switch_music, 98)
+	Audio.play_music(p_switch_music, 98, {}, false, false)
 
 
 func _on_duration_timeout() -> void:
@@ -75,11 +73,14 @@ func _on_duration_timeout() -> void:
 		return
 	collision_shape.set_deferred(&"disabled", false)
 	collision_shape_stomped.set_deferred(&"disabled", true)
+	collision_shape_activator.set_deferred(&"disabled", false)
 	timed_out.emit()
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
-	Audio.stop_music_channel(98, false)
+	_stop_music()
+	var player = Thunder._current_player
 	if !is_instance_valid(player): return
+	if player.completed: return
 	if player.died.is_connected(_stop_music):
 		player.died.disconnect(_stop_music)
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
