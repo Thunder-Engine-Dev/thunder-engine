@@ -45,7 +45,7 @@ func _ready() -> void:
 		marker = Marker2D.new()
 		marker.position = Vector2(
 			global_position.x,
-			clamp(global_position.x, cam_pos.y - 248, cam_pos.y + 248)
+			clamp(global_position.y, cam_pos.y - 248, cam_pos.y + 248)
 		)
 		Scenes.current_scene.add_child(marker)
 	
