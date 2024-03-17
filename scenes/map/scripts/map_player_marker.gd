@@ -31,6 +31,7 @@ func _ready() -> void:
 	):
 		await get_tree().process_frame
 		Data.values.erase('map_force_selected_marker')
+		#print(Data.values)
 		player.current_marker = get_next_marker()
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()

@@ -167,7 +167,9 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	)
 	
 	if completion_write_save:
-		ProfileManager.current_profile.complete_level(scene_file_path)
-		ProfileManager.save_current_profile()
+		var profile = ProfileManager.current_profile
+		if !profile.has_completed(scene_file_path):
+			profile.complete_level(scene_file_path)
+			ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()
