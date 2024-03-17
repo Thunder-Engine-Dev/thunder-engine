@@ -1,7 +1,7 @@
 @tool
 class_name MarkerSpace extends Node2D
 
-@export var space_name: StringName
+@export var space_name: int
 @export var dot_texture: Texture2D
 @export var x_texture: Texture2D
 @export var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
@@ -15,6 +15,7 @@ var _next_space: MarkerSpace
 var dots: Array
 var dots_mapping = []
 var uncompleted_levels: Array[StringName] = []
+var allow_saving: bool = true
 
 var map: Node2D
 
@@ -48,16 +49,39 @@ func _ready() -> void:
 	
 	if !Engine.is_editor_hint():
 		await get_tree().process_frame
-		if !uncompleted_levels.is_empty():
-			var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
-			prof.set_next_level_name(
-				uncompleted_levels[0].get_file().get_slice(".", 0)
-			)
-			prof.set_world_numbers(
-				space_name,
-				str(get_next_marker_id() + 1)
-			)
-			ProfileManager.save_current_profile()
+		if allow_saving && !uncompleted_levels.is_empty():
+			_save_progress()
+
+
+func _save_progress() -> void:
+	var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
+	var next_level_name: String = uncompleted_levels[0].get_file().get_slice(".", 0)
+	
+	prof.set_next_level_name(next_level_name)
+	var _no_save: bool = false
+	var next_marker_id: int = get_next_marker_id() + 1
+	var new_world: int = space_name
+	var new_level: int = next_marker_id
+	var world_numbers: PackedStringArray = prof.get_world_numbers().split("-")
+	if world_numbers:
+		if space_name > int(world_numbers[0]):
+			new_world = space_name
+			new_level = next_marker_id
+		elif (
+			next_marker_id > int(world_numbers[1]) &&
+			int(space_name) >= int(world_numbers[0])
+		):
+			new_world = int(world_numbers[0])
+			new_level = next_marker_id
+		else:
+			_no_save = true
+			print("No save is needed")
+	if !_no_save:
+		prof.set_world_numbers(
+			new_world,
+			new_level
+		)
+		ProfileManager.save_current_profile()
 
 # Recive events
 func _notification(what: int) -> void:

@@ -26,10 +26,7 @@ signal selected(item_index: int, item_node: Control, immediate: bool)
 var selectors: Array
 
 func _ready() -> void:
-	for child in get_children():
-		if child is HSeparator || child is VSeparator:
-			continue
-		selectors.push_back(child)
+	_update_selectors()
 	
 	if trigger_selection_immediately:
 		selected.emit(current_item_index, selectors[current_item_index], true)
@@ -59,6 +56,13 @@ func move_selector(index: int) -> void:
 	_selection_update()
 
 
+func _update_selectors() -> void:
+	for child in get_children():
+		if child is HSeparator || child is VSeparator:
+			continue
+		selectors.push_back(child)
+
+
 func _selection() -> void:
 	if control_sound:
 		Audio.play_1d_sound(control_sound, true, { "ignore_pause": true })
@@ -66,7 +70,9 @@ func _selection() -> void:
 
 
 func _selection_update() -> void:
+	if selectors.size() <= current_item_index: return
 	var item = selectors[current_item_index] as MenuSelection
+		
 	selected.emit(current_item_index, item, false)
 	item._handle_focused(true)
 	

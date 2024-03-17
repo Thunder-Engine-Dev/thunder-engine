@@ -43,8 +43,8 @@ class Profile:
 			return data.world_numbers
 		return &""
 	
-	func set_world_numbers(world: StringName, level: StringName) -> void:
-		data.world_numbers = &"%s-%s" % [world, level]
+	func set_world_numbers(world: int, level: int) -> void:
+		data.world_numbers = &"%d-%d" % [world, level]
 
 
 var profiles: Dictionary
