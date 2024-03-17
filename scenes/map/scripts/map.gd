@@ -68,6 +68,7 @@ func _physics_process(delta: float) -> void:
 	)
 	
 	Audio.play_1d_sound(transition_sound)
+	Data.values.erase('map_force_selected_marker')
 
 
 func _get_music() -> Node:
