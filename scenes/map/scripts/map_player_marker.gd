@@ -25,8 +25,12 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
-	if is_level_completed():
+	if (
+		(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
+		Data.values.get('map_force_selected_marker') == level
+	):
 		await get_tree().process_frame
+		Data.values.erase('map_force_selected_marker')
 		player.current_marker = get_next_marker()
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()
