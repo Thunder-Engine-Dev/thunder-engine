@@ -57,6 +57,9 @@ func _save_progress() -> void:
 	var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
 	var next_level_name: String = uncompleted_levels[0].get_file().get_slice(".", 0)
 	
+	if Data.values.get('map_force_selected_marker'):
+		Data.values.map_force_selected_marker = uncompleted_levels[0]
+	
 	prof.set_next_level_name(next_level_name)
 	var _no_save: bool = false
 	var next_marker_id: int = get_next_marker_id() + 1

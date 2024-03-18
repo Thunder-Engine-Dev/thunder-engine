@@ -46,7 +46,7 @@ func _get_current_key(action: StringName) :
 	var keys = InputMap.action_get_events(action)
 	for key in keys:
 		if key is InputEventKey:
-			return key.as_text().split(' (')[0]
+			return key.as_text().get_slice(' (', 0)
 
 ## Loads controls settings to InputMap
 func _load_keys() -> void:

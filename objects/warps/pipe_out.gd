@@ -2,6 +2,7 @@
 @tool
 extends Area2D
 
+signal warp_ended
 
 @export_category("PipeOut")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.UP
@@ -45,6 +46,7 @@ func _on_body_exited(body: Node2D) -> void:
 		Thunder._current_hud.timer.paused = false
 		
 		player_z_index = 0
+		warp_ended.emit()
 
 
 func pass_player(new_player: Player) -> void:
