@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bitys6p06gwh6" path="res://engine/objects/core/finish_line/textures/crossingbar.png" id="2_35wvr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b44pc"]
-size = Vector2(448, 288)
+size = Vector2(416, 288)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wg2sy"]
 size = Vector2(44, 16)
@@ -62,7 +62,7 @@ visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionArea"]
-position = Vector2(224, -144)
+position = Vector2(240, -144)
 shape = SubResource("RectangleShape2D_b44pc")
 debug_color = Color(0.541176, 0.0823529, 0.560784, 0.419608)
 
