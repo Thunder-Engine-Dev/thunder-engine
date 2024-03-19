@@ -24,7 +24,6 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
-	if !is_level(): return
 	
 	if (
 		is_level_completed() && !Data.values.get('map_force_selected_marker') ||
@@ -37,12 +36,14 @@ func _ready() -> void:
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()
 		marker_space.make_dots_visible_before(global_position)
-		marker_space.add_uncompleted_levels_after(global_position)
+		marker_space.add_uncompleted_levels_after(level)
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.get_next_marker_id()
 		)
-	else:
-		marker_space.uncompleted_levels.append(level)
+	elif is_level():
+		await get_tree().process_frame
+		if marker_space.uncompleted_levels.is_empty():
+			marker_space.add_all_uncompleted_levels()
 
 
 func get_next_marker() -> MapPlayerMarker:

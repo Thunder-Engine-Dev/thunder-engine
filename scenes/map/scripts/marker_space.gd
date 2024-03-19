@@ -17,7 +17,7 @@ var _next_space: MarkerSpace
 var dots: Array
 var dots_mapping = []
 var total_levels: Array = []
-var uncompleted_levels: Array[StringName] = []
+var uncompleted_levels: Array[String] = []
 
 var map: Node2D
 
@@ -161,6 +161,8 @@ func draw_logic(child: Node2D, next_child: Node2D) -> void:
 		if_level_draw_x(child)
 	else:
 		if_level_make_x(child)
+		if next_child == get_last_marker():
+			if_level_make_x(next_child)
 
 
 func if_level_draw_x(mark: MapPlayerMarker) -> void:
@@ -210,8 +212,25 @@ func make_dots_visible_before(pos: Vector2) -> void:
 		found -= 1
 
 
-func add_uncompleted_levels_after(level: String) -> void:
-	pass
+func add_uncompleted_levels_after(marker: String) -> void:
+	uncompleted_levels.clear()
+	var switched_to_uncompleted: bool = false
+	for i in total_levels:
+		if i.level == marker:
+			switched_to_uncompleted = true
+			continue
+		if switched_to_uncompleted:
+			uncompleted_levels.append(i.level)
+	
+	#print("Uncompleted levels:", uncompleted_levels)
+
+func add_all_uncompleted_levels() -> void:
+	if !uncompleted_levels.is_empty(): return
+	for i in total_levels:
+		if !i.get("level"): continue
+		uncompleted_levels.append(i.level)
+	
+	#print("Added all levels:", uncompleted_levels)
 
 
 # Returns first marker
