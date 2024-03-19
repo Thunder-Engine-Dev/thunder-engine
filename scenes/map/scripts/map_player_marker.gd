@@ -1,3 +1,4 @@
+@icon("../textures/icons/branch.svg")
 @tool
 class_name MapPlayerMarker extends Marker2D
 
@@ -6,8 +7,6 @@ class_name MapPlayerMarker extends Marker2D
 
 # DO NOT USE OUTSIDE THIS SCRIPT
 var _level: String
-var shape: CollisionShape2D
-var last_position: Vector2
 
 @onready var marker_space: MarkerSpace = get_parent()
 var player
@@ -25,20 +24,24 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
+	if !is_level(): return
+	
 	if (
-		(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
+		is_level_completed() && !Data.values.get('map_force_selected_marker') ||
 		Data.values.get('map_force_selected_marker') == level
 	):
 		await get_tree().process_frame
 		#Data.values.erase('map_force_selected_marker')
 		player.current_marker = get_next_marker()
+		#print(marker_space.get_next_marker_id())
 		player.global_position = global_position
 		player.camera.reset_smoothing.call_deferred()
 		marker_space.make_dots_visible_before(global_position)
+		marker_space.add_uncompleted_levels_after(global_position)
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.get_next_marker_id()
 		)
-	elif is_level():
+	else:
 		marker_space.uncompleted_levels.append(level)
 
 

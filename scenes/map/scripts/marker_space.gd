@@ -1,3 +1,4 @@
+@icon("../textures/icons/branch_space.svg")
 @tool
 class_name MarkerSpace extends Node2D
 
@@ -6,6 +7,7 @@ class_name MarkerSpace extends Node2D
 @export var x_texture: Texture2D
 @export var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
 @export var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
+@export var allow_saving: bool = true
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -14,8 +16,8 @@ var _next_space: MarkerSpace
 
 var dots: Array
 var dots_mapping = []
+var total_levels: Array = []
 var uncompleted_levels: Array[StringName] = []
-var allow_saving: bool = true
 
 var map: Node2D
 
@@ -120,40 +122,16 @@ func _draw() -> void:
 				child = next_child
 				continue
 			
-			# Checks if rotation is near 90 deg
-			var rot: float = child.global_position.direction_to(next_child.global_position).angle()
-			var incorrect: bool = roundi(rad_to_deg(abs(rot))) % 90
-			var modul: Color = Color.GREEN if !incorrect else Color.RED
-			
-			
-			# draw line
-			if Engine.is_editor_hint():
-				draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
-			
-			if Engine.is_editor_hint():
-				if_level_draw_x(child)
-			else:
-				if_level_make_x(child)
+			draw_logic(child, next_child)
 			
 			child = next_child
-			
 	
 	# same but with next Marker Space
 	if next_space != null && next_space != self:
 		var next_child = next_space.get_first_marker()
 		if next_child == null: return
 		
-		var rot: float = child.global_position.direction_to(next_child.global_position).angle()
-		var incorrect: bool = roundi(rad_to_deg(abs(rot))) % 90
-		var modul: Color = Color.GREEN if !incorrect else Color.RED
-		
-		if Engine.is_editor_hint():
-			draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
-		
-		if Engine.is_editor_hint():
-			if_level_draw_x(child)
-		else:
-			if_level_make_x(child)
+		draw_logic(child, next_child)
 		
 	if draw_dots && dot_texture != null:
 		build_dots()
@@ -167,12 +145,31 @@ func _draw() -> void:
 	
 	changed.emit()
 
+func draw_logic(child: Node2D, next_child: Node2D) -> void:
+	# Checks if rotation is near 90 deg
+	var rot: float = child.global_position.direction_to(next_child.global_position).angle()
+	var incorrect: bool = roundi(rad_to_deg(abs(rot))) % 90
+	var modul: Color = Color.GREEN if !incorrect else Color.RED
+	
+	# Draw a line
+	if Engine.is_editor_hint():
+		draw_line(child.global_position - global_position,next_child.global_position - global_position,modul,3)
+	
+	# If in editor, it will be a plain sprite, but in game,
+	# it will be an actual node with level information
+	if Engine.is_editor_hint():
+		if_level_draw_x(child)
+	else:
+		if_level_make_x(child)
+
+
 func if_level_draw_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
 		draw_texture(x_texture,(mark.global_position - (x_texture.get_size()/2)) - global_position)
 		
 func if_level_make_x(mark: MapPlayerMarker) -> void:
 	if mark.is_level() && x_texture != null:
+		total_levels.append(mark)
 		var m = map.get_node(map.player).x.instantiate()
 		m.global_position = mark.global_position
 		m.visible = mark.is_level_completed()
@@ -206,13 +203,16 @@ func make_dots_visible_before(pos: Vector2) -> void:
 			dots_mapping[i][1] is AnimatedSprite2D
 		):
 			found = i
-			#print('found', i)
 			break
 	
 	while found >= 0:
 		dots_mapping[found][1].visible = true
 		found -= 1
-	
+
+
+func add_uncompleted_levels_after(level: String) -> void:
+	pass
+
 
 # Returns first marker
 func get_first_marker() -> MapPlayerMarker:
@@ -245,7 +245,6 @@ func item_changed() -> void:
 
 func build_dots() -> void:
 	dots.clear()
-	var dot_intrval: float = 16
 	
 	var child: MapPlayerMarker
 	for next_child: Node2D in get_children():
@@ -255,18 +254,7 @@ func build_dots() -> void:
 		if child == null:
 			child = next_child as MapPlayerMarker
 		
-		var length = child.global_position.distance_to(next_child.global_position)
-		var amount = roundi(length / dot_intrval)
-		var direction = child.global_position.direction_to(next_child.global_position)
-		var computed_interval = length / amount
-		
-		for dot in range(amount):
-			if dot == 0:
-				if child.is_level():
-					continue
-			var f_pos = child.global_position + direction * (dot * computed_interval)
-			dots.push_back(f_pos)
-			dots_mapping.append([f_pos, child])
+		dot_building_logic(child, next_child)
 		
 		child = next_child as MapPlayerMarker
 	
@@ -274,18 +262,24 @@ func build_dots() -> void:
 		var next_child = next_space.get_first_marker()
 		if next_child == null: return
 		
-		var length = child.global_position.distance_to(next_child.global_position)
-		var amount = roundi(length / dot_intrval)
-		var direction = child.global_position.direction_to(next_child.global_position)
-		var computed_interval = length / amount
-		
-		for dot in range(amount):
-			if dot == 0:
-				if child.is_level():
-					continue
-			var f_pos = child.global_position + direction * (dot * computed_interval)
-			dots.push_back(f_pos)
-			dots_mapping.append([f_pos, child])
+		dot_building_logic(child, next_child)
+
+func dot_building_logic(child: MapPlayerMarker, next_child: Node2D) -> void:
+	var dot_interval: float = 16
+	
+	var length = child.global_position.distance_to(next_child.global_position)
+	var amount = roundi(length / dot_interval)
+	var direction = child.global_position.direction_to(next_child.global_position)
+	var computed_interval = length / amount
+	
+	for dot in range(amount):
+		if dot == 0:
+			if child.is_level():
+				continue
+		var f_pos = child.global_position + direction * (dot * computed_interval)
+		dots.push_back(f_pos)
+		dots_mapping.append([f_pos, child])
+
 
 # Updates lines
 func set_next_space(value: MarkerSpace) -> void:
