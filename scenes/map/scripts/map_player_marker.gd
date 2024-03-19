@@ -38,7 +38,7 @@ func _ready() -> void:
 		marker_space.make_dots_visible_before(global_position)
 		marker_space.add_uncompleted_levels_after(level)
 		Scenes.current_scene.next_level_ready.emit(
-			marker_space.get_next_marker_id()
+			marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
 		)
 	elif is_level():
 		await get_tree().process_frame
