@@ -137,7 +137,7 @@ autostart = true
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]
 [connection signal="collided_floor" from="." to="." method="turn_y"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/EnemyAttacked" method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
