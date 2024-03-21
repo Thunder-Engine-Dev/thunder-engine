@@ -19,18 +19,12 @@ var use_smooth_transition: bool = false
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
 var is_current: bool = false
 
-var _visible_on_screen: VisibleOnScreenEnabler2D
-
-
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	var player: Player = Thunder._current_player
 	if !player: return
 	if get_rect().abs().has_point(player.global_position): _switch_bounds()
-	
-	_visible_on_screen = VisibleOnScreenEnabler2D.new()
-	_visible_on_screen.rect = get_rect().grow(2)
-	add_child.call_deferred(_visible_on_screen)
+
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
