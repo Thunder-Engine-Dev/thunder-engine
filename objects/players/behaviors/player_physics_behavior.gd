@@ -196,13 +196,32 @@ func _stop_sliding_movement() -> void:
 #= Shape
 func _shape_process() -> void:
 	var crouch_shape: bool = (
-		(player.is_crouching || player.has_stuck) &&
+		player.is_crouching &&
 		player.warp == Player.Warp.NONE
 	)
 	var shaper: Shaper2D = (
 		suit.physics_shaper_crouch if crouch_shape else suit.physics_shaper
 	)
 	if !shaper: return
+	
+	var is_colliding: bool = _shape_recovery_process()
+	
+	player.has_stuck = is_colliding
+	if player.has_stuck:
+		shaper = suit.physics_shaper_crouch
+	
+	shaper.install_shape_for(player.collision_shape)
+	shaper.install_shape_for_caster(player.body)
+	shaper.install_shape_for_caster(player.attack)
+	
+	if player.collision_shape.shape is RectangleShape2D:
+		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
+		player.bubble.position.y = 0 if suit.type == PlayerSuit.Type.SMALL else -2
+
+
+func _shape_recovery_process() -> bool:
+	if player.warp != Player.Warp.NONE || player.completed:
+		return false
 	
 	var raycast: RayCast2D = player.collision_recovery
 	raycast.position = suit.physics_shaper.shape_pos
@@ -217,10 +236,12 @@ func _shape_process() -> void:
 		var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
 		var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
 		if tile_data:
-			for j in tile_data.get_collision_polygons_count(layer):
-				if !tile_data.is_collision_polygon_one_way(layer, j):
-					is_colliding = true
-					break
+			var phys_layer = collider.tile_set.get_physics_layers_count()
+			for i in phys_layer:
+				for j in tile_data.get_collision_polygons_count(i):
+					if !tile_data.is_collision_polygon_one_way(i, j):
+						is_colliding = true
+						break
 	elif collider is CollisionObject2D && !collider is StaticBumpingBlock:
 		var i = raycast.get_collider_shape()
 		if !collider.is_shape_owner_one_way_collision_enabled(i):
@@ -228,17 +249,7 @@ func _shape_process() -> void:
 	else:
 		is_colliding = raycast.is_colliding()
 	
-	player.has_stuck = player.warp == Player.Warp.NONE && is_colliding
-	if player.has_stuck:
-		shaper = suit.physics_shaper_crouch
-	
-	shaper.install_shape_for(player.collision_shape)
-	shaper.install_shape_for_caster(player.body)
-	shaper.install_shape_for_caster(player.attack)
-	
-	if player.collision_shape.shape is RectangleShape2D:
-		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
-		player.bubble.position.y = 0 if suit.type == PlayerSuit.Type.SMALL else -2
+	return is_colliding
 
 
 #= Head
