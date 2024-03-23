@@ -214,13 +214,11 @@ func _shape_process() -> void:
 	var is_colliding: bool = false
 	if collider is TileMap:
 		var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
-		for i in collider.get_layers_count():
-			var tile_data: TileData = collider.get_cell_tile_data(i, cell)
-			if !tile_data:
-				continue
-			
-			for j in tile_data.get_collision_polygons_count(i):
-				if !tile_data.is_collision_polygon_one_way(i, j):
+		var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
+		var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
+		if tile_data:
+			for j in tile_data.get_collision_polygons_count(layer):
+				if !tile_data.is_collision_polygon_one_way(layer, j):
 					is_colliding = true
 					break
 	elif collider is CollisionObject2D && !collider is StaticBumpingBlock:
@@ -260,7 +258,7 @@ func _head_process() -> void:
 		collider.global_position.direction_to(player.head.global_position + 8 * Vector2.DOWN.rotated(player.global_rotation)).dot(Vector2.DOWN.rotated(collider.global_rotation)) > cos(PI/4) && \
 		((player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
 		(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
-		(player.is_crouching || player.has_stuck)):
+		(player.is_crouching)):
 			collider.got_bumped.call_deferred(player)
 	
 	player.bubble.emitting = !player.is_underwater_out
