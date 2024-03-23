@@ -208,7 +208,7 @@ func _shape_process() -> void:
 		-suit.physics_shaper.shape.size.y + 16 - suit.physics_shaper.shape_pos.y
 	)
 	player.collision_recovery.force_raycast_update()
-	player.has_stuck = player.collision_recovery.is_colliding()
+	player.has_stuck = player.collision_recovery.is_colliding() && player.warp == Player.Warp.NONE
 	if player.has_stuck:
 		shaper = suit.physics_shaper_crouch
 	shaper.install_shape_for(player.collision_shape)
