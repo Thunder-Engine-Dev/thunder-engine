@@ -52,12 +52,19 @@ func _decelerate(dece: float, delta: float) -> void:
 
 
 func _movement_x(delta: float) -> void:
+	# Switch to sliding movement if slided on a slope
 	if player.slided:
 		var do_slide = true if \
 			suit.physics_crouchable else true if player.left_right == 0 else false
 		if do_slide:
 			_start_sliding_movement()
 			return
+	# Recovery if Super Mario has their head stuck in blocks
+	if !player.is_crouching && player.has_stuck && player.is_on_floor():
+		player.left_right = 0
+		player.jumping = 0
+		player.speed.x = -player.direction * config.stuck_recovery_speed
+	# Crouching / Completed Level motion speed
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		var deceleration: float = (
 			config.walk_crouch_deceleration if (
@@ -83,6 +90,7 @@ func _movement_x(delta: float) -> void:
 		_decelerate(config.walk_turning_acce, delta)
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
+	
 
 
 func _movement_y(delta: float) -> void:
@@ -119,6 +127,8 @@ func _movement_climbing(delta: float) -> void:
 	if player.is_crouching || player.completed: return
 	if player.is_sliding: _stop_sliding_movement()
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
+	if player.left_right != 0:
+		player.direction = player.left_right
 	# Resist to gravity
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta * 0.5
 	
@@ -134,9 +144,6 @@ func _movement_climbing(delta: float) -> void:
 #= Sliding from slopes
 func _movement_sliding(delta: float) -> void:
 	if player.completed: return
-	#if !player.is_on_floor():
-	#	_stop_sliding_movement()
-	#	return
 	var floor_normal = rad_to_deg(player.get_floor_normal().x)
 	var dir: bool = player.direction == 1
 	# Acceleration
@@ -188,10 +195,22 @@ func _stop_sliding_movement() -> void:
 
 #= Shape
 func _shape_process() -> void:
+	var crouch_shape: bool = (
+		(player.is_crouching || player.has_stuck) &&
+		player.warp == Player.Warp.NONE
+	)
 	var shaper: Shaper2D = (
-		suit.physics_shaper_crouch if player.is_crouching && player.warp == Player.Warp.NONE else suit.physics_shaper
+		suit.physics_shaper_crouch if crouch_shape else suit.physics_shaper
 	)
 	if !shaper: return
+	player.collision_recovery.position = suit.physics_shaper.shape_pos
+	player.collision_recovery.target_position.y = (
+		-suit.physics_shaper.shape.size.y + 16 - suit.physics_shaper.shape_pos.y
+	)
+	player.collision_recovery.force_raycast_update()
+	player.has_stuck = player.collision_recovery.is_colliding()
+	if player.has_stuck:
+		shaper = suit.physics_shaper_crouch
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
 	shaper.install_shape_for_caster(player.attack)
@@ -199,6 +218,7 @@ func _shape_process() -> void:
 	if player.collision_shape.shape is RectangleShape2D:
 		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
 		player.bubble.position.y = 0 if suit.type == PlayerSuit.Type.SMALL else -2
+
 
 #= Head
 func _head_process() -> void:

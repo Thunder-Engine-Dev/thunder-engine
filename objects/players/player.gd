@@ -89,6 +89,8 @@ var is_crouching: bool
 var is_underwater: bool
 var is_underwater_out: bool
 
+var has_stuck: bool
+
 var completed: bool
 
 var warp: Warp
@@ -101,9 +103,11 @@ var _suit_appear: bool
 @onready var _is_ready: bool = true
 
 @onready var control: PlayerControl = PlayerControl.new()
+@onready var starman_combo: Combo = Combo.new(self)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var collision_recovery: RayCast2D = $CollisionRecovery
 @onready var body: ShapeCast2D = $Body
 @onready var head: ShapeCast2D = $Head
 @onready var underwater: Node = $Underwater
@@ -111,8 +115,6 @@ var _suit_appear: bool
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubble: GPUParticles2D = $Sprite/Bubble
-
-@onready var starman_combo: Combo = Combo.new(self)
 
 
 func _ready() -> void:

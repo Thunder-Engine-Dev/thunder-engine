@@ -20,6 +20,7 @@ physics_shaper = ExtResource("5_gkp4p")
 physics_shaper_crouch = ExtResource("5_gkp4p")
 animation_sprites = ExtResource("2_4cms1")
 animation_behavior = ExtResource("1_36482")
+behavior_crouch_reflect_fireballs = false
 extra_vars = {}
 sound_hurt = ExtResource("8_f2g7m")
 sound_death = ExtResource("7_p8pjw")
