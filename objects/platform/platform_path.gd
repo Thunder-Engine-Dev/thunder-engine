@@ -89,7 +89,8 @@ func _body_check(body: CharacterBody2D) -> void:
 
 
 func _player_landed(player: Player) -> void:
-	players_standing.append(player)
+	if !player in players_standing:
+		players_standing.append(player)
 	players_have_stood = true
 	on_moving = true
 

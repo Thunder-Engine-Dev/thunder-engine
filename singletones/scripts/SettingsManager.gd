@@ -10,7 +10,7 @@ const settings_path = "user://settings.thss"
 
 var default_settings = {
 	"sound": 1,
-	"music": 1,
+	"music": 0.7,
 	"quality": QUALITY.MAX,
 	"game_speed": 1,
 	"autopause": true,

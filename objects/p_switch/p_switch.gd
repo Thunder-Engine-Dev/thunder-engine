@@ -50,6 +50,7 @@ func active() -> void:
 		NodeCreator.prepare_2d(explosion_effect, self).bind_global_transform(Vector2.UP * 16).create_2d()
 		set_deferred("collision", false)
 		$Sprite.visible = false
+		collision_shape_stomped.set_deferred(&"disabled", true)
 		gravity_scale = 0
 
 
@@ -71,9 +72,10 @@ func _on_activation(player: Player) -> void:
 func _on_duration_timeout() -> void:
 	if sprite.animation == &"default":
 		return
-	collision_shape.set_deferred(&"disabled", false)
-	collision_shape_stomped.set_deferred(&"disabled", true)
-	collision_shape_activator.set_deferred(&"disabled", false)
+	if !is_once:
+		collision_shape.set_deferred(&"disabled", false)
+		collision_shape_stomped.set_deferred(&"disabled", true)
+		collision_shape_activator.set_deferred(&"disabled", false)
 	timed_out.emit()
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
