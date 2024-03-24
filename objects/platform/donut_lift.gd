@@ -37,7 +37,8 @@ func _physics_process(delta):
 			if respawnable:
 				reset_vars()
 				sprite.scale = Vector2.ZERO
-				var tw = create_tween().tween_property(sprite, ^"scale", Vector2.ONE, 0.4)
+				var tw = create_tween()
+				tw.tween_property(sprite, ^"scale", Vector2.ONE, 0.4)
 			else:
 				queue_free()
 		return
