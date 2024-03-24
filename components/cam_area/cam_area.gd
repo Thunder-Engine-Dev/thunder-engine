@@ -12,6 +12,7 @@ extends Control
 @export var music_loader_ref: NodePath
 
 signal view_section_changed
+signal view_section_changed_with_section(section: Control)
 
 # Switch to prevent transition activating at the beginning
 var use_smooth_transition: bool = false
@@ -84,6 +85,7 @@ func _switch_bounds() -> void:
 		music_loader.index = set_music_index
 	
 	view_section_changed.emit()
+	view_section_changed_with_section.emit(self)
 	
 	is_current = true
 	camera.set_meta(&"cam_area", self)
