@@ -1,4 +1,4 @@
-extends ByNodeScript
+extends "res://engine/objects/enemies/_dead/prefabs/do_killed.gd"
 
 
 func _ready() -> void:
@@ -8,10 +8,4 @@ func _ready() -> void:
 	node.respawn_delay = body.respawn_delay
 	node.respawn_offset = body.respawn_offset
 	
-	if vars.get(&"dead_sprite", ^"") != ^"":
-		var dspr: Node2D = vars.enemy_attacked.get_node_or_null(vars.dead_sprite).duplicate()
-		if !dspr:
-			return
-		if &"flip_v" in dspr:
-			dspr.flip_v = true
-		node.add_child(dspr)
+	super()

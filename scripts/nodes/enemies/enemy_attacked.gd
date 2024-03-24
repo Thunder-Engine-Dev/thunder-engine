@@ -212,7 +212,6 @@ func _creation(creation: InstanceNode2D) -> void:
 	
 	var vars: Dictionary = {
 		enemy_attacked = self,
-		#attacker_speed = get_meta(&"attacker_speed") if has_meta(&"attacker_speed") else Vector2.ZERO
 	}
 	NodeCreator.prepare_ins_2d(creation, _center).execute_instance_script(vars).create_2d()
 

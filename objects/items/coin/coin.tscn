@@ -80,7 +80,7 @@ autoplay = "default"
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 6.19888e-07)
-scale = Vector2(1, 1.4)
+rect = Rect2(-17, -17, 34, 34)
 
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 4

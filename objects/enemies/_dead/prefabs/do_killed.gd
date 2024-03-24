@@ -23,7 +23,6 @@ func _ready() -> void:
 	if !death_node: return
 	
 	if !attacker_speed:
-		#_wait_for_meta()
 		attacker_speed = Vector2.ZERO
 	
 	death_node.visible = true
@@ -37,15 +36,9 @@ func _ready() -> void:
 			if root:
 				node.gravity_dir = root.gravity_dir
 	node.add_child(death_node)
-	
-#func _wait_for_meta() -> void:
-#	await Thunder.get_tree().physics_frame
-#	if enemy_attacked.has_meta(&"attacker_speed"):
-#		attacker_speed = enemy_attacked.get_meta(&"attacker_speed")
-#		fancy_death_effect()
+
 
 func fancy_death_effect() -> void:
-	#node.speed = Vector2(125, -300)
 	dir = sign(attacker_speed.x)
 	node.speed.x *= dir
 	if &"rotating_dir" in node:

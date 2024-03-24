@@ -36,7 +36,6 @@ var _movement: bool:
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var timer_pitching: Timer = $Pitching
 @onready var visible_on_screen_2d: VisibleOnScreenNotifier2D = $VisibleOnScreen2D
-@onready var solid_checker: Area2D = $SolidChecker
 
 
 func _physics_process(delta: float) -> void:
@@ -106,12 +105,9 @@ func _on_pitching() -> void:
 	await sprite.animation_finished
 	if sprite.animation == &"pitch":
 		await get_tree().create_timer(0.4, false).timeout
-		while solid_checker.get_overlapping_bodies().size() > 0:
-			await get_tree().physics_frame
 		sprite.play_backwards(&"pitch")
 		await sprite.animation_finished
 		sprite.play(&"default")
-		while solid_checker.get_overlapping_bodies().size() > 0:
-			await get_tree().physics_frame
 		_pitch()
 		timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+

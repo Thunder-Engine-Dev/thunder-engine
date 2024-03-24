@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://j4f2gd3x20bj"]
+[gd_scene load_steps=50 format=3 uid="uid://j4f2gd3x20bj"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_rfja5"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_wpj0n"]
@@ -37,11 +37,12 @@ trans_inheritances = 6
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
 trans_skew = 0.0
-visi_z_index = 0
+visi_z_index = 2
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"dead_sprite": NodePath("../../Sprite")
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("7_v5tr1")
 
@@ -306,9 +307,6 @@ animations = [{
 "speed": 50.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ercr8"]
-size = Vector2(32, 32)
-
 [node name="Lakitu" type="Node2D"]
 script = ExtResource("1_rfja5")
 pitched = SubResource("Resource_etq5v")
@@ -333,6 +331,7 @@ killing_immune = {
 "boomerang": false,
 "fireball": false,
 "hammer": false,
+"iceball": false,
 "shell": false,
 "shell_defence": 0,
 "shell_forced": false,
@@ -364,15 +363,6 @@ modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(3.57627e-08, 4.76837e-07)
 scale = Vector2(1.6, 2.4)
 metadata/_edit_lock_ = true
-
-[node name="SolidChecker" type="Area2D" parent="."]
-visible = false
-collision_layer = 32
-collision_mask = 32
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_ercr8")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
