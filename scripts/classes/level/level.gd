@@ -124,7 +124,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
-	if is_instance_valid(Audio._music_channels[1]):
+	if 1 in Audio._music_channels && is_instance_valid(Audio._music_channels[1]):
 		Audio._music_channels[1].stop()
 	if completion_music:
 		Audio.play_music(completion_music, -1)

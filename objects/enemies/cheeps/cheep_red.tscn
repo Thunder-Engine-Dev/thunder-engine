@@ -96,10 +96,6 @@ killing_immune = {
 killing_creation = SubResource("Resource_0wfa5")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_w3gcv")
-custom_vars = {
-"attachment_killed": NodePath("../../Sprite/Dead"),
-"attachment_stomped": NodePath("../../Sprite/Dead")
-}
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
 [node name="SwimX" type="ShapeCast2D" parent="."]
@@ -137,7 +133,7 @@ autostart = true
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]
 [connection signal="collided_floor" from="." to="." method="turn_y"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/EnemyAttacked" method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
