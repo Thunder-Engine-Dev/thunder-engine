@@ -38,6 +38,7 @@ max_falling_speed = 500.0
 metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_5emkl")
 debug_color = Color(0, 0.643137, 0.305882, 0.419608)
