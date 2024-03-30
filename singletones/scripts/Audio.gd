@@ -199,7 +199,7 @@ func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float,
 	if !player: return
 	if !is_instance_valid(player): return
 	
-	var tween: Tween = create_tween().set_trans(method)
+	var tween: Tween = create_tween().set_trans(method).set_ease(Tween.EASE_IN)
 	tween.tween_property(player, "volume_db", to, duration)
 	tween.tween_callback(
 		func() -> void:
@@ -228,7 +228,7 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 			if is_instance_valid(openmpt):
 				openmpt.queue_free()
 	else:
-		fade_music_1d_player(_music_channels[channel_id], -40, 1.5, Tween.TRANS_LINEAR, true)
+		fade_music_1d_player(_music_channels[channel_id], -40, 2, Tween.TRANS_SINE, true)
 
 
 ## Stop all musics from playing
