@@ -58,10 +58,6 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
 	scene_ready.emit()
-	await get_tree().process_frame
-	await get_tree().process_frame
-	if SettingsManager.settings.vsync == true:
-		DisplayServer.window_set_vsync_mode.call_deferred(DisplayServer.VSYNC_ENABLED)
 
 
 ## Loads the scene from the given path and instantiates it
