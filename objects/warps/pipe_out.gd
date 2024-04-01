@@ -23,7 +23,7 @@ func _ready() -> void:
 	$TextDir.queue_free()
 	body_exited.connect(_on_body_exited)
 	
-	if trigger_immediately:
+	if trigger_immediately && Data.values.checkpoint == -1:
 		player = Thunder._current_player
 		player_z_index = player.z_index
 		player.speed = Vector2.ZERO
