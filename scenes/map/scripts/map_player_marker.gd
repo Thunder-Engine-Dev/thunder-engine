@@ -34,7 +34,10 @@ func _ready() -> void:
 		player.current_marker = get_next_marker()
 		#print(marker_space.get_next_marker_id())
 		player.global_position = global_position
-		player.camera.reset_smoothing.call_deferred()
+		
+		if is_instance_valid(player.camera):
+			player.camera.reset_smoothing.call_deferred()
+		
 		marker_space.make_dots_visible_before(global_position)
 		marker_space.add_uncompleted_levels_after(level)
 		Scenes.current_scene.next_level_ready.emit(

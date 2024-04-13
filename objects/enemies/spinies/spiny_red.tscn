@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_ne3q7"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_wxq5y"]
-[ext_resource type="Texture2D" uid="uid://c04n1tivb0f5h" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="8_b2lnc"]
+[ext_resource type="Texture2D" uid="uid://vi6d2g1vukxs" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="8_b2lnc"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_vul36"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_bx7fb"]
