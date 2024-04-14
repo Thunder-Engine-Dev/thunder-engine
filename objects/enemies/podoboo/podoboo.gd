@@ -3,6 +3,7 @@ extends GeneralMovementBody2D
 
 @export var interval: float = 3
 @export var jumping_height: float = 256
+@export var one_shot: bool = false
 
 var jumping: bool
 var as_projectile: bool
@@ -49,7 +50,12 @@ func _physics_process(delta: float) -> void:
 			_pos = global_position
 			vel_set_y(0)
 			jumping = false
-			timer_interval.start(interval)
+			
+			if !one_shot:
+				timer_interval.start(interval)
+			else:
+				queue_free()
+			
 			return
 		_pos = global_position
 
