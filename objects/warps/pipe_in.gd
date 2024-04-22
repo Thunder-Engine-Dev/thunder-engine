@@ -9,7 +9,7 @@ extends Area2D
 @export_group("General")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.DOWN
 @export_node_path("Area2D") var warp_to: NodePath
-@export var warp_to_scene: String
+@export_file("*.tscn", "*.scn") var warp_to_scene: String
 @export var trigger_finish: bool = false
 @export var warping_speed: float = 60
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
@@ -76,8 +76,8 @@ func _physics_process(delta: float) -> void:
 		return
 	if !player: return
 	
-	var input_x: int = int(Input.get_axis(player.control.left, player.control.right))
-	var input_y: int = int(Input.get_axis(player.control.up, player.control.down))
+	var input_x: int = player.left_right
+	var input_y: int = player.up_down
 	
 	if !_on_warp && player.warp == Player.Warp.NONE:
 		if input_x > 0 && warp_direction == Player.WarpDir.RIGHT && player.is_on_floor():
