@@ -38,6 +38,7 @@ func horizontal_correction(amount: int) -> void:
 	
 	if !collide: return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return
+	if Thunder.get_or_null(collide.get_collider(), "_ignore_colliding_body_correction") == true: return
 	
 	var normal = collide.get_normal().rotated(-global_rotation)
 	if abs(normal.x) >= 0.4: return
@@ -63,6 +64,7 @@ func vertical_correction(amount: int) -> void:
 	
 	if !collide: return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return
+	if Thunder.get_or_null(collide.get_collider(), "_ignore_colliding_body_correction") == true: return
 	
 	var normal = collide.get_normal().rotated(-global_rotation)
 	if not abs(normal.x) == 1: return

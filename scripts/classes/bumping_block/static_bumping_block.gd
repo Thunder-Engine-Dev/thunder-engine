@@ -43,6 +43,8 @@ var _unsolid_mask: int = 1
 #var _self_modulate_alpha: float
 var _no_result_appearing_animation: bool = false
 
+var _ignore_colliding_body_correction: bool = false
+
 @onready var collision_layer_ori: int = collision_layer
 @onready var collision_mask_ori: int = collision_mask
 
@@ -68,6 +70,7 @@ func _ready() -> void:
 			collision_layer = _unsolid_layer
 			collision_mask = _unsolid_mask
 			_collision_shape_2d.set_deferred(&"disabled", true)
+		_ignore_colliding_body_correction = !initially_visible_and_solid
 		_sprites.visible = initially_visible_and_solid
 
 
@@ -89,6 +92,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if !active: return
 	
 	_sprites.visible = true
+	_ignore_colliding_body_correction = false
 	if !initially_visible_and_solid:
 		collision_layer = collision_layer_ori
 		collision_mask = collision_mask_ori

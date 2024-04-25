@@ -27,4 +27,6 @@ func collect() -> void:
 	if !mus_loader: return
 	mus_loader.play_immediately = false
 	mus_loader.pause_music()
+	Audio._music_tweens
 	Audio.play_music(starman_music, 98)
+	player._starman_faded = false
