@@ -68,7 +68,7 @@ func _save_progress() -> void:
 	var new_world: int = space_name
 	var new_level: int = next_marker_id
 	var world_numbers: PackedStringArray = prof.get_world_numbers().split("-")
-	if !world_numbers.is_empty():
+	if world_numbers.size() > 1:
 		if space_name > int(world_numbers[0]):
 			new_world = space_name
 			new_level = next_marker_id

@@ -27,6 +27,10 @@ func collect() -> void:
 	if !mus_loader: return
 	mus_loader.play_immediately = false
 	mus_loader.pause_music()
-	Audio._music_tweens
-	Audio.play_music(starman_music, 98)
+	for i in Audio._music_tweens:
+		i.kill()
+	if Audio._music_channels.has(98) && is_instance_valid(Audio._music_channels[98]):
+		Audio._music_channels[98].volume_db = 0
+	else:
+		Audio.play_music(starman_music, 98, { volume = 0 })
 	player._starman_faded = false

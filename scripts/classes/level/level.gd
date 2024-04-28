@@ -70,22 +70,58 @@ func _prepare_template() -> void:
 	
 	var camera = Camera2D.new()
 	camera.set_script(load("res://engine/objects/players/player_camera_2d.gd"))
-	camera.limit_left = 0
-	camera.limit_bottom = 480
-	camera.limit_top = 0
+	camera.editor_draw_screen = false
 	add_child(camera)
 	camera.set_name('PlayerCamera2D')
 	camera.set_owner(self)
+	camera.set_meta(&"_edit_lock_", true)
 	
+	# Camera limits
+	var cam_area = load("res://engine/components/cam_area/cam_area.tscn").instantiate()
+	add_child(cam_area)
+	cam_area.size = Vector2(11008, 480)
+	cam_area.set_name('CameraArea')
+	cam_area.set_owner(self)
+	cam_area.set_meta(&"_edit_lock_", true)
+	
+	# Setting up tileset for the TileMap
+	var tileset = TileSet.new()
+	tileset.tile_size = Vector2(32, 32)
+	tileset.add_physics_layer(0)
+	tileset.set_physics_layer_collision_layer(0, 0b1110000)
+	tileset.set_physics_layer_collision_mask(0, 0)
+	var tileset_source = TileSetAtlasSource.new()
+	tileset_source.texture = load("res://engine/tilesets/overworld/hard_block.png")
+	tileset_source.texture_region_size = Vector2(32, 32)
+	tileset_source.create_tile(Vector2i.ZERO)
+	tileset.add_source(tileset_source)
+	var tile_data = tileset_source.get_tile_data(Vector2i.ZERO, 0)
+	var polygons_array := PackedVector2Array(
+		[Vector2.ONE * -16, Vector2(1, -1) * 16, Vector2.ONE * 16, Vector2(-1, 1) * 16]
+	)
+	tile_data.add_collision_polygon(0)
+	tile_data.set_collision_polygon_points(0, 0, polygons_array)
+	
+	# Adding TileMap with tileset we defined above
 	var tilemap = TileMap.new()
-	tilemap.tile_set = load("res://engine/tilesets/placeholder/placeholder_tileset.tres").duplicate()
+	tilemap.tile_set = tileset
 	add_child(tilemap, true)
-	tilemap.set_cell(0, Vector2i(2, 13), 2, Vector2i.ZERO)
+	tilemap.set_cell(0, Vector2i(2, 13), 0, Vector2i.ZERO)
 	tilemap.set_owner(self)
+	tilemap.set_meta(&"_edit_lock_", true)
 	
 	var hud = load("res://engine/components/hud/hud.tscn").instantiate()
 	add_child(hud)
 	hud.set_owner(self)
+	
+	var parallax_bg = ParallaxBackground.new()
+	add_child(parallax_bg, true)
+	parallax_bg.set_owner(self)
+	
+	var folder = Node2D.new()
+	add_child(folder)
+	folder.set_name('Objects')
+	folder.set_owner(self)
 
 
 func _physics_process(delta: float) -> void:
