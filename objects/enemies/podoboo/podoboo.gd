@@ -31,11 +31,15 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 		return
 	
-	if speed.y > 0:
-		sprite_node.flip_v = true
-	
 	if sprite_node:
+		# Sprite rotation to the direction of velocity
+		if SettingsManager.settings.quality != SettingsManager.QUALITY.MIN:
+			sprite_node.global_rotation = lerp(sprite_node.global_rotation, velocity.angle() + PI/2, 8 * delta)
+		else:
+			sprite_node.flip_v = velocity.dot(gravity_dir) > 0
+		# Visible only when jumping
 		sprite_node.visible = jumping
+	
 	collision_shape_body.set_deferred(&"disabled", !jumping)
 	
 	
@@ -45,6 +49,7 @@ func _physics_process(delta: float) -> void:
 	
 	if jumping:
 		super(delta)
+		
 		if speed.y > 0 && (_pos - pos).dot(global_position - pos) < 0:
 			global_position = pos
 			_pos = global_position
@@ -68,3 +73,6 @@ func _on_jump() -> void:
 	
 	if !sprite_node: return
 	sprite_node.flip_v = false
+	# The velocity is not converted from `speed` in this case
+	# So here it needs a manual conversion
+	sprite_node.global_rotation = speed.rotated(get_global_gravity_dir().angle() - PI/2).angle() + PI/2
