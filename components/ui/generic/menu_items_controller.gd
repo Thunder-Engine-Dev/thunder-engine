@@ -51,9 +51,9 @@ func _physics_process(delta: float) -> void:
 		get_node(prev_screen_node_path)._handle_select()
 
 
-func move_selector(index: int) -> void:
+func move_selector(index: int, immediate: bool = false) -> void:
 	current_item_index = index
-	_selection_update()
+	_selection_update(immediate)
 
 
 func _update_selectors() -> void:
@@ -69,11 +69,11 @@ func _selection() -> void:
 	_selection_update()
 
 
-func _selection_update() -> void:
+func _selection_update(immediate: bool = false) -> void:
 	if selectors.size() <= current_item_index: return
 	var item = selectors[current_item_index] as MenuSelection
 		
-	selected.emit(current_item_index, item, false)
+	selected.emit(current_item_index, item, immediate)
 	item._handle_focused(true)
 	
 	for selector in selectors:

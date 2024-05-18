@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3vvhamuiaig6"]
+
+[ext_resource type="Script" path="res://engine/scenes/credits/scripts/credits.gd" id="1_mwb2r"]
+[ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_r223p"]
+[ext_resource type="Resource" uid="uid://r4icvvkicssp" path="res://engine/scenes/credits/music/credits.mod" id="3_kgehh"]
+[ext_resource type="Texture2D" uid="uid://cvsgouvs2ov2l" path="res://engine/scenes/credits/textures/credits_bg.png" id="4_h8pmh"]
+[ext_resource type="Script" path="res://engine/scenes/credits/credits_text.gd" id="5_fq1lx"]
+[ext_resource type="FontFile" uid="uid://bhsu5jpog66pw" path="res://engine/fonts/comix_heavy.ttf" id="5_spopo"]
+
+[node name="CreditsTemplate" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mwb2r")
+metadata/_edit_lock_ = true
+
+[node name="MusicLoader" parent="." instance=ExtResource("2_r223p")]
+music = Array[Resource]([ExtResource("3_kgehh")])
+channel_id = -7
+play_immediately = false
+play_globally = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_h8pmh")
+centered = false
+
+[node name="Text" type="Node2D" parent="."]
+position = Vector2(0, 496)
+script = ExtResource("5_fq1lx")
+speed = 50.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Text"]
+clip_contents = false
+offset_right = 640.0
+offset_bottom = 231.0
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0.466667, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("5_spopo")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[center][color=lightskyblue]CREDITS[/color]
+
+
+MADE USING THUNDER ENGINE ON GODOT
+
+
+-- [color=yellow]THUNDER ENGINE DEVELOPMENT[/color] --
+
+YUKANA(ELECTRONIC BOY)
+REFLEXGURU
+JUE13
+"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false

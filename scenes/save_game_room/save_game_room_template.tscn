@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=35 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="17_lfiik"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="20_1ppih"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://gfx/fonts/font_variations/mister_earl_variation.tres" id="21_kq0xl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tn1mg"]
 texture = ExtResource("5_yaxqo")
@@ -312,3 +314,87 @@ change_to_suit = ExtResource("16_75obd")
 position = Vector2(1472, 304)
 warp_to_scene = "res://engine/scenes/level.tscn"
 use_circle_transition = true
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("20_1ppih")
+amplitude = Vector2(0, 15)
+frequency = 2.0
+
+[node name="Label" type="Label" parent="Node2D"]
+offset_left = 656.0
+offset_top = 160.0
+offset_right = 784.0
+offset_bottom = 183.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "RESET POWERUP"
+horizontal_alignment = 1
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("20_1ppih")
+amplitude = Vector2(0, 15)
+phase = 180.0
+frequency = 2.0
+
+[node name="Label" type="Label" parent="Node2D2"]
+offset_left = 816.0
+offset_top = 160.0
+offset_right = 1232.0
+offset_bottom = 187.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "YOU CAN EXCHANGE YOUR LIVES FOR ONE OF THESE ITEMS!!!
+BUT BE CAREFUL, SOMETIMES LIVES ARE MORE IMPORTANT THAN THIS STUF."
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 752.0
+offset_top = 320.0
+offset_right = 880.0
+offset_bottom = 343.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "COSTS 1 LIFE"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 880.0
+offset_top = 320.0
+offset_right = 1008.0
+offset_bottom = 343.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 1008.0
+offset_top = 320.0
+offset_right = 1136.0
+offset_bottom = 343.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 1152.0
+offset_top = 320.0
+offset_right = 1280.0
+offset_bottom = 343.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("21_kq0xl")
+theme_override_font_sizes/font_size = 20
+text = "COSTS 2 LIVES"
+horizontal_alignment = 1

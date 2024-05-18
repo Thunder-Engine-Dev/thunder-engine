@@ -25,7 +25,11 @@ func add_scene_to_child(cred_path) -> void:
 		if !is_instance_valid(Audio._music_channels[i]): continue
 		if Audio._music_channels[i].process_mode == Node.PROCESS_MODE_ALWAYS:
 			Audio._music_channels[i].process_mode = Node.PROCESS_MODE_DISABLED
-	var credits_scene: Node = load(cred_path).instantiate()
+	
+	var credits_loaded = load(cred_path)
+	assert(is_instance_valid(credits_loaded), "Credits path is invalid. Check Project Settings and set a correct path to the credits scene")
+	
+	var credits_scene: Node = credits_loaded.instantiate()
 	var canvas_layer: CanvasLayer = CanvasLayer.new()
 	GlobalViewport.vp.add_child(canvas_layer)
 	canvas_layer.layer = 127

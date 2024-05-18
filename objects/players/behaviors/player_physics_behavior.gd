@@ -116,7 +116,7 @@ func _movement_y(delta: float) -> void:
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0 && player.speed.y < 0.0:
-			var buff: float = config.jump_buff_dynamic if abs(player.speed.x) > 50 else config.jump_buff_static
+			var buff: float = config.jump_buff_dynamic if (abs(player.speed.x) > 50 && !player.is_on_wall()) else config.jump_buff_static
 			player.speed.y -= abs(buff) * delta
 	if !player.jumping && player.speed.y >= 0:
 		player._has_jumped = false
