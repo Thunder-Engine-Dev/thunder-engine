@@ -41,6 +41,14 @@ signal settings_loaded
 func _ready() -> void:
 	load_settings()
 
+## Get ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
+func get_tweak(tweak_name: String, default_value: Variant = null) -> Variant:
+	return ProjectSettings.get_setting("application/thunder_settings/tweaks/" + tweak_name, default_value)
+
+## Set ProjectSettings "tweak" to a new value
+func set_tweak(tweak_name: String, value: Variant) -> void:
+	ProjectSettings.set_setting("application/thunder_settings/tweaks/" + tweak_name, value)
+
 ## Returns the key label of specified action
 func _get_current_key(action: StringName) :
 	var keys = InputMap.action_get_events(action)

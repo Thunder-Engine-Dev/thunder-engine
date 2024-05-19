@@ -29,6 +29,8 @@ func _physics_process(delta: float) -> void:
 	# Floor
 	_floor_process()
 	# Movement
+	if player.no_movement:
+		return
 	if player.is_climbing:
 		_movement_climbing(delta)
 	elif player.is_sliding:

@@ -95,6 +95,7 @@ var completed: bool
 
 var warp: Warp
 var warp_dir: WarpDir
+var no_movement: bool
 
 var _force_suit: bool
 var _suit_appear: bool
