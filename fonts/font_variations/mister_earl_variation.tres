@@ -1,9 +1,9 @@
 [gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://4h0cbbutybo2"]
 
-[ext_resource type="FontFile" uid="uid://v4bjowumsqe1" path="res://engine/fonts/mister_earl.otf" id="1_v5yhw"]
+[ext_resource type="FontFile" uid="uid://v4bjowumsqe1" path="res://engine/fonts/mister_earl.otf" id="1_i6pi2"]
 
 [resource]
-base_font = ExtResource("1_v5yhw")
-variation_transform = Transform2D(1, 0, 0, 0.64, 0, 0)
+base_font = ExtResource("1_i6pi2")
+variation_transform = Transform2D(1, 0, 0, 0.6, 0, 0)
 spacing_top = -8
 spacing_bottom = -8
