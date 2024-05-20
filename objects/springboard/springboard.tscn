@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dgcgfl28trox0"]
+[gd_scene load_steps=22 format=3 uid="uid://dgcgfl28trox0"]
 
 [ext_resource type="Script" path="res://engine/objects/springboard/springboard.gd" id="1_qhuqa"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ed1um"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://qm8qduuhy6t7" path="res://engine/objects/springboard/textures/spring_bone.png" id="7_7rmsc"]
 [ext_resource type="Texture2D" uid="uid://ck3xufj4ouo7r" path="res://engine/objects/springboard/textures/spring_ball.png" id="8_myiky"]
 [ext_resource type="Texture2D" uid="uid://c4bnathlyi334" path="res://engine/objects/springboard/textures/spring_board.png" id="9_hsop8"]
+[ext_resource type="Script" path="res://engine/objects/springboard/springboard_marker.gd" id="10_qaybd"]
 [ext_resource type="Texture2D" uid="uid://dhbdb0vketv31" path="res://engine/objects/springboard/textures/springboard.png" id="11_bx2yt"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_0airn"]
 
@@ -128,7 +129,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6, 2)]
+"values": [Vector2(-6.001, 1.999)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -152,7 +153,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(8, 2)]
+"values": [Vector2(7, 2)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -176,7 +177,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(7, -18)]
+"values": [Vector2(7.1, -18)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -241,7 +242,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(10, -8), Vector2(12, 0), Vector2(12, 8)]
+"values": [Vector2(10.999, -8), Vector2(12, 0), Vector2(12, 8)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -277,7 +278,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-6, 2), Vector2(-7, 6), Vector2(-7, 10)]
+"values": [Vector2(-6.001, 1.999), Vector2(-7, 6), Vector2(-7, 10)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -298,10 +299,10 @@ tracks/7/path = NodePath("Bone4:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.0001, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(8, 2), Vector2(7, 6), Vector2(7, 10)]
+"values": [Vector2(7, 2), Vector2(7, 2), Vector2(7.5, 6), Vector2(7, 10)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -325,7 +326,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(7, -18), Vector2(7, -6), Vector2(7, 8)]
+"values": [Vector2(7.1, -18), Vector2(7, -6), Vector2(7.999, 8)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -357,6 +358,9 @@ _data = {
 "RESET": SubResource("Animation_y01bv"),
 "jump": SubResource("Animation_6hv1e")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qou1f"]
+size = Vector2(31, 8)
 
 [node name="Springboard" type="CharacterBody2D"]
 collision_layer = 2
@@ -408,7 +412,6 @@ sprite_frames = SubResource("SpriteFrames_1e01p")
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("13_0airn")
-metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Node2D")
@@ -426,19 +429,19 @@ rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 
 [node name="Bone2" type="Sprite2D" parent="Node2D"]
-position = Vector2(7, -18)
+position = Vector2(7.1, -18)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
 
 [node name="Bone3" type="Sprite2D" parent="Node2D"]
-position = Vector2(-6, 2)
+position = Vector2(-6.001, 1.999)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_v = true
 
 [node name="Bone4" type="Sprite2D" parent="Node2D"]
-position = Vector2(8, 2)
+position = Vector2(7, 2)
 rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
@@ -461,8 +464,28 @@ texture = ExtResource("9_hsop8")
 position = Vector2(0, 12)
 texture = ExtResource("9_hsop8")
 
-[node name="Marker2D" type="Marker2D" parent="Node2D"]
+[node name="Marker2D" type="AnimatableBody2D" parent="Node2D"]
+visible = false
 position = Vector2(0, -32)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("10_qaybd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Marker2D"]
+position = Vector2(-0.5, 4)
+shape = SubResource("RectangleShape2D_qou1f")
+one_way_collision = true
+one_way_collision_margin = 2.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/Marker2D"]
+position = Vector2(-0.5, 28)
+shape = SubResource("RectangleShape2D_qou1f")
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Node2D/Marker2D"]
+position = Vector2(-0.5, 16)
+shape = SubResource("RectangleShape2D_qou1f")
+one_way_collision = true
 
 [node name="Timer" type="Timer" parent="Node2D"]
 wait_time = 0.4

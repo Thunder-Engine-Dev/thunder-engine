@@ -1,3 +1,4 @@
+class_name CreditsScene
 extends Control
 
 @onready var music_loader: Node = $MusicLoader
@@ -8,8 +9,10 @@ func _ready() -> void:
 	_original_time_scale = Engine.time_scale
 	Engine.time_scale = 1
 	
-	await get_tree().process_frame
 	music_loader.play_buffered.call_deferred()
+
+func _physics_process(delta: float) -> void:
+	pass
 
 
 var is_exiting: bool = false
