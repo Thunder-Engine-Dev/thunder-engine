@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=42 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -93,10 +93,6 @@ region = Rect2(0, 144, 64, 72)
 atlas = ExtResource("3_ohwn1")
 region = Rect2(0, 144, 64, 72)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ft67s"]
-atlas = ExtResource("3_ohwn1")
-region = Rect2(0, 0, 64, 72)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fiyrs"]
 atlas = ExtResource("3_ohwn1")
 region = Rect2(0, 72, 64, 72)
@@ -105,13 +101,13 @@ region = Rect2(0, 72, 64, 72)
 atlas = ExtResource("8_pk18g")
 region = Rect2(0, 0, 64, 72)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nx0v1"]
-atlas = ExtResource("8_pk18g")
-region = Rect2(0, 72, 64, 72)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7dn15"]
 atlas = ExtResource("8_pk18g")
 region = Rect2(0, 144, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nx0v1"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(0, 72, 64, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_osf36"]
 atlas = ExtResource("4_tfgcq")
@@ -173,43 +169,40 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uic60")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uic60")
-}, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_uic60")
 }],
 "loop": false,
 "name": &"flame_on",
-"speed": 12.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ft67s")
+"texture": SubResource("AtlasTexture_07nbk")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_uic60")
+}, {
+"duration": 4.0,
 "texture": SubResource("AtlasTexture_fiyrs")
 }],
 "loop": false,
 "name": &"flame_pre",
-"speed": 3.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ijvb0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nx0v1")
+"texture": SubResource("AtlasTexture_7dn15")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7dn15")
+"texture": SubResource("AtlasTexture_nx0v1")
 }],
 "loop": true,
 "name": &"flame_pre_multiple",
-"speed": 30.0
+"speed": 50.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -418,6 +411,7 @@ metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_0ddoy")
 autoplay = "default"
+frame_progress = 0.0522928
 
 [node name="PosFlame" type="Marker2D" parent="."]
 visible = false

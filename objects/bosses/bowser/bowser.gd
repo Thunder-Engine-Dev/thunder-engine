@@ -11,6 +11,7 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 	set(to):
 		health = to
 		(func() -> void: health_changed.emit(health)).call_deferred()
+## Projectile health, will remove a point from [member health] when it hits 0
 @export var hardness: int = 5
 @export var invincible_flashing_interval: float = 0.5
 @export var invincible_duration: float = 2
@@ -21,7 +22,7 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export var into_lava_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_into_lava.wav")
 @export_group("Status")
 @export var status_interval: Array[float] = [3]
-## There are the status you can input: [br]
+## These are the statuses you can input: [br]
 ## [b]flame[/b]: shoot single flame [br]
 ## [b]multiflames[/b]: shoot multiple flames, see [member multiple_flames_amount] [br]
 ## [b]hammer[/b]: throw hammers, see [member hammer_amount] and [member hammer_interval] [br]
@@ -40,7 +41,8 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export var hammer_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
 @export var burst_sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
 @export_group("Jumping")
-@export var jumping_interval: float = 0.22
+@export var jumping_interval: float = 0.15
+@export var jumping_chance: float = 0.05
 @export var jumping_speed: float = 300
 @export_group("Level Setting")
 @export_enum("Left: -1", "Right: 1") var complete_direction: int = 1
@@ -382,4 +384,4 @@ func _jumping(delta: float) -> void:
 	_jump_factor = 0
 	# Jumping
 	var chance: float = randf_range(0, 1)
-	if chance < 0.25: jump(jumping_speed)
+	if chance < jumping_chance: jump(jumping_speed)

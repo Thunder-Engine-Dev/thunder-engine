@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://b4m71alwd1txo"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/falling_blocks/falling_tile.gd" id="1_yeeuu"]
+[ext_resource type="Texture2D" uid="uid://dkvidhitsdrpf" path="res://engine/tilesets/overworld/hard_block.png" id="2_yths7"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_63d25"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_6asym"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_uvyqs"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="7_hyk8n"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_uhn5b"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_8rmpb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6xnf"]
+atlas = ExtResource("2_yths7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6jlc"]
+size = Vector2(28, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pp40"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_6dehk"]
+script = ExtResource("7_hyk8n")
+creation_nodepack = ExtResource("5_6asym")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -150)
+}
+custom_script = ExtResource("6_uvyqs")
+
+[node name="FallingTile" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_yeeuu")
+sprite = NodePath("Sprite")
+gravity_scale = 0.2
+collision = false
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_a6xnf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_i6jlc")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_7pp40")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("4_63d25")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99
+}
+killing_creation = SubResource("Resource_6dehk")
+killing_scores = 800
+killing_sound_succeeded = ExtResource("8_uhn5b")
+killing_sound_failed = ExtResource("9_8rmpb")
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+rect = Rect2(-32, -32, 64, 64)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
