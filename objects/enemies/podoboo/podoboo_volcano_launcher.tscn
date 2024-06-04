@@ -14,6 +14,11 @@ one_shot = true
 process_callback = 0
 
 [node name="Podoboo" type="Sprite2D" parent="."]
+z_index = 50
 texture = ExtResource("2_1gy3d")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-32, -32, 64, 64)

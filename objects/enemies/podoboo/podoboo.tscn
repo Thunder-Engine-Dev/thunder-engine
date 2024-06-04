@@ -61,7 +61,6 @@ animations = [{
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_kck43")
-one_shot = null
 sprite = NodePath("Sprite")
 gravity_scale = 0.2
 collision = false
