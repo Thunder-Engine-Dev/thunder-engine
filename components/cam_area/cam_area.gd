@@ -15,10 +15,10 @@ signal view_section_changed
 signal view_section_changed_with_section(section: Control)
 
 # Switch to prevent transition activating at the beginning
-var use_smooth_transition: bool = false
+var use_smooth_transition: bool
 
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
-var is_current: bool = false
+var is_current: bool
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -40,8 +40,11 @@ func _physics_process(_delta: float) -> void:
 	var rect = get_rect().abs()
 	
 	var is_in_bounds: bool = (
-		camera.has_meta(&"cam_area") && 
-		camera.get_meta(&"cam_area", null) != self && 
+		(
+			(camera.has_meta(&"cam_area") &&
+			camera.get_meta(&"cam_area", null) != self) ||
+			!camera.has_meta(&"cam_area")
+		) &&
 		camera.position.x > rect.position.x &&
 		camera.position.y > rect.position.y &&
 		camera.position.x < rect.end.x &&
@@ -49,7 +52,8 @@ func _physics_process(_delta: float) -> void:
 	)
 	
 	if is_in_bounds:
-		if is_current: return
+		if is_current:
+			return
 		
 		if smooth_transition:
 			var cam = transition_camera.instantiate() as Camera2D
@@ -67,12 +71,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func _switch_bounds() -> void:
-	var camera = Thunder._current_camera
-	var rect = get_rect().abs()
+	var camera := Thunder._current_camera
+	var rect := get_rect().abs()
 	
-	camera.limit_top = rect.position.y
 	camera.limit_left = rect.position.x
 	camera.limit_right = rect.end.x
+	camera.limit_top = rect.position.y
 	camera.limit_bottom = rect.end.y
 	
 	if change_music:
@@ -88,4 +92,5 @@ func _switch_bounds() -> void:
 	view_section_changed_with_section.emit(self)
 	
 	is_current = true
+	
 	camera.set_meta(&"cam_area", self)

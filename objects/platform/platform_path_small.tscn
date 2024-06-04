@@ -8,6 +8,7 @@
 rotates = false
 loop = false
 script = ExtResource("1_3ljp1")
+sprite = NodePath("Block/Sprite2D")
 
 [node name="Block" type="AnimatableBody2D" parent="."]
 collision_layer = 112
