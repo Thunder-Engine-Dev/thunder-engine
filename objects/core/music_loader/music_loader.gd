@@ -21,6 +21,7 @@ enum GLOBAL_TYPE {
 
 @export var channel_id: int = 1
 @export var play_immediately: bool = true
+@export var stop_all_music_on_start: bool = true
 @export var play_globally: GLOBAL_TYPE = GLOBAL_TYPE.NO
 @export var volume_db: Array[float]
 @export_group(&"Custom Script")
@@ -49,6 +50,9 @@ func _ready() -> void:
 	
 	if play_globally == GLOBAL_TYPE.CHECK_FOR_ONETIME_BLOCKS && !Data.values.onetime_blocks:
 		return
+	
+	if stop_all_music_on_start:
+		Audio.stop_all_musics()
 	
 	_change_music(index, channel_id)
 
