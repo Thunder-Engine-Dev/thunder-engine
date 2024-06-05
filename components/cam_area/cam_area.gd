@@ -55,6 +55,8 @@ func _physics_process(_delta: float) -> void:
 		if is_current:
 			return
 		
+		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
+		
 		if smooth_transition:
 			var cam = transition_camera.instantiate() as Camera2D
 			cam.limit_top = camera.limit_top
@@ -74,10 +76,10 @@ func _switch_bounds() -> void:
 	var camera := Thunder._current_camera
 	var rect := get_rect().abs()
 	
-	camera.limit_left = rect.position.x
-	camera.limit_right = rect.end.x
-	camera.limit_top = rect.position.y
-	camera.limit_bottom = rect.end.y
+	camera.limit_left = round(rect.position.x)
+	camera.limit_right = round(rect.end.x)
+	camera.limit_top = round(rect.position.y)
+	camera.limit_bottom = round(rect.end.y)
 	
 	if change_music:
 		var music_loader = get_node_or_null(music_loader_ref)

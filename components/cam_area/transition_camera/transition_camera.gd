@@ -1,5 +1,6 @@
 extends Camera2D
 
+var state: int = 0
 
 func _ready() -> void:
 	var camera = Thunder._current_camera
@@ -21,11 +22,27 @@ func _physics_process(delta: float) -> void:
 	
 	position_smoothing_speed += 1 * Thunder.get_delta(delta)
 	
-	if (
-		is_equal_approx(get_screen_center_position().x, camera.get_screen_center_position().x) &&
-		is_equal_approx(get_screen_center_position().y, camera.get_screen_center_position().y)
-	) || position_smoothing_speed > 35:
-		camera.make_current()
-		await get_tree().physics_frame
-		Scenes.current_scene.falling_below_y_offset /= 10
-		queue_free()
+	var is_close: bool = (
+		get_screen_center_position().is_equal_approx(camera.get_screen_center_position())
+	) || position_smoothing_speed > 35
+	
+	match state:
+		0:
+			if is_close:
+				state = 1
+				position_smoothing_speed = 15
+				is_close = false
+		1:
+			var pl: Player = Thunder._current_player
+			if !pl: return
+			camera.global_position = pl.global_position
+			if is_close:
+				state = 2
+		2:
+			camera.make_current()
+			_free.call_deferred()
+
+
+func _free() -> void:
+	Scenes.current_scene.falling_below_y_offset /= 10
+	queue_free()
