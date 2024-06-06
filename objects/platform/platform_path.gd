@@ -66,9 +66,6 @@ var linear_velocity: Vector2
 
 func _ready() -> void:
 	if smooth_turning_length > 0: _sign_up_points()
-	var par: Node = get_parent()
-	if par is Path2D:
-		par.position += Vector2(0.001, 0.001)
 
 func _physics_process(delta: float) -> void:
 	_bodies_standing_check()
@@ -121,9 +118,6 @@ func _on_path_movement_process(delta: float) -> void:
 	# Emit Falling
 	if on_path && players_have_stood && falling_acceleration > 0.0 && falling_enabled:
 		on_path = false
-		# Fix the sprite "flickering" in the opposite direction for a couple of frames
-		if sprite_node:
-			sprite_node.position += falling_direction
 
 
 func _non_path_movement_process(delta: float) -> void:

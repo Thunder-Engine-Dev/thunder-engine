@@ -71,6 +71,8 @@ func _selection() -> void:
 
 func _selection_update(immediate: bool = false) -> void:
 	if selectors.size() <= current_item_index: return
+	if !is_instance_valid(selectors[current_item_index]): return
+	
 	var item = selectors[current_item_index] as MenuSelection
 		
 	selected.emit(current_item_index, item, immediate)
