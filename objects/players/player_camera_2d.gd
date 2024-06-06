@@ -18,7 +18,6 @@ func _physics_process(_delta):
 
 
 func teleport() -> void:
-	if !is_current(): return
 	var player: Player = Thunder._current_player
 	if !par is PathFollow2D && player:
 		global_position = Vector2(Thunder._current_player.global_position)

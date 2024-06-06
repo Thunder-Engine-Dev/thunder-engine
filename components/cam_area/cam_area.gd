@@ -1,8 +1,22 @@
 @tool
 extends Control
+class_name CamArea
+
+enum SmoothFunction {
+	LINEAR,
+	EASE_IN,
+	EASE_OUT,
+	EASE_IN_OUT,
+	EASE_IN_BACK,
+	EASE_OUT_BACK,
+	EASE_IN_OUT_BACK
+}
 
 ## Enable smooth transition
 @export var smooth_transition: bool = false
+@export_group("Smooth Options")
+@export var smooth_function: SmoothFunction = SmoothFunction.EASE_OUT
+@export var smooth_speed: float = 0.06
 @export_group("Music Control")
 ## Should it automatically change the music index (useful for different level areas)
 @export var change_music: bool = false
@@ -58,11 +72,12 @@ func _physics_process(_delta: float) -> void:
 		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
 		
 		if smooth_transition:
+			Thunder.view.cam_border()
 			var cam = transition_camera.instantiate() as Camera2D
-			cam.limit_top = camera.limit_top
-			cam.limit_left = camera.limit_left
-			cam.limit_right = camera.limit_right
-			cam.limit_bottom = camera.limit_bottom
+			cam.limits.position = Vector2i(Thunder.view.border.position.x, Thunder.view.border.position.y)
+			cam.limits.end = Vector2i(Thunder.view.border.end.x, Thunder.view.border.end.y)
+			cam.function = smooth_function
+			cam.speed = smooth_speed
 			add_child(cam)
 			Scenes.current_scene.falling_below_y_offset *= 10
 		

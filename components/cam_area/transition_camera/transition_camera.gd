@@ -1,48 +1,62 @@
 extends Camera2D
 
 var state: int = 0
+var counter: float = 0
+
+var limits: Rect2i
+var speed: float = 0.04
+var function: CamArea.SmoothFunction = CamArea.SmoothFunction.EASE_OUT
 
 func _ready() -> void:
 	var camera = Thunder._current_camera
 	position_smoothing_enabled = true
 	global_position = camera.get_screen_center_position()
 	
-	await get_tree().physics_frame
 	make_current()
-	limit_top = camera.limit_top
-	limit_left = camera.limit_left
-	limit_right = camera.limit_right
-	limit_bottom = camera.limit_bottom
 
 
 func _physics_process(delta: float) -> void:
 	var camera = Thunder._current_camera
 	Thunder.view.cam_border()
-	global_position = camera.global_position
+	camera.make_current()
+	global_position = camera.get_screen_center_position()
 	
-	position_smoothing_speed += 1 * Thunder.get_delta(delta)
+	counter += speed * Thunder.get_delta(delta)
+	if counter > 1:
+		counter = 1
 	
-	var is_close: bool = (
-		get_screen_center_position().is_equal_approx(camera.get_screen_center_position())
-	) || position_smoothing_speed > 35
+	var eased_counter: float
 	
-	match state:
-		0:
-			if is_close:
-				state = 1
-				position_smoothing_speed = 15
-				is_close = false
-		1:
-			var pl: Player = Thunder._current_player
-			if !pl: return
-			camera.global_position = pl.global_position
-			if is_close:
-				state = 2
-		2:
-			camera.make_current()
-			_free.call_deferred()
-
-
-func _free() -> void:
-	Scenes.current_scene.falling_below_y_offset /= 10
-	queue_free()
+	match function:
+		CamArea.SmoothFunction.LINEAR:
+			eased_counter = counter
+		CamArea.SmoothFunction.EASE_IN:
+			eased_counter = Thunder.Math.ease_in(counter)
+		CamArea.SmoothFunction.EASE_OUT:
+			eased_counter = Thunder.Math.ease_out(counter)
+		CamArea.SmoothFunction.EASE_IN_OUT:
+			eased_counter = Thunder.Math.ease_in_out(counter)
+		CamArea.SmoothFunction.EASE_IN_BACK:
+			eased_counter = Thunder.Math.ease_in_back(counter)
+		CamArea.SmoothFunction.EASE_OUT_BACK:
+			eased_counter = Thunder.Math.ease_out_back(counter)
+		CamArea.SmoothFunction.EASE_IN_OUT_BACK:
+			eased_counter = Thunder.Math.ease_in_out_back(counter)
+	
+	var rect: Rect2i
+	
+	rect.size = Vector2i(camera.get_viewport_rect().size)
+	rect.position = Vector2i(camera.get_screen_center_position() - rect.size/2.0)
+	
+	limit_top = lerp(limits.position.y, rect.position.y, eased_counter)
+	limit_left = lerp(limits.position.x, rect.position.x, eased_counter)
+	limit_bottom = lerp(limits.end.y, rect.end.y, eased_counter)
+	limit_right = lerp(limits.end.x, rect.end.x, eased_counter)
+	
+	make_current()
+	
+	if counter == 1:
+		camera.make_current()
+		await get_tree().physics_frame
+		Scenes.current_scene.falling_below_y_offset /= 10
+		queue_free()

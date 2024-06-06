@@ -248,3 +248,38 @@ class Math:
 	## Return a direction from one point ot another
 	static func look_at(from: Vector2, to: Vector2, trans: Transform2D) -> int:
 		return int((trans.affine_inverse().basis_xform(from.direction_to(to))).sign().x)
+	
+	# Easing functions
+	
+	## Ease In Quad
+	static func ease_in(x: float) -> float:
+		return x * x
+	
+	## Ease Out Quad
+	static func ease_out(x: float) -> float:
+		return 1 - (1 - x) * (1 - x)
+	
+	## Ease In Out Quad
+	static func ease_in_out(x: float) -> float:
+		return 2 * x * x if x < 0.5 else 1 - pow(-2 * x + 2, 2) / 2
+	
+	## Ease In Back
+	static func ease_in_back(x: float) -> float:
+		var c1 = 1.70158
+		var c3 = c1 + 1
+		return c3 * x * x * x - c1 * x * x
+	
+	## Ease Out Back
+	static func ease_out_back(x: float) -> float:
+		var c1 = 1.70158
+		var c3 = c1 + 1
+		return 1 + c3 * pow(x - 1, 3) + c1 * pow(x - 1, 2)
+	
+	## Ease In Out Back
+	static func ease_in_out_back(x: float) -> float:
+		var c1 = 1.70158;
+		var c2 = c1 * 1.525;
+		if x < 0.5:
+			return (pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
+		else:
+			return (pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
