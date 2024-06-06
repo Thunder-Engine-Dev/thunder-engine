@@ -91,4 +91,4 @@ func _physics_process(delta: float) -> void:
 
 
 func oval_pos() -> void:
-	position = Thunder.Math.oval(Vector2.ZERO, amplitude, deg_to_rad(phase), deg_to_rad(track_rot))
+	position = Thunder.Math.oval(Vector2.ZERO, amplitude, deg_to_rad(phase), deg_to_rad(track_rot)).round()

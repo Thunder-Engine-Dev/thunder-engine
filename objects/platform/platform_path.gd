@@ -66,6 +66,8 @@ var linear_velocity: Vector2
 
 func _ready() -> void:
 	if smooth_turning_length > 0: _sign_up_points()
+	v_offset += 0.01
+	h_offset += 0.01
 
 func _physics_process(delta: float) -> void:
 	_bodies_standing_check()
