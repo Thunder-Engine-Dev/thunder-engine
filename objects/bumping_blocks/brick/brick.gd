@@ -32,7 +32,7 @@ func bricks_break() -> void:
 
 
 func got_bumped(by: Node2D) -> void:
-	if _triggered: return
+	if _triggered && lock_while_triggered: return
 	if by is Player:
 		if (by.is_on_floor() && !by.is_crouching) || by.warp != Player.Warp.NONE:
 			return

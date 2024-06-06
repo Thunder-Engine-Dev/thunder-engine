@@ -14,6 +14,7 @@ const _HITTER: PackedScene = preload("res://engine/objects/bumping_blocks/_hitte
 @export var result_as_sibling_node: bool = true
 ## If [code]false[/code], the block won't react to any kind of bumping
 @export var active: bool = true
+@export var lock_while_triggered: bool = false
 var _triggered: bool = false
 
 @export_group("Sounds")
@@ -57,6 +58,9 @@ signal bumped
 ## Emitted when the item gets spawned
 signal result_appeared
 
+## Current used tween
+var current_tw: Tween
+
 
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint(): return
@@ -88,7 +92,7 @@ func _editor_process() -> void:
 ## [code]bump_rotation[/code] is the direction angle that the block moves when it is being bumped[br]
 ## [code]interrupy[/code] no usge currently
 func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
-	if _triggered: return
+	if _triggered && lock_while_triggered: return
 	if !active: return
 	
 	_sprites.visible = true
@@ -101,10 +105,13 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	_triggered = true
 	
 #	var init_position = position
-	var tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
-	tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -8).rotated(deg_to_rad(bump_rotation)), 0.12).set_ease(Tween.EASE_OUT)
-	tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12).set_ease(Tween.EASE_IN)
-	tw.tween_callback(_lt.bind(disable))
+	if is_instance_valid(current_tw):
+		current_tw.kill()
+	
+	var current_tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
+	current_tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -8).rotated(deg_to_rad(bump_rotation)), 0.12).set_ease(Tween.EASE_OUT)
+	current_tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12).set_ease(Tween.EASE_IN)
+	current_tw.tween_callback(_lt.bind(disable))
 	
 	if result:
 		call_deferred(&"_creation", result.prepare())
