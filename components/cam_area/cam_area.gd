@@ -1,21 +1,10 @@
 @tool
 extends Control
-class_name CamArea
-
-enum SmoothFunction {
-	LINEAR,
-	EASE_IN,
-	EASE_OUT,
-	EASE_IN_OUT,
-	EASE_IN_BACK,
-	EASE_OUT_BACK,
-	EASE_IN_OUT_BACK
-}
 
 ## Enable smooth transition
 @export var smooth_transition: bool = false
 @export_group("Smooth Options")
-@export var smooth_function: SmoothFunction = SmoothFunction.EASE_OUT
+@export var smooth_function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_OUT
 @export var smooth_speed: float = 0.06
 @export_group("Music Control")
 ## Should it automatically change the music index (useful for different level areas)

@@ -237,7 +237,15 @@ class View:
 	func get_pos_ratio_in_screen_by_pos(vp_trans: Transform2D, vp_size: Vector2, global_position: Vector2) -> Vector2:
 		return (vp_trans * global_position) / vp_size
 
-
+enum SmoothFunction {
+	LINEAR,
+	EASE_IN,
+	EASE_OUT,
+	EASE_IN_OUT,
+	EASE_IN_BACK,
+	EASE_OUT_BACK,
+	EASE_IN_OUT_BACK
+}
 
 class Math:
 	## Return a point on a oval by given [param center], [param amplitude], [param phase], and [param rot(optional)]

@@ -5,7 +5,7 @@ var counter: float = 0
 
 var limits: Rect2i
 var speed: float = 0.04
-var function: CamArea.SmoothFunction = CamArea.SmoothFunction.EASE_OUT
+var function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_OUT
 
 func _ready() -> void:
 	var camera = Thunder._current_camera
@@ -28,19 +28,19 @@ func _physics_process(delta: float) -> void:
 	var eased_counter: float
 	
 	match function:
-		CamArea.SmoothFunction.LINEAR:
+		Thunder.SmoothFunction.LINEAR:
 			eased_counter = counter
-		CamArea.SmoothFunction.EASE_IN:
+		Thunder.SmoothFunction.EASE_IN:
 			eased_counter = Thunder.Math.ease_in(counter)
-		CamArea.SmoothFunction.EASE_OUT:
+		Thunder.SmoothFunction.EASE_OUT:
 			eased_counter = Thunder.Math.ease_out(counter)
-		CamArea.SmoothFunction.EASE_IN_OUT:
+		Thunder.SmoothFunction.EASE_IN_OUT:
 			eased_counter = Thunder.Math.ease_in_out(counter)
-		CamArea.SmoothFunction.EASE_IN_BACK:
+		Thunder.SmoothFunction.EASE_IN_BACK:
 			eased_counter = Thunder.Math.ease_in_back(counter)
-		CamArea.SmoothFunction.EASE_OUT_BACK:
+		Thunder.SmoothFunction.EASE_OUT_BACK:
 			eased_counter = Thunder.Math.ease_out_back(counter)
-		CamArea.SmoothFunction.EASE_IN_OUT_BACK:
+		Thunder.SmoothFunction.EASE_IN_OUT_BACK:
 			eased_counter = Thunder.Math.ease_in_out_back(counter)
 	
 	var rect: Rect2i
