@@ -116,6 +116,7 @@ var _suit_appear: bool
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubble: GPUParticles2D = $Sprite/Bubble
+@onready var stars: GPUParticles2D = $Sprite/Stars
 
 
 func _ready() -> void:
@@ -155,14 +156,12 @@ var _starman_faded: bool
 func _physics_process(delta: float) -> void:
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = suit
-	if is_starman && (
-		timer_starman.time_left > 0.0 &&
-		timer_starman.time_left < 1.5 &&
-		!_starman_faded
-	):
-		_starman_faded = true
-		Audio.stop_music_channel(98, true)
-
+	if is_starman() && \
+		timer_starman.time_left > 0.0 && \
+		timer_starman.time_left < 1.5 && \
+		!_starman_faded:
+			_starman_faded = true
+			Audio.stop_music_channel(98, true)
 
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
@@ -199,6 +198,7 @@ func starman(duration: float = 10) -> void:
 	attack.enabled = true
 	timer_starman.start(duration)
 	starmaned.emit(duration)
+	stars.emitting = true
 
 
 func hurt(tags: Dictionary = {}) -> void:
@@ -258,6 +258,7 @@ func is_starman() -> bool:
 func _on_starman_timeout() -> void:
 	starman_combo.reset_combo()
 	sprite.material.set_shader_parameter(&"mixing", false)
+	stars.emitting = false
 	attack.enabled = is_sliding
 	_starman_faded = false
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")

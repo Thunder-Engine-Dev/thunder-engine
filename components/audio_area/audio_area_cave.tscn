@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://72feht11cer2"]
+
+[ext_resource type="PackedScene" uid="uid://cdreuoa3gl1ja" path="res://engine/components/audio_area/audio_area.tscn" id="1_krhe2"]
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_int1k"]
+tap1_active = false
+tap2_active = false
+feedback_active = true
+feedback_delay_ms = 45.0
+feedback_level_db = -5.0
+
+[node name="AudioAreaCave" instance=ExtResource("1_krhe2")]
+audio_effects = Array[AudioEffect]([SubResource("AudioEffectDelay_int1k")])

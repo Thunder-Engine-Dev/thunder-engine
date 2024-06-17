@@ -40,10 +40,8 @@ func _lcpp(ref: Node2D) -> Vector2:
 func _create_2d_player(pos: Vector2, is_global: bool, is_permanent: bool = false) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
 	if !is_permanent: player.finished.connect(player.queue_free)
-	(func() -> void:
-		GlobalViewport.add_child(player)
-		player.global_position = pos
-	).call_deferred()
+	player.global_position = pos
+	GlobalViewport.add_child.call_deferred(player)
 	return player
 
 

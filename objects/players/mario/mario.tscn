@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=20 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="4_2mkq8"]
 [ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_633ve"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
+[ext_resource type="Texture2D" uid="uid://8ltalchh5vpa" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_ab7c7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
@@ -15,6 +16,36 @@ size = Vector2(20, 28)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kdes3"]
 shader = ExtResource("2_kdm1n")
 shader_parameter/mixing = false
+
+[sub_resource type="Curve" id="Curve_08q3l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_btes4"]
+curve = SubResource("Curve_08q3l")
+
+[sub_resource type="Curve" id="Curve_qeb68"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
+curve = SubResource("Curve_qeb68")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ljx6w"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 24.0
+angle_min = -180.0
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_ro0d7")
+alpha_curve = SubResource("CurveTexture_btes4")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
 size = Vector2(16, 2)
@@ -52,8 +83,8 @@ hit_from_inside = true
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
 material = SubResource("ShaderMaterial_kdes3")
-position = Vector2(0, -15)
 sprite_frames = ExtResource("2_eqact")
+offset = Vector2(0, -15)
 
 [node name="Bubble" type="GPUParticles2D" parent="Sprite"]
 position = Vector2(0, 15)
@@ -63,6 +94,14 @@ process_material = ExtResource("4_633ve")
 texture = ExtResource("4_2mkq8")
 lifetime = 5.0
 randomness = 0.5
+
+[node name="Stars" type="GPUParticles2D" parent="Sprite"]
+show_behind_parent = true
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_ljx6w")
+texture = ExtResource("6_ab7c7")
+lifetime = 0.5
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false

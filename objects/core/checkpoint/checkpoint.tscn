@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
-[ext_resource type="Texture2D" uid="uid://8rcid1w278qb" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
+[ext_resource type="Texture2D" uid="uid://8ltalchh5vpa" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bp6fk"]
 
@@ -11,14 +11,14 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_btes4"]
+[sub_resource type="CurveTexture" id="CurveTexture_b30oy"]
 curve = SubResource("Curve_tpfwp")
 
 [sub_resource type="Curve" id="Curve_hm1ix"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
+[sub_resource type="CurveTexture" id="CurveTexture_2n3nr"]
 curve = SubResource("Curve_hm1ix")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_opcst"]
@@ -33,9 +33,9 @@ radial_velocity_max = 75.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
 scale_max = 0.3
-scale_curve = SubResource("CurveTexture_ro0d7")
+scale_curve = SubResource("CurveTexture_2n3nr")
 color = Color(1, 0.843137, 0.792157, 1)
-alpha_curve = SubResource("CurveTexture_btes4")
+alpha_curve = SubResource("CurveTexture_b30oy")
 
 [sub_resource type="Animation" id="Animation_4yr7j"]
 resource_name = "RESET"

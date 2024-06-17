@@ -23,6 +23,7 @@ var use_smooth_transition: bool
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
 var is_current: bool
 
+
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	var player: Player = Thunder._current_player
