@@ -108,7 +108,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if is_instance_valid(current_tw):
 		current_tw.kill()
 	
-	var current_tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
+	current_tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
 	current_tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -8).rotated(deg_to_rad(bump_rotation)), 0.12).set_ease(Tween.EASE_OUT)
 	current_tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12).set_ease(Tween.EASE_IN)
 	current_tw.tween_callback(_lt.bind(disable))

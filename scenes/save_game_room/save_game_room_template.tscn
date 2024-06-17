@@ -231,12 +231,35 @@ metadata/_edit_lock_ = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Node2D" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
+script = ExtResource("20_1ppih")
+amplitude = Vector2(20, 5)
+random_phase = true
+sprite_path = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D"]
 position = Vector2(480, 96)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Node2D3" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
+script = ExtResource("20_1ppih")
+amplitude = Vector2(20, 5)
+random_phase = true
+sprite_path = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3"]
+position = Vector2(256, 128)
+sprite_frames = SubResource("SpriteFrames_xdu4w")
+autoplay = "default"
+
+[node name="Node2D2" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
+script = ExtResource("20_1ppih")
+amplitude = Vector2(20, 5)
+random_phase = true
+sprite_path = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D2"]
 position = Vector2(880, 64)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
