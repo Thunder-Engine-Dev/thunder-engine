@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://0s1sj8ke5lyv"]
+
+[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_y30xh"]
+[ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_pi1bs"]
+[ext_resource type="Texture2D" uid="uid://cu62ex2bb6yf8" path="res://engine/objects/platform/tank_ground.png" id="3_yc4n1"]
+
+[node name="PlatformPathTankFloor" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_y30xh")
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("2_pi1bs")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
+polygon = PackedVector2Array(-320, 0, 320, 0, 320, 5, -320, 5)
+one_way_collision = true
+
+[node name="Surface" type="Area2D" parent="Block"]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
+visible = false
+modulate = Color(0.921569, 0, 0.647059, 1)
+polygon = PackedVector2Array(-320, -1, 320, -1, 320, 0, -320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Block"]
+texture_repeat = 2
+position = Vector2(0, 32)
+texture = ExtResource("3_yc4n1")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 64)
