@@ -1,0 +1,430 @@
+[gd_scene load_steps=35 format=3 uid="uid://c8ql6hro5f6gv"]
+
+[ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
+[ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
+[ext_resource type="Texture2D" uid="uid://blo57krl3mggi" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
+[ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
+[ext_resource type="Texture2D" uid="uid://bpb6hk4ojf7db" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
+[ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
+[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="12_vow7r"]
+[ext_resource type="Texture2D" uid="uid://c5j1lhwknlkg8" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
+[ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
+[ext_resource type="Texture2D" uid="uid://cn77trsg8xmnu" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
+[ext_resource type="Texture2D" uid="uid://bfgvo2wwgybtb" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
+[ext_resource type="Texture2D" uid="uid://brl2gvotf7wjc" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
+[ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
+
+[sub_resource type="Gradient" id="Gradient_akj06"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_af70a"]
+gradient = SubResource("Gradient_akj06")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
+atlas = ExtResource("12_vow7r")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oiqgu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsnuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vq72u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ceg4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l365")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vjno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4p38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmyvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmhu3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3kcft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5s4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lhkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1wal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsnuv")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Animation" id="Animation_hvhdc"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.529412)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hope:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Selector:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8nk1g"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hope:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Selector:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_svgxp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TeamLogo:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.529412)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hope:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Selector:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
+_data = {
+"RESET": SubResource("Animation_svgxp"),
+"init": SubResource("Animation_8nk1g"),
+"open": SubResource("Animation_hvhdc")
+}
+
+[node name="GameOverLayer" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_3cank")
+
+[node name="GameOver" type="Control" parent="."]
+process_mode = 3
+process_priority = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_dcx8n")
+
+[node name="TextureRect" type="TextureRect" parent="GameOver"]
+modulate = Color(1, 1, 1, 0.529412)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_af70a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -21.0
+offset_right = 132.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+script = ExtResource("3_plhsm")
+focused = false
+
+[node name="TextureRect" type="TextureRect" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_d5pn5")
+stretch_mode = 3
+script = ExtResource("6_au7hf")
+
+[node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("11_dfbjn")
+stretch_mode = 3
+script = ExtResource("12_uwbd2")
+
+[node name="TextureRect5" type="TextureRect" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_7iopd")
+stretch_mode = 3
+script = ExtResource("14_vbxud")
+
+[node name="TextureRect6" type="TextureRect" parent="GameOver/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("15_o8bh8")
+stretch_mode = 3
+script = ExtResource("16_5gtqw")
+
+[node name="Selector" type="AnimatedSprite2D" parent="GameOver"]
+sprite_frames = SubResource("SpriteFrames_oiqgu")
+script = ExtResource("18_7lia2")
+smooth_speed = 0.4
+position_padding = 16
+position_paddings_array = Array[float]([-32.0, -1.0, 0.0, -52.0])
+
+[node name="TeamLogo" type="TextureRect" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -403.0
+offset_top = -208.0
+offset_right = -236.0
+offset_bottom = -180.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(83, 0)
+texture = ExtResource("15_e2iqk")
+
+[node name="Hope" type="TextureRect" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -384.0
+offset_right = 157.0
+offset_bottom = -298.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(285.6, 0)
+texture = ExtResource("15_pv04y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
+libraries = {
+"": SubResource("AnimationLibrary_5i4gi")
+}
+autoplay = "RESET"
+
+[connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]
