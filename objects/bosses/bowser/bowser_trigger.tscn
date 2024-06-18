@@ -6,7 +6,6 @@
 [node name="BowserTrigger" type="Path2D"]
 editor_description = "This should be placed ONLY as DIRECT CHILD of the level, and just under the camera"
 script = ExtResource("1_qucnd")
-trigger_area = Rect2(-16, -240, 32, 480)
 boss_music = ExtResource("2_un5wq")
 
 [node name="RouteFollower" type="PathFollow2D" parent="."]

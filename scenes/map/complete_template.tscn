@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map-complete.gd" id="1_k7tbx"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_so3pp"]
-[ext_resource type="AudioStream" uid="uid://co51ukl5tpe8l" path="res://engine/scenes/map/music/world_complete.ogg" id="3_0spfl"]
-[ext_resource type="Texture2D" uid="uid://ctj206881p21a" path="res://engine/scenes/map/textures/bg.png" id="4_uxbre"]
-[ext_resource type="Texture2D" uid="uid://d0ajiglyk7ra2" path="res://engine/scenes/map/textures/mario_icon.png" id="5_uqnum"]
-[ext_resource type="Texture2D" uid="uid://fp5mmjjp4ymi" path="res://engine/scenes/map/textures/world_1.png" id="6_2v7yw"]
+[ext_resource type="AudioStream" uid="uid://cdk2lul6rs3h6" path="res://engine/scenes/map/music/world_complete.ogg" id="3_0spfl"]
+[ext_resource type="Texture2D" uid="uid://pjk27xsstt0c" path="res://engine/scenes/map/textures/bg.png" id="4_uxbre"]
+[ext_resource type="Texture2D" uid="uid://efoencmt67ki" path="res://engine/scenes/map/textures/mario_icon.png" id="5_uqnum"]
+[ext_resource type="Texture2D" uid="uid://xs5ks4xe2w2x" path="res://engine/scenes/map/textures/world_1.png" id="6_2v7yw"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="7_jenna"]
-[ext_resource type="Texture2D" uid="uid://j6aobgsj5fag" path="res://engine/scenes/map/textures/completed.png" id="8_trcol"]
+[ext_resource type="Texture2D" uid="uid://dowfwbdrr03lp" path="res://engine/scenes/map/textures/completed.png" id="8_trcol"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uckvt"]
 atlas = ExtResource("8_trcol")
