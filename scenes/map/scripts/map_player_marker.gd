@@ -4,9 +4,12 @@ class_name MapPlayerMarker extends Marker2D
 
 @export_file("*.tscn", "*.scn") var level: String: 
 	set = set_level_path, get = get_level_path
+@export_file("*.tscn", "*.scn") var level_override_save: String = "":
+	set = set_level_save_path
 
 # DO NOT USE OUTSIDE THIS SCRIPT
 var _level: String
+var _level_save: String = ""
 
 @onready var marker_space: MarkerSpace = get_parent()
 var player
@@ -27,7 +30,7 @@ func _ready() -> void:
 	
 	if (
 		is_level_completed() && !Data.values.get('map_force_selected_marker') ||
-		Data.values.get('map_force_selected_marker') == level
+		Data.values.get('map_force_selected_marker') == _level_save
 	):
 		await get_tree().process_frame
 		#Data.values.erase('map_force_selected_marker')
@@ -39,7 +42,7 @@ func _ready() -> void:
 			player.camera.reset_smoothing.call_deferred()
 		
 		marker_space.make_dots_visible_before(global_position)
-		marker_space.add_uncompleted_levels_after(level)
+		marker_space.add_uncompleted_levels_after(_level_save)
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
 		)
@@ -67,13 +70,19 @@ func is_level() -> bool:
 func is_level_completed() -> bool:
 	return (
 		ProfileManager.current_profile.data.has(&"completed_levels") &&
-		ProfileManager.current_profile.data[&"completed_levels"].has(level)
+		ProfileManager.current_profile.data[&"completed_levels"].has(_level_save)
 	)
 
 func set_level_path(value: String) -> void:
 	changed.emit()
 	_level = value
+	_level_save = value
 	level = value
 
 func get_level_path() -> String:
 	return _level
+
+func set_level_save_path(value: String) -> void:
+	_level_save = value
+	level_override_save = value
+
