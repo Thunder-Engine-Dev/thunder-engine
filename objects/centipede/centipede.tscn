@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://c02e27qkcrmvw"]
+
+[ext_resource type="Script" path="res://engine/objects/centipede/centipede.gd" id="1_44y8h"]
+[ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_jf5i1"]
+[ext_resource type="Texture2D" uid="uid://p7bdygv1cljs" path="res://engine/objects/centipede/gfx/centipede_block.png" id="3_dwtbs"]
+[ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/projectiles/spikeball/spikeball.png" id="3_etl1t"]
+
+[node name="Centipede" type="PathFollow2D"]
+rotates = false
+loop = false
+script = ExtResource("1_44y8h")
+touching_player_touched_movement = true
+speed = 100.0
+loop_backwards = false
+warp_objects_on_end = false
+smooth_enabled = false
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="StaticBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("2_jf5i1")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+polygon = PackedVector2Array(-16, 0, 16, 0, 16, 32, -16, 32)
+
+[node name="Surface" type="Area2D" parent="Block"]
+visible = false
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
+modulate = Color(0.921569, 0, 0.647059, 1)
+polygon = PackedVector2Array(-16, -1, 16, -1, 16, 0, -16, 0)
+
+[node name="Spikeball" type="Sprite2D" parent="Block"]
+position = Vector2(0, 32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_etl1t")
+
+[node name="Sprite2D" type="Sprite2D" parent="Block"]
+position = Vector2(0, 16)
+texture = ExtResource("3_dwtbs")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Block"]

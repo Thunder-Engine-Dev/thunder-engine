@@ -41,7 +41,7 @@ var non_players_have_stood: bool
 var linear_velocity: Vector2
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
-@onready var block: AnimatableBody2D = $Block
+@onready var block: StaticBody2D = $Block
 @onready var surface: Area2D = $Block/Surface
 @onready var sprite_node: Node2D = get_node_or_null(sprite)
 
@@ -63,6 +63,8 @@ var linear_velocity: Vector2
 ).call()
 @onready var init_collision_layer: int = block.collision_layer
 
+# Block movement of the platform in scripts
+var _movement_blocked: bool = false
 
 func _ready() -> void:
 	if smooth_turning_length > 0: _sign_up_points()
@@ -77,7 +79,7 @@ func _physics_process(delta: float) -> void:
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
 	
-	if block.sync_to_physics: block.global_position = block.global_position
+	if block is AnimatableBody2D && block.sync_to_physics: block.global_position = block.global_position
 
 
 func _bodies_standing_check() -> void:
@@ -102,6 +104,7 @@ func _player_landed(player: Player) -> void:
 
 func _on_path_movement_process(delta: float) -> void:
 	if !on_path: return
+	if _movement_blocked: return
 	
 	var pos: Vector2 = global_position
 	# Moving
@@ -127,6 +130,7 @@ func _on_path_movement_process(delta: float) -> void:
 
 func _non_path_movement_process(delta: float) -> void:
 	if on_path: return
+	if _movement_blocked: return
 	
 	# Falling
 	if players_have_stood && falling_acceleration != 0 && falling_enabled:

@@ -1,4 +1,4 @@
-extends AnimatableBody2D
+extends StaticBody2D
 
 @onready var _path_follow = $".."
 
