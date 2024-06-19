@@ -24,6 +24,7 @@ enum GLOBAL_TYPE {
 @export var stop_all_music_on_start: bool = true
 @export var play_globally: GLOBAL_TYPE = GLOBAL_TYPE.NO
 @export var volume_db: Array[float]
+@export var start_from_sec: Array[float]
 @export_group(&"Custom Script")
 @export var custom_vars: Dictionary
 @export var custom_script: GDScript
@@ -35,11 +36,8 @@ var is_paused: bool = false
 
 
 func _ready() -> void:
-	if volume_db.size() < music.size():
-		volume_db.resize(music.size())
-	for i in volume_db.size():
-		if volume_db[i] == null: 
-			volume_db[i] = 0
+	_init_array(volume_db)
+	_init_array(start_from_sec)
 	
 	(func() -> void:
 		if play_globally && Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
@@ -57,6 +55,14 @@ func _ready() -> void:
 	_change_music(index, channel_id)
 
 
+func _init_array(arr: Array) -> void:
+	if arr.size() < music.size():
+		arr.resize(music.size())
+	for i in arr.size():
+		if arr[i] == null: 
+			arr[i] = 0.0
+
+
 func _change_music(ind: int, ch_id: int) -> void:
 	if music.size() <= ind: return
 	var options = [
@@ -64,7 +70,8 @@ func _change_music(ind: int, ch_id: int) -> void:
 		ch_id, 
 		{
 			"ignore_pause": true, 
-			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0
+			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
+			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
 		}
 	]
 	if play_immediately:

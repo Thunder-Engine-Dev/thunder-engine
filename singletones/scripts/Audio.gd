@@ -138,12 +138,14 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		_music_channels[channel_id] = _create_1d_player(is_global, is_permanent)
 	var music_player = _music_channels[channel_id]
 	
+	var openmpt: OpenMPT = null
+	
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
 		music_player.bus = &"Music"
 		music_player.play.call_deferred()
 	elif &"data" in resource:
-		var openmpt = _create_openmpt_player(is_global)
+		openmpt = _create_openmpt_player(is_global)
 		if !openmpt:
 			return null
 		
@@ -185,6 +187,11 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
+	if &"start_from_sec" in other_keys && other_keys.start_from_sec is float && other_keys.start_from_sec > 0.0:
+		if openmpt:
+			openmpt.set_position_seconds.call_deferred(other_keys.start_from_sec)
+		else:
+			_music_channels[channel_id].seek(other_keys.start_from_sec)
 	
 	return music_player if is_instance_valid(music_player) else null
 
