@@ -22,9 +22,10 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sx3tf"]
-size = Vector2(2, 2)
+size = Vector2(1, 1)
 
 [node name="FlameballLauncher" type="HBoxContainer"]
+z_index = 2
 clip_contents = true
 offset_right = 64.0
 offset_bottom = 32.0
@@ -36,13 +37,12 @@ flameball = SubResource("Resource_rtj67")
 metadata/_edit_pinned_properties_ = [&"flameball"]
 
 [node name="Obstacle" type="AnimatableBody2D" parent="."]
-visible = false
-position = Vector2(1, 1)
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("5_y1sec")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_sx3tf")
 
 [node name="Head" type="TextureRect" parent="."]
