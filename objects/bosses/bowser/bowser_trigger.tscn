@@ -7,6 +7,8 @@
 editor_description = "This should be placed ONLY as DIRECT CHILD of the level, and just under the camera"
 script = ExtResource("1_qucnd")
 boss_music = ExtResource("2_un5wq")
+boss_music_start_from_sec = null
+boss_music_volume = null
 
 [node name="RouteFollower" type="PathFollow2D" parent="."]
 rotates = false

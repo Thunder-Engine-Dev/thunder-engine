@@ -155,6 +155,10 @@ func attack(state: StringName) -> void:
 			if animations.current_animation == &"bowser/flame": return
 			animations.play(&"bowser/flame")
 			tween_status.pause()
+		&"doubleflame":
+			if animations.current_animation == &"bowser/flame": return
+			animations.play(&"bowser/doubleflame")
+			tween_status.pause()
 		&"multiflames":
 			if animations.current_animation == &"bowser/multiple_flames": return
 			animations.play(&"bowser/multiple_flames")

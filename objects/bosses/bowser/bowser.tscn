@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=43 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -361,9 +361,53 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_5bisy"]
+resource_name = "doubleflame"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.8, 0.9, 0.901, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [&"flame_sound"],
+"method": &"play_sound"
+}, {
+"args": [],
+"method": &"attack_flame"
+}, {
+"args": [],
+"method": &"attack_flame"
+}, {
+"args": [],
+"method": &"reset_animation"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"flame_pre", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"flame_on", 1.0, false],
+"method": &"play"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cho8p"]
 _data = {
 "RESET": SubResource("Animation_6qfym"),
+"doubleflame": SubResource("Animation_5bisy"),
 "flame": SubResource("Animation_nhmfv"),
 "idle": SubResource("Animation_bqdyw"),
 "jump": SubResource("Animation_xml0l"),

@@ -10,6 +10,8 @@ extends Path2D
 @export_group("Music")
 @export var boss_music: Resource = preload("./music/music_bowser_battle.mod")
 @export var boss_music_fading: bool = true
+@export var boss_music_start_from_sec: float
+@export var boss_music_volume: float
 
 var _cam_parent: Node
 
@@ -51,8 +53,12 @@ func _physics_process(delta: float) -> void:
 				cam.force_update_scroll()
 			if boss_music:
 				Audio.stop_all_musics(boss_music_fading)
-				Audio.play_music(boss_music, 32, {} if !boss_music_fading else {
-					volume = -40,
+				Audio.play_music(boss_music, 32, {
+					start_from_sec = boss_music_start_from_sec,
+					volume = boss_music_volume
+				} if !boss_music_fading else {
+					volume = -40 + boss_music_volume,
+					start_from_sec = boss_music_start_from_sec,
 					fade_duration = 1.5,
 					fade_to = 0
 				})
