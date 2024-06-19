@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		Effect.trail.call_deferred(
 			player, 
 			player.sprite.sprite_frames.get_frame_texture(player.sprite.animation, player.sprite.frame),
-			player.sprite.position,
+			player.sprite.position + Vector2(0, -16),
 			player.sprite.flip_h,
 			player.sprite.flip_v,
 			true,

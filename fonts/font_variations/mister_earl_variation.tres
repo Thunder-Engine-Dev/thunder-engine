@@ -1,6 +1,6 @@
 [gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://4h0cbbutybo2"]
 
-[ext_resource type="FontFile" uid="uid://bbq20vv2holdj" path="res://engine/fonts/mister_earl.otf" id="1_i6pi2"]
+[ext_resource type="FontFile" uid="uid://v4bjowumsqe1" path="res://engine/fonts/mister_earl.otf" id="1_i6pi2"]
 
 [resource]
 base_font = ExtResource("1_i6pi2")
