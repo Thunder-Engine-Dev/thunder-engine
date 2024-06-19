@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj3fvmd6bah6d"]
+
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="1_dtmji"]
+
+[node name="LabelMisterEarl" type="Label"]
+offset_right = 98.0
+offset_bottom = 16.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_dtmji")
+theme_override_font_sizes/font_size = 21
+text = "sample text"
+horizontal_alignment = 1
+uppercase = true

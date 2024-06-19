@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=38 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="9_brvlo"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_s7655"]
 [ext_resource type="Texture2D" uid="uid://bdcwcxs6acukg" path="res://engine/tilesets/overworld/default_grass.png" id="10_72rpp"]
+[ext_resource type="PackedScene" uid="uid://e1hxnaxfnvbl" path="res://engine/scenes/save_game_room/scripts/reset.tscn" id="10_p8a0e"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="11_33dcp"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="12_2qs05"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="13_b3ol1"]
@@ -22,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="20_1ppih"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="22_nw3gx"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="24_3w1ro"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tn1mg"]
 texture = ExtResource("5_yaxqo")
@@ -218,6 +220,9 @@ layer_0/tile_data = PackedInt32Array(851970, 2, 0, 851968, 2, 0, 851969, 2, 0, 8
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." instance=ExtResource("17_f33dw")]
+visible = false
+
+[node name="Reset" parent="." instance=ExtResource("10_p8a0e")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -379,6 +384,7 @@ theme_override_font_sizes/font_size = 21
 text = "YOU CAN EXCHANGE SOME LIVES FOR ONE OF THESE ITEMS!!!
 BUT BE CAREFUL, SOMETIMES LIVES ARE MORE IMPORTANT THAN THIS STUFF."
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Label" type="Label" parent="."]
 offset_left = 752.0
@@ -391,6 +397,7 @@ theme_override_fonts/font = ExtResource("22_nw3gx")
 theme_override_font_sizes/font_size = 21
 text = "COSTS 1 LIFE"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Label2" type="Label" parent="."]
 offset_left = 880.0
@@ -403,6 +410,7 @@ theme_override_fonts/font = ExtResource("22_nw3gx")
 theme_override_font_sizes/font_size = 21
 text = "COSTS 2 LIVES"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Label3" type="Label" parent="."]
 offset_left = 1008.0
@@ -415,6 +423,7 @@ theme_override_fonts/font = ExtResource("22_nw3gx")
 theme_override_font_sizes/font_size = 21
 text = "COSTS 2 LIVES"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Label4" type="Label" parent="."]
 offset_left = 1152.0
@@ -427,3 +436,25 @@ theme_override_fonts/font = ExtResource("22_nw3gx")
 theme_override_font_sizes/font_size = 21
 text = "COSTS 2 LIVES"
 horizontal_alignment = 1
+uppercase = true
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 352.0
+offset_top = 144.0
+offset_right = 480.0
+offset_bottom = 167.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_nw3gx")
+theme_override_font_sizes/font_size = 21
+text = "SELECT SAVE"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("24_3w1ro")
+
+[connection signal="body_entered" from="PipeSave" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="body_entered" from="PipeSave2" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave2" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="body_entered" from="PipeSave3" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
+[connection signal="body_exited" from="PipeSave3" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]

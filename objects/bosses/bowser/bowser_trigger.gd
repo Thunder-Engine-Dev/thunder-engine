@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
 		if curve:
-			drawn_rect.position = global_position + curve.get_point_position(0) - trigger_area.size / 2
+			drawn_rect.position = trigger_area.position + curve.get_point_position(0) - trigger_area.size / 2
 			drawn_rect.size = trigger_area.size
 		return
 	

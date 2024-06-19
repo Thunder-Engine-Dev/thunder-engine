@@ -6,6 +6,10 @@ const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture
 
 ## For coin bricks. Set to 1 for one-time output
 @export var result_counter_value: float = 300
+## Limit for items
+@export var max_items: int = 20
+
+var _items_hit: int
 var counter_enabled: bool = false
 
 
@@ -53,10 +57,11 @@ func got_bumped(by: Node2D) -> void:
 func brick_bump_logic() -> void:
 	if result_counter_value < 1: return
 	bump(false)
+	_items_hit += 1
 	if result && !counter_enabled:
 		counter_enabled = true
 	
-	if result_counter_value == 1 || result_counter_value == 0:
+	if result_counter_value == 1 || result_counter_value == 0 || _items_hit >= max_items:
 		_animated_sprite_2d.animation = &"empty"
 		counter_enabled = false
 		result_counter_value = 0
