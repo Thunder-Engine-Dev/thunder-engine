@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="4_2mkq8"]
 [ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_633ve"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
-[ext_resource type="Texture2D" uid="uid://8ltalchh5vpa" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_ab7c7"]
+[ext_resource type="Texture2D" uid="uid://b1mfy1jeb1fax" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_ab7c7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
