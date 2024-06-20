@@ -1,0 +1,16 @@
+[remap]
+
+importer="libopenmpt.modimporter"
+type="Resource"
+uid="uid://c54m13b157yo7"
+path="res://.godot/imported/credits.mod-f897ada28929042f57e454ddaed13609.res"
+
+[deps]
+
+source_file="res://engine/scenes/credits/music/credits.mod"
+dest_files=["res://.godot/imported/credits.mod-f897ada28929042f57e454ddaed13609.res"]
+
+[params]
+
+interpolation=2
+loop=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="libopenmpt.modimporter"
+type="Resource"
+uid="uid://bexk1qd4psene"
+path="res://.godot/imported/music_bowser_battle.mod-d7268dde39702d9835a93c8042424fe1.res"
+
+[deps]
+
+source_file="res://engine/objects/bosses/bowser/music/music_bowser_battle.mod"
+dest_files=["res://.godot/imported/music_bowser_battle.mod-d7268dde39702d9835a93c8042424fe1.res"]
+
+[params]
+
+interpolation=2
+loop=true
