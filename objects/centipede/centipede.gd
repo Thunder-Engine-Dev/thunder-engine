@@ -49,6 +49,8 @@ var prev_progress_fixed: float
 var interpolation_timer: float
 
 func _ready() -> void:
+	_set_current_delay()
+	
 	timer.wait_time = fixed_delta
 	timer.timeout.connect(_process_fixed)
 	
@@ -78,22 +80,17 @@ func _physics_process(delta: float) -> void:
 			audio_player.stream = moving_sound
 			audio_player.play()
 	
-	
-	#print(interpolation_timer)
-	progress = lerp(prev_progress_fixed, progress_fixed, interpolation_timer)
-	#progress = progress_fixed
+	progress = lerp(prev_progress_fixed, progress_fixed, interpolation_timer - fixed_delta)
+	interpolation_timer += 1 / (1 / delta * fixed_delta)
 	
 
 
 func _process_fixed() -> void:
 	interpolation_timer = 0
 	prev_progress_fixed = progress_fixed
-	var tw = create_tween()
-	tw.tween_property(self, "interpolation_timer", 1 - fixed_delta, fixed_delta)
-	_on_path_movement_process(fixed_delta)
 	
 	if _current_delay > 0:
-		_current_delay -= speed * fixed_delta
+		_current_delay -= 100 * fixed_delta
 		_movement_blocked = true
 	else:
 		_current_delay = 0
@@ -102,6 +99,8 @@ func _process_fixed() -> void:
 		if _first_delay:
 			_first_delay = false
 			_spawn_another_block()
+	
+	_on_path_movement_process(fixed_delta)
 
 func _on_path_movement_process(delta: float) -> void:
 	if _movement_blocked: return
@@ -151,9 +150,13 @@ func _process_stepper() -> void:
 	#print(Vector3(progress, target_offset, progress + speed))
 	if progress < target_offset && progress + (speed * fixed_delta) > target_offset:
 		progress = target_offset
-		_current_delay = _set_delay
+		_set_current_delay()
 		_movement_blocked = true
 		step_next_points.remove_at(0)
+
+
+func _set_current_delay() -> void:
+	_current_delay = _set_delay / (speed / 100) + 1
 
 
 func _sign_up_step_points() -> void:
