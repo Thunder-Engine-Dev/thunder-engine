@@ -4,11 +4,14 @@ extends PathFollow2D
 @export var moving_sound = preload("res://engine/objects/centipede/sfx/idle.wav")
 @export var block_amount: int = 5
 @export var speed: float = 100
+@export_group("Convey-belt Like")
+@export var convey_belt_speed: Vector2
 @export_group("Trigger", "trigger_")
 @export var trigger_area_enabled: bool = true
 @export var trigger_area: Rect2 = Rect2(0, 0, 32, 480)
 
 @onready var block = $Block
+@onready var olp_centipede = $Block/OLPCentipede
 @onready var audio_player = $Block/AudioStreamPlayer2D
 @onready var spikeball = $Block/Spikeball
 @onready var timer = $Block/Timer
@@ -34,14 +37,16 @@ var linear_velocity: Vector2
 var is_moving: bool
 var _movement_blocked: bool
 
-var _set_delay: int = 32
-var _current_delay: int = 32
+var _set_delay: float = 32
+var _current_delay: float = 32
 var _has_moved: bool = false
 var _first_delay: bool = true
 var _secondary_block: bool = false
 var _latter: bool = false
 
 var step_next_points: PackedVector2Array
+
+var vel: Vector2
 
 var fixed_delta: float = 0.025
 var progress_fixed: float
@@ -71,7 +76,8 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(player) && trigger_area_enabled:
 		_detect_area()
 	
-	if !is_moving: return
+	if !is_moving:
+		return
 	
 	if !_has_moved:
 		_has_moved = true
@@ -80,9 +86,9 @@ func _physics_process(delta: float) -> void:
 			audio_player.stream = moving_sound
 			audio_player.play()
 	
+	var pos: Vector2 = global_position
 	progress = lerp(prev_progress_fixed, progress_fixed, interpolation_timer - fixed_delta)
 	interpolation_timer += 1 / (1 / delta * fixed_delta)
-	
 
 
 func _process_fixed() -> void:
@@ -90,6 +96,7 @@ func _process_fixed() -> void:
 	prev_progress_fixed = progress_fixed
 	
 	if _current_delay > 0:
+		@warning_ignore("narrowing_conversion")
 		_current_delay -= 100 * fixed_delta
 		_movement_blocked = true
 	else:
@@ -156,6 +163,7 @@ func _process_stepper() -> void:
 
 
 func _set_current_delay() -> void:
+	@warning_ignore("narrowing_conversion")
 	_current_delay = _set_delay / (speed / 100) + 1
 
 

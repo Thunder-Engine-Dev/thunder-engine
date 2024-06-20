@@ -93,7 +93,7 @@ func _animation_process(delta: float) -> void:
 			return
 		# Non-climbing
 		if player.is_on_floor():
-			if player.speed.x != 0:
+			if !(is_zero_approx(player.speed.x)):
 				sprite.play(&"walk")
 				sprite.speed_scale = (
 					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
