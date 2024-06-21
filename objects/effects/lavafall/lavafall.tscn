@@ -1,0 +1,210 @@
+[gd_scene load_steps=16 format=3 uid="uid://db85vh72kcsmg"]
+
+[ext_resource type="Texture2D" uid="uid://cnvpy7jy5fcf0" path="res://engine/objects/effects/lavafall/lavafall.png" id="1_0b72y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76y8h"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 0, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eacl"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 32, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pp8i"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 64, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq0cg"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 96, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grycn"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 128, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upi7r"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 160, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2me6"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 192, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhol4"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 224, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy6vb"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 256, 54, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tvh0"]
+atlas = ExtResource("1_0b72y")
+region = Rect2(0, 288, 54, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h3yyw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76y8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eacl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pp8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq0cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grycn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upi7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2me6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhol4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy6vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tvh0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 50.0
+}]
+
+[sub_resource type="Animation" id="Animation_xnuwt"]
+resource_name = "new_animation"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_q2kwm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxcxq"]
+_data = {
+"RESET": SubResource("Animation_q2kwm"),
+"new_animation": SubResource("Animation_xnuwt")
+}
+
+[node name="Lavafall" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 272)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 240)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 208)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 176)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 144)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 112)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 80)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 48)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 304)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 336)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 368)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 400)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 432)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, 464)
+sprite_frames = SubResource("SpriteFrames_h3yyw")
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gxcxq")
+}
+autoplay = "new_animation"
