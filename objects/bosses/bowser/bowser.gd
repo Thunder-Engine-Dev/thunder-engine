@@ -120,12 +120,15 @@ func _physics_process(delta: float) -> void:
 		_jumping(delta)
 	# Attack
 	if !tween_status:
-		tween_status = create_tween().set_loops()
+		tween_status = create_tween()
 		for i in status.size():
 			tween_status.tween_interval(status_interval[i])
 			tween_status.tween_callback(
 				func() -> void:
 					attack(status[i])
+			)
+			tween_status.finished.connect(func() -> void:
+				tween_status = null
 			)
 	# Physics
 	motion_process(delta)
@@ -182,7 +185,8 @@ func attack_flame(offset_by_32: int = -1) -> void:
 				flm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
 				flm.speed *= facing
 	)
-	if !tween_status.is_running(): tween_status.play()
+	if tween_status && !tween_status.is_running(): 
+		tween_status.play()
 
 
 # Bowser's multiple flames
