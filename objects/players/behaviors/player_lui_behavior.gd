@@ -12,6 +12,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if player.get_tree().paused: return
 	# Trail effect
 	if trail_timer > 0.0: trail_timer -= 1 * Thunder.get_delta(delta)
 	if !player.is_on_floor() && trail_timer <= 0.0:
