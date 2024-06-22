@@ -8,7 +8,7 @@
 script = ExtResource("1_egrif")
 
 [node name="Head" type="TextureRect" parent="."]
-anchors_preset = -1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -96.0

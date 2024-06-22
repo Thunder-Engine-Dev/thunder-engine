@@ -2,10 +2,12 @@ extends CanvasLayer
 
 var bowser: Node2D
 
+@export var y_offset = 0
+
 @onready var head: TextureRect = $Head
 @onready var life: TextureRect = $Head/Life
-@onready var init_pos_y: float = head.get_viewport_transform().affine_inverse().origin.y -256
-@onready var to_pos_y: float = head.position.y
+@onready var init_pos_y: float = head.get_viewport_transform().affine_inverse().origin.y - 256 + y_offset
+@onready var to_pos_y: float = head.position.y + y_offset
 
 
 func _ready() -> void:

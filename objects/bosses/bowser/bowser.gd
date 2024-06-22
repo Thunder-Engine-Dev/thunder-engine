@@ -47,6 +47,8 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export_group("Level Setting")
 @export_enum("Left: -1", "Right: 1") var complete_direction: int = 1
 @export var final_boss: bool = true
+@export_group("HUD")
+@export var y_offset: int = 0
 
 var tween_hurt: Tween
 var tween_status: Tween
@@ -144,6 +146,7 @@ func activate() -> void:
 	# HUD
 	var hud: CanvasLayer = HUD.instantiate()
 	hud.bowser = self
+	hud.y_offset = y_offset
 	health_changed.connect(hud.life_changed)
 	add_sibling.call_deferred(hud)
 	# Emit the signal
@@ -222,7 +225,7 @@ func attack_hammer() -> void:
 						hm.global_position = pos_hammer.global_position
 						if hm is Projectile:
 							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							hm.vel_set(Vector2(randf_range(100, 400) * facing, randf_range(-1000, -200)))
+							hm.vel_set(Vector2(randf_range(50, 400) * facing, randf_range(-800, -200)))
 				)
 		).set_delay(hammer_interval)
 	tween_hammer.tween_callback(
@@ -270,7 +273,7 @@ func attack_burst() -> void:
 						bf.global_position = pos_flame.global_position
 						if bf is Projectile:
 							bf.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							bf.vel_set(Vector2(randf_range(200, 800) * facing, randf_range(-700, -100)))
+							bf.vel_set(Vector2(randf_range(400, 800) * facing, randf_range(-400, 0)))
 				)
 		).set_delay(0.1)
 	# Tween to end the process and restore data
