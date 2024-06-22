@@ -23,6 +23,7 @@ var _stunspot: Vector2
 @onready var timer_waiting: Timer = $Waiting
 @onready var left_explosion: RayCast2D = $LeftExplosion
 @onready var right_explosion: RayCast2D = $RightExplosion
+@onready var collision_shape_2d = $CollisionShape2D
 
 
 func _ready() -> void:
@@ -46,6 +47,9 @@ func _physics_process(delta: float) -> void:
 	match _step:
 		# Waiting
 		0:
+			collision = false
+			collision_shape_2d.disabled = true
+			
 			var player: Player = Thunder._current_player
 			if !player: return
 			var ppos: Vector2 = global_transform.affine_inverse() * player.global_position
@@ -54,6 +58,9 @@ func _physics_process(delta: float) -> void:
 				_step = 1
 		# Stunning
 		1:
+			collision = true
+			collision_shape_2d.disabled = false
+			
 			_vel = velocity.normalized()
 			motion_process(delta)
 			if is_on_floor():
@@ -75,6 +82,9 @@ func _physics_process(delta: float) -> void:
 				timer_waiting.start(waiting_time)
 		# Rising
 		3:
+			collision = false
+			collision_shape_2d.disabled = true
+			
 			velocity = -_vel * rising_speed
 			do_movement(delta)
 			if (_origin - global_position).dot(_origin - _stunspot) <= 0 && global_position.distance_squared_to(_origin) <= rising_speed * delta:
