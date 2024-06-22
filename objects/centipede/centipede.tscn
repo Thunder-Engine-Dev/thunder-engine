@@ -26,7 +26,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-volume_db = -10.0
 bus = &"Sound"
 
 [node name="Timer" type="Timer" parent="."]
