@@ -3,8 +3,11 @@ class_name PlayerCamera2D
 
 var stop_blocking_edges: bool
 
-@onready var par: Node2D = get_parent()
+@export_subgroup("Autoscroll")
+@export var stop_blocking_on_complete: bool = true
 
+@onready var par: Node2D = get_parent()
+@onready var player = Thunder._current_player
 
 func _ready():
 	Thunder._current_camera = self
@@ -15,6 +18,9 @@ func _ready():
 
 func _physics_process(_delta):
 	teleport()
+	
+	if is_instance_valid(player) && stop_blocking_on_complete && player.completed:
+		stop_blocking_edges = true
 
 
 func teleport() -> void:
