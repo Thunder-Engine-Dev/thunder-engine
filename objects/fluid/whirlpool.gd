@@ -25,6 +25,7 @@ func _physics_process(delta):
 		
 	var player: Player = Thunder._current_player
 	if !player: return
+	var camera: Camera2D = Thunder._current_camera
 	
 	if area_2d.overlaps_body(player) && player.is_underwater:
 		var pos = sinking_point
@@ -35,3 +36,6 @@ func _physics_process(delta):
 			sucking_motion.y * signf(pos.y - p_pos.y)
 		)
 		player.move_and_collide(Vector2.ZERO)
+		if !camera: return
+		camera.teleport()
+		
