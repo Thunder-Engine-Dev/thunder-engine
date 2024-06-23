@@ -78,6 +78,7 @@ animations = [{
 }]
 
 [node name="KoopaRed" instance=ExtResource("1_tovt6")]
+speed = Vector2(100, 0)
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_qcd8b")
