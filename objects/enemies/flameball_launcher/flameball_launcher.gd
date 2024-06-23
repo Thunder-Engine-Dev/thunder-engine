@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 @export var interval: float = 3
+@export var initial_interval: float = 1
 @export_group("Flameball")
 @export var flameball: InstanceNode2D
 @export var speed: float = 250
@@ -18,7 +19,7 @@ var _amount: int
 
 
 func _ready() -> void:
-	timer_interval.start(interval)
+	timer_interval.start(initial_interval)
 
 
 func _on_interval_timeout() -> void:

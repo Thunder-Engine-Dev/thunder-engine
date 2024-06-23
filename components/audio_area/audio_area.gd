@@ -11,7 +11,7 @@ func _ready() -> void:
 	body_exited.connect(_remove_effects)
 
 func _exit_tree() -> void:
-	_remove_effects()
+	_remove_effects(null)
 
 
 func _add_effect(player: Node2D) -> void:
@@ -30,7 +30,7 @@ func _add_effect(player: Node2D) -> void:
 			continue
 		audio.add_bus_effect(sound_channel, j)
 
-func _remove_effects() -> void:
+func _remove_effects(_p: Node2D = null) -> void:
 	var sound_channel := audio.get_bus_index(&"Sound")
 	for i in audio.get_bus_effect_count(sound_channel):
 		audio.remove_bus_effect(sound_channel, i)

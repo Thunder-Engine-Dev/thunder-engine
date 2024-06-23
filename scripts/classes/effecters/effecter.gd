@@ -30,6 +30,7 @@ static func trail(
 			tra.lifetime = duration
 			tra.material = material
 			tra.z_index = on.z_index + z_index
+			tra.add_to_group(&"Trail")
 	).create_2d().get_node() as Sprite2D
 
 

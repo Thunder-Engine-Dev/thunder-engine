@@ -26,8 +26,6 @@ collision_layer = 112
 collision_mask = 0
 script = ExtResource("1_2sd30")
 spikeball = SubResource("Resource_vtp0b")
-spikeball_velocity_min = Vector2(-100, -400)
-spikeball_velocity_max = Vector2(100, -250)
 metadata/_edit_pinned_properties_ = [&"spikeball"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
