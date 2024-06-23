@@ -18,6 +18,8 @@ func _time() -> void:
 	await get_tree().create_timer(0.1, false).timeout
 	_time()
 	
+	if !enabled: return
+	
 	if randi_range(0, random_pool) == random_equals:
 		Thunder.view.cam_border()
 		var to_pos = Vector2(Thunder.view.border.end) + Vector2(randi_range(-100, 0), 0)
