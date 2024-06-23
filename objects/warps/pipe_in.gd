@@ -23,6 +23,7 @@ extends Area2D
 @export var circle_closing_speed: float = 0.1
 @export var circle_opening_speed: float = 0.1
 @export var circle_focus_on_player: bool = true
+@export var circle_center_after_middle: bool = false
 @export_group("Blur Transition")
 @export var use_blur_transition: bool = false
 @export var blur_closing_speed: float = 2.2
@@ -128,16 +129,21 @@ func _physics_process(delta: float) -> void:
 			)
 			if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
 			await TransitionManager.transition_middle
-			TransitionManager.current_transition.paused = true
 			
-			if warp_to_scene: 
-				Scenes.scene_changed.connect(func(_current_scene):
-					if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
-					TransitionManager.current_transition.paused = false
-				, CONNECT_ONE_SHOT)
-			else:
-				if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
-				TransitionManager.current_transition.paused = false
+			# The commented code needs fixing and is temporarily commented out
+			
+			#TransitionManager.current_transition.paused = true
+			
+			#if warp_to_scene: 
+			#	Scenes.scene_ready.connect(func():
+			#		if circle_focus_on_player && is_instance_valid(Thunder._current_player): TransitionManager.current_transition.on(Thunder._current_player)
+			#		TransitionManager.current_transition.paused = false
+			#	, CONNECT_ONE_SHOT)
+			#else:
+			if circle_focus_on_player && !circle_center_after_middle: TransitionManager.current_transition.on(Thunder._current_player)
+			if circle_center_after_middle:
+				TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
+			#TransitionManager.current_transition.paused = false
 			
 			pass_warp.call_deferred()
 			
@@ -150,15 +156,18 @@ func _physics_process(delta: float) -> void:
 			
 			TransitionManager.accept_transition(trans)
 			await TransitionManager.transition_middle
-			TransitionManager.current_transition.paused = true
+			
+			# The commented code needs fixing and is temporarily commented out
+			
+			#TransitionManager.current_transition.paused = true
 			
 			
-			if warp_to_scene: 
-				Scenes.scene_changed.connect(func(_current_scene):
-					TransitionManager.current_transition.paused = false
-				, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-			else:
-				TransitionManager.current_transition.paused = false
+			#if warp_to_scene: 
+			#	Scenes.scene_changed.connect(func(_current_scene):
+			#		TransitionManager.current_transition.paused = false
+			#	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+			#else:
+			#	TransitionManager.current_transition.paused = false
 			
 			await get_tree().physics_frame
 			pass_warp()

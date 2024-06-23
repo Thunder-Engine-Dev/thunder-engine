@@ -208,7 +208,3 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 			ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()
-
-
-func disable():
-	pass # Replace with function body.
