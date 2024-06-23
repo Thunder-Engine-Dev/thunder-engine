@@ -2,6 +2,8 @@ extends Node
 
 const TIMUR_JUMPING = preload("res://engine/objects/enemies/cheeps/cheep_red_jumping.tscn")
 
+@export var enabled: bool = true
+
 @export_subgroup("Spawn rate")
 @export var random_pool: int = 20
 @export var random_equals: int = 10
@@ -26,3 +28,9 @@ func _time() -> void:
 		fishgoggles.speed.y = randi_range(speed_min.y, speed_max.y)
 		
 		Scenes.current_scene.add_child(fishgoggles)
+
+func enable() -> void:
+	enabled = true
+
+func disable() -> void:
+	enabled = false
