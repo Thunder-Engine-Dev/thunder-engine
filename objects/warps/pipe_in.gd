@@ -8,13 +8,13 @@ extends Area2D
 @export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
 @export_group("General")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.DOWN
-@export_group("Tweaks")
-@export var warp_invisible_left_right: bool = true
 @export_node_path("Area2D") var warp_to: NodePath
 @export_file("*.tscn", "*.scn") var warp_to_scene: String
 @export var trigger_finish: bool = false
 @export var warping_speed: float = 60
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+@export_group("Tweaks")
+@export var warp_invisible_left_right: bool = true
 @export_group("Path Transition")
 @export var warp_path: Path2D
 @export var warp_path_speed: float = 400
