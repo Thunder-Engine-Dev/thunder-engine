@@ -35,3 +35,6 @@ text = "up"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="PosPlayerInvisible" type="Marker2D" parent="."]
+visible = false

@@ -12,10 +12,11 @@ signal warp_ended
 
 var player: Player
 var player_z_index: int
+var warp_invisible_left_right: bool = true
 
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
-
+@onready var pos_player_invisible = $PosPlayerInvisible
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -36,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	if !player: return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
+	_tweak_process()
 
 
 func _on_body_exited(body: Node2D) -> void:
@@ -61,16 +63,16 @@ func pass_player(new_player: Player) -> void:
 	
 	match warp_direction:
 		Player.WarpDir.RIGHT:
-			pos_player.position = Vector2(0, 0)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.RIGHT
 		Player.WarpDir.LEFT:
-			pos_player.position = Vector2(0, 0)
+			pos_player.position = Vector2(0, -(shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.LEFT
 		Player.WarpDir.DOWN:
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 20)
 			player_warp_dir = Player.WarpDir.UP
 		Player.WarpDir.UP:
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y + 8)
 			player_warp_dir = Player.WarpDir.DOWN
 	
 	player.global_position = pos_player.global_position
@@ -81,6 +83,15 @@ func pass_player(new_player: Player) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	Audio.play_sound(warping_sound, self, false)
+
+
+func _tweak_process() -> void:
+	if !warp_invisible_left_right: return
+	
+	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
+		player.sprite.visible = true
+	if warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
+		player.sprite.visible = true
 
 
 func _label() -> void:

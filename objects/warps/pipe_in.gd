@@ -8,6 +8,8 @@ extends Area2D
 @export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
 @export_group("General")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.DOWN
+@export_group("Tweaks")
+@export var warp_invisible_left_right: bool = true
 @export_node_path("Area2D") var warp_to: NodePath
 @export_file("*.tscn", "*.scn") var warp_to_scene: String
 @export var trigger_finish: bool = false
@@ -38,6 +40,7 @@ var _warp_triggered: bool = false
 @onready var target: Area2D = get_node_or_null(warp_to)
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
+@onready var pos_player_invisible = $PosPlayerInvisible
 
 signal player_enter
 signal player_exit
@@ -110,6 +113,7 @@ func _physics_process(delta: float) -> void:
 	if _duration < _target:
 		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
 		_duration += delta
+		_tweak_process()
 	
 	# Warping Transition
 	elif !warp_trans && !_warp_triggered:
@@ -173,6 +177,8 @@ func pass_warp() -> void:
 	if target:
 		target.pass_player(player)
 		target.player_z_index = player_z_index
+		target.warp_invisible_left_right = warp_invisible_left_right
+		_transition_update()
 	elif warp_to_scene:
 		Scenes.goto_scene(warp_to_scene)
 	elif trigger_finish:
@@ -180,6 +186,22 @@ func pass_warp() -> void:
 		player.modulate.a = 0
 	player = null
 	warp_trans = null
+
+
+func _tweak_process() -> void:
+	if !warp_invisible_left_right: return
+	
+	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
+		player.sprite.visible = false
+	if warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
+		player.sprite.visible = false
+
+
+func _transition_update() -> void:
+	if use_circle_transition && circle_focus_on_player:
+		await get_tree().process_frame
+		await get_tree().process_frame
+		TransitionManager.current_transition.on(Thunder._current_player)
 
 
 func _label() -> void:
