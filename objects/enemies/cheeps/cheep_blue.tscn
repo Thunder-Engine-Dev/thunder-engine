@@ -66,6 +66,7 @@ animations = [{
 
 [node name="CheepBlue" instance=ExtResource("1_6qc7h")]
 type = 1
+turn_x_enabled = true
 metadata/_edit_pinned_properties_ = [&"type"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]

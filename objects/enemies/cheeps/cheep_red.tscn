@@ -59,9 +59,10 @@ animations = [{
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_86ols")
+turn_x_enabled = false
 look_at_player = true
 sprite = NodePath("Sprite")
-speed = Vector2(50, 0)
+speed = Vector2(-50, 0)
 metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

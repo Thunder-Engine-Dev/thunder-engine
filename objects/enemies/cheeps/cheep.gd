@@ -36,6 +36,8 @@ enum Type {
 			enemy_attacked.stomping_standard = Vector2.ZERO
 @export_group("Cheep General")
 @export var always_unstompable: bool
+@export var turn_x_enabled: bool = true
+@export var turn_y_enabled: bool = true
 @export_group("Cheep Swimming", "swimming_")
 @export var swimming_y_speed: float = 15
 @export var swimming_interval: float = 1
@@ -75,10 +77,10 @@ func _physics_process(delta: float) -> void:
 	_update_detc_pos(delta)
 	var out_of_water_x: bool = _in_water_detection(swim_x)
 	var out_of_water_y: bool = _in_water_detection(swim_y)
-	if out_of_water_x:
+	if out_of_water_x && turn_x_enabled:
 		speed.x *= -1
 		_update_detc_pos(delta)
-	if out_of_water_y:
+	if out_of_water_y && turn_y_enabled:
 		speed.y *= -1
 		_update_detc_pos(delta)
 
