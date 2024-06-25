@@ -8,9 +8,9 @@ func execute(args:Array) -> Command.ExecuteResult:
 	var suit = load("res://engine/objects/players/prefabs/suits/%s/suit_%s_%s.tres" % [character, character, args[1]])
 	if !suit:
 		return Command.ExecuteResult.new(
-			"""Try one of these: 
-			For \"character\": mario.
-			For \"power\": beetroot, super, fireball, green_lui, small"""
+	"""Try one of these: 
+	For \"character\": mario.
+	For \"power\": beetroot, super, fireball, green_lui, small"""
 		)
 	
 	Thunder._current_player.suit = suit
