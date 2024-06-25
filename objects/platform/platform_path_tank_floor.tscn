@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_y30xh"]
 [ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_pi1bs"]
-[ext_resource type="Texture2D" uid="uid://cu62ex2bb6yf8" path="res://engine/objects/platform/tank_ground.png" id="3_yc4n1"]
+[ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="3_yc4n1"]
 
 [node name="PlatformPathTankFloor" type="PathFollow2D"]
 rotates = false
