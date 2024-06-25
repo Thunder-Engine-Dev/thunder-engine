@@ -191,7 +191,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		if openmpt:
 			openmpt.set_position_seconds.call_deferred(other_keys.start_from_sec)
 		else:
-			_music_channels[channel_id].seek(other_keys.start_from_sec)
+			_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
 	
 	return music_player if is_instance_valid(music_player) else null
 
