@@ -123,7 +123,7 @@ func _ready() -> void:
 	# Transition center at the beginning of the level
 	Scenes.scene_ready.connect(func():
 		var cam := Thunder._current_camera
-		if cam:
+		if is_instance_valid(cam):
 			cam.force_update_scroll()
 		
 		for i in 8: # Deferred 8 frames to ensure the transition works after the player touches checkpoint
