@@ -90,9 +90,10 @@ func _movement_x(delta: float) -> void:
 		)
 		_accelerate(max_speed, config.walk_acceleration, delta)
 	elif player.left_right == -player.direction:
+		_decelerate(config.walk_turning_acce, delta)
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
-	if abs(player.speed.x) > max_speed && !player.is_sliding:
+	if abs(player.speed.x) > max_speed && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
 	
 
