@@ -9,6 +9,9 @@ var stop_blocking_edges: bool
 @onready var par: Node2D = get_parent()
 @onready var player = Thunder._current_player
 
+var _shocking: bool = false
+@onready var ofs: Vector2 = offset
+
 func _ready():
 	Thunder._current_camera = self
 	process_callback = CAMERA2D_PROCESS_IDLE #CAMERA2D_PROCESS_PHYSICS
@@ -47,7 +50,9 @@ func teleport() -> void:
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
-	var ofs: Vector2 = offset
+	if !_shocking:
+		ofs = offset
+	_shocking = true
 	var tw: Tween = create_tween().set_loops(ceili(duration / interval)).set_trans(Tween.TRANS_ELASTIC)
 	tw.tween_callback(
 		func() -> void:
@@ -59,4 +64,5 @@ func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
 	tw.finished.connect(
 		func() -> void:
 			offset = ofs
+			_shocking = false
 	)
