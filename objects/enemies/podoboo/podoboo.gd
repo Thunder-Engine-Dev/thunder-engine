@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if sprite_node:
 		# Sprite rotation to the direction of velocity
 		if SettingsManager.settings.quality != SettingsManager.QUALITY.MIN:
-			sprite_node.global_rotation = lerp(sprite_node.global_rotation, velocity.angle() + PI/2, 8 * delta)
+			sprite_node.global_rotation = lerp(sprite_node.global_rotation, velocity.angle() + (PI/2 if speed.x > 0 else -( (PI + PI/2) if speed.y > 0 else (PI/2 - PI) )), 8 * delta)
 		else:
 			sprite_node.flip_v = velocity.dot(gravity_dir) > 0
 		# Visible only when jumping
