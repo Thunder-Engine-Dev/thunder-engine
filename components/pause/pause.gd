@@ -28,7 +28,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle.call_deferred()
 
 
-func toggle(no_resume: bool = false) -> void:
+func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
 	
 	if !opened && TransitionManager.current_transition:
@@ -57,7 +57,8 @@ func toggle(no_resume: bool = false) -> void:
 	if opened:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
-		Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
+		if !no_sound_effect:
+			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		animation_player.play_backwards("open")
@@ -84,7 +85,7 @@ var autopause_timer: SceneTreeTimer
 
 func _notification(what: int) -> void:
 	var method: Callable = func():
-		if !opened: toggle.call_deferred()
+		if !opened: toggle.bind(false, true).call_deferred()
 	
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		if !Scenes.current_scene is Level: return
@@ -92,6 +93,7 @@ func _notification(what: int) -> void:
 		if !SettingsManager.settings.autopause: return
 		if !&"game_over" in Scenes.custom_scenes: return
 		if opened || Scenes.custom_scenes.game_over.opened: return
+		if get_tree().paused: return
 		if autopause_timer == null:
 			autopause_timer = get_tree().create_timer(0.2)
 			autopause_timer.timeout.connect(method)

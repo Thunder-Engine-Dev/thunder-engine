@@ -4,6 +4,7 @@ var commands: Dictionary
 
 @onready var input: LineEdit = $"UI/CmdInput"
 @onready var output: RichTextLabel = $"UI/OutputContainer/Output"
+@onready var bind_logic = $BindLogic
 
 var history: Array = ['']
 var position_in_history: int
@@ -27,7 +28,7 @@ func _ready():
 
 func _input(event) -> void:
 	if !OS.is_debug_build(): return
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_accept") && has_focus():
 		execute()
 
 func load_commands(dir: String) -> void:
@@ -42,14 +43,12 @@ func _physics_process(delta: float) -> void:
 		$UI/Paused.button_pressed = visible
 		Thunder.set_pause_game(visible)
 		
-	if visible:
-		if Input.is_key_pressed(KEY_ESCAPE):
-			grab_focus()
-		
+	if visible && has_focus():
 		if Input.is_action_just_pressed("ui_up"):
 			move_history(1)
 		if Input.is_action_just_pressed("ui_down"):
 			move_history(-1)
+
 
 func execute() -> void:
 	self.print("[b]> %s[/b]" % input.text)
@@ -59,13 +58,16 @@ func execute() -> void:
 	history.push_front("")
 	move_history_to_latest(null)
 	
-	var args = input.text.split(' ')
-	
-	var cmdName = args[0]
-	args.remove_at(0)
+	internal_execute(input.text)
 	
 	input.clear()
 	input.grab_focus()
+
+func internal_execute(input: String) -> void:
+	var args = input.split(' ')
+	
+	var cmdName = args[0]
+	args.remove_at(0)
 	
 	if !commands.has(cmdName):
 		if cmdName != "":

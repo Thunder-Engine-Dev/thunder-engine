@@ -143,6 +143,7 @@ func is_player_power(power: Data.PLAYER_POWER) -> bool:
 ## Pauses game
 func set_pause_game(pause: bool) -> void:
 	get_tree().paused = pause
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if pause else Input.MOUSE_MODE_HIDDEN
 
 
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them

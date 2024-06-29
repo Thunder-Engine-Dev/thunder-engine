@@ -73,7 +73,12 @@ var description: String = NIY
 
 # NOT FOR OVERRIDING
 func try_execute(args: Array) -> Variant:
-	if args.size() < params.keys().size():
+	var arg_count: int
+	for k in params.keys():
+		if !params[k].optional:
+			arg_count += 1
+	
+	if args.size() < arg_count:
 		return messages[Error.Param]
 	
 	# TODO: Check if param have wrong type
@@ -95,8 +100,12 @@ func get_help() -> String:
 		result = ""
 	else:
 		for k in params.keys():
-			# TODO: replace print intager to print actual type name
-			result += " [color=magenta]<%s: %s>[/color]" % [k, type_names[params[k]]]
+			var opt: bool = params[k].optional
+			var opening: String = "aqua][" if opt else "deep_sky_blue]<"
+			var closing: String = "]" if opt else ">"
+			result += " [color=%s%s: %s%s[/color]" % [
+				opening, k, type_names[params[k].type], closing
+			]
 	
 	result += " - %s" % description
 	
@@ -114,8 +123,11 @@ func set_description(desc: String) -> Command:
 	description = desc
 	return self
 
-func add_param(key: String, val: int) -> Command:
-	params[key] = val
+func add_param(key: String, val: int, _optional: bool = false) -> Command:
+	params[key] = {
+		type = val,
+		optional = _optional
+	}
 	return self
 
 @warning_ignore("shadowed_variable")
