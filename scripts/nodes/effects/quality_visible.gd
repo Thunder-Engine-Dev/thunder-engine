@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasItem
 
 @export_category("Keep only on these Quality Settings")
 @export var maximum: bool = true

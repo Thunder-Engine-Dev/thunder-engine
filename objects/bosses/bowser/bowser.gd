@@ -83,6 +83,9 @@ var _bullet_received: int
 @onready var pos_hammer_x: float = pos_hammer.position.x
 
 @onready var initial_killing_immune: Dictionary = enemy_attacked.killing_immune.duplicate(true)
+@onready var tweaked_stomping: bool = SettingsManager.get_tweak("bowser_stomping", false)
+@onready var player: Player = Thunder._current_player
+var _tweaked_stomping_vel: float
 
 
 func _ready() -> void:
@@ -91,6 +94,9 @@ func _ready() -> void:
 	direction = facing
 	vel_set_x(0)
 	enemy_attacked.killing_immune = {}
+	if tweaked_stomping:
+		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -136,6 +142,12 @@ func _physics_process(delta: float) -> void:
 	motion_process(delta)
 	if is_on_floor():
 		pos_y_on_floor = global_transform.affine_inverse().basis_xform(global_position).y
+	
+	# Old bowser stomping (Tweak)
+	if !tweaked_stomping: return
+	_tweaked_stomping_vel = move_toward(_tweaked_stomping_vel, 0.0, 50 * delta)
+	if is_instance_valid(player) && !player.is_on_wall():
+		player.position.x += _tweaked_stomping_vel * 50 * delta
 
 
 func activate() -> void:
@@ -152,6 +164,7 @@ func activate() -> void:
 	# Emit the signal
 	health = health
 	enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
+	player = Thunder._current_player
 
 
 # Bowser's attack
@@ -289,9 +302,12 @@ func attack_burst() -> void:
 
 
 # Bowser's hurt
-func hurt() -> void:
+func hurt(_external_damage_source: bool = false) -> void:
 	if tween_hurt: return
 	enemy_attacked.killing_immune = {}
+	
+	if !_external_damage_source && tweaked_stomping && is_instance_valid(player):
+		_tweaked_stomping_vel = 10 * player.direction
 	
 	if health > 0:
 		Audio.play_sound(hurt_sound, self)
@@ -329,7 +345,7 @@ func bullet_hurt() -> void:
 	_bullet_received += 1
 	if _bullet_received >= hardness:
 		_bullet_received = 0
-		hurt()
+		hurt(true)
 
 
 # Bowser's death
