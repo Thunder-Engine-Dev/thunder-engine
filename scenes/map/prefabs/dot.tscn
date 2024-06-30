@@ -1,63 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://beu6ovtvrvpfc"]
+[gd_scene load_steps=4 format=3 uid="uid://beu6ovtvrvpfc"]
 
-[ext_resource type="Texture2D" uid="uid://b7mpvpiw66wdu" path="res://engine/scenes/map/textures/dot.png" id="1_y7pm0"]
+[ext_resource type="SpriteFrames" uid="uid://cswh7qii8qpjn" path="res://engine/scenes/map/prefabs/dot_style.tres" id="1_8lxv4"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_dot.gd" id="2_6he3g"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2pjgg"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_es3e4"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ql348"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vy6xh"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_axj76"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jn15n"]
-atlas = ExtResource("1_y7pm0")
-region = Rect2(80, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_fett5"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2pjgg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_es3e4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ql348")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vy6xh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_axj76")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jn15n")
-}],
-"loop": true,
-"name": &"default",
-"speed": 20.0
-}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ry1p5"]
 radius = 6.0
 
 [node name="Dot" type="AnimatedSprite2D" groups=["map_dot"]]
-sprite_frames = SubResource("SpriteFrames_fett5")
+sprite_frames = ExtResource("1_8lxv4")
 autoplay = "default"
 script = ExtResource("2_6he3g")
 

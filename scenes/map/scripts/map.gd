@@ -8,7 +8,9 @@ signal player_entered_level ## Emitted when the player enters a level.
 var player: NodePath
 @export_group("Map Customization")
 @export
-var dot_style: SpriteFrames
+var dot_style: SpriteFrames = preload("res://engine/scenes/map/prefabs/dot_style.tres")
+@export
+var dot_sprite_offset: Vector2 = Vector2.ZERO
 @export
 var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
 @export

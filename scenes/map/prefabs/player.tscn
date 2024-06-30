@@ -1,9 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://w4jc7nb1lcsy"]
+[gd_scene load_steps=8 format=3 uid="uid://w4jc7nb1lcsy"]
 
 [ext_resource type="SpriteFrames" uid="uid://b1mklmn2aqcx8" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres" id="1_et5ts"]
 [ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_view.gd" id="2_2hlka"]
+[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="3_5re0p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wmk0a"]
+
+[sub_resource type="Curve" id="Curve_fhbdw"]
+_data = [Vector2(0, 1), 0.0, -1.7608e-07, 0, 0, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sslyt"]
+curve = SubResource("Curve_fhbdw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gfq2v"]
+particle_flag_disable_z = true
+direction = Vector3(-1, -1, 0)
+spread = 30.0
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_sslyt")
 
 [node name="Player" type="Node2D"]
 script = ExtResource("2_2hlka")
@@ -22,5 +39,13 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
 shape = SubResource("RectangleShape2D_wmk0a")
+
+[node name="bubbles" type="GPUParticles2D" parent="Player"]
+z_index = -1
+position = Vector2(0, -32)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_gfq2v")
+texture = ExtResource("3_5re0p")
+lifetime = 0.6
 
 [connection signal="area_entered" from="Player/hitbox" to="." method="_on_hitbox_area_entered"]

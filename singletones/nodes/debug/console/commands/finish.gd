@@ -8,6 +8,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if !level.has_method(&"finish"):
 		return Command.ExecuteResult.new("ERROR: Invalid scene!")
 	
+	level.completion_music = null
 	level.finish()
 	return Command.ExecuteResult.new("Success")
 

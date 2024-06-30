@@ -179,6 +179,8 @@ func if_level_make_x(mark: MapPlayerMarker) -> void:
 
 func make_dot(pos: Vector2) -> void:
 	var m = map.get_node(map.player).dots.instantiate()
+	m.sprite_frames = map.dot_style
+	m.offset = map.dot_sprite_offset
 	m.global_position = pos
 	m.visible = false
 	map.add_child.call_deferred(m)

@@ -17,6 +17,7 @@ var fast_forwarding: bool = false
 @onready var map = Scenes.current_scene
 @onready var player: AnimatedSprite2D = $Player
 @onready var camera: Camera2D = $Camera2D
+@onready var bubbles = $Player/bubbles
 
 func _ready() -> void:
 	# Sets powerup state to sprite
@@ -78,8 +79,13 @@ func move(delta: float) -> void:
 
 
 func animate() -> void:
+	if player.animation == "swim":
+		player.speed_scale = 1
+		bubbles.emitting = true
+		return
 	if !reached:
 		player.speed_scale = 3
+		bubbles.emitting = false
 	else:
 		player.speed_scale = 1
 

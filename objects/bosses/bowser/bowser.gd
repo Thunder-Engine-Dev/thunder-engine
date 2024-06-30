@@ -103,6 +103,8 @@ func _physics_process(delta: float) -> void:
 	# Direction
 	if !lock_direction:
 		facing = get_facing(facing)
+		if sprite.animation == &"throw":
+			sprite.offset.x = 7 * facing
 	# Animation
 	if facing != 0:
 		sprite.flip_h = (facing < 0)
