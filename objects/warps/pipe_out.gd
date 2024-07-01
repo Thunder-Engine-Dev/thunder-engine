@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	if !player: return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
-	_tweak_process()
+	player.sprite.visible = true
 
 
 func _on_body_exited(body: Node2D) -> void:
@@ -83,15 +83,6 @@ func pass_player(new_player: Player) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	Audio.play_sound(warping_sound, self, false)
-
-
-func _tweak_process() -> void:
-	if !warp_invisible_left_right: return
-	
-	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
-		player.sprite.visible = true
-	if warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
-		player.sprite.visible = true
 
 
 func _label() -> void:
