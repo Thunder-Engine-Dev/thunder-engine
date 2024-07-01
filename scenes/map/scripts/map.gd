@@ -73,4 +73,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _get_music() -> Node:
-	return Audio._music_channels[1] if 1 in Audio._music_channels else null
+	return (
+		Audio._music_channels[1] if 1 in Audio._music_channels &&
+		is_instance_valid(Audio._music_channels[1]) else null
+	)

@@ -23,37 +23,78 @@ var use_smooth_transition: bool
 var transition_camera = preload("res://engine/components/cam_area/transition_camera/transition_camera.tscn")
 var is_current: bool
 
+var _det_areas: Array[Control] = []
+
 
 func _ready() -> void:
-	if Engine.is_editor_hint(): return
+	if !child_entered_tree.is_connected(_set_detections):
+		child_entered_tree.connect(_set_detections)
+	if !child_exiting_tree.is_connected(_remove_detections):
+		child_exiting_tree.connect(_remove_detections)
+	for i in get_children():
+		if i is Control && is_instance_valid(i) && !_det_areas.has(i):
+			_det_areas.append(i)
+	if Engine.is_editor_hint():
+		return
 	var player: Player = Thunder._current_player
 	if !player: return
-	if get_rect().abs().has_point(player.global_position): _switch_bounds()
+	if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
+		_switch_bounds()
 
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
 	draw_set_transform(-global_position, rotation, Vector2.ONE)
-	draw_rect(get_rect().abs(), Color.AQUA, false, 4)
+	var color = Color.DARK_CYAN if len(_det_areas) > 0 else Color.AQUA
+	draw_rect(get_global_rect().abs(), color, false, 4)
+
+
+func _notification(what):
+	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
+		queue_redraw()
+
+
+func _set_detections(node: Node) -> void:
+	if node is Control && !_det_areas.has(node):
+		_det_areas.append(node)
+		if Engine.is_editor_hint():
+			node.set_script(preload("res://engine/components/cam_area/detection_area.gd"))
+
+
+func _remove_detections(node: Node) -> void:
+	if node is Control && _det_areas.has(node):
+		_det_areas.erase(node)
+
+
+func _get_cam_rect(rect: Control) -> Rect2:
+	if !is_instance_valid(rect):
+		return Rect2()
+	return rect.get_global_rect().abs()
 
 
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	var camera = Thunder._current_camera
-	var rect = get_rect().abs()
-	
-	var is_in_bounds: bool = (
-		(
-			(camera.has_meta(&"cam_area") &&
-			camera.get_meta(&"cam_area", null) != self) ||
-			!camera.has_meta(&"cam_area")
-		) &&
-		camera.position.x > rect.position.x &&
-		camera.position.y > rect.position.y &&
-		camera.position.x < rect.end.x &&
-		camera.position.y < rect.end.y
+	var is_in_bounds: bool
+	var has_cam_area: bool = (
+		(camera.has_meta(&"cam_area") &&
+		camera.get_meta(&"cam_area", null) != self) ||
+		!camera.has_meta(&"cam_area")
 	)
+	var detections: Array = _det_areas if len(_det_areas) > 0 else [self]
+	var _int_detections: int = 0
+	for i in detections:
+		var rect = _get_cam_rect(i)
+		
+		_int_detections += int(
+			has_cam_area &&
+			camera.position.x > rect.position.x &&
+			camera.position.y > rect.position.y &&
+			camera.position.x < rect.end.x &&
+			camera.position.y < rect.end.y
+		)
+	is_in_bounds = bool(_int_detections)
 	
 	if is_in_bounds:
 		if is_current:
@@ -79,7 +120,7 @@ func _physics_process(_delta: float) -> void:
 
 func _switch_bounds() -> void:
 	var camera := Thunder._current_camera
-	var rect := get_rect().abs()
+	var rect := get_global_rect().abs()
 	
 	camera.limit_left = round(rect.position.x)
 	camera.limit_right = round(rect.end.x)

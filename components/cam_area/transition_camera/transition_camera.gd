@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		Thunder.SmoothFunction.EASE_IN_OUT_BACK:
 			eased_counter = Thunder.Math.ease_in_out_back(counter)
 	
-	var rect: Rect2i
+	var rect: Rect2i = Rect2i()
 	
 	rect.size = Vector2i(camera.get_viewport_rect().size)
 	rect.position = Vector2i(camera.get_screen_center_position() - rect.size/2.0)

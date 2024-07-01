@@ -73,7 +73,7 @@ var description: String = NIY
 
 # NOT FOR OVERRIDING
 func try_execute(args: Array) -> Variant:
-	var arg_count: int
+	var arg_count: int = 0
 	for k in params.keys():
 		if !params[k].optional:
 			arg_count += 1

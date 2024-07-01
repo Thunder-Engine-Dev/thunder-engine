@@ -63,8 +63,8 @@ func execute() -> void:
 	input.clear()
 	input.grab_focus()
 
-func internal_execute(input: String) -> void:
-	var args = input.split(' ')
+func internal_execute(_in: String) -> void:
+	var args = _in.split(' ')
 	
 	var cmdName = args[0]
 	args.remove_at(0)

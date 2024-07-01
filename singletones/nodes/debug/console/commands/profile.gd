@@ -10,7 +10,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if profile.profiles.has(args[0]):
 		profile.current_profile = profile.profiles[args[0]]
 	else:
-		var prof_names: Array
+		var prof_names: Array = []
 		for i in profile.profiles:
 			prof_names.append(i)
 		
