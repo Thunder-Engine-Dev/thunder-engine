@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/fence.png" id="5_ftxe5"]
 [ext_resource type="Texture2D" uid="uid://bnb5am431a3u8" path="res://engine/tilesets/overworld/woods.png" id="6_t83ku"]
 [ext_resource type="Texture2D" uid="uid://bxrtju4bs3pr6" path="res://engine/tilesets/overworld/hill.png" id="7_ytmyx"]
-[ext_resource type="Texture2D" uid="uid://dkvidhitsdrpf" path="res://engine/tilesets/overworld/hard_block.png" id="8_5krnd"]
-[ext_resource type="Texture2D" uid="uid://cwwmqamx16bts" path="res://engine/tilesets/overworld/green_pipe.png" id="9_1a86s"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="8_5krnd"]
+[ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="9_1a86s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5ulr"]
 resource_name = "ground_classic"
