@@ -93,7 +93,7 @@ func _movement_x(delta: float) -> void:
 		_decelerate(config.walk_turning_acce, delta)
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
-	if abs(player.speed.x) > max_speed && player.is_underwater:
+	if abs(player.speed.x) > max_speed && player.left_right != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
 	
 
@@ -247,7 +247,7 @@ func _shape_recovery_process() -> bool:
 					if !tile_data.is_collision_polygon_one_way(i, j):
 						is_colliding = true
 						break
-	elif collider is CollisionObject2D && !collider is StaticBumpingBlock:
+	elif collider is CollisionObject2D:
 		var i = raycast.get_collider_shape()
 		if !collider.is_shape_owner_one_way_collision_enabled(i):
 			is_colliding = true

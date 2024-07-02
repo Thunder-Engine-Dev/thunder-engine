@@ -71,4 +71,3 @@ sprite_frames = SubResource("SpriteFrames_l71n6")
 
 [node name="Vision" parent="." index="3"]
 position = Vector2(1.43051e-06, 1.43051e-06)
-scale = Vector2(1.6, 1.6)

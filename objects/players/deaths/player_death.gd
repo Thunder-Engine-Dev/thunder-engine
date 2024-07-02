@@ -2,6 +2,7 @@ extends GravityBody2D
 
 @export var wait_time: float = 3.5
 @export var check_for_lives: bool = true
+@export_file("*.tscn", "*.scn") var jump_to_scene: String = ""
 
 var circle_closing_speed: float = 0.05
 var circle_opening_speed: float = 0.1
@@ -52,7 +53,13 @@ func _ready() -> void:
 	TransitionManager.current_transition.on(marker) # Supports a Node2D or a Vector2
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
-		Scenes.reload_current_scene()
+		if jump_to_scene.is_empty():
+			Scenes.reload_current_scene()
+		else:
+			Scenes.goto_scene(jump_to_scene)
+			Scenes.scene_changed.connect(func(_current_scene):
+				TransitionManager.current_transition.paused = false
+			, CONNECT_ONE_SHOT)
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
 

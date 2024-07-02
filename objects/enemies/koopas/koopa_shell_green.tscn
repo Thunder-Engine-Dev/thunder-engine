@@ -134,6 +134,7 @@ sprite_frames = SubResource("SpriteFrames_2216j")
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0, 2)
+rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("11_vu45w")
 metadata/_edit_lock_ = true
 

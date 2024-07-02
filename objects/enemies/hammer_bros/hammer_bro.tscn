@@ -141,6 +141,7 @@ position = Vector2(8, -17)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("12_nviwx")
 metadata/_edit_lock_ = true
 

@@ -64,6 +64,8 @@ enum WarpDir {
 @export var death_music_override: AudioStream
 @export var death_wait_time: float = 3.5
 @export var death_check_for_lives: bool = true
+## Specify where to go after player's death. Leave empty to restart the current scene.
+@export_file("*.tscn", "*.scn") var death_jump_to_scene: String = ""
 @export var death_stop_music: bool = true
 
 var _physics_behavior: ByNodeScript
@@ -237,6 +239,7 @@ func die(tags: Dictionary = {}) -> void:
 			func(db: Node2D) -> void:
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
+				db.jump_to_scene = death_jump_to_scene
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					db.add_child(dsdup)
