@@ -42,6 +42,7 @@ func _update_view() -> void:
 		&"enable",
 		!SettingsManager.settings.filter && container.scale.y != 1
 	)
+	container.texture_filter = TEXTURE_FILTER_NEAREST if (container.scale.y == 1 || (int(ceil(container.scale.y)) % 2 == 0 && container.scale.y >= 2)) else TEXTURE_FILTER_LINEAR
 	if !keep_aspect:
 		vp.size.x = 480 * (float(window_size.x) / float(window_size.y))
 	else:
