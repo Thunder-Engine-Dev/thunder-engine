@@ -126,11 +126,7 @@ func _process_settings() -> void:
 	_window_scale_logic()
 	
 	# Filter
-	GlobalViewport.container.material.set_shader_parameter(
-		&"enable",
-		!settings.filter && GlobalViewport.container.scale.y != 1
-	)
-	#GlobalViewport.vp.canvas_item_default_texture_filter = settings.filter
+	GlobalViewport._update_view()
 	
 	ProjectSettings.set_setting(
 		&"rendering/textures/canvas_textures/default_texture_filter",
