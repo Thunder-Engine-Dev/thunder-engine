@@ -1,12 +1,12 @@
 [gd_scene load_steps=37 format=3 uid="uid://cpme7ixwwuc2p"]
 
-[ext_resource type="Texture2D" uid="uid://c2t0hh13awaij" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
-[ext_resource type="Texture2D" uid="uid://b8hdbvgi7ygqi" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
+[ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
+[ext_resource type="Texture2D" uid="uid://ibc6xo4a3k4v" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
-[ext_resource type="AudioStream" uid="uid://dg1vhl3syq2ni" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
+[ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
-[ext_resource type="Texture2D" uid="uid://dwj8lljlqodvj" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
-[ext_resource type="FontFile" uid="uid://cihas1blodfrf" path="res://engine/fonts/LoliPop.ttf" id="7_qxkcl"]
+[ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
+[ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
 
@@ -246,11 +246,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/MovingUp"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="MovingDown" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -269,11 +270,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/MovingDown"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="MovingLeft" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -292,12 +294,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/MovingLeft"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
-text = "value
-"
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
+text = "value"
+uppercase = true
 
 [node name="MovingRight" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -316,12 +318,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/MovingRight"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
-text = "value
-"
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
+text = "value"
+uppercase = true
 
 [node name="Jump" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -340,11 +342,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/Jump"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="Fire" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -363,11 +366,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/Fire"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="Run" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -386,11 +390,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/Run"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="Pause" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -410,11 +415,12 @@ stretch_mode = 2
 [node name="Value" type="Label" parent="Options/Pause"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_qxkcl")
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rg6dg")
+theme_override_font_sizes/font_size = 28
 text = "value"
+uppercase = true
 
 [node name="HSeparator" type="HSeparator" parent="Options"]
 layout_mode = 2

@@ -1,0 +1,10 @@
+[gd_resource type="FontVariation" load_steps=3 format=3 uid="uid://ck8wxartix8w1"]
+
+[ext_resource type="FontFile" uid="uid://cjv6ukg7u6ptt" path="res://engine/fonts/smb.ttf" id="1_4qent"]
+[ext_resource type="FontFile" uid="uid://celwomq66nhaj" path="res://engine/fonts/LoliPop.ttf" id="2_0oiwp"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("2_0oiwp")])
+base_font = ExtResource("1_4qent")
+variation_transform = Transform2D(0.8, 0, 0, 1, 0, 0)
+spacing_glyph = -2
