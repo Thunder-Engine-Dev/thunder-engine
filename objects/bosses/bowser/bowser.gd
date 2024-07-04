@@ -311,6 +311,7 @@ func hurt(_external_damage_source: bool = false) -> void:
 	if !_external_damage_source && tweaked_stomping && is_instance_valid(player):
 		_tweaked_stomping_vel = 10 * player.direction
 	
+	_bullet_received = 0
 	if health > 0:
 		Audio.play_sound(hurt_sound, self)
 		health -= 1

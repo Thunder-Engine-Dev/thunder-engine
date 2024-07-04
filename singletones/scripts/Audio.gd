@@ -201,11 +201,11 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 ## [param weight] is the strength/delta-value to fade the music[br]
 ## [param method] is the way to fade the music, different [param method] decides different [param weight] calculation. See [enum FadingMethod][br]
 ## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
-func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false) -> void:
+func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false, ease: Tween.EaseType = Tween.EASE_IN) -> void:
 	if !player: return
 	if !is_instance_valid(player): return
 	
-	var tween: Tween = create_tween().set_trans(method).set_ease(Tween.EASE_IN)
+	var tween: Tween = create_tween().set_trans(method).set_ease(ease)
 	tween.tween_property(player, "volume_db", to, duration)
 	tween.tween_callback(
 		func() -> void:
