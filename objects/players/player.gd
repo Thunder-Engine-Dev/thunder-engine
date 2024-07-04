@@ -132,7 +132,7 @@ func _ready() -> void:
 			await get_tree().process_frame
 		
 		var trans := TransitionManager.current_transition
-		if is_instance_valid(trans):
+		if is_instance_valid(trans) && trans.has_method("on"):
 			trans.on(self)
 			trans.paused = false
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)

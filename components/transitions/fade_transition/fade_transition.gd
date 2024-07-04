@@ -9,6 +9,7 @@ var speed_opening: float = -2.0
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
+	name = "fade_transition"
 	start.emit()
 	animation_player.play(animation_name)
 	animation_player.speed_scale = -speed_opening

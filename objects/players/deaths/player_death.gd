@@ -10,6 +10,7 @@ var circle_opening_speed: float = 0.1
 var movement: bool
 
 @onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
+@onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 
 func _ready() -> void:
@@ -32,7 +33,17 @@ func _ready() -> void:
 	Data.values.lives -= 1
 	Data.values.onetime_blocks = false
 	
-	# Transition
+	# Transition (tweaked, crossfade)
+	if _is_simple_fade:
+		var _scene = Scenes.current_scene.scene_file_path if jump_to_scene.is_empty() else jump_to_scene
+		TransitionManager.accept_transition(
+		load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+			.instantiate()
+			.with_scene(_scene)
+		)
+		return
+	
+	# Transition (default, circle)
 	TransitionManager.accept_transition(
 	load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 		.instantiate()

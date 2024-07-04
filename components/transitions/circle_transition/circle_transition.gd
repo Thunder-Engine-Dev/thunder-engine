@@ -9,6 +9,7 @@ var middle_switch: bool = false
 
 
 func _ready() -> void:
+	name = "circle_transition"
 	#resized.connect(func():
 	#	if !color_rect: return
 	#	var rect = get_rect()

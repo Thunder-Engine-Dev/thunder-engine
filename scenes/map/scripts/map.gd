@@ -19,6 +19,8 @@ var jump_button_sound: AudioStream = preload("res://engine/objects/items/coin/co
 var to_level: String
 var is_fading: bool
 
+@onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+
 
 func _ready() -> void:
 	Data.values.checkpoint = -1
@@ -26,6 +28,8 @@ func _ready() -> void:
 	Data.values.onetime_blocks = true
 	
 	var music := _get_music()
+	if _is_simple_fade: return
+	
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()
 		TransitionManager.current_transition.paused = true
@@ -54,6 +58,7 @@ func _physics_process(delta: float) -> void:
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
 	Audio.play_1d_sound(jump_button_sound)
+	print("[Game] Going to a level.")
 	
 	is_fading = true
 	player_entered_level.emit()
@@ -63,13 +68,8 @@ func _physics_process(delta: float) -> void:
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 	
 	await get_tree().create_timer(0.4, false).timeout
-	TransitionManager.accept_transition(
-		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-			.instantiate()
-			.with_speeds(0.015, -0.1)
-	)
-	
-	Audio.play_1d_sound(transition_sound)
+	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
+	_start_transition()
 
 
 func _get_music() -> Node:
@@ -77,3 +77,21 @@ func _get_music() -> Node:
 		Audio._music_channels[1] if 1 in Audio._music_channels &&
 		is_instance_valid(Audio._music_channels[1]) else null
 	)
+
+
+func _start_transition() -> void:
+	if !_is_simple_fade:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+				.instantiate()
+				.with_speeds(0.015, -0.1)
+		)
+	else:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(get_node(player).current_marker.level)
+		)
+		var music = _get_music()
+		if is_instance_valid(music): music.stop()
+		

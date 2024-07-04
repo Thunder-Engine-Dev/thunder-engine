@@ -9,6 +9,7 @@ var speed_opening: float = -2.2
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
+	name = "blur_transition"
 	start.emit()
 	animation_player.play(ANIMATION_NAME)
 	animation_player.speed_scale = -speed_opening

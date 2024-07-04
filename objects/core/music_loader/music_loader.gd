@@ -34,6 +34,8 @@ enum GLOBAL_TYPE {
 var buffer: Array = []
 var is_paused: bool = false
 
+var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+
 
 func _ready() -> void:
 	_init_array(volume_db)
@@ -76,6 +78,9 @@ func _change_music(ind: int, ch_id: int) -> void:
 	]
 	if play_immediately:
 		music_started.emit(ind)
+		var _trans = TransitionManager.current_transition
+		if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
+			await _trans.end
 		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
 		(func():
 			if play_globally && player:
@@ -130,6 +135,9 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	if buffered_to_play.size() < 3: return false
 	if is_paused:
 		Audio.stop_all_musics()
+	var _trans = TransitionManager.current_transition
+	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
+		await _trans.end
 	Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
 	music_resumed_buffered.emit()
 	buffered_to_play = []

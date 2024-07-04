@@ -353,6 +353,7 @@ func bullet_hurt() -> void:
 
 # Bowser's death
 func die() -> void:
+	print("[Game] Boss defeated.")
 	Audio.play_sound(death_sound, self)
 	if trigger.has_method(&"stop_music"): trigger.stop_music()
 	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(

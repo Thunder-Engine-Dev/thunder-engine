@@ -157,6 +157,7 @@ func _physics_process(delta: float) -> void:
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	if !Thunder._current_player: return
 	level_completed.emit()
+	print("[Game] Level complete.")
 	
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
@@ -182,21 +183,29 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
 			await get_tree().create_timer(0.8, false, false).timeout
+			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 			
 			if jump_to_scene:
-				TransitionManager.accept_transition(
-					load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-						.instantiate()
-						.with_speeds(0.04, -0.1)
-				)
-				
-				TransitionManager.transition_middle.connect(func():
-					TransitionManager.current_transition.paused = true
-					Scenes.goto_scene(jump_to_scene)
-					Scenes.scene_changed.connect(func(_current_scene):
-						TransitionManager.current_transition.paused = false
+				if !_crossfade:
+					TransitionManager.accept_transition(
+						load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+							.instantiate()
+							.with_speeds(0.04, -0.1)
+					)
+					
+					TransitionManager.transition_middle.connect(func():
+						TransitionManager.current_transition.paused = true
+						Scenes.goto_scene(jump_to_scene)
+						Scenes.scene_changed.connect(func(_current_scene):
+							TransitionManager.current_transition.paused = false
+						, CONNECT_ONE_SHOT)
 					, CONNECT_ONE_SHOT)
-				, CONNECT_ONE_SHOT)
+				else:
+					TransitionManager.accept_transition(
+						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+							.instantiate()
+							.with_scene(jump_to_scene)
+					)
 			else:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)

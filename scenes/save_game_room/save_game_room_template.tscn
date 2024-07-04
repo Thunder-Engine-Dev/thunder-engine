@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=39 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="14_8lcjd"]
 [ext_resource type="PackedScene" uid="uid://b2d7bys2llvfr" path="res://engine/objects/bumping_blocks/reset_power_block/reset_power_block.tscn" id="15_p0k5q"]
 [ext_resource type="Resource" uid="uid://dkrwf64pscu5h" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres" id="16_75obd"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/saved_level_label.gd" id="17_815hk"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="17_lfiik"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
@@ -287,6 +288,21 @@ warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://engine/scenes/map/template.tscn"
 
+[node name="Label" type="Label" parent="PipeSave"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_nw3gx")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_815hk")
+
 [node name="PipeSave2" parent="." instance=ExtResource("8_7bo3b")]
 position = Vector2(416, 304)
 profile_name = "save_2"
@@ -294,12 +310,42 @@ warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://engine/scenes/map/template.tscn"
 
+[node name="Label" type="Label" parent="PipeSave2"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_nw3gx")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_815hk")
+
 [node name="PipeSave3" parent="." instance=ExtResource("8_7bo3b")]
 position = Vector2(544, 304)
 profile_name = "save_3"
 warping_editor_display_path = false
 warp_to = NodePath("../PipeOut")
 warp_to_scene = "res://engine/scenes/map/template.tscn"
+
+[node name="Label" type="Label" parent="PipeSave3"]
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -57.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("22_nw3gx")
+theme_override_font_sizes/font_size = 21
+text = "WORLD
+%s"
+horizontal_alignment = 1
+uppercase = true
+script = ExtResource("17_815hk")
 
 [node name="Objects" type="Node2D" parent="."]
 

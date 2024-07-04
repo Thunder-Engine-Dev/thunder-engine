@@ -12,7 +12,12 @@ extends Node
 var skippable: bool = false
 var has_skipped: bool = false
 
+var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+
 func _ready() -> void:
+	var _trans = TransitionManager.current_transition
+	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
+		await _trans.end
 	Audio.play_1d_sound(intro_music, false)
 	
 	await get_tree().create_timer(1.0, true, false, true).timeout
@@ -49,6 +54,14 @@ func end() -> void:
 func _start_transition() -> void:
 	if has_skipped: return
 	has_skipped = true
+	if _crossfade:
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_scene(goto_path)
+		)
+		return
+	
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
