@@ -18,3 +18,7 @@ func _physics_process(delta: float) -> void:
 	
 	if stop_on_death && !is_instance_valid(player):
 		speed = lerpf(speed, 0, stop_speed * delta)
+
+
+func set_speed(new_speed: float) -> void:
+	speed = new_speed

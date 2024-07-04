@@ -9,8 +9,8 @@ enum QUALITY {
 const settings_path = "user://settings.thss"
 
 var default_settings = {
-	"sound": 1,
-	"music": 0.7,
+	"sound": 0.5,
+	"music": 0.3,
 	"quality": QUALITY.MAX,
 	"game_speed": 1,
 	"autopause": true,

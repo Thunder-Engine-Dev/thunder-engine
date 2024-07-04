@@ -6,7 +6,7 @@ var value_template: String
 func _ready() -> void:
 	value_template = text
 	assert(value_name in Data.values, "Value " + value_name + " does not exist in Data.values dictionary.")
-	_update_text()
+	_update_text.call_deferred()
 
 
 func _physics_process(delta) -> void:

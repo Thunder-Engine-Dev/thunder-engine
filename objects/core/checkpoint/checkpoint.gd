@@ -19,6 +19,7 @@ extends Area2D
 func _ready() -> void:
 	if Data.values.checkpoint == id:
 		Thunder._current_player.global_position = global_position + Vector2.UP.rotated(global_rotation) * 16
+		Thunder._current_camera.teleport()
 		text.modulate.a = 1
 		animation_player.play(&"checkpoint")
 

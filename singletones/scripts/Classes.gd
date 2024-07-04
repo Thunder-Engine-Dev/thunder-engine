@@ -3,7 +3,7 @@
 extends Node
 # const CLASS_NAME:Script = preload("script path here!")
 
-func _init():
+func _init() -> void:
 	var autoload_script_list: Array = get_files("res://modules/", "preload.gd")
 	if !autoload_script_list.is_empty():
 		for i in autoload_script_list:
@@ -18,11 +18,11 @@ func _init():
 	
 
 
-func get_files(path: String, file := "", files := []):
+func get_files(path: String, file := "", files := []) -> Array:
 	var dir = DirAccess.open(path)
 	if dir == null || DirAccess.get_open_error() != OK:
 		print("An error occurred when trying to access %s." % path)
-		return
+		return []
 	
 	dir.include_hidden = false
 	dir.include_navigational = false
