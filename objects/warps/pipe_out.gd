@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_label()
 		return
-	if !player: return
+	if !is_instance_valid(player): return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
 	_tweak_process()
@@ -52,11 +52,13 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _tweak_process() -> void:
+	if !warp_invisible_left_right: return
+	
 	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
 		player.sprite.visible = true
-	if warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
+	elif warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
 		player.sprite.visible = true
-	else:
+	elif warp_direction == Player.WarpDir.UP || warp_direction == Player.WarpDir.DOWN:
 		player.sprite.visible = true
 
 
