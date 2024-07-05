@@ -41,7 +41,7 @@ func _ready() -> void:
 		if is_instance_valid(player.camera):
 			player.camera.reset_smoothing.call_deferred()
 		
-		marker_space.make_dots_visible_before(global_position)
+		marker_space.make_dots_visible_before(self)
 		marker_space.add_uncompleted_levels_after(_level_save)
 		Scenes.current_scene.next_level_ready.emit(
 			marker_space.total_levels.size() - marker_space.uncompleted_levels.size()

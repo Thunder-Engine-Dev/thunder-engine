@@ -194,16 +194,17 @@ func make_dot(pos: Vector2) -> void:
 	if found != -1:
 		dots_mapping[found][1] = m
 
-func make_dots_visible_before(pos: Vector2) -> void:
+func make_dots_visible_before(current_marker: MapPlayerMarker) -> void:
 	var found: int = -1
+	var pos: Vector2 = current_marker.global_position
 	
 	for i in len(dots_mapping):
 		var dot_pos = dots_mapping[i][0]
-		#print(floor(dot_pos.x / 32), floor(pos.x / 32))
+		#print(round(dot_pos.x / 32), " ", round(pos.x / 32), " : ", round(dot_pos.y / 32), " ", round(pos.y / 32))
 		
 		if (
-			floor(dot_pos.x / 32) == floor(pos.x / 32) &&
-			floor(dot_pos.y / 32) == floor(pos.y / 32) &&
+			round(dot_pos.x / 32) == round(pos.x / 32) &&
+			round(dot_pos.y / 32) == round(pos.y / 32) &&
 			dots_mapping[i][1] is AnimatedSprite2D
 		):
 			found = i
