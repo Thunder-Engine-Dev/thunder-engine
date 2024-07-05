@@ -24,9 +24,9 @@ func on(ref: Variant) -> Transition:
 #func start_transition(speed: float = 1.0) -> void:
 	#if animation_player.is_playing():
 		#animation_player.stop(true)
-#
-		##$AnimationPlayer.connect('animation_finished', self, '_end_transition', [], CONNECT_ONESHOT)
-#
+		#
+		#$AnimationPlayer.connect('animation_finished', self, '_end_transition', [], CONNECT_ONESHOT)
+		#
 	#animation_player.playback_speed = speed
 	#animation_player.play(ANIMATION_NAME)
 
