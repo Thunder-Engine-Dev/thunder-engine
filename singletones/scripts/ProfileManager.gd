@@ -84,11 +84,13 @@ func create_new_profile(_name: StringName) -> void:
 	#return FileAccess.file_exists("user://%s.ths" % name)
 
 ## Use this to set current profile
-func set_current_profile(_name: StringName) -> void:
+func set_current_profile(_name: StringName) -> bool:
 	if profiles.has(_name):
 		current_profile = profiles[_name]
+		return false
 	else:
 		create_new_profile(_name)
+		return true
 
 
 func load_profile(_name: StringName) -> Error:
