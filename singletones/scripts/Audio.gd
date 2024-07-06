@@ -19,6 +19,8 @@ var _duplicated_sounds: Array[AudioStream]
 
 var _calculate_player_position = _lcpp.bind()
 
+signal any_music_finished
+
 
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -139,6 +141,8 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
 		_music_channels[channel_id] = _create_1d_player(is_global, is_permanent)
 	var music_player = _music_channels[channel_id]
+	
+	music_player.finished.connect(func(): any_music_finished.emit(), CONNECT_ONE_SHOT)
 	
 	var openmpt: OpenMPT = null
 	

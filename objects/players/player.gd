@@ -62,6 +62,7 @@ enum WarpDir {
 @export var death_sprite: Node2D
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
 @export var death_music_override: AudioStream
+@export var death_music_ignore_pause: bool = false
 @export var death_wait_time: float = 3.5
 @export var death_check_for_lives: bool = true
 ## Specify where to go after player's death. Leave empty to restart the current scene.
@@ -149,8 +150,10 @@ func _ready() -> void:
 	if !is_starman():
 		sprite.material.set_shader_parameter(&"mixing", false)
 	
-	if Data.values.lives == -1 && death_check_for_lives:
-		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
+	(func():
+		if Data.values.lives == -1 && death_check_for_lives:
+			Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
+	).call_deferred()
 
 
 var _starman_faded: bool
@@ -231,7 +234,10 @@ func die(tags: Dictionary = {}) -> void:
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1 if death_stop_music else 2,
-		{pitch = suit.sound_pitch}
+		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
+			pitch = suit.sound_pitch,
+			ignore_pause = true
+		}
 	)
 	
 	if death_body:
