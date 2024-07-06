@@ -1,7 +1,11 @@
 extends MenuSelection
 
-var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
+const toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
+const bump = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 var is_custom: bool = false
+
+@onready var _value: TextureRect = $Value
+var _fullscr: bool
 
 func _handle_select() -> void:
 	return
@@ -13,15 +17,24 @@ func _physics_process(delta: float) -> void:
 		(fmod(GlobalViewport.container.scale.x, 0.5) == 0 ||
 		fmod(GlobalViewport.container.scale.y, 0.5) == 0)
 	):
-		$Value.texture.region.position.y = 38 * (-1 + GlobalViewport.container.scale.x * 2)
+		_value.texture.region.position.y = 38 * (-1 + GlobalViewport.container.scale.x * 2)
 		is_custom = true
 	else:
-		$Value.texture.region.position.y = 0
+		_value.texture.region.position.y = 0
 		is_custom = false
-		
+	
+	_fullscr = SettingsManager.settings.fullscreen
+	if _fullscr:
+		_value.modulate.v = 0.5
+	else:
+		_value.modulate.v = 1.0
+	
 	if !focused: return
 	
 	if Input.is_action_just_pressed("ui_right"):
+		if _fullscr:
+			Audio.play_1d_sound(bump, true, { "ignore_pause": true })
+			return
 		var old_value = SettingsManager.settings.scale
 		if old_value == 0:
 			SettingsManager.settings.scale = 1
@@ -30,10 +43,16 @@ func _physics_process(delta: float) -> void:
 		_toggled_option(old_value, SettingsManager.settings.scale)
 		
 	if Input.is_action_just_pressed("ui_left"):
-		if is_custom: DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		if _fullscr:
+			Audio.play_1d_sound(bump, true, { "ignore_pause": true })
+			return
 		var old_value = SettingsManager.settings.scale
 		SettingsManager.settings.scale = clamp(old_value - 0.5, 1, 4)
 		_toggled_option(old_value, SettingsManager.settings.scale)
+		#if is_custom:
+			#if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		#	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+		#	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 
 func _toggled_option(old_val, new_val) -> void:

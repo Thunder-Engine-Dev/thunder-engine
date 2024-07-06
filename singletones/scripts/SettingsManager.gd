@@ -16,6 +16,7 @@ var default_settings = {
 	"autopause": true,
 	"vsync": true,
 	"scale": 1,
+	"physics_tps": 0,
 	"filter": false,
 	"fullscreen": false,
 	"first_launch": true,
@@ -125,6 +126,26 @@ func _process_settings() -> void:
 	# Scale
 	_window_scale_logic()
 	
+	# Fullscreen
+	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		if OS.get_name() == "Windows":
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		SettingsManager._window_scale_logic(true)
+	elif settings.fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	
+	# Physics TPS
+	if settings.physics_tps <= 0:
+		var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
+		if rate < 119:
+			Engine.physics_ticks_per_second = rate * 2
+			print(&"Using double tps for physics")
+		else:
+			Engine.physics_ticks_per_second = rate
+	else:
+		Engine.physics_ticks_per_second = settings.physics_tps
+	
 	# Filter
 	GlobalViewport._update_view()
 	
@@ -149,10 +170,10 @@ func _process_settings() -> void:
 
 
 var old_scale: float = -1
-func _window_scale_logic() -> void:
+func _window_scale_logic(force_update: bool = false) -> void:
 	if no_saved_settings: return
 	if settings.scale == 0: return
-	if old_scale == settings.scale: return
+	if old_scale == settings.scale && !force_update: return
 	
 	var current_screen: int = DisplayServer.window_get_current_screen()
 	var screen_size: Vector2i = DisplayServer.screen_get_usable_rect(current_screen).size

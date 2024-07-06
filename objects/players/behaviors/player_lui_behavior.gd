@@ -27,5 +27,5 @@ func _physics_process(delta: float) -> void:
 			0.05,
 			1.0,
 			null,
-			0
+			1
 		)

@@ -1,24 +1,16 @@
 [gd_scene load_steps=37 format=3 uid="uid://cpme7ixwwuc2p"]
 
-[ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
-[ext_resource type="Texture2D" uid="uid://ibc6xo4a3k4v" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
+[ext_resource type="Texture2D" uid="uid://b2xfkdc66jmmu" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
+[ext_resource type="Texture2D" uid="uid://nydxtqa2bvtk" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
-[ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
+[ext_resource type="AudioStream" uid="uid://ff01tjwah4dl" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
-[ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
-[ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
+[ext_resource type="Texture2D" uid="uid://dhlv8f2ufm1lf" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
+[ext_resource type="FontVariation" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
-
-[sub_resource type="GDScript" id="GDScript_1ryyk"]
-script/source = "extends Control
-
-@export var hide_bg: bool
-
-func _ready() -> void:
-	if hide_bg:
-		$Bg.queue_free()
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3kw8g"]
 atlas = ExtResource("6_3wm1w")
@@ -67,18 +59,6 @@ func _handle_select() -> void:
 [sub_resource type="AtlasTexture" id="AtlasTexture_rt438"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 368, 217.245, 26)
-
-[sub_resource type="GDScript" id="GDScript_aba4d"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	super()
-	GlobalViewport.vp.get_camera_2d().position.x -= 640
-	await get_tree().physics_frame
-	get_parent().move_selector(0)
-	Scenes.current_scene.get_node(\"Settings/Options\").focused = true
-	Scenes.current_scene.get_node(\"Controls/Options\").focused = false
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p4gfi"]
 atlas = ExtResource("6_3wm1w")
@@ -190,7 +170,7 @@ offset_right = 640.0
 offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_1ryyk")
+script = ExtResource("1_i03yo")
 
 [node name="Bg" type="TextureRect" parent="."]
 z_index = -5
@@ -444,7 +424,7 @@ stretch_mode = 2
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
-script = SubResource("GDScript_aba4d")
+script = ExtResource("9_k7p48")
 
 [node name="Text" type="TextureRect" parent="Options/Back"]
 layout_mode = 2

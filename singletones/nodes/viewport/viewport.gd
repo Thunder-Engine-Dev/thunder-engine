@@ -17,11 +17,8 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if !event is InputEventKey or event.echo or !event.is_pressed(): return
 	if event.keycode == KEY_F11:
-		if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			SettingsManager._window_scale_logic()
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		SettingsManager.settings.fullscreen = !SettingsManager.settings.fullscreen
+		SettingsManager._process_settings()
 
 
 func _on_window_resized():

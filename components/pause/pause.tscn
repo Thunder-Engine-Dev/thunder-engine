@@ -3,24 +3,27 @@
 [ext_resource type="Script" path="res://engine/components/pause/pause.gd" id="1_8mdi1"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_f461o"]
 [ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_mxgx1"]
-[ext_resource type="Texture2D" uid="uid://blo57krl3mggi" path="res://engine/components/pause/textures/continue.png" id="2_yh8vt"]
-[ext_resource type="Texture2D" uid="uid://84ammo2opwdi" path="res://engine/components/pause/textures/restart.png" id="4_o7liu"]
+[ext_resource type="Texture2D" uid="uid://b7tj3gc0tv2fp" path="res://engine/components/pause/textures/continue.png" id="2_yh8vt"]
+[ext_resource type="Texture2D" uid="uid://daoqsaq7bs7f0" path="res://engine/components/pause/textures/restart.png" id="4_o7liu"]
 [ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="5_0q8y4"]
-[ext_resource type="Texture2D" uid="uid://01megc457w2e" path="res://engine/components/pause/textures/options.png" id="5_qqso8"]
-[ext_resource type="Texture2D" uid="uid://bpb6hk4ojf7db" path="res://engine/components/pause/textures/save_room.png" id="6_0jdfj"]
-[ext_resource type="Texture2D" uid="uid://c5j1lhwknlkg8" path="res://engine/components/pause/textures/main_menu.png" id="7_idns1"]
-[ext_resource type="Texture2D" uid="uid://bfgvo2wwgybtb" path="res://engine/components/pause/textures/quit_game.png" id="8_o0n1s"]
+[ext_resource type="Texture2D" uid="uid://bftyor823dcmy" path="res://engine/components/pause/textures/options.png" id="5_qqso8"]
+[ext_resource type="Texture2D" uid="uid://bar0gi2j5mi25" path="res://engine/components/pause/textures/save_room.png" id="6_0jdfj"]
+[ext_resource type="Texture2D" uid="uid://cvetw70y45rm4" path="res://engine/components/pause/textures/main_menu.png" id="7_idns1"]
+[ext_resource type="Texture2D" uid="uid://b0l1jdur5wqrs" path="res://engine/components/pause/textures/quit_game.png" id="8_o0n1s"]
 [ext_resource type="Script" path="res://engine/components/pause/restart_selection.gd" id="8_os0ko"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="10_5i5rp"]
 [ext_resource type="Script" path="res://engine/components/pause/options_selection.gd" id="10_ce2br"]
 [ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_ul4c7"]
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_guhqa"]
-[ext_resource type="Texture2D" uid="uid://civ55yf4f4fn3" path="res://engine/components/pause/textures/game_paused.png" id="14_j3ggr"]
+[ext_resource type="Texture2D" uid="uid://dkpb5jyadsw8u" path="res://engine/components/pause/textures/game_paused.png" id="14_j3ggr"]
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_75h8i"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="18_ftikl"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="20_6rkco"]
+[ext_resource type="Script" path="res://engine/components/pause/opt_controls_selection.gd" id="20_44axe"]
+[ext_resource type="Script" path="res://engine/components/pause/opt_exit_selection.gd" id="20_r3d2l"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="21_hgbbf"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_credits_selection.gd" id="21_npsqc"]
+[ext_resource type="Script" path="res://engine/components/pause/controls_back_selection.gd" id="22_rhyed"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -285,49 +288,6 @@ _data = {
 "open": SubResource("Animation_hvhdc")
 }
 
-[sub_resource type="GDScript" id="GDScript_s77al"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	var scene = get_parent().get_parent().get_parent()
-	
-	super()
-	scene.offset.x -= 640
-	await get_tree().physics_frame
-	scene.get_node(\"Settings/Options\").focused = false
-	scene.get_node(\"Controls/Options\").focused = true
-"
-
-[sub_resource type="GDScript" id="GDScript_jk6xi"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	var scene = get_parent().get_parent().get_parent()
-	
-	super()
-	scene.offset.y += 480
-	await get_tree().physics_frame
-	get_parent().move_selector(0)
-	scene.get_node(get_parent().get_parent().main_menu_controls).focused = true
-	scene.get_node(\"Settings/Options\").focused = false
-	
-	SettingsManager.save_settings()
-"
-
-[sub_resource type="GDScript" id="GDScript_yxnnb"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	var scene = get_parent().get_parent().get_parent()
-	
-	super()
-	scene.offset.x += 640
-	await get_tree().physics_frame
-	get_parent().move_selector(0)
-	scene.get_node(\"Settings/Options\").focused = true
-	scene.get_node(\"Controls/Options\").focused = false
-"
-
 [node name="PauseLayer" type="CanvasLayer"]
 layer = 128
 script = ExtResource("1_mxgx1")
@@ -439,21 +399,23 @@ process_mode = 3
 hide_bg = true
 main_menu_controls = "Pause/VBoxContainer"
 
-[node name="Controls" parent="Settings/Options" index="2"]
-script = SubResource("GDScript_s77al")
+[node name="Controls" parent="Settings/SubViewportContainer/SubViewport/Options" index="2"]
+script = ExtResource("20_44axe")
 
-[node name="Credits" parent="Settings/Options" index="9"]
+[node name="Credits" parent="Settings/SubViewportContainer/SubViewport/Options" index="11"]
 script = ExtResource("21_npsqc")
+metadata/_edit_pinned_properties_ = [&"script"]
 
-[node name="Exit" parent="Settings/Options" index="10"]
-script = SubResource("GDScript_jk6xi")
+[node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" index="12"]
+script = ExtResource("20_r3d2l")
 
 [node name="Controls" parent="." instance=ExtResource("21_hgbbf")]
 process_mode = 3
 hide_bg = true
 
 [node name="Back" parent="Controls/Options" index="10"]
-script = SubResource("GDScript_yxnnb")
+script = ExtResource("22_rhyed")
+metadata/_edit_pinned_properties_ = [&"script"]
 
 [connection signal="selected" from="Pause/VBoxContainer" to="Pause/Selector" method="handle_selection"]
 
