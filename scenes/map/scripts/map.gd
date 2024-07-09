@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	
 	await get_tree().create_timer(0.4, false).timeout
 	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
-	_start_transition()
+	_start_transition.call_deferred()
 
 
 func _get_music() -> Node:

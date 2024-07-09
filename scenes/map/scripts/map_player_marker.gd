@@ -32,24 +32,28 @@ func _ready() -> void:
 		is_level_completed() && !Data.values.get('map_force_selected_marker') ||
 		Data.values.get('map_force_selected_marker') == _level_save
 	):
-		await get_tree().process_frame
-		#Data.values.erase('map_force_selected_marker')
-		player.current_marker = get_next_marker()
-		#print(marker_space.get_next_marker_id())
-		player.global_position = global_position
-		
-		if is_instance_valid(player.camera):
-			player.camera.reset_smoothing.call_deferred()
-		
-		marker_space.make_dots_visible_before(self)
-		marker_space.add_uncompleted_levels_after(_level_save)
-		Scenes.current_scene.next_level_ready.emit(
-			marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
-		)
+		#await get_tree().process_frame
+		(func():
+			#Data.values.erase('map_force_selected_marker')
+			player.current_marker = get_next_marker()
+			#print(marker_space.get_next_marker_id())
+			player.global_position = global_position
+			
+			if is_instance_valid(player.camera):
+				player.camera.reset_smoothing.call_deferred()
+			
+			marker_space.make_dots_visible_before(self)
+			marker_space.add_uncompleted_levels_after(_level_save)
+			Scenes.current_scene.next_level_ready.emit(
+				marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
+			)
+		).call_deferred()
 	elif is_level():
-		await get_tree().process_frame
-		if marker_space.uncompleted_levels.is_empty():
-			marker_space.add_all_uncompleted_levels()
+		#await get_tree().process_frame
+		(func():
+			if marker_space.uncompleted_levels.is_empty():
+				marker_space.add_all_uncompleted_levels()
+		).call_deferred()
 
 
 func get_next_marker() -> MapPlayerMarker:
