@@ -29,6 +29,8 @@ func _physics_process(delta: float) -> void:
 	# Floor
 	_floor_process()
 	# Movement
+	if player.debug_fly:
+		_movement_debug(delta)
 	if player.no_movement:
 		return
 	if player.is_climbing:
@@ -42,6 +44,18 @@ func _physics_process(delta: float) -> void:
 	player.motion_process(delta)
 	if player.is_on_wall():
 		player.speed.x = 0
+
+
+func _movement_debug(delta) -> void:
+	var speed: float = 400.0
+	var dir: Vector2 = Vector2(
+		Input.get_axis(&"m_left", &"m_right"),
+		Input.get_axis(&"m_up", &"m_down")
+	)
+	var run: int = 1 + int(Input.is_action_pressed(&"m_run"))
+	
+	var vel: Vector2 = speed * dir * run
+	player.position += vel * delta
 
 
 #= Movement
@@ -95,7 +109,6 @@ func _movement_x(delta: float) -> void:
 			player.direction *= -1
 	if abs(player.speed.x) > max_speed && player.left_right != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
-	
 
 
 func _movement_y(delta: float) -> void:

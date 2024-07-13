@@ -96,6 +96,9 @@ var has_stuck: bool
 
 var completed: bool
 
+var debug_god: bool
+var debug_fly: bool
+
 var warp: Warp
 var warp_dir: WarpDir
 var no_movement: bool
@@ -207,7 +210,7 @@ func starman(duration: float = 10) -> void:
 
 
 func hurt(tags: Dictionary = {}) -> void:
-	if !suit:
+	if !suit || debug_god:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
@@ -226,6 +229,7 @@ func hurt(tags: Dictionary = {}) -> void:
 var is_dying: bool = false
 func die(tags: Dictionary = {}) -> void:
 	if warp != Warp.NONE: return
+	if debug_god: return
 	if is_dying: return
 	is_dying = true
 	
