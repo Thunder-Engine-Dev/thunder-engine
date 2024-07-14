@@ -1,7 +1,8 @@
-[gd_scene load_steps=39 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=40 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_omaog"]
 [ext_resource type="Resource" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_u27fl"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="5_yaxqo"]
@@ -184,6 +185,9 @@ metadata/_edit_lock_ = true
 
 [node name="MusicLoader" parent="." instance=ExtResource("2_4qycq")]
 music = Array[Resource]([ExtResource("3_u27fl")])
+
+[node name="SaveRoomLogic" type="Node" parent="."]
+script = ExtResource("2_omaog")
 
 [node name="Mario" parent="." instance=ExtResource("7_oesw4")]
 position = Vector2(96, 112)
