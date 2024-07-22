@@ -1,4 +1,4 @@
-extends BoxContainer
+extends Control
 class_name MenuItemsController
 ## Helps you create vertical and horizontal boxes with selection
 
