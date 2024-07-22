@@ -57,6 +57,7 @@ func move_selector(index: int, immediate: bool = false) -> void:
 
 
 func _update_selectors() -> void:
+	selectors = []
 	for child in get_children():
 		if child is HSeparator || child is VSeparator:
 			continue
