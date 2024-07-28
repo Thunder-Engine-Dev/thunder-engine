@@ -1,0 +1,254 @@
+[gd_scene load_steps=12 format=3 uid="uid://cx0wdn3m2f25y"]
+
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_lava.gd" id="1_316uv"]
+[ext_resource type="Texture2D" uid="uid://c0af6se3xgu6n" path="res://engine/objects/fluid/textures/lava_1.png" id="2_kl3gi"]
+[ext_resource type="Texture2D" uid="uid://df810y1jol8am" path="res://engine/objects/fluid/textures/lava_2.png" id="3_64gc6"]
+[ext_resource type="Texture2D" uid="uid://dmk6mhhdr84bf" path="res://engine/objects/fluid/textures/lava_3.png" id="4_7qdp3"]
+[ext_resource type="Texture2D" uid="uid://cxe1py701b8yc" path="res://engine/objects/fluid/textures/lava_4.png" id="5_asmow"]
+[ext_resource type="Texture2D" uid="uid://ddyxhsdkme088" path="res://engine/objects/fluid/textures/lava_5.png" id="6_3aw1w"]
+[ext_resource type="Texture2D" uid="uid://bd54l3c07s1cq" path="res://engine/objects/fluid/textures/lava_6.png" id="7_o817t"]
+[ext_resource type="Texture2D" uid="uid://cera40cx2nakg" path="res://engine/objects/fluid/textures/lava_7.png" id="8_hufeh"]
+[ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_4rh78"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
+frames = 7
+frame_0/texture = ExtResource("2_kl3gi")
+frame_0/duration = 0.15
+frame_1/texture = ExtResource("3_64gc6")
+frame_1/duration = 0.15
+frame_2/texture = ExtResource("4_7qdp3")
+frame_2/duration = 0.15
+frame_3/texture = ExtResource("5_asmow")
+frame_3/duration = 0.15
+frame_4/texture = ExtResource("6_3aw1w")
+frame_4/duration = 0.15
+frame_5/texture = ExtResource("7_o817t")
+frame_5/duration = 0.15
+frame_6/texture = ExtResource("8_hufeh")
+frame_6/duration = 0.15
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ip4k"]
+size = Vector2(480, 32)
+
+[node name="LavaBowser" type="Node2D"]
+z_index = 14
+position = Vector2(8368, 426)
+script = ExtResource("1_316uv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+process_mode = 1
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(32, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D2"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(64, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D3"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(96, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D4"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(128, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D5"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(160, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D6"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(192, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D7"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(224, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D8"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D9" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(256, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D9"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D10" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(288, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D10"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D11" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(320, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D11"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D12" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(352, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D12"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D13" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(384, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D13"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D14" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(416, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D14"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Sprite2D15" type="Sprite2D" parent="."]
+process_mode = 1
+position = Vector2(448, 0)
+texture = SubResource("AnimatedTexture_cct87")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D15"]
+z_index = -1
+offset_left = -16.0
+offset_top = 6.0
+offset_right = 16.0
+offset_bottom = 70.0
+size_flags_vertical = 3
+color = Color(0.470588, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+collision_layer = 128
+collision_mask = 7
+script = ExtResource("9_4rh78")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(224, 6)
+shape = SubResource("RectangleShape2D_0ip4k")

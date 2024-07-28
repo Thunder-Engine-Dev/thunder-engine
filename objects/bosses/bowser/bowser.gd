@@ -86,6 +86,7 @@ var _bullet_received: int
 @onready var tweaked_stomping: bool = SettingsManager.get_tweak("bowser_stomping", false)
 @onready var player: Player = Thunder._current_player
 var _tweaked_stomping_vel: float
+var hud: CanvasLayer
 
 
 func _ready() -> void:
@@ -97,6 +98,11 @@ func _ready() -> void:
 	if tweaked_stomping:
 		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 	
+	# HUD
+	hud = HUD.instantiate()
+	hud.bowser = self
+	health_changed.connect(hud.life_changed)
+	add_sibling.call_deferred(hud)
 
 
 func _physics_process(delta: float) -> void:
@@ -157,12 +163,7 @@ func activate() -> void:
 	active = true
 	direction = get_facing(facing)
 	speed.x = _speed * direction
-	# HUD
-	var hud: CanvasLayer = HUD.instantiate()
-	hud.bowser = self
 	hud.y_offset = y_offset
-	health_changed.connect(hud.life_changed)
-	add_sibling.call_deferred(hud)
 	# Emit the signal
 	health = health
 	enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
