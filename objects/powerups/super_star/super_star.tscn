@@ -73,6 +73,7 @@ autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-32, -32, 64, 64)
 script = ExtResource("3_o2iew")
 metadata/_edit_lock_ = true
 
