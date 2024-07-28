@@ -66,3 +66,20 @@ func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
 			offset = ofs
 			_shocking -= 1
 	)
+
+
+func shock_smooth(duration: int, time_scale: float = 1.0, interval: float = 0.01) -> void:
+	if _shocking == 0:
+		ofs = offset
+	_shocking += 1
+	var step: float = duration
+	while step > 0:
+		offset = Vector2(
+			randf_range(-step, step) / 2,
+			randf_range(-step, step) / 2
+		)
+		step -= 1 / time_scale
+		if step <= 0:
+			offset = ofs
+			_shocking -= 1
+		await get_tree().create_timer(interval, false).timeout
