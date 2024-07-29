@@ -24,6 +24,7 @@ func _handle_select() -> void:
 	super()
 	starting = true
 	get_parent().focused = false
+
 	var music = Audio._music_channels[0]
 	Audio.fade_music_1d_player(music, -60, 2.8, Tween.TRANS_LINEAR, true)
 	

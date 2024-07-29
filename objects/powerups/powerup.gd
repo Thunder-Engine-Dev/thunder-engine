@@ -32,7 +32,7 @@ var one_overlap: bool = false
 
 func _ready() -> void:
 	super()
-	if appear_distance:
+	if appear_distance && !supply_behavior:
 		appear_process(0)
 
 func _from_bumping_block() -> void:
