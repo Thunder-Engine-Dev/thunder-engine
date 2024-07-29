@@ -15,6 +15,7 @@ extends Area2D
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export_group("Tweaks")
 @export var warp_invisible_left_right: bool = true
+@export var warp_disable_smooth_entry: bool = false
 @export_group("Path Transition")
 @export var warp_path: Path2D
 @export var warp_path_speed: float = 400
@@ -104,9 +105,15 @@ func _physics_process(delta: float) -> void:
 			warp_started.emit()
 			player.warp = Player.Warp.IN
 			player.warp_dir = warp_direction
-			player.global_position = pos_player.global_position
+			if !warp_disable_smooth_entry:
+				var pos_tw = create_tween()
+				pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
+			else:
+				player.global_position = pos_player.global_position
 			player.z_index = -5
 			player.speed = Vector2.ZERO
+			if is_instance_valid(Thunder._current_camera):
+				Thunder._current_camera.teleport()
 			Audio.play_sound(warping_sound, self, false)
 			Thunder._current_hud.timer.paused = true
 	
