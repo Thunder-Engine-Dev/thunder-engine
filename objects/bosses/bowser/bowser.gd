@@ -101,6 +101,7 @@ func _ready() -> void:
 	# HUD
 	hud = HUD.instantiate()
 	hud.bowser = self
+	hud.y_offset = y_offset
 	health_changed.connect(hud.life_changed)
 	add_sibling.call_deferred(hud)
 
@@ -163,7 +164,6 @@ func activate() -> void:
 	active = true
 	direction = get_facing(facing)
 	speed.x = _speed * direction
-	hud.y_offset = y_offset
 	# Emit the signal
 	health = health
 	enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
