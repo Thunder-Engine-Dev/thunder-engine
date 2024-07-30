@@ -331,6 +331,7 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 script = ExtResource("1_f461o")
 focused = false
+prev_screen_node_path = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2

@@ -6,7 +6,7 @@ var open_blocked: bool = false
 const _MusicLoader: Script = preload("res://engine/objects/core/music_loader/music_loader.gd")
 
 const open_sound = preload("./sounds/pause_open.wav")
-const close_sound = preload("./sounds/pause_close.mp3")
+const close_sound = null
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
@@ -24,7 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"pause_toggle") && (
 		Scenes.current_scene is Level ||
 		Scenes.current_scene is Map2D
-	):
+	) && !(opened && event.is_action_pressed("ui_cancel")):
 		toggle.call_deferred()
 
 
