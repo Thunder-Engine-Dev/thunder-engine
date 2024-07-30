@@ -29,6 +29,7 @@ func _ready() -> void:
 	
 	var music := _get_music()
 	if _is_simple_fade: return
+	await get_tree().physics_frame
 	
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()
@@ -84,7 +85,7 @@ func _start_transition() -> void:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
-				.with_speeds(0.015, -0.1)
+				.with_speeds(0.02, -0.1)
 		)
 	else:
 		TransitionManager.accept_transition(

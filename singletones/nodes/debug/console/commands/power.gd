@@ -13,6 +13,8 @@ func execute(args:Array) -> Command.ExecuteResult:
 	For \"power\": beetroot, super, fireball, green_lui, small"""
 		)
 	
+	if !Thunder._current_player:
+		return Command.ExecuteResult.new("Error: Player not found")
 	Thunder._current_player.suit = suit
 	return Command.ExecuteResult.new("Success")
 

@@ -25,7 +25,9 @@ func _handle_select() -> void:
 	starting = true
 	get_parent().focused = false
 
-	var music = Audio._music_channels[0]
+	var music: AudioStreamPlayer
+	if 0 in Audio._music_channels:
+		music = Audio._music_channels[0]
 	Audio.fade_music_1d_player(music, -60, 2.8, Tween.TRANS_LINEAR, true)
 	
 	await get_tree().create_timer(wait_time).timeout

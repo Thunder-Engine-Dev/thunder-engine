@@ -5,6 +5,7 @@ var speed_closing: float = 0.05
 var speed_opening: float = -0.05
 var circle: float = 1.0
 var middle_switch: bool = false
+var _is_with_pause: bool = false
 @onready var color_rect: ColorRect = $ColorRect
 
 
@@ -38,14 +39,25 @@ func with_speeds(s_closing: float, s_opening: float) -> Transition:
 	return self
 
 
+func with_pause() -> Transition:
+	_is_with_pause = true
+	return self
+
+
 func _physics_process(delta: float) -> void:
 	if paused: return
 	
 	color_rect.material.set_shader_parameter("circle_size", circle)
 	
 	if circle == 0 && !middle_switch:
+		if _is_with_pause:
+			TransitionManager.current_transition.paused = true
 		await get_tree().physics_frame
 		middle.emit()
+		if _is_with_pause:
+			Scenes.scene_ready.connect(func():
+				TransitionManager.current_transition.paused = false
+			, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
 		middle_switch = true
 		speed_closing = speed_opening

@@ -26,6 +26,9 @@ extends Area2D
 @export var circle_focus_on_player: bool = true
 @export var circle_center_after_middle: bool = false
 @export var circle_wait_till_scene_changed: bool = true
+@export_group("Crossfade Transition")
+@export var force_circle_instead_of_crossfade: bool = false
+@export var crossfade_fade_speed: float = 0.54
 @export_group("Blur Transition")
 @export var use_blur_transition: bool = false
 @export var blur_closing_speed: float = 2.2
@@ -130,6 +133,17 @@ func _physics_process(delta: float) -> void:
 		warp_ended.emit()
 		
 		if use_circle_transition:
+			var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+			if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+				pass_warp()
+				TransitionManager.accept_transition(
+					load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+						.instantiate()
+						.with_time(crossfade_fade_speed)
+						.with_scene(warp_to_scene)
+				)
+				warp_to_scene = ""
+				return
 			TransitionManager.accept_transition(
 				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 					.instantiate()

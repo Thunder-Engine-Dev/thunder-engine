@@ -21,6 +21,8 @@ signal level_completed
 @export var completion_write_save: bool = true
 ## Jump to scene after level completion sequence
 @export_file("*.tscn", "*.scn") var jump_to_scene: String
+## If you have a weird misplaced circle transition after jumping to next scene, enable this property
+@export var completion_center_on_player_after_transition: bool = false
 
 @export_group("Player's Falling Below", "falling_below_")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
@@ -191,15 +193,13 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 						load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 							.instantiate()
 							.with_speeds(0.04, -0.1)
+							.with_pause()
 					)
 					
-					TransitionManager.transition_middle.connect(func():
-						TransitionManager.current_transition.paused = true
-						Scenes.goto_scene(jump_to_scene)
-						Scenes.scene_changed.connect(func(_current_scene):
-							TransitionManager.current_transition.paused = false
-						, CONNECT_ONE_SHOT)
-					, CONNECT_ONE_SHOT)
+					await TransitionManager.transition_middle
+					Scenes.goto_scene(jump_to_scene)
+					if completion_center_on_player_after_transition:
+						TransitionManager.current_transition.on.call_deferred(Thunder._current_player)
 				else:
 					TransitionManager.accept_transition(
 						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
