@@ -6,6 +6,8 @@ extends Node2D
 @export var use_strict_detection_area: bool
 @export var strict_completion_area_path: NodePath = ^"CompletionArea"
 @export var player_walking_speed: float = 125
+@export var override_score: bool = false
+@export var override_score_value: int = 0
 
 @onready var animation_player = $AnimationPlayer
 @onready var score_text_marker = $ScoreTextMarker
@@ -30,5 +32,9 @@ func _physics_process(_delta: float) -> void:
 		Scenes.current_scene.finish(true, direction_to_complete)
 		triggered = true
 		animation_player.stop(true)
-		Data.values.score += 100
-		ScoreText.new("100", score_text_marker)
+		if !override_score:
+			Data.values.score += 100
+			ScoreText.new("100", score_text_marker)
+		else:
+			Data.values.score += override_score_value
+			ScoreText.new(str(override_score_value), score_text_marker)
