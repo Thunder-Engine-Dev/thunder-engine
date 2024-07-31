@@ -19,6 +19,8 @@ signal level_completed
 @export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
 ## Write info about level completion to save file
 @export var completion_write_save: bool = true
+## Override scene path that gets written to save file
+@export var completion_write_save_path_override: String = ""
 ## Jump to scene after level completion sequence
 @export_file("*.tscn", "*.scn") var jump_to_scene: String
 ## If you have a weird misplaced circle transition after jumping to next scene, enable this property
@@ -214,8 +216,9 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	if completion_write_save:
 		var profile = ProfileManager.current_profile
-		if !profile.has_completed(scene_file_path):
-			profile.complete_level(scene_file_path)
+		var path = scene_file_path if !completion_write_save_path_override else completion_write_save_path_override
+		if !profile.has_completed(path):
+			profile.complete_level(path)
 			ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()
