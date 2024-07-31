@@ -111,11 +111,25 @@ func _on_body_entered(player: Node2D) -> void:
 	sound()
 
 
+var _already_processed: Array[int]
+
 func _on_collided_wall() -> void:
-	for i in get_slide_collision_count():
-		var j: KinematicCollision2D = get_slide_collision(i)
+	var dir = 1 if speed.x < 0 else -1
+	var saved_pos = global_position
+	_process_collision_deferred(dir, saved_pos)
+
+func _process_collision_deferred(dir: int, saved_pos: Vector2) -> void:
+	global_position = saved_pos
+	var rot: = get_global_gravity_dir().angle()
+	var vel = Vector2(dir, 0).rotated(rot - PI/2)
+	var j = move_and_collide(vel, true)
+	var id = j.get_collider_id() if j else 0
+	if j && !(id in _already_processed):
+		_already_processed.append(id)
 		if j.get_collider() is StaticBumpingBlock:
 			if j.get_collider().has_method(&"got_bumped"):
 				j.get_collider().got_bumped.call_deferred(self)
 			elif j.get_collider().has_method(&"bricks_break"):
 				j.get_collider().bricks_break.call_deferred()
+		await get_tree().physics_frame
+		_process_collision_deferred(dir, saved_pos)
