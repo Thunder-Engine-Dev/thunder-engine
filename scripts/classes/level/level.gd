@@ -186,6 +186,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		func() -> void:
 			await get_tree().create_timer(0.8, false, false).timeout
 			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+			Data.values.checkpoint = -1
+			Data.values.checked_cps = []
 			
 			if jump_to_scene:
 				if !_crossfade:

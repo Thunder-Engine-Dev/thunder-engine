@@ -14,6 +14,7 @@ extends AnimatableBody2D
 @export var shooting_sound: AudioStream = preload("../bill/sounds/bullet.ogg")
 @export var sound_pitch_min: float = 1.0
 @export var sound_pitch_max: float = 1.2
+@export var sound_volume: float = -4
 
 @onready var launcher: Sprite2D = $Launcher
 @onready var pos_bullet: Marker2D = $Launcher/PosBullet
@@ -38,9 +39,10 @@ func _on_bullet_launched() -> void:
 	
 	var dir: int = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
 	Audio.play_sound(
-		shooting_sound, pos_bullet, false, {
-			"pitch": randf_range(sound_pitch_min, sound_pitch_max)
-		}
+			shooting_sound, pos_bullet, false, {
+					"pitch": randf_range(sound_pitch_min, sound_pitch_max),
+					"volume": sound_volume,
+			}
 	)
 	NodeCreator.prepare_ins_2d(bullet_bill, self).create_2d().call_method(
 		func(bul: Node2D) -> void:
