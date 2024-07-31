@@ -139,7 +139,6 @@ func _process_collision_deferred(dir: int, saved_pos: Vector2) -> void:
 			query.shape = shape_owner_get_shape(i, j)
 			
 			var cldata: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query, max_multiple_breaking_blocks)
-			print(cldata)
 			
 			for k in cldata:
 				var l: Object = k.get(&"collider", null)
