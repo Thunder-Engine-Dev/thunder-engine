@@ -198,12 +198,11 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 							.instantiate()
 							.with_speeds(0.04, -0.1)
 							.with_pause()
+							.on_player_after_middle(completion_center_on_player_after_transition)
 					)
 					
 					await TransitionManager.transition_middle
 					Scenes.goto_scene(jump_to_scene)
-					if completion_center_on_player_after_transition:
-						TransitionManager.current_transition.on.call_deferred(Thunder._current_player)
 				else:
 					TransitionManager.accept_transition(
 						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")

@@ -5,7 +5,10 @@ var speed_closing: float = 0.05
 var speed_opening: float = -0.05
 var circle: float = 1.0
 var middle_switch: bool = false
+
 var _is_with_pause: bool = false
+var _on_player_after_middle: bool = false
+
 @onready var color_rect: ColorRect = $ColorRect
 
 
@@ -32,6 +35,14 @@ func on(ref: Variant, direct = false) -> Transition:
 	
 	return self
 
+
+func on_player_after_middle(enabled: bool) -> Transition:
+	if !enabled:
+		return self
+	_on_player_after_middle = true
+	return self
+
+
 ## Sets the speeds
 func with_speeds(s_closing: float, s_opening: float) -> Transition:
 	speed_closing = s_closing
@@ -57,6 +68,9 @@ func _physics_process(delta: float) -> void:
 		if _is_with_pause:
 			Scenes.scene_ready.connect(func():
 				TransitionManager.current_transition.paused = false
+				var pl = Thunder._current_player
+				if _on_player_after_middle && is_instance_valid(pl):
+					on(pl)
 			, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
 		middle_switch = true
