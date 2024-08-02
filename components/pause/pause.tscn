@@ -301,6 +301,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_8mdi1")
 
 [node name="TextureRect" type="TextureRect" parent="Pause"]
@@ -397,6 +398,7 @@ autoplay = "RESET"
 
 [node name="Settings" parent="." instance=ExtResource("20_6rkco")]
 process_mode = 3
+mouse_filter = 2
 hide_bg = true
 main_menu_controls = "Pause/VBoxContainer"
 

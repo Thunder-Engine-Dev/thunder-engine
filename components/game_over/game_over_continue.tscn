@@ -3,16 +3,16 @@
 [ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
-[ext_resource type="Texture2D" uid="uid://blo57krl3mggi" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
+[ext_resource type="Texture2D" uid="uid://dy68iw8isdo0k" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
 [ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
-[ext_resource type="Texture2D" uid="uid://bpb6hk4ojf7db" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
+[ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
 [ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="12_vow7r"]
-[ext_resource type="Texture2D" uid="uid://c5j1lhwknlkg8" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
+[ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
-[ext_resource type="Texture2D" uid="uid://cn77trsg8xmnu" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
-[ext_resource type="Texture2D" uid="uid://bfgvo2wwgybtb" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
-[ext_resource type="Texture2D" uid="uid://brl2gvotf7wjc" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
+[ext_resource type="Texture2D" uid="uid://b70uy0ois6r7v" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
+[ext_resource type="Texture2D" uid="uid://chj26jw0plkf8" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
+[ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
 
@@ -117,32 +117,31 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="Animation" id="Animation_hvhdc"]
-resource_name = "open"
-length = 0.3
+[sub_resource type="Animation" id="Animation_svgxp"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("VBoxContainer:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/path = NodePath("TeamLogo:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -151,10 +150,10 @@ tracks/2/path = NodePath("TextureRect:modulate")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.529412)]
+"values": [Color(1, 1, 1, 0.529412)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -163,10 +162,10 @@ tracks/3/path = NodePath("Hope:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -175,10 +174,10 @@ tracks/4/path = NodePath("Selector:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_8nk1g"]
@@ -245,31 +244,32 @@ tracks/4/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_svgxp"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_hvhdc"]
+resource_name = "open"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/path = NodePath("TeamLogo:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TeamLogo:modulate")
+tracks/1/path = NodePath("VBoxContainer:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -278,10 +278,10 @@ tracks/2/path = NodePath("TextureRect:modulate")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.529412)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.529412)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -290,10 +290,10 @@ tracks/3/path = NodePath("Hope:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -302,10 +302,10 @@ tracks/4/path = NodePath("Selector:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
@@ -328,6 +328,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("2_dcx8n")
 
 [node name="TextureRect" type="TextureRect" parent="GameOver"]
