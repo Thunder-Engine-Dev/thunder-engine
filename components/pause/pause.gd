@@ -58,11 +58,11 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		if !no_sound_effect:
-			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
+			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		animation_player.play_backwards("open")
-		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true })
+		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 	get_tree().paused = opened

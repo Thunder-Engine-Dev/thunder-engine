@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
-	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
+	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()
 	_update_string()
 

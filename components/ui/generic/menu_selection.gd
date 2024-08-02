@@ -16,7 +16,7 @@ func _handle_focused(focus: bool) -> void:
 ## Called when this item has been selected, extend this
 func _handle_select() -> void:
 	if selected_sound:
-		Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true })
+		Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 
 func _physics_process(delta: float) -> void:

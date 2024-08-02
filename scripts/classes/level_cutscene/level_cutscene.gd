@@ -19,7 +19,7 @@ func _ready() -> void:
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
-	Audio.play_1d_sound(intro_music, false)
+	Audio.play_1d_sound(intro_music, false, { "bus": "Music" })
 	
 	await get_tree().create_timer(1.0, true, false, true).timeout
 	skippable = true
@@ -37,7 +37,7 @@ func _cutscene_skip_logic() -> void:
 
 func end() -> void:
 	if has_skipped: return
-	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
+	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_start_transition.call_deferred()
 
 

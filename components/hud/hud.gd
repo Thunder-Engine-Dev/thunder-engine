@@ -39,7 +39,7 @@ func game_over() -> void:
 
 
 func timer_hurry() -> void:
-	Audio.play_1d_sound(preload("res://engine/components/hud/sounds/timeout.wav"))
+	Audio.play_1d_sound(preload("res://engine/components/hud/sounds/timeout.wav"), false, { "bus": "1D Sound" })
 	var tw = get_tree().create_tween().set_loops(8)
 	tw.tween_property(time_text, "scale:y", 0.5, 0.125)
 	tw.tween_property(time_text, "scale:y", 1, 0.125)
@@ -62,6 +62,6 @@ func time_countdown(_first_time: bool = true) -> void:
 
 func _time_countdown_sound_loop() -> void:
 	if Data.values.time > 0:
-		Audio.play_1d_sound(scoring_sound)
+		Audio.play_1d_sound(scoring_sound, false, { "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()

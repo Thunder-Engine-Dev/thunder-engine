@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
 		SettingsManager.settings["game_speed"] = 1.2 if SettingsManager.settings["game_speed"] == 1.0 else 1.0
-		Audio.play_1d_sound(toggle_sound, true, { &"ignore_pause": true })
+		Audio.play_1d_sound(toggle_sound, true, { &"ignore_pause": true, "bus": "1D Sound" })
 		SettingsManager._process_settings()
 		_update_string()
 

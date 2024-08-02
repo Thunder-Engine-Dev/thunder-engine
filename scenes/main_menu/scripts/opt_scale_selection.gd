@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_right"):
 		if _fullscr:
-			Audio.play_1d_sound(bump, true, { "ignore_pause": true })
+			Audio.play_1d_sound(bump, true, { "ignore_pause": true, "bus": "1D Sound" })
 			return
 		var old_value = SettingsManager.settings.scale
 		if old_value == 0:
@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("ui_left"):
 		if _fullscr:
-			Audio.play_1d_sound(bump, true, { "ignore_pause": true })
+			Audio.play_1d_sound(bump, true, { "ignore_pause": true, "bus": "1D Sound" })
 			return
 		var old_value = SettingsManager.settings.scale
 		SettingsManager.settings.scale = clamp(old_value - 0.5, 1, 4)
@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
-	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true })
+	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager.no_saved_settings = false
 	SettingsManager._process_settings()
 	

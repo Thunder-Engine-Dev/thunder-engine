@@ -33,7 +33,7 @@ func _handle_select() -> void:
 	await get_tree().create_timer(wait_time).timeout
 	
 	if is_instance_valid(music): music.stop()
-	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
+	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 	
 	if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):

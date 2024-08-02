@@ -148,20 +148,19 @@ func _physics_process(delta: float) -> void:
 				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 					.instantiate()
 					.with_speeds(circle_closing_speed, -circle_opening_speed)
+					.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 			)
 			if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
 			await TransitionManager.transition_middle
 			
 			TransitionManager.current_transition.paused = true
 			
-			if warp_to_scene && circle_wait_till_scene_changed: 
+			if warp_to_scene && circle_wait_till_scene_changed:
 				Scenes.scene_ready.connect(func():
-					if circle_focus_on_player && is_instance_valid(Thunder._current_player): TransitionManager.current_transition.on(Thunder._current_player)
 					TransitionManager.current_transition.paused = false
 				, CONNECT_ONE_SHOT)
 			else:
-				if circle_focus_on_player && !circle_center_after_middle: TransitionManager.current_transition.on(Thunder._current_player)
-				elif circle_center_after_middle:
+				if circle_center_after_middle:
 					TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 				TransitionManager.current_transition.paused = false
 			

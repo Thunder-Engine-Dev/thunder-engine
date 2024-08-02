@@ -171,7 +171,7 @@ func _process_settings() -> void:
 	
 	# Sound Volume
 	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Sound"),
+		AudioServer.get_bus_index("1D Sound"),
 		linear_to_db(settings.sound)
 	)
 	
