@@ -130,8 +130,7 @@ func _process_collision_deferred(dir: int, saved_pos: Vector2) -> void:
 	# WARNING: Only the first collision shape will be considered!
 	var query := PhysicsShapeQueryParameters2D.new()
 	query.collision_mask = collision_mask
-	query.motion = vel * velocity.length()
-	query.margin = 0.08
+	query.motion = vel
 	
 	for i in get_shape_owners():
 		query.transform = (shape_owner_get_owner(i) as Node2D).global_transform
