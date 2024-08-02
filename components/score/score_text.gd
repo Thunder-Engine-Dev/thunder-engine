@@ -1,13 +1,13 @@
 extends Label
 class_name ScoreText
 
-func _init(string: String, ref: Node2D):
+func _init(string: String, ref: Node2D, parent: Node = Scenes.current_scene):
 	text = string
 	
 	label_settings = LabelSettings.new()
 	label_settings.font = preload("res://engine/components/score/fonts/score.fnt")
 	
-	Scenes.current_scene.add_child(self)
+	parent.add_child(self)
 	var pos = size / 2
 	global_position = ref.global_position - pos
 	z_index = 1000
