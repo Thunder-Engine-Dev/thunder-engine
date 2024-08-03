@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0bnba81jh6tn"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling.gd" id="1_pee6d"]
+[ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="1_sqhu3"]
+[ext_resource type="Texture2D" uid="uid://pujov6sbhglg" path="res://engine/objects/enemies/spikes/textures/spike_hard_block.png" id="2_yxmcg"]
+[ext_resource type="Script" path="res://engine/objects/enemies/spikes/spike.gd" id="3_n4gg2"]
+[ext_resource type="Script" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling_rect_draw.gd" id="5_tk3o3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_faog7"]
+size = Vector2(1, 1)
+
+[node name="SpikeCeiling" type="VBoxContainer"]
+z_index = 99
+offset_right = 32.0
+offset_bottom = 64.0
+theme_override_constants/separation = 0
+script = ExtResource("1_pee6d")
+
+[node name="Sprite2D" type="TextureRect" parent="."]
+texture_repeat = 2
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_sqhu3")
+stretch_mode = 1
+
+[node name="Spike" type="TextureRect" parent="."]
+texture_repeat = 2
+layout_mode = 2
+texture = ExtResource("2_yxmcg")
+stretch_mode = 1
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="Spike"]
+script = ExtResource("3_n4gg2")
+type = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spike/Area2D"]
+shape = SubResource("RectangleShape2D_faog7")
+
+[node name="RectDraw" type="Node2D" parent="."]
+script = ExtResource("5_tk3o3")
+
+[node name="Activation" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="timeout" from="Activation" to="." method="_on_activation_timeout"]

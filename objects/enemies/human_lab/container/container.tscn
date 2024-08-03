@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwy11odywkm4d"]
+
+[ext_resource type="Texture2D" uid="uid://bkmh7bhmjp7cc" path="res://engine/objects/enemies/human_lab/container/textures/container.png" id="1_holu3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmi8o"]
+size = Vector2(76, 120)
+
+[node name="Container" type="Sprite2D"]
+texture = ExtResource("1_holu3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+shape = SubResource("RectangleShape2D_rmi8o")
