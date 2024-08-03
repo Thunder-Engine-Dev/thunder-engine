@@ -143,3 +143,6 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	buffered_to_play = []
 	is_paused = false
 	return true
+
+func set_index(ind: int) -> void:
+	index = ind
