@@ -81,6 +81,7 @@ func _get_music() -> Node:
 
 
 func _start_transition() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	if !_is_simple_fade:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")

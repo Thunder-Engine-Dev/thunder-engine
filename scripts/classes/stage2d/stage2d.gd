@@ -13,6 +13,8 @@ var _is_stage_ready: bool
 func _ready() -> void:
 	for i in 5:
 		await get_tree().process_frame
+	while get_tree().is_paused():
+		await get_tree().process_frame
 	_is_stage_ready = true
 
 
