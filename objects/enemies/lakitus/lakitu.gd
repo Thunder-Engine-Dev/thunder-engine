@@ -10,11 +10,17 @@ extends Node2D
 @export var hovering_range: float = 100
 @export var chasing_speed: float = 450
 @export var hovering_speed: float = 100
+@export var chasing_acceleration: float = 1000
+@export var hovering_acceleration: float = 2500
 @export_enum("Left:-1", "Right:1") var leaving_direction: int = -1
+@export var leaving_speed: float = 100
+@export var leaving_acceleration: float = 2500
 @export_group("Attack")
 @export var pitched: InstanceNode2D
 @export var pitching_interval_min: float = 4
-@export var pitching_interval_max: float = 5
+@export var pitching_interval_max: float = 6
+@export var pitching_duration: float = 0.4
+@export var skip_pitch_animation_delay: bool = false
 @export var sounds: Array[AudioStream] = [
 	preload("res://engine/objects/enemies/lakitus/sounds/lakitu_mek.ogg"),
 	preload("res://engine/objects/enemies/lakitus/sounds/lakitu_myu.ogg"),
@@ -29,7 +35,7 @@ var _movement: bool:
 			return
 		_movement = to
 		if _movement && timer_pitching.is_stopped():
-			timer_pitching.start()
+			timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
 		elif !timer_pitching.is_stopped():
 			timer_pitching.stop()
 
@@ -67,22 +73,25 @@ func _movement_process(delta: float, player: Player) -> void:
 	var dir: int = sign(pposx - posx)
 	
 	if posx > pposx + hovering_margin || posx < pposx - hovering_margin:
-		speed = move_toward(speed, chasing_speed * dir, 5)
+		speed = move_toward(speed, chasing_speed * dir, chasing_acceleration * delta)
 	elif posx < pposx + hovering_range && posx > pposx - hovering_range && ((speed < -100 && player.direction > 0) || (speed > 100 && player.direction < 0)):
-		speed = move_toward(speed, hovering_speed * player.direction, 10)
+		speed = move_toward(speed, hovering_speed * player.direction, hovering_acceleration * delta)
 
 
 func _leaving_process(delta: float) -> void:
 	if visible_on_screen_2d.is_on_screen():
-		speed = move_toward(speed, 100 * leaving_direction, 50)
+		speed = move_toward(speed, leaving_speed * leaving_direction, leaving_acceleration * delta)
 	else:
 		speed = 0
 
 
 func _pitch() -> void:
+	while !visible_on_screen_2d.is_on_screen() && is_inside_tree():
+		await get_tree().physics_frame
 	if pitched:
 		NodeCreator.prepare_ins_2d(pitched, self).create_2d().execute_instance_script()
 	Audio.play_sound(sounds.pick_random(), self)
+	timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
 
 
 func _on_animation_timeout() -> void:
@@ -102,12 +111,17 @@ func _on_animation_finished() -> void:
 
 func _on_pitching() -> void:
 	sprite.play(&"pitch")
-	await sprite.animation_finished
+	if !skip_pitch_animation_delay:
+		await sprite.animation_finished
 	if sprite.animation == &"pitch":
-		await get_tree().create_timer(0.4, false).timeout
+		if pitching_duration >= 0.05:
+			await get_tree().create_timer(pitching_duration, false).timeout
+		if skip_pitch_animation_delay:
+			_pitch()
 		sprite.play_backwards(&"pitch")
 		await sprite.animation_finished
 		sprite.play(&"default")
-		_pitch()
-		timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+		if !skip_pitch_animation_delay:
+			_pitch()
+		
 
