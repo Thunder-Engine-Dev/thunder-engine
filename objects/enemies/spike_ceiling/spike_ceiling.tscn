@@ -10,7 +10,7 @@
 size = Vector2(1, 1)
 
 [node name="SpikeCeiling" type="VBoxContainer"]
-z_index = 99
+z_index = 11
 offset_right = 32.0
 offset_bottom = 64.0
 theme_override_constants/separation = 0
