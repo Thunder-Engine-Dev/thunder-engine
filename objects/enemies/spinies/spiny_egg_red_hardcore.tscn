@@ -53,6 +53,7 @@ animations = [{
 spiny_creation = SubResource("Resource_wwk28")
 rotation_speed = 11.25
 free_offscreen = true
+gravity_scale = 0.3
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_creation = SubResource("Resource_edcu0")
