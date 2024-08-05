@@ -132,6 +132,7 @@ script = ExtResource("11_n7bsk")
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
 stream = ExtResource("13_tt0hr")
 volume_db = 4.0
 bus = &"Sound"

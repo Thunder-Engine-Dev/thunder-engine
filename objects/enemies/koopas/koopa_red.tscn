@@ -94,6 +94,7 @@ hit_from_inside = true
 script = ExtResource("5_d1njq")
 
 [node name="Sprite" parent="." index="3"]
+position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_82uh0")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 

@@ -26,7 +26,6 @@ func _physics_process(delta: float) -> void:
 	if !move: return
 	if in_lava && velocity.y > 50:
 		velocity += Vector2.UP.rotated(global_rotation) * 2000 * delta
-		print(velocity)
 	else:
 		velocity += Vector2.DOWN.rotated(global_rotation) * GRAVITY * falling_acceleration * delta
 	global_position += velocity * delta
