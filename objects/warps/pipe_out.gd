@@ -77,7 +77,7 @@ func pass_player(new_player: Player) -> void:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.RIGHT
 		Player.WarpDir.LEFT:
-			pos_player.position = Vector2(0, -(shape.shape as RectangleShape2D).size.x)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.LEFT
 		Player.WarpDir.DOWN:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 20)

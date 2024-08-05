@@ -6,8 +6,6 @@ extends Control
 @onready var keep_aspect = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
 
 func _ready() -> void:
-	#vp.audio_listener_enable_2d = true
-	#vp.audio_listener_enable_3d = true
 	resized.connect(_on_window_resized)
 	#_update_sound_function()
 	_update_view()

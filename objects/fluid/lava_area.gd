@@ -2,6 +2,7 @@ extends Area2D
 
 const LAVA_SPRAY: PackedScene = preload("res://engine/objects/effects/sprays/lava_spray.tscn")
 
+signal area_got_in_lava_at(pos: Vector2)
 
 func _ready() -> void:
 	# Body in/out of water
@@ -11,6 +12,14 @@ func _ready() -> void:
 				body.die()
 			if body.is_in_group(&"#lava_body"):
 				self._spray.call_deferred(body, Vector2.ZERO)
+	)
+	area_entered.connect(
+		func(area: Area2D) -> void:
+			if area.is_in_group(&"#lava_body"):
+				self._spray.call_deferred(area, Vector2.ZERO)
+				if area.has_method(&"got_in_lava"):
+					area.got_in_lava()
+					area_got_in_lava_at.emit(area.global_position)
 	)
 	
 	body_exited.connect(

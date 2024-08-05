@@ -1,18 +1,18 @@
 [gd_scene load_steps=58 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
-[ext_resource type="Texture2D" uid="uid://b2xfkdc66jmmu" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
-[ext_resource type="Texture2D" uid="uid://b4f4236xmik81" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
+[ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
+[ext_resource type="Texture2D" uid="uid://ciqt7od7lmtkc" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_icon.gd" id="4_8cb2v"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
-[ext_resource type="Texture2D" uid="uid://c8pts7b5jrx1g" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
+[ext_resource type="Texture2D" uid="uid://cr0xmvg0ljpxj" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
-[ext_resource type="Texture2D" uid="uid://btck46100depy" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
-[ext_resource type="Texture2D" uid="uid://lqao1unteobv" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
+[ext_resource type="Texture2D" uid="uid://ckrd0kfu2ue28" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
+[ext_resource type="Texture2D" uid="uid://dqvmle8qmxx2g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
-[ext_resource type="Texture2D" uid="uid://c2mv3n00wmemi" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
+[ext_resource type="Texture2D" uid="uid://dek2begmgx1bo" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="10_x0efh"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
-[ext_resource type="Texture2D" uid="uid://dvc042lw1bbm1" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
+[ext_resource type="Texture2D" uid="uid://c5kcdnxqujsym" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_physics_tps_selection.gd" id="19_2v0m3"]
 [ext_resource type="Texture2D" uid="uid://bk5eg5ovkdm4x" path="res://engine/scenes/main_menu/textures/physics_tps.png" id="19_obf1r"]
@@ -221,14 +221,17 @@ grow_vertical = 2
 texture = ExtResource("1_wqbo8")
 metadata/_edit_lock_ = true
 
-[node name="Icon" type="TextureRect" parent="."]
-layout_mode = 1
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("4_2sncp")
+amplitude = Vector2(0, 10)
+frequency = 10.0
+
+[node name="Icon" type="TextureRect" parent="Node2D"]
 offset_left = 8.0
 offset_top = 21.0
 offset_right = 129.0
 offset_bottom = 142.0
 texture = ExtResource("2_lauxo")
-script = ExtResource("4_8cb2v")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0
@@ -239,6 +242,7 @@ metadata/_edit_lock_ = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
+snap_2d_transforms_to_pixel = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 

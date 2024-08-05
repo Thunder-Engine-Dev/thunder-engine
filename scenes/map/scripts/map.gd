@@ -29,6 +29,7 @@ func _ready() -> void:
 	
 	var music := _get_music()
 	if _is_simple_fade: return
+	await get_tree().physics_frame
 	
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()
@@ -57,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	if !get_node(player).current_marker.level: return
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
-	Audio.play_1d_sound(jump_button_sound)
+	Audio.play_1d_sound(jump_button_sound, true, { "bus": "1D Sound" })
 	print("[Game] Going to a level.")
 	
 	is_fading = true
@@ -68,7 +69,7 @@ func _physics_process(delta: float) -> void:
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 	
 	await get_tree().create_timer(0.4, false).timeout
-	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
+	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_start_transition.call_deferred()
 
 
@@ -80,11 +81,12 @@ func _get_music() -> Node:
 
 
 func _start_transition() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	if !_is_simple_fade:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
-				.with_speeds(0.015, -0.1)
+				.with_speeds(0.02, -0.1)
 		)
 	else:
 		TransitionManager.accept_transition(

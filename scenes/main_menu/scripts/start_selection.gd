@@ -7,7 +7,6 @@ var starting: bool = false
 @export var wait_time: float = 2.5
 @export var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
-@onready var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 #func _ready() -> void:
 	#var area = MENU_MOUSE_AREA.instantiate()
@@ -25,16 +24,19 @@ func _handle_select() -> void:
 	super()
 	starting = true
 	get_parent().focused = false
-	var music = Audio._music_channels[0]
+
+	var music: AudioStreamPlayer
+	if 0 in Audio._music_channels:
+		music = Audio._music_channels[0]
 	Audio.fade_music_1d_player(music, -60, 2.8, Tween.TRANS_LINEAR, true)
 	
 	await get_tree().create_timer(wait_time).timeout
 	
 	if is_instance_valid(music): music.stop()
-	Audio.play_1d_sound(transition_sound, true, { ignore_pause = true })
+	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 	
-	if _crossfade:
+	if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 				.instantiate()

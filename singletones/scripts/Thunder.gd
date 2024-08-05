@@ -111,14 +111,14 @@ func _deferred_goto_scene(path) -> void:
 ## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be between 1 and 10, or an error will be sent to console. 
 ## So if you want to cut down the lives, please code:[br]
 ## [code]Data.values.lives -= some_count[/code]
-func add_lives(count: int):
+func add_lives(count: int, parent: Node = Scenes.current_scene):
 	if count <= 0 or count > 10:
 		push_error("[Thunder Engine] add_lives: Invalid life count. Must be between 1 and 10")
 		return
 	
 	Data.values.lives += count
 	if !_current_player: return
-	ScoreTextLife.new("%sUP" % count, _current_player)
+	ScoreTextLife.new("%sUP" % count, _current_player, parent)
 
 
 ## Add scores for [member _current_player][br]

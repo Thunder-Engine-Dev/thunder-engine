@@ -3,8 +3,8 @@ extends Control
 var opened: bool = false
 
 const open_sound = preload("res://engine/components/pause/sounds/pause_open.wav")
-const close_sound = preload("res://engine/components/pause/sounds/pause_close.mp3")
-const music = preload("res://engine/components/game_over/music/4mat_-_broken_heart.xm")
+const close_sound = null
+#const music = preload("res://engine/components/game_over/music/4mat_-_broken_heart.xm")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
@@ -26,7 +26,7 @@ func toggle(no_resume: bool = false) -> void:
 		v_box_container.move_selector(0)
 		animation_player.play("open")
 		#Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
-		Audio.play_music(music, 99, { "ignore_pause": true })
+		#Audio.play_music(music, 99, { "ignore_pause": true })
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		animation_player.play_backwards("open")

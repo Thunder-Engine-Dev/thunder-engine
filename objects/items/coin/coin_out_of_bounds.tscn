@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=3 uid="uid://dw362fu3hooyg"]
+
+[ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_lt0o5"]
+[ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="2_vwrbo"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_3fdh4"]
+[ext_resource type="PackedScene" uid="uid://ch646rieriyyu" path="res://engine/objects/effects/coin_effect/coin_effect.tscn" id="4_0fxpe"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_iln6o"]
+[ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_wfc2c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcllp"]
+size = Vector2(20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3wug"]
+atlas = ExtResource("2_vwrbo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6030"]
+atlas = ExtResource("2_vwrbo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kwl6"]
+atlas = ExtResource("2_vwrbo")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j5osl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3wug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6030")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kwl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6030")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_twjsq"]
+script/source = "extends ByNodeScript
+
+func _ready():
+	Data.add_coin()
+"
+
+[sub_resource type="Resource" id="Resource_223t5"]
+script = ExtResource("5_iln6o")
+creation_nodepack = ExtResource("4_0fxpe")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 0
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = SubResource("GDScript_twjsq")
+
+[node name="CoinOOB" type="Area2D" groups=["coin"]]
+editor_description = "Use this Coin if the ordinary coins you place outside are disappearing in game."
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_lt0o5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_xcllp")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+process_mode = 1
+sprite_frames = SubResource("SpriteFrames_j5osl")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-32, -128, 64, 256)
+metadata/_edit_lock_ = true
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_xcllp")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_3fdh4")
+stomping_enabled = false
+killing_immune = {
+"boomerang": false,
+"head": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false
+}
+killing_creation = SubResource("Resource_223t5")
+killing_sound_succeeded = ExtResource("6_wfc2c")
+turn_into_coin_on_level_end = false
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

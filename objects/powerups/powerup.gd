@@ -30,6 +30,10 @@ class_name Powerup
 
 var one_overlap: bool = false
 
+func _ready() -> void:
+	super()
+	if appear_distance && !supply_behavior:
+		appear_process(0)
 
 func _from_bumping_block() -> void:
 	Audio.play_sound(appearing_sound, self)
@@ -54,9 +58,11 @@ func _physics_process(delta: float) -> void:
 
 
 func appear_process(delta: float) -> void:
-	appear_distance = max(appear_distance - appear_speed * delta, 0)
+	if delta:
+		appear_distance = max(appear_distance - appear_speed * delta, 0)
 	modulate.a = 0.01 if (appear_distance > appear_visible) else 1.0
-	position -= Vector2(0, appear_speed).rotated(global_rotation) * delta
+	if delta:
+		position -= Vector2(0, appear_speed).rotated(global_rotation) * delta
 
 
 func collect() -> void:

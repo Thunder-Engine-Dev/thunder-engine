@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func life_changed(lives: int) -> void:
-	if !life.texture: return
+	if !is_instance_valid(life): return
 	
 	if lives > 0 && head.position.y != to_pos_y:
 		var tween: Tween = create_tween()

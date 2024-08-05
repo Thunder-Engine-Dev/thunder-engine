@@ -22,12 +22,13 @@ visible = false
 shape = SubResource("RectangleShape2D_2x2nd")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(1.43051e-06, 1.43051e-06)
-scale = Vector2(1.6, 1.6)
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-128, -64, 256, 128)
 script = ExtResource("2_dbavp")
 metadata/_edit_lock_ = true
 
 [node name="Sprites" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
 occluder = SubResource("OccluderPolygon2D_xwmjy")

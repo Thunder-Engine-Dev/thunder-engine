@@ -25,6 +25,8 @@ var _current_scene_buffer: PackedScene
 var current_scene: Node
 ## Name of previous scene
 var previous_scene_name: StringName
+## Resource path to the previous scene
+var previous_scene_path: StringName
 ## Custom project-wise scenes, push them to this Dict in their own _ready method
 var custom_scenes: Dictionary = {}
 
@@ -40,6 +42,7 @@ func _ready() -> void:
 func load_scene_deferred(scene: Node) -> void:
 	if !scene: return
 	previous_scene_name = current_scene.name
+	previous_scene_path = current_scene.scene_file_path
 	current_scene.free()
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
@@ -52,6 +55,7 @@ func load_scene_deferred(scene: Node) -> void:
 func load_scene_from_packed(pck: PackedScene) -> void:
 	if !pck: return
 	previous_scene_name = current_scene.name
+	previous_scene_path = current_scene.scene_file_path
 	current_scene.free()
 	var scene: Node = pck.instantiate()
 	current_scene = scene

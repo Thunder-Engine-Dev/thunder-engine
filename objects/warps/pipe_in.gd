@@ -15,6 +15,7 @@ extends Area2D
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export_group("Tweaks")
 @export var warp_invisible_left_right: bool = true
+@export var warp_disable_smooth_entry: bool = false
 @export_group("Path Transition")
 @export var warp_path: Path2D
 @export var warp_path_speed: float = 400
@@ -25,6 +26,9 @@ extends Area2D
 @export var circle_focus_on_player: bool = true
 @export var circle_center_after_middle: bool = false
 @export var circle_wait_till_scene_changed: bool = true
+@export_group("Crossfade Transition")
+@export var force_circle_instead_of_crossfade: bool = false
+@export var crossfade_fade_speed: float = 0.54
 @export_group("Blur Transition")
 @export var use_blur_transition: bool = false
 @export var blur_closing_speed: float = 2.2
@@ -104,9 +108,15 @@ func _physics_process(delta: float) -> void:
 			warp_started.emit()
 			player.warp = Player.Warp.IN
 			player.warp_dir = warp_direction
-			player.global_position = pos_player.global_position
+			if !warp_disable_smooth_entry:
+				var pos_tw = create_tween()
+				pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
+			else:
+				player.global_position = pos_player.global_position
 			player.z_index = -5
 			player.speed = Vector2.ZERO
+			if is_instance_valid(Thunder._current_camera):
+				Thunder._current_camera.teleport()
 			Audio.play_sound(warping_sound, self, false)
 			Thunder._current_hud.timer.paused = true
 	
@@ -123,24 +133,34 @@ func _physics_process(delta: float) -> void:
 		warp_ended.emit()
 		
 		if use_circle_transition:
+			var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+			if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+				pass_warp()
+				TransitionManager.accept_transition(
+					load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+						.instantiate()
+						.with_time(crossfade_fade_speed)
+						.with_scene(warp_to_scene)
+				)
+				warp_to_scene = ""
+				return
 			TransitionManager.accept_transition(
 				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 					.instantiate()
 					.with_speeds(circle_closing_speed, -circle_opening_speed)
+					.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 			)
 			if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
 			await TransitionManager.transition_middle
 			
 			TransitionManager.current_transition.paused = true
 			
-			if warp_to_scene && circle_wait_till_scene_changed: 
+			if warp_to_scene && circle_wait_till_scene_changed:
 				Scenes.scene_ready.connect(func():
-					if circle_focus_on_player && is_instance_valid(Thunder._current_player): TransitionManager.current_transition.on(Thunder._current_player)
 					TransitionManager.current_transition.paused = false
 				, CONNECT_ONE_SHOT)
 			else:
-				if circle_focus_on_player && !circle_center_after_middle: TransitionManager.current_transition.on(Thunder._current_player)
-				elif circle_center_after_middle:
+				if circle_center_after_middle:
 					TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 				TransitionManager.current_transition.paused = false
 			

@@ -5,6 +5,9 @@ extends Node
 ## We [b][i]extremely recommend[/i][/b] to use the methods in the singleton for playing your musics and sounds.[br]
 ## [b]Note:[/b] there are some methods with param [param other_keys]([Dictionary]), so here is the list of [i][u]spell_keys[/u][/i]:[br]
 ## ([float])[param pitch]: Determines the pitch of the sound or music
+## ([float])[param volume]: Determines the volume of the sound or music (in dB)
+## ([String])[param bus]: Determines which audio bus will the sound or music be attached to
+## ([bool])[param ignore_pause]: Determines whether the sound or music should play when the SceneTree is paused
 
 ## Param set when you call [method fade_music_1d_player]
 enum FadingMethod {
@@ -76,7 +79,7 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	if _duplicated_sounds.has(resource): return
 	_duplicated_sounds.append(resource)
 	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
-	player.bus = "Sound"
+	player.bus = "Sound" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 	player.stream = resource
 	player.play.call_deferred()
 	
@@ -105,7 +108,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	if _duplicated_sounds.has(resource): return
 	_duplicated_sounds.append(resource)
 	var player = _create_1d_player(is_global)
-	player.bus = "Sound"
+	player.bus = "Sound" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 	player.stream = resource
 	player.play.call_deferred()
 	
@@ -148,7 +151,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
-		music_player.bus = &"Music"
+		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 		music_player.play.call_deferred()
 	elif &"data" in resource:
 		openmpt = _create_openmpt_player(is_global)
@@ -168,7 +171,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		generator.mix_rate = 44100
 		
 		music_player.stream = generator
-		music_player.bus = &"Music"
+		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 		(func() -> void:
 			music_player.play()
 			#music_player.seek(0.0)

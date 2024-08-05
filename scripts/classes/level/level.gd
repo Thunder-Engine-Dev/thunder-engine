@@ -19,8 +19,12 @@ signal level_completed
 @export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
 ## Write info about level completion to save file
 @export var completion_write_save: bool = true
+## Override scene path that gets written to save file
+@export var completion_write_save_path_override: String = ""
 ## Jump to scene after level completion sequence
 @export_file("*.tscn", "*.scn") var jump_to_scene: String
+## If you have a weird misplaced circle transition after jumping to next scene, enable this property
+@export var completion_center_on_player_after_transition: bool = false
 
 @export_group("Player's Falling Below", "falling_below_")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
@@ -184,6 +188,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		func() -> void:
 			await get_tree().create_timer(0.8, false, false).timeout
 			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+			Data.values.checkpoint = -1
+			Data.values.checked_cps = []
 			
 			if jump_to_scene:
 				if !_crossfade:
@@ -191,15 +197,12 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 						load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 							.instantiate()
 							.with_speeds(0.04, -0.1)
+							.with_pause()
+							.on_player_after_middle(completion_center_on_player_after_transition)
 					)
 					
-					TransitionManager.transition_middle.connect(func():
-						TransitionManager.current_transition.paused = true
-						Scenes.goto_scene(jump_to_scene)
-						Scenes.scene_changed.connect(func(_current_scene):
-							TransitionManager.current_transition.paused = false
-						, CONNECT_ONE_SHOT)
-					, CONNECT_ONE_SHOT)
+					await TransitionManager.transition_middle
+					Scenes.goto_scene(jump_to_scene)
 				else:
 					TransitionManager.accept_transition(
 						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
@@ -212,8 +215,9 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	
 	if completion_write_save:
 		var profile = ProfileManager.current_profile
-		if !profile.has_completed(scene_file_path):
-			profile.complete_level(scene_file_path)
+		var path = scene_file_path if !completion_write_save_path_override else completion_write_save_path_override
+		if !profile.has_completed(path):
+			profile.complete_level(path)
 			ProfileManager.save_current_profile()
 	
 	Thunder._current_hud.time_countdown()

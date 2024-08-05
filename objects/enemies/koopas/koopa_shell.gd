@@ -5,7 +5,9 @@ const Shell: Script = preload("./koopa_shell.gd")
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.6
-@export_subgroup("Attack")
+@export_group("Breaking")
+@export_range(0, 64, 1, "or_greater") var max_multiple_breaking_blocks: int = 32
+@export_group("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
 @export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
@@ -111,11 +113,40 @@ func _on_body_entered(player: Node2D) -> void:
 	sound()
 
 
+var _already_processed: Array[int]
+
 func _on_collided_wall() -> void:
-	for i in get_slide_collision_count():
-		var j: KinematicCollision2D = get_slide_collision(i)
-		if j.get_collider() is StaticBumpingBlock:
-			if j.get_collider().has_method(&"got_bumped"):
-				j.get_collider().got_bumped.call_deferred(self)
-			elif j.get_collider().has_method(&"bricks_break"):
-				j.get_collider().bricks_break.call_deferred()
+	var dir = 1 if speed.x < 0 else -1
+	var saved_pos = global_position
+	_process_collision_deferred(dir, saved_pos)
+
+func _process_collision_deferred(dir: int, saved_pos: Vector2) -> void:
+	global_position = saved_pos
+	var rot: = get_global_gravity_dir().angle()
+	var vel = Vector2(dir, 0).rotated(rot - PI/2)
+	if is_zero_approx(vel.y):
+		vel.y = 0
+	
+	# WARNING: Only the first collision shape will be considered!
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.collision_mask = collision_mask
+	query.motion = vel
+	
+	for i in get_shape_owners():
+		query.transform = (shape_owner_get_owner(i) as Node2D).global_transform
+		for j in shape_owner_get_shape_count(i):
+			query.shape = shape_owner_get_shape(i, j)
+			
+			var cldata: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query, max_multiple_breaking_blocks)
+			
+			for k in cldata:
+				var l: Object = k.get(&"collider", null)
+				var id: int = k.get(&"collider_id", 0)
+				
+				if !(id in _already_processed):
+					_already_processed.append(id)
+					if l is StaticBumpingBlock:
+						if l.has_method(&"got_bumped"):
+							l.got_bumped.call_deferred(self)
+						elif l.has_method(&"bricks_break"):
+							l.bricks_break.call_deferred()

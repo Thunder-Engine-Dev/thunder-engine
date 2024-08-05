@@ -21,6 +21,7 @@ func _correct_collision() -> void:
 	if !correct_collision: return
 	
 	var collision = Thunder.get_child_by_class_name(self, 'CollisionShape2D')
+	# DEPRECATED IN GODOT 4.3!
 	if collision: collision.global_position.y -= 1
 
 ## Run [method move_and_slide] with corrections

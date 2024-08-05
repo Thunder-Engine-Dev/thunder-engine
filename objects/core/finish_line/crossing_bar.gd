@@ -20,23 +20,27 @@ func _physics_process(delta) -> void:
 		queue_free()
 
 func _add_score() -> void:
-	var calculated_y: float = position.y - initial_position
-	var given_score: int
-	if calculated_y < 30:
-		given_score = 10000
-	elif calculated_y < 60:
-		given_score = 5000
-	elif calculated_y < 100:
-		given_score = 2000
-	elif calculated_y < 150:
-		given_score = 1000
-	elif calculated_y < 200:
-		given_score = 500
+	if !finish_line.override_score:
+		var calculated_y: float = position.y - initial_position
+		var given_score: int
+		if calculated_y < 30:
+			given_score = 10000
+		elif calculated_y < 60:
+			given_score = 5000
+		elif calculated_y < 100:
+			given_score = 2000
+		elif calculated_y < 150:
+			given_score = 1000
+		elif calculated_y < 200:
+			given_score = 500
+		else:
+			given_score = 200
+		
+		Data.values.score += given_score
+		ScoreText.new(str(given_score), score_text_marker)
 	else:
-		given_score = 200
-	
-	Data.values.score += given_score
-	ScoreText.new(str(given_score), score_text_marker)
+		Data.values.score += finish_line.override_score_value
+		ScoreText.new(str(finish_line.override_score_value), score_text_marker)
 
 func _create_checker_bar() -> void:
 	NodeCreator.prepare_2d(CHECKER_BAR, Scenes.current_scene).create_2d(false).call_method(func(eff: Node2D):

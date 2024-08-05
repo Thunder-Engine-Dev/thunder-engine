@@ -6,7 +6,7 @@ var open_blocked: bool = false
 const _MusicLoader: Script = preload("res://engine/objects/core/music_loader/music_loader.gd")
 
 const open_sound = preload("./sounds/pause_open.wav")
-const close_sound = preload("./sounds/pause_close.mp3")
+const close_sound = null
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
@@ -24,7 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"pause_toggle") && (
 		Scenes.current_scene is Level ||
 		Scenes.current_scene is Map2D
-	):
+	) && !(opened && event.is_action_pressed("ui_cancel")):
 		toggle.call_deferred()
 
 
@@ -58,11 +58,11 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		if !no_sound_effect:
-			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
+			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		animation_player.play_backwards("open")
-		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true })
+		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
 	get_tree().paused = opened

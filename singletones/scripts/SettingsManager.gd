@@ -7,6 +7,7 @@ enum QUALITY {
 }
 
 const settings_path = "user://settings.thss"
+const tweaks_path = "user://tweaks.thss"
 
 var default_settings = {
 	"sound": 1,
@@ -35,12 +36,18 @@ var default_settings = {
 var settings = default_settings.duplicate(true)
 var no_saved_settings: bool = false
 
+var tweaks: Dictionary = {}
+
 signal settings_updated
 signal settings_saved
 signal settings_loaded
+signal tweaks_updated
+signal tweaks_saved
+signal tweaks_loaded
 
 func _ready() -> void:
 	load_settings()
+	load_tweaks()
 
 ## Get ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
 func get_tweak(tweak_name: String, default_value: Variant = null) -> Variant:
@@ -49,6 +56,8 @@ func get_tweak(tweak_name: String, default_value: Variant = null) -> Variant:
 ## Set ProjectSettings "tweak" to a new value
 func set_tweak(tweak_name: String, value: Variant) -> void:
 	ProjectSettings.set_setting("application/thunder_settings/tweaks/" + tweak_name, value)
+	tweaks[tweak_name] = value
+	tweaks_updated.emit()
 
 ## Returns the key label of specified action
 func _get_current_key(action: StringName) :
@@ -104,7 +113,7 @@ func load_settings() -> void:
 	_check_for_validity()
 	_process_settings()
 	settings_loaded.emit()
-	print("[Settings Manager] Loaded settings from file.")
+	print("[Settings Manager] Loaded settings from a file.")
 
 func _check_for_validity() -> void:
 	for i in default_settings.keys():
@@ -162,7 +171,7 @@ func _process_settings() -> void:
 	
 	# Sound Volume
 	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Sound"),
+		AudioServer.get_bus_index("1D Sound"),
 		linear_to_db(settings.sound)
 	)
 	
@@ -191,3 +200,35 @@ func _window_scale_logic(force_update: bool = false) -> void:
 		GlobalViewport._update_view()
 	
 	old_scale = settings.scale
+
+## Saves the tweaks variable to a file
+func save_tweaks() -> void:
+	var data = JSON.stringify(tweaks)
+	
+	var file: FileAccess = FileAccess.open(tweaks_path, FileAccess.WRITE)
+	file.store_string(data)
+	file.close()
+	
+	tweaks_saved.emit()
+	print("[Settings Manager] Tweaks saved!")
+
+## Loads the settings variable from file
+func load_tweaks() -> void:
+	if !FileAccess.file_exists(tweaks_path):
+		print("[Settings Manager] Using the default tweaks, no saved ones.")
+		return
+	
+	var data: String = FileAccess.get_file_as_string(tweaks_path)
+	var dict = JSON.parse_string(data)
+	
+	if dict == null:
+		OS.alert("Failed to load saved tweaks " + name, "Can't load save file!")
+		return
+	
+	tweaks = dict
+	for tweak in tweaks:
+		var value = tweaks[tweak]
+		ProjectSettings.set_setting("application/thunder_settings/tweaks/" + tweak, value)
+	
+	tweaks_loaded.emit()
+	print("[Settings Manager] Loaded tweaks from a file.")

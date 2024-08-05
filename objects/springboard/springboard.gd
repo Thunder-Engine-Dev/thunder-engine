@@ -34,6 +34,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	super(delta)
 	if !is_triggered: return
 	if player:
 		#player.no_movement = true

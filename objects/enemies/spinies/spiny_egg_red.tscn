@@ -121,7 +121,7 @@ texture = SubResource("AtlasTexture_igr41")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-16, -24, 32, 48)
+rect = Rect2(-128, -128, 256, 256)
 script = ExtResource("10_5bneu")
 metadata/_edit_lock_ = true
 

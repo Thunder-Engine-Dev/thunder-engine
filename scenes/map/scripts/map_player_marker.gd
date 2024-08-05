@@ -7,6 +7,9 @@ class_name MapPlayerMarker extends Marker2D
 @export_file("*.tscn", "*.scn") var level_override_save: String = "":
 	set = set_level_save_path
 
+@export var music_loader_ref: NodePath
+@export var change_music_index: int = 0
+
 # DO NOT USE OUTSIDE THIS SCRIPT
 var _level: String
 var _level_save: String = ""
@@ -15,6 +18,7 @@ var _level_save: String = ""
 var player
 
 signal changed
+signal current_active
 
 func _enter_tree() -> void:
 	if !is_in_group("map_marker"):
@@ -38,6 +42,12 @@ func _ready() -> void:
 			player.current_marker = get_next_marker()
 			#print(marker_space.get_next_marker_id())
 			player.global_position = global_position
+			
+			current_active.emit()
+			
+			var loader = get_node_or_null(music_loader_ref)
+			if is_instance_valid(loader):
+				loader.set_index.call_deferred(change_music_index)
 			
 			if is_instance_valid(player.camera):
 				player.camera.reset_smoothing.call_deferred()
