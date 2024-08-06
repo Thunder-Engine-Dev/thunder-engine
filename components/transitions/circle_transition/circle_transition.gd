@@ -62,12 +62,12 @@ func _physics_process(delta: float) -> void:
 	
 	if circle == 0 && !middle_switch:
 		if _is_with_pause:
-			TransitionManager.current_transition.paused = true
+			paused = true
 		await get_tree().physics_frame
 		middle.emit()
 		if _is_with_pause:
 			Scenes.scene_ready.connect(func():
-				TransitionManager.current_transition.paused = false
+				paused = false
 				var pl = Thunder._current_player
 				if _on_player_after_middle && is_instance_valid(pl):
 					on(pl)
@@ -79,6 +79,6 @@ func _physics_process(delta: float) -> void:
 	if middle_switch && circle > 2:
 		end.emit()
 	
-	if circle >= 0:
+	if circle >= 0 && !paused:
 		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
 	
