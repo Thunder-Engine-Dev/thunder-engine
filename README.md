@@ -14,7 +14,7 @@ It allows you to create games with previously unseen level of flexibility and st
 
 <h3 align="center">
 Current state: READY FOR SIMPLE PROJECTS<br/>
-Required game engine: Godot 4.2.x
+Required game engine: Godot 4.2.2
 </h3>
 
 ------------
