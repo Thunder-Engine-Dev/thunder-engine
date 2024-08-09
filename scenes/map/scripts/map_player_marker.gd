@@ -33,12 +33,15 @@ func _ready() -> void:
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
 	
 	if (
-		is_level_completed() && !Data.values.get('map_force_selected_marker') ||
-		Data.values.get('map_force_selected_marker') == _level_save
+			is_level_completed() && !Data.values.get('map_force_selected_marker') ||
+			Data.values.get('map_force_selected_marker') == _level_save
 	):
-		#await get_tree().process_frame
 		(func():
-			#Data.values.erase('map_force_selected_marker')
+			if (
+					get_index() == marker_space.get_child_count() - 1 &&
+					!is_instance_valid(marker_space.next_space)
+			):
+				return
 			player.current_marker = get_next_marker()
 			#print(marker_space.get_next_marker_id())
 			player.global_position = global_position
@@ -59,7 +62,6 @@ func _ready() -> void:
 			)
 		).call_deferred()
 	elif is_level():
-		#await get_tree().process_frame
 		(func():
 			if marker_space.uncompleted_levels.is_empty():
 				marker_space.add_all_uncompleted_levels()
