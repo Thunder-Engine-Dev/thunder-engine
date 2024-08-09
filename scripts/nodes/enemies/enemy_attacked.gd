@@ -84,6 +84,8 @@ var _stomping_delayer: SceneTreeTimer:
 @onready var _extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var _center: Node2D = get_node_or_null(center_node)
 
+@onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
+
 ## Emitted when the enemy gets stomped by the player
 signal stomped
 ## Emitted when the enemy gets stomped successfully
@@ -141,8 +143,26 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 		stomping_delay()
 		stomped_succeeded.emit()
 		if stomping_scores > 0:
-			ScoreText.new(str(stomping_scores), _center)
-			Data.values.score += stomping_scores
+			if !_stomping_combo_enabled:
+				ScoreText.new(str(stomping_scores), _center)
+				Data.values.score += stomping_scores
+			elif is_instance_valid(by):
+				var _do_combo: bool = true
+				if by.stomping_combo.get_combo() == 0:
+					var try = Combo.STOMP_COMBO_ARRAY.find(stomping_scores)
+					if try > 0:
+						by.stomping_combo._combo = try
+					else:
+						var combo_size: int = len(Combo.STOMP_COMBO_ARRAY)
+						for i in combo_size:
+							if stomping_scores < Combo.STOMP_COMBO_ARRAY[i]:
+								by.stomping_combo._combo = max(0, i)
+								_do_combo = false
+								ScoreText.new(str(stomping_scores), by)
+								Data.values.score += stomping_scores
+								break
+				if _do_combo:
+					by.stomping_combo.combo()
 		
 		_creation(stomping_creation)
 		

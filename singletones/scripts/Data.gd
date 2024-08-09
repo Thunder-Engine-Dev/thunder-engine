@@ -32,6 +32,7 @@ enum PROJECTILE_BELONGS {
 var values: Dictionary = {
 	lives = -1,
 	score = 0,
+	prev_score = 0,
 	coins = 0,
 	time = -1,
 	checkpoint = -1,
@@ -44,17 +45,32 @@ var values: Dictionary = {
 
 
 func add_coin(amount: int = 1) -> void:
-	Data.values.coins += 1
-	if Data.values.coins > 99:
-		Data.values.coins = 0
+	values.coins += 1
+	if values.coins > 99:
+		values.coins = 0
 		Thunder.add_lives(1)
 		Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), false)
+		if is_instance_valid(Thunder._current_hud):
+			Thunder._current_hud.pulse_label(Thunder._current_hud.coins)
+
 
 func add_score(amount: int) -> void:
-	Data.values.score += amount
+	values.score += amount
+	if SettingsManager.get_tweak("life_every_2_mil_score", false):
+		var two_mil: int = floor(values.score / 2_000_000)
+		if two_mil > values.prev_score:
+			values.prev_score = two_mil
+			
+			await get_tree().create_timer(0.3, false).timeout
+			Thunder.add_lives(1)
+			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), false)
+			
+			if is_instance_valid(Thunder._current_hud):
+				Thunder._current_hud.pulse_label(Thunder._current_hud.mario_score)
+
 
 func add_lives(amount: int = 1) -> void:
-	Data.values.lives += amount
+	values.lives += amount
 
 
 func reset_all_values() -> void:

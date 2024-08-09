@@ -130,7 +130,7 @@ func add_score(count: int):
 		push_error("[Thunder Engine] add_score: Invalid score count. Must be greater than 0")
 		return
 	
-	Data.values.score += count
+	Data.add_score(count)
 	if !_current_player: return
 	ScoreText.new(str(count), _current_player)
 

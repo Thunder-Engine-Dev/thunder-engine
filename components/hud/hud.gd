@@ -3,7 +3,10 @@ extends CanvasLayer
 @onready var timer = $Timer
 @onready var time_text = $Control/Time
 @onready var time_counter: Label = $Control/TimeCounter
+
 @onready var gameover = $Control/GameOver
+@onready var mario_score: Label = $Control/MarioScore
+@onready var coins: Label = $Control/Control/Coins
 
 @export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
 
@@ -65,3 +68,11 @@ func _time_countdown_sound_loop() -> void:
 		Audio.play_1d_sound(scoring_sound, false, { "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()
+
+
+func pulse_label(node: CanvasItem) -> void:
+	var tw = create_tween().set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
+	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)

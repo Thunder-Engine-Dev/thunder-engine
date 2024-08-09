@@ -111,6 +111,8 @@ var _suit_appear: bool
 
 @onready var control: PlayerControl = PlayerControl.new()
 @onready var starman_combo: Combo = Combo.new(self)
+@onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
+@onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -170,6 +172,9 @@ func _physics_process(delta: float) -> void:
 		!_starman_faded:
 			_starman_faded = true
 			Audio.stop_music_channel(98, true)
+	
+	if _stomping_combo_enabled && stomping_combo.get_combo() > 0 && is_on_floor():
+		stomping_combo.reset_combo()
 
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
