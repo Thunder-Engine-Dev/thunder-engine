@@ -479,7 +479,6 @@ gravity_scale = 0.15
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer", &"burst_fireball"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_dmd6v")
 
 [node name="Body" type="Area2D" parent="."]

@@ -90,6 +90,7 @@ var hud: CanvasLayer
 
 
 func _ready() -> void:
+	super()
 	_speed = speed.x
 	facing = get_facing(facing)
 	direction = facing

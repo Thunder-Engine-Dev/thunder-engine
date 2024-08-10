@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b71msw28e37a"]
+[gd_scene load_steps=10 format=3 uid="uid://b71msw28e37a"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
 [ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="2_1tqft"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
+[ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 31)
@@ -48,6 +50,14 @@ visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_o1sg4")
+stomping_enabled = false
+killing_immune = {
+"head": false
+}
+turn_into_coin_on_level_end = false
+
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_crlg7")
 
@@ -63,4 +73,8 @@ texture = SubResource("GradientTexture2D_cmgen")
 script = ExtResource("5_s7dmu")
 duration = 0.3
 
+[node name="BumpLogic" type="Node" parent="."]
+script = ExtResource("6_6ddmp")
+
 [connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="BumpLogic" method="set_bump"]
