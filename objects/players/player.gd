@@ -105,6 +105,7 @@ var no_movement: bool
 
 var _force_suit: bool
 var _suit_appear: bool
+var _suit_tree_paused: bool
 
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
@@ -113,6 +114,7 @@ var _suit_appear: bool
 @onready var starman_combo: Combo = Combo.new(self)
 @onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
+@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -180,6 +182,15 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	_force_suit = forced
 	_suit_appear = appear
 	suit = to
+	if appear && _suit_pause_tweak:
+		_suit_tree_paused = true
+		get_tree().paused = true
+		sprite.process_mode = Node.PROCESS_MODE_ALWAYS
+		await get_tree().create_timer(1.0, true, true).timeout
+		sprite.process_mode = Node.PROCESS_MODE_INHERIT
+		_suit_tree_paused = false
+		get_tree().paused = false
+		
 	_force_suit = false
 	_suit_appear = false
 
@@ -233,8 +244,8 @@ func hurt(tags: Dictionary = {}) -> void:
 	
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)
-		invincible(tags.get(&"hurt_duration", 2))
-		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
+		invincible.call_deferred(tags.get(&"hurt_duration", 2))
+		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch, ignore_pause = true})
 	else:
 		die(tags)
 	

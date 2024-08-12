@@ -5,11 +5,13 @@ var sprite: AnimatedSprite2D
 var config: PlayerConfig
 
 var _climb_progress: float
+var _suit_pause_tweak: bool
 
 func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
+	_suit_pause_tweak = SettingsManager.get_tweak("pause_on_suit_change", false)
 	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
@@ -33,7 +35,8 @@ func _physics_process(delta: float) -> void:
 func _suit_appeared() -> void:
 	if !sprite: return
 	sprite.play(&"appear")
-	await player.get_tree().create_timer(1, false, true).timeout
+	sprite.speed_scale = 1
+	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1, false, true).timeout
 	if sprite.animation == &"appear": sprite.play(&"default")
 
 
@@ -54,7 +57,7 @@ func _invincible(duration: float) -> void:
 	if !sprite: return
 	sprite.modulate.a = 1
 	if !player.is_starman():
-		Effect.flash(sprite, duration)
+		Effect.flash(sprite, duration, 0.06, Tween.TWEEN_PAUSE_STOP)
 
 
 func _sprite_loop() -> void:

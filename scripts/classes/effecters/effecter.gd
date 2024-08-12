@@ -36,11 +36,11 @@ static func trail(
 	return effect_node
 
 
-static func flash(on: CanvasItem, duration: float, interval: float = 0.06) -> void:
+static func flash(on: CanvasItem, duration: float, interval: float = 0.06, pause_mode = Tween.TWEEN_PAUSE_BOUND) -> void:
 	if !on:
 		return
 	var alpha: float = on.modulate.a
-	var tw: Tween = on.create_tween().set_loops(int(ceilf(duration / interval)))
+	var tw: Tween = on.create_tween().set_loops(int(ceilf(duration / interval))).set_pause_mode(pause_mode)
 	tw.tween_property(on, "modulate:a", 0, interval / 2)
 	tw.tween_property(on, "modulate:a", alpha, interval / 2)
 	tw.tween_callback(
