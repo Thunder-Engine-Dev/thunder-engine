@@ -5,10 +5,13 @@ class_name PlayerSkin
 @export var animation_speeds: Dictionary = {
 	"appear": 30,
 	"attack": 10,
+	"back": 0,
 	"climb": 0,
 	"crouch": 0,
 	"default": 0,
+	"fall": 0,
 	"jump": 0,
+	"skid": 0,
 	"slide": 0,
 	"swim": 8,
 	"walk": 6,
@@ -23,6 +26,9 @@ class_name PlayerSkin
 	"attack": [
 		Rect2(0, 0, 32, 64),
 	],
+	"back": [
+		Rect2(0, 0, 32, 64),
+	],
 	"climb": [
 		Rect2(0, 0, 32, 64),
 	],
@@ -32,7 +38,13 @@ class_name PlayerSkin
 	"default": [
 		Rect2(0, 0, 32, 64),
 	],
+	"fall": [
+		Rect2(0, 0, 32, 64),
+	],
 	"jump": [
+		Rect2(0, 0, 32, 64),
+	],
+	"skid": [
 		Rect2(0, 0, 32, 64),
 	],
 	"slide": [
@@ -60,10 +72,13 @@ class_name PlayerSkin
 @export var animation_loops: Dictionary = {
 	"appear": true,
 	"attack": false,
+	"back": false,
 	"climb": false,
 	"crouch": false,
 	"default": false,
+	"fall": false,
 	"jump": false,
+	"skid": false,
 	"slide": false,
 	"swim": true,
 	"walk": true,

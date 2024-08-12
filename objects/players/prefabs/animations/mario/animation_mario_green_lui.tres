@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://br1851e3gt1xr"]
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://br1851e3gt1xr"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_hq665"]
 
@@ -13,6 +13,10 @@ region = Rect2(144, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_72wl1"]
 atlas = ExtResource("1_hq665")
 region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aulbf"]
+atlas = ExtResource("1_hq665")
+region = Rect2(720, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qqyrd"]
 atlas = ExtResource("1_hq665")
@@ -29,6 +33,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_yqvls"]
 atlas = ExtResource("1_hq665")
 region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghihp"]
+atlas = ExtResource("1_hq665")
+region = Rect2(672, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5a1qo"]
 atlas = ExtResource("1_hq665")
@@ -105,6 +113,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_aulbf")
+}],
+"loop": false,
+"name": &"back",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qqyrd")
 }],
 "loop": false,
@@ -132,7 +148,23 @@ animations = [{
 "texture": SubResource("AtlasTexture_yqvls")
 }],
 "loop": false,
+"name": &"fall",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqvls")
+}],
+"loop": false,
 "name": &"jump",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghihp")
+}],
+"loop": false,
+"name": &"skid",
 "speed": 0.0
 }, {
 "frames": [{
@@ -192,5 +224,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"warp",
-"speed": 5.0
+"speed": 0.0
 }]

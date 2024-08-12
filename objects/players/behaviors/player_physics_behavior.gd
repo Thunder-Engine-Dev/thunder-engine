@@ -4,6 +4,7 @@ var player: Player
 var suit: PlayerSuit
 var config: PlayerConfig
 
+
 func _ready() -> void:
 	player = node as Player
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
@@ -80,6 +81,12 @@ func _movement_x(delta: float) -> void:
 		player.left_right = 0
 		player.jumping = 0
 		player.speed.x = -player.direction * config.stuck_recovery_speed
+	player.is_skidding = (
+			player._skid_tweak &&
+			(player.left_right == -player.direction) &&
+			abs(player.speed.x) > 1 &&
+			player.is_on_floor()
+	)
 	# Crouching / Completed Level motion speed
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		var deceleration: float = (

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=23 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
@@ -9,6 +9,7 @@
 [ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_633ve"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_ab7c7"]
+[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_tcjl5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
@@ -25,8 +26,8 @@ point_count = 2
 curve = SubResource("Curve_08q3l")
 
 [sub_resource type="Curve" id="Curve_qeb68"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.746479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.146, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
 curve = SubResource("Curve_qeb68")
@@ -46,6 +47,14 @@ scale_min = 0.1
 scale_max = 0.3
 scale_curve = SubResource("CurveTexture_ro0d7")
 alpha_curve = SubResource("CurveTexture_btes4")
+
+[sub_resource type="CurveTexture" id="CurveTexture_43ijr"]
+curve = SubResource("Curve_qeb68")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xqn1l"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_43ijr")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6hxb"]
 size = Vector2(16, 2)
@@ -102,6 +111,15 @@ emitting = false
 amount = 24
 process_material = SubResource("ParticleProcessMaterial_ljx6w")
 texture = ExtResource("6_ab7c7")
+lifetime = 0.5
+
+[node name="Skid" type="GPUParticles2D" parent="Sprite"]
+show_behind_parent = true
+position = Vector2(0, 15)
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_xqn1l")
+texture = ExtResource("7_tcjl5")
 lifetime = 0.5
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]

@@ -44,13 +44,12 @@ func _on_bullet_launched() -> void:
 					"volume": sound_volume,
 			}
 	)
-	NodeCreator.prepare_ins_2d(bullet_bill, self).create_2d().call_method(
+	NodeCreator.prepare_ins_2d(bullet_bill, self).create_2d(false).call_method(
 		func(bul: Node2D) -> void:
 			bul.global_transform = pos_bullet.global_transform
 			if bul is GeneralMovementBody2D:
 				bul.look_at_player = false
 				bul.vel_set(Vector2.RIGHT * bullet_speed * dir)
-				bul.z_index = z_index - 1
 				var enemy_attacked: Node = bul.get_node_or_null("EnemyAttacked")
 				if !enemy_attacked: return
 				enemy_attacked.stomping_standard = enemy_attacked.stomping_standard.rotated(-bul.global_rotation)

@@ -89,6 +89,7 @@ var _has_jumped: bool
 var is_climbing: bool
 var is_sliding: bool
 var is_crouching: bool
+var is_skidding: bool
 var is_underwater: bool
 var is_underwater_out: bool
 
@@ -115,6 +116,7 @@ var _suit_tree_paused: bool
 @onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 @onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
+@onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -127,6 +129,8 @@ var _suit_tree_paused: bool
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubble: GPUParticles2D = $Sprite/Bubble
 @onready var stars: GPUParticles2D = $Sprite/Stars
+@onready var skid: GPUParticles2D = $Sprite/Skid
+@onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")
 
 
 func _ready() -> void:

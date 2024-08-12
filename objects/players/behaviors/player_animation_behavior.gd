@@ -36,7 +36,7 @@ func _suit_appeared() -> void:
 	if !sprite: return
 	sprite.play(&"appear")
 	sprite.speed_scale = 1
-	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1, false, true).timeout
+	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1.0, false, true).timeout
 	if sprite.animation == &"appear": sprite.play(&"default")
 
 
@@ -71,6 +71,15 @@ func _sprite_finish() -> void:
 	if sprite.animation == &"attack": sprite.play(&"default")
 
 
+var _skid_sound_timer: bool
+func _skid_sound_loop() -> void:
+	if _skid_sound_timer: return
+	_skid_sound_timer = true
+	Audio.play_sound(player.skid_sound, player)
+	await player.get_tree().create_timer(0.10, false, false, true).timeout
+	_skid_sound_timer = false
+
+
 #= Main
 func _animation_process(delta: float) -> void:
 	if !sprite: return
@@ -80,6 +89,7 @@ func _animation_process(delta: float) -> void:
 	sprite.speed_scale = 1
 	# Non-warping
 	if player.warp == Player.Warp.NONE:
+		player.skid.emitting = false
 		if sprite.animation in [&"appear", &"attack"]: return
 		# Climbing
 		if player.is_climbing:
@@ -93,11 +103,15 @@ func _animation_process(delta: float) -> void:
 		if player.is_sliding:
 			sprite.play(&"slide")
 			sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
+			player.skid.emitting = true
 			return
 		# Non-climbing
+		player.skid.emitting = player.is_skidding
+		if player.is_skidding:
+			_skid_sound_loop()
 		if player.is_on_floor():
 			if !(is_zero_approx(player.speed.x)):
-				sprite.play(&"walk")
+				sprite.play(&"walk" if !player.is_skidding else &"skid")
 				sprite.speed_scale = (
 					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
 					config.animation_min_walking_speed,
@@ -107,10 +121,14 @@ func _animation_process(delta: float) -> void:
 				sprite.play(&"default")
 			if player.is_crouching:
 				sprite.play(&"crouch")
+				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
 		elif player.is_underwater:
 			sprite.play(&"swim")
 		else:
-			sprite.play(&"jump")
+			if player.speed.y < 0:
+				sprite.play(&"jump")
+			else:
+				sprite.play(&"fall")
 	# Warping
 	else:
 		match player.warp_dir:
