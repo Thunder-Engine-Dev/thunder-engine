@@ -18,7 +18,6 @@ collision = false
 metadata/_edit_pinned_properties_ = [&"sprite", &"collision"]
 
 [node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_gucbo")
 
 [node name="Attack" type="ShapeCast2D" parent="."]

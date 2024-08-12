@@ -17,7 +17,6 @@ gravity_scale = 0.18
 metadata/_edit_pinned_properties_ = [&"sprite"]
 
 [node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_kcu3t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

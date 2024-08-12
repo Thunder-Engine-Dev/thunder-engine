@@ -16,7 +16,6 @@ gravity_scale = 0.4
 correct_collision = false
 
 [node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_n2mkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

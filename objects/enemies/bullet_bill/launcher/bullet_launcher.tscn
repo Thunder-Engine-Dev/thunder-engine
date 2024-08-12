@@ -22,7 +22,6 @@ custom_vars = {}
 size = Vector2(32, 32)
 
 [node name="BulletLauncher" type="AnimatableBody2D"]
-z_index = 2
 collision_layer = 112
 collision_mask = 0
 sync_to_physics = false

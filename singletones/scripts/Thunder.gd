@@ -146,6 +146,33 @@ func set_pause_game(pause: bool) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if pause else Input.MOUSE_MODE_HIDDEN
 
 
+## == NODE UTILS ==
+
+## Move node on top of subtree (behind all nodes on the same z-index)
+func reorder_top(node: Node) -> void:
+	var parent = node.get_parent()
+	parent.move_child(node, 0)
+
+## Move node to bottom of subtree (on top of all nodes on the same z-index)
+func reorder_bottom(node: Node) -> void:
+	var parent = node.get_parent()
+	parent.move_child(node, parent.get_child_count())
+
+## Move node behind the target node on the same z-index, nodes should be on the same subtree
+func reorder_on_top_of(node: Node, target: Node) -> void:
+	var node_parent = node.get_parent()
+	var target_parent = target.get_parent()
+	
+	if node_parent != target_parent:
+		printerr("Invalid call. Node and target should be on the same subtree.")
+		return
+	
+	node_parent.move_child(node, target.get_index() - 1)
+
+
+## == SUBSINGLETONS ==
+
+
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them
 class View:
 	## Current screen border, used [Rect2i] because the size and position of screen border don't support [float]

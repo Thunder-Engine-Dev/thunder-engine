@@ -14,12 +14,12 @@ static func trail(
 	fade_out_strength: float = 0.05,
 	duration: float = 1.0,
 	material: Material = null,
-	z_index: int = -1
+	z_index: int = 0
 ) -> Sprite2D:
 	if !on:
 		return null
 	
-	return NodeCreator.prepare_2d(TRAIL, on).bind_global_transform().call_method(
+	var effect_node = NodeCreator.prepare_2d(TRAIL, on).bind_global_transform().call_method(
 		func(tra: Sprite2D) -> void:
 			tra.offset = offset
 			tra.texture = texture
@@ -32,6 +32,8 @@ static func trail(
 			tra.z_index = on.z_index + z_index
 			tra.add_to_group(&"Trail")
 	).create_2d().get_node() as Sprite2D
+	
+	return effect_node
 
 
 static func flash(on: CanvasItem, duration: float, interval: float = 0.06) -> void:

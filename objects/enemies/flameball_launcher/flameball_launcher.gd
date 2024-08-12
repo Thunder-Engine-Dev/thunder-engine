@@ -35,8 +35,8 @@ func _on_interval_flame_timeout() -> void:
 				ball.global_rotation = 0
 				ball.vel_set(Vector2.RIGHT.rotated(get_global_transform().get_rotation()) * -speed)
 				ball.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-			ball.z_index = z_index - 2
 			ball.reparent.call_deferred(get_parent())
+			Thunder.reorder_on_top_of.call_deferred(ball, self)
 	)
 	if _amount <= 0:
 		timer_interval.start(interval)
