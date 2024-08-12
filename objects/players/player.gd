@@ -33,7 +33,7 @@ enum WarpDir {
 		suit = to.duplicate()
 		
 		if suit.animation_sprites:
-			apply_player_skin()
+			apply_player_skin(suit)
 		
 		_physics_behavior = null
 		_suit_behavior = null
@@ -184,15 +184,14 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	_suit_appear = false
 
 
-func apply_player_skin() -> bool:
-	sprite.sprite_frames = suit.animation_sprites
-	return true
-	#if SkinsManager.custom_textures.has(SkinsManager.current_skin.to_lower()):
-		# #var skin = UserSkin.custom_textures[skin_name]
-		#sprite.sprite_frames = SkinsManager.get_custom_sprite_frames(suit.animation_sprites, SkinsManager.current_skin.to_lower(), suit.name)
-		#return true
-	#sprite.sprite_frames = suit.animation_sprites
-	#return false
+func apply_player_skin(_suit) -> bool:
+	#sprite.sprite_frames = _suit.animation_sprites
+	#return true
+	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin.to_lower()):
+		sprite.sprite_frames = SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin.to_lower(), _suit.name)
+		return true
+	sprite.sprite_frames = _suit.animation_sprites
+	return false
 
 
 func control_process() -> void:
