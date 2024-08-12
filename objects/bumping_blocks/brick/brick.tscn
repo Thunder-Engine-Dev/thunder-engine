@@ -12,7 +12,6 @@ cull_mode = 1
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [node name="Brick" type="AnimatableBody2D" groups=["brick"]]
-z_index = 1
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_5y3xv")
