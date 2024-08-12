@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://engine/objects/effects/coin_effect/coin_effect.gd" id="2_grwo7"]
 
 [node name="CoinEffect" type="AnimatedSprite2D"]
-z_index = 5
 position = Vector2(2.38419e-07, 0)
 scale = Vector2(0.864865, 1)
 sprite_frames = ExtResource("1_fva6q")

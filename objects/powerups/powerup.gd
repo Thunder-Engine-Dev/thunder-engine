@@ -44,10 +44,8 @@ func _physics_process(delta: float) -> void:
 		if !appear_distance:
 			motion_process(delta, slide)
 			modulate.a = 1
-			z_index = 0
 		else:
 			appear_process(Thunder.get_delta(delta))
-			z_index = -1
 	
 	var player: Player = Thunder._current_player
 	if !player: return
