@@ -164,7 +164,12 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 	var target_parent = target.get_parent()
 	
 	if node_parent != target_parent:
-		printerr("Invalid call. Node and target should be on the same subtree.")
+		# Trying to find the same parent deeper
+		if target_parent != get_tree().root:
+			print(node_parent, target_parent)
+			reorder_on_top_of(node, target_parent)
+		else:
+			printerr("Invalid call. Node and target should be on the same subtree.")
 		return
 	
 	node_parent.move_child(node, target.get_index() - 1)
