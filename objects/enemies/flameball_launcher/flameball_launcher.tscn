@@ -36,6 +36,7 @@ flameball = SubResource("Resource_rtj67")
 metadata/_edit_pinned_properties_ = [&"flameball"]
 
 [node name="Obstacle" type="AnimatableBody2D" parent="."]
+disable_mode = 1
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("5_y1sec")
@@ -74,7 +75,7 @@ wait_time = 3.0
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(9.53674e-07, 9.53674e-07)
-scale = Vector2(0.8, 0.8)
+rect = Rect2(0, 0, 64, 32)
 metadata/_edit_lock_ = true
 
 [connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]
