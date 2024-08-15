@@ -10,8 +10,8 @@ extends Node2D
 @export var hovering_range: float = 100
 @export var chasing_speed: float = 450
 @export var hovering_speed: float = 100
-@export var chasing_acceleration: float = 1000
-@export var hovering_acceleration: float = 2500
+@export var chasing_acceleration: float = 600
+@export var hovering_acceleration: float = 1200
 @export_enum("Left:-1", "Right:1") var leaving_direction: int = -1
 @export var leaving_speed: float = 100
 @export var leaving_acceleration: float = 2500
