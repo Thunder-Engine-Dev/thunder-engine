@@ -210,11 +210,11 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 ## [param weight] is the strength/delta-value to fade the music[br]
 ## [param method] is the way to fade the music, different [param method] decides different [param weight] calculation. See [enum FadingMethod][br]
 ## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
-func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false, ease: Tween.EaseType = Tween.EASE_IN) -> void:
+func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false, _ease: Tween.EaseType = Tween.EASE_IN) -> void:
 	if !player: return
 	if !is_instance_valid(player): return
 	
-	var tween: Tween = create_tween().set_trans(method).set_ease(ease)
+	var tween: Tween = create_tween().set_trans(method).set_ease(_ease)
 	tween.tween_property(player, "volume_db", to, duration)
 	tween.tween_callback(
 		func() -> void:
@@ -248,7 +248,7 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 
 ## Stop all musics from playing
 func stop_all_musics(fade: bool = false) -> void:
-	for i in _music_channels:
+	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]):
 			continue
 		if !fade:
@@ -256,8 +256,6 @@ func stop_all_musics(fade: bool = false) -> void:
 				var openmpt = _music_channels[i].get_meta("openmpt")
 				if is_instance_valid(openmpt):
 					openmpt.queue_free()
-			if &"OpenMPT" in _music_channels[i].name:
-				i.queue_free()
 			
 			_music_channels[i].queue_free()
 			_music_channels.erase(i)
@@ -265,7 +263,7 @@ func stop_all_musics(fade: bool = false) -> void:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
 
 func _stop_all_musics_scene_changed() -> void:
-	for i in _music_channels:
+	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"play_when_scene_changed", true):
 			continue
 		if _music_channels[i].has_meta("openmpt"):

@@ -7,6 +7,7 @@ signal swam
 signal shot
 signal invinciblized(dur: float)
 signal starmaned(dur: float)
+signal starman_attacked
 signal damaged
 signal died
 
@@ -116,6 +117,7 @@ var _suit_tree_paused: bool
 @onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 @onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
+@warning_ignore("unused_private_class_variable")
 @onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -323,4 +325,5 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 			what.sound_pitch = 1 + starman_combo.get_combo() * 0.135
 		#what.got_killed(&"starman", [&"no_score"])
 		starman_combo.combo()
+		starman_attacked.emit()
 

@@ -3,7 +3,7 @@ extends Powerup
 @export var starman_duration: float = 10
 @export var starman_music: Resource = preload("res://engine/objects/powerups/super_star/music-starman.it")
 
-var player = Thunder._current_player
+@onready var player = Thunder._current_player
 
 func _physics_process(delta: float) -> void:
 	super(delta)
