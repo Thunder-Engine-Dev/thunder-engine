@@ -27,7 +27,6 @@ class_name Powerup
 @export var sound_pitch: float = 1.0
 
 @onready var body: Area2D = $Body
-@onready var _bumping_tweak: bool = SettingsManager.get_tweak("brick_bumping_mushrooms", false)
 
 var one_overlap: bool = false
 

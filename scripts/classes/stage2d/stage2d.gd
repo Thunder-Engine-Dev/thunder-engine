@@ -8,6 +8,7 @@ class_name Stage2D
 ## will automatically call [method Scenes.register] to make [member Scenes.current_scene] work decently
 
 var _is_stage_ready: bool
+signal stage_ready
 
 
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
 	while get_tree().is_paused():
 		await get_tree().process_frame
 	_is_stage_ready = true
+	stage_ready.emit()
 
 
 ## Fast method to call [method Scenes.reload_current_scene] in [Stage2D] and its extended classes
