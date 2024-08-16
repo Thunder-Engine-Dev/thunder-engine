@@ -138,6 +138,7 @@ volume_db = 4.0
 bus = &"Sound"
 
 [node name="Timer" type="Timer" parent="AudioStreamPlayer2D"]
+process_mode = 1
 wait_time = 0.4
 script = ExtResource("12_mt8lq")
 

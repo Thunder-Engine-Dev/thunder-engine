@@ -103,7 +103,7 @@ func _animation_process(delta: float) -> void:
 		if player.is_sliding:
 			sprite.play(&"slide")
 			sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
-			player.skid.emitting = true
+			player.skid.emitting = player.is_on_floor()
 			return
 		# Non-climbing
 		player.skid.emitting = player.is_skidding
