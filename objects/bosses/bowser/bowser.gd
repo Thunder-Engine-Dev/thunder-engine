@@ -95,7 +95,7 @@ func _ready() -> void:
 	facing = get_facing(facing)
 	direction = facing
 	vel_set_x(0)
-	enemy_attacked.killing_immune = {}
+	#enemy_attacked.killing_immune = {}
 	if tweaked_stomping:
 		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 	
@@ -167,7 +167,7 @@ func activate() -> void:
 	speed.x = _speed * direction
 	# Emit the signal
 	health = health
-	enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
+	#enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
 	player = Thunder._current_player
 
 

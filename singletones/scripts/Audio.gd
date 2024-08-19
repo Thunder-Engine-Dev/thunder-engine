@@ -16,6 +16,31 @@ enum FadingMethod {
 	SMOOTH_STEP ## Fading musics with [method @GlobalScope.smoothstep] [i](Experimental!)[/i]
 }
 
+## Controlled by SettingsManager
+var _settings_sound_bus_volume_db: float = 0:
+	set(to):
+		_settings_sound_bus_volume_db = to
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("1D Sound"), _target_sound_bus_volume_db + to)
+
+## Controlled by SettingsManager
+var _settings_music_bus_volume_db: float = 0:
+	set(to):
+		_settings_music_bus_volume_db = to
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), _target_music_bus_volume_db + to)
+
+## Set to overwrite sound bus volume, respecting user settings
+var _target_sound_bus_volume_db: float = 0:
+	set(to):
+		_target_sound_bus_volume_db = to
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("1D Sound"), _settings_sound_bus_volume_db + to)
+
+## Controlled by Pause
+## Set to overwrite music bus volume, respecting user settings
+var _target_music_bus_volume_db: float = 0:
+	set(to):
+		_target_music_bus_volume_db = to
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), _settings_music_bus_volume_db + to)
+
 var _music_channels: Dictionary = {}
 var _music_tweens: Array[Tween]
 var _duplicated_sounds: Array[AudioStream]

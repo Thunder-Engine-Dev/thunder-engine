@@ -127,16 +127,10 @@ func _process_settings() -> void:
 	)
 	
 	# Music Volume
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Music"),
-		linear_to_db(settings.music)
-	)
+	Audio._settings_music_bus_volume_db = linear_to_db(settings.music)
 	
 	# Sound Volume
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("1D Sound"),
-		linear_to_db(settings.sound)
-	)
+	Audio._settings_sound_bus_volume_db = linear_to_db(settings.sound)
 	
 	settings_updated.emit()
 

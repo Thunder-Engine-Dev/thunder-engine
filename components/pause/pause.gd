@@ -3,8 +3,6 @@ extends Control
 var opened: bool = false
 var open_blocked: bool = false
 
-const _MusicLoader: Script = preload("res://engine/objects/core/music_loader/music_loader.gd")
-
 const open_sound = preload("./sounds/pause_open.wav")
 const close_sound = null
 
@@ -42,20 +40,9 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	opened = !opened
 	$'..'.offset = Vector2.ZERO
 	
-	for i in Scenes.current_scene.get_children():
-		if !i is _MusicLoader:
-			continue
-		i = i as _MusicLoader # To get code hints
-		if i.channel_id in Audio._music_channels && is_instance_valid(Audio._music_channels[i.channel_id]):
-			var vol: float = 0
-			if !i.volume_db.is_empty():
-				vol = i.volume_db[i.index]
-			Audio.fade_music_1d_player(
-				Audio._music_channels[i.channel_id],
-				-20 + vol if opened || no_resume else vol,
-				0.3
-			)
-			break
+	var target_volume: float = -20.0 if opened || no_resume else 0.0
+	var tw = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tw.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
 	
 	if opened:
 		v_box_container.move_selector(0, true)
