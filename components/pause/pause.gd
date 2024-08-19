@@ -17,13 +17,16 @@ const close_sound = null
 func _ready() -> void:
 	Scenes.custom_scenes.pause = self
 	animation_player.play(&"init")
+	
+	Scenes.scene_changed.connect(_on_scene_changed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if &"game_over" in Scenes.custom_scenes && Scenes.custom_scenes.game_over.opened: return
 	if event.is_action_pressed(&"pause_toggle") && (
 		Scenes.current_scene is Level ||
-		Scenes.current_scene is Map2D
+		Scenes.current_scene is Map2D || 
+		Scenes.current_scene is LevelCutscene
 	) && !(opened && event.is_action_pressed("ui_cancel")):
 		toggle.call_deferred()
 
@@ -31,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
 	
-	if !opened && TransitionManager.current_transition:
+	if !opened && is_instance_valid(TransitionManager.current_transition):
 		return
 	
 	if open_blocked: return
@@ -84,8 +87,6 @@ func _physics_process(delta: float) -> void:
 var autopause_timer: SceneTreeTimer
 
 func _notification(what: int) -> void:
-	var method: Callable = func():
-		if !opened: toggle.bind(false, true).call_deferred()
 	
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		if !Scenes.current_scene is Level: return
@@ -96,8 +97,23 @@ func _notification(what: int) -> void:
 		if get_tree().paused: return
 		if autopause_timer == null:
 			autopause_timer = get_tree().create_timer(0.2)
-			autopause_timer.timeout.connect(method)
+			autopause_timer.timeout.connect(_autopause_toggle)
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		if is_instance_valid(autopause_timer) && autopause_timer.timeout.is_connected(method):
-			autopause_timer.timeout.disconnect(method)
+		if is_instance_valid(autopause_timer) && autopause_timer.timeout.is_connected(_autopause_toggle):
+			autopause_timer.timeout.disconnect(_autopause_toggle)
 		autopause_timer = null
+
+
+func _autopause_toggle() -> void:
+	if !opened:
+		toggle.bind(false, true).call_deferred()
+
+
+func _on_scene_changed(to: Node) -> void:
+	if to is Stage2D && SettingsManager.settings.autopause:
+		await Scenes.current_scene.stage_ready
+		if TransitionManager.current_transition:
+			await TransitionManager.transition_end
+		
+		if !DisplayServer.window_is_focused():
+			_autopause_toggle()

@@ -196,9 +196,12 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		sprite.process_mode = Node.PROCESS_MODE_INHERIT
 		_suit_tree_paused = false
 		get_tree().paused = false
+	if !appear && sprite.animation == "appear":
+		sprite.animation = "default"
 		
 	_force_suit = false
 	_suit_appear = false
+	set_deferred("is_hurting", false)
 
 
 func apply_player_skin(_suit) -> bool:
@@ -241,12 +244,14 @@ func starman(duration: float = 10) -> void:
 	stars.emitting = true
 
 
+var is_hurting: bool = false
 func hurt(tags: Dictionary = {}) -> void:
-	if !suit || debug_god:
+	if !suit || debug_god || is_hurting:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
 	if warp != Warp.NONE: return
+	is_hurting = true
 	
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)

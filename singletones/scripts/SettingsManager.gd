@@ -51,6 +51,7 @@ signal data_loaded(id: String)
 
 func _ready() -> void:
 	load_settings()
+	_load_keys()
 	load_tweaks()
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"

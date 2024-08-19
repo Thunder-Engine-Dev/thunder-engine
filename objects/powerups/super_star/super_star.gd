@@ -4,11 +4,13 @@ extends Powerup
 @export var starman_music: Resource = preload("res://engine/objects/powerups/super_star/music-starman.it")
 
 @onready var player = Thunder._current_player
+@onready var _first_jump: bool = true
 
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if is_on_floor():
-		jump(250)
+		jump(175 if _first_jump else 250)
+		_first_jump = false
 	if !appear_distance:
 		$Sprite.speed_scale = 5
 
