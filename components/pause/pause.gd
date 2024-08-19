@@ -40,7 +40,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	opened = !opened
 	$'..'.offset = Vector2.ZERO
 	
-	var target_volume: float = -20.0 if opened || no_resume else 0.0
+	var target_volume: float = -20.0 if opened else 0.0
 	var tw = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
 	

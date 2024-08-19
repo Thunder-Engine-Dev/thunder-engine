@@ -196,7 +196,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		sprite.process_mode = Node.PROCESS_MODE_INHERIT
 		_suit_tree_paused = false
 		get_tree().paused = false
-	if !appear && sprite.animation == "appear":
+	if !appear && sprite.animation in ["appear", "attack"]:
 		sprite.animation = "default"
 		
 	_force_suit = false
