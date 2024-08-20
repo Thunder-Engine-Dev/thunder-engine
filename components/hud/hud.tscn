@@ -93,6 +93,7 @@ offset_right = 368.0
 offset_bottom = 51.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Control"]
+process_mode = 3
 sprite_frames = SubResource("SpriteFrames_fq5ig")
 autoplay = "default"
 frame_progress = 0.352484

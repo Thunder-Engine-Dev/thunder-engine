@@ -2,6 +2,7 @@ extends Control
 
 var opened: bool = false
 var open_blocked: bool = false
+var _no_unpause: bool = false
 
 const open_sound = preload("./sounds/pause_open.wav")
 const close_sound = null
@@ -11,6 +12,8 @@ const close_sound = null
 @onready var options: MenuItemsController = $"../Settings/SubViewportContainer/SubViewport/Options"
 @onready var controls_options: MenuItemsController = $"../Controls/Options"
 
+signal paused
+signal unpaused
 
 func _ready() -> void:
 	Scenes.custom_scenes.pause = self
@@ -38,6 +41,11 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if open_blocked: return
 	
 	opened = !opened
+	if opened:
+		unpaused.emit()
+	else:
+		paused.emit()
+	
 	$'..'.offset = Vector2.ZERO
 	
 	var target_volume: float = -20.0 if opened else 0.0
@@ -55,7 +63,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
-	get_tree().paused = opened
+	get_tree().paused = opened if !_no_unpause else true
 	
 	for i in 2:
 		await get_tree().physics_frame
@@ -97,6 +105,7 @@ func _autopause_toggle() -> void:
 
 
 func _on_scene_changed(to: Node) -> void:
+	_no_unpause = false
 	if to is Stage2D && SettingsManager.settings.autopause:
 		await Scenes.current_scene.stage_ready
 		if TransitionManager.current_transition:

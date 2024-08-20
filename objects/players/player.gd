@@ -191,11 +191,13 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	if appear && _suit_pause_tweak:
 		_suit_tree_paused = true
 		get_tree().paused = true
+		Scenes.custom_scenes.pause._no_unpause = true
 		sprite.process_mode = Node.PROCESS_MODE_ALWAYS
 		await get_tree().create_timer(1.0, true, true).timeout
 		sprite.process_mode = Node.PROCESS_MODE_INHERIT
 		_suit_tree_paused = false
 		get_tree().paused = false
+		Scenes.custom_scenes.pause._no_unpause = false
 	if !appear && sprite.animation in ["appear", "attack"]:
 		sprite.animation = "default"
 		
@@ -275,23 +277,32 @@ func die(tags: Dictionary = {}) -> void:
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1 if death_stop_music else 2,
-		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
+		{pitch = suit.sound_pitch} if !death_music_ignore_pause && !_suit_pause_tweak else {
 			pitch = suit.sound_pitch,
 			ignore_pause = true
 		}
 	)
 	
+	var _db: Node2D
 	if death_body:
-		NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
+		_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
 			func(db: Node2D) -> void:
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
 				db.jump_to_scene = death_jump_to_scene
+				if _suit_pause_tweak:
+					Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
+					Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					db.add_child(dsdup)
 					dsdup.visible = true
-		).create_2d()
+		).create_2d().get_node()
+	
+	if _suit_pause_tweak && _db:
+		get_tree().paused = true
+		_db.process_mode = Node.PROCESS_MODE_ALWAYS
+		Scenes.custom_scenes.pause._no_unpause = true
 	
 	died.emit()
 	queue_free()

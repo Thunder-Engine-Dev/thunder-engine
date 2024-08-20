@@ -33,7 +33,7 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 		assert(is_instance_valid(node) && (node is CanvasLayer), "HUD node is invalid")
 		_current_hud = node
 	get:
-		assert(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer), "HUD node is invalid or not set")
+		if !(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer)): return null
 		return _current_hud
 
 @warning_ignore("unused_private_class_variable")

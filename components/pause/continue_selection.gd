@@ -4,4 +4,4 @@ extends MenuSelection
 
 func _handle_select() -> void:
 	super()
-	pause.toggle()
+	pause.toggle(false)

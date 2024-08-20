@@ -11,16 +11,28 @@ var movement: bool
 
 @onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
 
 
 func _ready() -> void:
-	await get_tree().create_timer(0.5, false, true).timeout
+	await get_tree().create_timer(0.5, _suit_pause_tweak, true).timeout
 	
 	movement = true
 	vel_set_y(-550)
 	
 	if wait_time > 0.0:
-		await get_tree().create_timer(wait_time, false, true).timeout
+		await get_tree().create_timer(wait_time, _suit_pause_tweak, true).timeout
+	
+	if _suit_pause_tweak:
+		movement = false
+		for sound in GlobalViewport.get_children():
+			if !sound is AudioStreamPlayer2D:
+				continue
+			if sound.process_mode != Node.PROCESS_MODE_ALWAYS && sound.bus != "Music":
+				sound.queue_free()
+				
+		while Scenes.custom_scenes.pause.opened:
+			await get_tree().physics_frame
 	
 	# After death
 	if check_for_lives:
@@ -70,6 +82,7 @@ func _ready() -> void:
 			Scenes.goto_scene(jump_to_scene)
 			Scenes.scene_changed.connect(func(_current_scene):
 				TransitionManager.current_transition.paused = false
+				get_tree().paused = false
 			, CONNECT_ONE_SHOT)
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
