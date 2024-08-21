@@ -39,6 +39,7 @@ const COIN = preload("res://engine/objects/items/coin/coin.wav")
 ## Maximum of player's jumping speed, triggered when player stomps onto
 ## the enemy and you [b]are[/b] holding the jumping key
 @export var stomping_player_jumping_max: float = 700
+@export var stomping_delay_frames: float = 5
 @export_group("Killing","killing_")
 ## If [code]true[/code], the enemy will be able to be killed by attackers
 ## like projectiles, shells, the starman, etc
@@ -237,7 +238,7 @@ func _creation(creation: InstanceNode2D) -> void:
 
 
 func stomping_delay() -> void:
-	_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * 5)
+	_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * stomping_delay_frames)
 	_stomping_delayer.timeout.connect(
 		func() -> void:
 			_stomping_delayer = null

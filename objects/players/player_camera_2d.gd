@@ -5,11 +5,14 @@ var stop_blocking_edges: bool
 
 @export_subgroup("Autoscroll")
 @export var stop_blocking_on_complete: bool = true
+@export var enable_left_border_death: bool = true
+@export var enable_right_border_death: bool = true
 
 @onready var par: Node2D = get_parent()
 @onready var player = Thunder._current_player
 
 var _shocking: int = 0
+var _old_speed: Vector2
 @onready var ofs: Vector2 = offset
 
 func _ready():
@@ -34,13 +37,18 @@ func teleport() -> void:
 	if par is PathFollow2D:
 		if player && !stop_blocking_edges:
 			var rot: float = get_viewport_transform().affine_inverse().get_rotation()
-			var kc: KinematicCollision2D 
+			var kc: KinematicCollision2D
+			var left_col: bool
+			var right_col: bool
 			while !kc && player.get_global_transform_with_canvas().get_origin().x < 16:
 				kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
+				left_col = enable_left_border_death
 				if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
 					player.vel_set_x(0)
 			while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
 				kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
+				left_col = false
+				right_col = enable_right_border_death
 				if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
 					player.vel_set_x(0)
 			if kc && kc.get_collider():

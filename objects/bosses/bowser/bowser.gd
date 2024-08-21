@@ -26,7 +26,7 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 ## [b]flame[/b]: shoot single flame [br]
 ## [b]multiflames[/b]: shoot multiple flames, see [member multiple_flames_amount] [br]
 ## [b]hammer[/b]: throw hammers, see [member hammer_amount] and [member hammer_interval] [br]
-## [b]burst_fireball[/b]: burst out flameballs, see [member burst_fireball_amount]
+## [b]burst[/b]: burst out flameballs, see [member burst_fireball_amount]
 @export var status: Array[StringName] = [&"flame"]
 @export_subgroup("Projectiles")
 @export var flame: InstanceNode2D
@@ -199,7 +199,7 @@ func attack_flame(offset_by_32: int = -1) -> void:
 	if !flame: return
 	NodeCreator.prepare_ins_2d(flame, self).create_2d().call_method(
 		func(flm: Node2D) -> void:
-			flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 4) if offset_by_32 < 0 else offset_by_32)
+			flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 3) if offset_by_32 < 0 else offset_by_32)
 			flm.global_position = pos_flame.global_position
 			if flm is Projectile:
 				flm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
@@ -362,6 +362,7 @@ func die() -> void:
 		func(cps: Node2D) -> void:
 			var spr: AnimatedSprite2D = sprite.duplicate()
 			cps.add_child(spr)
+			spr.speed_scale = 1
 			spr.play.call_deferred(&"death")
 			cps.add_child(collision_shape.duplicate())
 			cps.falling_sound = falling_sound

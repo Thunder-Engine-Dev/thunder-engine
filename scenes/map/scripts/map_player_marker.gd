@@ -63,6 +63,8 @@ func _ready() -> void:
 		).call_deferred()
 	elif is_level():
 		(func():
+			if !is_instance_valid(marker_space):
+				return
 			if marker_space.uncompleted_levels.is_empty():
 				marker_space.add_all_uncompleted_levels()
 		).call_deferred()

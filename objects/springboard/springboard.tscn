@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ed1um"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_vp0le"]
 [ext_resource type="AudioStream" uid="uid://cstsdiler6f0v" path="res://engine/objects/springboard/sounds/springboard.wav" id="4_n438u"]
-[ext_resource type="Texture2D" uid="uid://qm8qduuhy6t7" path="res://engine/objects/springboard/textures/spring_bone.png" id="7_7rmsc"]
-[ext_resource type="Texture2D" uid="uid://ck3xufj4ouo7r" path="res://engine/objects/springboard/textures/spring_ball.png" id="8_myiky"]
-[ext_resource type="Texture2D" uid="uid://c4bnathlyi334" path="res://engine/objects/springboard/textures/spring_board.png" id="9_hsop8"]
+[ext_resource type="Texture2D" uid="uid://blk00uwviwdt2" path="res://engine/objects/springboard/textures/spring_bone.png" id="7_7rmsc"]
+[ext_resource type="Texture2D" uid="uid://miidtq8fivgv" path="res://engine/objects/springboard/textures/spring_ball.png" id="8_myiky"]
+[ext_resource type="Texture2D" uid="uid://br1lcm4sgo6sa" path="res://engine/objects/springboard/textures/spring_board.png" id="9_hsop8"]
 [ext_resource type="Script" path="res://engine/objects/springboard/springboard_marker.gd" id="10_qaybd"]
 [ext_resource type="Texture2D" uid="uid://dhbdb0vketv31" path="res://engine/objects/springboard/textures/springboard.png" id="11_bx2yt"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_0airn"]
@@ -418,7 +418,7 @@ root_node = NodePath("../Node2D")
 libraries = {
 "": SubResource("AnimationLibrary_dqr8a")
 }
-speed_scale = 2.2
+speed_scale = 2.5
 
 [node name="Node2D" type="Node2D" parent="."]
 visible = false

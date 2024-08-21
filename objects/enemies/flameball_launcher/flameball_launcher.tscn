@@ -33,6 +33,8 @@ size_flags_horizontal = 2
 theme_override_constants/separation = 0
 script = ExtResource("1_de4dl")
 flameball = SubResource("Resource_rtj67")
+speed = 350.0
+amount = 20.0
 metadata/_edit_pinned_properties_ = [&"flameball"]
 
 [node name="Obstacle" type="AnimatableBody2D" parent="."]
