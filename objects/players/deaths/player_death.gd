@@ -22,6 +22,8 @@ func _ready() -> void:
 	
 	if wait_time > 0.0:
 		await get_tree().create_timer(wait_time, _suit_pause_tweak, true).timeout
+	elif wait_time <= -1.0:
+		return
 	
 	if _suit_pause_tweak:
 		movement = false

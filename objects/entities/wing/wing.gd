@@ -11,6 +11,7 @@ extends AnimatedSprite2D
 func _ready() -> void:
 	if sprite && follow_parent_animation_speed:
 		sprite_frames.set_animation_speed(animation, sprite.sprite_frames.get_animation_speed(sprite.animation))
+		_physics_process(0)
 
 
 func _physics_process(_delta: float) -> void:

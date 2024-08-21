@@ -24,6 +24,9 @@ var facing: float
 
 @onready var center: Vector2 = position
 
+func _ready() -> void:
+	_physics_process(0)
+
 
 func _physics_process(delta: float) -> void:
 	position = Thunder.Math.oval(center, amplitude, deg_to_rad(phase))

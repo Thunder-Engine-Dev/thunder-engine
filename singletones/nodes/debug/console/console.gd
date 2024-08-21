@@ -24,7 +24,7 @@ func _ready():
 	)
 
 func _input(event) -> void:
-	if !OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
+	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
 	if event.is_action_pressed("ui_accept") && has_focus():
 		execute()
 
@@ -34,7 +34,7 @@ func load_commands(dir: String) -> void:
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
-	if !OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
+	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
 	if Input.is_action_just_pressed("a_console"):
 		visible = !visible
 		$UI/Paused.button_pressed = visible
