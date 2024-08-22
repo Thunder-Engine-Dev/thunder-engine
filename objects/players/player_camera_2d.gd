@@ -51,7 +51,7 @@ func teleport() -> void:
 				right_col = enable_right_border_death
 				if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
 					player.vel_set_x(0)
-			if kc && kc.get_collider():
+			if kc && kc.get_collider() && (left_col || right_col):
 				player.die()
 	
 	Thunder.view.cam_border.call_deferred()
