@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var first_pos: float = position.y
 @onready var down_pos: float = position.y + 42
+@onready var first_pos: float = position.y
 @onready var progress: TextureProgressBar = $Progress
 
 var tw: Tween

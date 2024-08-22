@@ -64,7 +64,7 @@ func _save_progress() -> void:
 	
 	prof.set_next_level_name(next_level_name)
 	var _no_save: bool = false
-	var next_marker_id: int = get_next_marker_id() + 1
+	var next_marker_id: int = get_next_marker_id(false) + 1
 	var new_world: int = space_name
 	var new_level: int = next_marker_id
 	var world_numbers: PackedStringArray = prof.get_world_numbers().split("-")
@@ -253,10 +253,11 @@ func get_last_marker() -> MapPlayerMarker:
 	
 	return null
 
-func get_next_marker_id() -> int:
+func get_next_marker_id(count_non_levels: bool = true) -> int:
 	var i: int = 0
 	for child in get_children():
 		if !child.is_in_group("map_marker"): continue
+		if !count_non_levels && !child.count_as_level: continue
 		if child.is_level() && child.is_level_completed():
 			i += 1
 	return i

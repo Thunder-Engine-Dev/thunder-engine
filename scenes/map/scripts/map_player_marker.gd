@@ -7,6 +7,7 @@ class_name MapPlayerMarker extends Marker2D
 @export_file("*.tscn", "*.scn") var level_override_save: String = "":
 	set = set_level_save_path
 
+@export var count_as_level: bool = true
 @export var music_loader_ref: NodePath
 @export var change_music_index: int = 0
 
