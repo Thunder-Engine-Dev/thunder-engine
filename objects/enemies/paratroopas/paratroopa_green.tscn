@@ -121,7 +121,7 @@ sprite_frames = SubResource("SpriteFrames_oof6l")
 autoplay = "default"
 
 [node name="Wings" parent="Sprite" instance=ExtResource("11_iya8u")]
-position = Vector2(-8, -9)
+position = Vector2(-8, -8)
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
@@ -129,6 +129,6 @@ rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_lgtb0")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

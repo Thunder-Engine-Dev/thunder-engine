@@ -132,7 +132,7 @@ sprite_frames = SubResource("SpriteFrames_b04x4")
 autoplay = "default"
 
 [node name="Wings" parent="Sprite" instance=ExtResource("12_q8dyn")]
-position = Vector2(-8, -8)
+position = Vector2(-8, -7)
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
