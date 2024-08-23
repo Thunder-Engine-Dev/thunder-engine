@@ -104,6 +104,9 @@ func _physics_process(_delta: float) -> void:
 		
 		if smooth_transition:
 			Thunder.view.cam_border()
+			var cams = get_tree().get_nodes_in_group("#transition_camera")
+			for i in cams:
+				i.queue_free()
 			var cam = transition_camera.instantiate() as Camera2D
 			cam.limits.position = Vector2i(Thunder.view.border.position.x, Thunder.view.border.position.y)
 			cam.limits.end = Vector2i(Thunder.view.border.end.x, Thunder.view.border.end.y)

@@ -18,21 +18,24 @@ var _old_speed: Vector2
 func _ready():
 	Thunder._current_camera = self
 	process_callback = CAMERA2D_PROCESS_IDLE #CAMERA2D_PROCESS_PHYSICS
+	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	make_current()
 	teleport()
 
 
-func _physics_process(_delta):
+func _physics_process(_delta: float):
 	teleport.call_deferred()
 	
 	if is_instance_valid(player) && stop_blocking_on_complete && player.completed:
 		stop_blocking_edges = true
 
 
-func teleport() -> void:
+func teleport(sync_position_only = false) -> void:
 	player = Thunder._current_player
 	if !par is PathFollow2D && player:
-		global_position = Vector2(Thunder._current_player.global_position).round()
+		global_position = Vector2(Thunder._current_player.global_position)
+	
+	if sync_position_only: return
 	
 	if par is PathFollow2D:
 		if player && !stop_blocking_edges:

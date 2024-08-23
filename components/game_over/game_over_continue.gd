@@ -44,5 +44,5 @@ func toggle(no_resume: bool = false) -> void:
 			Scenes.reload_current_scene()
 	
 	get_tree().paused = opened
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	v_box_container.focused = opened

@@ -15,7 +15,7 @@ func _ready() -> void:
 	make_current()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	var camera = Thunder._current_camera
 	Thunder.view.cam_border()
 	camera.make_current()

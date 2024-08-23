@@ -13,9 +13,9 @@ signal stage_ready
 
 func _ready() -> void:
 	for i in 5:
-		await get_tree().process_frame
+		await get_tree().physics_frame
 	while get_tree().is_paused():
-		await get_tree().process_frame
+		await get_tree().physics_frame
 	_is_stage_ready = true
 	stage_ready.emit()
 
@@ -23,4 +23,3 @@ func _ready() -> void:
 ## Fast method to call [method Scenes.reload_current_scene] in [Stage2D] and its extended classes
 func restart() -> void:
 	Scenes.reload_current_scene()
-

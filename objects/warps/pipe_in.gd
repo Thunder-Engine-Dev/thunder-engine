@@ -227,8 +227,8 @@ func _tweak_process() -> void:
 
 func _transition_update() -> void:
 	if use_circle_transition && circle_focus_on_player:
-		await get_tree().process_frame
-		await get_tree().process_frame
+		await get_tree().physics_frame
+		await get_tree().physics_frame
 		TransitionManager.current_transition.on(Thunder._current_player)
 
 

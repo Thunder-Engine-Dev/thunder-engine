@@ -181,7 +181,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		&"_on_level_end"
 	)
 	
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	if completion_music:
 		await Audio._music_channels[-1].finished
 	

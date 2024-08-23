@@ -50,7 +50,7 @@ func _ready() -> void:
 		build_dots()
 	
 	if !Engine.is_editor_hint():
-		await get_tree().process_frame
+		await get_tree().physics_frame
 		if allow_saving && !uncompleted_levels.is_empty():
 			_save_progress()
 

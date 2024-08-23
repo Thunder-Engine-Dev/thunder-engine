@@ -143,7 +143,7 @@ func _ready() -> void:
 			cam.force_update_scroll()
 		
 		for i in 8: # Deferred 8 frames to ensure the transition works after the player touches checkpoint
-			await get_tree().process_frame
+			await get_tree().physics_frame
 		
 		var trans := TransitionManager.current_transition
 		if is_instance_valid(trans) && trans.has_method("on"):

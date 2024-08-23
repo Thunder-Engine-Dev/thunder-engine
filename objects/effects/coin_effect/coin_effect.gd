@@ -6,7 +6,7 @@ var exploded: bool
 
 func _ready() -> void:
 	if exploded: return
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	_jump()
 
 func _jump() -> void:

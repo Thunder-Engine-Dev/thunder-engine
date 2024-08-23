@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=54 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -22,9 +22,6 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
 [ext_resource type="Texture2D" uid="uid://c5kcdnxqujsym" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_physics_tps_selection.gd" id="19_2v0m3"]
-[ext_resource type="Texture2D" uid="uid://bk5eg5ovkdm4x" path="res://engine/scenes/main_menu/textures/physics_tps.png" id="19_obf1r"]
-[ext_resource type="Texture2D" uid="uid://b70in7e84b0po" path="res://engine/scenes/main_menu/textures/physics_tps_option.png" id="20_au2x6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -81,10 +78,6 @@ region = Rect2(0, 0, 140, 38)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6u8uf"]
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ync32"]
-atlas = ExtResource("20_au2x6")
-region = Rect2(0, 0, 97, 38)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_df7ul"]
 atlas = ExtResource("4_wobiu")
@@ -434,26 +427,6 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6u8uf")
-stretch_mode = 2
-
-[node name="PhysicsTPS" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 4
-script = ExtResource("19_2v0m3")
-
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/PhysicsTPS"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("19_obf1r")
-stretch_mode = 2
-
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/PhysicsTPS"]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ync32")
 stretch_mode = 2
 
 [node name="Filter" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]

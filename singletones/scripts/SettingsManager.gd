@@ -106,18 +106,6 @@ func _process_settings() -> void:
 	elif settings.fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	
-	# Physics TPS
-	if settings.physics_tps <= 0:
-		var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
-		if rate < 119:
-			# Physics rate is always set to be at least around 120 TPS for better collisions
-			Engine.physics_ticks_per_second = rate * 2
-			print(&"Using double tps for physics")
-		else:
-			Engine.physics_ticks_per_second = rate
-	else:
-		Engine.physics_ticks_per_second = settings.physics_tps
-	
 	# Filter
 	GlobalViewport._update_view()
 	
@@ -174,7 +162,7 @@ func _window_scale_logic(force_update: bool = false) -> void:
 		ProjectSettings.get_setting("display/window/size/viewport_width"),
 		ProjectSettings.get_setting("display/window/size/viewport_height")
 	) * settings.scale)
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	if old_scale != 0 || settings.scale > 1:
 		DisplayServer.window_set_position(
 			screen_center - (DisplayServer.window_get_size() / 2)

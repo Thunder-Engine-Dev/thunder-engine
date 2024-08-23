@@ -39,6 +39,7 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
 process_mode = 1
+physics_interpolation_mode = 1
 disable_3d = true
 own_world_3d = true
 handle_input_locally = false

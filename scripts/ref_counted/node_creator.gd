@@ -53,9 +53,10 @@ class NodeCreation extends RefCounted:
 	
 	## Call an [Callable] method for the instance[br]
 	## [b]Warning:[/b] the method you are calling should contain a parameter in [Node2D] type as the first param of it
-	func call_method(method: Callable) -> NodeCreation:
+	func call_method(method: Callable, reset_interp_after_call = true) -> NodeCreation:
 		if !_node: return self
 		if method: method.call(_node)
+		if reset_interp_after_call: _node.reset_physics_interpolation()
 		return self
 	
 	
@@ -84,6 +85,7 @@ class NodeCreation extends RefCounted:
 		if !_node || !_on: return self
 		_node.global_transform = _on.global_transform.translated_local(offset).rotated(rot).scaled(scl)
 		_node.skew = _on.global_skew
+		_node.reset_physics_interpolation()
 		return self
 	
 	
@@ -115,5 +117,7 @@ class NodeCreation extends RefCounted:
 			_node.global_scale *= _on.global_scale
 		if _ins2d.trans_inheritances & 100 == 100:
 			_node.global_skew += _on.global_skew
+		
+		_node.reset_physics_interpolation()
 		
 		return self
