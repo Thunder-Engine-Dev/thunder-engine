@@ -87,6 +87,7 @@ func pass_player(new_player: Player) -> void:
 			player_warp_dir = Player.WarpDir.DOWN
 	
 	player.global_position = pos_player.global_position
+	player.reset_physics_interpolation()
 	player.warp_dir = player_warp_dir
 	player.z_index = -5
 	player.warp = Player.Warp.OUT

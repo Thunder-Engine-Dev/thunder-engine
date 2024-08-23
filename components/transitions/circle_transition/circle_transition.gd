@@ -55,10 +55,17 @@ func with_pause() -> Transition:
 	return self
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if paused: return
 	
 	color_rect.material.set_shader_parameter("circle_size", circle)
+	
+	if circle >= 0:
+		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
+
+
+func _physics_process(delta: float) -> void:
+	if paused: return
 	
 	if circle == 0 && !middle_switch:
 		if _is_with_pause:
@@ -78,7 +85,3 @@ func _physics_process(delta: float) -> void:
 	
 	if middle_switch && circle > 2:
 		end.emit()
-	
-	if circle >= 0 && !paused:
-		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
-	

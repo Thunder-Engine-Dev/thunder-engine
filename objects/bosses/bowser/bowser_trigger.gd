@@ -50,6 +50,7 @@ func _physics_process(delta: float) -> void:
 				cam.reparent(route_follower)
 				cam.par = cam.get_parent()
 				cam.force_update_transform()
+				cam.reset_physics_interpolation()
 				cam.force_update_scroll()
 			if boss_music:
 				Audio.stop_all_musics(boss_music_fading)

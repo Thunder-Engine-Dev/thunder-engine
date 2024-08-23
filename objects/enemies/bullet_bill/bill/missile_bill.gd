@@ -11,4 +11,4 @@ func _physics_process(delta: float) -> void:
 	
 	update_dir()
 	
-	speed.x = move_toward(speed.x, speed_cap * dir, abs(turn_speed * dir))
+	speed.x = move_toward(speed.x, speed_cap * dir, abs(turn_speed * dir) * delta * 50)
