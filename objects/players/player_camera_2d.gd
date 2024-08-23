@@ -23,7 +23,7 @@ func _ready():
 
 
 func _physics_process(_delta):
-	teleport()
+	teleport.call_deferred()
 	
 	if is_instance_valid(player) && stop_blocking_on_complete && player.completed:
 		stop_blocking_edges = true
@@ -32,7 +32,7 @@ func _physics_process(_delta):
 func teleport() -> void:
 	player = Thunder._current_player
 	if !par is PathFollow2D && player:
-		global_position = Vector2(Thunder._current_player.global_position)
+		global_position = Vector2(Thunder._current_player.global_position).round()
 	
 	if par is PathFollow2D:
 		if player && !stop_blocking_edges:
