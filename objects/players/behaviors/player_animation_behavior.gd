@@ -5,11 +5,13 @@ var sprite: AnimatedSprite2D
 var config: PlayerConfig
 
 var _climb_progress: float
+var _suit_pause_tweak: bool
 
 func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
+	_suit_pause_tweak = SettingsManager.get_tweak("pause_on_suit_change", false)
 	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
@@ -33,7 +35,8 @@ func _physics_process(delta: float) -> void:
 func _suit_appeared() -> void:
 	if !sprite: return
 	sprite.play(&"appear")
-	await player.get_tree().create_timer(1, false, true).timeout
+	sprite.speed_scale = 1
+	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1.0, false, true).timeout
 	if sprite.animation == &"appear": sprite.play(&"default")
 
 
@@ -54,7 +57,7 @@ func _invincible(duration: float) -> void:
 	if !sprite: return
 	sprite.modulate.a = 1
 	if !player.is_starman():
-		Effect.flash(sprite, duration)
+		Effect.flash(sprite, duration, 0.06, Tween.TWEEN_PAUSE_STOP)
 
 
 func _sprite_loop() -> void:
@@ -68,6 +71,15 @@ func _sprite_finish() -> void:
 	if sprite.animation == &"attack": sprite.play(&"default")
 
 
+var _skid_sound_timer: bool
+func _skid_sound_loop() -> void:
+	if _skid_sound_timer: return
+	_skid_sound_timer = true
+	Audio.play_sound(player.skid_sound, player)
+	await player.get_tree().create_timer(0.10, false, false, true).timeout
+	_skid_sound_timer = false
+
+
 #= Main
 func _animation_process(delta: float) -> void:
 	if !sprite: return
@@ -77,6 +89,7 @@ func _animation_process(delta: float) -> void:
 	sprite.speed_scale = 1
 	# Non-warping
 	if player.warp == Player.Warp.NONE:
+		player.skid.emitting = false
 		if sprite.animation in [&"appear", &"attack"]: return
 		# Climbing
 		if player.is_climbing:
@@ -90,11 +103,15 @@ func _animation_process(delta: float) -> void:
 		if player.is_sliding:
 			sprite.play(&"slide")
 			sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
+			player.skid.emitting = player.is_on_floor()
 			return
 		# Non-climbing
+		player.skid.emitting = player.is_skidding
+		if player.is_skidding:
+			_skid_sound_loop()
 		if player.is_on_floor():
 			if !(is_zero_approx(player.speed.x)):
-				sprite.play(&"walk")
+				sprite.play(&"walk" if !player.is_skidding else &"skid")
 				sprite.speed_scale = (
 					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
 					config.animation_min_walking_speed,
@@ -104,10 +121,14 @@ func _animation_process(delta: float) -> void:
 				sprite.play(&"default")
 			if player.is_crouching:
 				sprite.play(&"crouch")
+				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
 		elif player.is_underwater:
 			sprite.play(&"swim")
 		else:
-			sprite.play(&"jump")
+			if player.speed.y < 0:
+				sprite.play(&"jump")
+			else:
+				sprite.play(&"fall")
 	# Warping
 	else:
 		match player.warp_dir:

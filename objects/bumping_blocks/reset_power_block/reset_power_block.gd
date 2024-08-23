@@ -24,6 +24,7 @@ func got_bumped(by: Node2D) -> void:
 
 func call_bump() -> void:
 	bump(false)
+	if !active: return
 	_animated_sprite_2d.animation = &"empty"
-	Thunder._current_player.change_suit(change_to_suit)
+	Thunder._current_player.change_suit(change_to_suit, false)
 	Data.values.lives = ProjectSettings.get_setting(&"application/thunder_settings/player/default_lives", 4)

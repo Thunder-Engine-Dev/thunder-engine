@@ -3,9 +3,15 @@ extends CanvasLayer
 @onready var timer = $Timer
 @onready var time_text = $Control/Time
 @onready var time_counter: Label = $Control/TimeCounter
+
 @onready var gameover = $Control/GameOver
+@onready var mario_score: Label = $Control/MarioScore
+@onready var coins: Label = $Control/Control/Coins
+
+@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
 
 @export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
+@export var timer_hurry_sound = preload("res://engine/components/hud/sounds/timeout.wav")
 
 signal time_countdown_finished
 signal game_over_finished
@@ -35,11 +41,11 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(6, false).timeout.connect(emit_signal.bind("game_over_finished"))
+	get_tree().create_timer(6, _suit_pause_tweak).timeout.connect(emit_signal.bind("game_over_finished"))
 
 
 func timer_hurry() -> void:
-	Audio.play_1d_sound(preload("res://engine/components/hud/sounds/timeout.wav"), false, { "bus": "1D Sound" })
+	Audio.play_1d_sound(timer_hurry_sound, false, { "bus": "1D Sound" })
 	var tw = get_tree().create_tween().set_loops(8)
 	tw.tween_property(time_text, "scale:y", 0.5, 0.125)
 	tw.tween_property(time_text, "scale:y", 1, 0.125)
@@ -65,3 +71,11 @@ func _time_countdown_sound_loop() -> void:
 		Audio.play_1d_sound(scoring_sound, false, { "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()
+
+
+func pulse_label(node: CanvasItem) -> void:
+	var tw = create_tween().set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
+	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
+	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)

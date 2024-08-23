@@ -8,7 +8,9 @@ func _ready() -> void:
 func _on_trail() -> void:
 	if !sprite_node:
 		return
-	Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h).rotation = sprite_node.rotation
+	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h)
+	trail.rotation = sprite_node.rotation
+	Thunder.reorder_on_top_of(trail, self)
 
 
 func _on_level_end() -> void:

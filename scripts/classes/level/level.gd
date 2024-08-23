@@ -173,6 +173,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		_force_player_walking = true
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
+	Thunder._current_player.left_right = 0
 	
 	get_tree().call_group_flags(
 		get_tree().GROUP_CALL_DEFERRED,

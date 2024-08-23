@@ -22,7 +22,6 @@ custom_script = ExtResource("3_wr6fs")
 [node name="LakituHardcore" instance=ExtResource("1_6t1oy")]
 hovering_margin = 200.0
 chasing_speed = 1000.0
-chasing_acceleration = 500.0
 hovering_acceleration = 0.0
 pitched = SubResource("Resource_oefje")
 pitching_interval_min = 0.8

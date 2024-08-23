@@ -12,12 +12,11 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_llrrp")
 sprite = NodePath("Texture")
-speed = Vector2(387.5, 0)
-gravity_scale = 0.18
+speed = Vector2(350, 0)
+gravity_scale = 0.2
 metadata/_edit_pinned_properties_ = [&"sprite"]
 
 [node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_kcu3t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

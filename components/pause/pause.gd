@@ -2,8 +2,7 @@ extends Control
 
 var opened: bool = false
 var open_blocked: bool = false
-
-const _MusicLoader: Script = preload("res://engine/objects/core/music_loader/music_loader.gd")
+var _no_unpause: bool = false
 
 const open_sound = preload("./sounds/pause_open.wav")
 const close_sound = null
@@ -13,17 +12,22 @@ const close_sound = null
 @onready var options: MenuItemsController = $"../Settings/SubViewportContainer/SubViewport/Options"
 @onready var controls_options: MenuItemsController = $"../Controls/Options"
 
+signal paused
+signal unpaused
 
 func _ready() -> void:
 	Scenes.custom_scenes.pause = self
 	animation_player.play(&"init")
+	
+	Scenes.scene_changed.connect(_on_scene_changed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if &"game_over" in Scenes.custom_scenes && Scenes.custom_scenes.game_over.opened: return
 	if event.is_action_pressed(&"pause_toggle") && (
 		Scenes.current_scene is Level ||
-		Scenes.current_scene is Map2D
+		Scenes.current_scene is Map2D || 
+		Scenes.current_scene is LevelCutscene
 	) && !(opened && event.is_action_pressed("ui_cancel")):
 		toggle.call_deferred()
 
@@ -31,28 +35,22 @@ func _unhandled_input(event: InputEvent) -> void:
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
 	
-	if !opened && TransitionManager.current_transition:
+	if !opened && is_instance_valid(TransitionManager.current_transition):
 		return
 	
 	if open_blocked: return
 	
 	opened = !opened
+	if opened:
+		unpaused.emit()
+	else:
+		paused.emit()
+	
 	$'..'.offset = Vector2.ZERO
 	
-	for i in Scenes.current_scene.get_children():
-		if !i is _MusicLoader:
-			continue
-		i = i as _MusicLoader # To get code hints
-		if i.channel_id in Audio._music_channels && is_instance_valid(Audio._music_channels[i.channel_id]):
-			var vol: float = 0
-			if !i.volume_db.is_empty():
-				vol = i.volume_db[i.index]
-			Audio.fade_music_1d_player(
-				Audio._music_channels[i.channel_id],
-				-20 + vol if opened || no_resume else vol,
-				0.3
-			)
-			break
+	var target_volume: float = -20.0 if opened else 0.0
+	var tw = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	tw.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
 	
 	if opened:
 		v_box_container.move_selector(0, true)
@@ -65,7 +63,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	
-	get_tree().paused = opened
+	get_tree().paused = opened if !_no_unpause else true
 	
 	for i in 2:
 		await get_tree().physics_frame
@@ -84,8 +82,6 @@ func _physics_process(delta: float) -> void:
 var autopause_timer: SceneTreeTimer
 
 func _notification(what: int) -> void:
-	var method: Callable = func():
-		if !opened: toggle.bind(false, true).call_deferred()
 	
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		if !Scenes.current_scene is Level: return
@@ -96,8 +92,24 @@ func _notification(what: int) -> void:
 		if get_tree().paused: return
 		if autopause_timer == null:
 			autopause_timer = get_tree().create_timer(0.2)
-			autopause_timer.timeout.connect(method)
+			autopause_timer.timeout.connect(_autopause_toggle)
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		if is_instance_valid(autopause_timer) && autopause_timer.timeout.is_connected(method):
-			autopause_timer.timeout.disconnect(method)
+		if is_instance_valid(autopause_timer) && autopause_timer.timeout.is_connected(_autopause_toggle):
+			autopause_timer.timeout.disconnect(_autopause_toggle)
 		autopause_timer = null
+
+
+func _autopause_toggle() -> void:
+	if !opened:
+		toggle.bind(false, true).call_deferred()
+
+
+func _on_scene_changed(to: Node) -> void:
+	_no_unpause = false
+	if to is Stage2D && SettingsManager.settings.autopause:
+		await Scenes.current_scene.stage_ready
+		if TransitionManager.current_transition:
+			await TransitionManager.transition_end
+		
+		if !DisplayServer.window_is_focused():
+			_autopause_toggle()

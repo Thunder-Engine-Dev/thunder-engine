@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bg1q2ryf5r2ky"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/iceball/iceball.gd" id="1_cfamg"]
-[ext_resource type="Texture2D" uid="uid://dpuat766jhqbd" path="res://engine/objects/projectiles/iceball/texture.png" id="2_xpnjf"]
+[ext_resource type="Texture2D" uid="uid://dkelkj1uvmo1s" path="res://engine/objects/projectiles/iceball/texture.png" id="2_xpnjf"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_46ix7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wrgei"]
@@ -17,7 +17,6 @@ gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale"]
 
 [node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_xpnjf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

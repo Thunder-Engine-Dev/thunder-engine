@@ -33,7 +33,7 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 		assert(is_instance_valid(node) && (node is CanvasLayer), "HUD node is invalid")
 		_current_hud = node
 	get:
-		assert(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer), "HUD node is invalid or not set")
+		if !(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer)): return null
 		return _current_hud
 
 @warning_ignore("unused_private_class_variable")
@@ -130,7 +130,7 @@ func add_score(count: int):
 		push_error("[Thunder Engine] add_score: Invalid score count. Must be greater than 0")
 		return
 	
-	Data.values.score += count
+	Data.add_score(count)
 	if !_current_player: return
 	ScoreText.new(str(count), _current_player)
 
@@ -144,6 +144,37 @@ func is_player_power(power: Data.PLAYER_POWER) -> bool:
 func set_pause_game(pause: bool) -> void:
 	get_tree().paused = pause
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if pause else Input.MOUSE_MODE_HIDDEN
+
+
+## == NODE UTILS ==
+
+## Move node on top of subtree (behind all nodes on the same z-index)
+func reorder_top(node: Node) -> void:
+	var parent = node.get_parent()
+	parent.move_child(node, 0)
+
+## Move node to bottom of subtree (on top of all nodes on the same z-index)
+func reorder_bottom(node: Node) -> void:
+	var parent = node.get_parent()
+	parent.move_child(node, parent.get_child_count())
+
+## Move node behind the target node on the same z-index, nodes should be on the same subtree
+func reorder_on_top_of(node: Node, target: Node) -> void:
+	var node_parent = node.get_parent()
+	var target_parent = target.get_parent()
+	
+	if node_parent != target_parent:
+		# Trying to find the same parent deeper
+		if target_parent != get_tree().root:
+			reorder_on_top_of(node, target_parent)
+		else:
+			printerr("Invalid call. Node and target should be on the same subtree.")
+		return
+	
+	node_parent.move_child(node, target.get_index() - 1)
+
+
+## == SUBSINGLETONS ==
 
 
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them

@@ -116,14 +116,14 @@ func _on_body_entered(player: Node2D) -> void:
 var _already_processed: Array[int]
 
 func _on_collided_wall() -> void:
-	var dir = 1 if speed.x < 0 else -1
+	var _dir = 1 if speed.x < 0 else -1
 	var saved_pos = global_position
-	_process_collision_deferred(dir, saved_pos)
+	_process_collision_deferred(_dir, saved_pos)
 
-func _process_collision_deferred(dir: int, saved_pos: Vector2) -> void:
+func _process_collision_deferred(_dir: int, saved_pos: Vector2) -> void:
 	global_position = saved_pos
 	var rot: = get_global_gravity_dir().angle()
-	var vel = Vector2(dir, 0).rotated(rot - PI/2)
+	var vel = Vector2(_dir, 0).rotated(rot - PI/2)
 	if is_zero_approx(vel.y):
 		vel.y = 0
 	

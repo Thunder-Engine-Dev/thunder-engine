@@ -36,7 +36,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !is_triggered: return
-	if player:
+	if is_instance_valid(player):
 		#player.no_movement = true
 		player.global_position.y = marker.global_position.y - 16
 		player.speed.y = 0
@@ -68,7 +68,7 @@ func _animation_finished(anim: String) -> void:
 	else:
 		is_playing_backwards = false
 		is_triggered = false
-		if player:
+		if is_instance_valid(player):
 			_reset_config(player)
 			#player.no_movement = false
 			player.speed.y = -spring_jump_height if is_higher else -enemy_attacked.stomping_player_jumping_min
@@ -90,7 +90,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _add_config(_player) -> void:
-	if !_player: return
+	if !is_instance_valid(_player): return
 	old_config = _player.suit.physics_config
 	_player.suit.physics_config = old_config.duplicate(false)
 	

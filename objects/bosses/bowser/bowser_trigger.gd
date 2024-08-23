@@ -55,12 +55,14 @@ func _physics_process(delta: float) -> void:
 				Audio.stop_all_musics(boss_music_fading)
 				Audio.play_music(boss_music, 32, {
 					start_from_sec = boss_music_start_from_sec,
-					volume = boss_music_volume
+					volume = boss_music_volume,
+					ignore_pause = true,
 				} if !boss_music_fading else {
 					volume = -40,
 					start_from_sec = boss_music_start_from_sec,
 					fade_duration = 1.5,
-					fade_to = boss_music_volume
+					fade_to = boss_music_volume,
+					ignore_pause = true,
 				})
 			triggered = true
 	else:

@@ -7,6 +7,7 @@ signal swam
 signal shot
 signal invinciblized(dur: float)
 signal starmaned(dur: float)
+signal starman_attacked
 signal damaged
 signal died
 
@@ -33,7 +34,7 @@ enum WarpDir {
 		suit = to.duplicate()
 		
 		if suit.animation_sprites:
-			apply_player_skin()
+			apply_player_skin(suit)
 		
 		_physics_behavior = null
 		_suit_behavior = null
@@ -89,6 +90,7 @@ var _has_jumped: bool
 var is_climbing: bool
 var is_sliding: bool
 var is_crouching: bool
+var is_skidding: bool
 var is_underwater: bool
 var is_underwater_out: bool
 
@@ -105,12 +107,18 @@ var no_movement: bool
 
 var _force_suit: bool
 var _suit_appear: bool
+var _suit_tree_paused: bool
 
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
 
 @onready var control: PlayerControl = PlayerControl.new()
 @onready var starman_combo: Combo = Combo.new(self)
+@onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
+@onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
+@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
+@warning_ignore("unused_private_class_variable")
+@onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -123,6 +131,8 @@ var _suit_appear: bool
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubble: GPUParticles2D = $Sprite/Bubble
 @onready var stars: GPUParticles2D = $Sprite/Stars
+@onready var skid: GPUParticles2D = $Sprite/Skid
+@onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")
 
 
 func _ready() -> void:
@@ -170,24 +180,40 @@ func _physics_process(delta: float) -> void:
 		!_starman_faded:
 			_starman_faded = true
 			Audio.stop_music_channel(98, true)
+	
+	if _stomping_combo_enabled && stomping_combo.get_combo() > 0 && is_on_floor():
+		stomping_combo.reset_combo()
 
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
 	_suit_appear = appear
 	suit = to
+	if appear && _suit_pause_tweak:
+		_suit_tree_paused = true
+		get_tree().paused = true
+		Scenes.custom_scenes.pause._no_unpause = true
+		sprite.process_mode = Node.PROCESS_MODE_ALWAYS
+		await get_tree().create_timer(1.0, true, true).timeout
+		sprite.process_mode = Node.PROCESS_MODE_INHERIT
+		_suit_tree_paused = false
+		get_tree().paused = false
+		Scenes.custom_scenes.pause._no_unpause = false
+	if !appear && sprite.animation in ["appear", "attack"]:
+		sprite.animation = "default"
+		
 	_force_suit = false
 	_suit_appear = false
+	set_deferred("is_hurting", false)
 
 
-func apply_player_skin() -> bool:
-	sprite.sprite_frames = suit.animation_sprites
-	return true
-	#if SkinsManager.custom_textures.has(SkinsManager.current_skin.to_lower()):
-		# #var skin = UserSkin.custom_textures[skin_name]
-		#sprite.sprite_frames = SkinsManager.get_custom_sprite_frames(suit.animation_sprites, SkinsManager.current_skin.to_lower(), suit.name)
-		#return true
-	#sprite.sprite_frames = suit.animation_sprites
-	#return false
+func apply_player_skin(_suit) -> bool:
+	#sprite.sprite_frames = _suit.animation_sprites
+	#return true
+	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin.to_lower()):
+		sprite.sprite_frames = SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin.to_lower(), _suit.name)
+		return true
+	sprite.sprite_frames = _suit.animation_sprites
+	return false
 
 
 func control_process() -> void:
@@ -220,17 +246,19 @@ func starman(duration: float = 10) -> void:
 	stars.emitting = true
 
 
+var is_hurting: bool = false
 func hurt(tags: Dictionary = {}) -> void:
-	if !suit || debug_god:
+	if !suit || debug_god || is_hurting:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
 	if warp != Warp.NONE: return
+	is_hurting = true
 	
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)
-		invincible(tags.get(&"hurt_duration", 2))
-		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch})
+		invincible.call_deferred(tags.get(&"hurt_duration", 2))
+		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch, ignore_pause = true})
 	else:
 		die(tags)
 	
@@ -249,23 +277,32 @@ func die(tags: Dictionary = {}) -> void:
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1 if death_stop_music else 2,
-		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
+		{pitch = suit.sound_pitch} if !death_music_ignore_pause && !_suit_pause_tweak else {
 			pitch = suit.sound_pitch,
 			ignore_pause = true
 		}
 	)
 	
+	var _db: Node2D
 	if death_body:
-		NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
+		_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
 			func(db: Node2D) -> void:
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
 				db.jump_to_scene = death_jump_to_scene
+				if _suit_pause_tweak:
+					Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
+					Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					db.add_child(dsdup)
 					dsdup.visible = true
-		).create_2d()
+		).create_2d().get_node()
+	
+	if _suit_pause_tweak && _db:
+		get_tree().paused = true
+		_db.process_mode = Node.PROCESS_MODE_ALWAYS
+		Scenes.custom_scenes.pause._no_unpause = true
 	
 	died.emit()
 	queue_free()
@@ -304,4 +341,5 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 			what.sound_pitch = 1 + starman_combo.get_combo() * 0.135
 		#what.got_killed(&"starman", [&"no_score"])
 		starman_combo.combo()
+		starman_attacked.emit()
 

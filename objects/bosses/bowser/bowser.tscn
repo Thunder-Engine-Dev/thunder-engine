@@ -479,7 +479,6 @@ gravity_scale = 0.15
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer", &"burst_fireball"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_dmd6v")
 
 [node name="Body" type="Area2D" parent="."]
@@ -494,6 +493,7 @@ shape = SubResource("RectangleShape2D_dmd6v")
 script = ExtResource("2_ertde")
 stomping_player_jumping_min = 500.0
 stomping_player_jumping_max = 700.0
+stomping_delay_frames = 15.0
 killing_sound_succeeded = ExtResource("7_i07i2")
 turn_into_coin_on_level_end = false
 metadata/_edit_pinned_properties_ = [&"stomping_player_jumping_min", &"stomping_player_jumping_max", &"killing_sound_succeeded"]

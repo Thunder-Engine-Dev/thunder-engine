@@ -14,12 +14,16 @@ func _ready() -> void:
 	animation_player.play(&"init")
 	Scenes.custom_scenes.game_over = self
 	Scenes.scene_ready.connect(func():
-		if !Scenes.current_scene.has_node("HUD"): return
+		if !Thunder._current_hud: return
 		Thunder._current_hud.game_over_finished.connect(func(): toggle())
 	)
 
 
 func toggle(no_resume: bool = false) -> void:
+	while Scenes.custom_scenes.pause.opened:
+		await get_tree().physics_frame
+		if !Scenes.custom_scenes.pause._no_unpause:
+			break
 	opened = !opened
 		
 	if opened:

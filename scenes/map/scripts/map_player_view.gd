@@ -22,7 +22,7 @@ var fast_forwarding: bool = false
 func _ready() -> void:
 	# Sets powerup state to sprite
 	if Thunder._current_player_state != null:
-		player.sprite_frames = Thunder._current_player_state.animation_sprites
+		apply_player_skin(Thunder._current_player_state)
 	else:
 		printerr(&"[Map] Thunder._current_player_state is null")
 	
@@ -88,6 +88,16 @@ func animate() -> void:
 		bubbles.emitting = false
 	else:
 		player.speed_scale = 1
+
+
+func apply_player_skin(_suit) -> bool:
+	#sprite.sprite_frames = _suit.animation_sprites
+	#return true
+	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin.to_lower()):
+		player.sprite_frames = SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin.to_lower(), _suit.name)
+		return true
+	player.sprite_frames = _suit.animation_sprites
+	return false
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

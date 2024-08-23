@@ -51,10 +51,12 @@ func _handle_select() -> void:
 		Data.values.lives -= 1
 		Data.values.onetime_blocks = false
 		is_dead = false
+		Scenes.custom_scenes.pause._no_unpause = false
 		pause.toggle()
 		return
 	if !can_restart: return
 	if !player: return
 	super()
+	Scenes.custom_scenes.pause._no_unpause = false
 	pause.toggle()
 	player.die()

@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ltoqkqmxpt65"]
+[gd_scene load_steps=10 format=3 uid="uid://ltoqkqmxpt65"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/life_mushroom/life_mushroom.gd" id="1_ac6pg"]
 [ext_resource type="Texture2D" uid="uid://dmda3wjtlsj0k" path="res://engine/objects/powerups/life_mushroom/texture.png" id="2_0cie0"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ua8e3"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_oy0sk"]
+[ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="5_awxjw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufuol"]
 size = Vector2(32, 31)
@@ -49,6 +51,14 @@ visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_ua8e3")
+stomping_enabled = false
+killing_immune = {
+"head": false
+}
+turn_into_coin_on_level_end = false
+
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_0cie0")
 
@@ -63,4 +73,8 @@ range_layer_min = -100
 texture = SubResource("GradientTexture2D_cmgen")
 script = ExtResource("4_oy0sk")
 
+[node name="BumpLogic" type="Node" parent="."]
+script = ExtResource("5_awxjw")
+
 [connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="BumpLogic" method="set_bump"]

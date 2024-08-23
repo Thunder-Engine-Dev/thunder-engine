@@ -1,0 +1,162 @@
+[gd_scene load_steps=20 format=3 uid="uid://b1ta344iwb83q"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_yqkay"]
+[ext_resource type="PackedScene" uid="uid://bcm2a10a5vcug" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.tscn" id="2_gqerd"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_64luq"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_rcun4"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_4kw1i"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_qx6t7"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_paj0f"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="8_j0kfn"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_d530p"]
+[ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="10_knc7g"]
+[ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="11_yfqsf"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_1konx"]
+
+[sub_resource type="Resource" id="Resource_7hetq"]
+script = ExtResource("4_rcun4")
+creation_nodepack = ExtResource("2_gqerd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(250, -500),
+"speed_min": Vector2(50, -300)
+}
+custom_script = ExtResource("3_64luq")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iv4"]
+size = Vector2(32, 40)
+
+[sub_resource type="Resource" id="Resource_wnhwf"]
+resource_local_to_scene = true
+script = ExtResource("4_rcun4")
+creation_nodepack = ExtResource("6_qx6t7")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("7_paj0f")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x70y4"]
+atlas = ExtResource("10_knc7g")
+region = Rect2(0, 0, 32, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx21o"]
+atlas = ExtResource("10_knc7g")
+region = Rect2(32, 0, 32, 47)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjg3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x70y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx21o")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x70y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx21o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nwqk"]
+atlas = ExtResource("11_yfqsf")
+region = Rect2(96, 0, 32, 28)
+
+[node name="KoopaBro" type="CharacterBody2D" groups=["koopa_bro"]]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_yqkay")
+projectile = SubResource("Resource_7hetq")
+speed = Vector2(100, 0)
+gravity_scale = 0.2
+metadata/_edit_pinned_properties_ = [&"speed", &"gravity_scale", &"projectile"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_n0iv4")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_n0iv4")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_4kw1i")
+stomping_creation = SubResource("Resource_wnhwf")
+stomping_scores = 200
+stomping_sound = ExtResource("8_j0kfn")
+killing_creation = SubResource("Resource_wnhwf")
+killing_scores = 200
+killing_sound_succeeded = ExtResource("9_d530p")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_bjg3k")
+autoplay = "default"
+
+[node name="SpriteProjectile" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(17, -7)
+texture = SubResource("AtlasTexture_7nwqk")
+flip_v = true
+
+[node name="PosAttack" type="Marker2D" parent="."]
+visible = false
+position = Vector2(17, -8)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("12_1konx")
+metadata/_edit_lock_ = true
+
+[node name="Walk" type="Timer" parent="."]
+one_shot = true
+
+[node name="Attack" type="Timer" parent="."]
+wait_time = 0.06
+autostart = true
+
+[node name="Jump" type="Timer" parent="."]
+wait_time = 0.24
+autostart = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="timeout" from="Walk" to="." method="_on_walk_timeout"]
+[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]
+[connection signal="timeout" from="Jump" to="." method="_on_jump"]

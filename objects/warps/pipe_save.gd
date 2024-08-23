@@ -6,6 +6,7 @@ extends "pipe_in.gd"
 var profile_name: String
 
 var deletion_progress: float
+@onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
 
 signal save_deleted
 
@@ -33,6 +34,8 @@ func delete_save() -> void:
 
 func pass_warp() -> void:
 	ProfileManager.set_current_profile(profile_name)
+	if _tweak:
+		ProfileManager.current_profile.data.completed_levels = []
 	target = null
 	if &"current_world" in ProfileManager.current_profile.data && ProfileManager.current_profile.data.current_world:
 		warp_to_scene = ProfileManager.current_profile.data.current_world

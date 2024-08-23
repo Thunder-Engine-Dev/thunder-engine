@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://ciq78opwuq6ft"]
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://ciq78opwuq6ft"]
 
 [ext_resource type="Texture2D" uid="uid://deisknysdnd03" path="res://engine/objects/players/prefabs/textures/mario/mario_beetroot.png" id="1_ri41b"]
 
@@ -13,6 +13,10 @@ region = Rect2(144, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0xbg8"]
 atlas = ExtResource("1_ri41b")
 region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb0gy"]
+atlas = ExtResource("1_ri41b")
+region = Rect2(720, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_85gj1"]
 atlas = ExtResource("1_ri41b")
@@ -29,6 +33,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sg0l5"]
 atlas = ExtResource("1_ri41b")
 region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl1jb"]
+atlas = ExtResource("1_ri41b")
+region = Rect2(672, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2iqrc"]
 atlas = ExtResource("1_ri41b")
@@ -105,6 +113,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hb0gy")
+}],
+"loop": false,
+"name": &"back",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_85gj1")
 }],
 "loop": false,
@@ -132,7 +148,23 @@ animations = [{
 "texture": SubResource("AtlasTexture_sg0l5")
 }],
 "loop": false,
+"name": &"fall",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg0l5")
+}],
+"loop": false,
 "name": &"jump",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl1jb")
+}],
+"loop": false,
+"name": &"skid",
 "speed": 0.0
 }, {
 "frames": [{
@@ -192,5 +224,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"warp",
-"speed": 5.0
+"speed": 0.0
 }]

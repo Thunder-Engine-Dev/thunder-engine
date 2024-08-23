@@ -71,7 +71,6 @@ killing_sound_failed = ExtResource("8_fhq1h")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
 
 [node name="Sprite" type="Sprite2D" parent="."]
-z_index = 1
 texture = ExtResource("2_2h53c")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
