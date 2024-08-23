@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="7_2n42i"]
 [ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="7_p0nj6"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
-[ext_resource type="Texture2D" uid="uid://bdcwcxs6acukg" path="res://engine/tilesets/overworld/default_grass.png" id="8_er3no"]
+[ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="8_er3no"]
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="8_s5hxa"]
 [ext_resource type="PackedScene" uid="uid://da0fmncf7ksxc" path="res://engine/objects/enemies/piranha_plants/piranha_ice.tscn" id="9_1343o"]
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="10_sl285"]
@@ -106,7 +106,7 @@ metadata/_edit_lock_ = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
-position = Vector2(0, 240)
+position = Vector2(640, 240)
 rotation = 1.57079
 scale = Vector2(1, 640)
 texture = SubResource("GradientTexture1D_8wjb4")
