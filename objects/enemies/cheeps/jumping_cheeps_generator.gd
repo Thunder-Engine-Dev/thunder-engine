@@ -26,6 +26,7 @@ func _time() -> void:
 		
 		var fishgoggles = TIMUR_JUMPING.instantiate()
 		fishgoggles.global_position = to_pos
+		fishgoggles.reset_physics_interpolation()
 		fishgoggles.speed.x = randi_range(speed_min.x, speed_max.x)
 		fishgoggles.speed.y = randi_range(speed_min.y, speed_max.y)
 		

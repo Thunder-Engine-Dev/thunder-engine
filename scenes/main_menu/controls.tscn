@@ -434,6 +434,7 @@ texture = SubResource("AtlasTexture_p4gfi")
 stretch_mode = 2
 
 [node name="Selector" type="AnimatedSprite2D" parent="."]
+physics_interpolation_mode = 1
 sprite_frames = SubResource("SpriteFrames_t63jw")
 script = ExtResource("9_vidpf")
 smooth_speed = 0.4

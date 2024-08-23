@@ -5,6 +5,7 @@ func _handle_select() -> void:
 	
 	super()
 	scene.offset.x += 640
+	scene.reset_physics_interpolation()
 	await get_tree().physics_frame
 	get_parent().move_selector(0)
 	scene.get_node("Settings/SubViewportContainer/SubViewport/Options").focused = true

@@ -73,6 +73,7 @@ func _ready() -> void:
 			global_position.x,
 			clamp(global_position.y, cam_pos.y - 248, cam_pos.y + 248)
 		)
+		marker.reset_physics_interpolation()
 		Scenes.current_scene.add_child(marker)
 	
 	TransitionManager.current_transition.on(marker) # Supports a Node2D or a Vector2

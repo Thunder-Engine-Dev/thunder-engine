@@ -26,6 +26,7 @@ func _physics_process(delta):
 		cam.get_screen_center_position().x + 340 * direction,
 		cam.get_screen_center_position().y + randi_range(-128, 192)
 	)
+	inst.reset_physics_interpolation()
 
 func enable() -> void:
 	active = true

@@ -383,6 +383,7 @@ stretch_mode = 3
 script = ExtResource("16_5gtqw")
 
 [node name="Selector" type="AnimatedSprite2D" parent="GameOver"]
+physics_interpolation_mode = 1
 sprite_frames = SubResource("SpriteFrames_oiqgu")
 script = ExtResource("18_7lia2")
 smooth_speed = 0.4

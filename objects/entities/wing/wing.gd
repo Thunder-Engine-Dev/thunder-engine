@@ -17,4 +17,5 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if flip_as_parent:
 		position.x = -pos_x - 1 if sprite.flip_h else pos_x
+		reset_physics_interpolation()
 		flip_h = sprite.flip_h

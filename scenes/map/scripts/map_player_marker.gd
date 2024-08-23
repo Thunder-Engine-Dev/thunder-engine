@@ -46,6 +46,7 @@ func _ready() -> void:
 			player.current_marker = get_next_marker()
 			#print(marker_space.get_next_marker_id())
 			player.global_position = global_position
+			player.reset_physics_interpolation()
 			
 			current_active.emit()
 			
@@ -55,6 +56,7 @@ func _ready() -> void:
 			
 			if is_instance_valid(player.camera):
 				player.camera.reset_smoothing.call_deferred()
+				player.camera.reset_physics_interpolation()
 			
 			marker_space.make_dots_visible_before(self)
 			marker_space.add_uncompleted_levels_after(_level_save)

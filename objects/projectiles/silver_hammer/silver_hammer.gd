@@ -32,12 +32,6 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 	
-	if bounces_left == 0:
-		run_out.emit()
-		collision_layer = 0
-		collision_mask = 0
-		return
-	
 	for i in get_slide_collision_count():
 		var _collision: KinematicCollision2D = get_slide_collision(i)
 		if !_collision: continue
@@ -45,6 +39,12 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		var collider: Node2D = _collision.get_collider() as Node2D
 		if collider is StaticBumpingBlock && collider.has_method(&"bricks_break"):
 			collider.bricks_break()
+	
+	if bounces_left == 0:
+		run_out.emit()
+		collision_layer = 0
+		collision_mask = 0
+		return
 
 
 func _on_level_end() -> void:

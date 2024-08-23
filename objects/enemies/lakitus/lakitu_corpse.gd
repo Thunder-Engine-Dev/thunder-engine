@@ -44,6 +44,7 @@ func _ready() -> void:
 					* body.leaving_direction * \
 					(get_viewport_rect().size.x / 2 + 64 + respawn_offset)
 				)
+				body.reset_physics_interpolation()
 				queue_free()
 		)
 

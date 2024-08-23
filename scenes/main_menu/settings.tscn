@@ -215,6 +215,7 @@ texture = ExtResource("1_wqbo8")
 metadata/_edit_lock_ = true
 
 [node name="Node2D" type="Node2D" parent="."]
+physics_interpolation_mode = 1
 script = ExtResource("4_2sncp")
 amplitude = Vector2(0, 10)
 frequency = 10.0
@@ -478,6 +479,7 @@ texture = SubResource("AtlasTexture_uxvvb")
 stretch_mode = 2
 
 [node name="Selector" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
 sprite_frames = SubResource("SpriteFrames_t63jw")
 script = ExtResource("11_jh3ap")
 smooth_speed = 0.4

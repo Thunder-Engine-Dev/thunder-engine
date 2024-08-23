@@ -68,6 +68,7 @@ func _update_pos() -> void:
 func _physics_process(delta: float) -> void:
 	if smooth_transition:
 		global_position = global_position.lerp(target_position, smooth_speed * Thunder.get_delta(delta))
+		#global_position = global_position.move_toward(target_position, smooth_speed * Thunder.get_delta(delta))
 	else:
 		global_position = target_position
 	

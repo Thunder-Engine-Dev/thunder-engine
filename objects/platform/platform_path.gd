@@ -77,7 +77,7 @@ func _physics_process(delta: float) -> void:
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
 	
-	if block is AnimatableBody2D && block.sync_to_physics: block.global_position = block.global_position
+	#if block is AnimatableBody2D && block.sync_to_physics: block.global_position = block.global_position
 
 
 func _bodies_standing_check() -> void:

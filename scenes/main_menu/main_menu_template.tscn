@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_34ge5"]
 [ext_resource type="PackedScene" uid="uid://dkquk2byjeol8" path="res://engine/scenes/main_menu/main_menu_controls.tscn" id="1_p2k5d"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="2_4qgas"]
-[ext_resource type="Resource" uid="uid://cx457gmx6ncf1" path="res://engine/scenes/main_menu/music/main_menu.xm" id="2_pedjq"]
+[ext_resource type="Resource" uid="uid://ckvsfjusfv75o" path="res://engine/scenes/main_menu/music/main_menu.xm" id="2_pedjq"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="3_46jfl"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="6_pkt5f"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="7_poyjv"]
@@ -116,6 +116,7 @@ anchor_mode = 0
 position_smoothing_speed = 20.0
 
 [node name="Menu" type="Control" parent="."]
+physics_interpolation_mode = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

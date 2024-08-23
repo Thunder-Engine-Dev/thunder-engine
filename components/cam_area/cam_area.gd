@@ -112,6 +112,7 @@ func _physics_process(_delta: float) -> void:
 			cam.limits.end = Vector2i(Thunder.view.border.end.x, Thunder.view.border.end.y)
 			cam.function = smooth_function
 			cam.speed = smooth_speed
+			cam.reset_physics_interpolation()
 			add_child(cam)
 			Scenes.current_scene.falling_below_y_offset *= 10
 		

@@ -50,6 +50,7 @@ func _physics_process(delta):
 			counter = 0
 			if sprite.sprite_frames.has_animation(&"default"): sprite.animation = &"default"
 			sprite.position = Vector2.ZERO
+			sprite.reset_physics_interpolation()
 	
 	if speed_y != 0: return
 	if force_fall && counting: return

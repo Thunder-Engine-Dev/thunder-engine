@@ -113,6 +113,7 @@ func _physics_process(delta: float) -> void:
 		facing = get_facing(facing)
 		if sprite.animation == &"throw":
 			sprite.offset.x = 7 * facing
+			sprite.reset_physics_interpolation()
 	# Animation
 	if facing != 0:
 		sprite.flip_h = (facing < 0)
@@ -223,6 +224,7 @@ func attack_hammer() -> void:
 	if sprite.animation != &"throw": sprite.play(&"throw")
 	sprite.speed_scale = 0
 	sprite.offset.x = 7 * facing
+	sprite.reset_physics_interpolation()
 	
 	# Lock the animation player from running
 	animations.pause()
