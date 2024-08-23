@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/junebug.ttf-224caac9a06140174c5bc8c0403edbe3.
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

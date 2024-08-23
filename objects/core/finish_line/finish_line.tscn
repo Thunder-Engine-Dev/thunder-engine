@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(202, -256)]
+"values": [Vector2(203, -256)]
 }
 
 [sub_resource type="Animation" id="Animation_xxwwv"]
@@ -67,7 +67,7 @@ shape = SubResource("RectangleShape2D_b44pc")
 debug_color = Color(0.541176, 0.0823529, 0.560784, 0.419608)
 
 [node name="CrossingBarArea" type="Area2D" parent="."]
-position = Vector2(202, -256)
+position = Vector2(203, -256)
 collision_layer = 0
 script = ExtResource("2_4ss8s")
 
