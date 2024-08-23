@@ -60,6 +60,7 @@ killing_immune = {
 turn_into_coin_on_level_end = false
 
 [node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
 texture = ExtResource("2_0cie0")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
