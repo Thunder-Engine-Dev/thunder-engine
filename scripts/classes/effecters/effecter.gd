@@ -14,7 +14,8 @@ static func trail(
 	fade_out_strength: float = 0.05,
 	duration: float = 1.0,
 	material: Material = null,
-	z_index: int = 0
+	z_index: int = 0,
+	interpolation_support: bool = true
 ) -> Sprite2D:
 	if !on:
 		return null
@@ -31,6 +32,11 @@ static func trail(
 			tra.material = material
 			tra.z_index = on.z_index + z_index
 			tra.add_to_group(&"Trail")
+			
+			if interpolation_support:
+				tra.visible = false
+				await Thunder.get_tree().physics_frame
+				tra.visible = true
 	).create_2d().get_node() as Sprite2D
 	
 	return effect_node
