@@ -60,4 +60,3 @@ func _item_display_reset() -> void:
 	
 	item_displayer.texture = NULL_TEXTURE
 	current_displaying_item = ""
-

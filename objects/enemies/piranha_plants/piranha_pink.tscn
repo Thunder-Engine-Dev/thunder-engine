@@ -146,7 +146,7 @@ metadata/_edit_group_ = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="Stem" type="Sprite2D" parent="Head"]
-position = Vector2(1, 24)
+position = Vector2(0, 24)
 texture = ExtResource("3_12v5v")
 metadata/_edit_pinned_properties_ = [&"texture"]
 

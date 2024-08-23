@@ -107,7 +107,7 @@ autoplay = "default"
 metadata/_edit_group_ = true
 
 [node name="Stem" type="Sprite2D" parent="Head"]
-position = Vector2(1, 24)
+position = Vector2(0, 24)
 texture = ExtResource("3_blccl")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

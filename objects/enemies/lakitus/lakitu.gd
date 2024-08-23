@@ -124,4 +124,3 @@ func _on_pitching() -> void:
 		if !skip_pitch_animation_delay:
 			_pitch()
 		
-

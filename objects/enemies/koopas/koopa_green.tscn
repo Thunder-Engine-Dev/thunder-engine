@@ -100,7 +100,7 @@ killing_sound_succeeded = ExtResource("9_h7q22")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -8)
 sprite_frames = ExtResource("10_kkq1f")
 autoplay = "default"
 

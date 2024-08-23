@@ -104,4 +104,3 @@ func get_level_path() -> String:
 func set_level_save_path(value: String) -> void:
 	_level_save = value
 	level_override_save = value
-

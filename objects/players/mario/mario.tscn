@@ -93,7 +93,7 @@ hit_from_inside = true
 z_index = 5
 material = SubResource("ShaderMaterial_kdes3")
 sprite_frames = ExtResource("2_eqact")
-offset = Vector2(0, -15)
+offset = Vector2(0, -16)
 
 [node name="Bubble" type="GPUParticles2D" parent="Sprite"]
 position = Vector2(0, 15)
@@ -125,7 +125,7 @@ lifetime = 0.5
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false
 z_index = 15
-position = Vector2(1, 2)
+position = Vector2(1, 1)
 texture = ExtResource("3_qpqdp")
 
 [node name="Head" type="ShapeCast2D" parent="."]

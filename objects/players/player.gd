@@ -342,4 +342,3 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 		#what.got_killed(&"starman", [&"no_score"])
 		starman_combo.combo()
 		starman_attacked.emit()
-

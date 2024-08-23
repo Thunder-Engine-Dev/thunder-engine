@@ -8,9 +8,9 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_ht4jt"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_7a4ue"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_qkjsi"]
-[ext_resource type="Texture2D" uid="uid://cbfq13f6vbol4" path="res://engine/objects/enemies/piranha_plants/textures/head_light_blue.png" id="8_2albm"]
+[ext_resource type="Texture2D" uid="uid://c1gbisvbe8kdh" path="res://engine/objects/enemies/piranha_plants/textures/head_light_blue.png" id="8_2albm"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_25a05"]
-[ext_resource type="Texture2D" uid="uid://c7uv5i0jn6ktr" path="res://engine/objects/enemies/piranha_plants/textures/stem_light_blue.png" id="9_10kd0"]
+[ext_resource type="Texture2D" uid="uid://bimnss2acneqy" path="res://engine/objects/enemies/piranha_plants/textures/stem_light_blue.png" id="9_10kd0"]
 
 [sub_resource type="Resource" id="Resource_tm078"]
 script = ExtResource("4_ddlue")
@@ -137,7 +137,7 @@ metadata/_edit_group_ = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="Stem" type="Sprite2D" parent="Head"]
-position = Vector2(1, 24)
+position = Vector2(0, 24)
 texture = ExtResource("9_10kd0")
 metadata/_edit_pinned_properties_ = [&"texture"]
 
