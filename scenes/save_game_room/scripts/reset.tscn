@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://e1hxnaxfnvbl"]
 
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/reset.gd" id="1_fnvj3"]
-[ext_resource type="Texture2D" uid="uid://deygikmhly1jf" path="res://engine/scenes/save_game_room/textures/reset_counter_bg.png" id="2_ngiw6"]
-[ext_resource type="Texture2D" uid="uid://x4kyy74btfc5" path="res://engine/scenes/save_game_room/textures/reset_counter.png" id="3_q12ab"]
+[ext_resource type="Texture2D" uid="uid://cwwgmgsjprj1p" path="res://engine/scenes/save_game_room/textures/reset_counter_bg.png" id="2_ngiw6"]
+[ext_resource type="Texture2D" uid="uid://cquriu107cwpu" path="res://engine/scenes/save_game_room/textures/reset_counter.png" id="3_q12ab"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="4_hokub"]
 
 [node name="Reset" type="Node2D"]
@@ -20,13 +20,14 @@ texture_under = ExtResource("2_ngiw6")
 texture_progress = ExtResource("3_q12ab")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 245.0
+offset_left = 224.0
 offset_top = -24.0
-offset_right = 587.0
+offset_right = 608.0
 offset_bottom = -1.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("4_hokub")
 theme_override_font_sizes/font_size = 21
-text = "TO DELETE SAVE, PRESS AND HOLD DEL BUTTON FOR 3 SEC."
+text = "TO DELETE A SAVE, PRESS AND HOLD DEL BUTTON FOR 3 SEC."
 horizontal_alignment = 1
+uppercase = true

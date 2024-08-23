@@ -150,7 +150,7 @@ func _physics_process(delta: float) -> void:
 		match falling_below_screen_action:
 			1: player.die()
 			2: player.position.y -= 608
-			3: 
+			3 when player.warp == player.Warp.NONE: 
 				assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
 				"ERROR: falling_below_warp_target contains an invalid Out Warp")
 				

@@ -17,6 +17,9 @@ signal pre_scene_changed
 ## Emitted when the current scene is ready
 signal scene_ready
 
+## Emitted when loading the scene failed
+signal scene_change_failed
+
 const LOADING_SCREEN = preload("res://engine/components/loading_screen/loading_screen.tscn")
 
 # Loaded scene buffer for optimization purpose
@@ -54,10 +57,14 @@ func load_scene_deferred(scene: Node) -> void:
 ## Use with call_deferred
 func load_scene_from_packed(pck: PackedScene) -> void:
 	if !pck: return
+	if !pck.can_instantiate():
+		scene_change_failed.emit()
+		return
 	previous_scene_name = current_scene.name
 	previous_scene_path = current_scene.scene_file_path
 	current_scene.free()
 	var scene: Node = pck.instantiate()
+	
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
