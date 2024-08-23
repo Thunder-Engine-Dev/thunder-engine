@@ -132,7 +132,7 @@ autoplay = "default"
 
 [node name="SpriteProjectile" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(5, -17)
+position = Vector2(6, -17)
 texture = ExtResource("11_8ytaf")
 
 [node name="PosAttack" type="Marker2D" parent="."]
