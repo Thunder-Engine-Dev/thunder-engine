@@ -12,7 +12,6 @@ var stop_blocking_edges: bool
 @onready var player = Thunder._current_player
 
 var _shocking: int = 0
-var _old_speed: Vector2
 @onready var ofs: Vector2 = offset
 
 func _ready():
@@ -21,6 +20,7 @@ func _ready():
 	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	make_current()
 	teleport()
+	reset_physics_interpolation()
 
 
 func _physics_process(_delta: float):
@@ -30,7 +30,7 @@ func _physics_process(_delta: float):
 		stop_blocking_edges = true
 
 
-func teleport(sync_position_only = false) -> void:
+func teleport(sync_position_only = false, reset_interpolation: bool = false) -> void:
 	player = Thunder._current_player
 	if !par is PathFollow2D && player:
 		global_position = Vector2(Thunder._current_player.global_position)
@@ -40,7 +40,7 @@ func teleport(sync_position_only = false) -> void:
 	if par is PathFollow2D:
 		if player && !stop_blocking_edges:
 			var rot: float = get_viewport_transform().affine_inverse().get_rotation()
-			var kc: KinematicCollision2D
+			var kc: KinematicCollision2D = null
 			var left_col: bool
 			var right_col: bool
 			while !kc && player.get_global_transform_with_canvas().get_origin().x < 16:
@@ -64,7 +64,7 @@ func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
 	if _shocking == 0:
 		ofs = offset
 	_shocking += 1
-	var tw: Tween = create_tween().set_loops(ceili(duration / interval)).set_trans(Tween.TRANS_ELASTIC)
+	var tw: Tween = create_tween().set_loops(ceili(duration / interval))
 	tw.tween_callback(
 		func() -> void:
 			offset = Vector2(

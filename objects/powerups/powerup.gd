@@ -85,7 +85,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 		if to.name != Thunder._current_player_state.name:
 			player.change_suit(to)
 			Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch, ignore_pause = true})
-		else:
+		elif !supply_behavior:
 			Audio.play_sound(pickup_neutral_sound, self, false, {pitch = sound_pitch})
 		return
 	
@@ -100,5 +100,5 @@ func _change_state_logic(force_powerup: bool) -> void:
 		else:
 			player.change_suit(to)
 		Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch, ignore_pause = true})
-	elif !supply_behavior:
+	else:
 		Audio.play_sound(pickup_neutral_sound, self, false, {pitch = sound_pitch})

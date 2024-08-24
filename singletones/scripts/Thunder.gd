@@ -6,16 +6,11 @@ extends Node
 ## Most information is stored in the signleton, like current player and its state,
 ## default gravity speed and some other functions you can use for your game
 
-## Discarded, please see [signal "engine/singletones/scripts/Scenes.gd".scene_changed]
-signal stage_changed
-
 ## Used to get access to [Thunder.View] subsingleton
 var view: View = View.new() # View subsingleton
 ## Default gravity speed
 var gravity_speed: float = 50
 var _target_speed: int = 50
-
-# TO GET CURRENT CAMERA, USE Viewport.get_camera_2d()
 
 ## Current player you are playing
 var _current_player: Player: # Reference to the current player
@@ -36,6 +31,7 @@ var _current_hud: CanvasLayer: # Reference to level HUD
 		if !(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer)): return null
 		return _current_hud
 
+# TO GET CURRENT CAMERA, USE GlobalViewport.vp.get_camera_2d()
 @warning_ignore("unused_private_class_variable")
 var _current_camera: Camera2D
 
@@ -91,20 +87,8 @@ func _init() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 
 
-## Discarded, see [method "engine/singletones/scripts/Scenes.gd".switch_to_scene]
-func goto_scene(path) -> void:
-	call_deferred(&"_deferred_goto_scene", path)
-
-
-func _deferred_goto_scene(path) -> void:
-	Scenes.current_scene.free()
-	
-	var s = load(path)
-	Scenes.current_scene = s.instantiate()
-	stage_changed.emit()
-	
-	if !Scenes.current_scene.is_inside_tree():
-		get_tree().root.add_child(Scenes.current_scene)
+func _ready() -> void:
+	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 
 ## Add lives for [member _current_player][br]

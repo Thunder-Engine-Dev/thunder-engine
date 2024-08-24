@@ -146,3 +146,4 @@ func _switch_bounds() -> void:
 	is_current = true
 	
 	camera.set_meta(&"cam_area", self)
+	camera.teleport(false, true)
