@@ -62,6 +62,7 @@ func _direction() -> void:
 	sprite.flip_h = (dir < 0 && dir != 0)
 	sprite_projectile.flip_h = sprite.flip_h
 	pos_attack.position.x = pos_attack_x * dir
+	pos_attack.reset_physics_interpolation()
 
 
 func _animation() -> void:
@@ -72,6 +73,7 @@ func _animation() -> void:
 		var trans: Transform2D = sprite_projectile_animation_transform[sprite.frame]
 		trans.origin.x *= dir
 		sprite_projectile.transform = pos_attack.transform * trans
+		sprite_projectile.reset_physics_interpolation()
 	else:
 		sprite.play(&"default")
 		sprite_projectile.visible = false
