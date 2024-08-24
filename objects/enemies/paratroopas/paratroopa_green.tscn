@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_onbsx"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_ilfy3"]
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="10_6wrqt"]
-[ext_resource type="PackedScene" path="res://engine/objects/entities/wing/wing.tscn" id="11_iya8u"]
+[ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="11_iya8u"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="12_ktrak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]

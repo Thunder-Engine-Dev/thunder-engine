@@ -38,8 +38,9 @@ func _ready() -> void:
 		return
 	var player: Player = Thunder._current_player
 	if !player: return
-	if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
-		_switch_bounds()
+	_physics_process.call_deferred(0)
+	#if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
+	#	_switch_bounds.call_deferred()
 
 
 func _draw() -> void:
@@ -146,4 +147,4 @@ func _switch_bounds() -> void:
 	is_current = true
 	
 	camera.set_meta(&"cam_area", self)
-	camera.teleport(false, true)
+	camera.teleport.call_deferred(false, true)
