@@ -107,10 +107,10 @@ func _prepare_template() -> void:
 	tile_data.set_collision_polygon_points(0, 0, polygons_array)
 	
 	# Adding TileMap with tileset we defined above
-	var tilemap = TileMap.new()
+	var tilemap = TileMapLayer.new()
 	tilemap.tile_set = tileset
 	add_child(tilemap, true)
-	tilemap.set_cell(0, Vector2i(2, 13), 0, Vector2i.ZERO)
+	tilemap.set_cell(Vector2i(2, 13), 0, Vector2i.ZERO)
 	tilemap.set_owner(self)
 	tilemap.set_meta(&"_edit_lock_", true)
 	
