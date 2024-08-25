@@ -102,7 +102,6 @@ func _physics_process(_delta: float) -> void:
 			return
 		
 		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
-		
 		if smooth_transition:
 			Thunder.view.cam_border()
 			var cams = get_tree().get_nodes_in_group("#transition_camera")
@@ -113,9 +112,8 @@ func _physics_process(_delta: float) -> void:
 			cam.limits.end = Vector2i(Thunder.view.border.end.x, Thunder.view.border.end.y)
 			cam.function = smooth_function
 			cam.speed = smooth_speed
-			cam.reset_physics_interpolation()
 			add_child(cam)
-			Scenes.current_scene.falling_below_y_offset *= 10
+			#Scenes.current_scene.falling_below_y_offset *= 10
 		
 		_switch_bounds()
 	

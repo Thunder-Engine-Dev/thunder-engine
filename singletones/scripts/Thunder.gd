@@ -139,8 +139,7 @@ func reorder_top(node: Node) -> void:
 
 ## Move node to bottom of subtree (on top of all nodes on the same z-index)
 func reorder_bottom(node: Node) -> void:
-	var parent = node.get_parent()
-	parent.move_child(node, parent.get_child_count())
+	node.move_to_front()
 
 ## Move node behind the target node on the same z-index, nodes should be on the same subtree
 func reorder_on_top_of(node: Node, target: Node) -> void:
@@ -167,6 +166,10 @@ class View:
 	var border: Rect2i
 	## Current transformation of viewport
 	var trans: Transform2D
+	## Target screen transform (only origin is different), useful to ignore transitions in calculations
+	var target_trans: Transform2D
+	
+	var _target_pos := Vector2.INF
 	
 	
 	## Update [member border] and [member trans] for detectional functions, you need to call this method
@@ -174,31 +177,40 @@ class View:
 	func cam_border() -> void:
 		var cam: Camera2D = Thunder._current_camera
 		if !cam:
-			printerr("[Thunder Engine] Failed to retrieve current camera, is the current viewport correct?")
+			push_warning("[Thunder Engine] Failed to retrieve current camera, is the current viewport correct?")
 			return
 		trans = cam.get_viewport_transform()
 		border.size = Vector2i(cam.get_viewport_rect().size)
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
+		target_trans = trans
+		if _target_pos != Vector2.INF:
+			target_trans.origin = -_target_pos
+		if Thunder.get_tree().get_node_count_in_group("#transition_camera") == 0:
+			_target_pos = Vector2.INF
 	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of left edge of screen
-	func screen_left(pos: Vector2, offset: float) -> bool:
-		return (trans * pos).x > -offset
+	func screen_left(pos: Vector2, offset: float, ignore_transition: bool = false) -> bool:
+		var _transform = trans if !ignore_transition else target_trans
+		return (_transform * pos).x > -offset
 	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of right edge of screen
-	func screen_right(pos: Vector2, offset: float) -> bool:
-		return (trans * pos).x < border.size.x + offset
+	func screen_right(pos: Vector2, offset: float, ignore_transition: bool = false) -> bool:
+		var _transform = trans if !ignore_transition else target_trans
+		return (_transform * pos).x < border.size.x + offset
 	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of top edge of screen
-	func screen_top(pos: Vector2, offset: float) -> bool:
-		return (trans * pos).y > -offset
+	func screen_top(pos: Vector2, offset: float, ignore_transition: bool = false) -> bool:
+		var _transform = trans if !ignore_transition else target_trans
+		return (_transform * pos).y > -offset
 	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is NOT out of bottom edge of screen
-	func screen_bottom(pos: Vector2, offset: float) -> bool:
-		return (trans * pos).y < border.size.y + offset
+	func screen_bottom(pos: Vector2, offset: float, ignore_transition: bool = false) -> bool:
+		var _transform = trans if !ignore_transition else target_trans
+		return (_transform * pos).y < border.size.y + offset
 	
 	
 	## Returns [code]true[/code] if given [code]pos[/code] is out of the edge of screen, which is decided by
