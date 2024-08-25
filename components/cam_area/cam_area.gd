@@ -38,8 +38,8 @@ func _ready() -> void:
 		return
 	var player: Player = Thunder._current_player
 	if !player: return
-	_physics_process.call_deferred(0)
-	#if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
+	if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
+		_physics_process.call_deferred(0)
 	#	_switch_bounds.call_deferred()
 
 

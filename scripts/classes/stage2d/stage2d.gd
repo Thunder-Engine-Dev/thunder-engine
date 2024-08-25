@@ -12,9 +12,10 @@ signal stage_ready
 
 
 func _ready() -> void:
-	for i in 5:
-		await get_tree().physics_frame
+	await get_tree().physics_frame
 	while get_tree().is_paused():
+		await get_tree().physics_frame
+	for i in 5:
 		await get_tree().physics_frame
 	_is_stage_ready = true
 	stage_ready.emit()

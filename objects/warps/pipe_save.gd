@@ -6,12 +6,14 @@ extends "pipe_in.gd"
 var profile_name: String
 
 var deletion_progress: float
-@onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
+var _tweak: bool
 
 signal save_deleted
 
 func _ready() -> void:
 	super()
+	if Engine.is_editor_hint(): return
+	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
 	player_exit.connect(func(): deletion_progress = 0)
 
 func _physics_process(delta: float) -> void:
