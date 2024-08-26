@@ -16,7 +16,7 @@ var _shocking: int = 0
 
 func _ready():
 	Thunder._current_camera = self
-	process_callback = CAMERA2D_PROCESS_IDLE #CAMERA2D_PROCESS_PHYSICS
+	process_callback = CAMERA2D_PROCESS_PHYSICS
 	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	make_current()
 	teleport()
