@@ -18,7 +18,6 @@ var _xscroll: float
 
 
 func _ready():
-	SettingsManager.settings.xscroll = true
 	Thunder._current_camera = self
 	process_callback = CAMERA2D_PROCESS_PHYSICS
 	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
@@ -34,7 +33,7 @@ func _physics_process(delta: float):
 	
 	if !force_xscroll_off && SettingsManager.settings.xscroll:
 		var dont_move := int(player.is_on_wall() || player.warp != player.Warp.NONE || player.is_crouching)
-		if abs(player.speed.x) > 250 && player.running:
+		if abs(player.speed.x) > 200 && player.running && !par is PathFollow2D:
 			_xscroll += (2 - dont_move) * sign(player.left_right) * delta
 		_xscroll = move_toward(_xscroll, 0, delta)
 		_xscroll = clampf(_xscroll, -1.25, 1.25)
@@ -72,15 +71,13 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 					player.vel_set_x(0)
 			if kc && kc.get_collider() && (left_col || right_col):
 				player.die()
-	if !SettingsManager.settings.xscroll && _xscroll != 0.0:
+	
+	if !SettingsManager.settings.xscroll:
 		_xscroll = 0.0
 		drag_horizontal_enabled = false
 		drag_horizontal_offset = 0
-	elif !force_xscroll_off && SettingsManager.settings.xscroll && is_instance_valid(player):
-		
+	elif !force_xscroll_off && is_instance_valid(player):
 		drag_horizontal_enabled = true
-		#position_smoothing_enabled = true
-		#position_smoothing_speed = 10
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
 		drag_horizontal_offset = _xscroll / 1.25
