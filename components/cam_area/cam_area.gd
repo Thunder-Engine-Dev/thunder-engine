@@ -24,6 +24,7 @@ var transition_camera = preload("res://engine/components/cam_area/transition_cam
 var is_current: bool
 
 var _det_areas: Array[Control] = []
+var _is_initial: bool = true
 
 
 func _ready() -> void:
@@ -38,9 +39,13 @@ func _ready() -> void:
 		return
 	var player: Player = Thunder._current_player
 	if !player: return
+	
 	#if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
 	_physics_process.call_deferred(0)
 		#_switch_bounds.call_deferred()
+	
+	await get_tree().physics_frame
+	_is_initial = false
 
 
 func _draw() -> void:
@@ -102,7 +107,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		
 		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
-		if smooth_transition:
+		if smooth_transition && !_is_initial:
 			Thunder.view.cam_border()
 			var cams = get_tree().get_nodes_in_group("#transition_camera")
 			for i in cams:
