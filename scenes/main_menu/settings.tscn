@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=60 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
 [ext_resource type="Texture2D" uid="uid://c5kcdnxqujsym" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
+[ext_resource type="Texture2D" uid="uid://xoa25by4iqkt" path="res://engine/scenes/main_menu/textures/buffer.png" id="20_b2kcq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -59,11 +61,11 @@ region = Rect2(0, 115, 168, 28)
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ys5h5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhmnl"]
 atlas = ExtResource("4_wobiu")
-region = Rect2(0, 142, 95, 30)
+region = Rect2(0, 172, 122, 30)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6e80b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dbt7"]
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
@@ -76,6 +78,22 @@ atlas = ExtResource("17_xqi2q")
 region = Rect2(0, 0, 140, 38)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6u8uf"]
+atlas = ExtResource("9_0v236")
+region = Rect2(0, 0, 64, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys5h5"]
+atlas = ExtResource("4_wobiu")
+region = Rect2(0, 142, 95, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vog4w"]
+atlas = ExtResource("17_xqi2q")
+region = Rect2(0, 114, 140, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilj0e"]
+atlas = ExtResource("20_b2kcq")
+region = Rect2(0, 0, 118, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ltrg"]
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
@@ -368,25 +386,25 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_843vv")
 stretch_mode = 2
 
-[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="XScroll" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
-setting_name = "vsync"
+setting_name = "xscroll"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ys5h5")
+texture = SubResource("AtlasTexture_fhmnl")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_6e80b")
+texture = SubResource("AtlasTexture_0dbt7")
 stretch_mode = 2
 
 [node name="Scale" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
@@ -428,6 +446,46 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6u8uf")
+stretch_mode = 2
+
+[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("19_fkcly")
+
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ys5h5")
+stretch_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/VSync"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_vog4w")
+stretch_mode = 2
+
+[node name="Buffer" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_ilj0e")
+stretch_mode = 2
+
+[node name="OFF" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8ltrg")
 stretch_mode = 2
 
 [node name="Filter" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]

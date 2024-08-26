@@ -3,18 +3,22 @@ class_name PlayerCamera2D
 
 var stop_blocking_edges: bool
 
+@export var force_xscroll_off: bool = false
 @export_subgroup("Autoscroll")
 @export var stop_blocking_on_complete: bool = true
 @export var enable_left_border_death: bool = true
 @export var enable_right_border_death: bool = true
 
 @onready var par: Node2D = get_parent()
-@onready var player = Thunder._current_player
+@onready var player: Player = Thunder._current_player
 
 var _shocking: int = 0
+var _xscroll: float
 @onready var ofs: Vector2 = offset
 
+
 func _ready():
+	SettingsManager.settings.xscroll = true
 	Thunder._current_camera = self
 	process_callback = CAMERA2D_PROCESS_PHYSICS
 	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
@@ -23,10 +27,19 @@ func _ready():
 	reset_physics_interpolation()
 
 
-func _physics_process(_delta: float):
+func _physics_process(delta: float):
 	teleport.call_deferred()
 	
-	if is_instance_valid(player) && stop_blocking_on_complete && player.completed:
+	if !is_instance_valid(player): return
+	
+	if !force_xscroll_off && SettingsManager.settings.xscroll:
+		var dont_move := int(player.is_on_wall() || player.warp != player.Warp.NONE || player.is_crouching)
+		if abs(player.speed.x) > 250 && player.running:
+			_xscroll += (2 - dont_move) * sign(player.left_right) * delta
+		_xscroll = move_toward(_xscroll, 0, delta)
+		_xscroll = clampf(_xscroll, -1.25, 1.25)
+	
+	if stop_blocking_on_complete && player.completed:
 		stop_blocking_edges = true
 
 
@@ -36,6 +49,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 		global_position = Vector2(Thunder._current_player.global_position)
 		if reset_interpolation:
 			reset_physics_interpolation()
+			_xscroll = 0
 	
 	if sync_position_only: return
 	
@@ -58,6 +72,18 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 					player.vel_set_x(0)
 			if kc && kc.get_collider() && (left_col || right_col):
 				player.die()
+	if !SettingsManager.settings.xscroll && _xscroll != 0.0:
+		_xscroll = 0.0
+		drag_horizontal_enabled = false
+		drag_horizontal_offset = 0
+	elif !force_xscroll_off && SettingsManager.settings.xscroll && is_instance_valid(player):
+		
+		drag_horizontal_enabled = true
+		#position_smoothing_enabled = true
+		#position_smoothing_speed = 10
+		drag_left_margin = 0.5
+		drag_right_margin = 0.5
+		drag_horizontal_offset = _xscroll / 1.25
 	
 	Thunder.view.cam_border.call_deferred()
 

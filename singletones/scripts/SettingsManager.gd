@@ -16,7 +16,8 @@ var default_settings: Dictionary = {
 	"quality": ProjectSettings.get_setting("application/thunder_settings/default_quality_setting", QUALITY.MAX),
 	"game_speed": 1,
 	"autopause": true,
-	"vsync": true,
+	"xscroll": false,
+	"vsync": 1,
 	"scale": 1,
 	"physics_tps": 0,
 	"filter": false,
@@ -37,6 +38,7 @@ var default_settings: Dictionary = {
 
 var settings: Dictionary = default_settings.duplicate(true)
 var no_saved_settings: bool = false
+var request_restart: bool = false
 
 var tweaks: Dictionary = {}
 
@@ -175,6 +177,15 @@ func _window_scale_logic(force_update: bool = false) -> void:
 ## Saves the settings variable to file
 func save_settings() -> void:
 	save_data(settings, settings_path, "Settings")
+	if settings.vsync:
+		var file: FileAccess = FileAccess.open(
+			ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss"),
+			FileAccess.WRITE
+		)
+		file.store_string("""[rendering]
+rendering_device/vsync/swapchain_image_count=%d
+""" % [int(settings.vsync) + 1])
+		file.close()
 	
 	settings_saved.emit()
 	print("[Settings Manager] Settings saved!")
@@ -239,3 +250,18 @@ func save_data(data: Dictionary, to_path: String, id: String = "Custom") -> void
 	file.close()
 	
 	data_saved.emit(id)
+
+
+## Restarts the application
+func restart_application() -> void:
+	var thread = Thread.new()
+	thread.start(_execute_current_application)
+	get_tree().quit()
+
+
+func _execute_current_application():
+	var executable_path = OS.get_executable_path()
+	var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
+	var cmd_args: PackedStringArray = [menu_path]
+	cmd_args.append_array(OS.get_cmdline_args())
+	OS.execute(executable_path, cmd_args)
