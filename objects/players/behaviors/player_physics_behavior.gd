@@ -241,7 +241,6 @@ func _shape_process() -> void:
 	
 	if player.collision_shape.shape is RectangleShape2D:
 		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
-		player.bubble.position.y = 0 if suit.type == PlayerSuit.Type.SMALL else -2
 
 
 func _shape_recovery_process() -> bool:
@@ -288,6 +287,8 @@ func _head_process() -> void:
 		# Water
 		if collider.is_in_group(&"#water"): 
 			player.is_underwater_out = false
+			if player.bubbler.is_stopped():
+				player.bubbler.start()
 		# Bumpable Block
 		if collider is StaticBumpingBlock && \
 		collider.has_method(&"got_bumped") && \
@@ -297,7 +298,7 @@ func _head_process() -> void:
 		(player.is_crouching)):
 			collider.got_bumped.call_deferred(player)
 	
-	player.bubble.emitting = !player.is_underwater_out
+	player.bubbler.paused = player.is_underwater_out
 
 #= Body
 func _body_process() -> void:

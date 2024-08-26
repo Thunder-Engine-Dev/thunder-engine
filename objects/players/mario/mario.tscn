@@ -96,6 +96,7 @@ sprite_frames = ExtResource("2_eqact")
 offset = Vector2(0, -16)
 
 [node name="Bubble" type="GPUParticles2D" parent="Sprite"]
+visible = false
 position = Vector2(0, 15)
 emitting = false
 amount = 4
@@ -152,6 +153,10 @@ gravity_scale_override = 0.1
 max_falling_speed_override = 150.0
 spray_offset = Vector2(0, 8)
 metadata/_edit_pinned_properties_ = [&"max_falling_speed_override", &"gravity_scale_override"]
+
+[node name="Bubbler" type="Timer" parent="Underwater"]
+process_callback = 0
+wait_time = 0.1
 
 [node name="Invincible" type="Timer" parent="."]
 process_callback = 0

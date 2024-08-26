@@ -19,6 +19,7 @@ enum Type {
 @export_group("Animation", "animation_")
 @export var animation_sprites: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres")
 @export var animation_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_animation_behavior.gd")
+@export var animation_underwater_bubble_offset := Vector2(0, -20)
 @export_group("Behavior", "behavior_")
 @export var behavior_resource: Resource
 @export var behavior_script: GDScript
@@ -30,4 +31,3 @@ enum Type {
 @export var sound_hurt: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 @export var sound_death: AudioStream = preload("res://engine/objects/players/prefabs/sounds/music-die.ogg")
 @export var sound_pitch: float = 1
-

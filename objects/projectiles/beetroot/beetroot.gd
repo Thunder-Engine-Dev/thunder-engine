@@ -1,14 +1,27 @@
 extends Projectile
 
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
+const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
 
 var drown: bool = false
+var _bubble_timer: float
 
 @onready var detector: ShapeCast2D = $Attack
 
 signal run_out
+
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if drown:
+		_bubble_timer += delta
+		speed = Vector2(0, 75)
+		if _bubble_timer > 0.18:
+			_bubble_timer = 0
+			var bubble = BUBBLE.instantiate()
+			bubble.transform = global_transform
+			Scenes.current_scene.add_child(bubble)
 
 
 func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
@@ -42,7 +55,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if bounces_left == 0:
 		run_out.emit()
 		collision_layer = 0
-		collision_mask = 0
+		collision_mask = 128
 		return
 
 

@@ -12,7 +12,8 @@ func _ready() -> void:
 				underwater.in_water()
 				if !_is_ready:
 					return
-				self._spray.call_deferred(body, underwater.spray_offset)
+				if underwater.has_method("spray_offset"):
+					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
@@ -21,7 +22,8 @@ func _ready() -> void:
 				underwater.out_of_water()
 				if !_is_ready:
 					return
-				self._spray.call_deferred(body, underwater.spray_offset)
+				if underwater.has_method("spray_offset"):
+					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	if Scenes.current_scene is Stage2D:
 		await Scenes.current_scene.stage_ready

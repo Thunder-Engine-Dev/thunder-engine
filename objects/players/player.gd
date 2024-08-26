@@ -129,7 +129,7 @@ var _suit_tree_paused: bool
 @onready var timer_invincible: Timer = $Invincible
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
-@onready var bubble: GPUParticles2D = $Sprite/Bubble
+@onready var bubbler: Timer = $Underwater/Bubbler
 @onready var stars: GPUParticles2D = $Sprite/Stars
 @onready var skid: GPUParticles2D = $Sprite/Skid
 @onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")

@@ -1,5 +1,7 @@
 extends ByNodeScript
 
+const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
+
 var player: Player
 var sprite: AnimatedSprite2D
 var config: PlayerConfig
@@ -18,6 +20,8 @@ func _ready() -> void:
 	player.swam.connect(_swam)
 	player.shot.connect(_shot)
 	player.invinciblized.connect(_invincible)
+	
+	player.bubbler.timeout.connect(_bubble_spawn)
 	
 	sprite.animation_looped.connect(_sprite_loop)
 	sprite.animation_finished.connect(_sprite_finish)
@@ -58,6 +62,16 @@ func _invincible(duration: float) -> void:
 	sprite.modulate.a = 1
 	if !player.is_starman():
 		Effect.flash(sprite, duration, 0.06, Tween.TWEEN_PAUSE_STOP)
+
+
+func _bubble_spawn() -> void:
+	if randi_range(0, 9) != 0 || player.warp != player.Warp.NONE:
+		return
+	var bubble = BUBBLE.instantiate()
+	bubble.transform = player.global_transform
+	var _of: Vector2 = player.suit.animation_underwater_bubble_offset
+	bubble.position += Vector2(_of.x * player.direction, _of.y)
+	Scenes.current_scene.add_child(bubble)
 
 
 func _sprite_loop() -> void:
