@@ -150,7 +150,8 @@ func _switch_bounds() -> void:
 	is_current = true
 	
 	camera.set_meta(&"cam_area", self)
-	camera.teleport.call_deferred(false, true)
+	if camera.has_method(&"teleport"):
+		camera.teleport.call_deferred(false, true)
 	
 	if _is_initial:
 		camera.force_update_scroll.call_deferred()
