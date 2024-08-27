@@ -32,6 +32,11 @@ func _ready() -> void:
 				continue
 			if sound.process_mode != Node.PROCESS_MODE_ALWAYS && sound.bus != "Music":
 				sound.queue_free()
+		for sound in Audio.get_children():
+			if !sound is AudioStreamPlayer:
+				continue
+			if sound.process_mode != Node.PROCESS_MODE_ALWAYS && sound.bus != "Music":
+				sound.queue_free()
 				
 		while Scenes.custom_scenes.pause.opened:
 			await get_tree().physics_frame
@@ -62,6 +67,8 @@ func _ready() -> void:
 	load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 		.instantiate()
 		.with_speeds(circle_closing_speed, -circle_opening_speed)
+		.with_pause()
+		.on_player_after_middle(true)
 	)
 	
 	var cam: Camera2D = Thunder._current_camera
@@ -77,17 +84,13 @@ func _ready() -> void:
 		Scenes.current_scene.add_child(marker)
 	
 	TransitionManager.current_transition.on(marker) # Supports a Node2D or a Vector2
-	TransitionManager.transition_middle.connect(func():
-		TransitionManager.current_transition.paused = true
-		if jump_to_scene.is_empty():
-			Scenes.reload_current_scene()
-		else:
-			Scenes.goto_scene(jump_to_scene)
-			Scenes.scene_changed.connect(func(_current_scene):
-				TransitionManager.current_transition.paused = false
-				get_tree().paused = false
-			, CONNECT_ONE_SHOT)
-	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	await TransitionManager.transition_middle
+	
+	if jump_to_scene.is_empty():
+		Scenes.reload_current_scene()
+	else:
+		Scenes.goto_scene(jump_to_scene)
+		get_tree().paused = false
 
 
 func _physics_process(delta: float) -> void:

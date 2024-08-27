@@ -69,6 +69,7 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
 	scene_ready.emit()
+	get_tree().paused = false
 
 
 ## Loads the scene from the given path and instantiates it
