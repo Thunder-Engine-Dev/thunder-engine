@@ -53,7 +53,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 	if sync_position_only: return
 	
 	if par is PathFollow2D:
-		if player && !stop_blocking_edges:
+		if player && !stop_blocking_edges && ("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
 			var rot: float = get_viewport_transform().affine_inverse().get_rotation()
 			var kc: KinematicCollision2D = null
 			var left_col: bool
