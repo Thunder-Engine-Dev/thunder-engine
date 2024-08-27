@@ -7,6 +7,10 @@ const TRIPLE_POS = 190
 @onready var _value: TextureRect = $HBoxContainer/Value
 @onready var _buffer: TextureRect = $HBoxContainer/Buffer
 @onready var _off: TextureRect = $HBoxContainer/OFF
+var _saved_value: int
+
+func _ready() -> void:
+	SettingsManager.settings_updated.connect(set.bind(&"_saved_value", SettingsManager.settings.vsync))
 
 func _handle_select() -> void:
 	return
@@ -39,6 +43,6 @@ func _toggled_option(old_val, new_val) -> void:
 	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager.request_restart = (
 		new_val > 0 &&
-		new_val != ProjectSettings.get_setting("rendering/rendering_device/vsync/swapchain_image_count", 2)
+		new_val != _saved_value
 	)
 	SettingsManager._process_settings()
