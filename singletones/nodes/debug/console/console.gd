@@ -30,7 +30,7 @@ func _input(event) -> void:
 
 func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
-		var command: Command = load(dir+cmd).register()
+		var command: Command = load(dir + cmd.replace(".remap", "")).register()
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
