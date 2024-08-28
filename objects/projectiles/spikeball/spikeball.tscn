@@ -37,7 +37,7 @@ metadata/_edit_pinned_properties_ = [&"rotation_speed"]
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
-scale = Vector2(6.4, 6.4)
+rect = Rect2(-32, -32, 64, 512)
 
 [node name="Trail" type="Timer" parent="."]
 process_callback = 0

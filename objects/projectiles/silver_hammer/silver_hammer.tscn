@@ -35,6 +35,7 @@ metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-10, -10, 20, 512)
 metadata/_edit_lock_ = true
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]

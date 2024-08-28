@@ -42,7 +42,7 @@ killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-16, -16, 32, 32)
+rect = Rect2(-16, -16, 32, 512)
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]
