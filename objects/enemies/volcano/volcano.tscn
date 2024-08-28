@@ -63,3 +63,7 @@ autoplay = "volcano-heading"
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(0, -96)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-3.8147e-06, -3.8147e-06)
+scale = Vector2(9.6, 9.6)

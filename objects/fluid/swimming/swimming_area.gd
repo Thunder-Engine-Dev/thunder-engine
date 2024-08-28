@@ -12,7 +12,7 @@ func _ready() -> void:
 				underwater.in_water()
 				if !_is_ready:
 					return
-				if underwater.has_method("spray_offset"):
+				if "spray_offset" in underwater:
 					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	body_exited.connect(
@@ -22,7 +22,7 @@ func _ready() -> void:
 				underwater.out_of_water()
 				if !_is_ready:
 					return
-				if underwater.has_method("spray_offset"):
+				if "spray_offset" in underwater:
 					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	if Scenes.current_scene is Stage2D:

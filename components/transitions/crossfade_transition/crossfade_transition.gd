@@ -4,6 +4,7 @@ extends Transition
 
 @onready var texture_rect_from: TextureRect = $TextureRect
 var _scene: String
+var _forced_pause: bool
 
 func _ready() -> void:
 	name = "crossfade_transition"
@@ -18,15 +19,21 @@ func _ready() -> void:
 	Scenes.goto_scene(_scene)
 	await Scenes.scene_ready
 	get_tree().paused = true
+	_forced_pause = true
 	
 	## print("[Transition] Done")
 	middle.emit()
 	var tw = create_tween()
 	tw.tween_property(texture_rect_from, "self_modulate:a", 0.0, fade_time)
 	tw.tween_callback(func():
+		_forced_pause = false
 		get_tree().paused = false
 		end.emit()
 	)
+
+func _physics_process(delta: float) -> void:
+	if _forced_pause:
+		get_tree().paused = true
 
 
 func with_scene(scene: String) -> Transition:
