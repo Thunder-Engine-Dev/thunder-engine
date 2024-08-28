@@ -34,7 +34,8 @@ func _physics_process(delta: float):
 	if !force_xscroll_off && SettingsManager.settings.xscroll:
 		var dont_move := int(player.is_on_wall() || player.warp != player.Warp.NONE || player.is_crouching)
 		if abs(player.speed.x) > 200 && player.running && !par is PathFollow2D:
-			_xscroll += (2 - dont_move) * sign(player.left_right) * delta
+			var _dir: int = sign(player.left_right) if !player.is_sliding_accelerating else sign(player.speed.x)
+			_xscroll += (2 - dont_move) * _dir * delta
 		_xscroll = move_toward(_xscroll, 0, delta)
 		_xscroll = clampf(_xscroll, -1.25, 1.25)
 	

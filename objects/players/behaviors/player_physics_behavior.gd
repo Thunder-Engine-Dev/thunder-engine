@@ -169,26 +169,28 @@ func _movement_climbing(delta: float) -> void:
 #= Sliding from slopes
 func _movement_sliding(delta: float) -> void:
 	if player.completed: return
-	var floor_normal = rad_to_deg(player.get_floor_normal().x)
+	var floor_normal: float = rad_to_deg(player.get_floor_normal().x)
 	var dir: bool = player.direction == 1
 	# Acceleration
-	var accel: Callable = func() -> void:
-		_accelerate(config.slide_max_speed, config.slide_acceleration, delta)
+	var accel: Callable = func(_norm: float) -> void:
+		_accelerate(config.slide_max_speed, (config.slide_acceleration / 50) * _norm, delta)
+		player.is_sliding_accelerating = true
 	# Deceleration
-	var decel: Callable = func() -> void:
-		_decelerate(config.walk_deceleration, delta)
+	var decel: Callable = func(_norm: float) -> void:
+		_decelerate((config.walk_deceleration / 50) * _norm, delta)
+		player.is_sliding_accelerating = false
 	
 	# Sliding towards right
-	if floor_normal >= 40.0:
-		accel.call() if dir else decel.call()
+	if floor_normal >= 10.0:
+		accel.call(abs(floor_normal)) if dir else decel.call(abs(floor_normal))
 		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Sliding towards left
-	elif floor_normal <= -40.0:
-		accel.call() if !dir else decel.call()
+	elif floor_normal <= -10.0:
+		accel.call(abs(floor_normal)) if !dir else decel.call(abs(floor_normal))
 		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Momentum on flat surface after sliding
 	else:
-		decel.call()
+		decel.call(50)
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
 	
@@ -213,6 +215,7 @@ func _start_sliding_movement() -> void:
 
 func _stop_sliding_movement() -> void:
 	player.is_sliding = false
+	player.is_sliding_accelerating = false
 	player.attack.enabled = player.is_starman()
 	if !player.is_starman(): player.starman_combo.reset_combo()
 	player.attack.killing_detection_scale = 2

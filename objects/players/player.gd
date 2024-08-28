@@ -95,6 +95,7 @@ var is_underwater: bool
 var is_underwater_out: bool
 
 var has_stuck: bool
+var is_sliding_accelerating: bool
 
 var completed: bool
 
