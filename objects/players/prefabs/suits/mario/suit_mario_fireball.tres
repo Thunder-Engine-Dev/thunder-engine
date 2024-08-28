@@ -48,6 +48,7 @@ physics_shaper = ExtResource("6_lbdy1")
 physics_shaper_crouch = ExtResource("7_tym7w")
 animation_sprites = ExtResource("2_0gbpq")
 animation_behavior = ExtResource("1_ibg3l")
+animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_fo208")
 behavior_crouch_reflect_fireballs = false

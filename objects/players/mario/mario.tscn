@@ -115,6 +115,7 @@ texture = ExtResource("6_ab7c7")
 lifetime = 0.5
 
 [node name="Skid" type="GPUParticles2D" parent="Sprite"]
+physics_interpolation_mode = 2
 show_behind_parent = true
 position = Vector2(0, 15)
 emitting = false
@@ -122,6 +123,7 @@ amount = 12
 process_material = SubResource("ParticleProcessMaterial_xqn1l")
 texture = ExtResource("7_tcjl5")
 lifetime = 0.5
+fract_delta = false
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false

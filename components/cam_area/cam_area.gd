@@ -40,9 +40,7 @@ func _ready() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	
-	#if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
 	_physics_process.call_deferred(0)
-		#_switch_bounds.call_deferred()
 	
 	await get_tree().physics_frame
 	_is_initial = false
@@ -107,7 +105,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		
 		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
-		if smooth_transition && !_is_initial:
+		if smooth_transition && !_is_initial && SettingsManager.get_tweak("enable_smooth_cam_transitions", true):
 			Thunder.view.cam_border()
 			var cams = get_tree().get_nodes_in_group("#transition_camera")
 			for i in cams:
@@ -118,7 +116,6 @@ func _physics_process(_delta: float) -> void:
 			cam.function = smooth_function
 			cam.speed = smooth_speed
 			add_child(cam)
-			#Scenes.current_scene.falling_below_y_offset *= 10
 		
 		_switch_bounds()
 	

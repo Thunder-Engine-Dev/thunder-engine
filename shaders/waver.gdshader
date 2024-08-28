@@ -28,12 +28,12 @@ void fragment(){
 		uv_mod = UV.y;
 	}
 	float wav_x = calculate_diff(uv_mod, wave_amplitude, wave_frequency, wave_speed);
-	
+
 	if ( int( uv_mod * 1.0 ) % 2 == 0)
 	{
 		wav_x = -wav_x;
 	}
-	
+
 	vec4 textube;
 	if (y_axis) {
 		textube = texture(TEXTURE, vec2(uv_mod, UV.y + wav_x));

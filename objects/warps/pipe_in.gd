@@ -166,7 +166,7 @@ func _physics_process(delta: float) -> void:
 			
 			pass_warp.call_deferred()
 			
-		elif use_blur_transition:
+		elif use_blur_transition && SettingsManager.get_tweak("enable_blur_transitions", true):
 			var trans = load(
 				"res://engine/components/transitions/blur_transition/blur_transition.tscn"
 			).instantiate()
