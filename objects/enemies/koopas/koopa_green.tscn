@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cno8qn60lpnvv"]
+[gd_scene load_steps=19 format=3 uid="uid://cno8qn60lpnvv"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_0f4cl"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_3xxsn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_5whu3"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_txdwg"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_h7q22"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="10_3kwq4"]
 [ext_resource type="SpriteFrames" uid="uid://dowq1cl27iub7" path="res://engine/objects/enemies/koopas/prefabs/koopa_green.tres" id="10_kkq1f"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="11_uf1wh"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_5lllt"]
@@ -97,6 +98,7 @@ stomping_sound = ExtResource("6_fhwgb")
 killing_creation = SubResource("Resource_llg06")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_h7q22")
+killing_sound_failed = ExtResource("10_3kwq4")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
