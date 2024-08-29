@@ -93,8 +93,8 @@ func _physics_process(_delta: float) -> void:
 		
 		_int_detections += int(
 			has_cam_area &&
-			camera.position.x > rect.position.x &&
-			camera.position.y > rect.position.y &&
+			camera.position.x >= rect.position.x &&
+			camera.position.y >= rect.position.y &&
 			camera.position.x < rect.end.x &&
 			camera.position.y < rect.end.y
 		)
