@@ -26,6 +26,11 @@ func _draw() -> void:
 	draw_line(Vector2.ZERO, Vector2.UP * jumping_height, Color.DARK_ORANGE, 4)
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	timer_interval.start(interval)
+
+
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()

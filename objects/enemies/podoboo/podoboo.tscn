@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://uhf6frao7p1m"]
+[gd_scene load_steps=16 format=3 uid="uid://uhf6frao7p1m"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_8xlh0"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_bdac7"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_i6ttr"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="9_6xe0v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8kc8x"]
 radius = 16.0
@@ -101,6 +102,8 @@ autoplay = "default"
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-32, -32, 64, 64)
 enable_node_path = NodePath("../Interval")
+script = ExtResource("9_6xe0v")
+new_rect = Rect2(-128, -128, 256, 256)
 metadata/_edit_lock_ = true
 
 [node name="Interval" type="Timer" parent="."]

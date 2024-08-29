@@ -141,6 +141,8 @@ func _on_attack_timeout() -> void:
 	match _step_attacking:
 		# Detection for attack
 		0:
+			if !Thunder.view.is_getting_closer(self, 32):
+				return
 			var chance: float = randf_range(0, 1)
 			if chance < attacking_chance:
 				_step_attacking = 1
