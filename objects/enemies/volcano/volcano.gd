@@ -9,16 +9,19 @@ const VOLCANO_BALL = preload("res://engine/objects/projectiles/volcano_ball/volc
 const VOLCANO_FIRE = preload("res://engine/objects/enemies/volcano/volcano_fire.ogg")
 
 @onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
+@onready var timer: Timer = $Timer
 @onready var marker_2d: Marker2D = $Marker2D
 
 func _ready() -> void:
-	await get_tree().create_timer(initial_fire_delay, false, true).timeout
-	_fire()
+	#await get_tree().create_timer(initial_fire_delay, false, true).timeout
+	timer.start(initial_fire_delay)
+	timer.timeout.connect(_fire)
+
 
 func _fire() -> void:
-	get_tree().create_timer(fire_interval, false, true).timeout.connect(_fire)
+	timer.start(fire_interval)
 	
-	if !Thunder.view.is_getting_closer(self, 32): return
+	#if !Thunder.view.is_getting_closer(self, 32): return
 	
 	Audio.play_sound(VOLCANO_FIRE, self)
 	

@@ -65,5 +65,9 @@ autoplay = "volcano-heading"
 position = Vector2(0, -96)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(-3.8147e-06, -3.8147e-06)
-scale = Vector2(9.6, 9.6)
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -40)
+scale = Vector2(3.2, 5.6)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
