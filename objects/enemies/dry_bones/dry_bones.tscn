@@ -144,8 +144,9 @@ autoplay = "default"
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
-position = Vector2(0, 17)
+position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_ohwj0")
+offset = Vector2(0, 16)
 flip_v = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
@@ -154,5 +155,6 @@ rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("12_mxggl")
 metadata/_edit_lock_ = true
 
+[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="stomp"]
