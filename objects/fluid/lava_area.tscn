@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0121yqkw7b6i"]
+[gd_scene load_steps=13 format=3 uid="uid://d0121yqkw7b6i"]
 
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_uxlj0"]
 [ext_resource type="Texture2D" uid="uid://c0af6se3xgu6n" path="res://engine/objects/fluid/textures/lava_1.png" id="2_142ux"]
@@ -8,10 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://ddyxhsdkme088" path="res://engine/objects/fluid/textures/lava_5.png" id="6_bhtxx"]
 [ext_resource type="Texture2D" uid="uid://bd54l3c07s1cq" path="res://engine/objects/fluid/textures/lava_6.png" id="7_3sk6y"]
 [ext_resource type="Texture2D" uid="uid://cera40cx2nakg" path="res://engine/objects/fluid/textures/lava_7.png" id="8_fctt5"]
+[ext_resource type="Texture2D" uid="uid://bi76tjdg2fedl" path="res://engine/objects/fluid/textures/lava_8.png" id="9_1pgy4"]
 [ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_vgprf"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
-frames = 7
+frames = 8
 frame_0/texture = ExtResource("2_142ux")
 frame_0/duration = 0.15
 frame_1/texture = ExtResource("3_u3gbk")
@@ -26,6 +27,8 @@ frame_5/texture = ExtResource("7_3sk6y")
 frame_5/duration = 0.15
 frame_6/texture = ExtResource("8_fctt5")
 frame_6/duration = 0.15
+frame_7/texture = ExtResource("9_1pgy4")
+frame_7/duration = 0.15
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
