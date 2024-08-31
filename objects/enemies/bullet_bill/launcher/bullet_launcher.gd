@@ -10,6 +10,7 @@ extends AnimatableBody2D
 @export var first_shooting_delay: float = 0.5
 @export var shooting_delay_min: float = 1.5
 @export var shooting_delay_max: float = 4.5
+@export var shooting_force_dir: int = 0
 @export_group("Sound")
 @export var shooting_sound: AudioStream = preload("../bill/sounds/bullet.ogg")
 @export var sound_pitch_min: float = 1.0
@@ -37,12 +38,17 @@ func _on_bullet_launched() -> void:
 		interval.start(0.1)
 		return
 	
-	var dir: int = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
+	var dir: int
+	if shooting_force_dir == 0:
+		dir = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
+	else:
+		dir = shooting_force_dir
+	
 	Audio.play_sound(
-			shooting_sound, pos_bullet, false, {
-					"pitch": randf_range(sound_pitch_min, sound_pitch_max),
-					"volume": sound_volume,
-			}
+		shooting_sound, pos_bullet, false, {
+			"pitch": randf_range(sound_pitch_min, sound_pitch_max),
+			"volume": sound_volume,
+		}
 	)
 	NodeCreator.prepare_ins_2d(bullet_bill, self).create_2d(false).call_method(
 		func(bul: Node2D) -> void:
