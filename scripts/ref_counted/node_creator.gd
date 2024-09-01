@@ -84,7 +84,7 @@ class NodeCreation extends RefCounted:
 	func bind_global_transform(offset: Vector2 = Vector2.ZERO, rot: float = 0, scl: Vector2 = Vector2.ONE, skew: float = 0) -> NodeCreation:
 		if !_node || !_on: return self
 		_node.global_transform = _on.global_transform.translated_local(offset).rotated(rot).scaled(scl)
-		_node.skew = _on.global_skew
+		_node.global_skew = _on.global_skew
 		_node.reset_physics_interpolation()
 		return self
 	

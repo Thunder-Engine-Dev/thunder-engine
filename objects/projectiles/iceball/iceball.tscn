@@ -32,6 +32,8 @@ collision_mask = 3
 collide_with_areas = true
 script = ExtResource("3_46ix7")
 is_reflectable = true
+special_tags = Array[StringName]([&"freezible"])
+metadata/_edit_pinned_properties_ = [&"special_tags"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)

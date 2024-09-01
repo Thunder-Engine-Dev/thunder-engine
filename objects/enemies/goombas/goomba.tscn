@@ -114,7 +114,8 @@ killing_creation = SubResource("Resource_rnnrp")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("7_sc4cc")
 killing_sound_failed = ExtResource("11_btrgx")
-metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"ice_sprite"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1e01p")

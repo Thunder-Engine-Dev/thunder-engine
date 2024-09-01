@@ -9,6 +9,8 @@ extends Node
 const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effect.tscn")
 const COIN = preload("res://engine/objects/items/coin/coin.wav")
 
+const ICEBLOCK = preload("res://engine/objects/items/ice_block/ice_block.tscn")
+
 @export_category("EnemyAttacked")
 @export_group("General")
 ## The node that you are going to define as an enemy capable to be damaged
@@ -70,6 +72,13 @@ const COIN = preload("res://engine/objects/items/coin/coin.wav")
 @export var killing_sound_failed: AudioStream
 ## Will turn the enemy on screen into a coin upon touching the goal gate
 @export var turn_into_coin_on_level_end: bool = true
+@export_group("Frozen")
+## Path to the sprite that used for the item contained in the ice block created on being frozen.
+@export_node_path("CanvasItem") var ice_sprite: NodePath
+## Offset of what [member ice_sprite] refers to in the ice block.
+@export var ice_sprite_offset: Vector2
+## Sound triggered when the enemy becomes frozen.
+@export var frozen_sound: AudioStream
 @export_group("Sound", "sound_")
 @export var sound_pitch: float = 1.0
 @export_group("Extra")
@@ -84,6 +93,7 @@ var _stomping_delayer: SceneTreeTimer:
 @warning_ignore("unused_private_class_variable")
 @onready var _extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var _center: Node2D = get_node_or_null(center_node)
+@onready var _ice_sprite: Node2D = get_node_or_null(ice_sprite)
 
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 
@@ -101,6 +111,8 @@ signal killed_succeeded
 signal killed_failed
 ## Emitted when the type of enemy attack is marked as "signal"
 signal attack_custom_signal
+## Emitted when the enemy gets frozen.
+signal killed_frozen
 
 var _on_killed: bool # To prevent multiple creation by multiple attackers
 
@@ -186,13 +198,14 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed: bool = true) -> Dictionary:
 	var result: Dictionary
 	
-	if !killing_enabled || !by in killing_immune || _on_killed: 
+	if !killing_enabled || (by != &"suicide" && !by in killing_immune) || _on_killed: 
 		return result
 	
 	_on_killed = true
 	var shell_attack := false
 	
-	if killing_immune[by]:
+	# Immune
+	if by != &"suicide" && killing_immune[by]:
 		if trigger_killed_failed:
 			killed_failed.emit()
 		
@@ -200,7 +213,34 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			result = false,
 			attackee = self
 		}
+	# Frozen
+	elif &"freezible" in special_tags:
+		var ice := NodeCreator.prepare_2d(ICEBLOCK, _center).bind_global_transform(
+			Vector2.ZERO, 
+			_center.rotation, 
+			_center.scale, 
+			_center.skew
+		).create_2d().get_node()
+		ice.contained_item = _center
+		ice.contained_item_enemy_killed = self
+		
+		var in_ice_spr: Node2D = null
+		if is_instance_valid(_ice_sprite):
+			in_ice_spr = _ice_sprite.duplicate()
+		
+		ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
+		
+		_center.get_parent().remove_child.call_deferred(_center)
+		
+		result = {
+			result = true,
+			attackee = self
+		}
+		
+		killed_frozen.emit()
+	# Killed
 	else:
+		# By shell
 		if &"shell_attack" in special_tags:
 			shell_attack = true
 		
@@ -217,6 +257,7 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			result = true,
 			attackee = self
 		}
+		
 		if shell_attack:
 			result.type = &"shell"
 	

@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://dofejp2f025qw"]
+
+[ext_resource type="Script" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
+[ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
+[ext_resource type="Shader" path="res://engine/shaders/highlight.gdshader" id="2_ihm4y"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ena34"]
+size = Vector2(32, 32)
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_1d85q"]
+length = 0.01
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwnle"]
+shader = ExtResource("2_ihm4y")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.32
+shader_parameter/highlight_speed = 10.0
+shader_parameter/highlight_width = 32.0
+
+[node name="IceBlock" type="CharacterBody2D"]
+collision_layer = 7
+collision_mask = 64
+script = ExtResource("1_s4yfw")
+gravity_scale = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ena34")
+
+[node name="SeparateUp" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+rotation = -3.14159
+shape = SubResource("SeparationRayShape2D_1d85q")
+
+[node name="SeparateDown" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 16)
+shape = SubResource("SeparationRayShape2D_1d85q")
+
+[node name="SeparateLeft" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-16, 0)
+rotation = 1.57079
+shape = SubResource("SeparationRayShape2D_1d85q")
+
+[node name="SeparateRight" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(16, 0)
+rotation = -1.57079
+shape = SubResource("SeparationRayShape2D_1d85q")
+
+[node name="SpriteNP" type="NinePatchRect" parent="."]
+material = SubResource("ShaderMaterial_jwnle")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(16, 16)
+texture = ExtResource("2_e4ory")
+region_rect = Rect2(1, 0, 39, 40)
+patch_margin_left = 3
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 1.43051e-06)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("3_egg7o")
+metadata/_edit_lock_ = true
+
+[node name="TimerDestroy" type="Timer" parent="."]
+process_mode = 1
+one_shot = true

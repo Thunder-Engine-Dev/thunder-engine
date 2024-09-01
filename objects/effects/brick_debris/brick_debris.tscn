@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmiopxb2ews2o"]
+[gd_scene load_steps=4 format=3 uid="uid://dmiopxb2ews2o"]
 
 [ext_resource type="Texture2D" uid="uid://cp8u5w2nt1hwh" path="res://engine/objects/effects/brick_debris/brick_debris.png" id="1_arhg4"]
 [ext_resource type="Script" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_onta8"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_we1gi"]
 
 [node name="BrickDebris" type="Sprite2D"]
 z_index = 5
 texture = ExtResource("1_arhg4")
 script = ExtResource("2_onta8")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0392157)
+rect = Rect2(-8, -8, 16, 16)
+script = ExtResource("3_we1gi")
+metadata/_edit_lock_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]
