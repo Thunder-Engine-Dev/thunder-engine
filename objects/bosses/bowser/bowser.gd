@@ -114,29 +114,33 @@ func _physics_process(delta: float) -> void:
 		if sprite.animation == &"throw":
 			sprite.offset.x = 7 * facing
 			sprite.reset_physics_interpolation()
+	
 	# Animation
 	if facing != 0:
 		sprite.flip_h = (facing < 0)
 	
 	if !active: return
-	
 	match sprite.animation:
 		&"default":
 			if !is_on_floor(): animations.play(&"bowser/jump")
 		&"jump":
 			if is_on_floor(): animations.play(&"bowser/idle")
+	
 	# Pos markers
 	pos_flame.position.x = pos_flame_x * facing
 	pos_hammer.position.x = pos_hammer_x * facing
+	
 	# Movement
 	if !lock_movement:
 		_movement(delta)
 	elif speed.x != 0:
 		_speed = abs(speed.x)
 		vel_set_x(0)
+	
 	# Jump
 	if jump_enabled:
 		_jumping(delta)
+	
 	# Attack
 	if !tween_status:
 		tween_status = create_tween()
@@ -149,6 +153,7 @@ func _physics_process(delta: float) -> void:
 			tween_status.finished.connect(func() -> void:
 				tween_status = null
 			)
+	
 	# Physics
 	motion_process(delta)
 	if is_on_floor():
@@ -401,7 +406,8 @@ func _movement(delta: float) -> void:
 	var chance1: float = randf_range(0, 1)
 	if chance1 < 0.1 && !_walking_paused:
 		_walking_paused = true
-		_speed = abs(speed.x)
+		if !is_zero_approx(_speed):
+			_speed = abs(speed.x)
 		vel_set_x(0)
 	# Resuming
 	var chance2: float = randf_range(0, 1)
@@ -409,7 +415,8 @@ func _movement(delta: float) -> void:
 		_walking_paused = false
 	
 	# Keeps moving
-	if !_walking_paused: vel_set_x(_speed * direction)
+	if !_walking_paused:
+		vel_set_x(_speed * direction)
 
 
 # Bowser's Jumping
