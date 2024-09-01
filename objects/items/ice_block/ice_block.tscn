@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dofejp2f025qw"]
+[gd_scene load_steps=9 format=3 uid="uid://dofejp2f025qw"]
 
 [ext_resource type="Script" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
 [ext_resource type="Shader" path="res://engine/shaders/highlight.gdshader" id="2_ihm4y"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
+[ext_resource type="PackedScene" uid="uid://bsqqrmefglch8" path="res://engine/node_modifiers/ice_physics_modifier/ice_physics_modifier.tscn" id="5_7n84j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ena34"]
 size = Vector2(32, 32)
@@ -19,34 +20,29 @@ shader_parameter/highlight_speed = 10.0
 shader_parameter/highlight_width = 32.0
 
 [node name="IceBlock" type="CharacterBody2D"]
-collision_layer = 7
-collision_mask = 64
+collision_layer = 0
+collision_mask = 112
 script = ExtResource("1_s4yfw")
-gravity_scale = 0.25
+gravity_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_ena34")
 
 [node name="SeparateUp" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -16)
 rotation = -3.14159
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateDown" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 16)
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateLeft" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-16, 0)
 rotation = 1.57079
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateRight" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(16, 0)
 rotation = -1.57079
 shape = SubResource("SeparationRayShape2D_1d85q")
@@ -59,8 +55,8 @@ offset_right = 16.0
 offset_bottom = 16.0
 pivot_offset = Vector2(16, 16)
 texture = ExtResource("2_e4ory")
-region_rect = Rect2(1, 0, 39, 40)
-patch_margin_left = 3
+region_rect = Rect2(0, 0, 40, 40)
+patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
@@ -78,3 +74,5 @@ metadata/_edit_lock_ = true
 [node name="TimerDestroy" type="Timer" parent="."]
 process_mode = 1
 one_shot = true
+
+[node name="IcePhysicsModifier" parent="." instance=ExtResource("5_7n84j")]

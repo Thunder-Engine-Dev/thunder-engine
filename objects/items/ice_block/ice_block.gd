@@ -56,6 +56,8 @@ func _ready() -> void:
 		var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))).set_trans(Tween.TRANS_SINE)
 		tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
 		tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
+		
+		tw.finished.connect(break_ice)
 
 
 func _physics_process(delta: float) -> void:

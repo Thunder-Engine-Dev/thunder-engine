@@ -1,8 +1,4 @@
-extends StaticBody2D
-## DEPRECATED: use the ice physics node modifier instead.
-
-## Make a new StaticBody2D, attach this script, and add collision shapes to have the player
-## slide on it, like on ice. Put in place of the ground.
+extends NodeModifier
 
 @export var sliding_effect: PackedScene = preload("res://engine/objects/effects/slide/slide_effect.tscn")
 @export var sound_sliding: AudioStream = preload("res://engine/objects/platform/sound/sliding.mp3")
@@ -32,7 +28,7 @@ func _physics_process(delta):
 		_add_slippery(prev_state)
 	
 	var kc: = KinematicCollision2D.new()
-	test_move(global_transform, Vector2.UP.rotated(global_rotation), kc)
+	target_node.test_move(target_node.global_transform, Vector2.UP.rotated(target_node.global_rotation), kc)
 	if kc:
 		var collider: = kc.get_collider()
 		if collider is Player:

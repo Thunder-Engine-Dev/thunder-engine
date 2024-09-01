@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsqqrmefglch8"]
+
+[ext_resource type="Script" path="res://engine/node_modifiers/ice_physics_modifier/ice_physics_modifier.gd" id="1_c4r5v"]
+
+[node name="IcePhysicsModifier" type="Node"]
+script = ExtResource("1_c4r5v")
