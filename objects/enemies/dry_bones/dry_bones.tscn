@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4bjvmqtj8nv0"]
+[gd_scene load_steps=24 format=3 uid="uid://b4bjvmqtj8nv0"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/dry_bones/dry_bones.gd" id="1_gjuwm"]
+[ext_resource type="AudioStream" uid="uid://eusaqu4m1xk3" path="res://engine/objects/enemies/dry_bones/sounds/dry_bones_rebirth.ogg" id="2_57nos"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_sb3ce"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_m14to"]
-[ext_resource type="AudioStream" uid="uid://ctfpepe74akjs" path="res://engine/objects/bumping_blocks/_sounds/break.wav" id="4_45lk6"]
+[ext_resource type="AudioStream" uid="uid://gy4tcj7y30bb" path="res://engine/objects/enemies/dry_bones/sounds/dry_bones_death.ogg" id="5_5ckk4"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_tdmyt"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_hsdxt"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_keh7h"]
@@ -11,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_vk5nm"]
 [ext_resource type="Texture2D" uid="uid://b2rda0o76djx7" path="res://engine/objects/enemies/dry_bones/textures/dry_bones_crash.png" id="10_yrk1c"]
 [ext_resource type="Texture2D" uid="uid://df7awin576fr5" path="res://engine/objects/enemies/dry_bones/textures/dry_bones.png" id="11_mnn21"]
+[ext_resource type="Script" path="res://engine/objects/enemies/enemy_edge_turner.gd" id="11_xqagi"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mxggl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lhh31"]
@@ -61,7 +63,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"crash",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -94,6 +96,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_gjuwm")
+rebirth_sound = ExtResource("2_57nos")
 look_at_player = true
 sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
@@ -118,7 +121,7 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 script = ExtResource("3_m14to")
 stomping_creation = null
 stomping_scores = 0
-stomping_sound = ExtResource("4_45lk6")
+stomping_sound = ExtResource("5_5ckk4")
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -137,9 +140,18 @@ killing_sound_succeeded = ExtResource("9_vk5nm")
 killing_sound_failed = ExtResource("9_6dd26")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
+[node name="Turner" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(16, 9)
+target_position = Vector2(0, 8)
+collision_mask = 32
+hit_from_inside = true
+script = ExtResource("11_xqagi")
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_o8kx3")
+animation = &"crash"
 autoplay = "default"
 
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
