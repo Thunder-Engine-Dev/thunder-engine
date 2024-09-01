@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://b0f1uy0wgci6x"]
+
+[ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_qfrll"]
+[ext_resource type="Texture2D" uid="uid://cy6delerkofbo" path="res://engine/objects/powerups/ice_flower/texture.png" id="3_0ewov"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_7rv1n"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_n1n7i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e20fa"]
+atlas = ExtResource("3_0ewov")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5n81"]
+atlas = ExtResource("3_0ewov")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfvsj"]
+atlas = ExtResource("3_0ewov")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmqdq"]
+atlas = ExtResource("3_0ewov")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4qtav"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e20fa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5n81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfvsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmqdq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_jy2tl"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t2i4u"]
+gradient = SubResource("Gradient_jy2tl")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
+[node name="IceFlower" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_qfrll")
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4qtav")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+script = ExtResource("4_n1n7i")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_t2i4u")
+script = ExtResource("4_7rv1n")
+duration = 0.3
