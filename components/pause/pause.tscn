@@ -406,11 +406,11 @@ main_menu_controls = "Pause/VBoxContainer"
 [node name="Controls" parent="Settings/SubViewportContainer/SubViewport/Options" index="2"]
 script = ExtResource("20_44axe")
 
-[node name="Credits" parent="Settings/SubViewportContainer/SubViewport/Options" index="10"]
+[node name="Credits" parent="Settings/SubViewportContainer/SubViewport/Options" index="11"]
 script = ExtResource("21_npsqc")
 metadata/_edit_pinned_properties_ = [&"script"]
 
-[node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" index="11"]
+[node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" index="12"]
 script = ExtResource("20_r3d2l")
 
 [node name="Controls" parent="." instance=ExtResource("21_hgbbf")]

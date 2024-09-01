@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://uhf6frao7p1m"]
+[gd_scene load_steps=19 format=3 uid="uid://uhf6frao7p1m"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_bdac7"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_i6ttr"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="9_6xe0v"]
+[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="10_h5xk2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8kc8x"]
 radius = 16.0
@@ -57,6 +58,18 @@ animations = [{
 "name": &"default",
 "speed": 25.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_j7rb0"]
+colors = PackedColorArray(1, 1, 1, 0.501961, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pces4"]
+gradient = SubResource("Gradient_j7rb0")
+width = 160
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
 
 [node name="Podoboo" type="CharacterBody2D" groups=["#lava_body"]]
 collision_layer = 2
@@ -110,6 +123,14 @@ metadata/_edit_lock_ = true
 wait_time = 3.0
 one_shot = true
 autostart = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_pces4")
+texture_scale = 0.01
+script = ExtResource("10_h5xk2")
+duration = 0.15
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="timeout" from="Interval" to="." method="_on_jump"]

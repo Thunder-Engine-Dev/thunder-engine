@@ -36,7 +36,8 @@ static func trail(
 			if interpolation_support:
 				tra.visible = false
 				await Thunder.get_tree().physics_frame
-				tra.visible = true
+				if is_instance_valid(tra) && tra.is_inside_tree():
+					tra.visible = true
 	).create_2d().get_node() as Sprite2D
 	
 	return effect_node
