@@ -20,8 +20,8 @@ shader_parameter/highlight_speed = 10.0
 shader_parameter/highlight_width = 32.0
 
 [node name="IceBlock" type="CharacterBody2D"]
-collision_layer = 0
-collision_mask = 112
+collision_layer = 116
+collision_mask = 64
 script = ExtResource("1_s4yfw")
 gravity_scale = 0.5
 
