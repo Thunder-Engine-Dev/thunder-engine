@@ -52,4 +52,3 @@ func _physics_process(delta: float) -> void:
 			phases[i] += 5 * 50 * delta
 			lava_objects[i].position.y = vel * sin(phases[i] / 50.0)
 			lava_velocity[i] -= 0.1 * Thunder.get_delta(delta)
-

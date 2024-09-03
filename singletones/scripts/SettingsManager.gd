@@ -51,6 +51,8 @@ signal tweaks_loaded
 signal data_saved(id: String)
 signal data_loaded(id: String)
 
+var _default_tps: int = Engine.physics_ticks_per_second
+
 func _ready() -> void:
 	load_settings()
 	_load_keys()
@@ -87,6 +89,7 @@ func _check_for_validity() -> void:
 func _process_settings() -> void:
 	# Game Speed
 	Engine.time_scale = settings.game_speed
+	Engine.physics_ticks_per_second = Engine.time_scale * _default_tps
 	
 	# Vsync
 	var current_vsync = DisplayServer.window_get_vsync_mode(0)
