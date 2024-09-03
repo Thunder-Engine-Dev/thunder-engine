@@ -2,25 +2,13 @@ extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/smoke/smoke.tscn")
 
-@onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var jumping_speed: float = -350.0
 var bounces_left: int = 2
 
 
 func _ready() -> void:
-	await get_tree().physics_frame
-	if belongs_to == Data.PROJECTILE_BELONGS.ENEMY:
-		# Delete projectile if shot by enemy off-screen
-		if !vision.is_on_screen():
-			queue_free()
-		# Delete projectile if shot by enemy from the top
-		elif !Thunder.view.screen_top(global_position, 32, true):
-			queue_free()
-	# Delete projectile shot by player off-screen if it's there for too long
-	elif !vision.is_on_screen():
-		await get_tree().create_timer(2.0, false).timeout
-		if is_inside_tree() && !vision.is_on_screen():
-			queue_free()
+	offscreen_handler(2.0)
+	super()
 
 
 func _physics_process(delta: float) -> void:
@@ -47,7 +35,7 @@ func explode():
 
 func expand_vision(_scale: Vector2) -> void:
 	await ready
-	if vision: vision.scale = _scale
+	if vision_node: vision_node.scale = _scale
 
 
 func _on_level_end() -> void:

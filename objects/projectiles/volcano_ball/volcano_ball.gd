@@ -3,6 +3,7 @@ extends Projectile
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 func _ready() -> void:
+	super()
 	if speed.x < 0 && sprite_node:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed
 	
