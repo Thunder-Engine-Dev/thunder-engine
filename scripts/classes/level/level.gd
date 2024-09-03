@@ -121,6 +121,11 @@ func _prepare_template() -> void:
 	var parallax_bg = ParallaxBackground.new()
 	add_child(parallax_bg, true)
 	parallax_bg.set_owner(self)
+	
+	var folder = Node2D.new()
+	add_child(folder)
+	folder.set_name('Objects')
+	folder.set_owner(self)
 
 
 func _physics_process(delta: float) -> void:

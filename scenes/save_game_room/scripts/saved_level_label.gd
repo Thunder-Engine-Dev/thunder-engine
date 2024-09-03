@@ -2,6 +2,7 @@ extends Label
 
 @onready var pipe_save: Area2D = $".."
 @onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
+@onready var text_template: String = text
 
 func _ready() -> void:
 	if !pipe_save.profile_name:
@@ -24,7 +25,7 @@ func _ready() -> void:
 		if _tweak:
 			full_numbers = world_numbers[0]
 		
-		text = text % full_numbers.replace("-", " - ")
+		text = text_template % full_numbers.replace("-", " - ")
 	else:
 		set_empty()
 
@@ -36,4 +37,4 @@ func set_empty() -> void:
 func set_world_numbers(world_numbers: String) -> void:
 	if _tweak:
 		world_numbers = world_numbers.split("-")[0]
-	text = text % world_numbers.replace("-", " - ")
+	text = text_template % world_numbers.replace("-", " - ")

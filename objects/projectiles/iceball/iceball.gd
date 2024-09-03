@@ -8,13 +8,19 @@ var bounces_left: int = 2
 
 
 func _ready() -> void:
-	add_to_group(&"end_level_sequence")
 	await get_tree().physics_frame
-	if (
-		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&
-		!vision.is_on_screen()
-	):
-		queue_free()
+	if belongs_to == Data.PROJECTILE_BELONGS.ENEMY:
+		# Delete projectile if shot by enemy off-screen
+		if !vision.is_on_screen():
+			queue_free()
+		# Delete projectile if shot by enemy from the top
+		elif !Thunder.view.screen_top(global_position, 32, true):
+			queue_free()
+	# Delete projectile shot by player off-screen if it's there for too long
+	elif !vision.is_on_screen():
+		await get_tree().create_timer(2.0, false).timeout
+		if is_inside_tree() && !vision.is_on_screen():
+			queue_free()
 
 
 func _physics_process(delta: float) -> void:

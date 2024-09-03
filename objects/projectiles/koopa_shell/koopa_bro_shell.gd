@@ -31,6 +31,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		node.position.y += 12
 	)
 	
+	var _has_brick: bool
 	for i in get_slide_collision_count():
 		var _collision: KinematicCollision2D = get_slide_collision(i)
 		if !_collision: continue
@@ -41,12 +42,21 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 			collider.has_method(&"got_bumped")
 		):
 			collider.got_bumped(self)
+			_has_brick = true
+	if _has_brick:
+		_fix_velocity.call_deferred(speed.x)
 
 	if bounces_left == 0:
 		run_out.emit()
 		collision_layer = 0
 		collision_mask = 0
 		return
+
+
+func _fix_velocity(old_speed: float) -> void:
+	await get_tree().physics_frame
+	if is_inside_tree():
+		speed.x = old_speed
 
 
 func _on_level_end() -> void:

@@ -40,10 +40,4 @@ modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
 rect = Rect2(-32, -32, 64, 2048)
 
-[node name="Trail" type="Timer" parent="."]
-process_callback = 0
-wait_time = 0.06
-autostart = true
-
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
-[connection signal="timeout" from="Trail" to="." method="_on_trail"]

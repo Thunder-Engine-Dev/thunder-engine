@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var down_pos: float = position.y + 42
+@export var move_down_by_px: float = 42
 @onready var first_pos: float = position.y
 @onready var progress: TextureProgressBar = $Progress
 
@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 func _on_pipe_save_player_enter() -> void:
 	if tw: tw.kill()
 	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(self, ^"position:y", down_pos, 0.3)
+	tw.tween_property(self, ^"position:y", first_pos + move_down_by_px, 0.3)
 	is_inside = true
 
 
