@@ -74,10 +74,11 @@ func _physics_process(delta: float) -> void:
 		middle.emit()
 		if _is_with_pause:
 			Scenes.scene_ready.connect(func():
-				paused = false
 				var pl = Thunder._current_player
 				if _on_player_after_middle && is_instance_valid(pl):
 					on(pl)
+				else:
+					paused = false
 			, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
 		middle_switch = true

@@ -257,14 +257,8 @@ func save_data(data: Dictionary, to_path: String, id: String = "Custom") -> void
 
 ## Restarts the application
 func restart_application() -> void:
-	var thread = Thread.new()
-	thread.start(_execute_current_application)
-	get_tree().quit()
-
-
-func _execute_current_application():
-	var executable_path = OS.get_executable_path()
 	var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
 	var cmd_args: PackedStringArray = [menu_path]
 	cmd_args.append_array(OS.get_cmdline_args())
-	OS.execute(executable_path, cmd_args)
+	OS.set_restart_on_exit(true, cmd_args)
+	get_tree().quit()

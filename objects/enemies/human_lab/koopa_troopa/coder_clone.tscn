@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://clnvxc3co85ls"]
+[gd_scene load_steps=36 format=3 uid="uid://clnvxc3co85ls"]
 
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_cayg7"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_i0fi6"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bjoc52wskr2b8" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_body.png" id="7_bqfmj"]
 [ext_resource type="Texture2D" uid="uid://x1b1vqu024vr" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_dead.png" id="9_6expy"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="9_t5eyo"]
+[ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="10_typ8o"]
 [ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="10_uk66u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xa3qa"]
@@ -216,6 +217,7 @@ sprite_frames = SubResource("SpriteFrames_gtw8g")
 
 [node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_d2buv")
+script = ExtResource("10_typ8o")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="1"]
 z_index = -1

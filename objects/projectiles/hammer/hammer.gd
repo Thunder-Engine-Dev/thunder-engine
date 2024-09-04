@@ -1,5 +1,9 @@
 extends Projectile
 
+func _ready() -> void:
+	super()
+	offscreen_handler()
+
 
 func _physics_process(delta: float) -> void:
 	super(delta)

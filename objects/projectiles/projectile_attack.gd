@@ -21,10 +21,10 @@ signal damaged_player
 signal damaged_player_failed
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if par is GravityBody2D:
 		velocity = par.velocity
-		target_position = (velocity * get_physics_process_delta_time() * killing_detection_scale).rotated(-global_rotation)
+		target_position = (velocity * delta * killing_detection_scale).rotated(-global_rotation)
 	
 	if &"belongs_to" in par: belongs_to = par.belongs_to
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8kgbn8f7lvf0"]
+[gd_scene load_steps=15 format=3 uid="uid://b8kgbn8f7lvf0"]
 
 [ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
@@ -41,6 +41,9 @@ animations = [{
 "name": &"default",
 "speed": 15.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6em3"]
+size = Vector2(20, 30)
 
 [sub_resource type="GDScript" id="GDScript_twjsq"]
 script/source = "extends ByNodeScript
@@ -87,8 +90,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-visible = false
-shape = SubResource("RectangleShape2D_xcllp")
+shape = SubResource("RectangleShape2D_l6em3")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_o0ga7")

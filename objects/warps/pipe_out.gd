@@ -88,13 +88,18 @@ func pass_player(new_player: Player) -> void:
 	
 	player.global_position = pos_player.global_position
 	player.reset_physics_interpolation()
+	var cam: PlayerCamera2D = Thunder._current_camera
+	if cam:
+		cam.teleport(true, true)
+		
+	
 	player.warp_dir = player_warp_dir
 	player.z_index = -5
 	player.warp = Player.Warp.OUT
 	
 	await get_tree().physics_frame
-	await get_tree().physics_frame
 	Audio.play_sound(warping_sound, self, false)
+	await get_tree().physics_frame
 
 
 func _label() -> void:

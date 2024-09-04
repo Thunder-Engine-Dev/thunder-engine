@@ -10,6 +10,10 @@ var drown: bool = false
 
 signal run_out
 
+func _ready() -> void:
+	super()
+	offscreen_handler()
+
 
 func _physics_process(delta: float) -> void:
 	super(delta)
