@@ -10,6 +10,16 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var breaking_speed: float = 300
 ## Speed of ice debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var debris_speed: float = 6
+@export_group("Push")
+## If [code]true[/code], the block is pushable.
+@export var pushable: bool = true
+## Max speed of the ice block during Mario pushing it.
+@export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var pushing_max_speed: float = 300
+## Acceleration of the ice block while Mario is pushing it.
+@export_range(0, 99999, 0.1, "or_greater", "hide_slider", "suffix:px/s²") var pushing_acceleration: float = 250
+## Deceleration of the ice block when moving.
+@export_range(0, 99999, 0.1, "or_greater", "hide_slider", "suffix:px/s²") var deceleration: float = 250
+@export_group("Sounds", "sound_")
 ## Sound of ice breaking normally.
 @export var sound_breaking: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 ## Sound of ice breaking heavily.
@@ -20,11 +30,10 @@ var contained_item_sprite: Node2D
 var contained_item_enemy_killed: Node
 
 @onready var _sprite: NinePatchRect = $SpriteNP
-@onready var _separate_up: CollisionShape2D = $SeparateUp
-@onready var _separate_down: CollisionShape2D = $SeparateDown
-@onready var _separate_left: CollisionShape2D = $SeparateLeft
-@onready var _separate_right: CollisionShape2D = $SeparateRight
+@onready var _collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var _push_detc: ShapeCast2D = $PushDetc
 @onready var _timer_destroy: Timer = $TimerDestroy
+@onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _ready() -> void:
@@ -37,10 +46,12 @@ func _ready() -> void:
 	for i in 10:
 		await get_tree().physics_frame
 	
-	_separate_up.queue_free()
-	_separate_down.queue_free()
-	_separate_left.queue_free()
-	_separate_right.queue_free()
+	var dir := Vector2.DOWN
+	for j in 4:
+		while test_move(global_transform, Vector2.ZERO):
+			global_position -= dir
+			force_update_transform()
+		dir = dir.orthogonal()
 	
 	_timer_destroy.start(destroy_delay)
 	_timer_destroy.timeout.connect(break_ice)
@@ -62,9 +73,18 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	
 	if speed_previous.y > breaking_speed && is_on_floor():
 		break_ice(true, true)
-
+	
+	var right := Vector2.RIGHT.rotated(global_rotation)
+	for i in _push_detc.get_collision_count():
+		var pl := _push_detc.get_collider(i) as Player
+		var lr := Input.get_axis(&"m_left", &"m_right")
+		if pushable && pl && lr * pl.global_position.direction_to(global_position).dot(right * lr) > 0:
+			speed.x = move_toward(speed.x, lr * pushing_max_speed, pushing_acceleration * delta)
+		elif !pl && !is_zero_approx(speed.x):
+			speed.x = move_toward(speed.x, 0, deceleration * delta)
 
 ## Draws the sprite for the ice
 func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 = Vector2.ZERO) -> void:
@@ -99,10 +119,12 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	_sprite.position = -_sprite.pivot_offset
 	
 	var rect := _sprite.get_rect()
-	_separate_up.position.y = rect.position.y
-	_separate_down.position.y = rect.end.y
-	_separate_left.position.x = rect.position.x
-	_separate_right.position.x = rect.end.x
+	if _collision_shape.shape is RectangleShape2D:
+		_collision_shape.shape = _collision_shape.shape.duplicate(true)
+		(_collision_shape.shape as RectangleShape2D).size = rect.size
+	if _push_detc.shape is RectangleShape2D:
+		_push_detc.shape = _push_detc.shape.duplicate(true)
+		(_push_detc.shape as RectangleShape2D).size = rect.size + Vector2(2, -2)
 
 
 ## Breaks the ice.[br]
@@ -113,7 +135,8 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 		(func():
 			add_sibling(contained_item)
 			contained_item.global_transform = global_transform
-			contained_item.position += contained_item_sprite.position
+			if is_instance_valid(contained_item_sprite):
+				contained_item.position += contained_item_sprite.position
 			contained_item.reset_physics_interpolation()
 			
 			if !heavy && is_instance_valid(contained_item_enemy_killed):
@@ -124,17 +147,19 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 				contained_item.queue_free()
 		).call_deferred()
 	
+	
 	Audio.play_sound(sound_breaking_heavily if sound_heavily else sound_breaking, self)
 	
-	var rect := _sprite.get_rect().size
-	var get_ellipse_point: Callable = func(angle: float) -> Vector2:
-		return Vector2(rect.x * cos(angle), rect.y * sin(angle))
-	var maximum_debris := int(roundf(_sprite.get_rect().get_area() / 170.67))
-	var angle_unit := TAU / maximum_debris
-	
-	for i in maximum_debris:
-		var angle := wrapf(angle_unit * i, -PI, PI) - angle_unit / 2
-		var debris := NodeCreator.prepare_2d(ICE_DEBRIS, self).bind_global_transform(get_ellipse_point.call(angle)).create_2d().get_node()
-		debris.velocity = debris_speed * Vector2.RIGHT.rotated(global_rotation + angle)
+	if _visible_on_screen.is_on_screen():
+		var rect := _sprite.get_rect().size
+		var get_ellipse_point: Callable = func(angle: float) -> Vector2:
+			return Vector2(rect.x * cos(angle), rect.y * sin(angle))
+		var maximum_debris := int(roundf(_sprite.get_rect().get_area() / 170.67))
+		var angle_unit := TAU / maximum_debris
+		
+		for i in maximum_debris:
+			var angle := wrapf(angle_unit * i, -PI, PI) - angle_unit / 2
+			var debris := NodeCreator.prepare_2d(ICE_DEBRIS, self).bind_global_transform(get_ellipse_point.call(angle)).create_2d().get_node()
+			debris.velocity = debris_speed * Vector2.RIGHT.rotated(global_rotation + angle)
 	
 	queue_free()
