@@ -109,22 +109,20 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 ## If [param heavy] is [code]true[/code], the object in the block will be destroyed.[br]
 ## [param sound_heavily] determines which type of sound will play on the ice's breaking.
 func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
-	if !is_instance_valid(contained_item):
-		return
-	
-	(func():
-		add_sibling(contained_item)
-		contained_item.global_transform = global_transform
-		contained_item.position += contained_item_sprite.position
-		contained_item.reset_physics_interpolation()
-		
-		if !heavy && is_instance_valid(contained_item_enemy_killed):
-			contained_item.set_deferred(&"global_transform", global_transform)
-		elif contained_item.is_ancestor_of(contained_item_enemy_killed):
-			contained_item_enemy_killed.got_killed(&"suicide")
-		else:
-			contained_item.queue_free()
-	).call_deferred()
+	if is_instance_valid(contained_item):
+		(func():
+			add_sibling(contained_item)
+			contained_item.global_transform = global_transform
+			contained_item.position += contained_item_sprite.position
+			contained_item.reset_physics_interpolation()
+			
+			if !heavy && is_instance_valid(contained_item_enemy_killed):
+				contained_item.set_deferred(&"global_transform", global_transform)
+			elif contained_item.is_ancestor_of(contained_item_enemy_killed):
+				contained_item_enemy_killed.got_killed(&"suicide")
+			else:
+				contained_item.queue_free()
+		).call_deferred()
 	
 	Audio.play_sound(sound_breaking_heavily if sound_heavily else sound_breaking, self)
 	

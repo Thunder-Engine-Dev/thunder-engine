@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://3lhn1v4tm4e3"]
+[gd_scene load_steps=19 format=3 uid="uid://3lhn1v4tm4e3"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i4f1f"]
@@ -8,8 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="7_2n42i"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
 [ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="8_er3no"]
-[ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="10_emcnn"]
-[ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="11_0mbb6"]
 
 [sub_resource type="Gradient" id="Gradient_pt5ds"]
 colors = PackedColorArray(0.246609, 0.468349, 1, 1, 1, 1, 1, 1)
@@ -76,14 +74,6 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="GDScript" id="GDScript_jbshp"]
-script/source = "extends Node
-
-
-func _ready() -> void:
-	$\"../Attack\".belongs_to = Data.PROJECTILE_BELONGS.PLAYER
-"
-
 [node name="Level" type="Node2D"]
 script = ExtResource("1_rohf5")
 metadata/_edit_lock_ = true
@@ -129,15 +119,3 @@ autoplay = "default"
 position = Vector2(1008, 400)
 sprite_frames = SubResource("SpriteFrames_pxejg")
 autoplay = "default"
-
-[node name="Goomba" parent="." instance=ExtResource("10_emcnn")]
-position = Vector2(384, 160)
-
-[node name="Iceball" parent="." instance=ExtResource("11_0mbb6")]
-position = Vector2(320, 144)
-metadata/_edit_group_ = true
-
-[node name="Node" type="Node" parent="Iceball"]
-script = SubResource("GDScript_jbshp")
-
-[editable path="Iceball"]

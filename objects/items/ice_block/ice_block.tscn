@@ -26,23 +26,28 @@ script = ExtResource("1_s4yfw")
 gravity_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ena34")
 
 [node name="SeparateUp" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -16)
 rotation = -3.14159
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateDown" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 16)
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateLeft" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-16, 0)
 rotation = 1.57079
 shape = SubResource("SeparationRayShape2D_1d85q")
 
 [node name="SeparateRight" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(16, 0)
 rotation = -1.57079
 shape = SubResource("SeparationRayShape2D_1d85q")
