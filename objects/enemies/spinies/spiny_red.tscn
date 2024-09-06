@@ -136,6 +136,7 @@ stomping_standard = Vector2(0, 0)
 killing_creation = SubResource("Resource_ba3fn")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("10_oumu7")
+frozen_scores = 100
 custom_vars = {
 "attachment_killed": NodePath(""),
 "attachment_stomped": NodePath("")

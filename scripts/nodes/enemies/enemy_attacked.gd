@@ -9,7 +9,7 @@ extends Node
 const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effect.tscn")
 const COIN = preload("res://engine/objects/items/coin/coin.wav")
 
-const ICEBLOCK = preload("res://engine/objects/items/ice_block/ice_block.tscn")
+const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 
 @export_category("EnemyAttacked")
 @export_group("General")
@@ -73,12 +73,18 @@ const ICEBLOCK = preload("res://engine/objects/items/ice_block/ice_block.tscn")
 ## Will turn the enemy on screen into a coin upon touching the goal gate
 @export var turn_into_coin_on_level_end: bool = true
 @export_group("Frozen")
+## If [code]true[/code], the enemy will be able to be frozen into ice block by special attackers
+@export var frozen_enabled: bool = true
+## Scores given to the player when the enemy gets frozen
+@export var frozen_scores: int
 ## Path to the sprite that used for the item contained in the ice block created on being frozen.
 @export_node_path("CanvasItem") var ice_sprite: NodePath
+## Take the ice sprite from the root node's sprite variable
+@export var ice_sprite_autoset: bool = true
 ## Offset of what [member ice_sprite] refers to in the ice block.
 @export var ice_sprite_offset: Vector2
 ## Sound triggered when the enemy becomes frozen.
-@export var frozen_sound: AudioStream
+@export var frozen_sound: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 @export_group("Sound", "sound_")
 @export var sound_pitch: float = 1.0
 @export_group("Extra")
@@ -121,8 +127,11 @@ func _ready() -> void:
 	stomped_succeeded.connect(_lss)
 	killed_succeeded.connect(_lks)
 	killed_failed.connect(_lkf)
+	killed_frozen.connect(_lkfz)
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")
+	if !is_instance_valid(_ice_sprite) && ice_sprite_autoset && is_instance_valid(_center) && _center.sprite:
+		_ice_sprite = _center.get_node_or_null(_center.sprite)
 
 
 func _lss():
@@ -131,6 +140,8 @@ func _lks():
 	Audio.play_sound(killing_sound_succeeded, _center, false, {pitch = sound_pitch})
 func _lkf():
 	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch})
+func _lkfz():
+	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch})
 
 
 ## Makes the enemy stomped by the player, usually triggered
@@ -215,29 +226,34 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		}
 	# Frozen
 	elif &"freezible" in special_tags:
-		var ice := NodeCreator.prepare_2d(ICEBLOCK, _center).bind_global_transform(
-			Vector2.ZERO, 
-			_center.rotation, 
-			_center.scale, 
-			_center.skew
-		).create_2d().get_node()
-		ice.contained_item = _center
-		ice.contained_item_enemy_killed = self
-		
-		var in_ice_spr: Node2D = null
-		if is_instance_valid(_ice_sprite):
-			in_ice_spr = _ice_sprite.duplicate()
-		
-		ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
-		
-		_center.get_parent().remove_child.call_deferred(_center)
-		
-		result = {
-			result = true,
-			attackee = self
-		}
-		
-		killed_frozen.emit()
+		if frozen_enabled:
+			var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
+				Vector2.ZERO, 
+				_center.rotation, 
+				_center.scale, 
+				_center.skew
+			).create_2d().get_node()
+			ice.destroy_enabled = true
+			ice.contained_item = _center
+			ice.contained_item_enemy_killed = self
+			
+			var in_ice_spr: Node2D = null
+			if is_instance_valid(_ice_sprite):
+				in_ice_spr = _ice_sprite.duplicate()
+			
+			ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
+			
+			_center.get_parent().remove_child.call_deferred(_center)
+			
+			result = {
+				result = true,
+				attackee = self
+			}
+			
+			ScoreText.new(str(frozen_scores), _center)
+			Data.values.score += frozen_scores
+			
+			killed_frozen.emit()
 	# Killed
 	else:
 		# By shell

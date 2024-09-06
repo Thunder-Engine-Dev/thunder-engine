@@ -2,6 +2,8 @@ extends GeneralMovementBody2D
 
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
 
+## Whether to destroy the ice after a delay.
+@export var destroy_enabled: bool = false
 ## Delay to destroy the ice.
 @export_range(0, 20, 0.1, "or_greater") var destroy_delay: float = 6
 ## Delay to flash before the ice is to be broken.
@@ -23,7 +25,7 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 ## Sound of ice breaking normally.
 @export var sound_breaking: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 ## Sound of ice breaking heavily.
-@export var sound_breaking_heavily: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break_heavily.mp3")
+@export var sound_breaking_heavily: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break_heavy.tres")
 
 var contained_item: Node2D
 var contained_item_sprite: Node2D
@@ -34,7 +36,7 @@ var contained_item_enemy_killed: Node
 @onready var _push_detc: ShapeCast2D = $PushDetc
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
-
+@onready var _body: Area2D = $Body
 
 func _ready() -> void:
 	# Removes the contained item when the current scene gets changed to prevent memory leak
@@ -53,22 +55,23 @@ func _ready() -> void:
 			force_update_transform()
 		dir = dir.orthogonal()
 	
-	_timer_destroy.start(destroy_delay)
-	_timer_destroy.timeout.connect(break_ice)
-	
-	if flash_pre_seconds < destroy_delay:
-		const FLASH_INTERVAL := 0.08
+	if destroy_enabled:
+		_timer_destroy.start(destroy_delay)
+		_timer_destroy.timeout.connect(break_ice)
 		
-		var alpha := modulate.a
-		
-		await get_tree().create_timer(destroy_delay - flash_pre_seconds, false).timeout
-		_sprite.material = null
-		
-		var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))).set_trans(Tween.TRANS_SINE)
-		tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
-		tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
-		
-		tw.finished.connect(break_ice)
+		if flash_pre_seconds < destroy_delay:
+			const FLASH_INTERVAL := 0.08
+			
+			var alpha := modulate.a
+			
+			await get_tree().create_timer(destroy_delay - flash_pre_seconds, false).timeout
+			_sprite.material = null
+			
+			var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))).set_trans(Tween.TRANS_SINE)
+			tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
+			tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
+			
+			tw.finished.connect(break_ice)
 
 
 func _physics_process(delta: float) -> void:
@@ -77,14 +80,15 @@ func _physics_process(delta: float) -> void:
 	if speed_previous.y > breaking_speed && is_on_floor():
 		break_ice(true, true)
 	
-	var right := Vector2.RIGHT.rotated(global_rotation)
-	for i in _push_detc.get_collision_count():
-		var pl := _push_detc.get_collider(i) as Player
-		var lr := Input.get_axis(&"m_left", &"m_right")
-		if pushable && pl && lr * pl.global_position.direction_to(global_position).dot(right * lr) > 0:
-			speed.x = move_toward(speed.x, lr * pushing_max_speed, pushing_acceleration * delta)
-		elif !pl && !is_zero_approx(speed.x):
-			speed.x = move_toward(speed.x, 0, deceleration * delta)
+	speed.x = move_toward(speed.x, 0, deceleration * delta)
+
+func _on_body_entered(body: Node2D) -> void:
+	if !body is Player: return
+	if body.warp > Player.Warp.NONE: return
+	
+	update_dir()
+	speed.x = 200 * -dir
+	turn_sprite = true
 
 ## Draws the sprite for the ice
 func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 = Vector2.ZERO) -> void:

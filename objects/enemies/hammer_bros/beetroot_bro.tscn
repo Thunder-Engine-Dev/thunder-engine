@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://df06nfgxm0bjd"]
 
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="2_yc7oa"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yrrx0"]
 [ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0uieq"]

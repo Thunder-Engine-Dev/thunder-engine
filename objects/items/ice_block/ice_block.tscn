@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dofejp2f025qw"]
+[gd_scene load_steps=11 format=3 uid="uid://dofejp2f025qw"]
 
 [ext_resource type="Script" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
 [ext_resource type="Shader" path="res://engine/shaders/highlight.gdshader" id="2_ihm4y"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
 [ext_resource type="PackedScene" uid="uid://bsqqrmefglch8" path="res://engine/node_modifiers/ice_physics_modifier/ice_physics_modifier.tscn" id="5_7n84j"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_2o27h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ena34"]
 size = Vector2(32, 32)
@@ -15,6 +16,12 @@ shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/frequency = 0.32
 shader_parameter/highlight_speed = 10.0
 shader_parameter/highlight_width = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q60fw"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gi0x"]
+size = Vector2(34, 18)
 
 [node name="IceBlock" type="CharacterBody2D"]
 collision_layer = 112
@@ -27,6 +34,7 @@ visible = false
 shape = SubResource("RectangleShape2D_ena34")
 
 [node name="PushDetc" type="ShapeCast2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ena34")
 target_position = Vector2(0, 0)
 max_results = 1
@@ -60,3 +68,43 @@ process_mode = 1
 one_shot = true
 
 [node name="IcePhysicsModifier" parent="." instance=ExtResource("5_7n84j")]
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_q60fw")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("6_2o27h")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": false,
+"boomerang": true,
+"fireball": false,
+"hammer": true,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": true,
+"starman": true
+}
+turn_into_coin_on_level_end = false
+frozen_enabled = false
+
+[node name="BodyPushable" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="BodyPushable"]
+visible = false
+shape = SubResource("RectangleShape2D_6gi0x")
+debug_color = Color(0.992682, 0, 0.253664, 0.419608)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="break_ice" binds= [true, true]]
+[connection signal="body_entered" from="BodyPushable" to="." method="_on_body_entered"]
