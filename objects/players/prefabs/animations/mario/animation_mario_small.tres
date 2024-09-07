@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://cp03ve7ed68js"]
+[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://cp03ve7ed68js"]
 
 [ext_resource type="Texture2D" uid="uid://d1vkaab2ewmjq" path="res://engine/objects/players/prefabs/textures/mario/mario_small.png" id="1_j7ix7"]
 
@@ -37,6 +37,30 @@ region = Rect2(0, 0, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwo3y"]
 atlas = ExtResource("1_j7ix7")
 region = Rect2(192, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txlx4"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(128, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iwhv"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(96, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34fd0"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajfj1"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(64, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqtww"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(32, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfopu"]
+atlas = ExtResource("1_j7ix7")
+region = Rect2(160, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcknf"]
 atlas = ExtResource("1_j7ix7")
@@ -160,11 +184,76 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_txlx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iwhv")
+}],
+"loop": false,
+"name": &"grab",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34fd0")
+}],
+"loop": false,
+"name": &"hold",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34fd0")
+}],
+"loop": false,
+"name": &"hold_crouch",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajfj1")
+}],
+"loop": false,
+"name": &"hold_fall",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajfj1")
+}],
+"loop": false,
+"name": &"hold_jump",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajfj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqtww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34fd0")
+}],
+"loop": true,
+"name": &"hold_walk",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_pwo3y")
 }],
 "loop": false,
 "name": &"jump",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfopu")
+}],
+"loop": false,
+"name": &"kick",
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,

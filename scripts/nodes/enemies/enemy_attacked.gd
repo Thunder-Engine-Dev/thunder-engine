@@ -229,38 +229,37 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			attackee = self
 		}
 	# Frozen
-	elif &"freezible" in special_tags:
-		if frozen_enabled:
-			var _add_pos = Vector2.ZERO
-			if is_instance_valid(_ice_sprite):
-				_add_pos = _ice_sprite.position
-			
-			var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
-				_add_pos,
-				_center.rotation,
-				_center.scale,
-				_center.skew
-			).create_2d().get_node()
-			
-			ice.unfreeze_offset = -_add_pos
-			ice.destroy_enabled = true
-			ice.contained_item = _center
-			ice.contained_item_enemy_killed = self
-			
-			var in_ice_spr: Node2D = null
-			if is_instance_valid(_ice_sprite):
-				in_ice_spr = _ice_sprite.duplicate()
-			
-			ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
-			
-			_center.get_parent().remove_child.call_deferred(_center)
-			
-			result = {
-				result = true,
-				attackee = self
-			}
-			
-			killed_frozen.emit()
+	elif &"freezible" in special_tags && frozen_enabled:
+		var _add_pos = Vector2.ZERO
+		if is_instance_valid(_ice_sprite):
+			_add_pos = _ice_sprite.position
+		
+		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
+			_add_pos,
+			_center.rotation,
+			_center.scale,
+			_center.skew
+		).create_2d().get_node()
+		
+		ice.unfreeze_offset = -_add_pos
+		ice.destroy_enabled = true
+		ice.contained_item = _center
+		ice.contained_item_enemy_killed = self
+		
+		var in_ice_spr: Node2D = null
+		if is_instance_valid(_ice_sprite):
+			in_ice_spr = _ice_sprite.duplicate()
+		
+		ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
+		
+		_center.get_parent().remove_child.call_deferred(_center)
+		
+		result = {
+			result = true,
+			attackee = self
+		}
+		
+		killed_frozen.emit()
 	# Killed
 	else:
 		# By shell

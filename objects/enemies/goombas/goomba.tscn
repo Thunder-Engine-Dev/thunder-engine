@@ -114,7 +114,6 @@ killing_creation = SubResource("Resource_rnnrp")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("7_sc4cc")
 killing_sound_failed = ExtResource("11_btrgx")
-frozen_scores = 100
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"ice_sprite"]
 

@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bg1q2ryf5r2ky"]
+[gd_scene load_steps=6 format=3 uid="uid://bg1q2ryf5r2ky"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/iceball/iceball.gd" id="1_cfamg"]
 [ext_resource type="Texture2D" uid="uid://dkelkj1uvmo1s" path="res://engine/objects/projectiles/iceball/texture.png" id="2_xpnjf"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_46ix7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k31xc"]
+size = Vector2(14, 14)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wrgei"]
 radius = 8.0
@@ -20,8 +23,7 @@ metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale"]
 texture = ExtResource("2_xpnjf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CircleShape2D_wrgei")
+shape = SubResource("RectangleShape2D_k31xc")
 
 [node name="Attack" type="ShapeCast2D" parent="."]
 visible = false

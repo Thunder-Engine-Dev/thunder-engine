@@ -85,7 +85,6 @@ visible = false
 shape = SubResource("CircleShape2D_8kc8x")
 
 [node name="Body" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 5
 
@@ -105,7 +104,7 @@ killing_creation = SubResource("Resource_0b8qp")
 killing_scores = 400
 killing_sound_succeeded = ExtResource("3_aerwt")
 killing_sound_failed = ExtResource("7_i6ttr")
-frozen_scores = 100
+frozen_enabled = false
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_scores", &"killing_immune", &"killing_sound_succeeded", &"killing_sound_failed"]
 

@@ -46,6 +46,8 @@ enum WarpDir {
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
 		if suit.animation_behavior:
 			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
+		if suit.grab_behavior:
+			_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self, suit.grab_vars)
 		if suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
 		if _suit_appear:
@@ -73,6 +75,7 @@ enum WarpDir {
 var _physics_behavior: ByNodeScript
 var _suit_behavior: ByNodeScript
 var _animation_behavior: ByNodeScript
+var _grab_behavior: ByNodeScript
 var _extra_behavior: ByNodeScript
 
 var left_right: int
