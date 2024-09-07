@@ -195,18 +195,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1ajoe")
-}],
-"loop": false,
-"name": &"hold",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_tty5b")
 }],
 "loop": false,
 "name": &"hold_crouch",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ajoe")
+}],
+"loop": false,
+"name": &"hold_default",
 "speed": 0.0
 }, {
 "frames": [{

@@ -190,17 +190,17 @@ animations = [{
 "name": &"grab",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": false,
+"name": &"hold_crouch",
+"speed": 0.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gyiwm")
 }],
 "loop": false,
-"name": &"hold",
-"speed": 0.0
-}, {
-"frames": [],
-"loop": false,
-"name": &"hold_crouch",
+"name": &"hold_default",
 "speed": 0.0
 }, {
 "frames": [{

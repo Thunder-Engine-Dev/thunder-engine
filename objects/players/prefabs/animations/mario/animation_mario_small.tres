@@ -198,7 +198,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_34fd0")
 }],
 "loop": false,
-"name": &"hold",
+"name": &"hold_crouch",
 "speed": 0.0
 }, {
 "frames": [{
@@ -206,7 +206,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_34fd0")
 }],
 "loop": false,
-"name": &"hold_crouch",
+"name": &"hold_default",
 "speed": 0.0
 }, {
 "frames": [{

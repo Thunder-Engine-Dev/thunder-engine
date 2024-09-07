@@ -39,7 +39,6 @@ var unfreeze_offset: Vector2
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 @onready var _body: Area2D = $Body
 @onready var _body_collision: CollisionShape2D = $Body/Collision
-@onready var _body_pushable_collision: CollisionShape2D = $BodyPushable/Collision
 
 func _ready() -> void:
 	# Removes the contained item when the current scene gets changed to prevent memory leak
@@ -67,7 +66,9 @@ func _ready() -> void:
 			
 			var alpha := modulate.a
 			
-			await get_tree().create_timer(destroy_delay - flash_pre_seconds, false).timeout
+			await get_tree().create_timer(destroy_delay - flash_pre_seconds, false, true).timeout
+			if process_mode == PROCESS_MODE_DISABLED: return
+			
 			_sprite.material = null
 			
 			var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))).set_trans(Tween.TRANS_SINE)
@@ -84,14 +85,6 @@ func _physics_process(delta: float) -> void:
 		break_ice(true, true)
 	
 	speed.x = move_toward(speed.x, 0, deceleration * delta)
-
-func _on_body_entered(body: Node2D) -> void:
-	if !body is Player: return
-	if body.warp > Player.Warp.NONE: return
-	
-	update_dir()
-	speed.x = 200 * -dir
-	turn_sprite = true
 
 ## Draws the sprite for the ice
 func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 = Vector2.ZERO) -> void:
@@ -131,9 +124,6 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 		(_collision_shape.shape as RectangleShape2D).size = rect.size
 	if _body_collision.shape is RectangleShape2D:
 		_body_collision.shape = _collision_shape.shape
-	if _body_pushable_collision.shape is RectangleShape2D:
-		_body_pushable_collision.shape = _body_collision.shape.duplicate(true)
-		(_body_pushable_collision.shape as RectangleShape2D).size = rect.size + Vector2(2, -14)
 	
 
 
@@ -141,6 +131,8 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 ## If [param heavy] is [code]true[/code], the object in the block will be destroyed.[br]
 ## [param sound_heavily] determines which type of sound will play on the ice's breaking.
 func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
+	if process_mode == PROCESS_MODE_DISABLED: return
+	
 	if is_instance_valid(contained_item):
 		(func():
 			add_sibling(contained_item)

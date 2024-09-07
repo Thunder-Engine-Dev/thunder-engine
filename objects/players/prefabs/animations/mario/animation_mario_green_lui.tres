@@ -188,18 +188,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jusu0")
-}],
-"loop": false,
-"name": &"hold",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_gixb4")
 }],
 "loop": false,
 "name": &"hold_crouch",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jusu0")
+}],
+"loop": false,
+"name": &"hold_default",
 "speed": 0.0
 }, {
 "frames": [{

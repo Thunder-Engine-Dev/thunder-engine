@@ -15,7 +15,7 @@ func _physics_process(_delta: float) -> void:
 	player.completed: return
 	var bulls: StringName = StringName("bul" + resource.resource_name)
 	var bull_count: int = player.get_tree().get_nodes_in_group(bulls).size()
-	if player.attacked && bull_count < resource.amount:
+	if player.attacked && !player.is_holding && bull_count < resource.amount:
 		Audio.play_sound(resource.sound_attack, player, false)
 		player.shot.emit()
 		resource.create_projectile(player).add_to_group(bulls)

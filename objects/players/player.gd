@@ -5,6 +5,9 @@ signal suit_appeared
 signal suit_changed(to: PlayerSuit)
 signal swam
 signal shot
+signal threw
+signal grab_init(node: Node2D)
+signal grabbed(side_grabbed: bool)
 signal invinciblized(dur: float)
 signal starmaned(dur: float)
 signal starman_attacked
@@ -42,12 +45,12 @@ enum WarpDir {
 		_extra_behavior = null
 		if suit.physics_behavior:
 			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
+		if suit.grab_behavior:
+			_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self)
 		if suit.behavior_script:
 			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
 		if suit.animation_behavior:
 			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
-		if suit.grab_behavior:
-			_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self, suit.grab_vars)
 		if suit.extra_behavior:
 			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
 		if _suit_appear:
@@ -78,6 +81,8 @@ var _animation_behavior: ByNodeScript
 var _grab_behavior: ByNodeScript
 var _extra_behavior: ByNodeScript
 
+var holding_item: Node2D = null
+
 var left_right: int
 var up_down: int
 var jumping: int
@@ -94,6 +99,7 @@ var is_climbing: bool
 var is_sliding: bool
 var is_crouching: bool
 var is_skidding: bool
+var is_holding: bool
 var is_underwater: bool
 var is_underwater_out: bool
 
