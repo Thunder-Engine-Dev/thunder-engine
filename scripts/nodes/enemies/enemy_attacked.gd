@@ -75,8 +75,6 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 @export_group("Frozen")
 ## If [code]true[/code], the enemy will be able to be frozen into ice block by special attackers
 @export var frozen_enabled: bool = true
-## Scores given to the player when the enemy gets frozen
-@export var frozen_scores: int
 ## Path to the sprite that used for the item contained in the ice block created on being frozen.
 @export_node_path("CanvasItem") var ice_sprite: NodePath
 ## Take the ice sprite from the root node's sprite variable
@@ -215,14 +213,14 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed: bool = true) -> Dictionary:
 	var result: Dictionary
 	
-	if !killing_enabled || (by != &"suicide" && !by in killing_immune) || _on_killed: 
+	if !killing_enabled || (by != &"self" && !by in killing_immune) || _on_killed: 
 		return result
 	
 	_on_killed = true
 	var shell_attack := false
 	
 	# Immune
-	if by != &"suicide" && killing_immune[by]:
+	if by != &"self" && killing_immune[by]:
 		if trigger_killed_failed:
 			killed_failed.emit()
 		
@@ -233,12 +231,18 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 	# Frozen
 	elif &"freezible" in special_tags:
 		if frozen_enabled:
+			var _add_pos = Vector2.ZERO
+			if is_instance_valid(_ice_sprite):
+				_add_pos = _ice_sprite.position
+			
 			var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
-				Vector2.ZERO, 
-				_center.rotation, 
-				_center.scale, 
+				_add_pos,
+				_center.rotation,
+				_center.scale,
 				_center.skew
 			).create_2d().get_node()
+			
+			ice.unfreeze_offset = -_add_pos
 			ice.destroy_enabled = true
 			ice.contained_item = _center
 			ice.contained_item_enemy_killed = self
@@ -255,9 +259,6 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 				result = true,
 				attackee = self
 			}
-			
-			ScoreText.new(str(frozen_scores), _center)
-			Data.values.score += frozen_scores
 			
 			killed_frozen.emit()
 	# Killed

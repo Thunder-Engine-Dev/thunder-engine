@@ -30,6 +30,7 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 var contained_item: Node2D
 var contained_item_sprite: Node2D
 var contained_item_enemy_killed: Node
+var unfreeze_offset: Vector2
 
 @onready var _sprite: NinePatchRect = $SpriteNP
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
@@ -37,6 +38,8 @@ var contained_item_enemy_killed: Node
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 @onready var _body: Area2D = $Body
+@onready var _body_collision: CollisionShape2D = $Body/Collision
+@onready var _body_pushable_collision: CollisionShape2D = $BodyPushable/Collision
 
 func _ready() -> void:
 	# Removes the contained item when the current scene gets changed to prevent memory leak
@@ -126,9 +129,12 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	if _collision_shape.shape is RectangleShape2D:
 		_collision_shape.shape = _collision_shape.shape.duplicate(true)
 		(_collision_shape.shape as RectangleShape2D).size = rect.size
-	if _push_detc.shape is RectangleShape2D:
-		_push_detc.shape = _push_detc.shape.duplicate(true)
-		(_push_detc.shape as RectangleShape2D).size = rect.size + Vector2(2, -2)
+	if _body_collision.shape is RectangleShape2D:
+		_body_collision.shape = _collision_shape.shape
+	if _body_pushable_collision.shape is RectangleShape2D:
+		_body_pushable_collision.shape = _body_collision.shape.duplicate(true)
+		(_body_pushable_collision.shape as RectangleShape2D).size = rect.size + Vector2(2, -14)
+	
 
 
 ## Breaks the ice.[br]
@@ -141,14 +147,16 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 			contained_item.global_transform = global_transform
 			if is_instance_valid(contained_item_sprite):
 				contained_item.position += contained_item_sprite.position
-			contained_item.reset_physics_interpolation()
 			
 			if !heavy && is_instance_valid(contained_item_enemy_killed):
 				contained_item.set_deferred(&"global_transform", global_transform)
 			elif contained_item.is_ancestor_of(contained_item_enemy_killed):
-				contained_item_enemy_killed.got_killed(&"suicide")
+				contained_item_enemy_killed.got_killed(&"self")
 			else:
 				contained_item.queue_free()
+			
+			contained_item.set_deferred("position", contained_item.position + unfreeze_offset)
+			contained_item.reset_physics_interpolation.call_deferred()
 		).call_deferred()
 	
 	
