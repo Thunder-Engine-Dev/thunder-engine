@@ -198,7 +198,7 @@ sprite_frames = SubResource("SpriteFrames_jwl4n")
 animation = &"attack"
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0"]
-position = Vector2(0, 29)
+position = Vector2(0, 28)
 sprite_frames = SubResource("SpriteFrames_bhxi4")
 animation = &"idle"
 autoplay = "idle"

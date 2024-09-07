@@ -271,7 +271,7 @@ region_rect = Rect2(0, 0, 44, 52)
 script = ExtResource("13_g3nuv")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite"]
-position = Vector2(0, 23)
+position = Vector2(0, 22)
 sprite_frames = SubResource("SpriteFrames_7io13")
 autoplay = "default"
 script = ExtResource("14_jgi5h")

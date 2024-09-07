@@ -43,8 +43,14 @@ var values: Dictionary = {
 @warning_ignore("unused_private_class_variable")
 @onready var _default_values: Dictionary = values.duplicate(true)
 
+signal coin_added
+signal score_added
+signal life_added
+signal values_reset
+
 
 func add_coin(amount: int = 1) -> void:
+	coin_added.emit()
 	values.coins += 1
 	if values.coins > 99:
 		values.coins = 0
@@ -55,6 +61,7 @@ func add_coin(amount: int = 1) -> void:
 
 
 func add_score(amount: int) -> void:
+	score_added.emit()
 	values.score += amount
 	if SettingsManager.get_tweak("life_every_2_mil_score", false):
 		var two_mil: int = floor(values.score / 2_000_000)
@@ -70,9 +77,11 @@ func add_score(amount: int) -> void:
 
 
 func add_lives(amount: int = 1) -> void:
+	life_added.emit()
 	values.lives += amount
 
 
 func reset_all_values() -> void:
+	values_reset.emit()
 	Thunder._current_player_state = null
 	values = _default_values.duplicate(true)

@@ -100,7 +100,7 @@ func add_lives(count: int, parent: Node = Scenes.current_scene):
 		push_error("[Thunder Engine] add_lives: Invalid life count. Must be between 1 and 10")
 		return
 	
-	Data.values.lives += count
+	Data.add_lives(count)
 	if !_current_player: return
 	ScoreTextLife.new("%sUP" % count, _current_player, parent)
 
