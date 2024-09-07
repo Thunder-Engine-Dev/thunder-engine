@@ -130,7 +130,13 @@ func _ready() -> void:
 	killed_frozen.connect(_lkfz)
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")
-	if !is_instance_valid(_ice_sprite) && ice_sprite_autoset && is_instance_valid(_center) && _center.sprite:
+	if (
+		!is_instance_valid(_ice_sprite) &&
+		ice_sprite_autoset &&
+		is_instance_valid(_center) &&
+		"sprite" in _center &&
+		_center.sprite
+	):
 		_ice_sprite = _center.get_node_or_null(_center.sprite)
 
 
