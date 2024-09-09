@@ -131,7 +131,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("GamePaused:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -183,7 +183,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("GamePaused:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -235,7 +235,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("GamePaused:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -378,7 +378,7 @@ smooth_speed = 0.4
 position_padding = 8
 position_paddings_array = Array[float]([-32.0, -26.0, -70.0, -1.0, 0.0, -52.0])
 
-[node name="TeamLogo" type="TextureRect" parent="Pause"]
+[node name="GamePaused" type="TextureRect" parent="Pause"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

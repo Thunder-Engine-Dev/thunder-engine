@@ -249,7 +249,7 @@ func attack_hammer() -> void:
 						hm.global_position = pos_hammer.global_position
 						if hm is Projectile:
 							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							hm.vel_set(Vector2(randf_range(50, 400) * facing, randf_range(-800, -200)))
+							hm.vel_set(Vector2(randf_range(70, 400) * facing, randf_range(-800, -250)))
 				)
 		).set_delay(hammer_interval)
 	tween_hammer.tween_callback(
