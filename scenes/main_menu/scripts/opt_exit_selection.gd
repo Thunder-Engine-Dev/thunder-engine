@@ -1,19 +1,27 @@
 extends MenuSelection
 
+@onready var restart_popup: Control = $"../../../../RestartPopup/Control"
+
 func _handle_select() -> void:
 	super()
-	if !SettingsManager.request_restart:
-		GlobalViewport.vp.get_camera_2d().position.y -= 480
-		GlobalViewport.vp.get_camera_2d().reset_physics_interpolation()
 	await get_tree().physics_frame
-	get_parent().move_selector(0)
-	Scenes.current_scene.get_node(get_parent().get_parent().get_parent().get_parent().main_menu_controls).focused = true
+	if !SettingsManager.request_restart:
+		_screen_back()
 	Scenes.current_scene.get_node("Settings/SubViewportContainer/SubViewport/Options").focused = false
 	
 	SettingsManager.save_settings()
 	
 	if SettingsManager.request_restart:
-		process_mode = Node.PROCESS_MODE_ALWAYS
-		get_tree().paused = true
-		await get_tree().create_timer(0.4, true, false, true).timeout
-		SettingsManager.restart_application()
+		restart_popup.toggle()
+		await restart_popup.closed
+		if SettingsManager.request_restart:
+			await get_tree().physics_frame
+			SettingsManager.restart_application()
+		else:
+			_screen_back()
+
+func _screen_back() -> void:
+	GlobalViewport.vp.get_camera_2d().position.y -= 480
+	GlobalViewport.vp.get_camera_2d().reset_physics_interpolation()
+	Scenes.current_scene.get_node(get_parent().get_parent().get_parent().get_parent().main_menu_controls).focused = true
+	get_parent().move_selector(0)
