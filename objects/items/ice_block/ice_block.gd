@@ -1,5 +1,7 @@
 extends GeneralMovementBody2D
 
+signal grabbing_got_thrown
+
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
 
 ## Whether to destroy the ice after a delay.
@@ -8,6 +10,8 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 @export_range(0, 20, 0.1, "or_greater") var destroy_delay: float = 6
 ## Delay to flash before the ice is to be broken.
 @export_range(0, 20, 0.1, "or_greater") var flash_pre_seconds: float = 1.5
+## Enable breaking by speed
+@export var break_by_speed: bool = false
 ## Speed at or over which the ice block will break when it hits the ground.
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var breaking_speed: float = 300
 ## Speed of ice debris
@@ -76,12 +80,17 @@ func _ready() -> void:
 			tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
 			
 			tw.finished.connect(break_ice)
+	
+	grabbing_got_thrown.connect(
+		func():
+			break_by_speed = true
+	)
 
 
 func _physics_process(delta: float) -> void:
 	super(delta)
 	
-	if speed_previous.y > breaking_speed && is_on_floor():
+	if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
 		break_ice(true, true)
 	
 	speed.x = move_toward(speed.x, 0, deceleration * delta)

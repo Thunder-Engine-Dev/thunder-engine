@@ -11,9 +11,8 @@ extends NodeModifier
 @export var sound_grab_side = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
 @export var sound_throw = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 
-@onready var player = Thunder._current_player
+@onready var player: Player = Thunder._current_player
 
-var _player_lock: bool
 var _player_lock_pos: Vector2
 var _from_follow_pos: Vector2
 var _follow_progress: float
@@ -29,9 +28,12 @@ func _ready() -> void:
 	if grabbing_side_enabled:
 		target_node.add_to_group(&"#side_grabbable")
 	
-	target_node.add_user_signal(&"grabbing_got_top_grabbed")
-	target_node.add_user_signal(&"grabbing_got_side_grabbed")
-	target_node.add_user_signal(&"grabbing_got_thrown")
+	if !target_node.has_signal(&"grabbing_got_top_grabbed"):
+		target_node.add_user_signal(&"grabbing_got_top_grabbed")
+	if !target_node.has_signal(&"grabbing_got_side_grabbed"):
+		target_node.add_user_signal(&"grabbing_got_side_grabbed")
+	if !target_node.has_signal(&"grabbing_got_thrown"):
+		target_node.add_user_signal(&"grabbing_got_thrown")
 	
 	target_node.connect(&"grabbing_got_top_grabbed", _top_grabbed)
 	target_node.connect(&"grabbing_got_side_grabbed", _side_grabbed)
@@ -43,20 +45,19 @@ func _top_grabbed() -> void:
 	player.is_holding = true
 	await _do_player_lock()
 	_do_grab()
-	pass
 
 
 func _side_grabbed() -> void:
 	Audio.play_sound(sound_grab_side, player)
 	_do_grab()
-	pass
 
 
 func _do_player_lock() -> void:
 	_player_lock_pos = player.global_position
-	_player_lock = true
+	player.no_movement = true
+	player
 	await player.get_tree().create_timer(0.3, false, true).timeout
-	_player_lock = false
+	player.no_movement = false
 
 
 func _do_grab() -> void:
@@ -99,10 +100,6 @@ func _do_ungrab(player_died: bool) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _player_lock:
-		player.speed = Vector2.ZERO
-		player.global_position = _player_lock_pos
-	
 	if _grabbed && _following_start:
 		var _target = get_target_hold_position()
 		target_node.global_position = lerp(_from_follow_pos, _target, _follow_progress)

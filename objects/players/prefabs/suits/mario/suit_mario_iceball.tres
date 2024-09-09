@@ -55,10 +55,6 @@ animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_cx1gk")
 behavior_crouch_reflect_fireballs = false
-grab_vars = {
-"holding": false,
-"item": null
-}
 grab_behavior = ExtResource("9_x68dy")
 grab_sound_grab = ExtResource("10_hxaer")
 grab_sound_kick = ExtResource("11_yhvqh")

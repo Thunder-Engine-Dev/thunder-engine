@@ -96,7 +96,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		combo.combo()
 	# Gets blocked
-	else:
+	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack"):
 		if &"speed" in target_enemy_attacked.owner:
 			enemy_attacked.set_meta(
 				&"attacker_speed", target_enemy_attacked.owner.speed
