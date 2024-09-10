@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi1o8vb2tbotb"
-path="res://.godot/imported/progress_clearing.png-56806f6ebed5b28b135bafc52d5e0532.ctex"
+uid="uid://dia0f8bnn6ned"
+path="res://.godot/imported/progress_clearing.png-f973e4304ce3c7673929a16d8a2b7597.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/scenes/main_menu/textures/progress_clearing.png"
-dest_files=["res://.godot/imported/progress_clearing.png-56806f6ebed5b28b135bafc52d5e0532.ctex"]
+source_file="res://engine/components/progress_continue/textures/progress_clearing.png"
+dest_files=["res://.godot/imported/progress_clearing.png-f973e4304ce3c7673929a16d8a2b7597.ctex"]
 
 [params]
 

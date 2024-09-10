@@ -8,6 +8,10 @@ class_name MarkerSpace extends Node2D
 @export var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
 @export var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
 @export var allow_saving: bool = true
+@export_category("Progress Suspension")
+@export var progress_continue_enabled: bool = true
+@export var progress_title_prefix: String = "world\\n"
+@export var progress_title_name_override: String = ""
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -21,12 +25,19 @@ var uncompleted_levels: Array[String] = []
 
 var map: Node2D
 
+@onready var _progress_tweak: bool = SettingsManager.get_tweak("progress_continue", true)
 
 signal changed
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		map = Scenes.current_scene
+		
+		if Data.values.get("skip_progress_continue") == true:
+			Data.values.skip_progress_continue = false
+		elif _progress_tweak && progress_continue_enabled:
+			_save_suspended_progress.call_deferred()
+		
 	
 	# Connect the signals to redraw connecting
 	child_entered_tree.connect(_child_enter)
@@ -87,6 +98,26 @@ func _save_progress() -> void:
 			new_level
 		)
 		ProfileManager.save_current_profile()
+
+
+func _save_suspended_progress() -> void:
+	var profile = ProfileManager.Profile.new()
+	profile.name = "suspended"
+	
+	profile.data.saved_values = Data.values.duplicate(true)
+	profile.data.saved_player_state = Thunder._current_player_state.resource_name
+	profile.data.saved_profile = ProfileManager.current_profile.name
+	profile.data.title_prefix = progress_title_prefix
+	if progress_title_name_override.is_empty():
+		profile.data.title_name = str(space_name)
+	else:
+		profile.data.title_name = progress_title_name_override
+	profile.data.title_level = get_next_marker_id(false) + 1
+	profile.data.scene = Scenes.current_scene.scene_file_path
+	
+	ProfileManager.profiles.suspended = profile
+	ProfileManager.save_profile_data("suspended", profile.data)
+
 
 # Recive events
 func _notification(what: int) -> void:

@@ -78,6 +78,8 @@ func _physics_process(delta: float) -> void:
 				if _on_player_after_middle && is_instance_valid(pl):
 					on(pl)
 				else:
+					on(Vector2(0.5, 0.5), true)
+					await get_tree().physics_frame
 					paused = false
 			, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame

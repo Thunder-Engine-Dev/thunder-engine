@@ -3,10 +3,6 @@ extends Control
 var opened: bool = false
 var skip_to_save: bool = false
 
-const open_sound = preload("res://engine/components/pause/sounds/pause_open.wav")
-const close_sound = null
-#const music = preload("res://engine/components/game_over/music/4mat_-_broken_heart.xm")
-
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 
@@ -59,7 +55,6 @@ func toggle(no_resume: bool = false) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		animation_player.play_backwards("open")
-		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true })
 		Audio.stop_music_channel(99, false)
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		

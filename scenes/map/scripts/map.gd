@@ -4,23 +4,17 @@ signal player_fast_forwarded
 signal next_level_ready(index: int) ## Emitted with the next level index on ready
 signal player_entered_level ## Emitted when the player enters a level.
 
-@export
-var player: NodePath
+@export var player: NodePath
 @export_group("Map Customization")
-@export
-var dot_style: SpriteFrames = preload("res://engine/scenes/map/prefabs/dot_style.tres")
-@export
-var dot_sprite_offset: Vector2 = Vector2.ZERO
-@export
-var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
-@export
-var jump_button_sound: AudioStream = preload("res://engine/objects/items/coin/coin.wav")
+@export var dot_style: SpriteFrames = preload("res://engine/scenes/map/prefabs/dot_style.tres")
+@export var dot_sprite_offset: Vector2 = Vector2.ZERO
+@export var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
+@export var jump_button_sound: AudioStream = preload("res://engine/objects/items/coin/coin.wav")
 
 var to_level: String
 var is_fading: bool
 
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-
 
 func _ready() -> void:
 	Data.values.checkpoint = -1
