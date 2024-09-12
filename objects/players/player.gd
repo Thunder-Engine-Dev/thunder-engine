@@ -56,6 +56,8 @@ enum WarpDir {
 		if _suit_appear:
 			_suit_appear = false
 			suit_appeared.emit()
+		if !to.resource_path.is_empty():
+			Thunder._current_player_state_path = to.resource_path
 		Thunder._current_player_state = suit
 		suit_changed.emit(suit)
 @export_group("Physics")
@@ -161,10 +163,12 @@ func _ready() -> void:
 			trans.paused = false
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	
-	if !Thunder._current_player_state:
-		Thunder._current_player_state = suit
-	else:
+	if !Thunder._current_player_state_path.is_empty():
+		suit = load(Thunder._current_player_state_path)
+	elif Thunder._current_player_state:
 		suit = Thunder._current_player_state
+	else:
+		Thunder._current_player_state = suit
 	
 	change_suit(suit, false, true)
 	

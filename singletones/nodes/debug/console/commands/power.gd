@@ -17,4 +17,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 		return Command.ExecuteResult.new("Error: Player not found")
 	Thunder._current_player.suit = suit
 	return Command.ExecuteResult.new("Success")
-

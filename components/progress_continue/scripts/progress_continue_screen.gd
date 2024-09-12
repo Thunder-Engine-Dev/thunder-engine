@@ -19,7 +19,6 @@ signal closed
 
 func _ready() -> void:
 	animation_player.play(&"init")
-	show()
 	
 	var player: Player = Thunder._current_player
 	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile")):
@@ -32,11 +31,14 @@ func _ready() -> void:
 ")
 		label_text += "%s - %d" % [profile.title_name, profile.title_level]
 		level_label.text = label_text
-		if !profile.saved_player_state.is_empty():
+		if profile.get("saved_player_state"):
 			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites
 			state_preview.play("walk")
 		Scenes.custom_scenes.pause.open_blocked = true
+		
 		toggle()
+		await get_tree().physics_frame
+		show()
 	elif _pipe_out:
 		trigger_pipe()
 
@@ -76,5 +78,6 @@ func trigger_pipe() -> void:
 	_pipe_out.player_z_index = player.z_index
 	player.speed = Vector2.ZERO
 	player.no_movement = false
-	Scenes.custom_scenes.pause.open_blocked = false
 	_pipe_out.pass_player.call_deferred(player)
+	await get_tree().physics_frame
+	Scenes.custom_scenes.pause.open_blocked = false
