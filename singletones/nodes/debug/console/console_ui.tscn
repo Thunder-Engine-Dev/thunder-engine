@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bquqhbqux15rr"]
+[gd_scene load_steps=6 format=3 uid="uid://bquqhbqux15rr"]
+
+[ext_resource type="Script" path="res://engine/singletones/nodes/debug/console/debug_player_stats.gd" id="1_4vh8i"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_seusf"]
 action = &"ui_accept"
@@ -123,3 +125,15 @@ grow_horizontal = 0
 text = "FPS"
 horizontal_alignment = 2
 script = SubResource("GDScript_j5f7y")
+
+[node name="PlayerStats" type="Label" parent="."]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 72.0
+offset_bottom = 55.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -2
+theme_override_constants/outline_size = 8
+text = "Debug Stats"
+script = ExtResource("1_4vh8i")

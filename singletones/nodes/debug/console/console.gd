@@ -9,6 +9,8 @@ var commands: Dictionary
 var history: Array = ['']
 var position_in_history: int
 
+var player_stats_shown: bool = false
+
 
 func _ready():
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
@@ -39,7 +41,7 @@ func _physics_process(delta: float) -> void:
 		visible = !visible
 		$UI/Paused.button_pressed = visible
 		Thunder.set_pause_game(visible)
-		
+	
 	if visible && has_focus():
 		if Input.is_action_just_pressed("ui_up"):
 			move_history(1)

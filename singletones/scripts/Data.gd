@@ -84,4 +84,5 @@ func add_lives(amount: int = 1) -> void:
 func reset_all_values() -> void:
 	values_reset.emit()
 	Thunder._current_player_state = null
+	Thunder._current_player_state_path = ""
 	values = _default_values.duplicate(true)

@@ -70,6 +70,7 @@ func _init_game_over() -> bool:
 
 func _reset_data_values() -> void:
 	Thunder._current_player_state = null
+	Thunder._current_player_state_path = ""
 	Data.values.lives -= 1
 	Data.values.onetime_blocks = false
 

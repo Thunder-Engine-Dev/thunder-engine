@@ -17,16 +17,15 @@ var _xscroll: float
 @onready var ofs: Vector2 = offset
 
 
-func _ready():
+func _ready() -> void:
 	Thunder._current_camera = self
 	process_callback = CAMERA2D_PROCESS_PHYSICS
-	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	make_current()
 	teleport()
 	reset_physics_interpolation()
 
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
 	teleport.call_deferred()
 	
 	if !is_instance_valid(player): return
@@ -54,25 +53,35 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 	if sync_position_only: return
 	
 	if par is PathFollow2D:
-		if player && !stop_blocking_edges && ("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
-			var rot: float = get_viewport_transform().affine_inverse().get_rotation()
-			var kc: KinematicCollision2D = null
-			var left_col: bool
-			var right_col: bool
-			while !kc && player.get_global_transform_with_canvas().get_origin().x < 16:
-				kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
-				left_col = enable_left_border_death
-				if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
-					player.vel_set_x(0)
-			while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 16:
-				kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
-				left_col = false
-				right_col = enable_right_border_death
-				if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
-					player.vel_set_x(0)
-			if kc && kc.get_collider() && (left_col || right_col):
-				player.die()
+		_screen_border_logic()
 	
+	_xscroll_logic()
+	
+	Thunder.view.cam_border.call_deferred()
+
+
+func _screen_border_logic() -> void:
+	if player && !stop_blocking_edges && ("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
+		var rot: float = get_viewport_transform().affine_inverse().get_rotation()
+		var kc: KinematicCollision2D = null
+		var left_col: bool
+		var right_col: bool
+		while !kc && player.get_global_transform_with_canvas().get_origin().x < 15:
+			kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
+			left_col = enable_left_border_death
+			if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
+				player.vel_set_x.call_deferred(0)
+		while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - 15:
+			kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
+			left_col = false
+			right_col = enable_right_border_death
+			if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
+				player.vel_set_x.call_deferred(0)
+		if kc && kc.get_collider() && (left_col || right_col):
+			player.die()
+
+
+func _xscroll_logic() -> void:
 	if !SettingsManager.settings.xscroll:
 		_xscroll = 0.0
 		drag_horizontal_enabled = false
@@ -82,8 +91,6 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
 		drag_horizontal_offset = _xscroll / 1.25
-	
-	Thunder.view.cam_border.call_deferred()
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:

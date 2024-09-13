@@ -47,6 +47,7 @@ func _handle_select() -> void:
 	if is_dead && Data.values.lives != 0:
 		super()
 		Thunder._current_player_state = null
+		Thunder._current_player_state_path = ""
 		Scenes.reload_current_scene()
 		Data.values.lives -= 1
 		Data.values.onetime_blocks = false
