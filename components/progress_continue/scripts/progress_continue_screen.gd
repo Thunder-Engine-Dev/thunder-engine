@@ -29,7 +29,7 @@ func _ready() -> void:
 		scene = profile.scene
 		var label_text: String = profile.title_prefix.replacen("\\n", "
 ")
-		label_text += "%s - %d" % [profile.title_name, profile.title_level]
+		label_text += profile.title_level
 		level_label.text = label_text
 		if profile.get("saved_player_state"):
 			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites

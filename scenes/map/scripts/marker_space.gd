@@ -11,7 +11,7 @@ class_name MarkerSpace extends Node2D
 @export_category("Progress Suspension")
 @export var progress_continue_enabled: bool = true
 @export var progress_title_prefix: String = "world\\n"
-@export var progress_title_name_override: String = ""
+@export var progress_title_level: String = "{0} - {1}"
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -25,8 +25,6 @@ var uncompleted_levels: Array[String] = []
 
 var map: Node2D
 
-@onready var _progress_tweak: bool = SettingsManager.get_tweak("progress_continue", true)
-
 signal changed
 
 func _ready() -> void:
@@ -35,7 +33,7 @@ func _ready() -> void:
 		
 		if Data.values.get("skip_progress_continue") == true:
 			Data.values.skip_progress_continue = false
-		elif _progress_tweak && progress_continue_enabled:
+		elif SettingsManager.get_tweak("progress_continue", true) && progress_continue_enabled:
 			_save_suspended_progress.call_deferred()
 		
 	
@@ -110,11 +108,7 @@ func _save_suspended_progress() -> void:
 		profile.data.saved_player_state = Thunder._current_player_state_path
 	profile.data.saved_profile = ProfileManager.current_profile.name
 	profile.data.title_prefix = progress_title_prefix
-	if progress_title_name_override.is_empty():
-		profile.data.title_name = str(space_name)
-	else:
-		profile.data.title_name = progress_title_name_override
-	profile.data.title_level = get_next_marker_id(false) + 1
+	profile.data.title_level = progress_title_level.format([str(space_name), get_next_marker_id(false) + 1])
 	profile.data.scene = Scenes.current_scene.scene_file_path
 	
 	ProfileManager.profiles.suspended = profile
