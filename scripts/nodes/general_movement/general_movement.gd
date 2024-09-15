@@ -1,7 +1,6 @@
 extends GravityBody2D
 class_name GeneralMovementBody2D
 
-@export_category("GeneralMovement")
 @export var look_at_player: bool
 ## -1 is Left, 1 is Right.
 @export_enum("Disabled: 0", "Left: -1", "Right: 1") var force_direction: int = 0

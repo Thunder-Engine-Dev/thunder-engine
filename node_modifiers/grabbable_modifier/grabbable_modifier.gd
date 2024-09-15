@@ -1,5 +1,10 @@
 extends NodeModifier
 
+## Emitted when the item is grabbed.
+signal grabbed
+## Emitted when the item is ungrabbed.
+signal ungrabbed
+
 @export_group("Grabbing", "grabbing_")
 @export var grabbing_top_enabled: bool = true
 @export var grabbing_side_enabled: bool = true
@@ -68,6 +73,8 @@ func _do_grab() -> void:
 		player.holding_item = target_node
 		_from_follow_pos = target_node.global_position
 		_following_start = true
+	
+	grabbed.emit()
 
 
 func _do_ungrab(player_died: bool) -> void:
@@ -97,6 +104,8 @@ func _do_ungrab(player_died: bool) -> void:
 		
 		await player.get_tree().physics_frame
 		player.is_holding = false
+	
+	ungrabbed.emit()
 
 
 func _physics_process(delta: float) -> void:

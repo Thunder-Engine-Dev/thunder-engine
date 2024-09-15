@@ -59,8 +59,10 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 	Data.ATTACKERS.fireball: false,
 	Data.ATTACKERS.beetroot: false,
 	Data.ATTACKERS.iceball: false,
+	Data.ATTACKERS.iceblock: false,
 	Data.ATTACKERS.hammer: false,
 	Data.ATTACKERS.boomerang: false,
+	
 }
 ## Corpse of the enemy killed by the attacker
 @export var killing_creation: InstanceNode2D

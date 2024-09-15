@@ -36,9 +36,11 @@ var contained_item_sprite: Node2D
 var contained_item_enemy_killed: Node
 var unfreeze_offset: Vector2
 
+var _being_grabbed: bool
+
 @onready var _sprite: NinePatchRect = $SpriteNP
-@onready var _collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var _push_detc: ShapeCast2D = $PushDetc
+@onready var _collision_shapes: Array[CollisionShape2D] = [$CollisionShape2D, $Body/Collision] 
+@onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 @onready var _body: Area2D = $Body
@@ -62,16 +64,23 @@ func _ready() -> void:
 		dir = dir.orthogonal()
 	
 	if destroy_enabled:
-		_timer_destroy.start(destroy_delay)
+		start_timedown()
 		_timer_destroy.timeout.connect(break_ice)
 		
 		if flash_pre_seconds < destroy_delay:
+			if _being_grabbed:
+				return
+			
 			const FLASH_INTERVAL := 0.08
 			
 			var alpha := modulate.a
 			
 			await get_tree().create_timer(destroy_delay - flash_pre_seconds, false, true).timeout
-			if process_mode == PROCESS_MODE_DISABLED: return
+			
+			if _being_grabbed:
+				return
+			elif process_mode == PROCESS_MODE_DISABLED:
+				return
 			
 			_sprite.material = null
 			
@@ -79,7 +88,12 @@ func _ready() -> void:
 			tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
 			tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
 			
-			tw.finished.connect(break_ice)
+			if _being_grabbed:
+				tw.kill()
+				modulate.a = alpha
+				return
+			else:
+				tw.finished.connect(break_ice)
 	
 	grabbing_got_thrown.connect(
 		func():
@@ -93,7 +107,10 @@ func _physics_process(delta: float) -> void:
 	if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
 		break_ice(true, true)
 	
+	_attack.enabled = !is_zero_approx(velocity.length_squared())
+	
 	speed.x = move_toward(speed.x, 0, deceleration * delta)
+
 
 ## Draws the sprite for the ice
 func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 = Vector2.ZERO) -> void:
@@ -128,19 +145,23 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	_sprite.position = -_sprite.pivot_offset
 	
 	var rect := _sprite.get_rect()
-	if _collision_shape.shape is RectangleShape2D:
-		_collision_shape.shape = _collision_shape.shape.duplicate(true)
-		(_collision_shape.shape as RectangleShape2D).size = rect.size
-	if _body_collision.shape is RectangleShape2D:
-		_body_collision.shape = _collision_shape.shape
+	for i in _collision_shapes:
+		if i.shape is RectangleShape2D:
+			i.shape = i.shape.duplicate(true)
+			(i.shape as RectangleShape2D).size = rect.size
+		if i.shape is RectangleShape2D:
+			i.shape = i.shape
 	
-
+	if _attack.shape is RectangleShape2D:
+		_attack.shape = _attack.shape.duplicate(true)
+		(_attack.shape as RectangleShape2D).size = rect.size
 
 ## Breaks the ice.[br]
 ## If [param heavy] is [code]true[/code], the object in the block will be destroyed.[br]
 ## [param sound_heavily] determines which type of sound will play on the ice's breaking.
 func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
-	if process_mode == PROCESS_MODE_DISABLED: return
+	if process_mode == PROCESS_MODE_DISABLED:
+		return
 	
 	if is_instance_valid(contained_item):
 		(func():
@@ -165,10 +186,11 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 	
 	if _visible_on_screen.is_on_screen():
 		var rect := _sprite.get_rect().size
-		var get_ellipse_point: Callable = func(angle: float) -> Vector2:
-			return Vector2(rect.x * cos(angle), rect.y * sin(angle))
 		var maximum_debris := int(roundf(_sprite.get_rect().get_area() / 170.67))
 		var angle_unit := TAU / maximum_debris
+		
+		var get_ellipse_point: Callable = func(angle: float) -> Vector2:
+			return Vector2(rect.x * cos(angle), rect.y * sin(angle))
 		
 		for i in maximum_debris:
 			var angle := wrapf(angle_unit * i, -PI, PI) - angle_unit / 2
@@ -176,3 +198,24 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 			debris.velocity = debris_speed * Vector2.RIGHT.rotated(global_rotation + angle)
 	
 	queue_free()
+
+## Starts the timedown of breaking the ice block.
+func start_timedown(grabbed: bool = false) -> void:
+	_timer_destroy.paused = false
+	_timer_destroy.start(destroy_delay)
+	
+	if grabbed:
+		_being_grabbed = false
+
+## Pauses the timedown of breaking the ice block.
+func pause_timedown(grabbed: bool = false) -> void:
+	_timer_destroy.paused = true
+	
+	if grabbed:
+		_being_grabbed = true
+
+
+func _on_ungrabbed() -> void:
+	await get_tree().physics_frame
+	if speed_previous.y < 250:
+		break_by_speed = true

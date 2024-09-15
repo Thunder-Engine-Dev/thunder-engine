@@ -10,6 +10,7 @@ const ATTACKERS: Dictionary = {
 	fireball = &"fireball",
 	beetroot = &"beetroot",
 	iceball = &"iceball",
+	iceblock = &"iceblock",
 	hammer = &"hammer",
 	boomerang = &"boomerang"
 }
