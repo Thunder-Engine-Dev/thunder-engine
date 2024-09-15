@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b88ks57c23lyq"]
+[gd_scene load_steps=6 format=3 uid="uid://b88ks57c23lyq"]
 
-[ext_resource type="Texture2D" uid="uid://b6tudn6gbn2ib" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_yfmkj"]
+[ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_yfmkj"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="2_1p3d7"]
 
 [sub_resource type="Curve" id="Curve_wq43i"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -25,5 +26,6 @@ process_material = SubResource("ParticleProcessMaterial_4jdto")
 texture = ExtResource("1_yfmkj")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
+script = ExtResource("2_1p3d7")
 
 [connection signal="finished" from="." to="." method="queue_free"]
