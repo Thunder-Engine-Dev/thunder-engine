@@ -9,7 +9,11 @@ const GRAVITY: float = 2500.0
 
 @export_group("Speed")
 ## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
-@export var speed: Vector2 # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
+@export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
+	set(value):
+		velocity = value.rotated(get_global_gravity_dir().angle() - PI/2)
+	get:
+		return velocity.rotated(-get_global_gravity_dir().angle() + PI/2)
 @export_group("Gravity")
 ## The gravity_direction of the body, with length always [code]1.0[/code][br]
 ## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
@@ -57,11 +61,8 @@ func motion_process(delta: float, slide: bool = false) -> void:
 		is_speed_capped = true
 	
 	update_up_direction()
-	
-	var rot: = get_global_gravity_dir().angle()
-	velocity = speed.rotated(rot - PI/2)
 	do_movement(delta, slide, false)
-	speed = velocity.rotated(-rot + PI/2)
+	
 	if !is_speed_capped:
 		speed += gravity * gravity_dir * delta * 0.5
 	

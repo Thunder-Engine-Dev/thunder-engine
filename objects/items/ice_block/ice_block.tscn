@@ -65,6 +65,7 @@ turn_into_coin_on_level_end = false
 frozen_enabled = false
 
 [node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_fjc0d")
 target_position = Vector2(0, 0)
 max_results = 8
