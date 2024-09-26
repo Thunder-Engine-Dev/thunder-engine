@@ -307,6 +307,8 @@ func _head_process() -> void:
 func _body_process() -> void:
 	if !player.body.shape: return
 	
+	var player_velocity = player.velocity.normalized()
+	
 	for i in player.body.get_collision_count():
 		var collider: Node2D = player.body.get_collider(i) as Node2D
 		if !is_instance_valid(collider):
@@ -314,7 +316,7 @@ func _body_process() -> void:
 		if !collider.has_node("EnemyAttacked"): continue
 		
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
-		var result: Dictionary = enemy_attacked.got_stomped(player, player.velocity.normalized())
+		var result: Dictionary = enemy_attacked.got_stomped(player, player_velocity)
 		if result.is_empty(): return
 		if result.result == true:
 			if player.jumping > 0:
