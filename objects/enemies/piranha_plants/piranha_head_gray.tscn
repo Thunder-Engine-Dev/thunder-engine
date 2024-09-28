@@ -1,48 +1,45 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4wmfm3xdu1g0"]
+[gd_scene load_steps=8 format=3 uid="uid://cpf0e00tynf01"]
 
-[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_1osc4"]
-[ext_resource type="Texture2D" uid="uid://cgay0oqcx75my" path="res://engine/objects/enemies/piranha_plants/textures/head_gray.png" id="2_ml3lo"]
+[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_fag7l"]
+[ext_resource type="Texture2D" uid="uid://cgay0oqcx75my" path="res://engine/objects/enemies/piranha_plants/textures/head_gray.png" id="2_h33fj"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6m1fw"]
-atlas = ExtResource("2_ml3lo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_uexbf"]
+atlas = ExtResource("2_h33fj")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7e2o5"]
-atlas = ExtResource("2_ml3lo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbh7a"]
+atlas = ExtResource("2_h33fj")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eqxqu"]
-atlas = ExtResource("2_ml3lo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5wme"]
+atlas = ExtResource("2_h33fj")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_schhw"]
-atlas = ExtResource("2_ml3lo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxk3p"]
+atlas = ExtResource("2_h33fj")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_s8bx5"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bl55j"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6m1fw")
+"texture": SubResource("AtlasTexture_uexbf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7e2o5")
+"texture": SubResource("AtlasTexture_gbh7a")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eqxqu")
+"texture": SubResource("AtlasTexture_l5wme")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_schhw")
+"texture": SubResource("AtlasTexture_bxk3p")
 }],
 "loop": true,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaHeadGray" instance=ExtResource("1_1osc4")]
-
-[node name="AnimatedSprite2D" parent="." index="0"]
-sprite_frames = SubResource("SpriteFrames_s8bx5")
+[node name="PiranhaHeadGray" instance=ExtResource("1_fag7l")]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_immune = {
@@ -57,3 +54,7 @@ killing_immune = {
 "shell_forced": false,
 "starman": true
 }
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_bl55j")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]

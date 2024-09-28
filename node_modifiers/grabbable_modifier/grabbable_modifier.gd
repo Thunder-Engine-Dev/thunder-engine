@@ -60,7 +60,6 @@ func _side_grabbed() -> void:
 func _do_player_lock() -> void:
 	_player_lock_pos = player.global_position
 	player.no_movement = true
-	player
 	await player.get_tree().create_timer(0.3, false, true).timeout
 	player.no_movement = false
 

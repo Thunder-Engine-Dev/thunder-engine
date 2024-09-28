@@ -1,20 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://da16joa30w76a"]
+[gd_scene load_steps=15 format=3 uid="uid://b0o2s50kjcw6"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_w3cho"]
-[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_1xsw0"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_eemo7"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_ugd8k"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_rspvw"]
-[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_evmnd"]
-[ext_resource type="Texture2D" uid="uid://ehrk7tmgv47w" path="res://engine/objects/enemies/piranha_plants/textures/piranha_green.png" id="8_0itiq"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_wsasv"]
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_vwk7g"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_6dtcf"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_kp7a1"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_ksll2"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_nsnlw"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_wsuqe"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_pbp20"]
+[ext_resource type="Texture2D" uid="uid://cuuampkjmhj6j" path="res://engine/objects/enemies/piranha_plants/textures/piranha_gray.png" id="8_s43c1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcap"]
-script = ExtResource("5_rspvw")
-creation_nodepack = ExtResource("3_1xsw0")
+script = ExtResource("5_nsnlw")
+creation_nodepack = ExtResource("3_kp7a1")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -28,43 +28,43 @@ custom_vars = {
 "death_speed": Vector2(0, -250),
 "fast_death_effect": true
 }
-custom_script = ExtResource("4_ugd8k")
+custom_script = ExtResource("4_ksll2")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_88svi"]
-atlas = ExtResource("8_0itiq")
+[sub_resource type="AtlasTexture" id="AtlasTexture_etnku"]
+atlas = ExtResource("8_s43c1")
 region = Rect2(0, 0, 31, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3aab"]
-atlas = ExtResource("8_0itiq")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b82cp"]
+atlas = ExtResource("8_s43c1")
 region = Rect2(31, 0, 31, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7280e"]
-atlas = ExtResource("8_0itiq")
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwpqg"]
+atlas = ExtResource("8_s43c1")
 region = Rect2(62, 0, 31, 47)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ym01l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_88svi")
+"texture": SubResource("AtlasTexture_etnku")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t3aab")
+"texture": SubResource("AtlasTexture_b82cp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7280e")
+"texture": SubResource("AtlasTexture_iwpqg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t3aab")
+"texture": SubResource("AtlasTexture_b82cp")
 }],
 "loop": true,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaGreen" type="Node2D"]
+[node name="PiranhaGray" type="Node2D"]
 self_modulate = Color(1, 1, 1, 0.121569)
-script = ExtResource("1_w3cho")
+script = ExtResource("1_vwk7g")
 
 [node name="Body" type="Area2D" parent="."]
 visible = false
@@ -77,23 +77,23 @@ shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
-script = ExtResource("4_eemo7")
+script = ExtResource("2_6dtcf")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
-"beetroot": false,
-"boomerang": false,
-"fireball": false,
-"hammer": false,
-"iceball": false,
-"shell": false,
-"shell_defence": 0,
-"shell_forced": false,
+"beetroot": true,
+"boomerang": true,
+"fireball": true,
+"hammer": true,
+"iceball": true,
+"shell": true,
+"shell_defence": 5,
+"shell_forced": true,
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")
-killing_scores = 100
-killing_sound_succeeded = ExtResource("9_wsasv")
-killing_sound_failed = ExtResource("7_evmnd")
+killing_scores = 200
+killing_sound_succeeded = ExtResource("6_wsuqe")
+killing_sound_failed = ExtResource("7_pbp20")
 ice_sprite = NodePath("../../Sprite")
 ice_sprite_autoset = false
 ice_fragile = true

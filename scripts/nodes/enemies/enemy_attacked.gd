@@ -83,6 +83,8 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 @export var ice_sprite_autoset: bool = true
 ## Offset of what [member ice_sprite] refers to in the ice block.
 @export var ice_sprite_offset: Vector2
+## If [code]true[/code], the enemy will be killed even if the ice is not get heavily broken.
+@export var ice_fragile: bool
 ## Sound triggered when the enemy becomes frozen.
 @export var frozen_sound: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 @export_group("Sound", "sound_")
@@ -237,16 +239,15 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			_add_pos = _ice_sprite.position
 		
 		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
-			_add_pos,
-			_center.rotation,
-			_center.scale,
-			_center.skew
+			_add_pos
 		).create_2d().get_node()
+		print(_center.global_transform)
 		
 		ice.unfreeze_offset = -_add_pos
 		ice.destroy_enabled = true
 		ice.contained_item = _center
 		ice.contained_item_enemy_killed = self
+		ice.forced_heavy_break = ice_fragile
 		
 		var in_ice_spr: Node2D = null
 		if is_instance_valid(_ice_sprite):

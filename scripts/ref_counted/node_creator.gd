@@ -78,13 +78,17 @@ class NodeCreation extends RefCounted:
 		return self
 	
 	
-	## If you haven't called [method NodeCreator.prepare_ins_2d], then you need to call this function
-	## to set the [member Node2D.global_transform] of the node input[br]
-	## It's also allowed to call it before or after you call [method create_2d]
+	## Sets the [member Node2D.global_transform] of the node to be instantiated and created.[br][br]
+	## [b]Note 1:[/b] It's allowed to call this before or after you call [method create_2d][br]
+	## [b]Note 2:[/b] The parameters [param offset], [param rot], [param scl] and [param skew] are added to or multiplied by the related global transformal property of the center node.
+	## So you SHOULD NOT pass in a global position/rotation/scale/skew in this method.
 	func bind_global_transform(offset: Vector2 = Vector2.ZERO, rot: float = 0, scl: Vector2 = Vector2.ONE, skew: float = 0) -> NodeCreation:
 		if !_node || !_on: return self
-		_node.global_transform = _on.global_transform.translated_local(offset).rotated(rot).scaled(scl)
-		_node.global_skew = _on.global_skew
+		_node.global_rotation = _on.global_rotation + rot
+		_node.global_scale = _on.global_scale * scl
+		_node.global_position = _on.global_position
+		_node.translate(offset)
+		_node.global_skew = _on.global_skew + skew
 		_node.reset_physics_interpolation()
 		return self
 	
@@ -96,11 +100,15 @@ class NodeCreation extends RefCounted:
 	func create_2d(as_sibling: bool = false, ins2d: InstanceNode2D = null) -> NodeCreation:
 		if !_node: return self
 		
-		if as_sibling: _on.add_sibling(_node)
-		elif Scenes.current_scene: Scenes.current_scene.add_child(_node)
+		if as_sibling:
+			_on.add_sibling(_node)
+		elif Scenes.current_scene:
+			Scenes.current_scene.add_child(_node)
 		
-		if ins2d: _ins2d = ins2d
-		if !_ins2d: return self
+		if ins2d:
+			_ins2d = ins2d
+		if !_ins2d:
+			return self
 		
 		_node.global_position = _on.global_transform.translated_local(_ins2d.trans_offset).get_origin()
 		_node.global_rotation = _ins2d.trans_rotation

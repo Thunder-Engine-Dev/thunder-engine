@@ -31,6 +31,7 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 ## Sound of ice breaking heavily.
 @export var sound_breaking_heavily: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break_heavy.tres")
 
+var forced_heavy_break: bool
 var contained_item: Node2D
 var contained_item_sprite: Node2D
 var contained_item_enemy_killed: Node
@@ -104,6 +105,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	
+	if speed_previous.y < 0 && is_on_ceiling() && break_by_speed:
+		break_ice(true, true)
 	if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
 		break_ice(true, true)
 	
@@ -126,20 +129,11 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	
 	var mat := CanvasItemMaterial.new()
 	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
+	
 	drawn_sprite.material = mat
-	
-	var size: Vector2 = Vector2.ONE * 32
-	if drawn_sprite is Sprite2D:
-		if drawn_sprite.texture:
-			size = drawn_sprite.texture.get_size()
-	elif drawn_sprite is AnimatedSprite2D:
-		if drawn_sprite.sprite_frames:
-			var tex: Texture2D = drawn_sprite.sprite_frames.get_frame_texture(drawn_sprite.animation, drawn_sprite.frame)
-			if tex:
-				size = tex.get_size()
-	
 	drawn_sprite.process_mode = Node.PROCESS_MODE_DISABLED
 	
+	var size := _get_in_ice_sprite_size(drawn_sprite)
 	_sprite.size = size
 	_sprite.pivot_offset = size / 2
 	_sprite.position = -_sprite.pivot_offset
@@ -162,6 +156,10 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 	if process_mode == PROCESS_MODE_DISABLED:
 		return
+	
+	if forced_heavy_break:
+		heavy = true
+		sound_heavily = true
 	
 	if is_instance_valid(contained_item):
 		(func():
@@ -214,6 +212,24 @@ func pause_timedown(grabbed: bool = false) -> void:
 	if grabbed:
 		_being_grabbed = true
 
+
+func _get_in_ice_sprite_size(drawn_sprite: Node2D) -> Vector2:
+	var size: Array[Vector2] = [Vector2.ONE * 32]
+	
+	if drawn_sprite is Sprite2D:
+		if drawn_sprite.texture:
+			size.append(drawn_sprite.texture.get_size())
+	elif drawn_sprite is AnimatedSprite2D:
+		if drawn_sprite.sprite_frames:
+			var tex: Texture2D = drawn_sprite.sprite_frames.get_frame_texture(drawn_sprite.animation, drawn_sprite.frame)
+			if tex:
+				size.append(tex.get_size())
+	
+	size.sort_custom(func(a: Vector2, b: Vector2) -> bool:
+		return absf(a.x * a.y) > absf(b.x * b.y)
+	)
+	
+	return size[0]
 
 func _on_ungrabbed() -> void:
 	await get_tree().physics_frame

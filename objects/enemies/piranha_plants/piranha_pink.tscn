@@ -1,16 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene load_steps=20 format=3 uid="uid://oja3uy1y4hpl"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
-[ext_resource type="Texture2D" uid="uid://cn66b21sja8vk" path="res://engine/objects/enemies/piranha_plants/textures/head_pink.png" id="2_7expw"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_m1eaf"]
-[ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="3_12v5v"]
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="3_l5y0h"]
 [ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_t6vqd"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_85764"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_pik1k"]
+[ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="10_wf5qj"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
@@ -40,42 +39,38 @@ visi_z_index = 3
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Head"),
+"death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250),
 "fast_death_effect": true
 }
 custom_script = ExtResource("8_pik1k")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6wvqc"]
-atlas = ExtResource("2_7expw")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5aih"]
+atlas = ExtResource("10_wf5qj")
+region = Rect2(0, 0, 31, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8c8o4"]
-atlas = ExtResource("2_7expw")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_oe02n"]
+atlas = ExtResource("10_wf5qj")
+region = Rect2(31, 0, 31, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2jlnk"]
-atlas = ExtResource("2_7expw")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqta4"]
+atlas = ExtResource("10_wf5qj")
+region = Rect2(62, 0, 31, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kug6o"]
-atlas = ExtResource("2_7expw")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2q2vw"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_6buyf"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6wvqc")
+"texture": SubResource("AtlasTexture_m5aih")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8c8o4")
+"texture": SubResource("AtlasTexture_oe02n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2jlnk")
+"texture": SubResource("AtlasTexture_iqta4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kug6o")
+"texture": SubResource("AtlasTexture_oe02n")
 }],
 "loop": true,
 "name": &"default",
@@ -135,20 +130,17 @@ killing_immune = {
 killing_creation = SubResource("Resource_hukh6")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_85764")
+ice_sprite = NodePath("../../Sprite")
+ice_sprite_autoset = false
+ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation"]
 
-[node name="Head" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = -2
-position = Vector2(0, -32)
-sprite_frames = SubResource("SpriteFrames_2q2vw")
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_6buyf")
 autoplay = "default"
-metadata/_edit_group_ = true
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
-
-[node name="Stem" type="Sprite2D" parent="Head"]
-position = Vector2(0, 24)
-texture = ExtResource("3_12v5v")
-metadata/_edit_pinned_properties_ = [&"texture"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
@@ -169,4 +161,4 @@ range_layer_min = -100
 texture = SubResource("GradientTexture2D_g3ldy")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
