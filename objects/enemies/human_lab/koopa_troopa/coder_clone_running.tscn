@@ -141,8 +141,8 @@ stream = ExtResource("13_tt0hr")
 volume_db = 4.0
 bus = &"Sound"
 
-[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="show"]
