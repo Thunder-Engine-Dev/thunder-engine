@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnr3rfhkdf6j2"]
+[gd_scene load_steps=9 format=3 uid="uid://bnr3rfhkdf6j2"]
 
 [ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
 [ext_resource type="Resource" uid="uid://d14ntnfciec1v" path="res://engine/objects/bumping_blocks/question_block/item_resources/question_default_item.tres" id="2_3xrsj"]
 [ext_resource type="SpriteFrames" uid="uid://ctc2d4okn2gdd" path="res://engine/objects/bumping_blocks/question_block/question_block.tres" id="2_t2orr"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_eb4q6"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="5_21kjl"]
 [ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/invisible_body_checker.gd" id="6_i7yge"]
 
@@ -35,12 +34,6 @@ rotation = 3.14159
 shape = SubResource("RectangleShape2D_2x2nd")
 one_way_collision = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(1.43051e-06, 1.43051e-06)
-scale = Vector2(1.6, 1.6)
-script = ExtResource("3_eb4q6")
-metadata/_edit_lock_ = true
-
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
@@ -55,6 +48,12 @@ autoplay = "default"
 position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_t3wug")
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
+visible = false
+position = Vector2(1.43051e-06, 1.43051e-06)
+scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
