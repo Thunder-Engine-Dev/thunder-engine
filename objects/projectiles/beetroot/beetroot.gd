@@ -35,6 +35,8 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if with_sound:
 		Audio.play_sound(preload("res://engine/objects/projectiles/sounds/stun.wav"), self)
 	
+	process_bumping_blocks()
+	
 	turn_x()
 	
 	if !ceiling: jump(jumping_speed)
@@ -46,22 +48,33 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		node.position.y += 12
 	)
 	
-	for i in get_slide_collision_count():
-		var _collision: KinematicCollision2D = get_slide_collision(i)
-		if !_collision: continue
-		
-		var collider: Node2D = _collision.get_collider() as Node2D
-		if (
-			collider is StaticBumpingBlock &&
-			collider.has_method(&"got_bumped")
-		):
-			collider.got_bumped(self)
-
 	if bounces_left == 0:
 		run_out.emit()
 		collision_layer = 0
 		collision_mask = 128
-		return
+
+
+func process_bumping_blocks() -> void:
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.collision_mask = collision_mask
+	query.motion = Vector2(clamp(speed_previous.x, -1, 1), clamp(speed_previous.y, -1, 1)).rotated(global_rotation)
+	
+	for i in get_shape_owners():
+		query.transform = (shape_owner_get_owner(i) as Node2D).global_transform
+		for j in shape_owner_get_shape_count(i):
+			query.shape = shape_owner_get_shape(i, j)
+			
+			var cldata: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query)
+			
+			for k in cldata:
+				var l: Object = k.get(&"collider", null)
+				var id: int = k.get(&"collider_id", 0)
+				
+				if l is StaticBumpingBlock:
+					if l.has_method(&"got_bumped"):
+						l.got_bumped.call_deferred(self)
+					elif l.has_method(&"bricks_break"):
+						l.bricks_break.call_deferred()
 
 
 func _on_level_end() -> void:

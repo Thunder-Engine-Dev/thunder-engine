@@ -3,7 +3,7 @@ extends StaticBody2D
 @onready var _path_follow = $".."
 
 #func _ready() -> void:
-#	physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
+	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 
 # Forward the method call to the main platform script.
 func _player_landed(player: Player) -> void:
