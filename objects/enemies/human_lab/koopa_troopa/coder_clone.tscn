@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="10_uk66u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xa3qa"]
-size = Vector2(32, 64)
+size = Vector2(32, 63)
 
 [sub_resource type="Resource" id="Resource_6rql1"]
 script = ExtResource("4_jp4b2")
@@ -196,7 +196,7 @@ animations = [{
 [node name="CoderClone" instance=ExtResource("1_cayg7")]
 
 [node name="Collision" parent="." index="0"]
-position = Vector2(0, -6)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xa3qa")
 
 [node name="Collision" parent="Body" index="0"]

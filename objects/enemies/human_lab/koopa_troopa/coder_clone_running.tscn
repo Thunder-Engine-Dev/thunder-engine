@@ -15,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bdoleamphnfjc" path="res://engine/objects/enemies/human_lab/koopa_troopa/sfx/idle.wav" id="13_tt0hr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_anmel"]
-size = Vector2(48, 64)
+size = Vector2(48, 63)
 
 [sub_resource type="Resource" id="Resource_vbfrs"]
 resource_local_to_scene = true
@@ -83,7 +83,7 @@ gravity_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0, 1)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_anmel")
 
 [node name="Body" type="Area2D" parent="."]
