@@ -127,6 +127,7 @@ func _movement_y(delta: float) -> void:
 	if player.is_underwater:
 		if player.jumped && player.up_down != 1:
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
+			player._has_jumped = true
 			player.swam.emit()
 			Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
 		if player.speed.y < -abs(config.swim_max_speed) && !player.is_underwater_out:

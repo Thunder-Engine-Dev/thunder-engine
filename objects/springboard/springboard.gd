@@ -47,6 +47,9 @@ func trigger(pl: Player = null) -> void:
 		var spr = get_node(sprite) as AnimatedSprite2D
 		spr.play(&"default")
 		spr.frame = 0
+		var current_player: Player = Thunder._current_player
+		if is_instance_valid(current_player):
+			current_player._has_jumped = true
 		return
 	
 	if !is_instance_valid(pl): return
