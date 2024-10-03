@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=50 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -56,6 +56,9 @@ custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmd6v"]
 size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0q7nw"]
+size = Vector2(54, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jj5ok"]
 atlas = ExtResource("2_2ap45")
@@ -488,7 +491,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-shape = SubResource("RectangleShape2D_dmd6v")
+shape = SubResource("RectangleShape2D_0q7nw")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_ertde")

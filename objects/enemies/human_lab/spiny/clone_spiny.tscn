@@ -255,7 +255,7 @@ killing_sound_succeeded = ExtResource("5_12kt0")
 sprite_frames = SubResource("SpriteFrames_kdbtc")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0"]
-position = Vector2(0, 20)
+position = Vector2(0, 19)
 sprite_frames = SubResource("SpriteFrames_8gg20")
 autoplay = "default"
 script = ExtResource("8_mvgoi")

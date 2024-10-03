@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_ile01"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pi0fq"]
-radius = 16.0
+radius = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhx86"]
 atlas = ExtResource("2_ib7bh")
@@ -236,7 +236,6 @@ script = ExtResource("1_gq7m4")
 amplitude_changing_speed = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_pi0fq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

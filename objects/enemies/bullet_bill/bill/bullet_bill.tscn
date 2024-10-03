@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bw7f131nc4fhf"]
+[gd_scene load_steps=13 format=3 uid="uid://bw7f131nc4fhf"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_w3yqm"]
 [ext_resource type="Texture2D" uid="uid://c4ty5fuc65vlg" path="res://engine/objects/enemies/bullet_bill/bill/textures/bullet_bill.png" id="2_2h53c"]
@@ -12,6 +12,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4qhu"]
 size = Vector2(32, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msonm"]
+size = Vector2(26, 20)
 
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("4_6v8k6")
@@ -47,8 +50,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-visible = false
-shape = SubResource("RectangleShape2D_s4qhu")
+shape = SubResource("RectangleShape2D_msonm")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
