@@ -23,6 +23,7 @@ enum GLOBAL_TYPE {
 @export var play_immediately: bool = true
 @export var stop_all_music_on_start: bool = true
 @export var play_globally: GLOBAL_TYPE = GLOBAL_TYPE.NO
+@export var can_pause: bool = false
 @export var volume_db: Array[float]
 @export var start_from_sec: Array[float]
 @export_group(&"Custom Script")
@@ -71,7 +72,7 @@ func _change_music(ind: int, ch_id: int) -> void:
 		music[ind], 
 		ch_id, 
 		{
-			"ignore_pause": true, 
+			"ignore_pause": !can_pause, 
 			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
 			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
 		}

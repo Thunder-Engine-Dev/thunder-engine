@@ -1,13 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://dgcgfl28trox0"]
+[gd_scene load_steps=21 format=3 uid="uid://dgcgfl28trox0"]
 
 [ext_resource type="Script" path="res://engine/objects/springboard/springboard.gd" id="1_qhuqa"]
 [ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ed1um"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_vp0le"]
 [ext_resource type="AudioStream" uid="uid://cstsdiler6f0v" path="res://engine/objects/springboard/sounds/springboard.wav" id="4_n438u"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="6_g7kku"]
 [ext_resource type="Texture2D" uid="uid://blk00uwviwdt2" path="res://engine/objects/springboard/textures/spring_bone.png" id="7_7rmsc"]
 [ext_resource type="Texture2D" uid="uid://miidtq8fivgv" path="res://engine/objects/springboard/textures/spring_ball.png" id="8_myiky"]
 [ext_resource type="Texture2D" uid="uid://br1lcm4sgo6sa" path="res://engine/objects/springboard/textures/spring_board.png" id="9_hsop8"]
-[ext_resource type="Script" path="res://engine/objects/springboard/springboard_marker.gd" id="10_qaybd"]
 [ext_resource type="Texture2D" uid="uid://dhbdb0vketv31" path="res://engine/objects/springboard/textures/springboard.png" id="11_bx2yt"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="13_0airn"]
 
@@ -57,8 +57,10 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Animation" id="Animation_y01bv"]
+[sub_resource type="Animation" id="Animation_oi4es"]
+resource_name = "RESET"
 length = 0.001
+step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -74,50 +76,50 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Bone1:position")
+tracks/1/path = NodePath("BallL:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-7, -17)]
+"values": [Vector2(-10, -8)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Bone1:rotation")
+tracks/2/path = NodePath("BallR:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.401426]
+"values": [Vector2(10, -8)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("BallR:position")
+tracks/3/path = NodePath("Bone1:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, -8)]
+"values": [Vector2(-6, -17)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("BallL:position")
+tracks/4/path = NodePath("Bone1:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-10, -8)]
+"values": [0.401426]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -129,7 +131,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6.001, 1.999)]
+"values": [Vector2(-6, 1)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -153,7 +155,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(7, 2)]
+"values": [Vector2(7, 1)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -177,7 +179,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(7.1, -18)]
+"values": [Vector2(7, -17)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -190,18 +192,6 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [-0.401426]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("Marker2D:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -32)]
 }
 
 [sub_resource type="Animation" id="Animation_6hv1e"]
@@ -242,7 +232,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(10.999, -8), Vector2(12, 0), Vector2(12, 8)]
+"values": [Vector2(10, -8), Vector2(12, 0), Vector2(12, 8)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -254,7 +244,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-7, -17), Vector2(-7, -6), Vector2(-7, 8)]
+"values": [Vector2(-7, -17), Vector2(-7.5, -6.5), Vector2(-7, 8)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -278,7 +268,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-6.001, 1.999), Vector2(-7, 6), Vector2(-7, 10)]
+"values": [Vector2(-7, 1), Vector2(-7, 6), Vector2(-7, 10)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -302,7 +292,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0, 0.0001, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(7, 2), Vector2(7, 2), Vector2(7.5, 6), Vector2(7, 10)]
+"values": [Vector2(7, 1), Vector2(7, 2), Vector2(7, 6), Vector2(7, 10)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -326,7 +316,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(7.1, -18), Vector2(7, -6), Vector2(7.999, 8)]
+"values": [Vector2(7, -17), Vector2(7, -6), Vector2(7.999, 8)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -340,27 +330,12 @@ tracks/10/keys = {
 "update": 0,
 "values": [-0.401426, -0.785397, -1.0472, -1.309]
 }
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("Marker2D:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -32), Vector2(0, -16), Vector2(0, 1)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqr8a"]
 _data = {
-"RESET": SubResource("Animation_y01bv"),
+"RESET": SubResource("Animation_oi4es"),
 "jump": SubResource("Animation_6hv1e")
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qou1f"]
-size = Vector2(31, 8)
 
 [node name="Springboard" type="CharacterBody2D"]
 collision_layer = 2
@@ -406,11 +381,17 @@ turn_into_coin_on_level_end = false
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"stomping_offset"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_1e01p")
+script = ExtResource("6_g7kku")
+maximum = false
+minimum = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.90735e-06, -8)
+scale = Vector2(3.2, 4)
 script = ExtResource("13_0airn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -421,27 +402,28 @@ libraries = {
 speed_scale = 2.5
 
 [node name="Node2D" type="Node2D" parent="."]
-visible = false
+script = ExtResource("6_g7kku")
+medium = true
 
 [node name="Bone1" type="Sprite2D" parent="Node2D"]
-position = Vector2(-7, -17)
+position = Vector2(-6, -17)
 rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 
 [node name="Bone2" type="Sprite2D" parent="Node2D"]
-position = Vector2(7.1, -18)
+position = Vector2(7, -17)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
 
 [node name="Bone3" type="Sprite2D" parent="Node2D"]
-position = Vector2(-6.001, 1.999)
+position = Vector2(-6, 1)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_v = true
 
 [node name="Bone4" type="Sprite2D" parent="Node2D"]
-position = Vector2(7, 2)
+position = Vector2(7, 1)
 rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
@@ -463,32 +445,5 @@ texture = ExtResource("9_hsop8")
 [node name="SpringBoard2" type="Sprite2D" parent="Node2D"]
 position = Vector2(0, 12)
 texture = ExtResource("9_hsop8")
-
-[node name="Marker2D" type="AnimatableBody2D" parent="Node2D"]
-visible = false
-position = Vector2(0, -32)
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("10_qaybd")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Marker2D"]
-position = Vector2(-0.5, 4)
-shape = SubResource("RectangleShape2D_qou1f")
-one_way_collision = true
-one_way_collision_margin = 2.0
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D/Marker2D"]
-position = Vector2(-0.5, 28)
-shape = SubResource("RectangleShape2D_qou1f")
-one_way_collision = true
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Node2D/Marker2D"]
-position = Vector2(-0.5, 16)
-shape = SubResource("RectangleShape2D_qou1f")
-one_way_collision = true
-
-[node name="Timer" type="Timer" parent="Node2D"]
-wait_time = 0.4
-one_shot = true
 
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="trigger"]

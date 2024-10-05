@@ -65,7 +65,7 @@ func add_score(amount: int) -> void:
 	score_added.emit()
 	values.score += amount
 	if SettingsManager.get_tweak("life_every_2_mil_score", false):
-		var two_mil: int = floor(values.score / 2_000_000)
+		var two_mil: int = floor(values.score / 1_000_000)
 		if two_mil > values.prev_score:
 			values.prev_score = two_mil
 			
