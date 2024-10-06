@@ -7,47 +7,6 @@ enum Error {
 	Wrong = 2, # Something went wrong
 }
 
-const type_names = {
-	TYPE_NIL: "null",
-	TYPE_BOOL: "bool",
-	TYPE_INT: "int",
-	TYPE_FLOAT: "float",
-	TYPE_STRING: "String",
-	TYPE_VECTOR2: "Vector2",
-	TYPE_VECTOR2I: "Vector2i",
-	TYPE_RECT2: "Rect2",
-	TYPE_RECT2I: "Rect2i",
-	TYPE_VECTOR3: "Vector3",
-	TYPE_VECTOR3I: "Vector3i",
-	TYPE_TRANSFORM2D: "Transform2D",
-	TYPE_VECTOR4: "Vector4",
-	TYPE_VECTOR4I: "Vector4i",
-	TYPE_PLANE: "Plane",
-	TYPE_QUATERNION: "Quaternion",
-	TYPE_AABB: "AABB",
-	TYPE_BASIS: "Basis",
-	TYPE_TRANSFORM3D: "Transform3D",
-	TYPE_PROJECTION: "Projection",
-	TYPE_COLOR: "Color",
-	TYPE_STRING_NAME: "StringName",
-	TYPE_NODE_PATH: "NodePath",
-	TYPE_RID: "RID",
-	TYPE_OBJECT: "Object",
-	TYPE_CALLABLE: "Callable",
-	TYPE_SIGNAL: "Signal",
-	TYPE_DICTIONARY: "Dictionary",
-	TYPE_ARRAY: "Array",
-	TYPE_PACKED_BYTE_ARRAY: "PackedByteArray",
-	TYPE_PACKED_INT32_ARRAY: "PackedInt32Array",
-	TYPE_PACKED_INT64_ARRAY: "PackedInt64Array",
-	TYPE_PACKED_FLOAT32_ARRAY: "PackedFloat32Array",
-	TYPE_PACKED_FLOAT64_ARRAY: "PackedFloat64Array",
-	TYPE_PACKED_STRING_ARRAY: "PackedStringArray",
-	TYPE_PACKED_VECTOR2_ARRAY: "PackedVector2Array",
-	TYPE_PACKED_VECTOR3_ARRAY: "PackedVector3Array",
-	TYPE_PACKED_COLOR_ARRAY: "PackedColorArray",
-}
-
 class ExecuteResult:
 	var msg: Variant
 	var err: Error
@@ -104,7 +63,7 @@ func get_help() -> String:
 			var opening: String = "aqua][" if opt else "deep_sky_blue]<"
 			var closing: String = "]" if opt else ">"
 			result += " [color=%s%s: %s%s[/color]" % [
-				opening, k, type_names[params[k].type], closing
+				opening, k, type_string(params[k].type), closing
 			]
 	
 	result += " - %s" % description

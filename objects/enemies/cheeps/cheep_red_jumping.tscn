@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpr3k5jjwy2fc"]
+[gd_scene load_steps=14 format=3 uid="uid://bpr3k5jjwy2fc"]
 
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_fjorm"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_btk2t"]
@@ -29,9 +29,6 @@ custom_vars = {
 "death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("4_wa0ot")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
-size = Vector2(2, 2)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kpu1"]
 atlas = ExtResource("8_46bru")
@@ -100,24 +97,6 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("7_g3ol3")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_oamh3")
-target_position = Vector2(0, 0)
-max_results = 1
-collision_mask = 128
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="SwimY" type="ShapeCast2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_oamh3")
-target_position = Vector2(0, 0)
-max_results = 1
-collision_mask = 128
-collide_with_areas = true
-collide_with_bodies = false
-
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7tauq")
 autoplay = "default"
@@ -128,10 +107,6 @@ position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(4.8, 4.8)
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
-process_callback = 0
-autostart = true
-
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]
 [connection signal="collided_floor" from="." to="." method="turn_y"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
@@ -139,5 +114,4 @@ autostart = true
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
-[connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

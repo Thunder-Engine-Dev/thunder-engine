@@ -13,6 +13,7 @@ signal starmaned(dur: float)
 signal starman_attacked
 signal damaged
 signal died
+signal died_with_body(dead_player_body: Node2D)
 
 enum Warp {
 	NONE,
@@ -319,6 +320,7 @@ func die(tags: Dictionary = {}) -> void:
 		Scenes.custom_scenes.pause._no_unpause = true
 	
 	died.emit()
+	died_with_body.emit(_db)
 	queue_free()
 
 

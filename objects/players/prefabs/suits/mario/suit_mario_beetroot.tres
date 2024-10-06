@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="5_ofqfp"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_ysgl2"]
 [ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_mario_super.tres" id="6_ayx7l"]
-[ext_resource type="AudioStream" uid="uid://qj2r81vrry81" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_m5gcq"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_m5gcq"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_53kjs"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="7_d7ol3"]
 [ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="8_mhcy7"]
