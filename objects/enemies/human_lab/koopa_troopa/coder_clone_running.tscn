@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://vrjw4l81t48g"]
+[gd_scene load_steps=22 format=3 uid="uid://vrjw4l81t48g"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_qmatq"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_ia4sv"]
@@ -16,6 +16,24 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_anmel"]
 size = Vector2(48, 63)
+
+[sub_resource type="Resource" id="Resource_gvclo"]
+resource_local_to_scene = true
+script = ExtResource("4_mmpkq")
+creation_nodepack = ExtResource("2_ia4sv")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_3whwn")
 
 [sub_resource type="Resource" id="Resource_vbfrs"]
 resource_local_to_scene = true
@@ -93,7 +111,7 @@ script = ExtResource("2_ryuvu")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_5ua6b")
-stomping_creation = SubResource("Resource_vbfrs")
+stomping_creation = SubResource("Resource_gvclo")
 stomping_scores = 100
 stomping_sound = ExtResource("7_miya7")
 killing_creation = SubResource("Resource_vbfrs")

@@ -129,6 +129,11 @@ func is_player_power(power: Data.PLAYER_POWER) -> bool:
 	return _current_player_state && _current_player_state.type == power
 
 
+func reset_player_state() -> void:
+	_current_player_state_path = ""
+	_current_player_state = null
+
+
 ## Pauses game
 func set_pause_game(pause: bool) -> void:
 	get_tree().paused = pause
