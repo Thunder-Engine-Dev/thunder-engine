@@ -32,6 +32,16 @@ var default_settings: Dictionary = {
 		"m_attack": _get_current_key(&"m_attack"),
 		"pause_toggle": _get_current_key(&"pause_toggle"),
 	},
+	"controls_joypad": {
+		"m_up": _get_current_joykey(&"m_up"),
+		"m_down": _get_current_joykey(&"m_down"),
+		"m_left": _get_current_joykey(&"m_left"),
+		"m_right": _get_current_joykey(&"m_right"),
+		"m_jump": _get_current_joykey(&"m_jump"),
+		"m_run": _get_current_joykey(&"m_run"),
+		"m_attack": _get_current_joykey(&"m_attack"),
+		"pause_toggle": _get_current_joykey(&"pause_toggle"),
+	},
 	"character": ProjectSettings.get_setting("application/thunder_settings/default_character_setting", "Mario"),
 	"custom": {},
 }
@@ -89,6 +99,7 @@ func _check_for_validity() -> void:
 func _process_settings() -> void:
 	# Game Speed
 	Engine.time_scale = settings.game_speed
+	@warning_ignore("narrowing_conversion")
 	Engine.physics_ticks_per_second = Engine.time_scale * _default_tps
 	
 	# Vsync
@@ -127,25 +138,63 @@ func _process_settings() -> void:
 	
 	settings_updated.emit()
 
-## Returns the key label of specified action
-func _get_current_key(action: StringName) :
+## Returns the keyboard key label of specified action
+func _get_current_key(action: StringName) -> String:
 	var keys = InputMap.action_get_events(action)
 	for key in keys:
 		if key is InputEventKey:
 			return key.as_text().get_slice(' (', 0)
+	return ""
+
+## Returns the joypad key label of specified action
+func _get_current_joykey(action: StringName) -> JoyButton:
+	var keys = InputMap.action_get_events(action)
+	for joykey in keys:
+		if joykey is InputEventJoypadButton:
+			return joykey.button_index
+		elif joykey is InputEventJoypadMotion && abs(joykey.axis_value) >= 0.5:
+			return 40 + (joykey.axis * 2) + (0 if signf(joykey.axis_value) < 0 else 1)
+	return JOY_BUTTON_INVALID
 
 ## Loads controls settings to InputMap
 func _load_keys() -> void:
 	var controls = settings.controls
 	for action in controls:
-		if controls[action] and controls[action] is String:
-			var scancode = OS.find_keycode_from_string(controls[action])
-			var key = InputEventKey.new()
-			key.keycode = scancode
-			if key is InputEventKey:
+		if !controls[action] || !controls[action] is String:
+			continue
+		
+		var scancode = OS.find_keycode_from_string(controls[action])
+		var key = InputEventKey.new()
+		key.keycode = scancode
+		if key is InputEventKey:
+			var oldKeys = InputMap.action_get_events(action)
+			for toRemove in oldKeys:
+				if toRemove is InputEventKey:
+					InputMap.action_erase_event(action, toRemove)
+			InputMap.action_add_event(action, key)
+	
+	var controls_joy = settings.controls_joypad
+	for action in controls_joy:
+		if !controls_joy[action] || !controls_joy[action] is int:
+			continue
+		
+		if controls_joy[action] >= 40:
+			var motion = InputEventJoypadMotion.new()
+			motion.axis = (controls_joy[action] - 40) / 2
+			motion.axis_value = -1.0 if wrapi(controls_joy[action], 0, 2) == 0 else 1.0
+			if motion is InputEventJoypadMotion:
 				var oldKeys = InputMap.action_get_events(action)
 				for toRemove in oldKeys:
-					if toRemove is InputEventKey:
+					if toRemove is InputEventJoypadMotion:
+						InputMap.action_erase_event(action, toRemove)
+				InputMap.action_add_event(action, motion)
+		else:
+			var key = InputEventJoypadButton.new()
+			key.button_index = controls_joy[action]
+			if key is InputEventJoypadButton:
+				var oldKeys = InputMap.action_get_events(action)
+				for toRemove in oldKeys:
+					if toRemove is InputEventJoypadButton:
 						InputMap.action_erase_event(action, toRemove)
 				InputMap.action_add_event(action, key)
 	

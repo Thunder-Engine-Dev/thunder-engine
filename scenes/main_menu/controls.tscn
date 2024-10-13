@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene load_steps=50 format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
@@ -7,54 +7,80 @@
 [ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
 [ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_device_selection.gd" id="6_eh53w"]
+[ext_resource type="Texture2D" uid="uid://mf8lpy2j8u6k" path="res://engine/scenes/main_menu/textures/device_selector.png" id="7_3opa8"]
 [ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_reset_selection.gd" id="11_atcop"]
+[ext_resource type="Texture2D" uid="uid://cqtna1lefejv1" path="res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png" id="11_gj6qx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5kct"]
+atlas = ExtResource("7_3opa8")
+region = Rect2(0, 0, 90, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rvpt"]
+atlas = ExtResource("7_3opa8")
+region = Rect2(0, 60, 141, 30)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_un3r3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3kw8g"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 15, 141, 30)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4ofd"]
+atlas = ExtResource("11_gj6qx")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgyhc"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 63.73, 188.925, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqya7"]
+atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2fp7r"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 111.395, 165.02, 30)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl1hk"]
+atlas = ExtResource("11_gj6qx")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7oykq"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(2, 161, 174.935, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aj1f"]
+atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fn4x"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(2, 209, 65, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lc1i"]
+atlas = ExtResource("11_gj6qx")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ne13l"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 256, 52, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0m6ru"]
+atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhbv2"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(125, 256, 56.715, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqgad"]
+atlas = ExtResource("11_gj6qx")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_shng1"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 305, 81, 25)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_un3r3"]
-
-[sub_resource type="GDScript" id="GDScript_ilvph"]
-script/source = "extends MenuSelection
-
-func _handle_select() -> void:
-	super()
-	
-	SettingsManager.settings.controls = SettingsManager.default_settings.controls.duplicate(true)
-	SettingsManager._load_keys()
-"
+[sub_resource type="AtlasTexture" id="AtlasTexture_umhmi"]
+atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rt438"]
 atlas = ExtResource("6_3wm1w")
@@ -198,16 +224,41 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -444.0
-offset_top = 14.0
-offset_right = -59.0
-offset_bottom = -30.0
+offset_left = -448.0
+offset_top = 16.0
+offset_right = -64.0
+offset_bottom = -13.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("3_0brmq")
 focused = false
 control_sound = ExtResource("4_t3dkp")
 prev_screen_node_path = NodePath("Back")
+
+[node name="Device" type="HBoxContainer" parent="Options"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("6_eh53w")
+
+[node name="Text" type="TextureRect" parent="Options/Device"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_q5kct")
+stretch_mode = 2
+
+[node name="Value" type="TextureRect" parent="Options/Device"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_6rvpt")
+stretch_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="Options"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
 [node name="MovingUp" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -233,6 +284,14 @@ theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
 
+[node name="Icon" type="TextureRect" parent="Options/MovingUp"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_u4ofd")
+stretch_mode = 2
+
 [node name="MovingDown" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -256,6 +315,14 @@ theme_override_fonts/font = ExtResource("7_rg6dg")
 theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
+
+[node name="Icon" type="TextureRect" parent="Options/MovingDown"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_kqya7")
+stretch_mode = 2
 
 [node name="MovingLeft" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -281,6 +348,14 @@ theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
 
+[node name="Icon" type="TextureRect" parent="Options/MovingLeft"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_kl1hk")
+stretch_mode = 2
+
 [node name="MovingRight" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -304,6 +379,14 @@ theme_override_fonts/font = ExtResource("7_rg6dg")
 theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
+
+[node name="Icon" type="TextureRect" parent="Options/MovingRight"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_2aj1f")
+stretch_mode = 2
 
 [node name="Jump" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -329,6 +412,14 @@ theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
 
+[node name="Icon" type="TextureRect" parent="Options/Jump"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_6lc1i")
+stretch_mode = 2
+
 [node name="Fire" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -353,6 +444,14 @@ theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
 
+[node name="Icon" type="TextureRect" parent="Options/Fire"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_0m6ru")
+stretch_mode = 2
+
 [node name="Run" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -376,6 +475,14 @@ theme_override_fonts/font = ExtResource("7_rg6dg")
 theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
+
+[node name="Icon" type="TextureRect" parent="Options/Run"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_sqgad")
+stretch_mode = 2
 
 [node name="Pause" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -402,16 +509,24 @@ theme_override_font_sizes/font_size = 28
 text = "value"
 uppercase = true
 
+[node name="Icon" type="TextureRect" parent="Options/Pause"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_umhmi")
+stretch_mode = 2
+
 [node name="HSeparator" type="HSeparator" parent="Options"]
 layout_mode = 2
-theme_override_constants/separation = 36
+theme_override_constants/separation = 6
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
 [node name="ResetControls" type="HBoxContainer" parent="Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
-script = SubResource("GDScript_ilvph")
+script = ExtResource("11_atcop")
 
 [node name="Text" type="TextureRect" parent="Options/ResetControls"]
 layout_mode = 2
