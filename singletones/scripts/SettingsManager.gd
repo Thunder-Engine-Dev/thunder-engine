@@ -51,6 +51,8 @@ var no_saved_settings: bool = false
 var request_restart: bool = false
 
 var tweaks: Dictionary = {}
+var device_keyboard: bool = true
+var device_name: String = ""
 
 signal settings_updated
 signal settings_saved
@@ -67,6 +69,9 @@ func _ready() -> void:
 	load_settings()
 	_load_keys()
 	load_tweaks()
+	device_name = Input.get_joy_name(0)
+	device_keyboard = device_name.is_empty()
+
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
 func get_tweak(tweak_name: String, default_value: Variant = null) -> Variant:
@@ -175,7 +180,7 @@ func _load_keys() -> void:
 	
 	var controls_joy = settings.controls_joypad
 	for action in controls_joy:
-		if !controls_joy[action] || !controls_joy[action] is int:
+		if !controls_joy[action] is int:
 			continue
 		
 		if controls_joy[action] >= 40:

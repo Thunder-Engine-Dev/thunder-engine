@@ -6,13 +6,10 @@ extends MenuSelection
 @onready var icon: TextureRect = $Icon
 
 var changing: bool = false
-var device: bool = true # True is Keyboard, False is Joypad
-var device_name: String
 
 const change_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 func _ready() -> void:
-	add_to_group(&"_control_select_key")
 	icon.texture.region.size = Vector2(32, 32)
 
 
@@ -40,7 +37,7 @@ func _text_process() -> void:
 		value.text = "..."
 		return
 		
-	if device:
+	if SettingsManager.device_keyboard:
 		value.text = SettingsManager.settings.controls[action_name]
 		icon.visible = false
 		return
@@ -68,7 +65,7 @@ func _text_process() -> void:
 
 func _device_check(arr: Array[String]) -> bool:
 	for i in len(arr):
-		if arr[i] in device_name.to_lower():
+		if arr[i] in SettingsManager.device_name.to_lower():
 			return true
 	return false
 
@@ -94,7 +91,7 @@ func _input(event) -> void:
 		return
 	
 	if event is InputEventKey && event.pressed && !event.echo:
-		if device && (!event.is_action('ui_cancel') || !enable_cancel):
+		if SettingsManager.device_keyboard && (!event.is_action('ui_cancel') || !enable_cancel):
 			var scancode = event.as_text()
 			SettingsManager.settings.controls[action_name] = scancode
 			SettingsManager._load_keys()
@@ -102,13 +99,13 @@ func _input(event) -> void:
 		
 		_after_change()
 	elif event is InputEventJoypadButton && event.is_pressed():
-		if !device:
+		if !SettingsManager.device_keyboard:
 			SettingsManager.settings.controls_joypad[action_name] = event.button_index
 			SettingsManager._load_keys()
 			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 		
 		_after_change()
-	elif event is InputEventJoypadMotion && abs(event.axis_value) >= 0.5 && !device:
+	elif event is InputEventJoypadMotion && abs(event.axis_value) >= 0.5 && !SettingsManager.device_keyboard:
 		SettingsManager.settings.controls_joypad[action_name] = 40 + (event.axis * 2) + (0 if signf(event.axis_value) < 0 else 1)
 		SettingsManager._load_keys()
 		Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
@@ -124,8 +121,3 @@ func _after_change() -> void:
 	await get_tree().physics_frame
 	
 	get_parent().focused = true
-
-
-func _toggle_device() -> void:
-	device = !device
-	device_name = Input.get_joy_name(0)
