@@ -90,11 +90,11 @@ func _do_ungrab(player_died: bool) -> void:
 			target_node.speed.x = grabbing_ungrab_throw_power_max.x * player.direction
 		if player.left_right == 0:
 			target_node.speed.x = grabbing_ungrab_throw_power_min.x * player.direction
-		if player.up_down == -1:
+		if player.up_down < 0:
 			target_node.speed.y = grabbing_ungrab_throw_power_max.y * -1
 			if player.left_right == 0:
 				target_node.speed.x = 0
-		if player.up_down == 0:
+		if player.up_down > 0:
 			target_node.speed.y = grabbing_ungrab_throw_power_min.y * -1
 		
 		if grabbing_defer_mario_collision_until_on_floor && target_node.get_collision_layer_value(5):

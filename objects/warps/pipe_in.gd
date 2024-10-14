@@ -85,8 +85,8 @@ func _physics_process(delta: float) -> void:
 		return
 	if !player: return
 	
-	var input_x: int = player.left_right
-	var input_y: int = player.up_down
+	var input_x: float = player.left_right
+	var input_y: float = player.up_down
 	
 	if !_on_warp && player.warp == Player.Warp.NONE:
 		if input_x > 0 && warp_direction == Player.WarpDir.RIGHT && player.is_on_floor():

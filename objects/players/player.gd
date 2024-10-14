@@ -86,8 +86,8 @@ var _extra_behavior: ByNodeScript
 
 var holding_item: Node2D = null
 
-var left_right: int
-var up_down: int
+var left_right: float
+var up_down: float
 var jumping: int
 var jumped: bool
 var running: bool
@@ -232,8 +232,8 @@ func apply_player_skin(_suit) -> bool:
 
 
 func control_process() -> void:
-	left_right = int(Input.get_axis(control.left, control.right))
-	up_down = int(Input.get_axis(control.up, control.down))
+	left_right = Input.get_axis(control.left, control.right)
+	up_down = Input.get_axis(control.up, control.down)
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)

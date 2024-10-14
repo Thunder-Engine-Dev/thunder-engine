@@ -83,7 +83,7 @@ func _movement_x(delta: float) -> void:
 		player.speed.x = -player.direction * config.stuck_recovery_speed
 	player.is_skidding = (
 			player._skid_tweak &&
-			(player.left_right == -player.direction) &&
+			(sign(player.left_right) == -player.direction) &&
 			abs(player.speed.x) > 1 &&
 			player.is_on_floor()
 	)
@@ -98,23 +98,23 @@ func _movement_x(delta: float) -> void:
 		return
 	# Initial speed
 	if player.left_right != 0 && abs(player.speed.x) < 1:
-		player.direction = player.left_right
+		player.direction = signi(player.left_right)
 		player.speed.x = player.direction * config.walk_initial_speed
 	# Acceleration
 	var max_speed: float
-	if player.left_right == player.direction:
+	if sign(player.left_right) == player.direction:
 		max_speed = (
 			config.underwater_walk_max_walking_speed if player.is_underwater else (
 				config.walk_max_running_speed if player.running else \
 				config.walk_max_walking_speed
 			)
 		)
-		_accelerate(max_speed, config.walk_acceleration, delta)
-	elif player.left_right == -player.direction:
+		_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+	elif sign(player.left_right) == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
-	if abs(player.speed.x) > max_speed && player.left_right != -player.direction && player.is_underwater:
+	if abs(player.speed.x) > max_speed && sign(player.left_right) != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
 
 
@@ -125,7 +125,7 @@ func _movement_y(delta: float) -> void:
 	
 	# Swimming
 	if player.is_underwater:
-		if player.jumped && player.up_down != 1:
+		if player.jumped && player.up_down <= 0:
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
 			player._has_jumped = true
 			player.swam.emit()
@@ -135,7 +135,7 @@ func _movement_y(delta: float) -> void:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
-		if player.is_on_floor() && player.up_down != 1:
+		if player.is_on_floor() && player.up_down <= 0:
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()
 				player._has_jumped = true
@@ -154,7 +154,7 @@ func _movement_climbing(delta: float) -> void:
 	if player.is_sliding: _stop_sliding_movement()
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
 	if player.left_right != 0:
-		player.direction = player.left_right
+		player.direction = sign(player.left_right)
 	# Resist to gravity
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta * 0.5
 	
@@ -162,7 +162,7 @@ func _movement_climbing(delta: float) -> void:
 	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:
 		player._has_jumped = true
 		player.is_climbing = false
-		player.direction = player.left_right
+		player.direction = sign(player.left_right)
 		player.jump(config.jump_speed)
 		Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 
@@ -195,7 +195,7 @@ func _movement_sliding(delta: float) -> void:
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
 	
-	if player.left_right != 0 && player.left_right != player.direction && !player.slided:
+	if player.left_right != 0 && sign(player.left_right) != player.direction && !player.slided:
 		_stop_sliding_movement()
 
 
