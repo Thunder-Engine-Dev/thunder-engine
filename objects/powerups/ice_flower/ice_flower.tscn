@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0f1uy0wgci6x"]
+[gd_scene load_steps=13 format=3 uid="uid://b0f1uy0wgci6x"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_qfrll"]
-[ext_resource type="Resource" uid="uid://jq24esq236hk" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_iceball.tres" id="2_0wt70"]
 [ext_resource type="Texture2D" uid="uid://cy6delerkofbo" path="res://engine/objects/powerups/ice_flower/texture.png" id="3_0ewov"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_7rv1n"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_n1n7i"]
@@ -63,9 +62,7 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_qfrll")
-to_suit = {
-"Mario": ExtResource("2_0wt70")
-}
+to_suit = "iceball"
 gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]

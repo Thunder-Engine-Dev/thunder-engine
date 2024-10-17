@@ -3,9 +3,7 @@ class_name Powerup
 
 @export_group("Powerup Settings")
 @export var slide: bool = true
-@export var to_suit: Dictionary = {
-	Mario = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres")
-}
+@export var to_suit: String = "super"
 @export var force_powerup_state: bool = false
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
@@ -80,7 +78,8 @@ func collect() -> void:
 
 func _change_state_logic(force_powerup: bool) -> void:
 	var player: Player = Thunder._current_player
-	var to: PlayerSuit = to_suit[player.character]
+	var to: PlayerSuit = CharacterManager.get_suit(to_suit)
+	if !to: return
 	if force_powerup:
 		if to.name != Thunder._current_player_state.name:
 			player.change_suit(to)

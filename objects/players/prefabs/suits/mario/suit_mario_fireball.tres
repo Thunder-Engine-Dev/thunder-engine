@@ -8,16 +8,16 @@
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="4_v73ud"]
 [ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="5_3rfr7"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_eqpyc"]
-[ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_mario_super.tres" id="6_lbdy1"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_sxwr1"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_fo208"]
-[ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_mario_small.tres" id="7_tym7w"]
 [ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="8_ib3k0"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_3d64c"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_u1nrf"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_s0q1h"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_w8s7l"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_1d5w0"]
+[ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_0hp2k"]
+[ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="15_ed3lw"]
 
 [sub_resource type="Resource" id="Resource_yudqa"]
 script = ExtResource("4_0se1k")
@@ -47,8 +47,8 @@ gets_hurt_to = ExtResource("3_0xukd")
 physics_config = ExtResource("5_3rfr7")
 physics_behavior = ExtResource("4_v73ud")
 physics_crouchable = true
-physics_shaper = ExtResource("6_lbdy1")
-physics_shaper_crouch = ExtResource("7_tym7w")
+physics_shaper = ExtResource("14_0hp2k")
+physics_shaper_crouch = ExtResource("15_ed3lw")
 animation_sprites = ExtResource("2_0gbpq")
 animation_behavior = ExtResource("1_ibg3l")
 animation_underwater_bubble_offset = Vector2(0, -20)
