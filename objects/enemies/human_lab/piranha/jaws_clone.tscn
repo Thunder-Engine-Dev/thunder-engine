@@ -20,33 +20,11 @@ visi_z_index = 3
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
-"death": NodePath("../../Head/Dead"),
+"death": NodePath("../../Head#Dead"),
 "death_speed": Vector2(0, -250),
 "fast_death_effect": true
 }
 custom_script = ExtResource("3_qk4ci")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6kg5g"]
-atlas = ExtResource("3_65rfn")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6t7lh"]
-atlas = ExtResource("3_65rfn")
-region = Rect2(0, 48, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wmbsl"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6kg5g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6t7lh")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3uap4"]
 animations = [{
@@ -59,20 +37,38 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5q1s"]
+atlas = ExtResource("3_65rfn")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6ifh"]
+atlas = ExtResource("3_65rfn")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_if5di"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5q1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6ifh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="JawsClone" instance=ExtResource("1_4vc4f")]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_creation = SubResource("Resource_qwqpt")
 killing_sound_succeeded = ExtResource("2_f1d84")
 
-[node name="Head" parent="." index="1"]
-position = Vector2(0, -24)
-sprite_frames = SubResource("SpriteFrames_wmbsl")
-
-[node name="Stem" parent="Head" index="0"]
-visible = false
-
-[node name="Dead" type="AnimatedSprite2D" parent="Head" index="1"]
+[node name="Head#Dead" type="AnimatedSprite2D" parent="." index="1"]
 visible = false
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_3uap4")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_if5di")

@@ -10,13 +10,15 @@ var mouse_hovered: bool = false
 @export var selected_sound: AudioStream = preload("res://engine/components/ui/_sounds/select_enter.wav")
 ## Trigger action name
 @export var trigger_action: StringName = "ui_accept"
+## Mouse input is passed
+@export var trigger_mouse: bool = true
 
 ## Focus handler
 func _handle_focused(focus: bool) -> void:
 	focused = focus
 
 ## Called when this item has been selected, extend this
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if selected_sound:
 		Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 
@@ -25,4 +27,4 @@ func _physics_process(delta: float) -> void:
 	if !focused || !get_parent().focused: return
 
 	if Input.is_action_just_pressed(trigger_action):
-		_handle_select()
+		_handle_select(false)

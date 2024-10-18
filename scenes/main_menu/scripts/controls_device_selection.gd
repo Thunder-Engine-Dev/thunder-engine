@@ -7,7 +7,7 @@ var old_device_name: String = ""
 const toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	return
 
 

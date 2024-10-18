@@ -3,7 +3,7 @@ extends MenuSelection
 @onready var pause: Control = $"../.."
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	super()
 	Scenes.custom_scenes.pause._no_unpause = false
 	pause.toggle(true)

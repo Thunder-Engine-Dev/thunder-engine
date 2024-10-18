@@ -5,8 +5,8 @@ extends MenuSelection
 
 @onready var progress_continue: Control = $"../.."
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	
 	ProfileManager.delete_profile("suspended")
 	progress_continue.toggle(false)

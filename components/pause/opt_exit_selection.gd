@@ -2,8 +2,8 @@ extends MenuSelection
 
 @onready var restart_popup: Control = $"../../../../RestartPopup/Control"
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	await get_tree().physics_frame
 	if !SettingsManager.request_restart:
 		_screen_back()

@@ -43,7 +43,7 @@ func _physics_process(delta):
 		modulate.v = 1
 	
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if is_dead && Data.values.lives != 0:
 		super()
 		Thunder._current_player_state = null

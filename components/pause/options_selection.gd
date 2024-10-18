@@ -1,7 +1,7 @@
 extends MenuSelection
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	var scene: Node = Scenes.custom_scenes.pause.get_parent()
 	scene.offset.y -= 480
 	scene.reset_physics_interpolation()

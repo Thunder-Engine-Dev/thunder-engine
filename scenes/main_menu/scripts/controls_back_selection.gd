@@ -1,7 +1,7 @@
 extends MenuSelection
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	var cam = GlobalViewport.vp.get_camera_2d()
 	cam.position.x -= 640
 	cam.reset_physics_interpolation()

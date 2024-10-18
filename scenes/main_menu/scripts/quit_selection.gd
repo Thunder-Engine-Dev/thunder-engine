@@ -1,7 +1,7 @@
 extends MenuSelection
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()

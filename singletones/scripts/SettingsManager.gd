@@ -66,12 +66,15 @@ signal data_loaded(id: String)
 
 var _default_tps: int = Engine.physics_ticks_per_second
 
+@onready var mouse_timer := Timer.new()
+
 func _ready() -> void:
 	load_settings()
 	_load_keys()
 	load_tweaks()
 	device_name = Input.get_joy_name(0)
 	device_keyboard = device_name.is_empty()
+	add_child(mouse_timer)
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
@@ -329,13 +332,12 @@ func hide_mouse() -> void:
 	Input.mouse_mode = mouse_mode
 
 
-@onready var mouse_timer: SceneTreeTimer = get_tree().create_timer(1.5, true, true, true)
 func _input(event: InputEvent) -> void:
 	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 
 	if event is InputEventMouseMotion:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		mouse_timer.time_left = 1.5
+		mouse_timer.start(1.5)
 		await mouse_timer.timeout
 		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 		Input.mouse_mode = mouse_mode

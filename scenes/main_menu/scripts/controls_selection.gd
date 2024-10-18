@@ -23,13 +23,13 @@ func _physics_process(delta: float) -> void:
 		changing = false
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if !changing:
 		changing = true
 		icon.visible = false
 		get_parent().focused = false
 		value.text = "..."
-		super()
+		super(mouse_input)
 
 
 func _text_process() -> void:

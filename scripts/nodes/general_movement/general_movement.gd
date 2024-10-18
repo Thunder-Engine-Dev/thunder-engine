@@ -41,6 +41,8 @@ func update_dir() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	dir = Thunder.Math.look_at(global_position, player.global_position, global_transform)
+	if dir == 0: dir = -1
+
 
 func speed_to_dir() -> void:
 	speed.x = abs(speed.x) * dir

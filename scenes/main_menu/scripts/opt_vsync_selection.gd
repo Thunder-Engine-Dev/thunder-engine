@@ -12,7 +12,7 @@ var _saved_value: int
 func _ready() -> void:
 	SettingsManager.settings_updated.connect(set.bind(&"_saved_value", SettingsManager.settings.vsync))
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	return
 
 

@@ -7,8 +7,8 @@ enum CREDITS_OPTION {
 @export var credits_behavior: CREDITS_OPTION = CREDITS_OPTION.JumpToScene
 var was_paused: bool
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	var cred_path = ProjectSettings.get_setting("application/thunder_settings/credits_path")
 	match credits_behavior:
 		CREDITS_OPTION.JumpToScene:

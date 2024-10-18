@@ -3,8 +3,8 @@ extends MenuSelection
 @onready var prog: Control = $"../.."
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	super(mouse_input)
 	
 	Scenes.custom_scenes.pause.open_blocked = false
 	

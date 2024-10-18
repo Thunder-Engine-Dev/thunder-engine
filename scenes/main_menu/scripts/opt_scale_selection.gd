@@ -7,7 +7,7 @@ var is_custom: bool = false
 @onready var _value: TextureRect = $Value
 var _fullscr: bool
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	return
 
 

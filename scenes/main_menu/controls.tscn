@@ -266,6 +266,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_up"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/MovingUp"]
 layout_mode = 2
@@ -298,6 +299,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_down"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/MovingDown"]
 layout_mode = 2
@@ -330,6 +332,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_left"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/MovingLeft"]
 layout_mode = 2
@@ -362,6 +365,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_right"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/MovingRight"]
 layout_mode = 2
@@ -394,6 +398,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_jump"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/Jump"]
 layout_mode = 2
@@ -426,6 +431,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_attack"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/Fire"]
 layout_mode = 2
@@ -458,6 +464,7 @@ layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "m_run"
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/Run"]
 layout_mode = 2
@@ -491,6 +498,7 @@ size_flags_vertical = 6
 script = ExtResource("5_8vmlu")
 action_name = "pause_toggle"
 enable_cancel = false
+trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="Options/Pause"]
 layout_mode = 2

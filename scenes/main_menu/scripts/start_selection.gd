@@ -19,9 +19,9 @@ var starting: bool = false
 		#mouse_inside = false
 	#)
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	if starting: return
-	super()
+	super(mouse_input)
 	starting = true
 	get_parent().focused = false
 

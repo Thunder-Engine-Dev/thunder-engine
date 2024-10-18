@@ -9,7 +9,7 @@ func _ready():
 	_update_string()
 
 
-func _handle_select() -> void:
+func _handle_select(mouse_input: bool = false) -> void:
 	return
 
 
