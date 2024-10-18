@@ -53,6 +53,7 @@ var request_restart: bool = false
 var tweaks: Dictionary = {}
 var device_keyboard: bool = true
 var device_name: String = ""
+var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 
 signal settings_updated
 signal settings_saved
@@ -106,17 +107,17 @@ func _process_settings() -> void:
 	Engine.time_scale = settings.game_speed
 	@warning_ignore("narrowing_conversion")
 	Engine.physics_ticks_per_second = Engine.time_scale * _default_tps
-	
+
 	# Vsync
 	var current_vsync = DisplayServer.window_get_vsync_mode(0)
 	if settings.vsync && current_vsync != DisplayServer.VSYNC_ENABLED:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	elif !settings.vsync && current_vsync != DisplayServer.VSYNC_DISABLED:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	
+
 	# Scale
 	_window_scale_logic()
-	
+
 	# Fullscreen
 	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 		# This is needed to avoid borders being outside the monitor boundaries when you exit fullscreen
@@ -126,21 +127,21 @@ func _process_settings() -> void:
 		SettingsManager._window_scale_logic(true)
 	elif settings.fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-	
+
 	# Filter
 	GlobalViewport._update_view()
-	
+
 	ProjectSettings.set_setting(
 		&"rendering/textures/canvas_textures/default_texture_filter",
 		int(settings.filter)
 	)
-	
+
 	# Music Volume
 	Audio._settings_music_bus_volume_db = linear_to_db(settings.music)
-	
+
 	# Sound Volume
 	Audio._settings_sound_bus_volume_db = linear_to_db(settings.sound)
-	
+
 	settings_updated.emit()
 
 ## Returns the keyboard key label of specified action
@@ -167,7 +168,7 @@ func _load_keys() -> void:
 	for action in controls:
 		if !controls[action] || !controls[action] is String:
 			continue
-		
+
 		var scancode = OS.find_keycode_from_string(controls[action])
 		var key = InputEventKey.new()
 		key.keycode = scancode
@@ -177,12 +178,12 @@ func _load_keys() -> void:
 				if toRemove is InputEventKey:
 					InputMap.action_erase_event(action, toRemove)
 			InputMap.action_add_event(action, key)
-	
+
 	var controls_joy = settings.controls_joypad
 	for action in controls_joy:
 		if !controls_joy[action] is int:
 			continue
-		
+
 		if controls_joy[action] >= 40:
 			var motion = InputEventJoypadMotion.new()
 			motion.axis = (controls_joy[action] - 40) / 2
@@ -202,7 +203,7 @@ func _load_keys() -> void:
 					if toRemove is InputEventJoypadButton:
 						InputMap.action_erase_event(action, toRemove)
 				InputMap.action_add_event(action, key)
-	
+
 	print("[Settings Manager] Loaded input maps from settings.")
 
 
@@ -212,7 +213,7 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	if no_saved_settings: return
 	if settings.scale == 0: return
 	if old_scale == settings.scale && !force_update: return
-	
+
 	var current_screen: int = DisplayServer.window_get_current_screen()
 	var screen_size: Vector2i = DisplayServer.screen_get_usable_rect(current_screen).size
 	var screen_center: Vector2i = screen_size / 2
@@ -227,7 +228,7 @@ func _window_scale_logic(force_update: bool = false) -> void:
 			screen_center - (DisplayServer.window_get_size() / 2)
 		)
 		GlobalViewport._update_view()
-	
+
 	old_scale = settings.scale
 
 
@@ -243,7 +244,7 @@ func save_settings() -> void:
 rendering_device/vsync/swapchain_image_count=%d
 """ % [int(settings.vsync) + 1])
 		file.close()
-	
+
 	settings_saved.emit()
 	print("[Settings Manager] Settings saved!")
 
@@ -253,7 +254,7 @@ func load_settings() -> void:
 	if loaded_data.is_empty():
 		no_saved_settings = true
 		return
-	
+
 	settings = loaded_data
 	_check_for_validity()
 	_process_settings()
@@ -264,7 +265,7 @@ func load_settings() -> void:
 ## Saves the tweaks variable to a file
 func save_tweaks() -> void:
 	save_data(tweaks, tweaks_path, "Tweaks")
-	
+
 	tweaks_saved.emit()
 	print("[Settings Manager] Tweaks saved!")
 
@@ -273,7 +274,7 @@ func load_tweaks() -> void:
 	var loaded_data: Dictionary = load_data(tweaks_path, "Tweaks")
 	if loaded_data.is_empty():
 		return
-	
+
 	tweaks = loaded_data
 	for tweak in tweaks:
 		var value = tweaks[tweak]
@@ -287,25 +288,25 @@ func load_data(from_path: String, id: String = "Custom") -> Dictionary:
 	if !FileAccess.file_exists(from_path):
 		print("[Settings Manager] %s: File does not exist. Using default values." % id)
 		return {}
-	
+
 	var json: String = FileAccess.get_file_as_string(from_path)
 	var dict = JSON.parse_string(json)
-	
+
 	if dict == null:
 		OS.alert("Failed to load saved %s data %s" % [id, name], "Can't load save file!")
 		return {}
-	
+
 	data_loaded.emit(id)
 	return dict
 
 ## Saves the data
 func save_data(data: Dictionary, to_path: String, id: String = "Custom") -> void:
 	var json: String = JSON.stringify(data)
-	
+
 	var file: FileAccess = FileAccess.open(to_path, FileAccess.WRITE)
 	file.store_string(json)
 	file.close()
-	
+
 	data_saved.emit(id)
 
 
@@ -316,3 +317,25 @@ func restart_application() -> void:
 	cmd_args.append_array(OS.get_cmdline_args())
 	OS.set_restart_on_exit(true, cmd_args)
 	get_tree().quit()
+
+
+func show_mouse() -> void:
+	mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Input.mouse_mode = mouse_mode
+
+
+func hide_mouse() -> void:
+	mouse_mode = Input.MOUSE_MODE_HIDDEN
+	Input.mouse_mode = mouse_mode
+
+
+@onready var mouse_timer: SceneTreeTimer = get_tree().create_timer(1.5, true, true, true)
+func _input(event: InputEvent) -> void:
+	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
+
+	if event is InputEventMouseMotion:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		mouse_timer.time_left = 1.5
+		await mouse_timer.timeout
+		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
+		Input.mouse_mode = mouse_mode

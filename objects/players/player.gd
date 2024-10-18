@@ -36,10 +36,10 @@ enum WarpDir {
 	set(to):
 		if (!to || suit.name == to.name) && !_force_suit: return
 		suit = to.duplicate()
-		
+
 		if suit.animation_sprites:
 			apply_player_skin(suit)
-		
+
 		_physics_behavior = null
 		_suit_behavior = null
 		_animation_behavior = null
@@ -154,30 +154,30 @@ func _ready() -> void:
 		var cam := Thunder._current_camera
 		if is_instance_valid(cam):
 			cam.force_update_scroll()
-		
+
 		for i in 8: # Deferred 8 frames to ensure the transition works after the player touches checkpoint
 			await get_tree().physics_frame
-		
+
 		var trans := TransitionManager.current_transition
 		if is_instance_valid(trans) && trans.has_method("on"):
 			trans.on(self)
 			trans.paused = false
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-	
+
 	if !Thunder._current_player_state_path.is_empty():
 		suit = load(Thunder._current_player_state_path)
 	elif Thunder._current_player_state:
 		suit = Thunder._current_player_state
 	else:
 		Thunder._current_player_state = suit
-	
+
 	change_suit(suit, false, true)
-	
+
 	Thunder._current_player = self
-	
+
 	if !is_starman():
 		sprite.material.set_shader_parameter(&"mixing", false)
-	
+
 	(func():
 		if Data.values.lives == -1 && death_check_for_lives:
 			Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
@@ -195,7 +195,7 @@ func _physics_process(delta: float) -> void:
 		!_starman_faded:
 			_starman_faded = true
 			Audio.stop_music_channel(98, true)
-	
+
 	if _stomping_combo_enabled && stomping_combo.get_combo() > 0 && is_on_floor():
 		stomping_combo.reset_combo()
 
@@ -215,7 +215,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		Scenes.custom_scenes.pause._no_unpause = false
 	if !appear && sprite.animation in ["appear", "attack"]:
 		sprite.animation = "default"
-		
+
 	_force_suit = false
 	_suit_appear = false
 	set_deferred("is_hurting", false)
@@ -269,14 +269,14 @@ func hurt(tags: Dictionary = {}) -> void:
 		return
 	if warp != Warp.NONE: return
 	is_hurting = true
-	
+
 	if suit.gets_hurt_to:
 		change_suit(suit.gets_hurt_to)
 		invincible.call_deferred(tags.get(&"hurt_duration", 2))
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch, ignore_pause = true})
 	else:
 		die(tags)
-	
+
 	damaged.emit()
 
 
@@ -286,7 +286,7 @@ func die(tags: Dictionary = {}) -> void:
 	if debug_god: return
 	if is_dying: return
 	is_dying = true
-	
+
 	if death_stop_music:
 		Audio.stop_all_musics()
 	Audio.play_music(
@@ -297,7 +297,7 @@ func die(tags: Dictionary = {}) -> void:
 			ignore_pause = true
 		}
 	)
-	
+
 	var _db: Node2D
 	if death_body:
 		_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
@@ -313,12 +313,12 @@ func die(tags: Dictionary = {}) -> void:
 					db.add_child(dsdup)
 					dsdup.visible = true
 		).create_2d().get_node()
-	
+
 	if _suit_pause_tweak && _db:
 		get_tree().paused = true
 		_db.process_mode = Node.PROCESS_MODE_ALWAYS
 		Scenes.custom_scenes.pause._no_unpause = true
-	
+
 	died.emit()
 	died_with_body.emit(_db)
 	queue_free()

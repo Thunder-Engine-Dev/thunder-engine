@@ -18,7 +18,7 @@ signal unpaused
 func _ready() -> void:
 	Scenes.custom_scenes.pause = self
 	animation_player.play(&"init")
-	
+
 	Scenes.scene_changed.connect(_on_scene_changed)
 
 
@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if &"game_over" in Scenes.custom_scenes && Scenes.custom_scenes.game_over.opened: return
 	if event.is_action_pressed(&"pause_toggle") && (
 		Scenes.current_scene is Level ||
-		Scenes.current_scene is Map2D || 
+		Scenes.current_scene is Map2D ||
 		Scenes.current_scene is LevelCutscene
 	) && !(opened && event.is_action_pressed("ui_cancel")):
 		toggle.call_deferred()
@@ -34,40 +34,40 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
-	
+
 	if !opened && is_instance_valid(TransitionManager.current_transition):
 		return
-	
+
 	if open_blocked: return
-	
+
 	opened = !opened
 	if opened:
 		unpaused.emit()
 	else:
 		paused.emit()
-	
+
 	$'..'.offset = Vector2.ZERO
-	
+
 	var target_volume: float = -20.0 if opened else 0.0
 	var tw = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
-	
+
 	if opened:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		if !no_sound_effect:
 			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
 		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-	
+		SettingsManager.hide_mouse()
+
 	get_tree().paused = opened if !_no_unpause else true
-	
+
 	for i in 2:
 		await get_tree().physics_frame
-	
+
 	v_box_container.focused = opened
 	options.focused = false
 	controls_options.focused = false
@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 var autopause_timer: SceneTreeTimer
 
 func _notification(what: int) -> void:
-	
+
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		if !Scenes.current_scene is Level: return
 		if !&"settings" in SettingsManager || !&"autopause" in SettingsManager.settings: return
@@ -110,6 +110,6 @@ func _on_scene_changed(to: Node) -> void:
 		await Scenes.current_scene.stage_ready
 		if TransitionManager.current_transition:
 			await TransitionManager.transition_end
-		
+
 		if !DisplayServer.window_is_focused():
 			_autopause_toggle()

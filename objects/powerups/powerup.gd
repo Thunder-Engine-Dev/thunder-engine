@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 			modulate.a = 1
 		else:
 			appear_process(Thunder.get_delta(delta))
-	
+
 	var player: Player = Thunder._current_player
 	if !player: return
 	var overlaps: bool = body.overlaps_body(player)
@@ -63,16 +63,16 @@ func appear_process(delta: float) -> void:
 
 func collect() -> void:
 	_change_state_logic(force_powerup_state)
-	
+
 	if supply_behavior:
 		Data.values.lives = ProjectSettings.get("application/thunder_settings/player/default_lives") + supply_modify_lives
 		one_overlap = true
 		return
-	
+
 	if score > 0:
 		ScoreText.new(str(score), self)
 		Data.values.score += score
-	
+
 	queue_free()
 
 
@@ -87,10 +87,10 @@ func _change_state_logic(force_powerup: bool) -> void:
 		elif !supply_behavior:
 			Audio.play_sound(pickup_neutral_sound, self, false, {pitch = sound_pitch})
 		return
-	
+
 	if (
 		to.type > Thunder._current_player_state.type || (
-			to.name != Thunder._current_player_state.name && 
+			to.name != Thunder._current_player_state.name &&
 			to.type == Thunder._current_player_state.type
 		)
 	):

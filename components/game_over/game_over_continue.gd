@@ -15,7 +15,7 @@ func _ready() -> void:
 		Thunder._current_hud.game_over_finished.connect(func():
 			if skip_to_save:
 				var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
-				
+
 				if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
 					TransitionManager.accept_transition(
 						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
@@ -23,7 +23,7 @@ func _ready() -> void:
 							.with_scene(sgr_path)
 					)
 					return
-				
+
 				TransitionManager.accept_transition(
 					load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 						.instantiate()
@@ -31,7 +31,7 @@ func _ready() -> void:
 						.with_pause()
 						.on_player_after_middle(true)
 				)
-				
+
 				await TransitionManager.transition_middle
 				Scenes.goto_scene(sgr_path)
 			else:
@@ -46,23 +46,23 @@ func toggle(no_resume: bool = false) -> void:
 		if !Scenes.custom_scenes.pause._no_unpause:
 			break
 	opened = !opened
-		
+
 	if opened:
 		v_box_container.move_selector(0)
 		animation_player.play("open")
 		#Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
 		#Audio.play_music(music, 99, { "ignore_pause": true })
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
 		Audio.stop_music_channel(99, false)
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-		
+		SettingsManager.hide_mouse()
+
 		Data.reset_all_values()
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 		if !no_resume:
 			Scenes.reload_current_scene()
-	
+
 	get_tree().paused = opened
 	await get_tree().physics_frame
 	v_box_container.focused = opened

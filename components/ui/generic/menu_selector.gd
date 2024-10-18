@@ -28,7 +28,7 @@ var _current_item_node: Control = null
 var _immediate: bool
 
 ## Handles the selection change, used as a signal handler
-func handle_selection(item_index: int, item_node: Control, immediate: bool) -> void:
+func handle_selection(item_index: int, item_node: Control, immediate: bool, mouse_input: bool = false) -> void:
 	_current_item_index = item_index
 	_current_item_node = item_node
 	_immediate = immediate
@@ -60,7 +60,7 @@ func _update_pos() -> void:
 			target_position.y += position_padding + _current_item_node.get_rect().size.y
 			if len(position_paddings_array) >= _current_item_index:
 				target_position.y += position_paddings_array[_current_item_index]
-	
+
 	if _immediate:
 		global_position = target_position
 
@@ -68,9 +68,8 @@ func _update_pos() -> void:
 func _physics_process(delta: float) -> void:
 	if smooth_transition:
 		global_position = global_position.lerp(target_position, smooth_speed * Thunder.get_delta(delta))
-		#global_position = global_position.move_toward(target_position, smooth_speed * Thunder.get_delta(delta))
 	else:
 		global_position = target_position
-	
+
 	if is_instance_valid(_current_item_node):
 		_update_pos()

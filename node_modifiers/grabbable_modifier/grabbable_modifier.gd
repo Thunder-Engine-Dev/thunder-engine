@@ -32,14 +32,14 @@ func _ready() -> void:
 		target_node.add_to_group(&"#top_grabbable")
 	if grabbing_side_enabled:
 		target_node.add_to_group(&"#side_grabbable")
-	
+
 	if !target_node.has_signal(&"grabbing_got_top_grabbed"):
 		target_node.add_user_signal(&"grabbing_got_top_grabbed")
 	if !target_node.has_signal(&"grabbing_got_side_grabbed"):
 		target_node.add_user_signal(&"grabbing_got_side_grabbed")
 	if !target_node.has_signal(&"grabbing_got_thrown"):
 		target_node.add_user_signal(&"grabbing_got_thrown")
-	
+
 	target_node.connect(&"grabbing_got_top_grabbed", _top_grabbed)
 	target_node.connect(&"grabbing_got_side_grabbed", _side_grabbed)
 	target_node.connect(&"grabbing_got_thrown", _do_ungrab)
@@ -72,7 +72,7 @@ func _do_grab() -> void:
 		player.holding_item = target_node
 		_from_follow_pos = target_node.global_position
 		_following_start = true
-	
+
 	grabbed.emit()
 
 
@@ -85,7 +85,7 @@ func _do_ungrab(player_died: bool) -> void:
 		_follow_progress = false
 		_following_start = false
 		_following = false
-		
+
 		if player.left_right != 0:
 			target_node.speed.x = grabbing_ungrab_throw_power_max.x * player.direction
 		if player.left_right == 0:
@@ -96,14 +96,14 @@ func _do_ungrab(player_died: bool) -> void:
 				target_node.speed.x = 0
 		if player.up_down == 0:
 			target_node.speed.y = grabbing_ungrab_throw_power_min.y * -1
-		
+
 		if grabbing_defer_mario_collision_until_on_floor && target_node.get_collision_layer_value(5):
 			target_node.set_collision_layer_value(5, false)
 			_wait_until_floor = true
-		
+
 		await player.get_tree().physics_frame
 		player.is_holding = false
-	
+
 	ungrabbed.emit()
 
 
@@ -116,10 +116,10 @@ func _physics_process(delta: float) -> void:
 			_follow_progress = 0
 			_following_start = false
 			_following = true
-	
+
 	if _grabbed && _following:
 		target_node.global_position = get_target_hold_position()
-	
+
 	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
 		target_node.set_collision_layer_value(5, true)
 		_wait_until_floor = false

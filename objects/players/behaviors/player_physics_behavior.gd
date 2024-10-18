@@ -15,14 +15,14 @@ func _physics_process(delta: float) -> void:
 	if player.get_tree().paused: return
 	suit = node.suit
 	config = suit.physics_config
-	
+
 	delta = player.get_physics_process_delta_time()
 	# Control
 	if !player.completed: player.control_process()
 	# Shape
 	_shape_process()
 	if player.warp != Player.Warp.NONE: return
-	
+
 	# Head
 	_head_process()
 	# Body
@@ -54,7 +54,7 @@ func _movement_debug(delta) -> void:
 		Input.get_axis(&"m_up", &"m_down")
 	)
 	var run: int = 1 + int(Input.is_action_pressed(&"m_run"))
-	
+
 	var vel: Vector2 = speed * dir * run
 	player.position += vel * delta
 
@@ -122,7 +122,7 @@ func _movement_y(delta: float) -> void:
 	if player.is_crouching && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
 		return
 	if player.completed: return
-	
+
 	# Swimming
 	if player.is_underwater:
 		if player.jumped && player.up_down <= 0:
@@ -157,7 +157,7 @@ func _movement_climbing(delta: float) -> void:
 		player.direction = sign(player.left_right)
 	# Resist to gravity
 	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta * 0.5
-	
+
 	# Jump from climbing
 	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:
 		player._has_jumped = true
@@ -180,7 +180,7 @@ func _movement_sliding(delta: float) -> void:
 	var decel: Callable = func(_norm: float) -> void:
 		_decelerate((config.walk_deceleration / 50) * _norm, delta)
 		player.is_sliding_accelerating = false
-	
+
 	# Sliding towards right
 	if floor_normal >= 10.0:
 		accel.call(abs(floor_normal)) if dir else decel.call(abs(floor_normal))
@@ -194,7 +194,7 @@ func _movement_sliding(delta: float) -> void:
 		decel.call(50)
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
-	
+
 	if player.left_right != 0 && sign(player.left_right) != player.direction && !player.slided:
 		_stop_sliding_movement()
 
@@ -232,17 +232,17 @@ func _shape_process() -> void:
 		suit.physics_shaper_crouch if crouch_shape else suit.physics_shaper
 	)
 	if !shaper: return
-	
+
 	var is_colliding: bool = _shape_recovery_process()
-	
+
 	player.has_stuck = is_colliding
 	if player.has_stuck:
 		shaper = suit.physics_shaper_crouch
-	
+
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
 	shaper.install_shape_for_caster(player.attack)
-	
+
 	if player.collision_shape.shape is RectangleShape2D:
 		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
 
@@ -250,7 +250,7 @@ func _shape_process() -> void:
 func _shape_recovery_process() -> bool:
 	if player.warp != Player.Warp.NONE || player.completed:
 		return false
-	
+
 	var raycast: RayCast2D = player.collision_recovery
 	raycast.position = suit.physics_shaper.shape_pos
 	raycast.target_position.y = (
@@ -276,20 +276,20 @@ func _shape_recovery_process() -> bool:
 			is_colliding = true
 	else:
 		is_colliding = raycast.is_colliding()
-	
+
 	return is_colliding
 
 
 #= Head
 func _head_process() -> void:
 	player.is_underwater_out = true
-	
+
 	# Hit block
 	for i in player.head.get_collision_count():
 		var collider: Node2D = player.head.get_collider(i) as Node2D
 		if !collider: continue
 		# Water
-		if collider.is_in_group(&"#water"): 
+		if collider.is_in_group(&"#water"):
 			player.is_underwater_out = false
 			if player.bubbler.is_stopped():
 				player.bubbler.start()
@@ -301,21 +301,21 @@ func _head_process() -> void:
 		(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
 		(player.is_crouching)):
 			collider.got_bumped.call_deferred(player)
-	
+
 	player.bubbler.paused = player.is_underwater_out
 
 #= Body
 func _body_process() -> void:
 	if !player.body.shape: return
-	
+
 	var player_velocity = player.velocity.normalized()
-	
+
 	for i in player.body.get_collision_count():
 		var collider: Node2D = player.body.get_collider(i) as Node2D
 		if !is_instance_valid(collider):
 			continue
 		if !collider.has_node("EnemyAttacked"): continue
-		
+
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
 		var result: Dictionary = enemy_attacked.got_stomped(player, player_velocity)
 		if result.is_empty(): return
@@ -331,16 +331,16 @@ func _body_process() -> void:
 func _floor_process() -> void:
 	# We process landing on things here
 	# If we land on something and function "_player_landed" exists there, we call it.
-	
+
 	if !is_instance_valid(player): return
 	if !player.is_on_floor(): return
-	
+
 	for i in player.get_slide_collision_count():
 		var collision: KinematicCollision2D = player.get_slide_collision(i)
 		if !collision: continue
-		
+
 		var collider = collision.get_collider()
 		if !is_instance_valid(collider): continue
-		
+
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)

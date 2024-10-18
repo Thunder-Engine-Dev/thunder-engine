@@ -13,16 +13,16 @@ func _handle_select() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	
+
 	if !get_parent().focused: return
-	
+
 	if SettingsManager.device_keyboard:
 		value.texture.region.position.y = 60
 	else:
 		value.texture.region.position.y = 30
-	
+
 	if !focused: return
-	
+
 	var joy_name: String = Input.get_joy_name(0)
 	if old_device_name != joy_name:
 		old_device_name = joy_name
@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 			print("Gamepad not connected, using keyboard by default.")
 		else:
 			print(SettingsManager.device_name)
-	
+
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
 		SettingsManager.device_keyboard = !SettingsManager.device_keyboard
 		SettingsManager.device_name = Input.get_joy_name(0)

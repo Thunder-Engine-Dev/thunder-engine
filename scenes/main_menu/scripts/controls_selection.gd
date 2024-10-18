@@ -15,10 +15,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	
+
 	if get_parent().focused:
 		_text_process()
-	
+
 	if !focused:
 		changing = false
 
@@ -36,12 +36,12 @@ func _text_process() -> void:
 	if changing:
 		value.text = "..."
 		return
-		
+
 	if SettingsManager.device_keyboard:
 		value.text = SettingsManager.settings.controls[action_name]
 		icon.visible = false
 		return
-	
+
 	if _device_check(["xbox", "xinput"]):
 		_gamepad_icon_logic(
 			preload("res://engine/scenes/main_menu/textures/gamepad_icons/xbox_icons.png"),
@@ -89,35 +89,35 @@ func _gamepad_icon_logic(texture: Texture2D, max_icons: int = 15, icon_exception
 func _input(event) -> void:
 	if !changing:
 		return
-	
+
 	if event is InputEventKey && event.pressed && !event.echo:
 		if SettingsManager.device_keyboard && (!event.is_action('ui_cancel') || !enable_cancel):
 			var scancode = event.as_text()
 			SettingsManager.settings.controls[action_name] = scancode
 			SettingsManager._load_keys()
 			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		
+
 		_after_change()
 	elif event is InputEventJoypadButton && event.is_pressed():
 		if !SettingsManager.device_keyboard:
 			SettingsManager.settings.controls_joypad[action_name] = event.button_index
 			SettingsManager._load_keys()
 			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		
+
 		_after_change()
 	elif event is InputEventJoypadMotion && abs(event.axis_value) >= 0.5 && !SettingsManager.device_keyboard:
 		SettingsManager.settings.controls_joypad[action_name] = 40 + (event.axis * 2) + (0 if signf(event.axis_value) < 0 else 1)
 		SettingsManager._load_keys()
 		Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		
+
 		_after_change()
 
 
 func _after_change() -> void:
 	changing = false
-	
+
 	# should be changed, crutch.
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	
+
 	get_parent().focused = true

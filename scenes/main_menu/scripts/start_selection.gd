@@ -29,13 +29,13 @@ func _handle_select() -> void:
 	if 0 in Audio._music_channels:
 		music = Audio._music_channels[0]
 	Audio.fade_music_1d_player(music, -60, 2.8, Tween.TRANS_LINEAR, true)
-	
+
 	await get_tree().create_timer(wait_time).timeout
-	
+
 	if is_instance_valid(music): music.stop()
 	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
-	
+
 	if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
@@ -43,13 +43,13 @@ func _handle_select() -> void:
 				.with_scene(sgr_path)
 		)
 		return
-	
+
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
 			.with_speeds(0.015, -0.1)
 	)
-	
+
 	TransitionManager.transition_middle.connect(func():
 		TransitionManager.current_transition.paused = true
 		Scenes.goto_scene(sgr_path)

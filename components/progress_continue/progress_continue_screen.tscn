@@ -219,18 +219,21 @@ prev_screen_node_path = NodePath("TextureRect2")
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("2_1ly8w")
 stretch_mode = 3
 script = ExtResource("4_m2bkh")
 
 [node name="TextureRect2" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("4_a3l1u")
 stretch_mode = 3
 script = ExtResource("6_k11o0")
 
 [node name="TextureRect3" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("5_bogmr")
 stretch_mode = 3
 script = ExtResource("7_fpdiu")
@@ -241,7 +244,7 @@ sprite_frames = SubResource("SpriteFrames_5ve22")
 autoplay = "default"
 script = ExtResource("6_pq48x")
 smooth_speed = 0.4
-position_paddings_array = Array[float]([-18.0, -22.0, 4.0])
+position_padding = 16
 
 [node name="GamePaused" type="TextureRect" parent="."]
 layout_mode = 1

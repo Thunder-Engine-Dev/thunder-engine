@@ -19,12 +19,12 @@ signal closed
 
 func _ready() -> void:
 	animation_player.play(&"init")
-	
+
 	var player: Player = Thunder._current_player
 	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile")):
 		player.no_movement = true
 		player.hide()
-		
+
 		profile = ProfileManager.profiles.suspended.data
 		scene = profile.scene
 		var label_text: String = profile.title_prefix.replacen("\\n", "
@@ -35,7 +35,7 @@ func _ready() -> void:
 			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites
 			state_preview.play("walk")
 		Scenes.custom_scenes.pause.open_blocked = true
-		
+
 		toggle()
 		await get_tree().physics_frame
 		show()
@@ -45,28 +45,28 @@ func _ready() -> void:
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
-	
+
 	opened = !opened
-	
+
 	if opened:
 		popped.emit()
 	else:
 		closed.emit()
-	
+
 	$'..'.offset = Vector2.ZERO
-	
+
 	if opened:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+		SettingsManager.hide_mouse()
 		Thunder._current_player.show()
-	
+
 	for i in 2:
 		await get_tree().physics_frame
-	
+
 	v_box_container.focused = opened
 	#options.focused = false
 	#controls_options.focused = false

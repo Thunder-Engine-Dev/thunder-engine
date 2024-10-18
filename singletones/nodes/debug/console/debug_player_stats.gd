@@ -7,12 +7,12 @@ func _physics_process(delta: float) -> void:
 	visible = Console.player_stats_shown
 	if !Console.player_stats_shown: return
 	var other_text: String = "PAUSE:" + str(get_tree().paused)
-	
+
 	var pl: Player = Thunder._current_player
 	if !pl:
 		text = "Player Not Found " + other_text + target_text
 		return
-	
+
 	target_text = """
 X: %s
 Y: %s

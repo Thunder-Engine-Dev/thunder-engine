@@ -16,21 +16,21 @@ var movement: bool
 
 func _ready() -> void:
 	await get_tree().create_timer(0.5, _suit_pause_tweak, true).timeout
-	
+
 	movement = true
 	vel_set_y(-550)
-	
+
 	if wait_time > 0.0:
 		await get_tree().create_timer(wait_time, _suit_pause_tweak, true).timeout
 	elif wait_time <= -1.0:
 		return
-	
+
 	if _suit_pause_tweak:
 		_pause_tweak_logic()
-				
+
 		while Scenes.custom_scenes.pause.opened:
 			await get_tree().physics_frame
-	
+
 	# After death
 	var has_gameover: bool = _init_game_over()
 	if has_gameover:
@@ -97,11 +97,11 @@ func _transition_circle() -> void:
 		.with_pause()
 		.on_player_after_middle(true)
 	)
-	
+
 	var marker = _create_marker()
 	TransitionManager.current_transition.on(marker) # Supports a Node2D or a Vector2
 	await TransitionManager.transition_middle
-	
+
 	if jump_to_scene.is_empty():
 		Scenes.reload_current_scene()
 	else:

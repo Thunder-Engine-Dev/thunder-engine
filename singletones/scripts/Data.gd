@@ -68,11 +68,11 @@ func add_score(amount: int) -> void:
 		var two_mil: int = floor(values.score / 1_000_000)
 		if two_mil > values.prev_score:
 			values.prev_score = two_mil
-			
+
 			await get_tree().create_timer(0.3, false).timeout
 			Thunder.add_lives(1)
 			Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), false)
-			
+
 			if is_instance_valid(Thunder._current_hud):
 				Thunder._current_hud.pulse_label(Thunder._current_hud.mario_score)
 

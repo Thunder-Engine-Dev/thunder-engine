@@ -56,9 +56,9 @@ func _ready() -> void:
 		if get_child_count() == 0:
 			_prepare_template()
 		return
-	
+
 	Data.values.time = time
-	
+
 	super()
 
 # Adding neccessary nodes to our level scene
@@ -66,12 +66,12 @@ func _prepare_template() -> void:
 	var music_loader = load("res://engine/objects/core/music_loader/music_loader.tscn").instantiate()
 	add_child(music_loader)
 	music_loader.set_owner(self)
-	
+
 	var player = load("res://engine/objects/players/mario/mario.tscn").instantiate()
 	add_child(player)
 	player.position = Vector2(80, 400)
 	player.set_owner(self)
-	
+
 	var camera = Camera2D.new()
 	camera.set_script(load("res://engine/objects/players/player_camera_2d.gd"))
 	camera.editor_draw_screen = false
@@ -79,7 +79,7 @@ func _prepare_template() -> void:
 	camera.set_name('PlayerCamera2D')
 	camera.set_owner(self)
 	camera.set_meta(&"_edit_lock_", true)
-	
+
 	# Camera limits
 	var cam_area = load("res://engine/components/cam_area/cam_area.tscn").instantiate()
 	add_child(cam_area)
@@ -87,7 +87,7 @@ func _prepare_template() -> void:
 	cam_area.set_name('CameraArea')
 	cam_area.set_owner(self)
 	cam_area.set_meta(&"_edit_lock_", true)
-	
+
 	# Setting up tileset for the TileMap
 	var tileset = TileSet.new()
 	tileset.tile_size = Vector2(32, 32)
@@ -105,7 +105,7 @@ func _prepare_template() -> void:
 	)
 	tile_data.add_collision_polygon(0)
 	tile_data.set_collision_polygon_points(0, 0, polygons_array)
-	
+
 	# Adding TileMap with tileset we defined above
 	var tilemap = TileMapLayer.new()
 	tilemap.tile_set = tileset
@@ -113,15 +113,15 @@ func _prepare_template() -> void:
 	tilemap.set_cell(Vector2i(2, 13), 0, Vector2i.ZERO)
 	tilemap.set_owner(self)
 	tilemap.set_meta(&"_edit_lock_", true)
-	
+
 	var hud = load("res://engine/components/hud/hud.tscn").instantiate()
 	add_child(hud)
 	hud.set_owner(self)
-	
+
 	var parallax_bg = ParallaxBackground.new()
 	add_child(parallax_bg, true)
 	parallax_bg.set_owner(self)
-	
+
 	var folder = Node2D.new()
 	add_child(folder)
 	folder.set_name('Objects')
@@ -131,10 +131,10 @@ func _prepare_template() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+
 	var player: Player = Thunder._current_player
 	if !player: return
-	
+
 	# Force player walking when completed
 	if _force_player_walking && !_forced_player_on_wall:
 		player.direction = _force_player_walking_dir
@@ -142,7 +142,7 @@ func _physics_process(delta: float) -> void:
 		_forced_player_on_wall = player.is_on_wall()
 		if _forced_player_on_wall:
 			player.speed.x = 0
-	
+
 	# Falling behavior
 	if !player || !_is_stage_ready:
 		return
@@ -150,10 +150,10 @@ func _physics_process(delta: float) -> void:
 		match falling_below_screen_action:
 			1: player.die()
 			2: player.position.y -= 608
-			3 when player.warp == player.Warp.NONE: 
+			3 when player.warp == player.Warp.NONE:
 				assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
 				"ERROR: falling_below_warp_target contains an invalid Out Warp")
-				
+
 				player.speed = Vector2.ZERO
 				falling_below_warp_target.pass_player(player)
 
@@ -162,36 +162,36 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	if !Thunder._current_player: return
 	level_completed.emit()
 	print("[Game] Level complete.")
-	
+
 	Thunder._current_hud.timer.paused = true
 	Thunder._current_player.completed = true
 	Audio.stop_all_musics()
 	if completion_music:
 		Audio.play_music(completion_music, -1)
-	
-	if walking: 
+
+	if walking:
 		_force_player_walking = true
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	Thunder._current_player.left_right = 0
-	
+
 	get_tree().call_group_flags(
 		get_tree().GROUP_CALL_DEFERRED,
 		&"end_level_sequence",
 		&"_on_level_end"
 	)
-	
+
 	await get_tree().physics_frame
 	if completion_music:
 		await Audio._music_channels[-1].finished
-	
+
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
 			await get_tree().create_timer(0.8, false, false).timeout
 			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 			Data.values.checkpoint = -1
 			Data.values.checked_cps = []
-			
+
 			if jump_to_scene:
 				if !_crossfade:
 					TransitionManager.accept_transition(
@@ -201,7 +201,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 							.with_pause()
 							.on_player_after_middle(completion_center_on_player_after_transition)
 					)
-					
+
 					await TransitionManager.transition_middle
 					Scenes.goto_scene(jump_to_scene)
 				else:
@@ -213,12 +213,12 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 			else:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)
-	
+
 	if completion_write_save:
 		var profile = ProfileManager.current_profile
 		var path = scene_file_path if !completion_write_save_path_override else completion_write_save_path_override
 		if !profile.has_completed(path):
 			profile.complete_level(path)
 			ProfileManager.save_current_profile()
-	
+
 	Thunder._current_hud.time_countdown()
