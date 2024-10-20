@@ -29,14 +29,17 @@ var selectors: Array
 
 func _ready() -> void:
 	_update_selectors()
+	SettingsManager.mouse_pressed.connect(_on_mouse_pressed)
+	#SettingsManager.mouse_released.connect(_on_mouse_released)
 
 	if trigger_selection_immediately:
 		selected.emit(current_item_index, selectors[current_item_index], true, false)
 		selectors[current_item_index]._handle_focused(true)
 
-var _mouse_pressed: bool
+var _mouse_can_process: bool
 var _mouse_pos: Vector2
 func _physics_process(delta: float) -> void:
+	_mouse_can_process = false
 	if !focused: return
 
 	var sel = current_item_index
@@ -53,27 +56,25 @@ func _physics_process(delta: float) -> void:
 	if has_node(prev_screen_node_path) && Input.is_action_just_pressed(prev_screen_control_cancel):
 		get_node(prev_screen_node_path)._handle_select(false)
 	
-	if !get_tree().root.has_focus():
-		return
+	if !SettingsManager.get_tweak("mouse_in_menus", true): return
+	if !get_tree().root.has_focus(): return
 	
-	for item: Control in selectors:
+	var _current_mouse_pos: Vector2 = get_tree().root.get_mouse_position()
+	if !get_tree().root.get_visible_rect().has_point(_current_mouse_pos): return
+	
+	for item in selectors:
+		if !is_instance_valid(item): continue
+		if !item is Control: continue
 		if item.get_global_rect().has_point(item.get_global_mouse_position()):
-			if item.mouse_hovered == false && _mouse_pos != get_tree().root.get_mouse_position():
+			if item.mouse_hovered == false && _mouse_pos != _current_mouse_pos:
 				item.mouse_hovered = true
 				current_item_index = selectors.find(item)
 				_selection(true)
-
-			if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-				if !_mouse_pressed:
-					_mouse_pressed = true
-					if item.trigger_mouse:
-						item._handle_select(true)
-			else:
-				_mouse_pressed = false
 		else:
 			item.mouse_hovered = false
 	
-	_mouse_pos = get_tree().root.get_mouse_position()
+	_mouse_pos = _current_mouse_pos
+	_mouse_can_process = true
 
 
 func move_selector(index: int, immediate: bool = false) -> void:
@@ -107,3 +108,18 @@ func _selection_update(immediate: bool = false, _mouse_input: bool = false) -> v
 	for selector in selectors:
 		if selector != item && selector.focused:
 			selector._handle_focused(false)
+
+
+func _on_mouse_pressed(index: MouseButton) -> void:
+	if !_mouse_can_process: return
+	if index != MOUSE_BUTTON_LEFT: return
+	
+	for item in selectors:
+		if !is_instance_valid(item): continue
+		if !item is Control: continue
+		if item.mouse_hovered && item.trigger_mouse:
+			item._handle_select(true)
+
+
+#func _on_mouse_released(index: MouseButton) -> void:
+#	pass

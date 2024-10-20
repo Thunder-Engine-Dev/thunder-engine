@@ -528,7 +528,6 @@ transparent_bg = true
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 physics_object_picking = true
-gui_disable_input = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
@@ -820,10 +819,16 @@ smooth_speed = 0.4
 position_padding = 16
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 552
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+editor_draw_screen = false
 script = ExtResource("25_stro5")
 
 [node name="RestartPopup" type="CanvasLayer" parent="."]

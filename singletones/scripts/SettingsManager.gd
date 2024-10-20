@@ -55,6 +55,9 @@ var device_keyboard: bool = true
 var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 
+signal mouse_pressed(index: MouseButton)
+signal mouse_released(index: MouseButton)
+
 signal settings_updated
 signal settings_saved
 signal settings_loaded
@@ -66,7 +69,7 @@ signal data_loaded(id: String)
 
 var _default_tps: int = Engine.physics_ticks_per_second
 
-@onready var mouse_timer := Timer.new()
+@onready var _mouse_timer := Timer.new()
 
 func _ready() -> void:
 	load_settings()
@@ -74,7 +77,10 @@ func _ready() -> void:
 	load_tweaks()
 	device_name = Input.get_joy_name(0)
 	device_keyboard = device_name.is_empty()
-	add_child(mouse_timer)
+	add_child(_mouse_timer)
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	if get_tweak("custom_mouse_cursor", false):
+		Input.set_custom_mouse_cursor(preload("res://engine/components/ui/generic/textures/mouse_cursor.png"))
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
@@ -282,6 +288,7 @@ func load_tweaks() -> void:
 	for tweak in tweaks:
 		var value = tweaks[tweak]
 		ProjectSettings.set_setting("application/thunder_settings/tweaks/" + tweak, value)
+	
 	tweaks_loaded.emit()
 	print("[Settings Manager] Loaded tweaks from a file.")
 
@@ -333,11 +340,17 @@ func hide_mouse() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			mouse_pressed.emit(event.button_index)
+		else:
+			mouse_released.emit(event.button_index)
+	
 	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 
 	if event is InputEventMouseMotion:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		mouse_timer.start(1.5)
-		await mouse_timer.timeout
+		_mouse_timer.start(1.5)
+		await _mouse_timer.timeout
 		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 		Input.mouse_mode = mouse_mode
