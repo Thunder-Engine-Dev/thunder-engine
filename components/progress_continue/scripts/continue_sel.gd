@@ -10,7 +10,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	Data.values = prog.profile.saved_values.duplicate(true)
 	Data.values.skip_progress_continue = true
-	Thunder._current_player_state_path = prog.profile.saved_player_state
+	if "saved_player_state" in prog.profile:
+		Thunder._current_player_state_path = prog.profile.saved_player_state
 	ProfileManager.current_profile = ProfileManager.profiles[prog.profile.saved_profile]
 	
 	_start_transition.call_deferred()

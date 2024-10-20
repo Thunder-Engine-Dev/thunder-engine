@@ -6,6 +6,7 @@ extends Node
 ##   (list of power names) => dictionary of character names => suit resources
 ## i.e. "suits.Mario.small" returns a PlayerSuit of small Mario.
 var suits: Dictionary = {}
+var voice_lines: Dictionary = {}
 
 ## Base suits for Mario
 const MARIO_SUITS: Dictionary = {
@@ -26,9 +27,32 @@ const LUIGI_SUITS: Dictionary = {
 	"iceball": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_iceball.tres"),
 }
 
+
+const MARIO_VOICE_LINES: Dictionary = {
+	"checkpoint": [
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_1.ogg"),
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_2.ogg"),
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_3.ogg"),
+	],
+	"oh_no": preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav"),
+	"fall": preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav"),
+}
+
+const LUIGI_VOICE_LINES: Dictionary = {
+	"checkpoint": [
+		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_1.wav"),
+		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_2.wav"),
+		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_3.wav"),
+	],
+	"oh_no": preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav"),
+	"fall": preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav"),
+}
+
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
+	add_voice_lines(MARIO_VOICE_LINES, "Mario")
+	add_voice_lines(LUIGI_VOICE_LINES, "Luigi")
 	print(suits)
 
 
@@ -56,6 +80,17 @@ func get_suit_names(character_name: String = "") -> Array:
 	return suit_name_arr
 
 
+func get_voice_line(voice_line: String, character_name: String = "") -> Variant:
+	var player = Thunder._current_player
+	var chara: String = character_name
+	if chara.is_empty() && player && player.character in voice_lines:
+		chara = player.character
+	
+	if chara && chara in voice_lines && voice_line in voice_lines[chara]:
+		return voice_lines[chara][voice_line]
+	return null
+
+
 func get_character_names() -> Array:
 	var chara_name_arr: Array = []
 	for key in suits.keys():
@@ -78,3 +113,11 @@ func add_suits(dict: Dictionary, character: String, override: bool = false) -> v
 		new_suit_dict[character] = {}
 	new_suit_dict[character].merge(dict, override)
 	suits = new_suit_dict
+
+
+func add_voice_lines(dict: Dictionary, character: String, override: bool = false) -> void:
+	var new_voice_dict: Dictionary = voice_lines.duplicate(true)
+	if !character in new_voice_dict:
+		new_voice_dict[character] = {}
+	new_voice_dict[character].merge(dict, override)
+	voice_lines = new_voice_dict

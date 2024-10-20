@@ -35,10 +35,9 @@ func _ready() -> void:
 			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites
 			state_preview.play("walk")
 		Scenes.custom_scenes.pause.open_blocked = true
-
+		
+		animation_player.play("init")
 		toggle()
-		await get_tree().physics_frame
-		show()
 	elif _pipe_out:
 		trigger_pipe()
 

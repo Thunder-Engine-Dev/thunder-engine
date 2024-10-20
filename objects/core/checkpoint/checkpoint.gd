@@ -3,11 +3,8 @@ extends Area2D
 @export var id: int = 0
 @export var permanent_checked: bool
 @export var sound = preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
-@export var voice_lines: Array[AudioStream] = [
-	preload("res://engine/objects/core/checkpoint/sounds/voice1.ogg"),
-	preload("res://engine/objects/core/checkpoint/sounds/voice2.ogg"),
-	preload("res://engine/objects/core/checkpoint/sounds/voice3.ogg")
-]
+## This will override standard universal player voice lines. Leave this array empty if you do not want that.
+@export var voice_lines: Array[AudioStream] = []
 
 @onready var text = $Text
 @onready var animation_player = $AnimationPlayer
@@ -53,8 +50,13 @@ func activate() -> void:
 	animation_player.play(&"checkpoint")
 	animation_text_flying.play(&"triggered")
 	
+	var _voices
+	if !voice_lines.is_empty():
+		_voices = voice_lines
+	else:
+		_voices = CharacterManager.get_voice_line("checkpoint")
 	get_tree().create_timer(0.5, false, true).timeout.connect(func() -> void:
-		Audio.play_1d_sound(voice_lines[randi_range(0, len(voice_lines) - 1)])
+		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
 	)
 	
 	if permanent_checked && !id in Data.values.checked_cps:
