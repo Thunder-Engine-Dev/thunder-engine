@@ -56,7 +56,10 @@ func _shot() -> void:
 	if sprite.animation == &"swim":
 		sprite.frame = 3
 		return
-	sprite.play(&"attack")
+	if player.is_climbing: return
+	if sprite.animation in [&"attack", &"attack_air"]:
+		sprite.frame = 0
+	sprite.play(&"attack" if player.is_on_floor() else &"attack_air")
 
 
 func _invincible(duration: float) -> void:
@@ -85,6 +88,7 @@ func _sprite_loop() -> void:
 func _sprite_finish() -> void:
 	if !sprite: return
 	if sprite.animation == &"attack": sprite.play(&"default")
+	if sprite.animation == &"attack_air": sprite.play(&"jump" if player.speed.y < 0 else &"fall")
 
 
 var _skid_sound_timer: bool
@@ -161,6 +165,7 @@ func _animation_process(delta: float) -> void:
 		elif player.is_underwater:
 			sprite.play(&"swim")
 		else:
+			if sprite.animation == &"attack_air": return
 			if player.speed.y < 0:
 				sprite.play(_get_animation_prefixed(&"jump"))
 			else:

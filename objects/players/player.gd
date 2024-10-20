@@ -213,7 +213,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		_suit_tree_paused = false
 		get_tree().paused = false
 		Scenes.custom_scenes.pause._no_unpause = false
-	if !appear && sprite.animation in ["appear", "attack"]:
+	if !appear && sprite.animation in ["appear", "attack", "attack_air"]:
 		sprite.animation = "default"
 
 	_force_suit = false
