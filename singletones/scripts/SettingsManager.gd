@@ -81,7 +81,11 @@ func _ready() -> void:
 	add_child(_mouse_timer)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if get_tweak("custom_mouse_cursor", false):
-		Input.set_custom_mouse_cursor(preload("res://engine/components/ui/generic/textures/mouse_cursor.png"))
+		Input.set_custom_mouse_cursor(
+			load(
+				ProjectSettings.get_setting("application/thunder_settings/custom_mouse_cursor_path")
+			)
+		)
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"

@@ -54,6 +54,7 @@ func _ready() -> void:
 	add_voice_lines(MARIO_VOICE_LINES, "Mario")
 	add_voice_lines(LUIGI_VOICE_LINES, "Luigi")
 	print(suits)
+	print(SettingsManager.default_settings)
 
 
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
@@ -72,6 +73,8 @@ func get_suit_names(character_name: String = "") -> Array:
 	var chara: String = character_name
 	if chara.is_empty() && player && player.character in suits:
 		chara = player.character
+	else:
+		chara = SettingsManager.settings.character
 	
 	var suit_name_arr: Array = []
 	if chara && chara in suits:
@@ -85,6 +88,8 @@ func get_voice_line(voice_line: String, character_name: String = "") -> Variant:
 	var chara: String = character_name
 	if chara.is_empty() && player && player.character in voice_lines:
 		chara = player.character
+	else:
+		chara = SettingsManager.settings.character
 	
 	if chara && chara in voice_lines && voice_line in voice_lines[chara]:
 		return voice_lines[chara][voice_line]
