@@ -26,6 +26,7 @@ func _physics_process(delta: float) -> void:
 	var joy_name: String = Input.get_joy_name(0)
 	if old_device_name != joy_name:
 		old_device_name = joy_name
+		SettingsManager.device_name = joy_name
 		SettingsManager.device_keyboard = joy_name.is_empty()
 		if SettingsManager.device_keyboard:
 			print("Gamepad not connected, using keyboard by default.")

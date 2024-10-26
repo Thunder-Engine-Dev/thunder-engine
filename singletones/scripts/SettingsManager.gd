@@ -74,6 +74,7 @@ var _default_tps: int = Engine.physics_ticks_per_second
 func _ready() -> void:
 	load_settings()
 	_load_keys()
+	_load_joy_controls()
 	load_tweaks()
 	device_name = Input.get_joy_name(0)
 	device_keyboard = device_name.is_empty()
@@ -161,15 +162,16 @@ func _get_current_key(action: StringName) -> String:
 			return key.as_text().get_slice(' (', 0)
 	return ""
 
-## Returns the joypad key label of specified action
-func _get_current_joykey(action: StringName) -> JoyButton:
-	var keys = InputMap.action_get_events(action)
-	for joykey in keys:
+## Returns the joypad button label of specified action
+func _get_current_joykey(action: StringName) -> Array[JoyButton]:
+	var buttons = InputMap.action_get_events(action)
+	var array: Array[JoyButton] = []
+	for joykey in buttons:
 		if joykey is InputEventJoypadButton:
-			return joykey.button_index
+			array.append(joykey.button_index)
 		elif joykey is InputEventJoypadMotion && abs(joykey.axis_value) >= 0.5:
-			return 40 + (joykey.axis * 2) + (0 if signf(joykey.axis_value) < 0 else 1)
-	return JOY_BUTTON_INVALID
+			array.append(40 + (joykey.axis * 2) + (0 if signf(joykey.axis_value) < 0 else 1))
+	return array
 
 ## Loads controls settings to InputMap
 func _load_keys() -> void:
@@ -187,33 +189,39 @@ func _load_keys() -> void:
 				if toRemove is InputEventKey:
 					InputMap.action_erase_event(action, toRemove)
 			InputMap.action_add_event(action, key)
+	
+	print("[Settings Manager] Loaded keyboard input maps from settings.")
 
-	var controls_joy = settings.controls_joypad
-	for action in controls_joy:
-		if !controls_joy[action] is int:
+
+func _load_joy_controls() -> void:
+	var controls_joy: Dictionary = settings.controls_joypad
+	var buttons_to_add: Array = []
+	for actions in controls_joy:
+		if !actions is Array:
 			continue
+		var oldKeys: Array[InputEvent] = InputMap.action_get_events(controls_joy[actions])
+		for joy_index in actions:
+			if joy_index >= 40:
+				var motion = InputEventJoypadMotion.new()
+				motion.axis = (joy_index - 40) / 2
+				motion.axis_value = -1.0 if wrapi(joy_index, 0, 2) == 0 else 1.0
+				if motion is InputEventJoypadMotion:
+					buttons_to_add.append(motion)
+			else:
+				var button = InputEventJoypadButton.new()
+				button.button_index = joy_index
+				if button is InputEventJoypadButton:
+					buttons_to_add.append(button)
+		
+		if buttons_to_add.is_empty(): continue
+		
+		for toRemove in oldKeys:
+			if toRemove is InputEventJoypadButton || toRemove is InputEventJoypadMotion:
+				InputMap.action_erase_event(controls_joy[actions], toRemove)
+		for button in buttons_to_add:
+			InputMap.action_add_event(controls_joy[actions], button)
 
-		if controls_joy[action] >= 40:
-			var motion = InputEventJoypadMotion.new()
-			motion.axis = (controls_joy[action] - 40) / 2
-			motion.axis_value = -1.0 if wrapi(controls_joy[action], 0, 2) == 0 else 1.0
-			if motion is InputEventJoypadMotion:
-				var oldKeys = InputMap.action_get_events(action)
-				for toRemove in oldKeys:
-					if toRemove is InputEventJoypadMotion:
-						InputMap.action_erase_event(action, toRemove)
-				InputMap.action_add_event(action, motion)
-		else:
-			var key = InputEventJoypadButton.new()
-			key.button_index = controls_joy[action]
-			if key is InputEventJoypadButton:
-				var oldKeys = InputMap.action_get_events(action)
-				for toRemove in oldKeys:
-					if toRemove is InputEventJoypadButton:
-						InputMap.action_erase_event(action, toRemove)
-				InputMap.action_add_event(action, key)
-
-	print("[Settings Manager] Loaded input maps from settings.")
+	print("[Settings Manager] Loaded joypad input maps from settings.")
 
 
 var old_scale: float = -1

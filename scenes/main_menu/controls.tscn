@@ -1,20 +1,18 @@
-[gd_scene load_steps=50 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene load_steps=40 format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
 [ext_resource type="Texture2D" uid="uid://ibc6xo4a3k4v" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
 [ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
 [ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_device_selection.gd" id="6_eh53w"]
 [ext_resource type="Texture2D" uid="uid://mf8lpy2j8u6k" path="res://engine/scenes/main_menu/textures/device_selector.png" id="7_3opa8"]
-[ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
+[ext_resource type="PackedScene" uid="uid://cbeoj4aqamscv" path="res://engine/scenes/main_menu/prefabs/control_selection.tscn" id="8_lqhon"]
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_reset_selection.gd" id="11_atcop"]
-[ext_resource type="Texture2D" uid="uid://cqtna1lefejv1" path="res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png" id="11_gj6qx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5kct"]
 atlas = ExtResource("7_3opa8")
@@ -26,61 +24,37 @@ region = Rect2(0, 60, 141, 30)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_un3r3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kw8g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0sbi"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 15, 141, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u4ofd"]
-atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgyhc"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 63.73, 188.925, 30)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kqya7"]
-atlas = ExtResource("11_gj6qx")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2fp7r"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(0, 111.395, 165.02, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kl1hk"]
-atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7oykq"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(2, 161, 174.935, 25)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2aj1f"]
-atlas = ExtResource("11_gj6qx")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fn4x"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(2, 209, 65, 26)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6lc1i"]
-atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ne13l"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 256, 52, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0m6ru"]
-atlas = ExtResource("11_gj6qx")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhbv2"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(125, 256, 56.715, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sqgad"]
-atlas = ExtResource("11_gj6qx")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_shng1"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 305, 81, 25)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_umhmi"]
-atlas = ExtResource("11_gj6qx")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rt438"]
 atlas = ExtResource("6_3wm1w")
@@ -260,270 +234,45 @@ layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
-[node name="MovingUp" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
+[node name="MovingUp" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_up"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_g0sbi")
 
-[node name="Text" type="TextureRect" parent="Options/MovingUp"]
+[node name="MovingDown" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_3kw8g")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingUp"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/MovingUp"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_u4ofd")
-stretch_mode = 2
-
-[node name="MovingDown" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_down"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_kgyhc")
 
-[node name="Text" type="TextureRect" parent="Options/MovingDown"]
+[node name="MovingLeft" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_kgyhc")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingDown"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/MovingDown"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_kqya7")
-stretch_mode = 2
-
-[node name="MovingLeft" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_left"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_2fp7r")
 
-[node name="Text" type="TextureRect" parent="Options/MovingLeft"]
+[node name="MovingRight" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_2fp7r")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingLeft"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/MovingLeft"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_kl1hk")
-stretch_mode = 2
-
-[node name="MovingRight" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_right"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_7oykq")
 
-[node name="Text" type="TextureRect" parent="Options/MovingRight"]
+[node name="Jump" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_7oykq")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingRight"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/MovingRight"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_2aj1f")
-stretch_mode = 2
-
-[node name="Jump" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_jump"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_0fn4x")
 
-[node name="Text" type="TextureRect" parent="Options/Jump"]
+[node name="Fire" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_0fn4x")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Jump"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/Jump"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_6lc1i")
-stretch_mode = 2
-
-[node name="Fire" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_attack"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_ne13l")
 
-[node name="Text" type="TextureRect" parent="Options/Fire"]
+[node name="Run" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ne13l")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Fire"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/Fire"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_0m6ru")
-stretch_mode = 2
-
-[node name="Run" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "m_run"
-trigger_mouse = false
+displayed_texture = SubResource("AtlasTexture_bhbv2")
 
-[node name="Text" type="TextureRect" parent="Options/Run"]
+[node name="Pause" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_bhbv2")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Run"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/Run"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_sqgad")
-stretch_mode = 2
-
-[node name="Pause" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
 action_name = "pause_toggle"
-enable_cancel = false
-trigger_mouse = false
-
-[node name="Text" type="TextureRect" parent="Options/Pause"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_shng1")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Pause"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Icon" type="TextureRect" parent="Options/Pause"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_umhmi")
-stretch_mode = 2
+displayed_texture = SubResource("AtlasTexture_shng1")
 
 [node name="HSeparator" type="HSeparator" parent="Options"]
 layout_mode = 2
