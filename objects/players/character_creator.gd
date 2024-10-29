@@ -36,7 +36,6 @@ func _ready() -> void:
 	var player: Player = CharacterManager.get_player_packed_scene().instantiate()
 	player.transform = transform
 	add_sibling.call_deferred(player)
-	Thunder.reorder_on_top_of(player, self)
 	if !Thunder._current_player:
 		Thunder._current_player = player
 	

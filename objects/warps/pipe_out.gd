@@ -28,13 +28,14 @@ func _ready() -> void:
 		player = Thunder._current_player
 		player_z_index = player.z_index
 		player.speed = Vector2.ZERO
+		player.warp = Player.Warp.OUT
 		pass_player.call_deferred(player)
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_label()
 		return
-	player = Thunder._current_player
+	
 	if !is_instance_valid(player): return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
@@ -82,7 +83,7 @@ func pass_player(new_player: Player) -> void:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.LEFT
 		Player.WarpDir.DOWN:
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 20)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y) #- (player.collision_shape.shape as RectangleShape2D).size.y + 20)
 			player_warp_dir = Player.WarpDir.UP
 		Player.WarpDir.UP:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y + 8)
