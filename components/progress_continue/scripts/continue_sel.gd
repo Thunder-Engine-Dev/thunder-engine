@@ -13,7 +13,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if "saved_player_state" in prog.profile:
 		Thunder._current_player_state_path = prog.profile.saved_player_state
 	ProfileManager.current_profile = ProfileManager.profiles[prog.profile.saved_profile]
-	ProfileManager.current_profile.data = ProfileManager.profiles[prog.profile.saved_profile_data]
+	ProfileManager.current_profile.data = prog.profile.saved_profile_data
 	
 	_start_transition.call_deferred()
 
