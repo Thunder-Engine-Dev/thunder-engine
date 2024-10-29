@@ -16,6 +16,7 @@ script = ExtResource("1_67t5y")
 
 [node name="Start" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("2_4gh10")
 stretch_mode = 3
 script = ExtResource("3_iocfn")
@@ -23,12 +24,14 @@ selected_sound = ExtResource("4_jtmrc")
 
 [node name="Options" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("3_flajg")
 stretch_mode = 3
 script = ExtResource("6_gmf4k")
 
 [node name="Quit" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("4_bw6k8")
 stretch_mode = 3
 script = ExtResource("8_wjgxf")

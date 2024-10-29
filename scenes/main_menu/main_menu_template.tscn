@@ -1,107 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://dqyitcg1tlsi3"]
+[gd_scene load_steps=9 format=3 uid="uid://dqyitcg1tlsi3"]
 
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="1_34ge5"]
 [ext_resource type="PackedScene" uid="uid://dkquk2byjeol8" path="res://engine/scenes/main_menu/main_menu_controls.tscn" id="1_p2k5d"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/mario_selector.png" id="2_4qgas"]
 [ext_resource type="Resource" uid="uid://ckvsfjusfv75o" path="res://engine/scenes/main_menu/music/main_menu.xm" id="2_pedjq"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="3_46jfl"]
+[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="5_umi3c"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="6_pkt5f"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="6_u4pkv"]
 [ext_resource type="PackedScene" uid="uid://cpme7ixwwuc2p" path="res://engine/scenes/main_menu/controls.tscn" id="7_poyjv"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("2_4qgas")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t63jw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -142,11 +48,14 @@ offset_bottom = -68.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Selector" type="AnimatedSprite2D" parent="Menu"]
-sprite_frames = SubResource("SpriteFrames_t63jw")
+[node name="Selector" type="Node2D" parent="Menu"]
 script = ExtResource("3_46jfl")
 smooth_speed = 0.4
-position_paddings_array = Array[float]([-5.0, 11.0, -16.0])
+position_padding = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Menu/Selector"]
+sprite_frames = ExtResource("5_umi3c")
+script = ExtResource("6_u4pkv")
 
 [node name="Settings" parent="." instance=ExtResource("6_pkt5f")]
 layout_mode = 1
