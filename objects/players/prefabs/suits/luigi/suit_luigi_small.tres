@@ -1,27 +1,27 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://cirtkvdvviy47"]
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_bhtbx"]
-[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_7lbfg"]
+[ext_resource type="SpriteFrames" uid="uid://bna35rwesy4fq" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_small.tres" id="2_r7q3r"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="3_2we5g"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="4_i7xnm"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="5_drstm"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="6_ga7d1"]
-[ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="7_h7vju"]
+[ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="7_ku1ya"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="8_e6bee"]
-[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="9_xlajb"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="9_384dj"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="10_4n8wv"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="11_tr74d"]
 
 [resource]
-script = ExtResource("9_xlajb")
+script = ExtResource("9_384dj")
 name = &"small"
 type = 0
-physics_config = ExtResource("7_h7vju")
+physics_config = ExtResource("7_ku1ya")
 physics_behavior = ExtResource("6_ga7d1")
 physics_crouchable = false
 physics_shaper = ExtResource("8_e6bee")
 physics_shaper_crouch = ExtResource("8_e6bee")
-animation_sprites = ExtResource("2_7lbfg")
+animation_sprites = ExtResource("2_r7q3r")
 animation_behavior = ExtResource("1_bhtbx")
 animation_underwater_bubble_offset = Vector2(0, 0)
 behavior_crouch_reflect_fireballs = false

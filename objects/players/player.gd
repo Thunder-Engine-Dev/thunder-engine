@@ -32,35 +32,37 @@ enum WarpDir {
 @export var nickname: StringName = &"MARIO"
 @export var character: StringName = &"Mario"
 @export_group("Suit")
-@export var suit: PlayerSuit = preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres"):
-	set(to):
-		if (!to || suit.name == to.name) && !_force_suit: return
-		suit = to.duplicate()
-
-		if suit.animation_sprites:
-			apply_player_skin(suit)
-
-		_physics_behavior = null
-		_suit_behavior = null
-		_animation_behavior = null
-		_extra_behavior = null
-		if suit.physics_behavior:
-			_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
-		if suit.grab_behavior:
-			_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self)
-		if suit.behavior_script:
-			_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
-		if suit.animation_behavior:
-			_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
-		if suit.extra_behavior:
-			_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
-		if _suit_appear:
-			_suit_appear = false
-			suit_appeared.emit()
-		if !to.resource_path.is_empty():
-			Thunder._current_player_state_path = to.resource_path
-		Thunder._current_player_state = suit
-		suit_changed.emit(suit)
+@export var suit: PlayerSuit#:
+	#set(to):
+		#if (!to || (suit && suit.name == to.name)) && !_force_suit: return
+		#suit = to.duplicate()
+#
+		#if suit.animation_sprites:
+		#	apply_player_skin.call_deferred(suit)
+#
+		#_physics_behavior = null
+		#_suit_behavior = null
+		#_animation_behavior = null
+		#_extra_behavior = null
+		#
+		#if suit.physics_behavior:
+			#_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
+		#if suit.grab_behavior:
+			#_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self)
+		#if suit.behavior_script:
+			#_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
+		#if suit.animation_behavior:
+			#_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
+		#if suit.extra_behavior:
+			#_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
+		#if _suit_appear:
+			#_suit_appear = false
+			#suit_appeared.emit()
+		#
+		#if !to.resource_path.is_empty():
+			#Thunder._current_player_state_path = to.resource_path
+		#Thunder._current_player_state = suit
+		#suit_changed.emit(suit)
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
 	set(to):
@@ -202,7 +204,37 @@ func _physics_process(delta: float) -> void:
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
 	_suit_appear = appear
-	suit = to
+	#suit = to
+	if (!to || (suit && suit.name == to.name)) && !_force_suit: return
+	suit = to.duplicate()
+
+	if suit.animation_sprites:
+		apply_player_skin(suit)
+
+	_physics_behavior = null
+	_suit_behavior = null
+	_animation_behavior = null
+	_extra_behavior = null
+	
+	if suit.physics_behavior:
+		_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
+	if suit.grab_behavior:
+		_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self)
+	if suit.behavior_script:
+		_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
+	if suit.animation_behavior:
+		_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
+	if suit.extra_behavior:
+		_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
+	if _suit_appear:
+		_suit_appear = false
+		suit_appeared.emit()
+	
+	if !to.resource_path.is_empty():
+		Thunder._current_player_state_path = to.resource_path
+	Thunder._current_player_state = suit
+	suit_changed.emit(suit)
+	
 	if appear && _suit_pause_tweak:
 		_suit_tree_paused = true
 		get_tree().paused = true

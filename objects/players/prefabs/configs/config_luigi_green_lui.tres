@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="PlayerConfig" load_steps=4 format=3 uid="uid://cuxjhq738o20q"]
+
+[ext_resource type="Script" path="res://engine/objects/players/player_config.gd" id="1_dyb46"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="2_oyci2"]
+[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="3_wn3sa"]
+
+[resource]
+script = ExtResource("1_dyb46")
+walk_initial_speed = 50.0
+walk_acceleration = 250.0
+walk_deceleration = 250.0
+walk_crouch_deceleration = 625.0
+walk_turning_acce = 834.0
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+underwater_walk_max_walking_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1750.0
+jump_buff_dynamic = 1750.0
+jump_stomp_multiplicator = 1.0
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 468.75
+slide_deceleration = 468.75
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
+animation_max_walking_speed = 5.0
+animation_min_walking_speed = 1.0
+sound_jump = ExtResource("2_oyci2")
+sound_swim = ExtResource("3_wn3sa")

@@ -144,6 +144,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_256ee")
+}],
+"loop": false,
+"name": &"attack_air",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_s8nu6")
 }],
 "loop": false,

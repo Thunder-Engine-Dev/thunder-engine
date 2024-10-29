@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="11_cr6rj"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_yhvqh"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="12_vdl0u"]
-[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="13_ctnqf"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="13_ctnqf"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="14_4q04l"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="15_njonu"]
 

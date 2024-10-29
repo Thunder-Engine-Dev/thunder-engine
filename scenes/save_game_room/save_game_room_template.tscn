@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="5_yaxqo"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="6_xttds"]
-[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/mario/mario.tscn" id="7_oesw4"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_oesw4"]
 [ext_resource type="PackedScene" uid="uid://dyg18uvaedfxp" path="res://engine/objects/warps/pipe_save.tscn" id="8_7bo3b"]
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="9_brvlo"]
 [ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_s7655"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ugxjxrdao5el"]
+[gd_scene load_steps=10 format=3 uid="uid://ugxjxrdao5el"]
 
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="1_2cnn0"]
 [ext_resource type="Script" path="res://engine/components/hud/hud.gd" id="1_pci6b"]
 [ext_resource type="Texture2D" uid="uid://bdyg3ju76ed67" path="res://engine/components/hud/coins.png" id="2_1pklb"]
 [ext_resource type="Script" path="res://engine/components/hud/value.gd" id="2_ogg8n"]
+[ext_resource type="Script" path="res://engine/components/hud/player_lives.gd" id="3_387e8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7il7"]
 atlas = ExtResource("2_1pklb")
@@ -63,7 +64,8 @@ grow_horizontal = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("1_2cnn0")
 text = "MARIO ~ %s"
-script = ExtResource("2_ogg8n")
+uppercase = true
+script = ExtResource("3_387e8")
 value_name = "lives"
 
 [node name="MarioScore" type="Label" parent="Control"]

@@ -1,21 +1,22 @@
-[gd_scene load_steps=23 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=24 format=3 uid="uid://clikwo8p4cpu6"]
 
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ofdvu"]
-[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
-[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_kdm1n"]
-[ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="3_qpqdp"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="3_vybsq"]
-[ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="4_2mkq8"]
-[ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_633ve"]
-[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="5_tgx46"]
-[ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_ab7c7"]
-[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_tcjl5"]
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_nytfe"]
+[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_24vui"]
+[ext_resource type="Resource" uid="uid://dkrwf64pscu5h" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres" id="2_kmri0"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_scihc"]
+[ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_ypl7p"]
+[ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="5_sh4vy"]
+[ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_rp2su"]
+[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_p7vjq"]
+[ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_wip5t"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_r8p8w"]
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_abn5k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
 size = Vector2(20, 28)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kdes3"]
-shader = ExtResource("2_kdm1n")
+shader = ExtResource("2_24vui")
 shader_parameter/mixing = false
 
 [sub_resource type="Curve" id="Curve_08q3l"]
@@ -71,7 +72,8 @@ slide_on_ceiling = false
 floor_max_angle = 0.837758
 floor_snap_length = 12.0
 platform_on_leave = 2
-script = ExtResource("1_ofdvu")
+script = ExtResource("1_nytfe")
+suit = ExtResource("2_kmri0")
 death_sprite = NodePath("SpriteDeath")
 gravity_scale = 1.0
 max_falling_speed = 500.0
@@ -92,7 +94,7 @@ hit_from_inside = true
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
 material = SubResource("ShaderMaterial_kdes3")
-sprite_frames = ExtResource("2_eqact")
+sprite_frames = ExtResource("3_scihc")
 offset = Vector2(0, -16)
 
 [node name="Bubble" type="GPUParticles2D" parent="Sprite"]
@@ -100,8 +102,8 @@ visible = false
 position = Vector2(0, 15)
 emitting = false
 amount = 4
-process_material = ExtResource("4_633ve")
-texture = ExtResource("4_2mkq8")
+process_material = ExtResource("4_ypl7p")
+texture = ExtResource("5_sh4vy")
 lifetime = 5.0
 randomness = 0.5
 visibility_rect = Rect2(-300, -300, 600, 600)
@@ -111,7 +113,7 @@ show_behind_parent = true
 emitting = false
 amount = 24
 process_material = SubResource("ParticleProcessMaterial_ljx6w")
-texture = ExtResource("6_ab7c7")
+texture = ExtResource("6_rp2su")
 lifetime = 0.5
 
 [node name="Skid" type="GPUParticles2D" parent="Sprite"]
@@ -121,7 +123,7 @@ position = Vector2(0, 15)
 emitting = false
 amount = 12
 process_material = SubResource("ParticleProcessMaterial_xqn1l")
-texture = ExtResource("7_tcjl5")
+texture = ExtResource("7_p7vjq")
 lifetime = 0.5
 fract_delta = false
 
@@ -129,7 +131,7 @@ fract_delta = false
 visible = false
 z_index = 15
 position = Vector2(1, 1)
-texture = ExtResource("3_qpqdp")
+texture = ExtResource("8_wip5t")
 
 [node name="Head" type="ShapeCast2D" parent="."]
 visible = false
@@ -150,7 +152,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Underwater" type="Node" parent="."]
-script = ExtResource("3_vybsq")
+script = ExtResource("9_r8p8w")
 gravity_scale_override = 0.1
 max_falling_speed_override = 150.0
 spray_offset = Vector2(0, 8)
@@ -178,7 +180,7 @@ max_results = 8
 collision_mask = 3
 collide_with_areas = true
 collide_with_bodies = false
-script = ExtResource("5_tgx46")
+script = ExtResource("10_abn5k")
 killer_type = &"starman"
 killing_detection_scale = 1.0
 trigger_enemy_failed_signal = false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccnkeccrybwn7"
-path="res://.godot/imported/selector.png-97eb7aefc13d0886489c8c9ac6beeeaf.ctex"
+uid="uid://dwjky85robt5c"
+path="res://.godot/imported/luigi_proppler.png-7ee39ce3cf758ccd2f80724d3caeb855.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/scenes/main_menu/textures/selector.png"
-dest_files=["res://.godot/imported/selector.png-97eb7aefc13d0886489c8c9ac6beeeaf.ctex"]
+source_file="res://engine/objects/players/prefabs/textures/luigi/luigi_proppler.png"
+dest_files=["res://.godot/imported/luigi_proppler.png-7ee39ce3cf758ccd2f80724d3caeb855.ctex"]
 
 [params]
 

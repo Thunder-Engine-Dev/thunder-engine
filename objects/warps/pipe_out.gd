@@ -28,12 +28,13 @@ func _ready() -> void:
 		player = Thunder._current_player
 		player_z_index = player.z_index
 		player.speed = Vector2.ZERO
-		pass_player(player)
+		pass_player.call_deferred(player)
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_label()
 		return
+	player = Thunder._current_player
 	if !is_instance_valid(player): return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
@@ -53,6 +54,7 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _tweak_process() -> void:
 	if !warp_invisible_left_right: return
+	if !is_instance_valid(player.get("sprite")): return
 	
 	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
 		player.sprite.visible = true

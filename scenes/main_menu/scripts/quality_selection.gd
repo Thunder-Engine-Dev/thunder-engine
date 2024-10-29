@@ -1,13 +1,18 @@
 extends MenuSelection
 
 var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
+@onready var value = $Value
 
 func _ready():
 	_update_string.call_deferred()
 
 
 func _handle_select(mouse_input: bool = false) -> void:
-	return
+	if !focused || !get_parent().focused: return
+	var old_value = SettingsManager.settings.quality
+	
+	SettingsManager.settings.quality = wrapi(old_value + 1, 0, 3)
+	_toggled_option(old_value, SettingsManager.settings.quality)
 
 
 func _physics_process(delta: float) -> void:
@@ -33,10 +38,11 @@ func _toggled_option(old_val, new_val) -> void:
 
 
 func _update_string() -> void:
-	if SettingsManager.settings.quality == SettingsManager.QUALITY.MIN:
-		$Value.texture.region.position.y = 32
-	if SettingsManager.settings.quality == SettingsManager.QUALITY.MID:
-		$Value.texture.region.position.y = 64
-	if SettingsManager.settings.quality == SettingsManager.QUALITY.MAX:
-		$Value.texture.region.position.y = 0
+	match SettingsManager.settings.quality:
+		SettingsManager.QUALITY.MIN:
+			value.texture.region.position.y = 32
+		SettingsManager.QUALITY.MID:
+			value.texture.region.position.y = 64
+		SettingsManager.QUALITY.MAX:
+			value.texture.region.position.y = 0
 	

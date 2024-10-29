@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_eqpyc"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_sxwr1"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_fo208"]
-[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="8_ib3k0"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="8_ib3k0"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_3d64c"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_u1nrf"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_s0q1h"]

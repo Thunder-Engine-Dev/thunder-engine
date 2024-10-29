@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c7uf7msxw3lc5"]
+[gd_scene load_steps=32 format=3 uid="uid://c7uf7msxw3lc5"]
 
 [ext_resource type="Script" path="res://engine/components/pause/pause.gd" id="1_8mdi1"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_f461o"]
@@ -17,7 +17,8 @@
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_guhqa"]
 [ext_resource type="Texture2D" uid="uid://bm8q2lod5kscj" path="res://engine/components/pause/textures/game_paused.png" id="14_j3ggr"]
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_75h8i"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="18_ftikl"]
+[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="17_pod7t"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="18_ek8ml"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="20_6rkco"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_controls_selection.gd" id="20_44axe"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_exit_selection.gd" id="20_r3d2l"]
@@ -30,101 +31,6 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_af70a"]
 gradient = SubResource("Gradient_akj06")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("18_ftikl")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t63jw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
 
 [sub_resource type="Animation" id="Animation_8nk1g"]
 length = 0.001
@@ -377,11 +283,14 @@ texture = ExtResource("8_o0n1s")
 stretch_mode = 3
 script = ExtResource("16_75h8i")
 
-[node name="Selector" type="AnimatedSprite2D" parent="Pause"]
-sprite_frames = SubResource("SpriteFrames_t63jw")
+[node name="Selector" type="Node2D" parent="Pause"]
 script = ExtResource("10_5i5rp")
 smooth_speed = 0.4
 position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pause/Selector"]
+sprite_frames = ExtResource("17_pod7t")
+script = ExtResource("18_ek8ml")
 
 [node name="GamePaused" type="TextureRect" parent="Pause"]
 layout_mode = 1

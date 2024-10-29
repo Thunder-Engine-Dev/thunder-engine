@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene load_steps=23 format=3 uid="uid://c8ql6hro5f6gv"]
 
 [ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
@@ -7,9 +7,10 @@
 [ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
 [ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
 [ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="12_vow7r"]
 [ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
+[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_jqjx8"]
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
+[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_xubmy"]
 [ext_resource type="Texture2D" uid="uid://b70uy0ois6r7v" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
 [ext_resource type="Texture2D" uid="uid://chj26jw0plkf8" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
@@ -21,101 +22,6 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_af70a"]
 gradient = SubResource("Gradient_akj06")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_oiqgu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
 
 [sub_resource type="Animation" id="Animation_svgxp"]
 length = 0.001
@@ -382,13 +288,16 @@ texture = ExtResource("15_o8bh8")
 stretch_mode = 3
 script = ExtResource("16_5gtqw")
 
-[node name="Selector" type="AnimatedSprite2D" parent="GameOver"]
+[node name="Selector" type="Node2D" parent="GameOver"]
 physics_interpolation_mode = 1
-sprite_frames = SubResource("SpriteFrames_oiqgu")
 script = ExtResource("18_7lia2")
 smooth_speed = 0.4
 position_padding = 16
 position_paddings_array = Array[float]([-32.0, -1.0, 0.0, -52.0])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver/Selector"]
+sprite_frames = ExtResource("13_jqjx8")
+script = ExtResource("14_xubmy")
 
 [node name="TeamLogo" type="TextureRect" parent="GameOver"]
 layout_mode = 1

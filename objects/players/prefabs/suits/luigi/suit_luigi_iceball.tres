@@ -1,21 +1,21 @@
 [gd_resource type="Resource" script_class="PlayerSuit" load_steps=21 format=3 uid="uid://daebho1nypc6v"]
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_8u73f"]
-[ext_resource type="SpriteFrames" uid="uid://boq3ykcdoxnb5" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_iceball.tres" id="2_2v7v4"]
+[ext_resource type="SpriteFrames" uid="uid://co67sm7im1ylg" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_iceball.tres" id="2_aul86"]
 [ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="3_tjuyv"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_rbsff"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_am834"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_yv7oe"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_saisp"]
-[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="8_52r8g"]
+[ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="8_5hs8y"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_q0v04"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_anj3y"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_xmn2v"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="12_b7010"]
-[ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="13_6v41y"]
+[ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="13_cynh3"]
 [ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_fuivj"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="15_oso7f"]
-[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="16_vccy5"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="16_vccy5"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="17_g8hsj"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="18_d08is"]
 
@@ -43,13 +43,13 @@ sound_attack = ExtResource("6_yv7oe")
 script = ExtResource("16_vccy5")
 name = &"iceball"
 type = 2
-gets_hurt_to = ExtResource("8_52r8g")
-physics_config = ExtResource("13_6v41y")
+gets_hurt_to = ExtResource("8_5hs8y")
+physics_config = ExtResource("13_cynh3")
 physics_behavior = ExtResource("12_b7010")
 physics_crouchable = true
 physics_shaper = ExtResource("14_fuivj")
 physics_shaper_crouch = ExtResource("15_oso7f")
-animation_sprites = ExtResource("2_2v7v4")
+animation_sprites = ExtResource("2_aul86")
 animation_behavior = ExtResource("1_8u73f")
 animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_w5vmj")

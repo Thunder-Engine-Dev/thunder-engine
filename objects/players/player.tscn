@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://1do11cr84k7y"]
+
+[ext_resource type="Script" path="res://engine/objects/players/character_creator.gd" id="1_r0tql"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
+[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_kdm1n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
+size = Vector2(20, 28)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdes3"]
+shader = ExtResource("2_kdm1n")
+shader_parameter/mixing = false
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+script = ExtResource("1_r0tql")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_5emkl")
+debug_color = Color(0, 0.643137, 0.305882, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_kdes3")
+sprite_frames = ExtResource("2_eqact")
+offset = Vector2(0, -16)

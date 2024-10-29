@@ -107,6 +107,7 @@ func _save_suspended_progress() -> void:
 	if pl_state:
 		profile.data.saved_player_state = Thunder._current_player_state_path
 	profile.data.saved_profile = ProfileManager.current_profile.name
+	profile.data.saved_profile_data = ProfileManager.current_profile.data
 	profile.data.title_prefix = progress_title_prefix
 	profile.data.title_level = progress_title_level.format([str(space_name), get_next_marker_id(false) + 1])
 	profile.data.scene = Scenes.current_scene.scene_file_path

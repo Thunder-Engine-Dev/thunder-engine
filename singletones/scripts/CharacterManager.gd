@@ -6,7 +6,15 @@ extends Node
 ##   (list of power names) => dictionary of character names => suit resources
 ## i.e. "suits.Mario.small" returns a PlayerSuit of small Mario.
 var suits: Dictionary = {}
+## Contains all voice lines for all characters in the game.
+## Add new ones with "add_voice_line" method.
 var voice_lines: Dictionary = {}
+## Contains all player scenes to be added by Character Creator node.
+## Add new ones with "add_player_packed_scene" method.
+var player_scenes: Dictionary = {}
+## Miscelleneous textures for all characters, like the menu player head selector.
+## Add new ones with "add_misc_texture" method.
+var misc_textures: Dictionary = {}
 
 ## Base suits for Mario
 const MARIO_SUITS: Dictionary = {
@@ -27,7 +35,7 @@ const LUIGI_SUITS: Dictionary = {
 	"iceball": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_iceball.tres"),
 }
 
-
+## Base voice lines for Mario
 const MARIO_VOICE_LINES: Dictionary = {
 	"checkpoint": [
 		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_1.ogg"),
@@ -37,7 +45,7 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"oh_no": preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav"),
 	"fall": preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav"),
 }
-
+## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
 	"checkpoint": [
 		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_1.wav"),
@@ -53,15 +61,30 @@ func _ready() -> void:
 	add_suits(LUIGI_SUITS, "Luigi")
 	add_voice_lines(MARIO_VOICE_LINES, "Mario")
 	add_voice_lines(LUIGI_VOICE_LINES, "Luigi")
-	print(suits)
-	print(SettingsManager.default_settings)
+	add_player_packed_scene(preload("res://engine/objects/players/characters/mario.tscn"), "Mario")
+	add_player_packed_scene(preload("res://engine/objects/players/characters/luigi.tscn"), "Luigi")
+	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
+	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
+	add_misc_texture(preload("res://engine/scenes/map/textures/mario_icon.png"), "map_icon", "Mario")
+	add_misc_texture(preload("res://engine/scenes/map/textures/luigi_icon.png"), "map_icon", "Luigi")
+
+
+func get_character_name() -> String:
+	return SettingsManager.settings.character
+
+
+func get_player_packed_scene(character_name: String = "") -> PackedScene:
+	var chara: String = character_name
+	if chara.is_empty(): chara = SettingsManager.settings.character
+	
+	if chara && chara in player_scenes:
+		return player_scenes[chara]
+	return null
 
 
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
-	var player = Thunder._current_player
 	var chara: String = character_name
-	if chara.is_empty() && player && player.character in suits:
-		chara = player.character
+	if chara.is_empty(): chara = SettingsManager.settings.character
 	
 	if chara && chara in suits && suit_name in suits[chara]:
 		return suits[chara][suit_name]
@@ -69,12 +92,8 @@ func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
 
 
 func get_suit_names(character_name: String = "") -> Array:
-	var player = Thunder._current_player
 	var chara: String = character_name
-	if chara.is_empty() && player && player.character in suits:
-		chara = player.character
-	else:
-		chara = SettingsManager.settings.character
+	if chara.is_empty(): chara = SettingsManager.settings.character
 	
 	var suit_name_arr: Array = []
 	if chara && chara in suits:
@@ -84,15 +103,20 @@ func get_suit_names(character_name: String = "") -> Array:
 
 
 func get_voice_line(voice_line: String, character_name: String = "") -> Variant:
-	var player = Thunder._current_player
 	var chara: String = character_name
-	if chara.is_empty() && player && player.character in voice_lines:
-		chara = player.character
-	else:
-		chara = SettingsManager.settings.character
+	if chara.is_empty(): chara = SettingsManager.settings.character
 	
 	if chara && chara in voice_lines && voice_line in voice_lines[chara]:
 		return voice_lines[chara][voice_line]
+	return null
+
+
+func get_misc_texture(texture_name: String, character_name: String = "") -> Variant:
+	var chara: String = character_name
+	if chara.is_empty(): chara = SettingsManager.settings.character
+	
+	if chara && chara in misc_textures && texture_name in misc_textures[chara]:
+		return misc_textures[chara][texture_name]
 	return null
 
 
@@ -101,6 +125,10 @@ func get_character_names() -> Array:
 	for key in suits.keys():
 		chara_name_arr.append(key)
 	return chara_name_arr
+
+
+func add_player_packed_scene(scene, character_name: String) -> void:
+	player_scenes[character_name] = scene
 
 
 func add_suit(suit: PlayerSuit, power: String, character: String, override: bool = false) -> void:
@@ -126,3 +154,13 @@ func add_voice_lines(dict: Dictionary, character: String, override: bool = false
 		new_voice_dict[character] = {}
 	new_voice_dict[character].merge(dict, override)
 	voice_lines = new_voice_dict
+
+
+func add_misc_texture(texture: Variant, texture_name: String, character: String, override: bool = false) -> void:
+	var new_texture_dict: Dictionary = misc_textures.duplicate(true)
+	if !character in new_texture_dict:
+		new_texture_dict[character] = {}
+	if !override && texture_name in new_texture_dict[character]:
+		return
+	new_texture_dict[character][texture_name] = texture
+	misc_textures = new_texture_dict

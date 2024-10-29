@@ -1,21 +1,21 @@
 [gd_resource type="Resource" script_class="PlayerSuit" load_steps=21 format=3 uid="uid://dwjyg73br3od0"]
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_oc01y"]
-[ext_resource type="SpriteFrames" uid="uid://ciq78opwuq6ft" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_beetroot.tres" id="2_3f4io"]
+[ext_resource type="SpriteFrames" uid="uid://cqs4lmmejojw5" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_beetroot.tres" id="2_fypkw"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="3_yxmfi"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3yk1c"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_h5xrk"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_mkwrr"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_2l4wi"]
-[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="8_6ludy"]
+[ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="8_nkjrt"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_ybumx"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_dvm6o"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_c50do"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="12_bnoth"]
-[ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="13_83tx0"]
+[ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="13_lnrib"]
 [ext_resource type="Resource" uid="uid://513ld6k2bccl" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_jdccd"]
 [ext_resource type="Resource" uid="uid://dgtnm5aove1kg" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="15_3km1d"]
-[ext_resource type="Script" path="res://engine/objects/player_suit.gd" id="16_yspbf"]
+[ext_resource type="Script" path="res://engine/objects/players/player_suit.gd" id="16_yspbf"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="17_3nrh8"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="18_0seoj"]
 
@@ -43,13 +43,13 @@ sound_attack = ExtResource("6_mkwrr")
 script = ExtResource("16_yspbf")
 name = &"beetroot"
 type = 2
-gets_hurt_to = ExtResource("8_6ludy")
-physics_config = ExtResource("13_83tx0")
+gets_hurt_to = ExtResource("8_nkjrt")
+physics_config = ExtResource("13_lnrib")
 physics_behavior = ExtResource("12_bnoth")
 physics_crouchable = true
 physics_shaper = ExtResource("14_jdccd")
 physics_shaper_crouch = ExtResource("15_3km1d")
-animation_sprites = ExtResource("2_3f4io")
+animation_sprites = ExtResource("2_fypkw")
 animation_behavior = ExtResource("1_oc01y")
 animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_af60k")
