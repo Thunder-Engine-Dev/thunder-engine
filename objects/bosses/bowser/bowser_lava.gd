@@ -1,5 +1,7 @@
 extends Node2D
 
+signal splash_sequence_started(pos: Vector2)
+
 var lava_objects: Array[Sprite2D]
 var lava_velocity: Array[float]
 var phases: Array[float]
@@ -19,6 +21,7 @@ func _ready() -> void:
 
 func _start_splash_seq(pos: Vector2) -> void:
 	block_logic = false
+	splash_sequence_started.emit(pos)
 	for i in len(lava_objects):
 		var lava: Sprite2D = lava_objects[i]
 		var _pos: Vector2 = pos
