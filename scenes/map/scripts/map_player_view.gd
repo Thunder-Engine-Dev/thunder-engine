@@ -24,7 +24,7 @@ func _ready() -> void:
 	if Thunder._current_player_state != null:
 		apply_player_skin(Thunder._current_player_state)
 	else:
-		printerr(&"[Map] Thunder._current_player_state is null")
+		apply_player_skin(CharacterManager.get_suit("small"))
 	
 	player.play(&"walk")
 	
