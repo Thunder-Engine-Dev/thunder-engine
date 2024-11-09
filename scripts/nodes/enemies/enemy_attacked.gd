@@ -41,6 +41,7 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 ## Maximum of player's jumping speed, triggered when player stomps onto
 ## the enemy and you [b]are[/b] holding the jumping key
 @export var stomping_player_jumping_max: float = 700
+@export var stomping_only_from_above: bool = false
 @export var stomping_delay_frames: float = 5
 @export_group("Killing","killing_")
 ## If [code]true[/code], the enemy will be able to be killed by attackers

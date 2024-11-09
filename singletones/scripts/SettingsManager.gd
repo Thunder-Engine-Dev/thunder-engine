@@ -257,10 +257,12 @@ func _window_scale_logic(force_update: bool = false) -> void:
 func save_settings() -> void:
 	save_data(settings, settings_path, "Settings")
 	if settings.vsync:
-		var file: FileAccess = FileAccess.open(
-			ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss"),
-			FileAccess.WRITE
-		)
+		var boot_path: String = ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss")
+		if !boot_path.is_absolute_path():
+			boot_path = "user://boot.thss"
+			ProjectSettings.set_setting("application/config/project_settings_override", "user://boot.thss")
+		var file: FileAccess = FileAccess.open( boot_path, FileAccess.WRITE )
+		
 		file.store_string("""[rendering]
 rendering_device/vsync/swapchain_image_count=%d
 """ % [int(settings.vsync) + 1])
