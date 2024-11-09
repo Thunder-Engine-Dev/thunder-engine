@@ -21,7 +21,11 @@ func _ready() -> void:
 	animation_player.play(&"init")
 
 	var player: Player = Thunder._current_player
-	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile")):
+	if (
+		Data.technical_values.impulse_progress_continue &&
+		ProfileManager.profiles.has("suspended") &&
+		ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile"))
+	):
 		player.no_movement = true
 		player.hide()
 
@@ -35,6 +39,7 @@ func _ready() -> void:
 			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites
 			state_preview.play("walk")
 		Scenes.custom_scenes.pause.open_blocked = true
+		Data.technical_values.impulse_progress_continue = false
 		
 		animation_player.play("init")
 		toggle()

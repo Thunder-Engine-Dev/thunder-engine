@@ -1,23 +1,9 @@
 extends MenuSelection
 
-#const MENU_MOUSE_AREA = preload("res://engine/components/ui/generic/menu_mouse_area.tscn")
-#var mouse_inside: bool
-
 var starting: bool = false
 @export var wait_time: float = 2.5
 @export var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
-
-#func _ready() -> void:
-	#var area = MENU_MOUSE_AREA.instantiate()
-	#add_child(area)
-	#area.get_child(0).shape.size = size
-	#area.mouse_entered.connect(func():
-		#mouse_inside = true
-	#)
-	#area.mouse_exited.connect(func():
-		#mouse_inside = false
-	#)
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if starting: return
@@ -35,6 +21,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if is_instance_valid(music): music.stop()
 	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
+	Data.technical_values.impulse_progress_continue = true
 
 	if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
 		TransitionManager.accept_transition(

@@ -41,6 +41,11 @@ var values: Dictionary = {
 	onetime_blocks = true
 }
 
+## Internal values that require preservation between scenes, but don't have to be saved
+var technical_values: Dictionary = {
+	impulse_progress_continue = false,
+}
+
 @warning_ignore("unused_private_class_variable")
 @onready var _default_values: Dictionary = values.duplicate(true)
 
