@@ -70,7 +70,6 @@ enum WarpDir {
 		if !direction in [-1, 1]:
 			direction = [-1, 1].pick_random()
 @export_group("Death", "death_")
-@export var death_sprite: Node2D
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
 @export var death_music_override: AudioStream
 @export var death_music_ignore_pause: bool = false
@@ -148,6 +147,7 @@ var _suit_tree_paused: bool
 @onready var stars: GPUParticles2D = $Sprite/Stars
 @onready var skid: GPUParticles2D = $Sprite/Skid
 @onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")
+@onready var death_sprite: Sprite2D = $SpriteDeath
 
 
 func _ready() -> void:
@@ -171,7 +171,9 @@ func _ready() -> void:
 	elif Thunder._current_player_state:
 		suit = Thunder._current_player_state
 	else:
-		Thunder._current_player_state = suit
+		var small_suit: PlayerSuit = CharacterManager.get_suit("small")
+		Thunder._current_player_state = small_suit
+		suit = small_suit
 
 	change_suit(suit, false, true)
 
@@ -342,6 +344,9 @@ func die(tags: Dictionary = {}) -> void:
 					Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
+					var character_death_sprite = CharacterManager.get_misc_texture("death")
+					if character_death_sprite:
+						dsdup.texture = character_death_sprite
 					db.add_child(dsdup)
 					dsdup.visible = true
 		).create_2d().get_node()

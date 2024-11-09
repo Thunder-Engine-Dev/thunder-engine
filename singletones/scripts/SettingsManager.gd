@@ -351,6 +351,11 @@ func hide_mouse() -> void:
 	Input.mouse_mode = mouse_mode
 
 
+func get_quality() -> QUALITY:
+	@warning_ignore("int_as_enum_without_cast")
+	return roundi(settings.quality)
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():

@@ -9,9 +9,6 @@ var suits: Dictionary = {}
 ## Contains all voice lines for all characters in the game.
 ## Add new ones with "add_voice_line" method.
 var voice_lines: Dictionary = {}
-## Contains all player scenes to be added by Character Creator node.
-## Add new ones with "add_player_packed_scene" method.
-var player_scenes: Dictionary = {}
 ## Miscelleneous textures for all characters, like the menu player head selector.
 ## Add new ones with "add_misc_texture" method.
 var misc_textures: Dictionary = {}
@@ -61,25 +58,16 @@ func _ready() -> void:
 	add_suits(LUIGI_SUITS, "Luigi")
 	add_voice_lines(MARIO_VOICE_LINES, "Mario")
 	add_voice_lines(LUIGI_VOICE_LINES, "Luigi")
-	add_player_packed_scene(preload("res://engine/objects/players/characters/mario.tscn"), "Mario")
-	add_player_packed_scene(preload("res://engine/objects/players/characters/luigi.tscn"), "Luigi")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
 	add_misc_texture(preload("res://engine/scenes/map/textures/mario_icon.png"), "map_icon", "Mario")
 	add_misc_texture(preload("res://engine/scenes/map/textures/luigi_icon.png"), "map_icon", "Luigi")
+	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/mario/mario_dead.png"), "death", "Mario")
+	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/luigi/luigi_dead.png"), "death", "Luigi")
 
 
 func get_character_name() -> String:
 	return SettingsManager.settings.character
-
-
-func get_player_packed_scene(character_name: String = "") -> PackedScene:
-	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
-	
-	if chara && chara in player_scenes:
-		return player_scenes[chara]
-	return null
 
 
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
@@ -125,10 +113,6 @@ func get_character_names() -> Array:
 	for key in suits.keys():
 		chara_name_arr.append(key)
 	return chara_name_arr
-
-
-func add_player_packed_scene(scene, character_name: String) -> void:
-	player_scenes[character_name] = scene
 
 
 func add_suit(suit: PlayerSuit, power: String, character: String, override: bool = false) -> void:

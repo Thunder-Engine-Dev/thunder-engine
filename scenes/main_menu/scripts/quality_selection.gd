@@ -9,7 +9,7 @@ func _ready():
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if !focused || !get_parent().focused: return
-	var old_value = SettingsManager.settings.quality
+	var old_value = SettingsManager.get_quality()
 	
 	SettingsManager.settings.quality = wrapi(old_value + 1, 0, 3)
 	_toggled_option(old_value, SettingsManager.settings.quality)
@@ -17,15 +17,16 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if !get_parent().focused: return
 	if !focused: return
 	
 	if Input.is_action_just_pressed("ui_right"):
-		var old_value = SettingsManager.settings.quality
+		var old_value = SettingsManager.get_quality()
 		SettingsManager.settings.quality = clamp(old_value + 1, 0, 2)
 		_toggled_option(old_value, SettingsManager.settings.quality)
 		
 	if Input.is_action_just_pressed("ui_left"):
-		var old_value = SettingsManager.settings.quality
+		var old_value = SettingsManager.get_quality()
 		SettingsManager.settings.quality = clamp(old_value - 1, 0, 2)
 		_toggled_option(old_value, SettingsManager.settings.quality)
 
@@ -38,7 +39,7 @@ func _toggled_option(old_val, new_val) -> void:
 
 
 func _update_string() -> void:
-	match SettingsManager.settings.quality:
+	match SettingsManager.get_quality():
 		SettingsManager.QUALITY.MIN:
 			value.texture.region.position.y = 32
 		SettingsManager.QUALITY.MID:

@@ -1,15 +1,69 @@
-[gd_scene load_steps=6 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=23 format=3 uid="uid://1do11cr84k7y"]
 
-[ext_resource type="Script" path="res://engine/objects/players/character_creator.gd" id="1_r0tql"]
-[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_eqact"]
-[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_kdm1n"]
+[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ojh72"]
+[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_5s16q"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
+[ext_resource type="Material" uid="uid://dwxmwsep7htcn" path="res://engine/particles/bubble_underwater.tres" id="4_nxxy3"]
+[ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="5_5h0yl"]
+[ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
+[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
+[ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
+[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5emkl"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
 size = Vector2(20, 28)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdes3"]
-shader = ExtResource("2_kdm1n")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7womw"]
+shader = ExtResource("2_5s16q")
 shader_parameter/mixing = false
+
+[sub_resource type="Curve" id="Curve_qbg1c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_btes4"]
+curve = SubResource("Curve_qbg1c")
+
+[sub_resource type="Curve" id="Curve_61d7b"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
+curve = SubResource("Curve_61d7b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gm2pg"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 24.0
+angle_min = -180.0
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_ro0d7")
+alpha_curve = SubResource("CurveTexture_btes4")
+
+[sub_resource type="CurveTexture" id="CurveTexture_43ijr"]
+curve = SubResource("Curve_61d7b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xos35"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_43ijr")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r881"]
+size = Vector2(16, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xql3q"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2d70d"]
+size = Vector2(1, 1)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 16
@@ -17,7 +71,7 @@ slide_on_ceiling = false
 floor_max_angle = 0.837758
 floor_snap_length = 12.0
 platform_on_leave = 2
-script = ExtResource("1_r0tql")
+script = ExtResource("1_ojh72")
 gravity_scale = 1.0
 max_falling_speed = 500.0
 metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
@@ -25,11 +79,110 @@ metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_5emkl")
+shape = SubResource("RectangleShape2D_dmcrg")
 debug_color = Color(0, 0.643137, 0.305882, 0.419608)
+
+[node name="CollisionRecovery" type="RayCast2D" parent="."]
+z_index = 6
+target_position = Vector2(0, 0)
+collision_mask = 16
+hit_from_inside = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
-material = SubResource("ShaderMaterial_kdes3")
-sprite_frames = ExtResource("2_eqact")
+material = SubResource("ShaderMaterial_7womw")
+sprite_frames = ExtResource("3_uy3nm")
 offset = Vector2(0, -16)
+
+[node name="Bubble" type="GPUParticles2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 15)
+emitting = false
+amount = 4
+process_material = ExtResource("4_nxxy3")
+texture = ExtResource("5_5h0yl")
+lifetime = 5.0
+randomness = 0.5
+visibility_rect = Rect2(-300, -300, 600, 600)
+
+[node name="Stars" type="GPUParticles2D" parent="Sprite"]
+show_behind_parent = true
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_gm2pg")
+texture = ExtResource("6_skpgp")
+lifetime = 0.5
+
+[node name="Skid" type="GPUParticles2D" parent="Sprite"]
+physics_interpolation_mode = 2
+show_behind_parent = true
+position = Vector2(0, 15)
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_xos35")
+texture = ExtResource("7_nplxc")
+lifetime = 0.5
+fract_delta = false
+
+[node name="SpriteDeath" type="Sprite2D" parent="."]
+visible = false
+z_index = 15
+position = Vector2(1, 1)
+texture = ExtResource("8_vc1bf")
+
+[node name="Head" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_2r881")
+target_position = Vector2(0, -2)
+max_results = 16
+collision_mask = 144
+collide_with_areas = true
+
+[node name="Body" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_xql3q")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 6
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Underwater" type="Node" parent="."]
+script = ExtResource("9_05rqn")
+gravity_scale_override = 0.1
+max_falling_speed_override = 150.0
+spray_offset = Vector2(0, 8)
+metadata/_edit_pinned_properties_ = [&"max_falling_speed_override", &"gravity_scale_override"]
+
+[node name="Bubbler" type="Timer" parent="Underwater"]
+process_callback = 0
+wait_time = 0.1
+
+[node name="Invincible" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[node name="Starman" type="Timer" parent="."]
+process_callback = 0
+wait_time = 10.0
+one_shot = true
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+enabled = false
+shape = SubResource("RectangleShape2D_2d70d")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("10_ph62t")
+killer_type = &"starman"
+killing_detection_scale = 1.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[connection signal="timeout" from="Starman" to="." method="_on_starman_timeout"]
+[connection signal="killed" from="Attack" to="." method="_on_starman_killed"]

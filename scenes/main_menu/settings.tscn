@@ -733,6 +733,6 @@ libraries = {
 }
 autoplay = "RESET"
 
-[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
 [connection signal="selected" from="RestartPopup/Control/VBoxContainer" to="RestartPopup/Control/Selector" method="handle_selection"]
