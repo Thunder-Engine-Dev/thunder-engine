@@ -15,7 +15,7 @@ class_name MapPlayerMarker extends Marker2D
 var _level: String
 var _level_save: String = ""
 
-@onready var marker_space: MarkerSpace = get_parent()
+@onready var marker_space = get_parent()
 var player
 
 signal changed

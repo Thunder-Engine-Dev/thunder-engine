@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_w3gcv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
-size = Vector2(32, 32)
+size = Vector2(28, 28)
 
 [sub_resource type="Resource" id="Resource_0wfa5"]
 resource_local_to_scene = true

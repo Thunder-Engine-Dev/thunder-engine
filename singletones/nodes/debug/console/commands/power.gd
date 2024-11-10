@@ -11,5 +11,6 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if !suit:
 		return Command.ExecuteResult.new("Try one of these: %s" % [CharacterManager.get_suit_names()])
 	
+	player.change_suit(suit)
 	Thunder._current_player.suit = suit
 	return Command.ExecuteResult.new("Success")
