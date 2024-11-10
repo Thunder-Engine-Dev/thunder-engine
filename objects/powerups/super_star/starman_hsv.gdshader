@@ -5,7 +5,7 @@ uniform bool mixing = false;
 
 // https://godotengine.org/qa/53831/using-hsv-values-in-shaders-instead-of-rgb
 vec4 hsv_to_rgb(float h, float s, float v, float a){
-    //based on 
+    //based on
     //https://stackoverflow.com/questions/51203917/math-behind-hsv-to-rgb-conversion-of-colors
     // So it needs values from 0 to 1
     float r;
@@ -50,14 +50,14 @@ void fragment() {
   if (mixing) {
     //float s = float(abs(int(TIME * 20.0f) % 5)) / 4.0f;
     // vec4 f_color = texture(TEXTURE,UV) * texture(pallet,vec2(s,1)) * vec4(2.5,2.5,2.5,2.5);
-    vec4 col_a = texture(TEXTURE, UV) + vec4(0.4, 0.4, 0.4, 0);
+    vec4 col_a = texture(TEXTURE, UV) + vec4(0.3, 0.3, 0.3, 0);
     // vec4 col_b = texture(pallet, vec2(s, 1)) * vec4(1.3, 1.3, 1.3, 0);
     vec4 col_b = hsv_to_rgb(TIME * 1.0f, 1, 1, 1) * vec4(1.3, 1.3, 1.3, 0);
     vec4 f_color;
     if (int(TIME * 20.0f) % 2 == 0) {
       f_color = col_a * col_b;
     } else {
-      f_color = texture(TEXTURE, UV);
+      f_color = col_a * vec4(0.7, 0.7, 0.7, 0) * col_b;
     }
     f_color.a = col_a.a;
     COLOR = f_color;

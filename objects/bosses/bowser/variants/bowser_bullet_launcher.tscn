@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://csxupm6tw1xtm"]
+
+[ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="1_mmgfh"]
+[ext_resource type="Texture2D" uid="uid://b8cntoih5pafh" path="res://engine/objects/bosses/bowser/variants/textures/bullet_launcher.png" id="2_s7l32"]
+
+[node name="Bowser" instance=ExtResource("1_mmgfh")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="6"]
+position = Vector2(20, 12)
+texture = ExtResource("2_s7l32")

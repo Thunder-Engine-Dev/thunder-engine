@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=30 format=3 uid="uid://br1851e3gt1xr"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://br1851e3gt1xr"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_hq665"]
 
@@ -14,17 +14,17 @@ region = Rect2(144, 0, 48, 64)
 atlas = ExtResource("1_hq665")
 region = Rect2(192, 0, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_irnul"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_aw334"]
 atlas = ExtResource("1_hq665")
-region = Rect2(336, 0, 48, 64)
+region = Rect2(432, 64, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_irx27"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7abmv"]
 atlas = ExtResource("1_hq665")
-region = Rect2(384, 0, 48, 64)
+region = Rect2(336, 64, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kwrwc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wxmf"]
 atlas = ExtResource("1_hq665")
-region = Rect2(432, 0, 48, 64)
+region = Rect2(384, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aulbf"]
 atlas = ExtResource("1_hq665")
@@ -42,9 +42,9 @@ region = Rect2(288, 0, 48, 64)
 atlas = ExtResource("1_hq665")
 region = Rect2(0, 0, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yqvls"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqleb"]
 atlas = ExtResource("1_hq665")
-region = Rect2(240, 0, 48, 64)
+region = Rect2(480, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbaba"]
 atlas = ExtResource("1_hq665")
@@ -66,6 +66,10 @@ region = Rect2(48, 64, 48, 64)
 atlas = ExtResource("1_hq665")
 region = Rect2(96, 64, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqvls"]
+atlas = ExtResource("1_hq665")
+region = Rect2(240, 0, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_l6uph"]
 atlas = ExtResource("1_hq665")
 region = Rect2(240, 64, 48, 64)
@@ -77,6 +81,18 @@ region = Rect2(672, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5a1qo"]
 atlas = ExtResource("1_hq665")
 region = Rect2(576, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irnul"]
+atlas = ExtResource("1_hq665")
+region = Rect2(336, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irx27"]
+atlas = ExtResource("1_hq665")
+region = Rect2(384, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwrwc"]
+atlas = ExtResource("1_hq665")
+region = Rect2(432, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfd6l"]
 atlas = ExtResource("1_hq665")
@@ -130,20 +146,20 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_72wl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aw334")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_irnul")
+"texture": SubResource("AtlasTexture_7abmv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_irx27")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kwrwc")
+"texture": SubResource("AtlasTexture_3wxmf")
 }],
 "loop": false,
 "name": &"attack_air",
@@ -183,7 +199,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yqvls")
+"texture": SubResource("AtlasTexture_nqleb")
 }],
 "loop": false,
 "name": &"fall",
