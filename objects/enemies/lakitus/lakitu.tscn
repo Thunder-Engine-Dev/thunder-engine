@@ -326,6 +326,7 @@ stomping_hurtable = false
 stomping_creation = SubResource("Resource_h3r88")
 stomping_scores = 100
 stomping_sound = ExtResource("7_hqpcj")
+stomping_only_from_above = true
 killing_immune = {
 "beetroot": false,
 "boomerang": false,

@@ -13,3 +13,5 @@ func _physics_process(_delta: float) -> void:
 	global_position = _path_follow.global_position
 	if _path_follow.progress < 5:
 		reset_physics_interpolation()
+	
+	

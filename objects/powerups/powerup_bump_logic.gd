@@ -10,4 +10,6 @@ func set_bump() -> void:
 	if !_center: return
 	if !_center.appear_distance && _center.speed.y > -1:
 		_center.jump(jump_strength)
+		#var pl = Thunder._current_player
+		#if pl && pl.global_position.x < _center.global_position.x:
 		_center.turn_x()

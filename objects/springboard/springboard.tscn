@@ -375,6 +375,7 @@ stomping_scores = 0
 stomping_sound = ExtResource("4_n438u")
 stomping_player_jumping_min = 550.0
 stomping_player_jumping_max = 550.0
+stomping_only_from_above = true
 killing_enabled = false
 killing_creation = null
 turn_into_coin_on_level_end = false
