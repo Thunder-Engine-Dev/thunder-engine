@@ -68,22 +68,27 @@ func _physics_process(delta: float) -> void:
 	if paused: return
 	
 	if circle == 0 && !middle_switch:
+		#var aaa: float = Time.get_ticks_msec()
 		if _is_with_pause:
 			paused = true
 		await get_tree().physics_frame
 		middle.emit()
+		#print("M: " + str(Time.get_ticks_msec() - aaa))
 		if _is_with_pause:
 			Scenes.scene_ready.connect(func():
 				var pl = Thunder._current_player
+				#print("R: " + str(Time.get_ticks_msec() - aaa))
 				if _on_player_after_middle && is_instance_valid(pl):
 					on(pl)
 				else:
 					on(Vector2(0.5, 0.5), true)
 					await get_tree().physics_frame
+					#print("P: " + str(Time.get_ticks_msec() - aaa))
 					paused = false
 			, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
 		middle_switch = true
+		#print("NP " + str(Time.get_ticks_msec() - aaa))
 		speed_closing = speed_opening
 	
 	if middle_switch && circle > 2:

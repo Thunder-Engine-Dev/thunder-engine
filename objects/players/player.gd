@@ -152,19 +152,21 @@ var _suit_tree_paused: bool
 
 func _ready() -> void:
 	# Transition center at the beginning of the level
-	Scenes.scene_ready.connect(func():
-		var cam := Thunder._current_camera
-		if is_instance_valid(cam):
-			cam.force_update_scroll()
+	if Scenes.current_scene is Stage2D:
+		Scenes.current_scene.stage_ready.connect(func():
+	#Scenes.scene_ready.connect(func():
+			var cam := Thunder._current_camera
+			if is_instance_valid(cam):
+				cam.force_update_scroll()
 
-		for i in 8: # Deferred 8 frames to ensure the transition works after the player touches checkpoint
-			await get_tree().physics_frame
-
-		var trans := TransitionManager.current_transition
-		if is_instance_valid(trans) && trans.has_method("on"):
-			trans.on(self)
-			trans.paused = false
-	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+			#for i in 8: # Deferred 8 frames to ensure the transition works after the player touches checkpoint
+			#	await get_tree().physics_frame
+			#while !Scenes.current_scene._is_stage_ready:
+			var trans := TransitionManager.current_transition
+			if is_instance_valid(trans) && trans.has_method("on"):
+				trans.on(self)
+				trans.paused = false
+		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
 	if !Thunder._current_player_state_path.is_empty():
 		suit = load(Thunder._current_player_state_path)

@@ -36,7 +36,7 @@ func _ready() -> void:
 		label_text += profile.title_level
 		level_label.text = label_text
 		if profile.get("saved_player_state"):
-			state_preview.sprite_frames = load(profile.saved_player_state).animation_sprites
+			state_preview.sprite_frames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
 			state_preview.play("walk")
 		Scenes.custom_scenes.pause.open_blocked = true
 		Data.technical_values.impulse_progress_continue = false

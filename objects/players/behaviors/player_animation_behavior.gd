@@ -8,12 +8,14 @@ var config: PlayerConfig
 
 var _climb_progress: float
 var _suit_pause_tweak: bool
+var _attack_air_tweak: bool
 
 func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
 	_suit_pause_tweak = SettingsManager.get_tweak("pause_on_suit_change", false)
+	_attack_air_tweak = SettingsManager.get_tweak("air_attack_animation", false)
 	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
@@ -59,7 +61,11 @@ func _shot() -> void:
 	if player.is_climbing: return
 	if sprite.animation in [&"attack", &"attack_air"]:
 		sprite.frame = 0
-	sprite.play(&"attack" if player.is_on_floor() else &"attack_air")
+	
+	if _attack_air_tweak:
+		sprite.play(&"attack" if player.is_on_floor() else &"attack_air")
+	elif player.is_on_floor():
+		sprite.play(&"attack")
 
 
 func _invincible(duration: float) -> void:

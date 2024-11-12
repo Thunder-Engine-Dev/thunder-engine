@@ -157,7 +157,8 @@ func _physics_process(delta: float) -> void:
 
 			if warp_to_scene && circle_wait_till_scene_changed:
 				Scenes.scene_ready.connect(func():
-					TransitionManager.current_transition.paused = false
+					if !Thunder._current_player:
+						TransitionManager.current_transition.paused = false
 				, CONNECT_ONE_SHOT)
 			else:
 				if circle_center_after_middle:

@@ -81,6 +81,7 @@ func _start_transition() -> void:
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
 				.with_speeds(0.02, -0.1)
+				.on_player_after_middle(true)
 		)
 	else:
 		TransitionManager.accept_transition(

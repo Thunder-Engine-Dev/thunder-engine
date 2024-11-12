@@ -101,11 +101,11 @@ func _save_progress() -> void:
 func _save_suspended_progress() -> void:
 	var profile = ProfileManager.Profile.new()
 	profile.name = "suspended"
-	var pl_state: String = Thunder._current_player_state_path
+	var pl_state: PlayerSuit = Thunder._current_player_state
 	
 	profile.data.saved_values = Data.values.duplicate(true)
 	if pl_state:
-		profile.data.saved_player_state = Thunder._current_player_state_path
+		profile.data.saved_player_state = Thunder._current_player_state.name
 	profile.data.saved_profile = ProfileManager.current_profile.name
 	profile.data.saved_profile_data = ProfileManager.current_profile.data
 	profile.data.title_prefix = progress_title_prefix
