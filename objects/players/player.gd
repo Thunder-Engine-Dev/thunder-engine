@@ -167,6 +167,13 @@ func _ready() -> void:
 				trans.on(self)
 				trans.paused = false
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	elif is_instance_valid(TransitionManager.current_transition):
+		Scenes.scene_ready.connect(func():
+			var trans := TransitionManager.current_transition
+			if is_instance_valid(trans) && trans.has_method("on"):
+				trans.on(Vector2(0.5, 0.5))
+				trans.paused = false
+		)
 
 	if !Thunder._current_player_state_path.is_empty():
 		suit = load(Thunder._current_player_state_path)

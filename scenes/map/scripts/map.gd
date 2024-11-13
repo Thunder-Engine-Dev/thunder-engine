@@ -31,7 +31,8 @@ func _ready() -> void:
 		Scenes.goto_scene(get_node(player).current_marker.level)
 		Scenes.scene_ready.connect(func():
 			TransitionManager.current_transition.on(Thunder._current_player)
-			TransitionManager.current_transition.paused = false
+			if !Thunder._current_player:
+				TransitionManager.current_transition.paused = false
 		, CONNECT_ONE_SHOT)
 	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 
@@ -81,6 +82,7 @@ func _start_transition() -> void:
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()
 				.with_speeds(0.02, -0.1)
+				.with_pause()
 				.on_player_after_middle(true)
 		)
 	else:

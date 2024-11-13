@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=46 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
@@ -17,8 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="12_2qs05"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="13_b3ol1"]
 [ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="14_8lcjd"]
+[ext_resource type="Texture2D" uid="uid://bps7hsckfsjs1" path="res://engine/scenes/save_game_room/textures/cloud_secret.png" id="14_h52hi"]
 [ext_resource type="PackedScene" uid="uid://b2d7bys2llvfr" path="res://engine/objects/bumping_blocks/reset_power_block/reset_power_block.tscn" id="15_p0k5q"]
-[ext_resource type="Resource" uid="uid://dkrwf64pscu5h" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_small.tres" id="16_75obd"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/secret_cloud.gd" id="15_tlegf"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/saved_level_label.gd" id="17_815hk"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="17_f33dw"]
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="17_lfiik"]
@@ -141,6 +142,52 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4ofm"]
+atlas = ExtResource("14_h52hi")
+region = Rect2(0, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5d6l"]
+atlas = ExtResource("14_h52hi")
+region = Rect2(65, 0, 65, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ughv8"]
+atlas = ExtResource("14_h52hi")
+region = Rect2(130, 0, 65, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u1h80"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yayh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejx6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukdmr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4ofm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5d6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ughv8")
+}],
+"loop": true,
+"name": &"secret",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_csgur"]
+radius = 24.0
+
 [node name="SaveGameRoom" type="Node2D"]
 script = ExtResource("1_gva46")
 time = -1
@@ -217,17 +264,6 @@ position = Vector2(480, 96)
 sprite_frames = SubResource("SpriteFrames_xdu4w")
 autoplay = "default"
 
-[node name="Node2D3" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
-script = ExtResource("20_1ppih")
-amplitude = Vector2(20, 5)
-random_phase = true
-sprite_path = NodePath("AnimatedSprite2D")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer/Node2D3"]
-position = Vector2(256, 128)
-sprite_frames = SubResource("SpriteFrames_xdu4w")
-autoplay = "default"
-
 [node name="Node2D2" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
 script = ExtResource("20_1ppih")
 amplitude = Vector2(20, 5)
@@ -243,6 +279,27 @@ autoplay = "default"
 position = Vector2(224, 400)
 sprite_frames = SubResource("SpriteFrames_56m6p")
 autoplay = "default"
+
+[node name="Node2D3" type="Node2D" parent="."]
+z_index = -5
+script = ExtResource("20_1ppih")
+amplitude = Vector2(20, 5)
+random_phase = true
+sprite_path = NodePath("CloudSecret")
+
+[node name="CloudSecret" type="AnimatedSprite2D" parent="Node2D3"]
+position = Vector2(256, 128)
+sprite_frames = SubResource("SpriteFrames_u1h80")
+autoplay = "default"
+script = ExtResource("15_tlegf")
+
+[node name="Area2D" type="Area2D" parent="Node2D3/CloudSecret"]
+show_behind_parent = true
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D3/CloudSecret/Area2D"]
+shape = SubResource("CircleShape2D_csgur")
 
 [node name="PipeOut" parent="." instance=ExtResource("19_pdlhx")]
 position = Vector2(96, 112)
@@ -320,6 +377,7 @@ script = ExtResource("17_815hk")
 
 [node name="RedMushroom" parent="Objects" instance=ExtResource("11_33dcp")]
 position = Vector2(816, 400)
+to_suit = "super"
 force_powerup_state = true
 score = 0
 supply_behavior = true
@@ -357,7 +415,6 @@ metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="ResetPowerBlock" parent="Objects" instance=ExtResource("15_p0k5q")]
 position = Vector2(720, 208)
-change_to_suit = ExtResource("16_75obd")
 
 [node name="PipeIn" parent="Objects" instance=ExtResource("17_lfiik")]
 position = Vector2(1472, 304)
@@ -473,3 +530,8 @@ script = ExtResource("24_3w1ro")
 [connection signal="body_exited" from="PipeSave2" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
 [connection signal="body_entered" from="PipeSave3" to="Reset" method="_on_pipe_save_player_enter" unbinds=1]
 [connection signal="body_exited" from="PipeSave3" to="Reset" method="_on_pipe_save_player_exit" unbinds=1]
+[connection signal="collected_changed_suit" from="Objects/RedMushroom" to="Node2D3/CloudSecret" method="reset_cloud"]
+[connection signal="collected_changed_suit" from="Objects/FireFlower" to="Node2D3/CloudSecret" method="reset_cloud"]
+[connection signal="collected_changed_suit" from="Objects/Beetroot" to="Node2D3/CloudSecret" method="reset_cloud"]
+[connection signal="collected_changed_suit" from="Objects/GreenLui" to="Node2D3/CloudSecret" method="reset_cloud"]
+[connection signal="bumped" from="Objects/ResetPowerBlock" to="Node2D3/CloudSecret" method="reset_cloud"]

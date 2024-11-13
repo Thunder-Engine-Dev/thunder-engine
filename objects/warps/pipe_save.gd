@@ -6,6 +6,7 @@ extends "pipe_in.gd"
 var profile_name: String
 
 var deletion_progress: float
+var is_empty: bool
 var _tweak: bool
 
 signal save_deleted

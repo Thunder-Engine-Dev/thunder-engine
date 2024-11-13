@@ -1,6 +1,9 @@
 extends GravityBody2D
 class_name Powerup
 
+signal collected
+signal collected_changed_suit
+
 @export_group("Powerup Settings")
 @export var slide: bool = true
 @export var to_suit: String = "super"
@@ -84,8 +87,10 @@ func _change_state_logic(force_powerup: bool) -> void:
 		if to.name != Thunder._current_player_state.name:
 			player.change_suit(to)
 			Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch, ignore_pause = true})
+			collected_changed_suit.emit()
 		elif !supply_behavior:
 			Audio.play_sound(pickup_neutral_sound, self, false, {pitch = sound_pitch})
+		collected.emit()
 		return
 
 	if (
@@ -99,5 +104,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 		else:
 			player.change_suit(to)
 		Audio.play_sound(pickup_powerup_sound, self, false, {pitch = sound_pitch, ignore_pause = true})
+		collected_changed_suit.emit()
 	else:
 		Audio.play_sound(pickup_neutral_sound, self, false, {pitch = sound_pitch})
+	collected.emit()

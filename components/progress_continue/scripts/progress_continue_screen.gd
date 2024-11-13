@@ -20,31 +20,35 @@ signal closed
 func _ready() -> void:
 	animation_player.play(&"init")
 
-	var player: Player = Thunder._current_player
 	if (
 		Data.technical_values.impulse_progress_continue &&
 		ProfileManager.profiles.has("suspended") &&
 		ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile"))
 	):
-		player.no_movement = true
-		player.hide()
-
-		profile = ProfileManager.profiles.suspended.data
-		scene = profile.scene
-		var label_text: String = profile.title_prefix.replacen("\\n", "
-")
-		label_text += profile.title_level
-		level_label.text = label_text
-		if profile.get("saved_player_state"):
-			state_preview.sprite_frames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
-			state_preview.play("walk")
-		Scenes.custom_scenes.pause.open_blocked = true
-		Data.technical_values.impulse_progress_continue = false
-		
-		animation_player.play("init")
-		toggle()
+		suspended_game_logic()
 	elif _pipe_out:
 		trigger_pipe()
+
+
+func suspended_game_logic() -> void:
+	var player: Player = Thunder._current_player
+	player.no_movement = true
+	player.hide()
+
+	profile = ProfileManager.profiles.suspended.data
+	scene = profile.scene
+	var label_text: String = profile.title_prefix.replacen("\\n", "
+")
+	label_text += profile.title_level
+	level_label.text = label_text
+	if profile.get(&"saved_player_state"):
+		state_preview.sprite_frames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
+		state_preview.play(&"walk")
+	Scenes.custom_scenes.pause.open_blocked = true
+	Data.technical_values.impulse_progress_continue = false
+	
+	animation_player.play(&"init")
+	toggle()
 
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:

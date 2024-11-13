@@ -17,7 +17,7 @@ func _ready() -> void:
 		
 		var full_numbers: String = prof.get_world_numbers()
 		var world_numbers: Array = full_numbers.split("-")
-		if !world_numbers:
+		if !world_numbers[0]:
 			set_empty()
 			return
 		
@@ -32,6 +32,7 @@ func _ready() -> void:
 
 func set_empty() -> void:
 	text = "empty..."
+	pipe_save.is_empty = true
 
 
 func set_world_numbers(world_numbers: String) -> void:

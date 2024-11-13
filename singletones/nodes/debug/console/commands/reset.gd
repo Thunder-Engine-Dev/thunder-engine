@@ -10,4 +10,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 	Console.hide()
 	Console.get_tree().paused = false
 	return result
-

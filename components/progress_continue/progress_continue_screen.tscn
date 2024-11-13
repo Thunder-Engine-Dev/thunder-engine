@@ -257,10 +257,10 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="StatePreview" type="AnimatedSprite2D" parent="."]
-position = Vector2(320, 288)
+position = Vector2(320, 284)
 sprite_frames = ExtResource("16_ccim0")
 animation = &"walk"
 autoplay = "walk"
 
-[connection signal="selected" from="VBoxContainer" to="Node" method="handle_selection"]
 [connection signal="selected" from="VBoxContainer" to="Selector" method="handle_selection"]
+[connection signal="selected" from="VBoxContainer" to="Node" method="handle_selection"]

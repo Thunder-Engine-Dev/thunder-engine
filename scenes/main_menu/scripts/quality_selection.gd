@@ -5,6 +5,7 @@ var toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 func _ready():
 	_update_string.call_deferred()
+	SettingsManager.settings_updated.connect(_update_string)
 
 
 func _handle_select(mouse_input: bool = false) -> void:

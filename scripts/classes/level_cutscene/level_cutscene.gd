@@ -1,4 +1,4 @@
-class_name LevelCutscene extends Node
+class_name LevelCutscene extends Stage2D
 
 @export_file("*.tscn", "*.scn") var goto_path: String
 @export var fade_out_time: float = 0.04
