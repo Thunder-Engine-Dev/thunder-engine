@@ -13,6 +13,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if "saved_player_state" in prog.profile:
 		Thunder._current_player_state = CharacterManager.get_suit(prog.profile.saved_player_state)
 		Thunder._current_player_state_path = ""
+	
 	ProfileManager.current_profile = ProfileManager.profiles[prog.profile.saved_profile]
 	ProfileManager.current_profile.data = prog.profile.saved_profile_data
 	

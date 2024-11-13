@@ -32,7 +32,9 @@ func _ready() -> void:
 		map = Scenes.current_scene
 		
 		if Data.values.get("skip_progress_continue") == true:
-			Data.values.skip_progress_continue = false
+			(func():
+				Data.values.skip_progress_continue = false
+			).call_deferred()
 		elif SettingsManager.get_tweak("progress_continue", true) && progress_continue_enabled:
 			_save_suspended_progress.call_deferred()
 		

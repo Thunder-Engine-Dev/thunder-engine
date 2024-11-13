@@ -84,44 +84,52 @@ func _physics_process(delta: float) -> void:
 		_label()
 		return
 	if !player: return
+	_warp_initiator()
 
+	if !_on_warp: return
+	_warping_process(delta)
+
+
+func _warp_initiator() -> void:
+	if _on_warp || player.warp != Player.Warp.NONE:
+		return
+	
 	var input_x: float = player.left_right
 	var input_y: float = player.up_down
 
-	if !_on_warp && player.warp == Player.Warp.NONE:
-		if input_x > 0 && warp_direction == Player.WarpDir.RIGHT && player.is_on_floor():
-			_on_warp = true
-			pos_player.position = Vector2(-(shape.shape as RectangleShape2D).size.x / 2, 0)
-		elif input_x < 0 && warp_direction == Player.WarpDir.LEFT && player.is_on_floor():
-			_on_warp = true
-			pos_player.position = Vector2((shape.shape as RectangleShape2D).size.x / 2, 0)
-		if input_y > 0 && warp_direction == Player.WarpDir.DOWN:
-			_on_warp = true
-			pos_player.position = Vector2(0, 0)
-		elif input_y < 0 && warp_direction == Player.WarpDir.UP:
-			_on_warp = true
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
+	if input_x > 0 && warp_direction == Player.WarpDir.RIGHT && player.is_on_floor():
+		_on_warp = true
+		pos_player.position = Vector2(-(shape.shape as RectangleShape2D).size.x / 2, 0)
+	elif input_x < 0 && warp_direction == Player.WarpDir.LEFT && player.is_on_floor():
+		_on_warp = true
+		pos_player.position = Vector2((shape.shape as RectangleShape2D).size.x / 2, 0)
+	if input_y > 0 && warp_direction == Player.WarpDir.DOWN:
+		_on_warp = true
+		pos_player.position = Vector2(0, 0)
+	elif input_y < 0 && warp_direction == Player.WarpDir.UP:
+		_on_warp = true
+		pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
 
-		if _on_warp:
-			player_z_index = player.z_index
+	if _on_warp:
+		player_z_index = player.z_index
 
-			warp_started.emit()
-			player.warp = Player.Warp.IN
-			player.warp_dir = warp_direction
-			if !warp_disable_smooth_entry:
-				var pos_tw = create_tween()
-				pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
-			else:
-				player.global_position = pos_player.global_position
-			player.z_index = -5
-			player.speed = Vector2.ZERO
-			if is_instance_valid(Thunder._current_camera):
-				Thunder._current_camera.teleport()
-			Audio.play_sound(warping_sound, self, false)
-			Thunder._current_hud.timer.paused = true
+		warp_started.emit()
+		player.warp = Player.Warp.IN
+		player.warp_dir = warp_direction
+		if !warp_disable_smooth_entry:
+			var pos_tw = create_tween()
+			pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
+		else:
+			player.global_position = pos_player.global_position
+		player.z_index = -5
+		player.speed = Vector2.ZERO
+		if is_instance_valid(Thunder._current_camera):
+			Thunder._current_camera.teleport()
+		Audio.play_sound(warping_sound, self, false)
+		Thunder._current_hud.timer.paused = true
 
-	if !_on_warp: return
 
+func _warping_process(delta: float) -> void:
 	if _duration < _target:
 		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
 		_duration += delta
@@ -133,39 +141,7 @@ func _physics_process(delta: float) -> void:
 		warp_ended.emit()
 
 		if use_circle_transition:
-			var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-			if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
-				pass_warp()
-				TransitionManager.accept_transition(
-					load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-						.instantiate()
-						.with_time(crossfade_fade_speed)
-						.with_scene(warp_to_scene)
-				)
-				warp_to_scene = ""
-				return
-			TransitionManager.accept_transition(
-				load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-					.instantiate()
-					.with_speeds(circle_closing_speed, -circle_opening_speed)
-					.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
-			)
-			if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
-			await TransitionManager.transition_middle
-
-			TransitionManager.current_transition.paused = true
-
-			if warp_to_scene && circle_wait_till_scene_changed:
-				Scenes.scene_ready.connect(func():
-					if !Thunder._current_player:
-						TransitionManager.current_transition.paused = false
-				, CONNECT_ONE_SHOT)
-			else:
-				if circle_center_after_middle:
-					TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
-				TransitionManager.current_transition.paused = false
-
-			pass_warp.call_deferred()
+			_circle_transition()
 
 		elif use_blur_transition && SettingsManager.get_tweak("enable_blur_transitions", true):
 			var trans = load(
@@ -178,10 +154,8 @@ func _physics_process(delta: float) -> void:
 			await TransitionManager.transition_middle
 
 			# The commented code needs fixing and is temporarily commented out
-
 			#TransitionManager.current_transition.paused = true
-
-
+			
 			#if warp_to_scene:
 			#	Scenes.scene_changed.connect(func(_current_scene):
 			#		TransitionManager.current_transition.paused = false
@@ -192,6 +166,42 @@ func _physics_process(delta: float) -> void:
 			await get_tree().physics_frame
 			pass_warp()
 		else: pass_warp()
+
+
+func _circle_transition() -> void:
+	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+		pass_warp()
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+				.instantiate()
+				.with_time(crossfade_fade_speed)
+				.with_scene(warp_to_scene)
+		)
+		warp_to_scene = ""
+		return
+	TransitionManager.accept_transition(
+		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+			.instantiate()
+			.with_speeds(circle_closing_speed, -circle_opening_speed)
+			.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
+	)
+	if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+	await TransitionManager.transition_middle
+
+	TransitionManager.current_transition.paused = true
+
+	if warp_to_scene && circle_wait_till_scene_changed:
+		Scenes.scene_ready.connect(func():
+			if !Thunder._current_player:
+				TransitionManager.current_transition.paused = false
+		, CONNECT_ONE_SHOT)
+	else:
+		if circle_center_after_middle:
+			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
+		TransitionManager.current_transition.paused = false
+
+	pass_warp.call_deferred()
 
 
 func pass_warp() -> void:

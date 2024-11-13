@@ -2,6 +2,10 @@ extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
+func _ready() -> void:
+	offscreen_handler(0.8)
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !sprite_node: return
