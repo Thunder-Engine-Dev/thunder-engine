@@ -16,6 +16,7 @@ var has_skipped: bool = false
 @onready var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _ready() -> void:
+	super()
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
