@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwjky85robt5c"
-path="res://.godot/imported/luigi_proppler.png-7ee39ce3cf758ccd2f80724d3caeb855.ctex"
+uid="uid://bgcayqfivo5wf"
+path="res://.godot/imported/door_red.png-d9fad4ffe7c3497a7764709477a96735.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/players/prefabs/textures/luigi/luigi_proppler.png"
-dest_files=["res://.godot/imported/luigi_proppler.png-7ee39ce3cf758ccd2f80724d3caeb855.ctex"]
+source_file="res://engine/objects/warps/door/door_red.png"
+dest_files=["res://.godot/imported/door_red.png-d9fad4ffe7c3497a7764709477a96735.ctex"]
 
 [params]
 

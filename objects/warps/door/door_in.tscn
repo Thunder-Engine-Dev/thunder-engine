@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b15mtpvvr38vx"]
+
+[ext_resource type="Script" path="res://engine/objects/warps/door/door_in.gd" id="1_bjwu6"]
+[ext_resource type="Texture2D" uid="uid://c32gr3g5syhnt" path="res://engine/objects/warps/door/door_background.png" id="2_g7vay"]
+[ext_resource type="SpriteFrames" uid="uid://chb2xwhkx80un" path="res://engine/objects/warps/door/door_animation.tres" id="3_4oodk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgisv"]
+size = Vector2(16, 16)
+
+[node name="DoorIn" type="Area2D" groups=["door_in"]]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_bjwu6")
+
+[node name="SpriteBG" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -32)
+texture = ExtResource("2_g7vay")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
+sprite_frames = ExtResource("3_4oodk")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_qgisv")
+debug_color = Color(0, 0.352941, 0.180392, 0.419608)
+
+[node name="PosPlayer" type="Marker2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]

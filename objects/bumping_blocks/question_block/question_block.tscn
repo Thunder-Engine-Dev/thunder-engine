@@ -18,6 +18,7 @@ atlas = ExtResource("5_21kjl")
 region = Rect2(0, 0, 32, 32)
 
 [node name="QuestionBlock" type="AnimatableBody2D"]
+disable_mode = 1
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_cty0g")
