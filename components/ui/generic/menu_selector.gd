@@ -63,6 +63,7 @@ func _update_pos() -> void:
 
 	if _immediate:
 		global_position = target_position
+		reset_physics_interpolation()
 
 
 func _physics_process(delta: float) -> void:
@@ -70,6 +71,7 @@ func _physics_process(delta: float) -> void:
 		global_position = global_position.lerp(target_position, smooth_speed * Thunder.get_delta(delta))
 	else:
 		global_position = target_position
+		reset_physics_interpolation()
 
 	if is_instance_valid(_current_item_node):
 		_update_pos()
