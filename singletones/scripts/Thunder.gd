@@ -167,7 +167,7 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 			printerr("Invalid call. Node and target should be on the same subtree.")
 		return
 
-	node_parent.move_child(node, target.get_index() - 1)
+	node_parent.move_child(node, target.get_index())
 
 
 ## == SUBSINGLETONS ==

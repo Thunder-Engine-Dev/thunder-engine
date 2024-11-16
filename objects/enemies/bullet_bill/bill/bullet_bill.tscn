@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bw7f131nc4fhf"]
 
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_w3yqm"]
+[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.gd" id="1_rybvi"]
 [ext_resource type="Texture2D" uid="uid://c4ty5fuc65vlg" path="res://engine/objects/enemies/bullet_bill/bill/textures/bullet_bill.png" id="2_2h53c"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_wg1gp"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_iuxfx"]
@@ -33,7 +33,7 @@ custom_vars = {
 custom_script = ExtResource("4_ik838")
 
 [node name="BulletBill" type="CharacterBody2D"]
-script = ExtResource("1_w3yqm")
+script = ExtResource("1_rybvi")
 look_at_player = true
 sprite = NodePath("Sprite")
 speed = Vector2(195, 0)
