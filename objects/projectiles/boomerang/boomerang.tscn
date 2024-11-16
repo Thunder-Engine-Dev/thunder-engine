@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cun8jv47pjvmt"]
+[gd_scene load_steps=9 format=3 uid="uid://cun8jv47pjvmt"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/boomerang/boomerang.gd" id="1_biice"]
-[ext_resource type="Texture2D" uid="uid://c6vccfrooupb7" path="res://engine/objects/projectiles/boomerang/boomerang_player.png" id="2_8ng0e"]
+[ext_resource type="Texture2D" uid="uid://c6vccfrooupb7" path="res://engine/objects/projectiles/boomerang/textures/boomerang_player.png" id="2_8ng0e"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_c4rlt"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ks1x"]
+[ext_resource type="AudioStream" uid="uid://6m5l3lgoy0k1" path="res://engine/objects/projectiles/boomerang/sfx/boomerange_flying.wav" id="5_3nf32"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_js70m"]
 radius = 16.0
@@ -25,17 +26,25 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_biice")
 turn_sprite = false
-sprite = NodePath("Texture")
+sprite = NodePath("Sprite")
 speed = Vector2(500, -300)
 correct_collision = false
-
-[node name="Texture" type="Sprite2D" parent="."]
-z_index = 1
-texture = ExtResource("2_8ng0e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_js70m")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("CircleShape2D_js70m")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_8ng0e")
 
 [node name="Attack" type="ShapeCast2D" parent="."]
 visible = false
@@ -59,12 +68,21 @@ texture = SubResource("GradientTexture2D_fl30v")
 texture_scale = 0.01
 script = ExtResource("4_5ks1x")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-monitorable = false
+[node name="SoundFlying" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_3nf32")
+autoplay = true
+max_distance = 960.0
+bus = &"Sound"
+area_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-shape = SubResource("CircleShape2D_js70m")
+[node name="SoundInterval" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="TrailInterval" type="Timer" parent="."]
+wait_time = 0.065
+autostart = true
 
 [connection signal="killed_succeeded" from="Attack" to="." method="explode"]
+[connection signal="timeout" from="SoundInterval" to="SoundFlying" method="play"]
+[connection signal="timeout" from="TrailInterval" to="." method="make_trail"]

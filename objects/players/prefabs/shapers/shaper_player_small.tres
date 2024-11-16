@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Shaper2D" load_steps=3 format=3 uid="uid://dgtnm5aove1kg"]
+[gd_resource type="Resource" script_class="Shaper2D" load_steps=3 format=3 uid="uid://2etad878gceh"]
 
 [ext_resource type="Script" path="res://engine/scripts/resources/shaper/shaper_2d.gd" id="1_hbi32"]
 

@@ -97,6 +97,7 @@ killing_creation = SubResource("Resource_l87kq")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_kcsna")
 killing_sound_failed = ExtResource("9_yihn6")
+ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

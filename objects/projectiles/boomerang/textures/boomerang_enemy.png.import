@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://orrjr1vsi13m"
-path="res://.godot/imported/boomerang_enemy.png-bbab30dc68aafd46827b8e6c563ee2af.ctex"
+path="res://.godot/imported/boomerang_enemy.png-2424549d7e1190b11e3f6f33cbe29058.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/projectiles/boomerang/boomerang_enemy.png"
-dest_files=["res://.godot/imported/boomerang_enemy.png-bbab30dc68aafd46827b8e6c563ee2af.ctex"]
+source_file="res://engine/objects/projectiles/boomerang/textures/boomerang_enemy.png"
+dest_files=["res://.godot/imported/boomerang_enemy.png-2424549d7e1190b11e3f6f33cbe29058.ctex"]
 
 [params]
 

@@ -1,11 +1,15 @@
 extends Projectile
 
+const enemy_mode_texture = preload("res://engine/objects/projectiles/boomerang/textures/boomerang_enemy.png")
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
+
+@export_range(0, 20, 0.1, "hide_slider", "suffix:s") var trail_emitting_interval: float = 0.4
 
 var flag: bool = false
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var area_2d: Area2D = $Area2D
+
 
 func _ready() -> void:
 	add_to_group(&"end_level_sequence")
@@ -16,9 +20,10 @@ func _ready() -> void:
 		if !vision.is_on_screen():
 			queue_free()
 			return
-
 		vision.screen_exited.connect(queue_free)
-
+		
+	if sprite_node is Sprite2D:
+		sprite_node.texture = sprite_node.texture if belongs_to == Data.PROJECTILE_BELONGS.PLAYER else enemy_mode_texture
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -50,10 +55,22 @@ func _physics_process(delta: float) -> void:
 func explode():
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 
-
 func expand_vision(_scale: Vector2) -> void:
 	await ready
 	if vision: vision.scale = _scale
+
+func make_trail() -> void:
+	var trail := sprite_node.duplicate() as Sprite2D
+	(func() -> void:
+		add_sibling(trail)
+		get_parent().move_child(trail, get_index() - 1)
+		trail.modulate.a = 0.75
+		trail.global_transform = sprite_node.global_transform
+	).call_deferred()
+	
+	var tw := trail.create_tween()
+	tw.tween_property(trail, ^"modulate:a", 0.0, 0.5)
+	tw.finished.connect(trail.queue_free)
 
 
 func _on_level_end() -> void:

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://duodk2nyl4k2h"]
+[gd_resource type="TileSet" load_steps=25 format=3 uid="uid://duodk2nyl4k2h"]
 
 [ext_resource type="Texture2D" uid="uid://c2xfexiy1rnqh" path="res://engine/tilesets/overworld/overworld_classic.png" id="1_pmc3t"]
 [ext_resource type="Texture2D" uid="uid://ngfj3e7qgbeb" path="res://engine/tilesets/overworld/overworld_new.png" id="2_i8cip"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://bxrtju4bs3pr6" path="res://engine/tilesets/overworld/hill.png" id="7_ytmyx"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="8_5krnd"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="9_1a86s"]
+[ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="10_4hc53"]
 [ext_resource type="Texture2D" uid="uid://k8a5qakqvy2c" path="res://engine/tilesets/overworld/overworld_slopes.png" id="10_ekg45"]
+[ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="11_gwdxq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5ulr"]
 resource_name = "ground classic"
@@ -765,6 +767,29 @@ texture_region_size = Vector2i(32, 32)
 1:2/0 = 0
 1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6rww4"]
+resource_name = "grass"
+texture = ExtResource("10_4hc53")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(2, 1)
+0:0/animation_columns = 3
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 0.3
+0:0/animation_frame_1/duration = 0.3
+0:0/animation_frame_2/duration = 0.3
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(-16, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i2r8u"]
+texture = ExtResource("11_gwdxq")
+texture_region_size = Vector2i(32, 48)
+0:0/size_in_atlas = Vector2i(2, 1)
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 0.3
+0:0/animation_frame_1/duration = 0.3
+0:0/animation_frame_2/duration = 0.3
+0:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fpdlc"]
 resource_name = "overworld slopes"
 texture = ExtResource("10_ekg45")
@@ -810,7 +835,7 @@ terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Classic"
 terrain_set_0/terrain_0/color = Color(0.717647, 0.0745098, 0, 1)
 terrain_set_1/mode = 0
-terrain_set_1/terrain_0/name = "New"
+terrain_set_1/terrain_0/name = "NeoClassic"
 terrain_set_1/terrain_0/color = Color(0.376471, 0, 0.992157, 1)
 sources/0 = SubResource("TileSetAtlasSource_g5ulr")
 sources/1 = SubResource("TileSetAtlasSource_uyuu6")
@@ -822,3 +847,5 @@ sources/11 = SubResource("TileSetAtlasSource_ceo53")
 sources/2 = SubResource("TileSetAtlasSource_qca0q")
 sources/4 = SubResource("TileSetAtlasSource_7527e")
 sources/8 = SubResource("TileSetAtlasSource_fpdlc")
+sources/5 = SubResource("TileSetAtlasSource_6rww4")
+sources/6 = SubResource("TileSetAtlasSource_i2r8u")
