@@ -85,4 +85,4 @@ autostart = true
 
 [connection signal="killed_succeeded" from="Attack" to="." method="explode"]
 [connection signal="timeout" from="SoundInterval" to="SoundFlying" method="play"]
-[connection signal="timeout" from="TrailInterval" to="." method="make_trail"]
+[connection signal="timeout" from="TrailInterval" to="." method="_on_trail"]

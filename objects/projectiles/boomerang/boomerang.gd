@@ -59,19 +59,15 @@ func expand_vision(_scale: Vector2) -> void:
 	await ready
 	if vision: vision.scale = _scale
 
-func make_trail() -> void:
-	var trail := sprite_node.duplicate() as Sprite2D
-	(func() -> void:
-		add_sibling(trail)
-		get_parent().move_child(trail, get_index() - 1)
-		trail.modulate.a = 0.75
-		trail.global_transform = sprite_node.global_transform
-	).call_deferred()
-	
-	var tw := trail.create_tween()
-	tw.tween_property(trail, ^"modulate:a", 0.0, 0.5)
-	tw.finished.connect(trail.queue_free)
 
+func _on_trail() -> void:
+	if !sprite_node:
+		return
+	if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
+		return
+	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h)
+	trail.rotation = sprite_node.rotation
+	Thunder.reorder_on_top_of(trail, self)
 
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 96):
