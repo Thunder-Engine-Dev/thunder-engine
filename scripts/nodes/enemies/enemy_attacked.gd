@@ -242,7 +242,6 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
 			_add_pos
 		).create_2d().get_node()
-		print(_center.global_transform)
 		
 		ice.unfreeze_offset = -_add_pos
 		ice.destroy_enabled = true
