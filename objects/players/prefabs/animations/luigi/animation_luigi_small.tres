@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://bna35rwesy4fq"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://bna35rwesy4fq"]
 
 [ext_resource type="Texture2D" uid="uid://uv86d81lljqe" path="res://engine/objects/players/prefabs/textures/luigi/luigi_small.png" id="1_dv5o3"]
 
@@ -125,6 +125,10 @@ region = Rect2(0, 0, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkrkb"]
 atlas = ExtResource("1_dv5o3")
 region = Rect2(448, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvgyo"]
+atlas = ExtResource("1_dv5o3")
+region = Rect2(512, 64, 32, 64)
 
 [resource]
 animations = [{
@@ -344,7 +348,10 @@ animations = [{
 "name": &"warp",
 "speed": 0.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvgyo")
+}],
 "loop": true,
 "name": &"win",
 "speed": 5.0

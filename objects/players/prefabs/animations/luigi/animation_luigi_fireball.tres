@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://c80jiowoibk80"]
+[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://c80jiowoibk80"]
 
 [ext_resource type="Texture2D" uid="uid://b1iw5dwaenvc5" path="res://engine/objects/players/prefabs/textures/luigi/luigi_fireball.png" id="1_ksl0h"]
 
@@ -117,6 +117,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4tqr"]
 atlas = ExtResource("1_ksl0h")
 region = Rect2(624, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lclm1"]
+atlas = ExtResource("1_ksl0h")
+region = Rect2(720, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -329,4 +333,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lclm1")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

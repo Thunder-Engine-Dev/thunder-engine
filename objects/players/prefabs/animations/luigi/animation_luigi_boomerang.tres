@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://bmherqvbmxpdy"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://bmherqvbmxpdy"]
 
 [ext_resource type="Texture2D" uid="uid://ciitds8tyr58q" path="res://engine/objects/players/prefabs/textures/luigi/luigi_boomerang.png" id="1_0fkyd"]
 
@@ -125,6 +125,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8kil8"]
 atlas = ExtResource("1_0fkyd")
 region = Rect2(624, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0fp7"]
+atlas = ExtResource("1_0fkyd")
+region = Rect2(720, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -337,4 +341,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0fp7")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

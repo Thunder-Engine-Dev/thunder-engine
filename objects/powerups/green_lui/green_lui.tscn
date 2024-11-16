@@ -1,8 +1,101 @@
-[gd_scene load_steps=18 format=3 uid="uid://o3k018cbex8g"]
+[gd_scene load_steps=32 format=3 uid="uid://o3k018cbex8g"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/green_lui/green_lui.gd" id="1_w0eyt"]
+[ext_resource type="Texture2D" uid="uid://ctfyip0sy48dp" path="res://engine/objects/powerups/green_lui/texture_red_mar.png" id="2_6w31r"]
 [ext_resource type="Texture2D" uid="uid://skeuracpsv2p" path="res://engine/objects/powerups/green_lui/texture.png" id="3_7ksfc"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_wvem1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpp8j"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(0, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uit41"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(30, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfkuq"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(60, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu0uc"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(90, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0qi6"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(120, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wpio"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(150, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6teu5"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(180, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nob6"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(210, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40bua"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(240, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_woc38"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(270, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma4g5"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(300, 0, 30, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qgig"]
+atlas = ExtResource("2_6w31r")
+region = Rect2(330, 0, 30, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qmvvm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpp8j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uit41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfkuq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu0uc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0qi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wpio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6teu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nob6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40bua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_woc38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma4g5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qgig")
+}],
+"loop": true,
+"name": &"default",
+"speed": 40.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(31, 31)
@@ -105,6 +198,7 @@ collision_mask = 64
 floor_constant_speed = true
 floor_snap_length = 20.0
 script = ExtResource("1_w0eyt")
+luigi_spriteframes = SubResource("SpriteFrames_qmvvm")
 to_suit = "green_lui"
 gravity_scale = 0.2
 metadata/_edit_pinned_properties_ = [&"to_suit"]

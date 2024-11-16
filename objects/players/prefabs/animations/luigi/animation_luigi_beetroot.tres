@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://cqs4lmmejojw5"]
+[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://cqs4lmmejojw5"]
 
 [ext_resource type="Texture2D" uid="uid://ds4pvej3t28he" path="res://engine/objects/players/prefabs/textures/luigi/luigi_beetroot.png" id="1_pg1ba"]
 
@@ -121,6 +121,10 @@ region = Rect2(0, 0, 48, 68)
 [sub_resource type="AtlasTexture" id="AtlasTexture_aj6bg"]
 atlas = ExtResource("1_pg1ba")
 region = Rect2(624, 0, 48, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i42v2"]
+atlas = ExtResource("1_pg1ba")
+region = Rect2(720, 68, 48, 68)
 
 [resource]
 animations = [{
@@ -336,4 +340,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i42v2")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

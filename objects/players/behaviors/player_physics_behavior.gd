@@ -103,12 +103,16 @@ func _movement_x(delta: float) -> void:
 	# Acceleration
 	var max_speed: float
 	if sign(player.left_right) == player.direction:
-		max_speed = (
-			config.underwater_walk_max_walking_speed if player.is_underwater else (
-				config.walk_max_running_speed if player.running else \
+		if player.running:
+			max_speed = (
+				config.underwater_walk_max_running_speed if player.is_underwater else \
+				config.walk_max_running_speed
+			)
+		else:
+			max_speed = (
+				config.underwater_walk_max_walking_speed if player.is_underwater else \
 				config.walk_max_walking_speed
 			)
-		)
 		_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
 	elif sign(player.left_right) == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)

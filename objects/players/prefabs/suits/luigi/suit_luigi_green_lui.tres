@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_qvubr"]
 [ext_resource type="SpriteFrames" uid="uid://cvlwjx821dw3v" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_green_lui.tres" id="2_ueb2b"]
-[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_lui_behavior.gd" id="3_bq5dd"]
+[ext_resource type="Script" path="res://engine/objects/players/behaviors/player_mar_behavior.gd" id="3_en7xj"]
 [ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="4_15xqy"]
 [ext_resource type="Script" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="5_vo43p"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="6_4vn2f"]
@@ -28,7 +28,7 @@ physics_shaper_crouch = ExtResource("11_2ehs6")
 animation_sprites = ExtResource("2_ueb2b")
 animation_behavior = ExtResource("1_qvubr")
 animation_underwater_bubble_offset = Vector2(0, -20)
-behavior_script = ExtResource("3_bq5dd")
+behavior_script = ExtResource("3_en7xj")
 behavior_crouch_reflect_fireballs = false
 grab_behavior = ExtResource("5_vo43p")
 grab_sound_grab = ExtResource("6_4vn2f")
