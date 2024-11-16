@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://gm8i477hwytp"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://gm8i477hwytp"]
 
 [ext_resource type="Texture2D" uid="uid://cb6i8p16hixy1" path="res://engine/objects/players/prefabs/textures/mario/mario_boomerang.png" id="1_c67an"]
 
@@ -125,6 +125,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qha4e"]
 atlas = ExtResource("1_c67an")
 region = Rect2(624, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4vsc"]
+atlas = ExtResource("1_c67an")
+region = Rect2(720, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -337,4 +341,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4vsc")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

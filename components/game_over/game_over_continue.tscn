@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
 [ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
 [ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_jqjx8"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_jqjx8"]
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_xubmy"]
 [ext_resource type="Texture2D" uid="uid://b70uy0ois6r7v" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]

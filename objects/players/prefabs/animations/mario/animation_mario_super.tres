@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://b1mklmn2aqcx8"]
+[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://b1mklmn2aqcx8"]
 
 [ext_resource type="Texture2D" uid="uid://wgy3e7a8hx8" path="res://engine/objects/players/prefabs/textures/mario/mario_super.png" id="2_etu0p"]
 
@@ -117,6 +117,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bj17y"]
 atlas = ExtResource("2_etu0p")
 region = Rect2(672, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amuo8"]
+atlas = ExtResource("2_etu0p")
+region = Rect2(768, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -329,4 +333,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amuo8")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

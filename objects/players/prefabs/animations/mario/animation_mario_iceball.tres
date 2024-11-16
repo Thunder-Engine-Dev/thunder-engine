@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://boq3ykcdoxnb5"]
+[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://boq3ykcdoxnb5"]
 
 [ext_resource type="Texture2D" uid="uid://kmfa1hdjbsch" path="res://engine/objects/players/prefabs/textures/mario/mario_iceball.png" id="1_ddvwu"]
 
@@ -117,6 +117,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6yvrk"]
 atlas = ExtResource("1_ddvwu")
 region = Rect2(624, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3em3"]
+atlas = ExtResource("1_ddvwu")
+region = Rect2(720, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -329,4 +333,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3em3")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

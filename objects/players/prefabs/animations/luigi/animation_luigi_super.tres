@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://b36it0nioiiri"]
+[gd_resource type="SpriteFrames" load_steps=35 format=3 uid="uid://b36it0nioiiri"]
 
 [ext_resource type="Texture2D" uid="uid://cr7aqfwfyq87m" path="res://engine/objects/players/prefabs/textures/luigi/luigi_super.png" id="1_dsgyl"]
 
@@ -129,6 +129,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_2log1"]
 atlas = ExtResource("1_dsgyl")
 region = Rect2(672, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhic7"]
+atlas = ExtResource("1_dsgyl")
+region = Rect2(768, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -344,4 +348,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhic7")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

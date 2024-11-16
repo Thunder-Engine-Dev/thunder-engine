@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_reset_selection.gd" id="11_atcop"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_pkdou"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_pkdou"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_sobst"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5kct"]
@@ -178,6 +178,7 @@ displayed_texture = SubResource("AtlasTexture_bhbv2")
 [node name="Pause" parent="Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "pause_toggle"
+enable_cancel = false
 displayed_texture = SubResource("AtlasTexture_shng1")
 
 [node name="HSeparator" type="HSeparator" parent="Options"]

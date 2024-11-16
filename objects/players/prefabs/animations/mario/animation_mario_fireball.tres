@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=30 format=3 uid="uid://ccq78jb2slkov"]
+[gd_resource type="SpriteFrames" load_steps=31 format=3 uid="uid://ccq78jb2slkov"]
 
 [ext_resource type="Texture2D" uid="uid://bkfw1m7cfp576" path="res://engine/objects/players/prefabs/textures/mario/mario_fireball.png" id="2_b55ej"]
 
@@ -113,6 +113,10 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_g371k"]
 atlas = ExtResource("2_b55ej")
 region = Rect2(624, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haxs8"]
+atlas = ExtResource("2_b55ej")
+region = Rect2(720, 64, 48, 64)
 
 [resource]
 animations = [{
@@ -325,4 +329,12 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_haxs8")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]

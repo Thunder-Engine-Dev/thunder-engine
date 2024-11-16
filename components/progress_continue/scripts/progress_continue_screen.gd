@@ -28,6 +28,8 @@ func _ready() -> void:
 		suspended_game_logic()
 	elif _pipe_out:
 		trigger_pipe()
+	
+	Data.technical_values.impulse_progress_continue = false
 
 
 func suspended_game_logic() -> void:
@@ -45,7 +47,6 @@ func suspended_game_logic() -> void:
 		state_preview.sprite_frames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
 		state_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
-	Data.technical_values.impulse_progress_continue = false
 	
 	animation_player.play(&"init")
 	toggle()

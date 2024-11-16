@@ -343,4 +343,9 @@ animations = [{
 "loop": true,
 "name": &"warp",
 "speed": 0.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"win",
+"speed": 5.0
 }]
