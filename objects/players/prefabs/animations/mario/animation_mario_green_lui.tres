@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://br1851e3gt1xr"]
+[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://br1851e3gt1xr"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_hq665"]
 
@@ -42,9 +42,9 @@ region = Rect2(288, 0, 48, 64)
 atlas = ExtResource("1_hq665")
 region = Rect2(0, 0, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nqleb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqvls"]
 atlas = ExtResource("1_hq665")
-region = Rect2(480, 64, 48, 64)
+region = Rect2(240, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbaba"]
 atlas = ExtResource("1_hq665")
@@ -65,10 +65,6 @@ region = Rect2(48, 64, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwckk"]
 atlas = ExtResource("1_hq665")
 region = Rect2(96, 64, 48, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yqvls"]
-atlas = ExtResource("1_hq665")
-region = Rect2(240, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l6uph"]
 atlas = ExtResource("1_hq665")
@@ -199,7 +195,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nqleb")
+"texture": SubResource("AtlasTexture_yqvls")
 }],
 "loop": false,
 "name": &"fall",
