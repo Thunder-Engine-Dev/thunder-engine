@@ -3,6 +3,7 @@ extends AnimatableBody2D
 
 const CannonBall = preload("./cannon_ball.gd")
 
+@export_category("Cannon")
 @export_group("Sprites", "sprite_")
 @export var sprite_head: Sprite2D
 @export var sprite_handler: Sprite2D
@@ -13,23 +14,23 @@ const CannonBall = preload("./cannon_ball.gd")
 		if !sprite_head:
 			return
 		sprite_head.rotation = sprite_head_rotation
-		sprite_head.scale.y = absf(sprite_head.scale.y) * (-1 if sprite_head.rotation > PI / 2 || sprite_head.rotation < -PI / 2 else 1)
+		sprite_head.flip_v = true if sprite_head.rotation > PI / 2 || sprite_head.rotation < -PI / 2 else false
 @export_range(-180, 180, 0.1, "radians_as_degrees") var sprite_handler_rotation: float = 0:
 	set(value):
 		sprite_handler_rotation = value
 		if !sprite_head:
 			return
 		sprite_handler.rotation = sprite_handler_rotation
-		sprite_handler.scale.x = absf(sprite_handler.scale.y) * (-1 if sprite_handler.rotation > PI / 2 || sprite_handler.rotation < -PI / 2 else 1)
+		sprite_handler.flip_h = true if sprite_handler.rotation > PI / 2 || sprite_handler.rotation < -PI / 2 else false
 @export_group("Cannon")
 @export_subgroup("Cannon Ball")
 @export var cannon_ball: PackedScene = preload("./cannon_ball.tscn")
-@export_range(0, 9999, 0.1, "or_greater","suffix:px/s") var cannon_ball_speed: float = 200
+@export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var cannon_ball_speed: float = 200
 @export_subgroup("Cannon Shooting")
 @export var cannon_explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
-@export_range(0, 20, 0.001, "or_greater","suffix:s") var first_shooting_delay: float = 0.5
-@export_range(0, 20, 0.001, "or_greater","suffix:s") var shooting_delay_min: float = 1.5
-@export_range(0, 20, 0.001, "or_greater","suffix:s") var shooting_delay_max: float = 4.5
+@export_range(0, 20, 0.001, "or_greater", "suffix:s") var first_shooting_delay: float = 0.5
+@export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_delay_min: float = 1.5
+@export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_delay_max: float = 4.5
 @export_group("Sounds", "sound_")
 @export var sound_shoot: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
 
@@ -67,3 +68,10 @@ func _on_cannon_interval_timeout() -> void:
 		eff.global_position = _pos_cball.global_position
 	
 	_cannon_itrvl.start(randf_range(shooting_delay_min, shooting_delay_max))
+
+
+func _on_screen_entered() -> void:
+	_cannon_itrvl.paused = false
+
+func _on_screen_exited() -> void:
+	_cannon_itrvl.paused = true

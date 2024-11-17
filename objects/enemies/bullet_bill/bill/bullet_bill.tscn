@@ -10,11 +10,11 @@
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_v7ft1"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_fhq1h"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4qhu"]
-size = Vector2(32, 28)
+[sub_resource type="CircleShape2D" id="CircleShape2D_vwemg"]
+radius = 16.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_msonm"]
-size = Vector2(26, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_qrt8a"]
+radius = 14.0
 
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("4_6v8k6")
@@ -42,15 +42,16 @@ metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_s4qhu")
+shape = SubResource("CircleShape2D_vwemg")
 disabled = true
 
 [node name="Body" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-shape = SubResource("RectangleShape2D_msonm")
+shape = SubResource("CircleShape2D_qrt8a")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
