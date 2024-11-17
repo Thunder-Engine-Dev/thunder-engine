@@ -1,12 +1,20 @@
 extends GravityBody2D
 class_name GeneralMovementBody2D
 
+##
+##
+##
+
+##
 @export var look_at_player: bool
 ## -1 is Left, 1 is Right.
 @export_enum("Disabled: 0", "Left: -1", "Right: 1") var force_direction: int = 0
+##
 @export var turn_sprite: bool = true
+##
 @export var slide: bool
-@export_category("References")
+@export_group("References")
+##
 @export var sprite: NodePath
 
 var dir: int

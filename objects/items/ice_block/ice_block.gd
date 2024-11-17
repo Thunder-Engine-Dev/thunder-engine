@@ -1,7 +1,13 @@
 extends GeneralMovementBody2D
 
-signal grabbing_got_thrown
+##
+##
+##
 
+##
+signal grabbing_got_thrown(is_ungrab: bool)
+
+##
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
 
 ## Whether to destroy the ice after a delay.
@@ -37,6 +43,7 @@ var contained_item_sprite: Node2D
 var contained_item_enemy_killed: Node
 var unfreeze_offset: Vector2
 
+var _is_inside_tree: bool = false
 var _being_grabbed: bool
 
 @onready var _sprite: NinePatchRect = $SpriteNP
@@ -44,10 +51,11 @@ var _being_grabbed: bool
 @onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
-@onready var _body: Area2D = $Body
-@onready var _body_collision: CollisionShape2D = $Body/Collision
+#@onready var _body: Area2D = $Body
+#@onready var _body_collision: CollisionShape2D = $Body/Collision
 
 func _ready() -> void:
+	_is_inside_tree = true
 	# Removes the contained item when the current scene gets changed to prevent memory leak
 	get_tree().node_removed.connect(func(node: Node) -> void:
 		if node == Scenes.current_scene && is_instance_valid(contained_item):
@@ -56,13 +64,6 @@ func _ready() -> void:
 	
 	for i in 10:
 		await get_tree().physics_frame
-	
-	var dir := Vector2.DOWN
-	for j in 4:
-		while test_move(global_transform, Vector2.ZERO):
-			global_position -= dir
-			force_update_transform()
-		dir = dir.orthogonal()
 	
 	if destroy_enabled:
 		start_timedown()
@@ -97,16 +98,33 @@ func _ready() -> void:
 				tw.finished.connect(break_ice)
 	
 	grabbing_got_thrown.connect(
-		func():
+		func(_is_ungrab: bool) -> void:
 			break_by_speed = true
 	)
 
 
 func _physics_process(delta: float) -> void:
+	if _is_inside_tree:
+		gravity_dir = get_gravity().normalized()
+		if !gravity_dir.is_zero_approx():
+			up_direction = -gravity_dir
+	
 	super(delta)
 	
+	if speed_previous.length_squared() > 200 ** 2:
+		for i: int in get_slide_collision_count():
+			var col := get_slide_collision(i)
+			if !col:
+				continue
+			var collider := col.get_collider()
+			if collider is StaticBumpingBlock && collider.has_method(&"bricks_break"):
+				collider.bricks_break()
+				break_ice(true, false)
+	
+	if absf(speed_previous.x) > breaking_speed && is_on_wall() && break_by_speed:
+		break_ice(true, false)
 	if speed_previous.y < 0 && is_on_ceiling() && break_by_speed:
-		break_ice(true, true)
+		break_ice(true, false)
 	if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
 		break_ice(true, true)
 	
@@ -192,8 +210,9 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 		
 		for i in maximum_debris:
 			var angle := wrapf(angle_unit * i, -PI, PI) - angle_unit / 2
-			var debris := NodeCreator.prepare_2d(ICE_DEBRIS, self).bind_global_transform(get_ellipse_point.call(angle)).create_2d().get_node()
-			debris.velocity = debris_speed * Vector2.RIGHT.rotated(global_rotation + angle)
+			var debris := NodeCreator.prepare_2d(ICE_DEBRIS, self).create_2d().get_node()
+			debris.global_position = global_position + get_ellipse_point.call(angle)
+			debris.velocity = debris_speed * Vector2.RIGHT.rotated(angle)
 	
 	queue_free()
 

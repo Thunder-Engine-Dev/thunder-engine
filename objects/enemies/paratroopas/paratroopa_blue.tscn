@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_q3loj"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_do5l5"]
 [ext_resource type="Texture2D" uid="uid://b8myuvxesg01g" path="res://engine/objects/enemies/koopas/textures/koopa_blue.png" id="11_khtf2"]
-[ext_resource type="PackedScene" path="res://engine/objects/entities/wing/wing.tscn" id="12_q8dyn"]
+[ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="12_q8dyn"]
 [ext_resource type="Texture2D" uid="uid://b5ru4nrm6iejt" path="res://engine/objects/enemies/koopas/textures/shell_blue.png" id="13_l8bgk"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="14_02l8i"]
 
@@ -147,5 +147,6 @@ metadata/_edit_lock_ = true
 [connection signal="collided_floor" from="." to="." method="jump" binds= [0.0]]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

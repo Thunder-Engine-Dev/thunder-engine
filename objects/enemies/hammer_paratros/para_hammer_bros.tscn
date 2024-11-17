@@ -1,0 +1,171 @@
+[gd_scene load_steps=24 format=3 uid="uid://cr4ubl3c0rfax"]
+
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.gd" id="1_wpw0v"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_6og6y"]
+[ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="2_nvwv3"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_24k5o"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_ve3oj"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_kp5yk"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_8odi0"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_64gf8"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="6_cgqsc"]
+[ext_resource type="Script" path="res://engine/objects/enemies/hammer_paratros/paratros_spawn_bros.gd" id="7_4w4ym"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_a1xfa"]
+[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="8_r451l"]
+[ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="9_hui0y"]
+[ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="9_j3og5"]
+
+[sub_resource type="Resource" id="Resource_iubp8"]
+script = ExtResource("5_8odi0")
+creation_nodepack = ExtResource("2_nvwv3")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(250, -500),
+"speed_min": Vector2(50, -300)
+}
+custom_script = ExtResource("3_ve3oj")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dwmi"]
+size = Vector2(32, 40)
+
+[sub_resource type="Resource" id="Resource_avc6j"]
+resource_local_to_scene = true
+script = ExtResource("5_8odi0")
+creation_nodepack = ExtResource("6_cgqsc")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = ExtResource("7_4w4ym")
+
+[sub_resource type="Resource" id="Resource_yp7dl"]
+resource_local_to_scene = true
+script = ExtResource("5_8odi0")
+creation_nodepack = ExtResource("3_24k5o")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("4_kp5yk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydctw"]
+atlas = ExtResource("8_r451l")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0pkg"]
+atlas = ExtResource("8_r451l")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2m03"]
+atlas = ExtResource("8_r451l")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22pec"]
+atlas = ExtResource("8_r451l")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hw4r5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydctw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0pkg")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2m03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22pec")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="ParaHammerBros" type="Node2D"]
+script = ExtResource("1_wpw0v")
+projectile = SubResource("Resource_iubp8")
+metadata/_edit_pinned_properties_ = [&"projectile"]
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_1dwmi")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_6og6y")
+stomping_creation = SubResource("Resource_avc6j")
+stomping_scores = 200
+stomping_sound = ExtResource("6_64gf8")
+killing_creation = SubResource("Resource_yp7dl")
+killing_scores = 200
+killing_sound_succeeded = ExtResource("7_a1xfa")
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_hw4r5")
+autoplay = "default"
+
+[node name="Wings" parent="." instance=ExtResource("9_hui0y")]
+position = Vector2(-14, -18)
+root_path = NodePath("..")
+parent_path = NodePath("../Sprite")
+metadata/_edit_pinned_properties_ = [&"parent_path", &"root_path"]
+
+[node name="SpriteProjectile" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(6, -16)
+texture = ExtResource("9_j3og5")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(7.15256e-07, -8)
+scale = Vector2(1.6, 2.4)
+metadata/_edit_lock_ = true
+
+[node name="PosAttack" type="Marker2D" parent="."]
+visible = false
+position = Vector2(8, -17)
+
+[node name="Attack" type="Timer" parent="."]
+wait_time = 0.06
+autostart = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
+[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]

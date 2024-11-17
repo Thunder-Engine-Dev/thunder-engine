@@ -2,7 +2,9 @@
 extends CorrectedCharacterBody2D
 class_name GravityBody2D
 
-## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion[br]
+## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion.
+##
+##
 
 ## Default gravity acceleration
 const GRAVITY: float = 2500.0
@@ -11,9 +13,9 @@ const GRAVITY: float = 2500.0
 ## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
 @export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
 	set(value):
-		velocity = value.rotated(get_global_gravity_dir().angle() - PI/2)
+		velocity = value.rotated(gravity_dir.angle() - PI/2)
 	get:
-		return velocity.rotated(-get_global_gravity_dir().angle() + PI/2)
+		return velocity.rotated(-gravity_dir.angle() + PI/2)
 @export_group("Gravity")
 ## The gravity_direction of the body, with length always [code]1.0[/code][br]
 ## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
@@ -28,6 +30,9 @@ const GRAVITY: float = 2500.0
 ## Defines if the body enables collision. For those who don't need any collision, it's recommended to set this value to [code]false[/code]
 ## to acquire more performance
 @export var collision: bool = true
+@export_group("Up Direction")
+## If [code]true[/code], calling [method motion_process] will update [member CharacterBody2D.up_direction].
+@export var auto_update_up_direction: bool = true
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
@@ -60,7 +65,9 @@ func motion_process(delta: float, slide: bool = false) -> void:
 		speed.y = max_falling_speed
 		is_speed_capped = true
 	
-	update_up_direction()
+	if auto_update_up_direction:
+		update_up_direction()
+	
 	do_movement(delta, slide, false)
 	
 	if !is_speed_capped:
@@ -76,7 +83,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 ## [param delta] should be the one from [method Node._phyiscs_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
 ## [param emit_detection_signal] makes the body emit [b]collision*[b] signals if collision happens[br]
-func do_movement(delta: float, slide:bool = false, emit_detection_signal: bool = true) -> void:
+func do_movement(delta: float, slide: bool = false, emit_detection_signal: bool = true) -> void:
 	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if !collision:

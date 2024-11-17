@@ -80,7 +80,9 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 @export var frozen_enabled: bool = true
 ## Path to the sprite that used for the item contained in the ice block created on being frozen.
 @export_node_path("CanvasItem") var ice_sprite: NodePath
-## Take the ice sprite from the root node's sprite variable
+## Take the ice sprite from the root node's sprite variable.[br][br]
+## [b]Note:[/b] The root node should have a property named [code]sprite[/code] so that this property may work as expected.
+## In case this occurs, please set [member ice_sprite] manually.
 @export var ice_sprite_autoset: bool = true
 ## Offset of what [member ice_sprite] refers to in the ice block.
 @export var ice_sprite_offset: Vector2
@@ -239,23 +241,25 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		if is_instance_valid(_ice_sprite):
 			_add_pos = _ice_sprite.position
 		
-		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center).bind_global_transform(
-			_add_pos
-		).create_2d().get_node()
-		
-		ice.unfreeze_offset = -_add_pos
-		ice.destroy_enabled = true
-		ice.contained_item = _center
-		ice.contained_item_enemy_killed = self
-		ice.forced_heavy_break = ice_fragile
-		
-		var in_ice_spr: Node2D = null
-		if is_instance_valid(_ice_sprite):
-			in_ice_spr = _ice_sprite.duplicate()
-		
-		ice.draw_sprite.call_deferred(in_ice_spr, ice_sprite_offset)
-		
-		_center.get_parent().remove_child.call_deferred(_center)
+		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center) \
+			.create_2d() \
+			.get_node()as PhysicsBody2D
+		ice.ready.connect(ice.move_and_collide.bind(Vector2.DOWN.rotated(ice.global_rotation)))
+		(func() -> void:
+			ice.global_transform = _center.global_transform.translated_local(_add_pos)
+			ice.unfreeze_offset = -_add_pos
+			ice.destroy_enabled = true
+			ice.contained_item = _center
+			ice.contained_item_enemy_killed = self
+			ice.forced_heavy_break = ice_fragile
+			
+			var in_ice_spr: Node2D = null
+			if is_instance_valid(_ice_sprite):
+				in_ice_spr = _ice_sprite.duplicate()
+			ice.draw_sprite(in_ice_spr, ice_sprite_offset)
+			
+			_center.get_parent().remove_child(_center)
+		).call_deferred()
 		
 		result = {
 			result = true,

@@ -95,7 +95,6 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("9_wsasv")
 killing_sound_failed = ExtResource("7_evmnd")
 ice_sprite = NodePath("../../Sprite")
-ice_sprite_autoset = false
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
 
