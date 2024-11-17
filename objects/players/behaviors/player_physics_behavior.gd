@@ -98,6 +98,7 @@ func _movement_x(delta: float) -> void:
 		return
 	# Initial speed
 	if player.left_right != 0 && abs(player.speed.x) < 1:
+		@warning_ignore("narrowing_conversion")
 		player.direction = signi(player.left_right)
 		player.speed.x = player.direction * config.walk_initial_speed
 	# Acceleration
@@ -187,10 +188,12 @@ func _movement_sliding(delta: float) -> void:
 
 	# Sliding towards right
 	if floor_normal >= 10.0:
+		@warning_ignore("standalone_ternary")
 		accel.call(abs(floor_normal)) if dir else decel.call(abs(floor_normal))
 		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Sliding towards left
 	elif floor_normal <= -10.0:
+		@warning_ignore("standalone_ternary")
 		accel.call(abs(floor_normal)) if !dir else decel.call(abs(floor_normal))
 		if abs(player.speed.x) < 1: _start_sliding_movement()
 	# Momentum on flat surface after sliding

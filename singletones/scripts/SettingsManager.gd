@@ -43,6 +43,7 @@ var default_settings: Dictionary = {
 		"pause_toggle": _get_current_joykey(&"pause_toggle"),
 	},
 	"character": ProjectSettings.get_setting("application/thunder_settings/default_character_setting", "Mario"),
+	"skin": "",
 	"custom": {},
 }
 
@@ -276,6 +277,7 @@ func load_settings() -> void:
 	var loaded_data: Dictionary = load_data(settings_path, "Settings")
 	if loaded_data.is_empty():
 		no_saved_settings = true
+		_process_settings()
 		return
 
 	settings = loaded_data
@@ -373,3 +375,17 @@ func _input(event: InputEvent) -> void:
 		await _mouse_timer.timeout
 		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 		Input.mouse_mode = mouse_mode
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	var _path = Scenes.current_scene.get(&"scene_file_path")
+	if !_path || get_tree().paused:
+		return
+	if event is InputEventKey && event.is_pressed():
+		var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
+		var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
+		if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false) && _path != menu_path:
+			Scenes.goto_scene(menu_path)
+		elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false) && _path != sgr_path:
+			Scenes.goto_scene(sgr_path)
+			

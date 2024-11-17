@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
 [ext_resource type="Texture2D" uid="uid://xoa25by4iqkt" path="res://engine/scenes/main_menu/textures/buffer.png" id="20_b2kcq"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_0jxgt"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_0jxgt"]
 [ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="25_5v41g"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="25_n2q6e"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="25_stro5"]

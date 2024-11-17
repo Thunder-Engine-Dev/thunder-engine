@@ -78,7 +78,7 @@ func _drop_on_death() -> void:
 		player.threw.emit()
 
 
-func _accept_grabbable(node: Node2D) -> void:
+func _accept_grabbable(_node: Node2D) -> void:
 	print('Accepting grab')
-	print(node)
+	print(_node)
 	pass

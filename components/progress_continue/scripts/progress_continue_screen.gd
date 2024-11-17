@@ -23,7 +23,8 @@ func _ready() -> void:
 	if (
 		Data.technical_values.impulse_progress_continue &&
 		ProfileManager.profiles.has("suspended") &&
-		ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile"))
+		ProfileManager.profiles.has(ProfileManager.profiles.suspended.data.get("saved_profile")) &&
+		SettingsManager.get_tweak("progress_continue", true)
 	):
 		suspended_game_logic()
 	elif _pipe_out:
@@ -44,7 +45,7 @@ func suspended_game_logic() -> void:
 	label_text += profile.title_level
 	level_label.text = label_text
 	if profile.get(&"saved_player_state"):
-		state_preview.sprite_frames = CharacterManager.get_suit(profile.saved_player_state).animation_sprites
+		state_preview.sprite_frames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
 		state_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
 	

@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 	# Trail effect
 	if trail_timer > 0.0: trail_timer -= 1 * Thunder.get_delta(delta)
 	
-	if player.running && player.left_right != 0 && abs(player.speed.x) > 1 && trail_timer <= 0.0:
+	if player.running && abs(player.speed.x) > 1 && trail_timer <= 0.0:
 		trail_timer = 1.5
 		Effect.trail.call_deferred(
 			player, 

@@ -27,7 +27,8 @@ func _ready() -> void:
 
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()
-		TransitionManager.current_transition.paused = true
+		if TransitionManager.current_transition:
+			TransitionManager.current_transition.paused = true
 		Scenes.goto_scene(get_node(player).current_marker.level)
 		Scenes.scene_ready.connect(func():
 			TransitionManager.current_transition.on(Thunder._current_player)

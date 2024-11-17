@@ -18,12 +18,20 @@ func _init() -> void:
 	custom_textures = tex
 
 
-#func _ready() -> void:
+func _ready() -> void:
+	current_skin = SettingsManager.settings.skin
+	SettingsManager.settings_updated.connect(set.bind(&"current_skin", SettingsManager.settings.skin))
 #	print(animation_list)
 	
 	# Saving animation sprite frames
 	#var err = ResourceSaver.save(base_sprite_frames, base_dir + "/animation.tres", ResourceSaver.FLAG_RELATIVE_PATHS)
 	#print(err)
+
+
+func apply_player_skin(_suit) -> SpriteFrames:
+	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin.to_lower()):
+		return SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin.to_lower(), _suit.name)
+	return _suit.animation_sprites
 
 
 func load_external_textures() -> Dictionary:
@@ -65,7 +73,7 @@ func load_external_textures() -> Dictionary:
 					
 					var file: Image = Image.load_from_file(file_path + "/" + file_name)
 					var file_texture: ImageTexture = ImageTexture.create_from_image(file)
-					print(file_path + "/" + file_name)
+					print(i + "/" + j + "/" + file_name)
 					loaded[i][j][texture_name] = file_texture
 				# Loading skin settings (regions, loops etc.) to cache
 				elif !dir_access.current_is_dir() && file_name == "skin_settings.tres":

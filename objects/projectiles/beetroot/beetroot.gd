@@ -68,7 +68,7 @@ func process_bumping_blocks() -> void:
 			
 			for k in cldata:
 				var l: Object = k.get(&"collider", null)
-				var id: int = k.get(&"collider_id", 0)
+				#var id: int = k.get(&"collider_id", 0)
 				
 				if l is StaticBumpingBlock:
 					if l.has_method(&"got_bumped"):
