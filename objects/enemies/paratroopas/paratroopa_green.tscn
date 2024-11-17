@@ -111,6 +111,7 @@ stomping_sound = ExtResource("6_tlp6l")
 killing_creation = SubResource("Resource_llg06")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_ilfy3")
+ice_sprite = NodePath("../../Sprite")
 custom_vars = {
 "attachment_killed": NodePath("../../Sprite/Dead")
 }
@@ -121,18 +122,21 @@ position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_oof6l")
 autoplay = "default"
 
-[node name="Wings" parent="Sprite" instance=ExtResource("11_iya8u")]
-position = Vector2(-8, -8)
-
 [node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
 visible = false
 position = Vector2(0, 4)
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_lgtb0")
 
+[node name="Wings" parent="." instance=ExtResource("11_iya8u")]
+position = Vector2(-8, -16)
+root_path = NodePath("..")
+parent_path = NodePath("../Sprite")
+metadata/_edit_pinned_properties_ = [&"root_path", &"parent_path"]
+
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]

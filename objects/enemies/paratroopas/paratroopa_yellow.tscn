@@ -94,9 +94,6 @@ metadata/_edit_pinned_properties_ = [&"stomping_creation", &"stomping_scores", &
 sprite_frames = SubResource("SpriteFrames_ds46o")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="Wings" parent="Sprite" index="0"]
-position = Vector2(-8, -7)
-
-[node name="Dead" parent="Sprite" index="1"]
+[node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_soyln")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

@@ -341,7 +341,9 @@ killing_immune = {
 killing_creation = SubResource("Resource_h3r88")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_pwsn6")
-metadata/_edit_pinned_properties_ = [&"stomping_hurtable", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_sound", &"killing_sound_succeeded"]
+ice_sprite = NodePath("../../Sprite")
+ice_fragile = true
+metadata/_edit_pinned_properties_ = [&"stomping_hurtable", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_sound", &"killing_sound_succeeded", &"killing_immune", &"ice_sprite", &"ice_fragile"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kg3wr")

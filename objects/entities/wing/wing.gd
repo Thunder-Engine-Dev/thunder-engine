@@ -8,15 +8,12 @@ extends AnimatedSprite2D
 
 var _is_falling: bool
 
-@onready var _anim: AnimationPlayer = $AnimationPlayer
-
 @onready var parent_sprite: Node2D = get_node(parent_path) as Node2D
 @onready var pos_x: float = position.x
 
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE && _is_falling:
-		print("Haha!")
 		cancel_free()
 
 func _ready() -> void:
@@ -37,19 +34,24 @@ func fall() -> void:
 		return
 	
 	_is_falling = true
+	stop()
+	frame = 0
 	(func() -> void:
 		set_physics_process(false)
 		reparent(get_node(root_path).get_parent())
 		
-		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_loops()
-		tw.tween_property(self, ^"position:x", position.x + 16, 0.2)
-		tw.tween_property(self, ^"position:x", position.x - 16, 0.2)
+		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
+		for i: int in 2:
+			tw.chain().tween_property(self, ^"offset:x", offset.x + 24, 0.5)
+			tw.tween_property(self, ^"rotation", rotation - PI / 3, 0.5)
+			tw.chain().tween_property(self, ^"offset:x", offset.x - 24, 0.5)
+			tw.tween_property(self, ^"rotation", rotation + PI / 3, 0.5)
 		
-		var tw2 := create_tween()
-		tw2.tween_property(self, ^"position:y", position.y + 64, 1)
+		var tw2 := create_tween().set_parallel()
+		tw2.tween_property(self, ^"position", position + Vector2.DOWN.rotated(rotation) * 24, 2)
+		tw2.tween_property(self, ^"modulate:a", 0.0, 2)
 		
-		_anim.play(&"fall")
-		await _anim.animation_finished
+		await tw.finished
 		tw.kill()
 		tw2.kill()
 		
