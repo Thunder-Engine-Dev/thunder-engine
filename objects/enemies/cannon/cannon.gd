@@ -18,7 +18,7 @@ const CannonBall = preload("./cannon_ball.gd")
 @export_range(-180, 180, 0.1, "radians_as_degrees") var sprite_handler_rotation: float = 0:
 	set(value):
 		sprite_handler_rotation = value
-		if !sprite_head:
+		if !sprite_handler:
 			return
 		sprite_handler.rotation = sprite_handler_rotation
 		sprite_handler.flip_h = true if sprite_handler.rotation > PI / 2 || sprite_handler.rotation < -PI / 2 else false
@@ -46,10 +46,8 @@ func _ready() -> void:
 
 func _on_cannon_interval_timeout() -> void:
 	Audio.play_sound(sound_shoot, self, false)
-	var par := get_parent()
-	var cball: CannonBall = null
 	if cannon_ball:
-		cball = NodeCreator.prepare_2d(cannon_ball, par) \
+		var cball: CannonBall = NodeCreator.prepare_2d(cannon_ball, self) \
 			.bind_global_transform(
 				_pos_cball.global_position,
 				global_rotation,
@@ -57,11 +55,11 @@ func _on_cannon_interval_timeout() -> void:
 				global_skew
 			) \
 			.create_2d() \
-			.get_node() as CannonBall
+			.get_node()
 		if cball:
 			cball.velocity = Vector2.RIGHT.rotated(global_rotation + sprite_head_rotation) * cannon_ball_speed
 	if cannon_explosion_effect:
-		var eff := NodeCreator.prepare_2d(cannon_explosion_effect, par) \
+		var eff := NodeCreator.prepare_2d(cannon_explosion_effect, self) \
 			.create_2d() \
 			.get_node()
 		eff.global_transform = global_transform
