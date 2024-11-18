@@ -88,6 +88,7 @@ func _ready() -> void:
 				ProjectSettings.get_setting("application/thunder_settings/custom_mouse_cursor_path")
 			)
 		)
+	_mouse_timer.timeout.connect(_hide_mouse)
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
@@ -383,9 +384,11 @@ func _input(event: InputEvent) -> void:
 		
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		_mouse_timer.start(1.5)
-		await _mouse_timer.timeout
-		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
-		Input.mouse_mode = mouse_mode
+
+
+func _hide_mouse() -> void:
+	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
+	Input.mouse_mode = mouse_mode
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
