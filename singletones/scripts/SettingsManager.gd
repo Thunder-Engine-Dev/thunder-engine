@@ -69,6 +69,7 @@ signal data_saved(id: String)
 signal data_loaded(id: String)
 
 var _default_tps: int = Engine.physics_ticks_per_second
+var _current_mouse_pos: Vector2
 
 @onready var _mouse_timer := Timer.new()
 
@@ -355,6 +356,10 @@ func hide_mouse() -> void:
 	Input.mouse_mode = mouse_mode
 
 
+func get_mouse_position() -> Vector2:
+	return _current_mouse_pos
+
+
 func get_quality() -> QUALITY:
 	@warning_ignore("int_as_enum_without_cast")
 	return roundi(settings.quality)
@@ -366,10 +371,16 @@ func _input(event: InputEvent) -> void:
 			mouse_pressed.emit(event.button_index)
 		else:
 			mouse_released.emit(event.button_index)
-	
-	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 
 	if event is InputEventMouseMotion:
+		if (
+			get_tree().root.has_focus() &&
+			DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_MINIMIZED
+		):
+			_current_mouse_pos = get_tree().root.get_mouse_position()
+		
+		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
+		
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		_mouse_timer.start(1.5)
 		await _mouse_timer.timeout

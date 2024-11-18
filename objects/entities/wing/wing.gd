@@ -39,6 +39,7 @@ func fall() -> void:
 	(func() -> void:
 		set_physics_process(false)
 		reparent(get_node(root_path).get_parent())
+		reset_physics_interpolation()
 		
 		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
 		for i: int in 2:

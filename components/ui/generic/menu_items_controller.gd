@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 	if !SettingsManager.get_tweak("mouse_in_menus", true): return
 	if !get_tree().root.has_focus(): return
 	
-	var _current_mouse_pos: Vector2 = get_tree().root.get_mouse_position()
+	var _current_mouse_pos: Vector2 = SettingsManager._current_mouse_pos
 	if !get_tree().root.get_visible_rect().has_point(_current_mouse_pos): return
 	
 	for item in selectors:

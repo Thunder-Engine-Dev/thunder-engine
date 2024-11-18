@@ -27,8 +27,7 @@ func _ready() -> void:
 
 	TransitionManager.transition_middle.connect(func():
 		if is_instance_valid(music): music.stop()
-		if TransitionManager.current_transition:
-			TransitionManager.current_transition.paused = true
+		TransitionManager.current_transition.paused = true
 		Scenes.goto_scene(get_node(player).current_marker.level)
 		Scenes.scene_ready.connect(func():
 			TransitionManager.current_transition.on(Thunder._current_player)
@@ -78,6 +77,8 @@ func _get_music() -> Node:
 
 func _start_transition() -> void:
 	SettingsManager.hide_mouse()
+	while is_instance_valid(TransitionManager.current_transition):
+		await get_tree().physics_frame
 	if !_is_simple_fade:
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")

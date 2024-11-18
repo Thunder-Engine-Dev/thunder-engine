@@ -7,6 +7,7 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	super(delta)
+	if !Thunder._current_player: return
 	if active && Thunder._current_player.suit.type == PlayerSuit.Type.SMALL:
 		active = false
 		_animated_sprite_2d.animation = &"empty"

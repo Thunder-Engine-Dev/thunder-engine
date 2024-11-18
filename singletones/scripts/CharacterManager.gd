@@ -73,12 +73,7 @@ func get_character_name() -> String:
 
 
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
-	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
-	
-	if chara && chara in suits && suit_name in suits[chara]:
-		return suits[chara][suit_name]
-	return null
+	return _get_something(suit_name, character_name, suits, false)
 
 
 func get_suit_names(character_name: String = "") -> Array:
@@ -93,21 +88,11 @@ func get_suit_names(character_name: String = "") -> Array:
 
 
 func get_voice_line(voice_line: String, character_name: String = "") -> Variant:
-	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
-	
-	if chara && chara in voice_lines && voice_line in voice_lines[chara]:
-		return voice_lines[chara][voice_line]
-	return null
+	return _get_something(voice_line, character_name, voice_lines, true)
 
 
 func get_misc_texture(texture_name: String, character_name: String = "") -> Variant:
-	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
-	
-	if chara && chara in misc_textures && texture_name in misc_textures[chara]:
-		return misc_textures[chara][texture_name]
-	return null
+	return _get_something(texture_name, character_name, misc_textures, true)
 
 
 func get_character_names() -> Array:
@@ -150,3 +135,12 @@ func add_misc_texture(texture: Variant, texture_name: String, character: String,
 		return
 	new_texture_dict[character][texture_name] = texture
 	misc_textures = new_texture_dict
+
+
+func _get_something(what: String, character_name: String, dict_ref: Dictionary, skinnable: bool) -> Variant:
+	var chara: String = character_name
+	if chara.is_empty(): chara = SettingsManager.settings.character
+	
+	if chara && chara in dict_ref && what in dict_ref[chara]:
+		return dict_ref[chara][what]
+	return null
