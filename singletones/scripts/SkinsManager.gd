@@ -7,6 +7,8 @@ var base_dir: String = OS.get_executable_path().get_base_dir() + "/skins"
 var custom_textures: Dictionary
 var custom_sprite_frames: Dictionary
 var skins: Dictionary
+var misc_textures: Dictionary
+var misc_sounds: Dictionary
 
 @onready var base_sprite_frames: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres")
 @onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
@@ -41,58 +43,28 @@ func load_external_textures() -> Dictionary:
 		print("Skipped loading custom textures")
 		return {}
 	
-	var loaded: Dictionary = {}
 	var dir_access = DirAccess.open(base_dir)
 	if !dir_access:
 		return {}
 	
 	custom_sprite_frames = {}
 	skins = {}
+	misc_textures = {}
+	misc_sounds = {}
+	var loaded: Dictionary = {}
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	#print(directories)
 	for i in directories:
 		dir_access.change_dir(base_dir + "/" + i)
+		misc_textures[i] = {}
+		misc_sounds[i] = {}
+		_load_misc_files(dir_access, i)
+		
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
-		loaded[i] = {}
 		custom_sprite_frames[i] = {}
 		print(i, " Anims: ", _anims)
-		for j in _anims:
-			var file_path: String = base_dir + "/" + i + "/" + j
-			dir_access.change_dir(file_path)
-			dir_access.list_dir_begin()
-			if !dir_access.file_exists(file_path + "/skin_settings.tres"):
-				print("No skin settings found at " + file_path + ". Skipping")
-				continue
-			var file_name: String = dir_access.get_next()
-			#print(file_name)
-			loaded[i][j] = {}
-			#custom_sprite_frames[i][j] = null
-			while file_name != "":
-				var file_ext: String = file_name.get_extension().to_lower()
-				# Loading external skin textures to cache
-				if !dir_access.current_is_dir() && file_ext == "png":
-					var texture_name: String = file_name.trim_suffix("." + file_ext)
-					
-					var file: Image = Image.load_from_file(file_path + "/" + file_name)
-					var file_texture: ImageTexture = ImageTexture.create_from_image(file)
-					#print(i + "/" + j + "/" + file_name)
-					loaded[i][j][texture_name] = file_texture
-				# Loading skin settings (regions, loops etc.) to cache
-				elif !dir_access.current_is_dir() && file_name == "skin_settings.tres":
-					var _skin = ResourceLoader.load(file_path + "/skin_settings.tres", "Resource", ResourceLoader.CACHE_MODE_REPLACE)
-					if (
-						!_skin || !"animation_regions" in _skin ||
-						!"animation_loops" in _skin ||
-						!"animation_speeds" in _skin ||
-						!"name" in _skin
-					):
-						OS.alert(file_path + "/skin_settings.tres is invalid.", "Player Skin Load Error")
-						file_name = dir_access.get_next()
-						continue
-					
-					skins[_skin.name] = _skin
-				
-				file_name = dir_access.get_next()
+		loaded[i] = _load_animations(dir_access, i, _anims)
+		
 		# Print errors
 		var comp_1 := PackedStringArray(skins.keys())
 		comp_1.sort()
@@ -103,6 +75,77 @@ func load_external_textures() -> Dictionary:
   Found: """, comp_2, """
   Loaded without errors: """, comp_1)
 	dir_access.list_dir_end()
+	return loaded
+
+
+func _load_misc_files(dir_access: DirAccess, i: String):
+	var _misc_files: PackedStringArray = dir_access.get_files()
+	for j in _misc_files:
+		var file_path: String = base_dir + "/" + i + "/" + j
+		var is_array: bool = j.get_basename().left(-1).ends_with("_") && j.get_basename().right(1).is_valid_int()
+		var file_ext: String = j.get_extension().to_lower()
+		if !file_ext in ["png", "ogg"]:
+			continue
+		
+		var arrayed_filename: String = j.get_basename().left(-2)
+		if is_array && !arrayed_filename in misc_textures[i]:
+			misc_textures[i][arrayed_filename] = []
+		if file_ext == "png":
+			var img: Image = Image.load_from_file(file_path)
+			var file := ImageTexture.create_from_image(img)
+			if is_array:
+				misc_textures[i][arrayed_filename].append(file)
+			else:
+				misc_textures[i][j.get_basename()] = file
+		
+		elif file_ext == "ogg":
+			var file = AudioStreamOggVorbis.load_from_file(file_path)
+			if is_array:
+				misc_sounds[i][arrayed_filename].append(file)
+			else:
+				misc_sounds[i][j.get_basename()] = file
+
+
+func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray):
+	var loaded: Dictionary = {}
+	loaded = {}
+	for j in _anims:
+		var file_path: String = base_dir + "/" + i + "/" + j
+		dir_access.change_dir(file_path)
+		dir_access.list_dir_begin()
+		if !dir_access.file_exists(file_path + "/skin_settings.tres"):
+			print("No skin settings found at " + file_path + ". Skipping")
+			continue
+		var file_name: String = dir_access.get_next()
+		#print(file_name)
+		loaded[j] = {}
+		#custom_sprite_frames[i][j] = null
+		while file_name != "":
+			var file_ext: String = file_name.get_extension().to_lower()
+			# Loading external skin textures to cache
+			if !dir_access.current_is_dir() && file_ext == "png":
+				var texture_name: String = file_name.trim_suffix("." + file_ext)
+				
+				var file: Image = Image.load_from_file(file_path + "/" + file_name)
+				var file_texture: ImageTexture = ImageTexture.create_from_image(file)
+				#print(i + "/" + j + "/" + file_name)
+				loaded[j][texture_name] = file_texture
+			# Loading skin settings (regions, loops etc.) to cache
+			elif !dir_access.current_is_dir() && file_name == "skin_settings.tres":
+				var _skin = ResourceLoader.load(file_path + "/skin_settings.tres", "Resource", ResourceLoader.CACHE_MODE_REPLACE)
+				if (
+					!_skin || !"animation_regions" in _skin ||
+					!"animation_loops" in _skin ||
+					!"animation_speeds" in _skin ||
+					!"name" in _skin
+				):
+					OS.alert(file_path + "/skin_settings.tres is invalid.", "Player Skin Load Error")
+					file_name = dir_access.get_next()
+					continue
+				
+				skins[_skin.name] = _skin
+			
+			file_name = dir_access.get_next()
 	return loaded
 
 
