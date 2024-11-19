@@ -6,7 +6,7 @@ var base_dir: String = OS.get_executable_path().get_base_dir() + "/skins"
 
 var custom_textures: Dictionary
 var custom_sprite_frames: Dictionary
-var skins: Array[PlayerSkin] = []
+var skins: Dictionary
 
 @onready var base_sprite_frames: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres")
 @onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
@@ -36,6 +36,7 @@ func apply_player_skin(_suit) -> SpriteFrames:
 
 func load_external_textures() -> Dictionary:
 	print(base_dir)
+	
 	if !DirAccess.dir_exists_absolute(base_dir):
 		print("Skipped loading custom textures")
 		return {}
@@ -46,7 +47,7 @@ func load_external_textures() -> Dictionary:
 		return {}
 	
 	custom_sprite_frames = {}
-	skins = []
+	skins = {}
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	#print(directories)
 	for i in directories:
@@ -54,12 +55,13 @@ func load_external_textures() -> Dictionary:
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
 		loaded[i] = {}
 		custom_sprite_frames[i] = {}
-		print(_anims)
+		print(i, " Anims: ", _anims)
 		for j in _anims:
 			var file_path: String = base_dir + "/" + i + "/" + j
 			dir_access.change_dir(file_path)
 			dir_access.list_dir_begin()
 			if !dir_access.file_exists(file_path + "/skin_settings.tres"):
+				print("No skin settings found at " + file_path + ". Skipping")
 				continue
 			var file_name: String = dir_access.get_next()
 			#print(file_name)
@@ -73,14 +75,33 @@ func load_external_textures() -> Dictionary:
 					
 					var file: Image = Image.load_from_file(file_path + "/" + file_name)
 					var file_texture: ImageTexture = ImageTexture.create_from_image(file)
-					print(i + "/" + j + "/" + file_name)
+					#print(i + "/" + j + "/" + file_name)
 					loaded[i][j][texture_name] = file_texture
 				# Loading skin settings (regions, loops etc.) to cache
 				elif !dir_access.current_is_dir() && file_name == "skin_settings.tres":
 					var _skin = ResourceLoader.load(file_path + "/skin_settings.tres", "Resource", ResourceLoader.CACHE_MODE_REPLACE)
-					skins.append(_skin)
+					if (
+						!_skin || !"animation_regions" in _skin ||
+						!"animation_loops" in _skin ||
+						!"animation_speeds" in _skin ||
+						!"name" in _skin
+					):
+						OS.alert(file_path + "/skin_settings.tres is invalid.", "Player Skin Load Error")
+						file_name = dir_access.get_next()
+						continue
+					
+					skins[_skin.name] = _skin
 				
 				file_name = dir_access.get_next()
+		# Print errors
+		var comp_1 := PackedStringArray(skins.keys())
+		comp_1.sort()
+		var comp_2 := _anims
+		comp_2.sort()
+		if comp_1 != comp_2:
+			print("[Skins Manager] ALERT! For ", i, """, Some animations have not been loaded properly!
+  Found: """, comp_2, """
+  Loaded without errors: """, comp_1)
 	dir_access.list_dir_end()
 	return loaded
 
@@ -117,14 +138,15 @@ func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, powe
 func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, power: String) -> SpriteFrames:
 	if !old_sprites: return null
 	if textures.is_empty(): return old_sprites
-
+	if !power in skins: return old_sprites
+	
 	var new_sprites := SpriteFrames.new()
-	var _regions: Dictionary = skins[0].animation_regions
+	var _regions: Dictionary = skins[power].animation_regions
 	for anim in old_sprites.get_animation_names():
 		if anim != "default":
 			new_sprites.add_animation(anim)
-		new_sprites.set_animation_speed(anim, skins[0].animation_speeds[anim])
-		new_sprites.set_animation_loop(anim, skins[0].animation_loops[anim])
+		new_sprites.set_animation_speed(anim, skins[power].animation_speeds[anim])
+		new_sprites.set_animation_loop(anim, skins[power].animation_loops[anim])
 		var frame_count = old_sprites.get_frame_count(anim)
 		if len(_regions[anim]) > 0:
 			frame_count = len(_regions[anim])
