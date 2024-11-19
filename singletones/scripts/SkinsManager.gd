@@ -90,6 +90,8 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 		var arrayed_filename: String = j.get_basename().left(-2)
 		if is_array && !arrayed_filename in misc_textures[i]:
 			misc_textures[i][arrayed_filename] = []
+		if is_array && !arrayed_filename in misc_sounds[i]:
+			misc_sounds[i][arrayed_filename] = []
 		if file_ext == "png":
 			var img: Image = Image.load_from_file(file_path)
 			var file := ImageTexture.create_from_image(img)

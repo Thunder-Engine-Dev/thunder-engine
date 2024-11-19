@@ -13,7 +13,4 @@ func _physics_process(delta) -> void:
 
 func _update_text() -> void:
 	var value = Data.values[value_name]
-	var character: String = SkinsManager.current_skin.left(15)
-	if character.is_empty():
-		character = SettingsManager.settings.character
-	text = "%s ~ %s" % [character, value]
+	text = "%s ~ %s" % [CharacterManager.get_character_display_name(), value]

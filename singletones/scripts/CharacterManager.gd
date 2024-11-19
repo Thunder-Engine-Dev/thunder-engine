@@ -72,6 +72,13 @@ func get_character_name() -> String:
 	return SettingsManager.settings.character
 
 
+func get_character_display_name() -> String:
+	var character: String = SkinsManager.current_skin.left(15)
+	if character.is_empty():
+		character = SettingsManager.settings.character
+	return character
+
+
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
 	return _get_something(suit_name, character_name, suits, {})
 
