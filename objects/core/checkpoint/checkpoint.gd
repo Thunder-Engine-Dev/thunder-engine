@@ -48,7 +48,8 @@ func activate() -> void:
 	var tween = create_tween()
 	tween.tween_property(text, ^"modulate:a", 1.0, 0.2)
 	animation_player.play(&"checkpoint")
-	animation_text_flying.play(&"triggered")
+	if SettingsManager.get_quality() != SettingsManager.QUALITY.MIN:
+		animation_text_flying.play(&"triggered")
 	
 	var _voices
 	if !voice_lines.is_empty():
