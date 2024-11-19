@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://chwsfunxfau7o"]
+
+[ext_resource type="Texture2D" uid="uid://dffv08vqiv3dv" path="res://engine/objects/enemies/chain_chomp/texture/chain_chomp_pile.png" id="1_ylgoo"]
+
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvm6e"]
+size = Vector2(32, 32)
+
+[node name="ChainChompPile" type="AnimatableBody2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_uvm6e")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_ylgoo")
