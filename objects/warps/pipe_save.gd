@@ -36,6 +36,8 @@ func _deletion_process(delta: float) -> void:
 
 func delete_save() -> void:
 	ProfileManager.delete_profile(profile_name)
+	if ProfileManager.profiles.has("suspended") && ProfileManager.profiles.suspended.get("saved_profile") == profile_name:
+		ProfileManager.delete_profile("suspended")
 	save_deleted.emit()
 	print(&"Save " + profile_name + &" deleted!")
 	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
