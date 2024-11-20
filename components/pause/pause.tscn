@@ -17,7 +17,7 @@
 [ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_guhqa"]
 [ext_resource type="Texture2D" uid="uid://bm8q2lod5kscj" path="res://engine/components/pause/textures/game_paused.png" id="14_j3ggr"]
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_75h8i"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="17_pod7t"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="17_pod7t"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="18_ek8ml"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="20_6rkco"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_controls_selection.gd" id="20_44axe"]

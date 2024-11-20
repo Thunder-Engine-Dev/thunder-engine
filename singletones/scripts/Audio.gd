@@ -300,3 +300,10 @@ func _stop_all_musics_scene_changed() -> void:
 		
 		_music_channels[i].queue_free()
 		_music_channels.erase(i)
+
+
+func stop_all_sounds() -> void:
+	for i in GlobalViewport.get_children():
+		if i is AudioStreamPlayer2D || i is AudioStreamPlayer:
+			i.stop()
+			i.queue_free()

@@ -45,6 +45,7 @@ func _physics_process(delta):
 
 func _handle_select(mouse_input: bool = false) -> void:
 	if is_dead && Data.values.lives != 0:
+		Audio.stop_all_sounds()
 		super()
 		Thunder._current_player_state = null
 		Thunder._current_player_state_path = ""

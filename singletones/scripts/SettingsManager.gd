@@ -393,7 +393,7 @@ func _hide_mouse() -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	var _path = Scenes.current_scene.get(&"scene_file_path")
-	if !_path || get_tree().paused:
+	if !_path || get_tree().paused || TransitionManager.current_transition:
 		return
 	if event is InputEventKey && event.is_pressed():
 		var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")

@@ -1,7 +1,7 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("goto").add_param("scene_path", TYPE_FLOAT).set_description("Changes current scene to a specified scene.")
+	return new().set_name("goto").add_param("scene_path", TYPE_STRING).set_description("Changes current scene to a specified scene.")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var scene = " ".join(args)
