@@ -72,6 +72,7 @@ func _save_progress() -> void:
 	
 	if Data.values.get('map_force_selected_marker'):
 		Data.values.map_force_selected_marker = uncompleted_levels[0]
+		print("Map Forced To ", Data.values.map_force_selected_marker)
 	
 	prof.set_next_level_name(next_level_name)
 	var _no_save: bool = false
@@ -249,19 +250,19 @@ func add_uncompleted_levels_after(marker: String) -> void:
 	uncompleted_levels.clear()
 	var switched_to_uncompleted: bool = false
 	for i in total_levels:
-		if i.level == marker:
+		if i._level_save == marker:
 			switched_to_uncompleted = true
 			continue
 		if switched_to_uncompleted:
-			uncompleted_levels.append(i.level)
+			uncompleted_levels.append(i._level_save)
 	
 	#print("Uncompleted levels:", uncompleted_levels)
 
 func add_all_uncompleted_levels() -> void:
 	if !uncompleted_levels.is_empty(): return
 	for i in total_levels:
-		if !i.get("level"): continue
-		uncompleted_levels.append(i.level)
+		if !i.get("_level_save"): continue
+		uncompleted_levels.append(i._level_save)
 	
 	#print("Added all levels:", uncompleted_levels)
 

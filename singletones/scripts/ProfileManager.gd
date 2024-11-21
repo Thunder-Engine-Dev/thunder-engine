@@ -53,12 +53,22 @@ var current_profile: Profile
 const SAVE_FILE_EX = ".ths"
 
 func _ready() -> void:
+	load_all_profiles()
+	
+	create_new_profile(&"debug")
+	print("[Profile Manager] Dummy profile set for testing")
+
+
+func load_all_profiles() -> void:
 	if !DirAccess.dir_exists_absolute(&"user://saves/"):
 		DirAccess.make_dir_absolute(&"user://saves/")
 	
 	var dir: DirAccess = DirAccess.open(&"user://saves/")
+	profiles = {}
 	
 	for file in dir.get_files():
+		if file.begins_with(&"debug"):
+			continue
 		if file.ends_with(SAVE_FILE_EX):
 			file = file.trim_suffix(SAVE_FILE_EX)
 			print("[Profile Manager] Loading ", file)
@@ -67,9 +77,6 @@ func _ready() -> void:
 				printerr("[Profile Manager] %s has failed to load!" % file)
 	
 	print("[Profile Manager] All profiles loaded!")
-	
-	create_new_profile(&"debug")
-	print("[Profile Manager] Dummy profile set for testing")
 
 
 func create_new_profile(_name: StringName) -> void:

@@ -28,9 +28,6 @@ enum WarpDir {
 	DOWN
 }
 
-@export_group("General")
-@export var nickname: StringName = &"MARIO"
-@export var character: StringName = &"Mario"
 @export_group("Suit")
 @export var suit: PlayerSuit#:
 	#set(to):

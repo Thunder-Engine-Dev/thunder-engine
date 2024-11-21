@@ -32,9 +32,10 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
+	#print(Data.values.get('map_force_selected_marker'), " and ", _level_save)
 	
 	if (
-			is_level_completed() && !Data.values.get('map_force_selected_marker') ||
+			(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
 			Data.values.get('map_force_selected_marker') == _level_save
 	):
 		(func():
@@ -44,7 +45,6 @@ func _ready() -> void:
 			):
 				return
 			player.current_marker = get_next_marker()
-			#print(marker_space.get_next_marker_id())
 			player.global_position = global_position
 			player.reset_physics_interpolation()
 			
