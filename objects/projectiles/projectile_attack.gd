@@ -91,7 +91,7 @@ func _hurt_player() -> void:
 			if &"suit" in ins && ins.suit && \
 				&"behavior_crouch_reflect_fireballs" in ins.suit && \
 				ins.suit.behavior_crouch_reflect_fireballs == true && \
-				ins.is_crouching == true:
+				ins.is_crouching == true && is_reflectable:
 					damaged_player_failed.emit()
 					break
 			

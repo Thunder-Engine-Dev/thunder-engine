@@ -65,8 +65,6 @@ shape = SubResource("RectangleShape2D_3yefo")
 script = ExtResource("2_el7gp")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
-"beetroot": true,
-"fireball": true,
 "iceball": false
 }
 killing_sound_failed = ExtResource("3_2u027")
