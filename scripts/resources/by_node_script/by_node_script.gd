@@ -15,6 +15,14 @@ class_name ByNodeScript
 ## Only used as an identifier, no other usage!
 signal extra_script
 
+enum _NodeNotification {
+	NODE_READY,
+	NODE_ENTER_TREE,
+	NODE_EXIT_TREE,
+	NODE_PROCESS,
+	NODE_PHYSICS_PROCESS
+}
+
 ## Root node of the script to do fast access
 var node: Node
 ## Optinal variables of the script to do fast access
@@ -35,36 +43,59 @@ static func activate_script(script: GDScript, by: Node, new_vars: Dictionary = {
 
 
 func _init(by: Node, new_vars: Dictionary = {}) -> void:
-	if !by: return
-	node = by
+	if !is_instance_valid(by):
+		return
+	
+	node = weakref(by).get_ref()
 	vars = new_vars
-	node.tree_entered.connect(_enter_tree)
-	node.tree_exited.connect(_exit_tree)
-	_ready()
-	if !node.is_inside_tree(): await node.ready
-	node.get_tree().process_frame.connect(_process.bind(node.get_process_delta_time()))
-	node.get_tree().physics_frame.connect(_physics_process.bind(node.get_physics_process_delta_time()))
+	
+	node.tree_entered.connect(_script_notification.bind(_NodeNotification.NODE_ENTER_TREE))
+	node.tree_exited.connect(_script_notification.bind(_NodeNotification.NODE_EXIT_TREE))
+	
+	_script_notification(_NodeNotification.NODE_READY)
+	
+	if !node.is_inside_tree(): 
+		await node.ready
+	node.get_tree().process_frame.connect(_script_notification.bind(_NodeNotification.NODE_PROCESS))
+	node.get_tree().physics_frame.connect(_script_notification.bind(_NodeNotification.NODE_PHYSICS_PROCESS))
 
 
-## [code]@abstract[/code] called by [member node]'s [method Node._ready]
+func _script_notification(what: _NodeNotification) -> void:
+	if !is_instance_valid(node):
+		node = null
+		return
+	match what:
+		_NodeNotification.NODE_READY:
+			_ready()
+		_NodeNotification.NODE_ENTER_TREE:
+			_enter_tree()
+		_NodeNotification.NODE_EXIT_TREE:
+			_exit_tree()
+		_NodeNotification.NODE_PROCESS when node.can_process():
+			_process(node.get_process_delta_time())
+		_NodeNotification.NODE_PHYSICS_PROCESS when node.can_process():
+			_physics_process(node.get_physics_process_delta_time())
+
+
+## [code]@virtual[/code] called by [member node]'s [method Node._ready]
 func _ready() -> void:
 	pass
 
-## [code]@abstract[/code] called by [member node]'s [method Node._enter_tree]
+## [code]@virtual[/code] called by [member node]'s [method Node._enter_tree]
 func _enter_tree() -> void:
 	pass
 
-## [code]@abstract[/code] called by [member node]'s [method Node._exit_tree]
+## [code]@virtual[/code] called by [member node]'s [method Node._exit_tree]
 func _exit_tree() -> void:
 	pass
 
-## [code]@abstract[/code] called by [member node]'s [method Node._process][br]
+## [code]@virtual[/code] called by [member node]'s [method Node._process][br]
 ## [b]Note:[/b] sometimes you need to assign a variable to get delta:[br]
 ## [code]delta: float = node.get_process_delta_time()[/code]
 func _process(delta: float) -> void:
 	pass
 
-## [code]@abstract[/code] called by [member node]'s [method Node._physics_process][br]
+## [code]@virtual[/code] called by [member node]'s [method Node._physics_process][br]
 ## [b]Note:[/b] sometimes you need to assign a variable to get delta:[br]
 ## [code]delta: float = node.get_physics_process_delta_time()[/code]
 func _physics_process(delta: float) -> void:
