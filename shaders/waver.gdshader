@@ -15,11 +15,6 @@ float calculate_diff(float uv, float amp, float freq, float spd){
 	return diff_x;
 }
 
-vec2 calculate_move(vec2 dir, float spd){
-	vec2 move = dir * TIME;
-	return move;
-}
-
 void fragment(){
 	float uv_mod;
 	if (y_axis) {

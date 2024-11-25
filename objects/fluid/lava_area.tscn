@@ -1,34 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0121yqkw7b6i"]
+[gd_scene load_steps=9 format=3 uid="uid://d0121yqkw7b6i"]
 
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_uxlj0"]
-[ext_resource type="Texture2D" uid="uid://c0af6se3xgu6n" path="res://engine/objects/fluid/textures/lava_1.png" id="2_142ux"]
-[ext_resource type="Texture2D" uid="uid://df810y1jol8am" path="res://engine/objects/fluid/textures/lava_2.png" id="3_u3gbk"]
-[ext_resource type="Texture2D" uid="uid://dmk6mhhdr84bf" path="res://engine/objects/fluid/textures/lava_3.png" id="4_mkm1j"]
-[ext_resource type="Texture2D" uid="uid://cxe1py701b8yc" path="res://engine/objects/fluid/textures/lava_4.png" id="5_xlbac"]
-[ext_resource type="Texture2D" uid="uid://ddyxhsdkme088" path="res://engine/objects/fluid/textures/lava_5.png" id="6_bhtxx"]
-[ext_resource type="Texture2D" uid="uid://bd54l3c07s1cq" path="res://engine/objects/fluid/textures/lava_6.png" id="7_3sk6y"]
-[ext_resource type="Texture2D" uid="uid://cera40cx2nakg" path="res://engine/objects/fluid/textures/lava_7.png" id="8_fctt5"]
-[ext_resource type="Texture2D" uid="uid://bi76tjdg2fedl" path="res://engine/objects/fluid/textures/lava_8.png" id="9_1pgy4"]
+[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="2_kptu4"]
+[ext_resource type="Texture2D" uid="uid://cccjyxok3ss1l" path="res://engine/objects/fluid/textures/lava.png" id="3_anev1"]
 [ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_vgprf"]
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
-frames = 8
-frame_0/texture = ExtResource("2_142ux")
-frame_0/duration = 0.15
-frame_1/texture = ExtResource("3_u3gbk")
-frame_1/duration = 0.15
-frame_2/texture = ExtResource("4_mkm1j")
-frame_2/duration = 0.15
-frame_3/texture = ExtResource("5_xlbac")
-frame_3/duration = 0.15
-frame_4/texture = ExtResource("6_bhtxx")
-frame_4/duration = 0.15
-frame_5/texture = ExtResource("7_3sk6y")
-frame_5/duration = 0.15
-frame_6/texture = ExtResource("8_fctt5")
-frame_6/duration = 0.15
-frame_7/texture = ExtResource("9_1pgy4")
-frame_7/duration = 0.15
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gf034"]
+shader = ExtResource("2_kptu4")
+shader_parameter/frame_size = Vector2(1, 8)
+shader_parameter/frame_count = 8
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 6.0
+shader_parameter/frame_offset = 0
+shader_parameter/sprite_sheet = ExtResource("3_anev1")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sjij6"]
+width = 32
+height = 32
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_mubo6")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
@@ -42,9 +36,10 @@ border_color = Color(0, 0, 1, 0)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 31
+material = SubResource("ShaderMaterial_gf034")
 layout_mode = 2
 size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_cct87")
+texture = SubResource("NoiseTexture2D_sjij6")
 stretch_mode = 1
 
 [node name="Area2D" type="Area2D" parent="." groups=["#water"]]
