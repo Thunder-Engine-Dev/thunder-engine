@@ -31,8 +31,8 @@ func _ready() -> void:
 
 
 func apply_player_skin(_suit) -> SpriteFrames:
-	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin.to_lower()):
-		return SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin.to_lower(), _suit.name)
+	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin):
+		return SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin, _suit.name)
 	return _suit.animation_sprites
 
 
@@ -62,11 +62,12 @@ func load_external_textures() -> Dictionary:
 		
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
 		custom_sprite_frames[i] = {}
+		skins[i] = {}
 		print(i, " Anims: ", _anims)
 		loaded[i] = _load_animations(dir_access, i, _anims)
 		
 		# Print errors
-		var comp_1 := PackedStringArray(skins.keys())
+		var comp_1 := PackedStringArray(skins[i].keys())
 		comp_1.sort()
 		var comp_2 := _anims
 		comp_2.sort()
@@ -119,7 +120,6 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			print("No skin settings found at " + file_path + ". Skipping")
 			continue
 		var file_name: String = dir_access.get_next()
-		#print(file_name)
 		loaded[j] = {}
 		#custom_sprite_frames[i][j] = null
 		while file_name != "":
@@ -145,7 +145,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 					file_name = dir_access.get_next()
 					continue
 				
-				skins[_skin.name] = _skin
+				skins[i][_skin.name] = _skin
 			
 			file_name = dir_access.get_next()
 	return loaded
@@ -183,15 +183,15 @@ func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, powe
 func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, power: String) -> SpriteFrames:
 	if !old_sprites: return null
 	if textures.is_empty(): return old_sprites
-	if !power in skins: return old_sprites
+	if !current_skin in skins || !power in skins[current_skin]: return old_sprites
 	
 	var new_sprites := SpriteFrames.new()
-	var _regions: Dictionary = skins[power].animation_regions
+	var _regions: Dictionary = skins[current_skin][power].animation_regions
 	for anim in old_sprites.get_animation_names():
 		if anim != "default":
 			new_sprites.add_animation(anim)
-		new_sprites.set_animation_speed(anim, skins[power].animation_speeds[anim])
-		new_sprites.set_animation_loop(anim, skins[power].animation_loops[anim])
+		new_sprites.set_animation_speed(anim, skins[current_skin][power].animation_speeds[anim])
+		new_sprites.set_animation_loop(anim, skins[current_skin][power].animation_loops[anim])
 		var frame_count = old_sprites.get_frame_count(anim)
 		if len(_regions[anim]) > 0:
 			frame_count = len(_regions[anim])
@@ -201,7 +201,7 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 			var new_tex := AtlasTexture.new()
 			if anim in textures:
 				new_tex.atlas = textures[anim] # ImageTexture
-				var _region = tex.region
+				var _region: Rect2 = tex.region if tex else Rect2()
 				if len(_regions[anim]) > 0:
 					_region = _regions[anim][frame]
 				#new_tex.margin = tex.margin
