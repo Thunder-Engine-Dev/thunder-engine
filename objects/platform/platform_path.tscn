@@ -6,6 +6,7 @@
 
 [node name="PlatformPath" type="PathFollow2D"]
 rotates = false
+cubic_interp = false
 loop = false
 script = ExtResource("1_p2p8j")
 sprite = NodePath("Block/Sprite2D")

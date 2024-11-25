@@ -8,6 +8,9 @@ var tw: Tween
 var deletion_progress: float
 var is_inside: bool
 
+func _ready() -> void:
+	modulate.a = 0.0
+
 func _physics_process(delta: float) -> void:
 	if !is_inside: return
 	
@@ -26,7 +29,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_pipe_save_player_enter() -> void:
 	if tw: tw.kill()
-	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
+	tw.tween_property(self, ^"modulate:a", 1.0, 0.1)
 	tw.tween_property(self, ^"position:y", first_pos + move_down_by_px, 0.3)
 	is_inside = true
 
@@ -36,6 +40,7 @@ func _on_pipe_save_player_exit() -> void:
 	if !is_inside_tree(): return
 	deletion_progress = 0.0
 	progress.visible = false
-	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_parallel()
+	tw.tween_property(self, ^"modulate:a", 0.0, 0.6).set_ease(Tween.EASE_IN)
 	tw.tween_property(self, ^"position:y", first_pos, 0.3)
 	is_inside = false

@@ -28,6 +28,7 @@ const NIY: String = "Not Implemented Yet"
 var name: StringName = "null"
 var params: Dictionary = {} # Example {"Name of Param": Type } Use typeof
 var description: String = NIY
+var debug_only: bool
 
 
 # NOT FOR OVERRIDING
@@ -92,4 +93,9 @@ func add_param(key: String, val: int, _optional: bool = false) -> Command:
 @warning_ignore("shadowed_variable")
 func set_name(name: String) -> Command:
 	self.name = name
+	return self
+
+func set_debug() -> Command:
+	if OS.has_feature("template"):
+		debug_only = true
 	return self

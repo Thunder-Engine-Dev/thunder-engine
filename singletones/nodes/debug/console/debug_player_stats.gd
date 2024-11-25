@@ -6,7 +6,11 @@ var target_text: String
 func _physics_process(delta: float) -> void:
 	visible = Console.player_stats_shown
 	if !Console.player_stats_shown: return
-	var other_text: String = "PAUSE:" + str(get_tree().paused)
+	var other_text: String = "PAUSE:" + str(get_tree().paused) + "
+NICK: %s CHAR: %s" % [
+		CharacterManager.get_character_display_name(),
+		SettingsManager.settings.get("character", ""),
+	]
 
 	var pl: Player = Thunder._current_player
 	if !pl:
@@ -18,7 +22,7 @@ X: %s
 Y: %s
 SPDX: %s
 SPDY: %s
-NICK:%s CHAR:%s | lr:%s ud:%s
+suit: %s | lr:%s ud:%s
 STUCK:%s SLIDED:%s ISSLIDING:%s
 COMPL:%s NOMOVE:%s WARPSTATE:%s
 FCWS: %s%s%s%s
@@ -28,8 +32,7 @@ ITEM:%s
 		pl.global_position.y,
 		pl.speed.x,
 		pl.speed.y,
-		pl.get("nickname"),
-		pl.get("character"),
+		pl.suit.name if pl.get("suit") else null,
 		pl.get("left_right"),
 		pl.get("up_down"),
 		pl.get("has_stuck"),

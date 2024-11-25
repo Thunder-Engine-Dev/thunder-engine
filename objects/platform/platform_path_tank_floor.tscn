@@ -6,6 +6,7 @@
 
 [node name="PlatformPathTankFloor" type="PathFollow2D"]
 rotates = false
+cubic_interp = false
 loop = false
 script = ExtResource("1_y30xh")
 sprite = NodePath("Block/Sprite2D")

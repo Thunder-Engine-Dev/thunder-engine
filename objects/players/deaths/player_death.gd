@@ -42,11 +42,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !movement:
 		return
+	
+	#if _suit_pause_tweak && Scenes.custom_scenes.pause.opened:
+	#	return
 	motion_process(delta)
 
 
 func _pause_tweak_logic() -> void:
-	movement = false
+	#movement = false
 	for sound in GlobalViewport.get_children():
 		if !sound is AudioStreamPlayer2D:
 			continue

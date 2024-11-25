@@ -12,6 +12,8 @@ func _ready() -> void:
 				underwater.in_water()
 				if !_is_ready:
 					return
+				if "warp" in body && body.warp != 0:
+					return
 				if "spray_offset" in underwater:
 					self._spray.call_deferred(body, underwater.spray_offset)
 	)
@@ -21,6 +23,8 @@ func _ready() -> void:
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
 				if !_is_ready:
+					return
+				if "warp" in body && body.warp != 0:
 					return
 				if "spray_offset" in underwater:
 					self._spray.call_deferred(body, underwater.spray_offset)

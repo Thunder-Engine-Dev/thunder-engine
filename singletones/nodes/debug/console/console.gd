@@ -10,6 +10,7 @@ var history: Array = ['']
 var position_in_history: int
 
 var player_stats_shown: bool = false
+var command_executed: bool = false
 
 
 func _ready():
@@ -33,6 +34,7 @@ func _input(event) -> void:
 func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
+		if command.debug_only: continue
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
@@ -72,6 +74,9 @@ func internal_execute(_in: String) -> void:
 		if cmdName != "":
 			col_print("Command does not exist!", Color.RED)
 		return
+	
+	if OS.has_feature("template"):
+		command_executed = true
 	
 	self.print(commands[cmdName].try_execute(args))
 
