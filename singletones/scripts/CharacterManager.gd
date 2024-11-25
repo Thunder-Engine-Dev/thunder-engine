@@ -73,7 +73,7 @@ func get_character_name() -> String:
 
 
 func get_character_display_name() -> String:
-	var character: String = SkinsManager.current_skin.left(15)
+	var character: String = SkinsManager.custom_nicknames.get(SkinsManager.current_skin, "")
 	if character.is_empty():
 		character = SettingsManager.settings.character
 	return character

@@ -9,6 +9,7 @@ var custom_sprite_frames: Dictionary
 var skins: Dictionary
 var misc_textures: Dictionary
 var misc_sounds: Dictionary
+var custom_nicknames: Dictionary
 
 @onready var base_sprite_frames: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres")
 @onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
@@ -51,6 +52,7 @@ func load_external_textures() -> Dictionary:
 	skins = {}
 	misc_textures = {}
 	misc_sounds = {}
+	custom_nicknames = {}
 	var loaded: Dictionary = {}
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	#print(directories)
@@ -58,7 +60,9 @@ func load_external_textures() -> Dictionary:
 		dir_access.change_dir(base_dir + "/" + i)
 		misc_textures[i] = {}
 		misc_sounds[i] = {}
+		custom_nicknames[i] = i.left(15)
 		_load_misc_files(dir_access, i)
+		
 		
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
 		custom_sprite_frames[i] = {}
@@ -85,7 +89,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 		var file_path: String = base_dir + "/" + i + "/" + j
 		var is_array: bool = j.get_basename().left(-1).ends_with("_") && j.get_basename().right(1).is_valid_int()
 		var file_ext: String = j.get_extension().to_lower()
-		if !file_ext in ["png", "ogg"]:
+		if !file_ext in ["png", "ogg", "txt"]:
 			continue
 		
 		var arrayed_filename: String = j.get_basename().left(-2)
@@ -107,6 +111,12 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				misc_sounds[i][arrayed_filename].append(file)
 			else:
 				misc_sounds[i][j.get_basename()] = file
+		
+		elif file_ext == "txt" && j.get_basename().to_lower() == "name":
+			var file = FileAccess.open(file_path, FileAccess.READ)
+			custom_nicknames[i] = file.get_line().left(15)
+			print(i, " Custom nick: ", custom_nicknames[i])
+			file.close()
 
 
 func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray):
