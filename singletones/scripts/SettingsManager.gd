@@ -58,6 +58,7 @@ var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
+signal mouse_moved()
 
 signal settings_updated
 signal settings_saved
@@ -376,9 +377,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if (
 			get_tree().root.has_focus() &&
-			DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_MINIMIZED
+			DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_MINIMIZED &&
+			event.relative != Vector2.ZERO
 		):
 			_current_mouse_pos = get_tree().root.get_mouse_position()
+			mouse_moved.emit()
 		
 		if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 		
