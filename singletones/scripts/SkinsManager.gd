@@ -23,12 +23,16 @@ func _init() -> void:
 
 func _ready() -> void:
 	current_skin = SettingsManager.settings.skin
-	SettingsManager.settings_updated.connect(set.bind(&"current_skin", SettingsManager.settings.skin))
+	SettingsManager.settings_updated.connect(_update_current_skin_from_settings)
 #	print(animation_list)
 	
 	# Saving animation sprite frames
 	#var err = ResourceSaver.save(base_sprite_frames, base_dir + "/animation.tres", ResourceSaver.FLAG_RELATIVE_PATHS)
 	#print(err)
+
+
+func _update_current_skin_from_settings() -> void:
+	current_skin = SettingsManager.settings.skin
 
 
 func apply_player_skin(_suit) -> SpriteFrames:

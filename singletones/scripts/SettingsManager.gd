@@ -260,6 +260,7 @@ func _window_scale_logic(force_update: bool = false) -> void:
 ## Saves the settings variable to file
 func save_settings() -> void:
 	save_data(settings, settings_path, "Settings")
+	no_saved_settings = false
 	if settings.vsync:
 		var boot_path: String = ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss")
 		if !boot_path.is_absolute_path():

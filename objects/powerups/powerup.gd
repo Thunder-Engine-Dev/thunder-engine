@@ -10,7 +10,7 @@ signal collected_changed_suit
 @export var force_powerup_state: bool = false
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
-@export var appear_visible: float = 28
+@export var appear_visible: float = 27
 @export var score: int = 1000
 
 
