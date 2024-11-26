@@ -3,7 +3,7 @@ extends Node
 @export var center: NodePath = ^".."
 @export var jump_strength: float = 350
 @onready var _center: Powerup = get_node_or_null(center)
-@onready var _tweak: bool = SettingsManager.get_tweak("brick_bumping_mushrooms", false)
+@onready var _tweak: bool = false #SettingsManager.get_tweak("brick_bumping_mushrooms", false)
 
 func set_bump() -> void:
 	if !_tweak: return
