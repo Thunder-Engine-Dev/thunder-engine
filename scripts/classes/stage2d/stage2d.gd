@@ -7,6 +7,8 @@ class_name Stage2D
 ## When the instance of the class gets notified with [member Node._ready], the instance
 ## will automatically call [method Scenes.register] to make [member Scenes.current_scene] work decently
 
+@export var disable_pause_menu: bool = false
+
 var _is_stage_ready: bool
 signal stage_ready
 

@@ -20,6 +20,6 @@ void fragment() {
         float(frame % frames_per_row),
         float(frame / frames_per_row)
     )) / frame_size;
-    
+
     COLOR = v_vertex_color * texture(sprite_sheet, uv);
 }

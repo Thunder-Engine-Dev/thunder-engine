@@ -28,7 +28,7 @@ enum WarpDir {
 	DOWN
 }
 
-@export_group("Suit")
+@export_group("General")
 @export var suit: PlayerSuit#:
 	#set(to):
 		#if (!to || (suit && suit.name == to.name)) && !_force_suit: return
@@ -60,6 +60,7 @@ enum WarpDir {
 			#Thunder._current_player_state_path = to.resource_path
 		#Thunder._current_player_state = suit
 		#suit_changed.emit(suit)
+@export var circle_transition_on_self: bool = true
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
 	set(to):
@@ -149,7 +150,7 @@ var _suit_tree_paused: bool
 
 func _ready() -> void:
 	# Transition center at the beginning of the level
-	if Scenes.current_scene is Stage2D:
+	if Scenes.current_scene is Stage2D && circle_transition_on_self:
 		Scenes.current_scene.stage_ready.connect(func():
 	#Scenes.scene_ready.connect(func():
 			var cam := Thunder._current_camera

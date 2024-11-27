@@ -25,10 +25,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if &"game_over" in Scenes.custom_scenes && Scenes.custom_scenes.game_over.opened: return
 	if event.is_action_pressed(&"pause_toggle") && (
-		Scenes.current_scene is Level ||
-		Scenes.current_scene is Map2D ||
-		Scenes.current_scene is LevelCutscene
-	) && !(opened && event.is_action_pressed("ui_cancel")):
+		Scenes.current_scene is Stage2D ||
+		Scenes.current_scene is Map2D
+	) && !(opened && event.is_action_pressed("ui_cancel")) && !Scenes.current_scene.get(&"disable_pause_menu"):
 		toggle.call_deferred()
 
 
