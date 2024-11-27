@@ -125,6 +125,7 @@ func _on_mouse_moved() -> void:
 func _can_mouse_process() -> bool:
 	if !focused: return false
 	if !SettingsManager.get_tweak("mouse_in_menus", true): return false
+	if get_tree().paused && !can_process(): return false
 	if !get_tree().root.get_visible_rect().has_point(SettingsManager._current_mouse_pos): return false
 	return true
 
