@@ -83,6 +83,7 @@ func _detect_area() -> void:
 	if actual_area.has_point(player.global_position) && !is_moving:
 		_player_landed()
 
+
 func _player_landed(p = null) -> void:
 	is_moving = true
 

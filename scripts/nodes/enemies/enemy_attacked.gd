@@ -328,6 +328,7 @@ func _on_level_end() -> void:
 	Audio.play_1d_sound(COIN)
 	NodeCreator.prepare_2d(COIN_EFFECT, _center).bind_global_transform().create_2d().call_method(func(node):
 		node.score_given = 1000
+		node.global_rotation = 0
 	)
 	Data.add_coin()
 	_center.queue_free.call_deferred()
