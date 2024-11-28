@@ -70,6 +70,7 @@ script = ExtResource("4_5ks1x")
 
 [node name="SoundFlying" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_3nf32")
+volume_db = -3.0
 autoplay = true
 max_distance = 960.0
 bus = &"Sound"

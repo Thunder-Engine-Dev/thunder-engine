@@ -3,6 +3,8 @@ extends MenuSelection
 @onready var restart_popup: Control = $"../../../../RestartPopup/Control"
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if Data.technical_values.get("credits_cooldown", 0.0) > Time.get_ticks_msec():
+		return
 	super(mouse_input)
 	await get_tree().physics_frame
 	if !SettingsManager.request_restart:

@@ -5,12 +5,16 @@ extends Label
 @onready var text_template: String = text
 
 func _ready() -> void:
+	pipe_save.save_deleted.connect(set_empty)
+	update_label()
+
+
+func update_label() -> void:
 	if !pipe_save.profile_name:
 		set_empty()
 		return
 	
 	var profile_name = pipe_save.profile_name
-	pipe_save.save_deleted.connect(set_empty)
 
 	if ProfileManager.profiles.has(profile_name):
 		var prof: ProfileManager.Profile = ProfileManager.profiles[profile_name]

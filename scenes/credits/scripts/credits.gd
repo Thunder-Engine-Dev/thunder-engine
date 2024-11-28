@@ -4,10 +4,13 @@ extends Control
 @onready var music_loader: Node = $MusicLoader
 
 var _original_time_scale: float
+var _original_volume: float
 
 func _ready() -> void:
 	_original_time_scale = Engine.time_scale
+	_original_volume = Audio._target_music_bus_volume_db
 	Engine.time_scale = 1
+	Audio._target_music_bus_volume_db = 0.0
 	
 	music_loader.play_buffered.call_deferred()
 	Thunder._connect(SettingsManager.mouse_pressed,
@@ -25,6 +28,7 @@ func scene_exit() -> void:
 	if is_exiting: return
 	is_exiting = true
 	Engine.time_scale = _original_time_scale
+	Audio._target_music_bus_volume_db = _original_volume
 	Data.technical_values.credits_cooldown = Time.get_ticks_msec() + 500
 	if music_loader.channel_id in Audio._music_channels && is_instance_valid(Audio._music_channels[music_loader.channel_id]):
 		Audio.stop_music_channel(music_loader.channel_id, false)
