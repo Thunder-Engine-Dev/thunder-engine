@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://e0knwhbbb2ok"]
+[gd_scene load_steps=6 format=3 uid="uid://e0knwhbbb2ok"]
 
 [ext_resource type="Script" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.gd" id="1_kg4ub"]
 [ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="2_5fl35"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_7xrok"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
-size = Vector2(20, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_84swo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
+radius = 8.0
 
 [node name="SilverHammer" type="CharacterBody2D"]
 collision_layer = 4
@@ -20,11 +22,11 @@ texture = ExtResource("2_5fl35")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_t82ul")
+shape = SubResource("RectangleShape2D_84swo")
 
 [node name="Attack" type="ShapeCast2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_t82ul")
+shape = SubResource("CircleShape2D_eyugj")
 target_position = Vector2(0, 0)
 max_results = 8
 collision_mask = 67
