@@ -60,7 +60,7 @@ stomping_creation = SubResource("Resource_d54bi")
 stomping_scores = 100
 stomping_sound = ExtResource("6_v7ft1")
 killing_immune = {
-"beetroot": false,
+"beetroot": true,
 "boomerang": false,
 "fireball": true,
 "hammer": false,
