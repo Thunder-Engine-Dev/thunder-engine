@@ -85,6 +85,8 @@ var _bullet_received: int
 @onready var initial_killing_immune: Dictionary = enemy_attacked.killing_immune.duplicate(true)
 @onready var tweaked_stomping: bool = SettingsManager.get_tweak("bowser_stomping", false)
 @onready var player: Player = Thunder._current_player
+
+var _attacking: bool
 var _tweaked_stomping_vel: float
 var hud: CanvasLayer
 
@@ -120,11 +122,12 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = (facing < 0)
 	
 	if !active: return
-	match sprite.animation:
-		&"default":
-			if !is_on_floor(): animations.play(&"bowser/jump")
-		&"jump":
-			if is_on_floor(): animations.play(&"bowser/idle")
+	if !_attacking:
+		match sprite.animation:
+			&"default" when !is_on_floor():
+				animations.play(&"bowser/jump")
+			&"jump" when is_on_floor():
+				animations.play(&"bowser/idle")
 	
 	# Pos markers
 	pos_flame.position.x = pos_flame_x * facing
@@ -146,13 +149,10 @@ func _physics_process(delta: float) -> void:
 		tween_status = create_tween()
 		for i in status.size():
 			tween_status.tween_interval(status_interval[i])
-			tween_status.tween_callback(
-				func() -> void:
-					attack(status[i])
-			)
-			tween_status.finished.connect(func() -> void:
-				tween_status = null
-			)
+			tween_status.tween_callback(attack.bind(status[i]))
+		tween_status.finished.connect(func() -> void:
+			tween_status = null
+		)
 	
 	# Physics
 	motion_process(delta)
@@ -179,6 +179,7 @@ func activate() -> void:
 
 # Bowser's attack
 func attack(state: StringName) -> void:
+	_attacking = true
 	match state:
 		&"flame":
 			if animations.current_animation == &"bowser/flame": return
@@ -213,6 +214,7 @@ func attack_flame(offset_by_32: int = -1) -> void:
 	)
 	if tween_status && !tween_status.is_running(): 
 		tween_status.play()
+		_attacking = false
 
 
 # Bowser's multiple flames
@@ -265,6 +267,7 @@ func attack_hammer() -> void:
 			sprite.speed_scale = 1
 			sprite.play(&"default")
 			lock_movement = false
+			_attacking = false
 			animations.play(&"bowser/idle")
 			tween_status.play()
 	)
@@ -307,6 +310,7 @@ func attack_burst() -> void:
 			sprite.play(&"default")
 			lock_movement = false
 			lock_direction = false
+			_attacking = false
 			animations.play(&"bowser/idle")
 			tween_status.play()
 	)
