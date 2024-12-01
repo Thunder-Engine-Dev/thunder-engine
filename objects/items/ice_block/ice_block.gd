@@ -193,7 +193,7 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 			else:
 				contained_item.queue_free()
 			
-			contained_item.set_deferred("position", contained_item.position + unfreeze_offset)
+			contained_item.set_deferred(&"position", contained_item.position + unfreeze_offset)
 			contained_item.reset_physics_interpolation.call_deferred()
 		).call_deferred()
 	

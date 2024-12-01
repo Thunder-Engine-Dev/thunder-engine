@@ -156,7 +156,7 @@ func _animation_process(delta: float) -> void:
 		if player.is_on_floor():
 			if !(is_zero_approx(player.speed.x)):
 				sprite.play(
-					_get_animation_prefixed(&"walk") if !player.is_skidding else &"skid"
+					StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
 				)
 				sprite.speed_scale = (
 					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
