@@ -207,7 +207,7 @@ func _movement_sliding(delta: float) -> void:
 
 
 func _start_sliding_movement() -> void:
-	player.attack.killing_detection_scale = 8
+	player.attack.killing_detection_scale = 2
 	player.attack.enabled = true
 	var floor_norm = rad_to_deg(player.get_floor_normal().x)
 	if floor_norm <= -40.0:
@@ -226,7 +226,7 @@ func _stop_sliding_movement() -> void:
 	player.is_sliding_accelerating = false
 	player.attack.enabled = player.is_starman()
 	if !player.is_starman(): player.starman_combo.reset_combo()
-	player.attack.killing_detection_scale = 2
+	player.attack.killing_detection_scale = 1
 
 
 #= Shape

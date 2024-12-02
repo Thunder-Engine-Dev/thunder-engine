@@ -97,3 +97,6 @@ metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 [node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_soyln")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="Wings" parent="." index="2"]
+root_path = NodePath("../..")
