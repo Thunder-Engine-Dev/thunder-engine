@@ -31,11 +31,11 @@ func _physics_process(delta):
 		var pos = sinking_point
 		var p_pos = player.global_position
 		
-		player.global_position += delta * Vector2(
-			sucking_motion.x * signf(pos.x - p_pos.x),
-			sucking_motion.y * signf(pos.y - p_pos.y)
-		)
-		player.move_and_collide(Vector2.ZERO)
+		if !player.test_move(player.global_transform, Vector2.ZERO):
+			player.global_position += delta * Vector2(
+				sucking_motion.x * signf(pos.x - p_pos.x),
+				sucking_motion.y * signf(pos.y - p_pos.y)
+			)
 		if !camera: return
 		camera.teleport()
 		

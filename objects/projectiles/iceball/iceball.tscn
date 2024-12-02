@@ -17,6 +17,7 @@ script = ExtResource("1_cfamg")
 sprite = NodePath("Texture")
 speed = Vector2(387.5, 0)
 gravity_scale = 0.5
+impulse_move_on_turn_x = false
 metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale"]
 
 [node name="Texture" type="Sprite2D" parent="."]

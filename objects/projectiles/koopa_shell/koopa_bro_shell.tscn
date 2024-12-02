@@ -46,6 +46,7 @@ rect = Rect2(-16, -16, 32, 512)
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="collided_wall" from="." to="." method="bounce"]
 [connection signal="run_out" from="." to="Attack" method="queue_free"]
 [connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]

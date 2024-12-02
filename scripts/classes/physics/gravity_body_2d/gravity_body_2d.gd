@@ -33,6 +33,9 @@ const GRAVITY: float = 2500.0
 @export_group("Up Direction")
 ## If [code]true[/code], calling [method motion_process] will update [member CharacterBody2D.up_direction].
 @export var auto_update_up_direction: bool = true
+@export_group("Turning")
+@export var impulse_move_on_turn_x: bool = true
+@export var impulse_move_on_turn_y: bool = false
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
@@ -140,6 +143,8 @@ func turn_x() -> void:
 		return
 	speed_previous.x *= -1
 	speed.x = speed_previous.x
+	if impulse_move_on_turn_x:
+		do_movement(get_physics_process_delta_time(), false, false)
 
 
 ## Reverse [member speed].y
@@ -149,6 +154,8 @@ func turn_y() -> void:
 		return
 	speed_previous.y *= -1
 	speed.y = speed_previous.y
+	if impulse_move_on_turn_y:
+		do_movement(get_physics_process_delta_time(), false, false)
 
 
 ## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always negative(upwards)

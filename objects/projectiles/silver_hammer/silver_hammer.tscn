@@ -16,6 +16,7 @@ script = ExtResource("1_kg4ub")
 sprite = NodePath("Texture")
 speed = Vector2(120, -300)
 gravity_scale = 0.3
+impulse_move_on_turn_x = false
 
 [node name="Texture" type="Sprite2D" parent="."]
 texture = ExtResource("2_5fl35")

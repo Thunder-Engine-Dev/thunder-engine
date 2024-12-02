@@ -29,6 +29,7 @@ func _ready() -> void:
 		if Data.values.time == 100:
 			timer_hurry()
 		elif Data.values.time == 0:
+			time_counter.text = "0"
 			Thunder._current_player.die()
 	)
 	
