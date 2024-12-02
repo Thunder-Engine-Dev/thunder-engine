@@ -98,8 +98,6 @@ func pause_music(ind: int = index, ch_id: int = channel_id) -> void:
 		return
 	var music_player = Audio._music_channels[ch_id]
 	music_player.playing = false
-	if music_player.has_meta(&"openmpt"):
-		Audio._music_channels[ch_id].get_meta(&"openmpt").stop()
 	is_paused = true
 	music_paused.emit()
 
@@ -110,13 +108,6 @@ func unpause_music(ind: int = index, ch_id: int = channel_id) -> void:
 	var music_player = Audio._music_channels[ch_id]
 	index = ind
 	music_player.play()
-	if music_player.has_meta(&"openmpt"):
-		var openmpt: OpenMPT = Audio._music_channels[ch_id].get_meta(&"openmpt")
-		(func() -> void:
-			music_player.play()
-			openmpt.set_audio_generator_playback(music_player)
-			openmpt.start(true)
-		).call_deferred()
 	is_paused = false
 	music_unpaused.emit()
 

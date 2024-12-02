@@ -1,7 +1,7 @@
 [remap]
 
-importer="libopenmpt.modimporter"
-type="Resource"
+importer="dudejoe870.openmptimporter"
+type="AudioStreamMPT"
 uid="uid://bexk1qd4psene"
 path="res://.godot/imported/music_bowser_battle.mod-d7268dde39702d9835a93c8042424fe1.res"
 
@@ -12,5 +12,8 @@ dest_files=["res://.godot/imported/music_bowser_battle.mod-d7268dde39702d9835a93
 
 [params]
 
-interpolation=2
-loop=true
+force/mono=false
+playback/loop_mode=1
+playback/interpolation=2
+load/skip_plugins=false
+load/skip_subsongs_init=false

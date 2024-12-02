@@ -83,14 +83,6 @@ func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStre
 	return player
 
 
-func _create_openmpt_player(is_global: bool) -> OpenMPT:
-	var openmpt = OpenMPT.new()
-	if !is_global: Scenes.pre_scene_changed.connect(openmpt.queue_free)
-	add_child(openmpt)
-	openmpt.stop()
-	return openmpt
-
-
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
 ## [b]Note:[/b] This method creates [AudioStreamPlayer2D] which plays sound with pan changed according to its position to the center of screen, rather than [AudioStreamPlayer].[br]
 ## [param resource] is the sound stream you are going to install[br]
@@ -172,43 +164,12 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	
 	music_player.finished.connect(func(): any_music_finished.emit(), CONNECT_ONE_SHOT)
 	
-	var openmpt: OpenMPT = null
-	
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
 		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 		music_player.play.call_deferred()
-	elif &"data" in resource:
-		openmpt = _create_openmpt_player(is_global)
-		if !openmpt:
-			return null
-		
-		openmpt.load_module_data(resource.data)
-		if !openmpt.is_module_loaded():
-			printerr("[Audio] Failed to load file using tracker loader")
-			openmpt.queue_free()
-			music_player.queue_free()
-			return null
-		music_player.set_meta(&"openmpt", openmpt)
-		
-		var generator = AudioStreamGenerator.new()
-		generator.buffer_length = 0.04
-		generator.mix_rate = 44100
-		
-		music_player.stream = generator
-		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
-		(func() -> void:
-			music_player.play()
-			#music_player.seek(0.0)
-			openmpt.set_audio_generator_playback(music_player)
-			openmpt.set_render_interpolation(resource.interpolation)
-			openmpt.set_repeat_count(0 if !resource.loop else -1)
-			#_music_channels[channel_id].volume_db = resource.volume_offset
-			openmpt.start(true)
-			#openmpt.set_position_seconds(0.0)
-		).call_deferred()
 	else:
-		printerr("Invalid data provided in method Audio.play_music")
+		print("ERROR: Invalid data provided in method Audio.play_music")
 		return null
 	
 	if &"pitch" in other_keys && other_keys.pitch is float:
@@ -222,10 +183,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
 	if &"start_from_sec" in other_keys && other_keys.start_from_sec is float && other_keys.start_from_sec > 0.0:
-		if openmpt:
-			openmpt.set_position_seconds.call_deferred(other_keys.start_from_sec)
-		else:
-			_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
+		_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
 	
 	return music_player if is_instance_valid(music_player) else null
 
@@ -245,10 +203,6 @@ func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float,
 		func() -> void:
 			if stop_after_fading && is_instance_valid(player):
 				player.stop()
-				if player.has_meta("openmpt"):
-					var openmpt = player.get_meta("openmpt")
-					if is_instance_valid(openmpt):
-						openmpt.queue_free()
 				player.free()
 			tween.kill()
 			if tween in _music_tweens:
@@ -263,10 +217,6 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 	if !_music_channels[channel_id]: return
 	if !fade:
 		_music_channels[channel_id].stop()
-		if _music_channels[channel_id].has_meta("openmpt"):
-			var openmpt = _music_channels[channel_id].get_meta("openmpt")
-			if is_instance_valid(openmpt):
-				openmpt.queue_free()
 	else:
 		fade_music_1d_player(_music_channels[channel_id], -40, 2, Tween.TRANS_SINE, true)
 
@@ -277,11 +227,6 @@ func stop_all_musics(fade: bool = false) -> void:
 		if !is_instance_valid(_music_channels[i]):
 			continue
 		if !fade:
-			if _music_channels[i].has_meta("openmpt"):
-				var openmpt = _music_channels[i].get_meta("openmpt")
-				if is_instance_valid(openmpt):
-					openmpt.queue_free()
-			
 			_music_channels[i].queue_free()
 			_music_channels.erase(i)
 		else:
@@ -291,12 +236,6 @@ func _stop_all_musics_scene_changed() -> void:
 	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"play_when_scene_changed", true):
 			continue
-		if _music_channels[i].has_meta("openmpt"):
-			var openmpt = _music_channels[i].get_meta("openmpt")
-			if is_instance_valid(openmpt):
-				openmpt.queue_free()
-		if &"OpenMPT" in _music_channels[i].name:
-			i.queue_free()
 		
 		_music_channels[i].queue_free()
 		_music_channels.erase(i)
