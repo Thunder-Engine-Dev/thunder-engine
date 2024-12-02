@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8mms5q7m2lk7"]
+[gd_scene load_steps=16 format=3 uid="uid://c8mms5q7m2lk7"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/cheeps/cheep.gd" id="1_86ols"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_0vv4i"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_7ctkp"]
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_63gk1"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_w3gcv"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="9_wfl3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
 size = Vector2(28, 28)
@@ -124,7 +125,9 @@ autoplay = "default"
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(3.8147e-06, 3.8147e-06)
-scale = Vector2(4.8, 4.8)
+scale = Vector2(2, 2)
+rect = Rect2(-24, -24, 48, 48)
+script = ExtResource("9_wfl3o")
 metadata/_edit_lock_ = true
 
 [node name="Interval" type="Timer" parent="."]

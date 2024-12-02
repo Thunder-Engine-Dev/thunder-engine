@@ -10,7 +10,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 	if voice_line is Array:
 		var temp_v = voice_line.pick_random()
 		voice_line = temp_v
-	Audio.play_1d_sound(voice_line)
+	Audio.play_1d_sound(voice_line, true, { ignore_pause = true })
 	
 	var result: Command.ExecuteResult = Command.ExecuteResult.new("Success")
 	return result

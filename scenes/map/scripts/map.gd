@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	if !get_node(player).current_marker.level: return
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
-	Audio.play_1d_sound(jump_button_sound, true, { "bus": "1D Sound" })
+	Audio.play_1d_sound(jump_button_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	print("[Game] Going to a level.")
 
 	is_fading = true
