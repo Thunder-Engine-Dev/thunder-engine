@@ -50,6 +50,7 @@ var _force_player_walking_dir: int = 1:
 var _forced_player_on_wall: bool
 
 var completed: bool
+var _level_has_completed: bool = false
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -160,7 +161,10 @@ func _physics_process(delta: float) -> void:
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	if !Thunder._current_player: return
+	if _level_has_completed:
+		return
 	level_completed.emit()
+	_level_has_completed = true
 	print("[Game] Level complete.")
 
 	Thunder._current_hud.timer.paused = true
