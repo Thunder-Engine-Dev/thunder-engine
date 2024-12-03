@@ -26,7 +26,6 @@ class_name MenuItemsController
 signal selected(item_index: int, item_node: Control, immediate: bool, mouse_input: bool)
 
 var selectors: Array
-var selector_repeat_timer: float
 
 func _ready() -> void:
 	_update_selectors()
@@ -43,42 +42,22 @@ var _mouse_can_process: bool
 func _physics_process(delta: float) -> void:
 	_mouse_can_process = false
 	if !focused: return
-	if selector_repeat_timer > 0: selector_repeat_timer -= delta
 
-	#var sel = current_item_index
-	#if Input.is_action_just_pressed(control_forward):
-		#current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
-		#_selection(false)
-		#return
-#
-	#if Input.is_action_just_pressed(control_backward):
-		#current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
-		#_selection(false)
-		#return
+	var sel = current_item_index
+	if Input.is_action_just_pressed(control_forward):
+		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
+		_selection(false)
+		return
+
+	if Input.is_action_just_pressed(control_backward):
+		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
+		_selection(false)
+		return
 
 	if has_node(prev_screen_node_path) && Input.is_action_just_pressed(prev_screen_control_cancel):
 		get_node(prev_screen_node_path)._handle_select(false)
 	
 	_mouse_can_process = true
-
-func _input(event: InputEvent) -> void:
-	if !focused: return
-	if !event.is_pressed(): return
-	if event.is_echo():
-		if selector_repeat_timer > 0:
-			return
-		else:
-			selector_repeat_timer = 0.06
-	var sel = current_item_index
-	if event.is_action(control_forward):
-		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
-		_selection(false)
-		return
-	
-	elif event.is_action(control_backward):
-		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
-		_selection(false)
-		return
 
 
 func move_selector(index: int, immediate: bool = false) -> void:

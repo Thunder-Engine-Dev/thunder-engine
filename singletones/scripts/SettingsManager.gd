@@ -203,11 +203,14 @@ func _load_keys() -> void:
 
 func _load_joy_controls() -> void:
 	var controls_joy: Dictionary = settings.controls_joypad
-	var buttons_to_add: Array = []
-	for actions in controls_joy:
+	prints(controls_joy)
+	for key in controls_joy.keys():
+		var buttons_to_add: Array = []
+		var actions = controls_joy[key]
+		print(actions)
 		if !actions is Array:
 			continue
-		var oldKeys: Array[InputEvent] = InputMap.action_get_events(controls_joy[actions])
+		var oldKeys: Array[InputEvent] = InputMap.action_get_events(key)
 		for joy_index in actions:
 			if joy_index >= 40:
 				var motion = InputEventJoypadMotion.new()
@@ -225,9 +228,9 @@ func _load_joy_controls() -> void:
 		
 		for toRemove in oldKeys:
 			if toRemove is InputEventJoypadButton || toRemove is InputEventJoypadMotion:
-				InputMap.action_erase_event(controls_joy[actions], toRemove)
+				InputMap.action_erase_event(key, toRemove)
 		for button in buttons_to_add:
-			InputMap.action_add_event(controls_joy[actions], button)
+			InputMap.action_add_event(key, button)
 
 	print("[Settings Manager] Loaded joypad input maps from settings.")
 
