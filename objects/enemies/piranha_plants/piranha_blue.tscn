@@ -35,7 +35,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PiranhaGreen" instance=ExtResource("1_vwvis")]
+[node name="PiranhaBlue" instance=ExtResource("1_vwvis")]
 range_in_pipe = 0.0
 
 [node name="EnemyAttacked" parent="Body" index="1"]
