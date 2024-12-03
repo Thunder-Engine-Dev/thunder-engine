@@ -139,7 +139,13 @@ func _on_interval_timeout() -> void:
 		return
 	if player.completed: 
 		return
-	if player.global_position.distance_squared_to(global_position) <= stop_shooting_radius ** 2:
+	var legacy_not_shooting: bool = ProjectSettings.get_setting("application/thunder_settings/tweaks/legacy_bullet_launcher_not_shooting_range", false)
+	var not_allowed_shooting := (
+		absf(global_transform.affine_inverse().basis_xform(player.global_position).x - global_transform.affine_inverse().basis_xform(global_position).x) <= stop_shooting_radius \
+		if legacy_not_shooting else \
+		player.global_position.distance_squared_to(global_position) <= stop_shooting_radius ** 2
+	)
+	if not_allowed_shooting:
 		_itrvl.start(0.1)
 		return
 	
