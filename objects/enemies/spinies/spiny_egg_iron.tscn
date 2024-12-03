@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://xugemt6nrnq"]
+[gd_scene load_steps=12 format=3 uid="uid://xugemt6nrnq"]
 
 [ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_27dq1"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_atwwu"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_g5j4e"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_jp7c6"]
 [ext_resource type="Texture2D" uid="uid://cplqyrqgikdet" path="res://engine/objects/enemies/spinies/textures/spiny_egg_iron.png" id="5_f80mt"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="6_80ejn"]
+[ext_resource type="Texture2D" uid="uid://6jvnknfhxi0m" path="res://engine/objects/enemies/spinies/textures/spiny_iron.png" id="7_3aaug"]
 
 [sub_resource type="Resource" id="Resource_fa5h4"]
 script = ExtResource("4_jp7c6")
@@ -53,7 +55,26 @@ animations = [{
 spiny_creation = SubResource("Resource_fa5h4")
 
 [node name="EnemyAttacked" parent="Body" index="1"]
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": false,
+"iceblock": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
 killing_creation = SubResource("Resource_c3pw0")
+killing_sound_failed = ExtResource("6_80ejn")
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_ru4ok")
+
+[node name="Killed" parent="Sprite" index="0"]
+texture = ExtResource("7_3aaug")
+region_enabled = true
+region_rect = Rect2(0, 33, 31, 31)
