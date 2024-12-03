@@ -33,4 +33,8 @@ func _on_shooting() -> void:
 		).create_2d()
 	
 	if !explosion: return
-	NodeCreator.prepare_2d(explosion, self).bind_global_transform(Vector2.UP * 24).create_2d()
+	var expl = explosion.instantiate()
+	add_sibling(expl)
+	expl.global_position = global_position
+	expl.position += Vector2.UP.rotated(global_rotation) * 24
+	expl.reset_physics_interpolation()

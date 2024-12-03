@@ -19,10 +19,14 @@ func _physics_process(delta: float) -> void:
 	if !focused: return
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		SettingsManager.settings["game_speed"] = 1.2 if SettingsManager.settings["game_speed"] == 1.0 else 1.0
-		Audio.play_1d_sound(toggle_sound, true, { &"ignore_pause": true, "bus": "1D Sound" })
-		SettingsManager._process_settings()
-		_update_string()
+		_toggle_setting()
+
+
+func _toggle_setting() -> void:
+	SettingsManager.settings["game_speed"] = 1.2 if SettingsManager.settings["game_speed"] == 1.0 else 1.0
+	Audio.play_1d_sound(toggle_sound, true, { &"ignore_pause": true, "bus": "1D Sound" })
+	SettingsManager._process_settings()
+	_update_string()
 
 
 func _update_string():
@@ -30,3 +34,10 @@ func _update_string():
 		value.texture.region.position.y = 36
 	else:
 		value.texture.region.position.y = 0
+
+
+func _on_mouse_pressed(index: MouseButton) -> void:
+	if !mouse_hovered || !focused: return
+	if index != MOUSE_BUTTON_LEFT: return
+	
+	_toggle_setting()

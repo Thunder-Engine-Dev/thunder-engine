@@ -15,8 +15,9 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	if !skippable: return
-	if Input.is_action_just_pressed("m_jump") || Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_pressed("m_jump") || Input.is_action_pressed("ui_accept"):
 		skippable = false
+		Audio.stop_music_channel(1, true)
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 				.instantiate()

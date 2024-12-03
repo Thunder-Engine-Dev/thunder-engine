@@ -5,6 +5,7 @@ extends MenuSelection
 
 var change_sound = preload("res://engine/components/hud/sounds/scoring.wav")
 var _mouse_can_process: bool = false
+var selector_repeat_timer: float
 
 func _ready() -> void:
 	SettingsManager.mouse_released.connect(_on_mouse_released)
@@ -20,15 +21,8 @@ func _physics_process(delta: float) -> void:
 	$Value.value = SettingsManager.settings[type] * 10
 	
 	if !focused || !get_parent().focused: return
+	if selector_repeat_timer > 0: selector_repeat_timer -= delta
 	var old_value = SettingsManager.settings[type]
-	
-	if Input.is_action_just_pressed("ui_right"):
-		SettingsManager.settings[type] = clamp(old_value + 0.1, 0, 1)
-		_toggled_option(old_value, SettingsManager.settings[type])
-		
-	if Input.is_action_just_pressed("ui_left"):
-		SettingsManager.settings[type] = clamp(old_value - 0.1, 0, 1)
-		_toggled_option(old_value, SettingsManager.settings[type])
 	
 	if !_mouse_can_process: return
 	
@@ -40,6 +34,24 @@ func _physics_process(delta: float) -> void:
 			0,
 			1
 		)
+		_toggled_option(old_value, SettingsManager.settings[type])
+
+func _input(event: InputEvent) -> void:
+	if !focused || !get_parent().focused: return
+	if !event.is_pressed(): return
+	if event.is_echo():
+		if selector_repeat_timer > 0:
+			return
+		else:
+			selector_repeat_timer = 0.06
+	
+	var old_value = SettingsManager.settings[type]
+	if event.is_action("ui_right"):
+		SettingsManager.settings[type] = clamp(old_value + 0.1, 0, 1)
+		_toggled_option(old_value, SettingsManager.settings[type])
+		
+	if event.is_action("ui_left"):
+		SettingsManager.settings[type] = clamp(old_value - 0.1, 0, 1)
 		_toggled_option(old_value, SettingsManager.settings[type])
 
 
