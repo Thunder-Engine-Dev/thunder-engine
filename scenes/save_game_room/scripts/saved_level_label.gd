@@ -25,6 +25,7 @@ func update_label() -> void:
 			set_empty()
 			return
 		
+		pipe_save.is_empty = false
 		if world_numbers.size() < 2: world_numbers.append("0")
 		if _tweak:
 			full_numbers = world_numbers[0]
