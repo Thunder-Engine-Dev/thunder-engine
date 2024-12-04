@@ -83,6 +83,7 @@ var _animation_behavior: ByNodeScript
 var _grab_behavior: ByNodeScript
 var _extra_behavior: ByNodeScript
 
+var flasher: Tween
 var holding_item: Node2D = null
 
 var left_right: float

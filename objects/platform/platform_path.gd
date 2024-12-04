@@ -39,6 +39,7 @@ var players_have_stood: bool
 var non_players_have_stood: bool
 
 var linear_velocity: Vector2
+var _path_falling_speed: float
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: StaticBody2D = $Block
@@ -104,8 +105,12 @@ func _on_path_movement_process(delta: float) -> void:
 	if !on_path: return
 	if _movement_blocked: return
 	
-	var pos: Vector2 = global_position
+	#var pos: Vector2 = global_position
 	# Moving
+	if players_have_stood && falling_acceleration != 0 && falling_enabled:
+		linear_velocity += falling_direction.normalized() * _path_falling_speed * delta
+		_path_falling_speed += falling_acceleration
+	
 	if curve:
 		progress += speed * delta
 		if loop:
@@ -117,10 +122,13 @@ func _on_path_movement_process(delta: float) -> void:
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
 	
-	linear_velocity = (global_position - pos) / delta
+	if falling_acceleration != 0:
+		position += linear_velocity * Thunder.get_delta(delta)
+	
+	#linear_velocity = (global_position - pos) / delta
 	# Emit Falling
-	if on_path && players_have_stood && falling_acceleration > 0.0 && falling_enabled:
-		on_path = false
+	#if on_path && players_have_stood && falling_acceleration > 0.0 && falling_enabled:
+	#	on_path = false
 
 
 func _non_path_movement_process(delta: float) -> void:

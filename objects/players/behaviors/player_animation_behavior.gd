@@ -72,7 +72,7 @@ func _invincible(duration: float) -> void:
 	if !sprite: return
 	sprite.modulate.a = 1
 	if !player.is_starman():
-		Effect.flash(sprite, duration, 0.06, Tween.TWEEN_PAUSE_STOP)
+		player.flasher = Effect.flash(sprite, duration, 0.06, Tween.TWEEN_PAUSE_STOP)
 
 
 func _bubble_spawn() -> void:

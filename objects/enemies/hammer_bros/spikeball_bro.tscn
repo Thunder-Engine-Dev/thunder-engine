@@ -1,0 +1,115 @@
+[gd_scene load_steps=16 format=3 uid="uid://cqss7uv208mep"]
+
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_r3rlh"]
+[ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/projectiles/spikeball/spikeball.tscn" id="2_apjcd"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_g80xd"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_sxow4"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_vkt3x"]
+[ext_resource type="Texture2D" uid="uid://ck3rfp4qvdp2x" path="res://engine/objects/enemies/hammer_bros/textures/gray_bro.png" id="5_ybtb3"]
+[ext_resource type="Texture2D" uid="uid://7xenkrg6v27r" path="res://engine/objects/enemies/hammer_bros/textures/spikeball_projectile.png" id="6_kyteb"]
+
+[sub_resource type="GDScript" id="GDScript_ji76f"]
+script/source = "extends ByNodeScript
+
+
+func _ready() -> void:
+	var min_speed: Vector2 = vars.get(&\"speed_min\", Vector2.ZERO)
+	var max_speed: Vector2 = vars.get(&\"speed_max\", Vector2.ZERO)
+	if node is GravityBody2D:
+		node.vel_set(Vector2(randf_range(min_speed.x, max_speed.x) * vars.bro.dir, randf_range(min_speed.y, max_speed.y)))
+		node.gravity_scale = 0.3
+"
+
+[sub_resource type="Resource" id="Resource_28r82"]
+script = ExtResource("4_vkt3x")
+creation_nodepack = ExtResource("2_apjcd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(250, -500),
+"speed_min": Vector2(50, -300)
+}
+custom_script = SubResource("GDScript_ji76f")
+
+[sub_resource type="Resource" id="Resource_dfga2"]
+resource_local_to_scene = true
+script = ExtResource("4_vkt3x")
+creation_nodepack = ExtResource("2_g80xd")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("3_sxow4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifm5w"]
+atlas = ExtResource("5_ybtb3")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg5aq"]
+atlas = ExtResource("5_ybtb3")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kon84"]
+atlas = ExtResource("5_ybtb3")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30gei"]
+atlas = ExtResource("5_ybtb3")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4t8q7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ifm5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg5aq")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kon84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30gei")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="SpikeballBro" instance=ExtResource("1_r3rlh")]
+projectile = SubResource("Resource_28r82")
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_dfga2")
+killing_creation = SubResource("Resource_dfga2")
+
+[node name="Sprite" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_4t8q7")
+
+[node name="SpriteProjectile" parent="." index="3"]
+position = Vector2(13, -16)
+rotation = -0.261799
+texture = ExtResource("6_kyteb")
+
+[node name="PosAttack" parent="." index="4"]
+position = Vector2(13, -16)

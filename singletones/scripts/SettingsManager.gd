@@ -400,13 +400,22 @@ func _hide_mouse() -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	var _path = Scenes.current_scene.get(&"scene_file_path")
-	if !_path || get_tree().paused || TransitionManager.current_transition:
+	if !_path || get_tree().paused:
 		return
 	if event is InputEventKey && event.is_pressed():
 		var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
 		var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 		if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false) && _path != menu_path:
 			Scenes.goto_scene(menu_path)
+			for i in 3:
+				if TransitionManager.current_transition:
+					TransitionManager.current_transition.end.emit()
+				await get_tree().physics_frame
+			_process_settings()
 		elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false) && _path != sgr_path:
 			Scenes.goto_scene(sgr_path)
-			
+			for i in 3:
+				if TransitionManager.current_transition:
+					TransitionManager.current_transition.end.emit()
+				await get_tree().physics_frame
+			_process_settings()

@@ -108,6 +108,8 @@ func _physics_process(delta: float) -> void:
 func _circle_transition() -> void:
 	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+		if player && "sprite" in player && player.sprite:
+			player.sprite.visible = false
 		pass_warp()
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
@@ -129,6 +131,8 @@ func _circle_transition() -> void:
 	TransitionManager.current_transition.paused = true
 
 	if warp_to_scene && circle_wait_till_scene_changed:
+		if player && "sprite" in player && player.sprite:
+			player.sprite.visible = false
 		Scenes.scene_ready.connect(func():
 			if !Thunder._current_player:
 				TransitionManager.current_transition.paused = false
