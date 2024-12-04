@@ -25,8 +25,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bltdr"]
-size = Vector2(32, 30)
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnevv"]
+radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0wnvj"]
 radius = 16.0
@@ -85,7 +85,7 @@ metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_bltdr")
+shape = SubResource("CircleShape2D_gnevv")
 disabled = true
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 

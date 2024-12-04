@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://xugemt6nrnq"]
+[gd_scene load_steps=13 format=3 uid="uid://xugemt6nrnq"]
 
 [ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_27dq1"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_atwwu"]
@@ -21,6 +21,9 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q4sn2"]
+radius = 15.0
 
 [sub_resource type="Resource" id="Resource_c3pw0"]
 resource_local_to_scene = true
@@ -53,6 +56,9 @@ animations = [{
 
 [node name="SpinyIronEgg" instance=ExtResource("1_27dq1")]
 spiny_creation = SubResource("Resource_fa5h4")
+
+[node name="Collision" parent="." index="0"]
+shape = SubResource("CircleShape2D_q4sn2")
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_immune = {
