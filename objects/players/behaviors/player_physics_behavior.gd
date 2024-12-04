@@ -99,7 +99,7 @@ func _movement_x(delta: float) -> void:
 	# Initial speed
 	if player.left_right != 0 && abs(player.speed.x) < 1:
 		@warning_ignore("narrowing_conversion")
-		player.direction = signi(player.left_right)
+		player.direction = sign(player.left_right)
 		player.speed.x = player.direction * config.walk_initial_speed
 	# Acceleration
 	var max_speed: float
