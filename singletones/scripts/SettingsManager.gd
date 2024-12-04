@@ -203,11 +203,11 @@ func _load_keys() -> void:
 
 func _load_joy_controls() -> void:
 	var controls_joy: Dictionary = settings.controls_joypad
-	prints(controls_joy)
+	#prints(controls_joy)
 	for key in controls_joy.keys():
 		var buttons_to_add: Array = []
 		var actions = controls_joy[key]
-		print(actions)
+		#print(actions)
 		if !actions is Array:
 			continue
 		var oldKeys: Array[InputEvent] = InputMap.action_get_events(key)
