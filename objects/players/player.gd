@@ -220,6 +220,15 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 	if suit.animation_sprites:
 		sprite.sprite_frames = SkinsManager.apply_player_skin(suit)
+	var _jump = CharacterManager.get_voice_line("jump")
+	var _hurt = CharacterManager.get_voice_line("hurt")
+	var _swim = CharacterManager.get_voice_line("swim")
+	var _death = CharacterManager.get_voice_line("death")
+	suit.physics_config = suit.physics_config.duplicate()
+	if _jump: suit.physics_config.sound_jump = _jump
+	if _swim: suit.physics_config.sound_swim = _swim
+	if _hurt: suit.sound_hurt = _hurt
+	if _death: suit.sound_death = _death
 
 	_physics_behavior = null
 	_suit_behavior = null

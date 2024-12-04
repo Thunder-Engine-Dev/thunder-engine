@@ -43,6 +43,10 @@ const MARIO_VOICE_LINES: Dictionary = {
 	],
 	"oh_no": preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav"),
 	"fall": preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav"),
+	"jump": null,
+	"swim": null,
+	"hurt": null,
+	"death": null,
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -53,6 +57,10 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	],
 	"oh_no": preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav"),
 	"fall": preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav"),
+	"jump": null,
+	"swim": null,
+	"hurt": null,
+	"death": null,
 }
 
 func _ready() -> void:
@@ -95,7 +103,9 @@ func get_suit_names(character_name: String = "") -> Array:
 
 
 func get_voice_line(voice_line: String, character_name: String = "", skinned: bool = true) -> Variant:
-	var skinned_dict = SkinsManager.misc_sounds if skinned else {}
+	var skinned_dict = {}
+	if skinned:
+		skinned_dict = SkinsManager.misc_sounds
 	return _get_something(voice_line, character_name, voice_lines, skinned_dict)
 
 
