@@ -19,7 +19,7 @@
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="14_vuk5p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aahbl"]
-size = Vector2(32, 54)
+size = Vector2(30, 54)
 
 [sub_resource type="Resource" id="Resource_kg3jd"]
 resource_local_to_scene = true

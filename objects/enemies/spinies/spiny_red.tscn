@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="11_achxa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 28)
+size = Vector2(30, 28)
 
 [sub_resource type="Resource" id="Resource_ba3fn"]
 resource_local_to_scene = true

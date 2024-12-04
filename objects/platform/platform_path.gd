@@ -109,7 +109,10 @@ func _on_path_movement_process(delta: float) -> void:
 	# Moving
 	if players_have_stood && falling_acceleration != 0 && falling_enabled:
 		linear_velocity += falling_direction.normalized() * _path_falling_speed * delta
-		_path_falling_speed += falling_acceleration
+		if curve:
+			_path_falling_speed += falling_acceleration
+		else:
+			_path_falling_speed = falling_acceleration
 	
 	if curve:
 		progress += speed * delta

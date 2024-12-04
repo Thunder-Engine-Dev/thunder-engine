@@ -13,8 +13,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_vwemg"]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qrt8a"]
-radius = 14.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mntb8"]
+size = Vector2(28, 20)
 
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("4_6v8k6")
@@ -46,12 +46,11 @@ shape = SubResource("CircleShape2D_vwemg")
 disabled = true
 
 [node name="Body" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CircleShape2D_qrt8a")
+shape = SubResource("RectangleShape2D_mntb8")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]

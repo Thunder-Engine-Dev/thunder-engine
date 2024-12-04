@@ -226,7 +226,7 @@ func _stop_sliding_movement() -> void:
 	player.is_sliding_accelerating = false
 	player.attack.enabled = player.is_starman()
 	if !player.is_starman(): player.starman_combo.reset_combo()
-	player.attack.killing_detection_scale = 1
+	player.attack.killing_detection_scale = 2
 
 
 #= Shape
