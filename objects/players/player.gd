@@ -273,7 +273,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 
 func control_process() -> void:
-	left_right = Input.get_axis(control.left, control.right)
+	left_right = clamp(Input.get_axis(control.left, control.right) * 1.25, -1, 1)
 	up_down = Input.get_axis(control.up, control.down)
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))
