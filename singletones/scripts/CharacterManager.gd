@@ -41,8 +41,12 @@ const MARIO_VOICE_LINES: Dictionary = {
 		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_2.ogg"),
 		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_3.ogg"),
 	],
-	"oh_no": preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav"),
-	"fall": preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav"),
+	"oh_no": [
+		preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav")
+	],
+	"fall": [
+		preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav")
+	],
 	"jump": null,
 	"swim": null,
 	"hurt": null,
@@ -55,8 +59,12 @@ const LUIGI_VOICE_LINES: Dictionary = {
 		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_2.wav"),
 		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_3.wav"),
 	],
-	"oh_no": preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav"),
-	"fall": preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav"),
+	"oh_no": [
+		preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav")
+		],
+	"fall": [
+		preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav")
+	],
 	"jump": null,
 	"swim": null,
 	"hurt": null,
