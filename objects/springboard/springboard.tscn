@@ -392,8 +392,9 @@ minimum = true
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.90735e-06, -8)
-scale = Vector2(3.2, 4)
+rect = Rect2(-32, -48, 64, 96)
 script = ExtResource("13_0airn")
+new_rect = Rect2(-256, -256, 512, 512)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Node2D")
@@ -448,3 +449,5 @@ position = Vector2(0, 12)
 texture = ExtResource("9_hsop8")
 
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="trigger"]
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]

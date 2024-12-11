@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://yreeufpqjft1"]
+[gd_scene load_steps=11 format=3 uid="uid://yreeufpqjft1"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
 [ext_resource type="Texture2D" uid="uid://1bnxo3a5rbrn" path="res://engine/objects/bosses/bowser/texture/Flame.png" id="2_khrfp"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_qukhs"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="4_jce6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
 size = Vector2(46, 20)
@@ -65,7 +66,9 @@ killing_immune = {
 "fireball": true,
 "iceball": false
 }
-killing_sound_failed = ExtResource("3_qukhs")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("3_qukhs")
+killing_sound_failed = ExtResource("4_jce6f")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

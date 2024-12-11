@@ -34,12 +34,22 @@ func _animation_finished(anim: String) -> void:
 		is_playing_backwards = false
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("m_jump"):
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("m_jump"):
 		enemy_attacked.stomping_player_jumping_max = spring_jump_height
 		if !is_better:
-			await get_tree().create_timer(0.1).timeout
-			enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+			get_tree().create_timer(0.1).timeout.connect(func():
+				enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+			)
 		
-	elif event.is_action_released("m_jump") && is_better:
+	if is_better && !Input.is_action_pressed("m_jump"):
 		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+
+
+func _on_screen_entered() -> void:
+	if is_better && Input.is_action_pressed("m_jump"):
+		enemy_attacked.stomping_player_jumping_max = spring_jump_height
+
+
+func _on_screen_exited() -> void:
+	enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
