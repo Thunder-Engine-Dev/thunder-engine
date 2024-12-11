@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b71msw28e37a"]
+[gd_scene load_steps=10 format=3 uid="uid://b71msw28e37a"]
 
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_qo0md"]
 [ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
 [ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
 
@@ -62,6 +63,7 @@ texture = ExtResource("2_crlg7")
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-128, -128, 256, 256)
+script = ExtResource("4_qo0md")
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
