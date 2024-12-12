@@ -14,8 +14,12 @@ extends MenuSelection
 		displayed_texture = new_value
 		if has_node(^"Text"):
 			$Text.texture = displayed_texture
+@export var conflict_list: Array[NodePath] = []
+@export var fail_sound = preload("res://engine/components/ui/_sounds/select_failure.wav")
 
 var changing: bool = false
+@warning_ignore("unused_private_class_variable")
+var _tw: Tween
 
 const change_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
@@ -55,7 +59,7 @@ func _text_process() -> void:
 		return
 
 	if SettingsManager.device_keyboard:
-		value.text = SettingsManager.settings.controls[action_name]
+		value.text = str(SettingsManager.settings.controls.get(action_name))
 		icon.visible = false
 		icon_2.visible = false
 		or_string.visible = false
@@ -81,7 +85,7 @@ func _text_process() -> void:
 		icon.visible = false
 		icon_2.visible = false
 		or_string.visible = false
-		value.text = "Joy " + str(SettingsManager.settings.controls_joypad[action_name])
+		value.text = "Joy " + str(SettingsManager.settings.controls_joypad.get(action_name))
 
 
 func _device_check(arr: Array[String]) -> bool:
@@ -92,7 +96,7 @@ func _device_check(arr: Array[String]) -> bool:
 
 
 func _gamepad_icon_logic(texture: Texture2D, max_icons: int = 15, icon_exceptions: Array = [-1, 48, 50]) -> void:
-	var actions_array: Array = SettingsManager.settings.controls_joypad[action_name]
+	var actions_array: Array = SettingsManager.settings.controls_joypad.get(action_name)
 
 	var placeholder_text: PackedStringArray
 	var loop_ind: int = -1
@@ -126,6 +130,19 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey && event.pressed && !event.echo:
 		if SettingsManager.device_keyboard && (!event.is_action('ui_cancel') || !enable_cancel):
 			var scancode: String = event.as_text()
+			# Scan for Conflicts
+			for i in conflict_list:
+				if SettingsManager.settings.controls.get(get_node(i).action_name) == scancode:
+					Audio.play_1d_sound(fail_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+					var _nod = get_node(i)
+					if _nod._tw:
+						_nod._tw = null
+					_nod.modulate = Color.RED
+					_nod._tw = get_tree().create_tween().bind_node(_nod)
+					_nod._tw.tween_property(_nod, "modulate", Color.WHITE, 1.5)
+					_after_change()
+					return
+			# Saving the key to config
 			SettingsManager.settings.controls[action_name] = scancode
 			SettingsManager._load_keys()
 			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
@@ -133,6 +150,7 @@ func _input(event: InputEvent) -> void:
 		_after_change()
 	elif event is InputEventJoypadButton && event.is_pressed():
 		if !SettingsManager.device_keyboard:
+			# Saving the key to config
 			set_joy_control(event.button_index)
 			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 
@@ -155,7 +173,7 @@ func _after_change() -> void:
 
 
 func set_joy_control(joy_index: int) -> void:
-	var joy_array: Array = SettingsManager.settings.controls_joypad[action_name].duplicate()
+	var joy_array: Array = SettingsManager.settings.controls_joypad.get(action_name).duplicate()
 	joy_array.push_front(joy_index)
 	if joy_array.size() > 2:
 		joy_array.resize(joy_array.size() - 1)

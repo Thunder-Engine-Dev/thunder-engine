@@ -28,7 +28,6 @@ custom_minimum_size = Vector2(0, 36)
 size_flags_vertical = 6
 script = ExtResource("1_n10yh")
 displayed_texture = SubResource("AtlasTexture_3kw8g")
-trigger_mouse = false
 
 [node name="Text" type="TextureRect" parent="."]
 layout_mode = 2

@@ -331,9 +331,8 @@ script = ExtResource("20_r3d2l")
 process_mode = 3
 hide_bg = true
 
-[node name="Back" parent="Controls/Options" index="12"]
+[node name="Back" parent="Controls/SubViewportContainer/SubViewport/Options" index="22"]
 script = ExtResource("22_rhyed")
-metadata/_edit_pinned_properties_ = [&"script"]
 
 [connection signal="selected" from="Pause/VBoxContainer" to="Pause/Selector" method="handle_selection"]
 

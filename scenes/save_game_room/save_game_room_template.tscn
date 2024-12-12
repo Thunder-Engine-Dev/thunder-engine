@@ -1,9 +1,9 @@
-[gd_scene load_steps=46 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=48 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
 [ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_omaog"]
-[ext_resource type="Resource" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_u27fl"]
+[ext_resource type="AudioStream" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_u27fl"]
 [ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="5_yaxqo"]
 [ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="6_xttds"]
@@ -25,8 +25,10 @@
 [ext_resource type="PackedScene" uid="uid://dh4kf1w7jyseo" path="res://engine/objects/warps/pipe_in.tscn" id="17_lfiik"]
 [ext_resource type="PackedScene" uid="uid://u383towqhd0i" path="res://engine/objects/warps/pipe_out.tscn" id="19_pdlhx"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="20_1ppih"]
+[ext_resource type="AudioStream" uid="uid://b1bxtmesp2bfq" path="res://engine/objects/players/prefabs/sounds/powerup.wav" id="22_hss8l"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="22_nw3gx"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/effects/blinking_canvas_item.gd" id="24_3w1ro"]
+[ext_resource type="Script" path="res://engine/scenes/save_game_room/scripts/item_shop_label.gd" id="28_7hqg1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tn1mg"]
 texture = ExtResource("5_yaxqo")
@@ -377,12 +379,11 @@ script = ExtResource("17_815hk")
 
 [node name="RedMushroom" parent="Objects" instance=ExtResource("11_33dcp")]
 position = Vector2(816, 400)
-to_suit = "super"
 force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -1
-pickup_neutral_sound = null
+pickup_neutral_sound = ExtResource("22_hss8l")
 speed = Vector2(0, 0)
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
@@ -392,7 +393,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = null
+pickup_neutral_sound = ExtResource("22_hss8l")
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="Beetroot" parent="Objects" instance=ExtResource("13_b3ol1")]
@@ -401,7 +402,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = null
+pickup_neutral_sound = ExtResource("22_hss8l")
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="GreenLui" parent="Objects" instance=ExtResource("14_8lcjd")]
@@ -410,7 +411,7 @@ force_powerup_state = true
 score = 0
 supply_behavior = true
 supply_modify_lives = -2
-pickup_neutral_sound = null
+pickup_neutral_sound = ExtResource("22_hss8l")
 metadata/_edit_pinned_properties_ = [&"pickup_neutral_sound"]
 
 [node name="ResetPowerBlock" parent="Objects" instance=ExtResource("15_p0k5q")]
@@ -457,6 +458,8 @@ text = "YOU CAN EXCHANGE SOME LIVES FOR ONE OF THESE ITEMS!!!
 BUT BE CAREFUL, SOMETIMES LIVES ARE MORE IMPORTANT THAN THIS STUFF."
 horizontal_alignment = 1
 uppercase = true
+script = ExtResource("28_7hqg1")
+action = "m_up"
 
 [node name="Label" type="Label" parent="."]
 offset_left = 752.0

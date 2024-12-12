@@ -10,7 +10,7 @@ const close_sound = null
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
 @onready var options: MenuItemsController = $"../Settings/SubViewportContainer/SubViewport/Options"
-@onready var controls_options: MenuItemsController = $"../Controls/Options"
+@onready var controls_options: MenuItemsController = $"../Controls/SubViewportContainer/SubViewport/Options"
 
 signal paused
 signal unpaused

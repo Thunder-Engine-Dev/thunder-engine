@@ -21,7 +21,7 @@ func _init() -> void:
 func get_files(path: String, file := "", files := []) -> Array:
 	var dir = DirAccess.open(path)
 	if dir == null || DirAccess.get_open_error() != OK:
-		print("An error occurred when trying to access %s." % path)
+		#print("An error occurred when trying to access %s." % path)
 		return []
 	
 	dir.include_hidden = false

@@ -117,6 +117,7 @@ gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"look_at_player", &"speed", &"gravity_scale"]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_t445g")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
@@ -127,6 +128,7 @@ collision_mask = 7
 script = ExtResource("2_8bbjj")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)

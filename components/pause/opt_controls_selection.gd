@@ -7,4 +7,4 @@ func _handle_select(mouse_input: bool = false) -> void:
 	scene.reset_physics_interpolation()
 	await get_tree().physics_frame
 	scene.get_node("Settings/SubViewportContainer/SubViewport/Options").focused = false
-	scene.get_node("Controls/Options").focused = true
+	scene.get_node("Controls/SubViewportContainer/SubViewport/Options").focused = true

@@ -9,4 +9,4 @@ func _handle_select(mouse_input: bool = false) -> void:
 	await get_tree().physics_frame
 	get_parent().move_selector(0)
 	scene.get_node("Settings/SubViewportContainer/SubViewport/Options").focused = true
-	scene.get_node("Controls/Options").focused = false
+	scene.get_node("Controls/SubViewportContainer/SubViewport/Options").focused = false

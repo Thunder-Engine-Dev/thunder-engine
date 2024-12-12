@@ -154,7 +154,6 @@ killing_creation = SubResource("Resource_j7a5f")
 killing_scores = 800
 killing_sound_succeeded = ExtResource("6_cdkox")
 killing_sound_failed = ExtResource("7_58bjx")
-turn_into_coin_on_level_end = false
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
 

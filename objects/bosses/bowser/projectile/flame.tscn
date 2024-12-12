@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="4_jce6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
-size = Vector2(46, 20)
+size = Vector2(40, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l13ct"]
 atlas = ExtResource("2_khrfp")

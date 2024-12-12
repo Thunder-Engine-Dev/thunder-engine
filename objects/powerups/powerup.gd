@@ -50,6 +50,10 @@ func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	var overlaps: bool = body.overlaps_body(player)
+	if supply_behavior && SettingsManager.get_tweak(&"revamped_item_shop", true):
+		if overlaps && Input.is_action_just_pressed(&"m_up"):
+			collect()
+		return
 	if overlaps && !one_overlap:
 		collect()
 	if !overlaps && one_overlap:
