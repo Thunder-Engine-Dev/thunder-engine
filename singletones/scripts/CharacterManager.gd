@@ -12,6 +12,7 @@ var voice_lines: Dictionary = {}
 ## Miscelleneous textures for all characters, like the menu player head selector.
 ## Add new ones with "add_misc_texture" method.
 var misc_textures: Dictionary = {}
+var suit_settings: Dictionary = {}
 
 ## Base suits for Mario
 const MARIO_SUITS: Dictionary = {
@@ -69,6 +70,17 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"swim": null,
 	"hurt": null,
 	"death": null,
+}
+
+const DEFAULT_SUIT_SETTINGS: Dictionary = {
+	"look_up_animation": false,
+	"attack_air_animation": false,
+	"separate_run_animation": false,
+	"idle_animation": false,
+	"idle_activate_after_sec": 10.0,
+	"stomp_animation": false,
+	"emit_particles": false,
+	"emit_particles_color": Color(1, 1, 1, 1),
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
@@ -131,6 +143,11 @@ func get_voice_line(voice_line: String, character_name: String = "", skinned: bo
 func get_misc_texture(texture_name: String, character_name: String = "", skinned: bool = true) -> Variant:
 	var skinned_dict = SkinsManager.misc_textures if skinned else {}
 	return _get_something(texture_name, character_name, misc_textures, skinned_dict)
+
+
+func get_suit_setting(setting: String, character_name: String = "", skinned: bool = true) -> Variant:
+	var skinned_dict = SkinsManager.suit_settings if skinned else {}
+	return _get_something(setting, character_name, suit_settings, skinned_dict)
 
 
 func get_character_names() -> Array:

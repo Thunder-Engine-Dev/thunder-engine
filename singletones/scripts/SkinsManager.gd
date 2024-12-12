@@ -11,10 +11,8 @@ var misc_textures: Dictionary
 var misc_sounds: Dictionary
 var custom_nicknames: Dictionary
 var custom_story_text: Dictionary
-var custom_settings: Dictionary
+var suit_settings: Dictionary
 
-@onready var base_sprite_frames: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres")
-@onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
 
 func _init() -> void:
 	var _tex: String = load_external_textures()
@@ -24,7 +22,6 @@ func _init() -> void:
 func _ready() -> void:
 	current_skin = SettingsManager.settings.skin
 	SettingsManager.settings_updated.connect(_update_current_skin_from_settings)
-#	print(animation_list)
 	
 	# Saving animation sprite frames
 	#var err = ResourceSaver.save(base_sprite_frames, base_dir + "/animation.tres", ResourceSaver.FLAG_RELATIVE_PATHS)
@@ -63,7 +60,7 @@ func load_external_textures() -> String:
 	misc_sounds = {}
 	custom_nicknames = {}
 	custom_story_text = {}
-	custom_settings = {}
+	suit_settings = {}
 	
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	for i in directories:
@@ -74,7 +71,7 @@ func load_external_textures() -> String:
 		misc_sounds[i] = {}
 		custom_nicknames[i] = i.left(15)
 		custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
-		custom_settings[i] = {}
+		suit_settings[i] = {}
 		# Loading miscellaneous textures, voice lines, and sound effects
 		_load_misc_files(dir_access, i)
 		
@@ -165,9 +162,10 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				
 
 
-func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray):
+func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray) -> Dictionary:
 	var loaded: Dictionary = {}
 	loaded = {}
+	var errored: PackedStringArray = []
 	for j in _anims:
 		var file_path: String = base_dir + "/" + i + "/" + j
 		dir_access.change_dir(file_path)
@@ -177,6 +175,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			continue
 		var file_name: String = dir_access.get_next()
 		loaded[j] = {}
+		suit_settings[i][j] = CharacterManager.DEFAULT_SUIT_SETTINGS.duplicate(false)
 		#custom_sprite_frames[i][j] = null
 		while file_name != "":
 			var file_ext: String = file_name.get_extension().to_lower()
@@ -197,13 +196,30 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 					!"animation_speeds" in _skin ||
 					!"name" in _skin
 				):
-					OS.alert(file_path + "/skin_settings.tres is invalid.", "Player Skin Load Error")
+					errored.append(file_path + "/skin_settings.tres is invalid.")
 					file_name = dir_access.get_next()
 					continue
 				
 				skins[i][_skin.name] = _skin
+			# Loading Suit Tweaks to "suit_settings" variable
+			elif !dir_access.current_is_dir() && file_name == "suit_tweaks.json":
+				var _file: String = FileAccess.get_file_as_string(file_path + "/suit_tweaks.json")
+				var _json = JSON.parse_string(_file)
+				if !_json || !_json is Dictionary:
+					errored.append(file_path + "/suit_tweaks.json is invalid.")
+					print(_json)
+					file_name = dir_access.get_next()
+					continue
+				
+				for key in _json.keys():
+					if key in suit_settings[i][j]:
+						suit_settings[i][j][key] = _json[key]
+				
 			
 			file_name = dir_access.get_next()
+	if !errored.is_empty():
+		OS.alert("
+".join(errored), "Player Skin Load Error")
 	return loaded
 
 
