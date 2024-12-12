@@ -113,6 +113,14 @@ process_material = SubResource("ParticleProcessMaterial_gm2pg")
 texture = ExtResource("6_skpgp")
 lifetime = 0.5
 
+[node name="SkinParticles" type="GPUParticles2D" parent="Sprite"]
+show_behind_parent = true
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_gm2pg")
+texture = ExtResource("6_skpgp")
+lifetime = 0.5
+
 [node name="Skid" type="GPUParticles2D" parent="Sprite"]
 physics_interpolation_mode = 2
 show_behind_parent = true

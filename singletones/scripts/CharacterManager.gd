@@ -12,7 +12,7 @@ var voice_lines: Dictionary = {}
 ## Miscelleneous textures for all characters, like the menu player head selector.
 ## Add new ones with "add_misc_texture" method.
 var misc_textures: Dictionary = {}
-var suit_settings: Dictionary = {}
+var suit_tweaks: Dictionary = {}
 
 ## Base suits for Mario
 const MARIO_SUITS: Dictionary = {
@@ -72,7 +72,7 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"death": null,
 }
 
-const DEFAULT_SUIT_SETTINGS: Dictionary = {
+const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"look_up_animation": false,
 	"attack_air_animation": false,
 	"separate_run_animation": false,
@@ -81,6 +81,7 @@ const DEFAULT_SUIT_SETTINGS: Dictionary = {
 	"stomp_animation": false,
 	"emit_particles": false,
 	"emit_particles_color": Color(1, 1, 1, 1),
+	"emit_particles_behind": true,
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
@@ -96,6 +97,10 @@ func _ready() -> void:
 	add_misc_texture(preload("res://engine/scenes/map/textures/luigi_icon.png"), "map_icon", "Luigi")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/mario/mario_dead.png"), "death", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/luigi/luigi_dead.png"), "death", "Luigi")
+	for i in MARIO_SUITS.keys():
+		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
+	for i in LUIGI_SUITS.keys():
+		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Luigi", i)
 
 
 func get_character_name() -> String:
@@ -145,9 +150,18 @@ func get_misc_texture(texture_name: String, character_name: String = "", skinned
 	return _get_something(texture_name, character_name, misc_textures, skinned_dict)
 
 
-func get_suit_setting(setting: String, character_name: String = "", skinned: bool = true) -> Variant:
-	var skinned_dict = SkinsManager.suit_settings if skinned else {}
-	return _get_something(setting, character_name, suit_settings, skinned_dict)
+func get_suit_tweak(tweak: String, character_name: String = "", suit_name: String = "", skinned: bool = true) -> Variant:
+	var skinned_dict = SkinsManager.suit_tweaks if skinned else {}
+	var chara: String = character_name
+	if chara.is_empty(): chara = SettingsManager.settings.character
+	if !suit_name:
+		suit_name = Thunder._current_player_state.name
+	
+	if chara && chara in suit_tweaks && suit_name in suit_tweaks[chara] && tweak in suit_tweaks[chara][suit_name]:
+		if skinned_dict && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
+			return skinned_dict[SkinsManager.current_skin][suit_name][tweak]
+		return suit_tweaks[chara][suit_name][tweak]
+	return null
 
 
 func get_character_names() -> Array:
@@ -190,6 +204,16 @@ func add_misc_texture(texture: Variant, texture_name: String, character: String,
 		return
 	new_texture_dict[character][texture_name] = texture
 	misc_textures = new_texture_dict
+
+
+func add_suit_tweaks(dict: Dictionary, character: String, suit: String, override: bool = false) -> void:
+	var new_tweak_dict: Dictionary = suit_tweaks.duplicate(true)
+	if !character in new_tweak_dict:
+		new_tweak_dict[character] = {}
+	if !suit in new_tweak_dict[character]:
+		new_tweak_dict[character][suit] = {}
+	new_tweak_dict[character][suit].merge(dict, override)
+	suit_tweaks = new_tweak_dict
 
 
 func _get_something(what: String, character_name: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:

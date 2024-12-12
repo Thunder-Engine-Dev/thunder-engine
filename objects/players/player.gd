@@ -146,6 +146,7 @@ var _suit_tree_paused: bool
 @onready var stars: GPUParticles2D = $Sprite/Stars
 @onready var skid: GPUParticles2D = $Sprite/Skid
 @onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")
+@onready var skin_particles: GPUParticles2D = $Sprite/SkinParticles
 @onready var death_sprite: Sprite2D = $SpriteDeath
 
 
@@ -248,6 +249,13 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	if _suit_appear:
 		_suit_appear = false
 		suit_appeared.emit()
+	
+	skin_particles.emitting = CharacterManager.get_suit_tweak("emit_particles", "", suit.name)
+	var _particle_color = CharacterManager.get_suit_tweak("emit_particles_color", "", suit.name)
+	if _particle_color is String:
+		_particle_color = Color.from_string(_particle_color, Color.WHITE)
+	skin_particles.modulate = _particle_color
+	skin_particles.show_behind_parent = CharacterManager.get_suit_tweak("emit_particles_behind", "", suit.name)
 	
 	if !to.resource_path.is_empty():
 		Thunder._current_player_state_path = to.resource_path
