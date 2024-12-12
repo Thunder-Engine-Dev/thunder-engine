@@ -64,7 +64,7 @@ func _shot() -> void:
 	
 	if _attack_air_tweak:
 		sprite.play(&"attack" if player.is_on_floor() else &"attack_air")
-	elif player.is_on_floor():
+	else:
 		sprite.play(&"attack")
 
 
@@ -93,8 +93,8 @@ func _sprite_loop() -> void:
 
 func _sprite_finish() -> void:
 	if !sprite: return
-	if sprite.animation == &"attack": sprite.play(&"default")
-	if sprite.animation == &"attack_air": sprite.play(&"jump" if player.speed.y < 0 else &"fall")
+	if sprite.animation == &"attack": _play_anim(&"default")
+	if sprite.animation == &"attack_air": _play_anim(&"jump" if player.speed.y < 0 else &"fall")
 
 
 var _skid_sound_timer: bool
@@ -137,7 +137,7 @@ func _animation_process(delta: float) -> void:
 		if sprite.animation in [&"appear", &"attack", &"grab", &"kick"]: return
 		# Climbing
 		if player.is_climbing:
-			sprite.play(&"climb")
+			_play_anim(&"climb")
 			if player.speed != Vector2.ZERO:
 				_climb_progress += abs(player.speed.length() * delta)
 				if _climb_progress > 20:
@@ -145,7 +145,7 @@ func _animation_process(delta: float) -> void:
 					sprite.flip_h = !sprite.flip_h
 			return
 		if player.is_sliding:
-			sprite.play(&"slide")
+			_play_anim(&"slide")
 			sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
 			player.skid.emitting = player.is_on_floor()
 			return
@@ -155,7 +155,7 @@ func _animation_process(delta: float) -> void:
 			_skid_sound_loop()
 		if player.is_on_floor():
 			if !(is_zero_approx(player.speed.x)):
-				sprite.play(
+				_play_anim(
 					StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
 				)
 				sprite.speed_scale = (
@@ -164,29 +164,35 @@ func _animation_process(delta: float) -> void:
 					config.animation_max_walking_speed)
 				)
 			else:
-				sprite.play(_get_animation_prefixed(&"default"))
+				_play_anim(_get_animation_prefixed(&"default"))
 			if player.is_crouching:
-				sprite.play(_get_animation_prefixed(&"crouch"))
+				_play_anim(_get_animation_prefixed(&"crouch"))
 				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
 		elif player.is_underwater:
-			sprite.play(&"swim")
+			_play_anim(_get_animation_prefixed(&"swim"))
 		else:
 			if sprite.animation == &"attack_air": return
 			if player.speed.y < 0:
-				sprite.play(_get_animation_prefixed(&"jump"))
+				_play_anim(_get_animation_prefixed(&"jump"))
 			else:
-				sprite.play(_get_animation_prefixed(&"fall"))
+				_play_anim(_get_animation_prefixed(&"fall"))
 	# Warping
 	else:
 		match player.warp_dir:
 			Player.WarpDir.UP, Player.WarpDir.DOWN:
-				sprite.play(&"warp")
+				_play_anim(&"warp")
 			Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
 				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
-				sprite.play(_get_animation_prefixed(&"walk"))
+				_play_anim(_get_animation_prefixed(&"walk"))
 				sprite.speed_scale = 2
 
 func _get_animation_prefixed(anim_name: String) -> String:
 	if player.is_holding:
 		return "hold_%s" % anim_name
 	return anim_name
+
+func _play_anim(animation: StringName) -> void:
+	if sprite.animation != animation:
+		sprite.play(animation)
+	else:
+		sprite.animation = animation
