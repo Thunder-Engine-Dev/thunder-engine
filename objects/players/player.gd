@@ -346,9 +346,9 @@ func die(tags: Dictionary = {}) -> void:
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
 				db.jump_to_scene = death_jump_to_scene
-				if _suit_pause_tweak:
-					Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
-					Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
+				#if _suit_pause_tweak:
+				#	Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
+				#	Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					var character_death_sprite = CharacterManager.get_misc_texture("death")
@@ -358,10 +358,10 @@ func die(tags: Dictionary = {}) -> void:
 					dsdup.visible = true
 		).create_2d().get_node()
 
-	if _suit_pause_tweak && _db:
-		get_tree().paused = true
-		_db.process_mode = Node.PROCESS_MODE_ALWAYS
-		Scenes.custom_scenes.pause._no_unpause = true
+	#if _suit_pause_tweak && _db:
+	#	get_tree().paused = true
+	#	_db.process_mode = Node.PROCESS_MODE_ALWAYS
+	#	Scenes.custom_scenes.pause._no_unpause = true
 
 	died.emit()
 	died_with_body.emit(_db)

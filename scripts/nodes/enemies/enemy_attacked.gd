@@ -133,6 +133,7 @@ func _ready() -> void:
 	killed_succeeded.connect(_lks)
 	killed_failed.connect(_lkf)
 	killed_frozen.connect(_lkfz)
+	stomping_delay()
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")
 	if (

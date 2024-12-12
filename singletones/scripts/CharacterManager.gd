@@ -98,7 +98,7 @@ func get_character_display_name() -> String:
 
 
 func get_character_story_text(index: int) -> String:
-	var text: Array = SkinsManager.custom_story_text.get(SkinsManager.current_skin, "")
+	var text: Array = SkinsManager.custom_story_text.get(SkinsManager.current_skin, [])
 	if text.is_empty():
 		text = DEFAULT_STORY_TEXT.duplicate()
 		text[0] = "he"

@@ -11,25 +11,18 @@ var movement: bool
 
 @onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
-@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
 
 
 func _ready() -> void:
-	await get_tree().create_timer(0.5, _suit_pause_tweak, true).timeout
+	await get_tree().create_timer(0.5, false, true).timeout
 
 	movement = true
 	vel_set_y(-550)
 
 	if wait_time > 0.0:
-		await get_tree().create_timer(wait_time, _suit_pause_tweak, true).timeout
+		await get_tree().create_timer(wait_time, false, true).timeout
 	elif wait_time <= -1.0:
 		return
-
-	if _suit_pause_tweak:
-		_pause_tweak_logic()
-
-		while Scenes.custom_scenes.pause.opened:
-			await get_tree().physics_frame
 
 	# After death
 	var has_gameover: bool = _init_game_over()
@@ -46,20 +39,6 @@ func _physics_process(delta: float) -> void:
 	#if _suit_pause_tweak && Scenes.custom_scenes.pause.opened:
 	#	return
 	motion_process(delta)
-
-
-func _pause_tweak_logic() -> void:
-	#movement = false
-	for sound in GlobalViewport.get_children():
-		if !sound is AudioStreamPlayer2D:
-			continue
-		if sound.process_mode != Node.PROCESS_MODE_ALWAYS && sound.bus != "Music":
-			sound.queue_free()
-	for sound in Audio.get_children():
-		if !sound is AudioStreamPlayer:
-			continue
-		if sound.process_mode != Node.PROCESS_MODE_ALWAYS && sound.bus != "Music":
-			sound.queue_free()
 
 
 func _init_game_over() -> bool:
@@ -82,6 +61,7 @@ func _start_transition() -> void:
 	# Transition (tweaked, crossfade)
 	if _is_simple_fade:
 		var _scene = Scenes.current_scene.scene_file_path if jump_to_scene.is_empty() else jump_to_scene
+		Audio.stop_all_sounds()
 		TransitionManager.accept_transition(
 		load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
 			.instantiate()

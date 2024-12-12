@@ -127,6 +127,7 @@ script = ExtResource("3_5ua6b")
 stomping_creation = SubResource("Resource_5c6gf")
 stomping_scores = 100
 stomping_sound = ExtResource("7_miya7")
+stomping_delay_frames = 8.0
 killing_creation = SubResource("Resource_in8n8")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_xh6bi")

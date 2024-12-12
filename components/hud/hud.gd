@@ -8,8 +8,6 @@ extends CanvasLayer
 @onready var mario_score: Label = $Control/MarioScore
 @onready var coins: Label = $Control/Control/Coins
 
-@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
-
 @export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
 @export var timer_hurry_sound = preload("res://engine/components/hud/sounds/timeout.wav")
 
@@ -42,7 +40,7 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(6, _suit_pause_tweak).timeout.connect(emit_signal.bind("game_over_finished"))
+	get_tree().create_timer(6, false).timeout.connect(emit_signal.bind("game_over_finished"))
 
 
 func timer_hurry() -> void:
