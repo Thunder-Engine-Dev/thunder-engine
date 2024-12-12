@@ -136,6 +136,7 @@ func _input(event: InputEvent) -> void:
 					Audio.play_1d_sound(fail_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 					var _nod = get_node(i)
 					if _nod._tw:
+						_nod._tw.stop()
 						_nod._tw = null
 					_nod.modulate = Color.RED
 					_nod._tw = get_tree().create_tween().bind_node(_nod)

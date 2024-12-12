@@ -97,11 +97,9 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 			continue
 		
 		var arrayed_filename: String = j.get_basename().left(-2)
-		if is_array && !arrayed_filename in misc_textures[i]:
-			misc_textures[i][arrayed_filename] = []
-		if is_array && !arrayed_filename in misc_sounds[i]:
-			misc_sounds[i][arrayed_filename] = []
 		if file_ext == "png":
+			if is_array && !arrayed_filename in misc_textures[i]:
+				misc_textures[i][arrayed_filename] = []
 			var img: Image = Image.load_from_file(file_path)
 			var file := ImageTexture.create_from_image(img)
 			if is_array:
@@ -110,11 +108,12 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				misc_textures[i][j.get_basename()] = file
 		
 		elif file_ext == "ogg":
+			if !is_array:
+				arrayed_filename = j.get_basename()
+			if !arrayed_filename in misc_sounds[i]:
+				misc_sounds[i][arrayed_filename] = []
 			var file = AudioStreamOggVorbis.load_from_file(file_path)
-			if is_array:
-				misc_sounds[i][arrayed_filename].append(file)
-			else:
-				misc_sounds[i][j.get_basename()] = file
+			misc_sounds[i][arrayed_filename].append(file)
 		
 		elif file_ext == "txt" && j.get_basename().to_lower() == "name":
 			var file = FileAccess.open(file_path, FileAccess.READ)

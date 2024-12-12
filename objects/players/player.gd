@@ -225,8 +225,8 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	var _swim = CharacterManager.get_voice_line("swim")
 	var _death = CharacterManager.get_voice_line("death")
 	suit.physics_config = suit.physics_config.duplicate()
-	if _jump: suit.physics_config.sound_jump = _jump
-	if _swim: suit.physics_config.sound_swim = _swim
+	if _jump: suit.physics_config.sound_jump = _jump[0]
+	if _swim: suit.physics_config.sound_swim = _swim[0]
 	if _hurt: suit.sound_hurt = _hurt[randi_range(0, len(_hurt) - 1)]
 	if _death: suit.sound_death = _death[randi_range(0, len(_death) - 1)]
 
