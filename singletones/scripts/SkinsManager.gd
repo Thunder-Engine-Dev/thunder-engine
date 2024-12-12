@@ -17,10 +17,8 @@ var custom_settings: Dictionary
 @onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
 
 func _init() -> void:
-	var tex: Dictionary = load_external_textures()
-	#print(tex)
-	if tex.is_empty(): return
-	custom_textures = tex
+	var _tex: String = load_external_textures()
+	print_rich(_tex)
 
 
 func _ready() -> void:
@@ -43,17 +41,22 @@ func apply_player_skin(_suit) -> SpriteFrames:
 	return _suit.animation_sprites
 
 
-func load_external_textures() -> Dictionary:
+func load_external_textures() -> String:
 	print(base_dir)
 	
+	# Skip if there are no skins
 	if !DirAccess.dir_exists_absolute(base_dir):
-		print("Skipped loading custom textures")
-		return {}
+		return "Skipped loading custom textures"
 	
 	var dir_access = DirAccess.open(base_dir)
 	if !dir_access:
-		return {}
+		return ""
 	
+	# Debug print
+	var out: PackedStringArray = []
+	
+	# Removing everything from memory on initialization
+	custom_textures = {}
 	custom_sprite_frames = {}
 	skins = {}
 	misc_textures = {}
@@ -61,47 +64,61 @@ func load_external_textures() -> Dictionary:
 	custom_nicknames = {}
 	custom_story_text = {}
 	custom_settings = {}
-	var loaded: Dictionary = {}
+	
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
-	#print(directories)
 	for i in directories:
 		dir_access.change_dir(base_dir + "/" + i)
+		
+		# Initiating a skin in dictionaries
 		misc_textures[i] = {}
 		misc_sounds[i] = {}
 		custom_nicknames[i] = i.left(15)
 		custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
+		custom_settings[i] = {}
+		# Loading miscellaneous textures, voice lines, and sound effects
 		_load_misc_files(dir_access, i)
 		
-		
+		# Initiating animations
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
 		custom_sprite_frames[i] = {}
 		skins[i] = {}
-		print(i, " Anims: ", _anims)
-		loaded[i] = _load_animations(dir_access, i, _anims)
+		out.append("[color=yellow]" + str(i) + "[/color] Anims: [color=cyan]" + "[/color], [color=cyan]".join(_anims) + "[/color].")
+		# Loading textures and setting up sprite frames
+		custom_textures[i] = _load_animations(dir_access, i, _anims)
 		
-		# Print errors
+		# Printing errors
 		var comp_1 := PackedStringArray(skins[i].keys())
 		comp_1.sort()
 		var comp_2 := _anims
 		comp_2.sort()
 		if comp_1 != comp_2:
-			print("[Skins Manager] ALERT! For ", i, """, Some animations have not been loaded properly!
-  Found: """, comp_2, """
-  Loaded without errors: """, comp_1)
+			out.append("[Skins Manager] [color=red]ALERT![/color] For [color=yellow]" + str(i) + """[/color], Some animations have not been loaded properly!
+	[color=red]Found[/color]: [color=cyan]""" + "[/color], [color=cyan]".join(comp_2) + """[/color].
+	[color=red]Loaded without errors[/color]: [color=cyan]""" + "[/color], [color=cyan]".join(comp_1) + "[/color].")
+	
+	# Final step
 	dir_access.list_dir_end()
-	return loaded
+	out.append("Skins loaded!")
+	return "
+".join(out)
 
 
 func _load_misc_files(dir_access: DirAccess, i: String):
+	# "i" here means the skin name
 	var _misc_files: PackedStringArray = dir_access.get_files()
 	for j in _misc_files:
+		# "j" here means the name of current file
 		var file_path: String = base_dir + "/" + i + "/" + j
+		# Accepting syntax "blahblah_#", where # is a number from 0 to 9
 		var is_array: bool = j.get_basename().left(-1).ends_with("_") && j.get_basename().right(1).is_valid_int()
 		var file_ext: String = j.get_extension().to_lower()
+		# Ignoring everything that's not png, ogg or txt
 		if !file_ext in ["png", "ogg", "txt"]:
 			continue
 		
 		var arrayed_filename: String = j.get_basename().left(-2)
+		# If it's PNG, then load to memory under "misc_textures" variable
+		# Can load as a texture object, or as an array
 		if file_ext == "png":
 			if is_array && !arrayed_filename in misc_textures[i]:
 				misc_textures[i][arrayed_filename] = []
@@ -112,6 +129,8 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 			else:
 				misc_textures[i][j.get_basename()] = file
 		
+		# If it's OGG, then load to memory under "misc_sounds" variable
+		# Only loads as an array
 		elif file_ext == "ogg":
 			if !is_array:
 				arrayed_filename = j.get_basename()
@@ -120,12 +139,16 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 			var file = AudioStreamOggVorbis.load_from_file(file_path)
 			misc_sounds[i][arrayed_filename].append(file)
 		
+		# If it's TXT, then check what name it has, and load only valid files to memory
 		elif file_ext == "txt":
+			# Name for HUD, variable "custom_nicknames"
 			if j.get_basename().to_lower() == "name":
 				var file = FileAccess.open(file_path, FileAccess.READ)
 				custom_nicknames[i] = file.get_line().left(15)
 				print(i, " Custom nick: ", custom_nicknames[i])
 				file.close()
+			# For story text, includes pronouns and basic description about the player skin
+			# Variable "custom_story_text"
 			elif j.get_basename().to_lower() == "story":
 				var file = FileAccess.open(file_path, FileAccess.READ)
 				var _line = file.get_line().left(15)
