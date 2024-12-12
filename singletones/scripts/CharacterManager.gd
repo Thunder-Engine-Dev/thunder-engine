@@ -71,6 +71,8 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"death": null,
 }
 
+const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
+
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
@@ -93,6 +95,15 @@ func get_character_display_name() -> String:
 	if character.is_empty():
 		character = SettingsManager.settings.character
 	return character
+
+
+func get_character_story_text(index: int) -> String:
+	var text: Array = SkinsManager.custom_story_text.get(SkinsManager.current_skin, "")
+	if text.is_empty():
+		text = DEFAULT_STORY_TEXT.duplicate()
+		text[0] = "he"
+		text[1] = "him"
+	return text[index]
 
 
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:

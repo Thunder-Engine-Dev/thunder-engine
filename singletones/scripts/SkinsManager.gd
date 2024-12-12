@@ -10,6 +10,8 @@ var skins: Dictionary
 var misc_textures: Dictionary
 var misc_sounds: Dictionary
 var custom_nicknames: Dictionary
+var custom_story_text: Dictionary
+var custom_settings: Dictionary
 
 @onready var base_sprite_frames: SpriteFrames = preload("res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres")
 @onready var animation_list: PackedStringArray = base_sprite_frames.get_animation_names()
@@ -57,6 +59,8 @@ func load_external_textures() -> Dictionary:
 	misc_textures = {}
 	misc_sounds = {}
 	custom_nicknames = {}
+	custom_story_text = {}
+	custom_settings = {}
 	var loaded: Dictionary = {}
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	#print(directories)
@@ -65,6 +69,7 @@ func load_external_textures() -> Dictionary:
 		misc_textures[i] = {}
 		misc_sounds[i] = {}
 		custom_nicknames[i] = i.left(15)
+		custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
 		_load_misc_files(dir_access, i)
 		
 		
@@ -115,11 +120,26 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 			var file = AudioStreamOggVorbis.load_from_file(file_path)
 			misc_sounds[i][arrayed_filename].append(file)
 		
-		elif file_ext == "txt" && j.get_basename().to_lower() == "name":
-			var file = FileAccess.open(file_path, FileAccess.READ)
-			custom_nicknames[i] = file.get_line().left(15)
-			print(i, " Custom nick: ", custom_nicknames[i])
-			file.close()
+		elif file_ext == "txt":
+			if j.get_basename().to_lower() == "name":
+				var file = FileAccess.open(file_path, FileAccess.READ)
+				custom_nicknames[i] = file.get_line().left(15)
+				print(i, " Custom nick: ", custom_nicknames[i])
+				file.close()
+			elif j.get_basename().to_lower() == "story":
+				var file = FileAccess.open(file_path, FileAccess.READ)
+				var _line = file.get_line().left(15)
+				if _line:
+					custom_story_text[i][0] = _line
+				var index: int = 0
+				while !file.eof_reached():
+					index += 1
+					if len(custom_story_text[i]) < index + 1:
+						custom_story_text[i].resize(index + 1)
+					custom_story_text[i][index] = file.get_line().left(50)
+				print(i, " Custom story text: ", custom_story_text[i])
+				file.close()
+				
 
 
 func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray):
