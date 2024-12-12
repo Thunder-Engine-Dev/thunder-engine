@@ -82,6 +82,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"emit_particles": false,
 	"emit_particles_color": Color(1, 1, 1, 1),
 	"emit_particles_behind": true,
+	"warp_animation": true,
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]

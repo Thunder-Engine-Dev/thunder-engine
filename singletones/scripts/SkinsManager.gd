@@ -259,17 +259,40 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	
 	var new_sprites := SpriteFrames.new()
 	var _regions: Dictionary = skins[current_skin][power].animation_regions
-	for anim in old_sprites.get_animation_names():
+	var _temp_sprites = old_sprites.duplicate()
+	if CharacterManager.get_suit_tweak("look_up_animation", "", power):
+		_temp_sprites.add_animation("look_up")
+	if CharacterManager.get_suit_tweak("stomp_animation", "", power):
+		_temp_sprites.add_animation("stomp")
+	if CharacterManager.get_suit_tweak("separate_run_animation", "", power):
+		_temp_sprites.add_animation("p_run")
+		_temp_sprites.add_animation("p_jump")
+		_temp_sprites.add_animation("p_fall")
+	if CharacterManager.get_suit_tweak("idle_animation", "", power):
+		_temp_sprites.add_animation("idle")
+	
+	for anim in _temp_sprites.get_animation_names():
 		if anim != "default":
 			new_sprites.add_animation(anim)
+		var errored: PackedStringArray = []
+		for dict_check in ["animation_regions", "animation_speeds", "animation_loops"]:
+			if !anim in skins[current_skin][power][dict_check]:
+				errored.append(
+					str(current_skin) + ": Animation '" + anim + "' is not present in " + dict_check
+				)
+				continue
+		if !errored.is_empty():
+			OS.alert("
+".join(errored), "Player Skin Load Error")
+			return old_sprites
 		new_sprites.set_animation_speed(anim, skins[current_skin][power].animation_speeds[anim])
 		new_sprites.set_animation_loop(anim, skins[current_skin][power].animation_loops[anim])
-		var frame_count = old_sprites.get_frame_count(anim)
+		var frame_count = _temp_sprites.get_frame_count(anim)
 		if len(_regions[anim]) > 0:
 			frame_count = len(_regions[anim])
 		
 		for frame in frame_count:
-			var tex = old_sprites.get_frame_texture(anim, frame)
+			var tex = _temp_sprites.get_frame_texture(anim, frame)
 			var new_tex := AtlasTexture.new()
 			if anim in textures:
 				new_tex.atlas = textures[anim] # ImageTexture

@@ -6,16 +6,26 @@ var player: Player
 var sprite: AnimatedSprite2D
 var config: PlayerConfig
 
-var _climb_progress: float
 var _suit_pause_tweak: bool
 var _attack_air_tweak: bool
+var _idle_tweak: bool
+var _idle_activate_after_sec: float
+var _look_up_tweak: bool
+var _separate_run_tweak: bool
+var _stomp_anim_tweak: bool
+var _warp_tweak: bool
+
+var _climb_progress: float
+var _p_run_enabled: bool
+var _stomp_enabled: bool
+var _idle_timer: float
 
 func _ready() -> void:
 	player = node as Player
 	sprite = node.sprite as AnimatedSprite2D
 	
 	_suit_pause_tweak = SettingsManager.get_tweak("pause_on_suit_change", false)
-	_attack_air_tweak = SettingsManager.get_tweak("air_attack_animation", false)
+	_setup_tweaks()
 	
 	# Connect animation signals for the current powerup
 	player.suit_appeared.connect(_suit_appeared)
@@ -44,6 +54,9 @@ func _suit_appeared() -> void:
 	if !sprite: return
 	sprite.play(&"appear")
 	sprite.speed_scale = 1
+	
+	_setup_tweaks()
+	
 	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1.0, false, true).timeout
 	if sprite.animation == &"appear": sprite.play(&"default")
 
@@ -124,6 +137,16 @@ func _handle_grabbed_finished() -> void:
 	sprite.play(&"hold_default")
 
 
+func _setup_tweaks() -> void:
+	_attack_air_tweak = CharacterManager.get_suit_tweak("attack_air_animation", "", player.suit.name)
+	_look_up_tweak = CharacterManager.get_suit_tweak("look_up_animation", "", player.suit.name)
+	_idle_tweak = CharacterManager.get_suit_tweak("idle_animation", "", player.suit.name)
+	_idle_activate_after_sec = CharacterManager.get_suit_tweak("idle_activate_after_sec", "", player.suit.name)
+	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
+	_stomp_anim_tweak = CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
+	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
+
+
 #= Main
 func _animation_process(delta: float) -> void:
 	if !sprite: return
@@ -154,44 +177,75 @@ func _animation_process(delta: float) -> void:
 		if player.is_skidding:
 			_skid_sound_loop()
 		if player.is_on_floor():
+			_stomp_enabled = false
 			if !(is_zero_approx(player.speed.x)):
-				_play_anim(
-					StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
-				)
+				if _separate_run_tweak && abs(player.speed.x) >= config.walk_max_running_speed:
+					_play_anim(&"p_run" if !player.is_skidding else &"skid")
+					_p_run_enabled = !player.is_holding
+				else:
+					_play_anim(
+						StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
+					)
+					_p_run_enabled = false
 				sprite.speed_scale = (
 					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
 					config.animation_min_walking_speed,
 					config.animation_max_walking_speed)
 				)
 			else:
-				_play_anim(_get_animation_prefixed(&"default"))
+				_p_run_enabled = false
+				if player.up_down == -1 && !player.is_holding && _look_up_tweak:
+					_play_anim(&"look_up")
+				else:
+					_idle_timer += delta
+					if _idle_tweak && !player.is_holding && _idle_timer > _idle_activate_after_sec:
+						_play_anim(&"idle")
+					else:
+						_play_anim(_get_animation_prefixed(&"default"))
 			if player.is_crouching:
+				_p_run_enabled = false
 				_play_anim(_get_animation_prefixed(&"crouch"))
 				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
 		elif player.is_underwater:
+			_p_run_enabled = false
 			_play_anim(_get_animation_prefixed(&"swim"))
 		else:
 			if sprite.animation == &"attack_air": return
-			if player.speed.y < 0:
-				_play_anim(_get_animation_prefixed(&"jump"))
+			if _stomp_enabled && !_p_run_enabled:
+				_play_anim(_get_animation_prefixed(&"stomp"))
 			else:
-				_play_anim(_get_animation_prefixed(&"fall"))
+				if player.speed.y < 0:
+					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_run_jump")
+				else:
+					_play_anim(_get_animation_prefixed(&"fall") if !_p_run_enabled else &"p_run_fall")
 	# Warping
 	else:
+		player.skid.emitting = false
+		_idle_timer = 0.0
 		match player.warp_dir:
-			Player.WarpDir.UP, Player.WarpDir.DOWN:
-				_play_anim(&"warp")
+			Player.WarpDir.DOWN:
+				_play_anim(
+					&"warp" if _warp_tweak else (
+						_get_animation_prefixed(
+							&"default" if Thunder.is_player_power(Data.PLAYER_POWER.SMALL) else &"crouch"
+						)
+					)
+				)
+			Player.WarpDir.UP:
+				_play_anim(&"warp" if _warp_tweak else _get_animation_prefixed(&"jump"))
 			Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
 				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
 				_play_anim(_get_animation_prefixed(&"walk"))
 				sprite.speed_scale = 2
 
-func _get_animation_prefixed(anim_name: String) -> String:
+func _get_animation_prefixed(anim_name: StringName) -> StringName:
 	if player.is_holding:
-		return "hold_%s" % anim_name
+		return &"hold_%s" % anim_name
 	return anim_name
 
 func _play_anim(animation: StringName) -> void:
+	if !animation in [&"default", &"idle"]:
+		_idle_timer = 0.0
 	if sprite.animation != animation:
 		sprite.play(animation)
 	else:
