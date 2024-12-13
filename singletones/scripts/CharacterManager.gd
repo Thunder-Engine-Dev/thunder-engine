@@ -159,7 +159,7 @@ func get_suit_tweak(tweak: String, character_name: String = "", suit_name: Strin
 		suit_name = Thunder._current_player_state.name
 	
 	if chara && chara in suit_tweaks && suit_name in suit_tweaks[chara] && tweak in suit_tweaks[chara][suit_name]:
-		if skinned_dict && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
+		if skinned_dict && SkinsManager.current_skin && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
 			return skinned_dict[SkinsManager.current_skin][suit_name][tweak]
 		return suit_tweaks[chara][suit_name][tweak]
 	return null

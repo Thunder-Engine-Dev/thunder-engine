@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://engine/components/progress_continue/scripts/erase_sel.gd" id="7_fpdiu"]
 [ext_resource type="Texture2D" uid="uid://dyvymtdao3hwr" path="res://engine/components/progress_continue/textures/progress_title.png" id="7_hedy6"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="8_n72oc"]
-[ext_resource type="SpriteFrames" uid="uid://dpgdqsx2xxpd" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="10_p7lkf"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="10_p7lkf"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="10_s8rqy"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="11_qfik6"]
 [ext_resource type="Texture2D" uid="uid://dia0f8bnn6ned" path="res://engine/components/progress_continue/textures/progress_clearing.png" id="12_6nsta"]
