@@ -169,6 +169,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				if !_json || !_json is Dictionary:
 					continue
 				print(i, " Global skin tweaks loaded")
+				misc_textures[i].global_skin_tweaks = CharacterManager.DEFAULT_GLOBAL_SKIN_TWEAKS.duplicate(false)
 				_load_json(_json, misc_textures[i].global_skin_tweaks)
 
 
@@ -322,8 +323,8 @@ func _load_json(_json, load_to) -> void:
 			if value is Dictionary:
 				load_to[key] = {}
 				for dict_key in value.keys():
-					if dict_key in load_to[key]:
-						load_to[dict_key] = value[dict_key]
+					if dict_key in value:
+						load_to[key][dict_key] = value[dict_key]
 			else:
 				load_to[key] = value
 	

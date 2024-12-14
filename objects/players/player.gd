@@ -133,6 +133,8 @@ var _suit_tree_paused: bool
 @warning_ignore("unused_private_class_variable")
 @onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 
+@onready var force_override_death_sound: bool = false
+
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var collision_recovery: RayCast2D = $CollisionRecovery
@@ -183,6 +185,10 @@ func _ready() -> void:
 		var small_suit: PlayerSuit = CharacterManager.get_suit("small")
 		Thunder._current_player_state = small_suit
 		suit = small_suit
+	
+	var _global_tweaks = CharacterManager.get_misc_texture("global_skin_tweaks")
+	if _global_tweaks && _global_tweaks is Dictionary:
+		force_override_death_sound = _global_tweaks.get("force_override_death_sound", false)
 
 	change_suit(suit, false, true)
 
@@ -347,7 +353,7 @@ func die(tags: Dictionary = {}) -> void:
 	if death_stop_music:
 		Audio.stop_all_musics()
 	Audio.play_music(
-		suit.sound_death if !death_music_override else death_music_override,
+		suit.sound_death if !death_music_override || force_override_death_sound else death_music_override,
 		1 if death_stop_music else 2,
 		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
 			pitch = suit.sound_pitch,

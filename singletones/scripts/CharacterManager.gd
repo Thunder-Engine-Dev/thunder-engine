@@ -137,7 +137,8 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 		"gravity": [0, 0],
 		"scale_min": 0.1,
 		"scale_max": 0.3,
-	}
+	},
+	"force_override_death_sound": false,
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
