@@ -116,6 +116,7 @@ lifetime = 0.5
 
 [node name="SkinParticles" type="GPUParticles2D" parent="Sprite"]
 show_behind_parent = true
+emitting = false
 amount = 48
 amount_ratio = 0.5
 process_material = SubResource("ParticleProcessMaterial_gm2pg")

@@ -5,7 +5,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 		"particle_flag_disable_z": true,
 		"emission_shape": "sphere",
 		"emission_sphere_radius": 24,
-		"emission_box_extents": [1, 1],
+		"emission_box_extents": [8, 8],
 		"angle_min": -180,
 		"angle_max": 180,
 		"direction": [1, 0],
@@ -18,12 +18,20 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 	}
 }
 
-@onready var global_skin_tweaks = CharacterManager.get_misc_texture("global_skin_tweaks")
-
 func _ready() -> void:
+	update_particles()
+	SkinsManager.skins_loaded.connect(update_particles)
+
+
+func update_particles():
+	var global_skin_tweaks = CharacterManager.get_misc_texture("global_skin_tweaks")
 	if !global_skin_tweaks || !global_skin_tweaks is Dictionary: return
 	var mat: Dictionary = global_skin_tweaks.get("particles_process_material")
 	if !mat: return
+	
+	var particle_tex = CharacterManager.get_misc_texture("particle")
+	if particle_tex:
+		texture = particle_tex
 	
 	var new_mat: ParticleProcessMaterial = process_material.duplicate()
 	new_mat.particle_flag_disable_z = mat.particle_flag_disable_z

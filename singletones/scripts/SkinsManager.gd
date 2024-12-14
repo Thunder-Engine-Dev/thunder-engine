@@ -1,5 +1,8 @@
 extends Node
 
+signal skins_loaded
+signal skins_load_failed
+
 var current_skin: String = ""
 
 var base_dir: String = OS.get_executable_path().get_base_dir() + "/skins"
@@ -43,10 +46,12 @@ func load_external_textures() -> String:
 	
 	# Skip if there are no skins
 	if !DirAccess.dir_exists_absolute(base_dir):
+		skins_load_failed.emit()
 		return "Skipped loading custom textures"
 	
 	var dir_access = DirAccess.open(base_dir)
 	if !dir_access:
+		skins_load_failed.emit()
 		return ""
 	
 	# Debug print
@@ -96,6 +101,7 @@ func load_external_textures() -> String:
 	# Final step
 	dir_access.list_dir_end()
 	out.append("Skins loaded!")
+	skins_loaded.emit()
 	return "
 ".join(out)
 
