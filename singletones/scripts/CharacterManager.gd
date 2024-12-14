@@ -79,10 +79,65 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"idle_animation": false,
 	"idle_activate_after_sec": 10.0,
 	"stomp_animation": false,
-	"emit_particles": false,
-	"emit_particles_color": Color(1, 1, 1, 1),
-	"emit_particles_behind": true,
+	"kick_ground_animation": false,
 	"warp_animation": true,
+	"emit_particles": {
+		"enabled": false,
+		"color": "#ffffffff",
+		"show_behind": true,
+		"lifetime_sec": 0.5,
+		"amount_ratio": 0.5,
+		"offset": [0, 0],
+	},
+	"loop_frame_offsets": {
+		"appear": -1,
+		"attack": -1,
+		"attack_air": -1,
+		"back": -1,
+		"climb": -1,
+		"crouch": -1,
+		"default": -1,
+		"fall": -1,
+		"grab": -1,
+		"hold_crouch": -1,
+		"hold_default": -1,
+		"hold_fall": -1,
+		"hold_jump": -1,
+		"hold_walk": -1,
+		"jump": -1,
+		"kick": -1,
+		"skid": -1,
+		"slide": -1,
+		"swim": 6,
+		"walk": -1,
+		"warp": -1,
+		"win": -1,
+		"look_up": -1,
+		"p_run": -1,
+		"p_jump": -1,
+		"p_fall": -1,
+		"idle": -1,
+		"stomp": -1,
+		"hold_swim": -1,
+	},
+}
+
+const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
+	"particles_process_material": {
+		"particle_flag_disable_z": true,
+		"emission_shape": "sphere",
+		"emission_sphere_radius": 24,
+		"emission_box_extents": [1, 1],
+		"angle_min": -180,
+		"angle_max": 180,
+		"direction": [1, 0],
+		"spread": 180,
+		"initial_velocity_min": 25,
+		"initial_velocity_max": 75,
+		"gravity": [0, 0],
+		"scale_min": 0.1,
+		"scale_max": 0.3,
+	}
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
@@ -98,6 +153,8 @@ func _ready() -> void:
 	add_misc_texture(preload("res://engine/scenes/map/textures/luigi_icon.png"), "map_icon", "Luigi")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/mario/mario_dead.png"), "death", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/luigi/luigi_dead.png"), "death", "Luigi")
+	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Mario")
+	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Luigi")
 	for i in MARIO_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
 	for i in LUIGI_SUITS.keys():
@@ -159,7 +216,7 @@ func get_suit_tweak(tweak: String, character_name: String = "", suit_name: Strin
 		suit_name = Thunder._current_player_state.name
 	
 	if chara && chara in suit_tweaks && suit_name in suit_tweaks[chara] && tweak in suit_tweaks[chara][suit_name]:
-		if skinned_dict && SkinsManager.current_skin && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
+		if skinned_dict && SkinsManager.current_skin in skinned_dict && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
 			return skinned_dict[SkinsManager.current_skin][suit_name][tweak]
 		return suit_tweaks[chara][suit_name][tweak]
 	return null

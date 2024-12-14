@@ -109,8 +109,8 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 		# Accepting syntax "blahblah_#", where # is a number from 0 to 9
 		var is_array: bool = j.get_basename().left(-1).ends_with("_") && j.get_basename().right(1).is_valid_int()
 		var file_ext: String = j.get_extension().to_lower()
-		# Ignoring everything that's not png, ogg or txt
-		if !file_ext in ["png", "ogg", "txt"]:
+		# Ignoring everything that's not png, ogg, txt or json
+		if !file_ext in ["png", "ogg", "txt", "json"]:
 			continue
 		
 		var arrayed_filename: String = j.get_basename().left(-2)
@@ -160,6 +160,16 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				print(i, " Custom story text: ", custom_story_text[i])
 				file.close()
 				
+		# If it's JSON, then check what name it has, and load only valid files to memory
+		elif file_ext == "json":
+			
+			if j.get_basename().to_lower() == "global_skin_tweaks":
+				var _file: String = FileAccess.get_file_as_string(file_path)
+				var _json = JSON.parse_string(_file)
+				if !_json || !_json is Dictionary:
+					continue
+				print(i, " Global skin tweaks loaded")
+				_load_json(_json, misc_textures[i].global_skin_tweaks)
 
 
 func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArray) -> Dictionary:
@@ -207,13 +217,10 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				var _json = JSON.parse_string(_file)
 				if !_json || !_json is Dictionary:
 					errored.append(file_path + "/suit_tweaks.json is invalid.")
-					print(_json)
 					file_name = dir_access.get_next()
 					continue
 				
-				for key in _json.keys():
-					if key in suit_tweaks[i][j]:
-						suit_tweaks[i][j][key] = _json[key]
+				_load_json(_json, suit_tweaks[i][j])
 				
 			
 			file_name = dir_access.get_next()
@@ -307,3 +314,16 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	#var err = ResourceSaver.save(skins[0], base_dir + "/luigi/%s/skin_settings.tres" % power)
 	#print(err)
 	return new_sprites
+
+func _load_json(_json, load_to) -> void:
+	for key in _json.keys():
+		if key in load_to:
+			var value = _json[key]
+			if value is Dictionary:
+				load_to[key] = {}
+				for dict_key in value.keys():
+					if dict_key in load_to[key]:
+						load_to[dict_key] = value[dict_key]
+			else:
+				load_to[key] = value
+	

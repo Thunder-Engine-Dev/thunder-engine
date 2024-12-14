@@ -223,6 +223,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		var path = scene_file_path if !completion_write_save_path_override else completion_write_save_path_override
 		if !profile.has_completed(path):
 			profile.complete_level(path)
+			if Data.values.get("map_force_selected_marker"):
+				Data.values.map_force_go_next = true
 			ProfileManager.save_current_profile()
 
 	Thunder._current_hud.time_countdown()

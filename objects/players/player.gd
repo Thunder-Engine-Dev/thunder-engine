@@ -250,12 +250,20 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		_suit_appear = false
 		suit_appeared.emit()
 	
-	skin_particles.emitting = CharacterManager.get_suit_tweak("emit_particles", "", suit.name)
-	var _particle_color = CharacterManager.get_suit_tweak("emit_particles_color", "", suit.name)
-	if _particle_color is String:
-		_particle_color = Color.from_string(_particle_color, Color.WHITE)
-	skin_particles.modulate = _particle_color
-	skin_particles.show_behind_parent = CharacterManager.get_suit_tweak("emit_particles_behind", "", suit.name)
+	var skin_particle_tweaks = CharacterManager.get_suit_tweak("emit_particles", "", suit.name)
+	skin_particles.emitting = skin_particle_tweaks && skin_particle_tweaks.enabled
+	if skin_particle_tweaks:
+		var _particle_color = skin_particle_tweaks.color
+		if _particle_color is String:
+			_particle_color = Color.from_string(_particle_color, Color.WHITE)
+		skin_particles.modulate = _particle_color
+		skin_particles.show_behind_parent = skin_particle_tweaks.show_behind
+		skin_particles.lifetime = skin_particle_tweaks.lifetime_sec
+		skin_particles.amount_ratio = skin_particle_tweaks.amount_ratio
+		var _particle_off = skin_particle_tweaks.offset
+		if !_particle_off is Array:
+			_particle_off = [0, 0]
+		skin_particles.position = Vector2(_particle_off.front(), _particle_off.back())
 	
 	if !to.resource_path.is_empty():
 		Thunder._current_player_state_path = to.resource_path
@@ -341,7 +349,7 @@ func die(tags: Dictionary = {}) -> void:
 	Audio.play_music(
 		suit.sound_death if !death_music_override else death_music_override,
 		1 if death_stop_music else 2,
-		{pitch = suit.sound_pitch} if !death_music_ignore_pause && !_suit_pause_tweak else {
+		{pitch = suit.sound_pitch} if !death_music_ignore_pause else {
 			pitch = suit.sound_pitch,
 			ignore_pause = true
 		}

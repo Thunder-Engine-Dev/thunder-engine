@@ -70,9 +70,10 @@ func _save_progress() -> void:
 	var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
 	var next_level_name: String = uncompleted_levels[0].get_file().get_slice(".", 0)
 	
-	if Data.values.get('map_force_selected_marker'):
+	if Data.values.get("map_force_selected_marker") && Data.values.get("map_force_go_next"):
 		Data.values.map_force_selected_marker = uncompleted_levels[0]
 		print("Map Forced To ", Data.values.map_force_selected_marker)
+		Data.values.map_force_go_next = false
 	
 	prof.set_next_level_name(next_level_name)
 	var _no_save: bool = false
@@ -112,7 +113,10 @@ func _save_suspended_progress() -> void:
 	profile.data.saved_profile = ProfileManager.current_profile.name
 	profile.data.saved_profile_data = ProfileManager.current_profile.data
 	profile.data.title_prefix = progress_title_prefix
-	profile.data.title_level = progress_title_level.format([str(space_name), get_next_marker_id(false) + 1])
+	var _saved_level: String = str(get_next_marker_id(false) + 1)
+	if profile.data.saved_profile_data.get("star_world"):
+		_saved_level = uncompleted_levels[0].get_file().get_slice(".", 0).right(1)
+	profile.data.title_level = progress_title_level.format([str(space_name), _saved_level])
 	profile.data.scene = Scenes.current_scene.scene_file_path
 	
 	ProfileManager.profiles.suspended = profile

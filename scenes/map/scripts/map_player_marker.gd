@@ -35,13 +35,13 @@ func _ready() -> void:
 	#print(Data.values.get('map_force_selected_marker'), " and ", _level_save)
 	
 	if (
-			(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
-			Data.values.get('map_force_selected_marker') == _level_save
+		(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
+		Data.values.get('map_force_selected_marker') == _level_save
 	):
 		(func():
 			if (
-					get_index() == marker_space.get_child_count() - 1 &&
-					!is_instance_valid(marker_space.next_space)
+				get_index() == marker_space.get_child_count() - 1 &&
+				!is_instance_valid(marker_space.next_space)
 			):
 				return
 			player.current_marker = get_next_marker()

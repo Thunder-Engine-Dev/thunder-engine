@@ -14,11 +14,13 @@ var _look_up_tweak: bool
 var _separate_run_tweak: bool
 var _stomp_anim_tweak: bool
 var _warp_tweak: bool
+var _loop_offsets: Dictionary = {}
 
 var _climb_progress: float
 var _p_run_enabled: bool
 var _stomp_enabled: bool
 var _idle_timer: float
+var _previous_animation: String
 
 func _ready() -> void:
 	player = node as Player
@@ -100,14 +102,21 @@ func _bubble_spawn() -> void:
 
 func _sprite_loop() -> void:
 	if !sprite: return
-	match sprite.animation:
-		&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
+	for anim in _loop_offsets.keys():
+		if _loop_offsets[anim] < 0: continue
+		if sprite.animation == anim:
+			sprite.frame = _loop_offsets[anim]
+		#&"swim": sprite.frame = sprite.sprite_frames.get_frame_count(sprite.animation) - 2
 
 
 func _sprite_finish() -> void:
 	if !sprite: return
-	if sprite.animation == &"attack": _play_anim(&"default")
-	if sprite.animation == &"attack_air": _play_anim(&"jump" if player.speed.y < 0 else &"fall")
+	match sprite.animation:
+		&"attack", &"idle":
+			_play_anim(&"default")
+			_idle_timer = 0.0
+		&"attack_air":
+			_play_anim(&"jump" if player.speed.y < 0 else &"fall")
 
 
 var _skid_sound_timer: bool
@@ -133,8 +142,10 @@ func _threw() -> void:
 
 
 func _handle_grabbed_finished() -> void:
-	await sprite.animation_finished
-	sprite.play(&"hold_default")
+	sprite.animation_finished.connect(func():
+		sprite.play(&"hold_default")
+	, CONNECT_ONE_SHOT)
+	
 
 
 func _setup_tweaks() -> void:
@@ -145,6 +156,9 @@ func _setup_tweaks() -> void:
 	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
 	_stomp_anim_tweak = CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
 	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
+	var _off = CharacterManager.get_suit_tweak("loop_frame_offsets", "", player.suit.name)
+	if _off is Dictionary:
+		_loop_offsets = _off
 
 
 #= Main
@@ -215,9 +229,9 @@ func _animation_process(delta: float) -> void:
 				_play_anim(_get_animation_prefixed(&"stomp"))
 			else:
 				if player.speed.y < 0:
-					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_run_jump")
+					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_jump")
 				else:
-					_play_anim(_get_animation_prefixed(&"fall") if !_p_run_enabled else &"p_run_fall")
+					_play_anim(_get_animation_prefixed(&"fall") if !_p_run_enabled else &"p_fall")
 	# Warping
 	else:
 		player.skid.emitting = false
@@ -244,9 +258,11 @@ func _get_animation_prefixed(anim_name: StringName) -> StringName:
 	return anim_name
 
 func _play_anim(animation: StringName) -> void:
-	if !animation in [&"default", &"idle"]:
+	if animation != &"default" && animation != &"idle":
 		_idle_timer = 0.0
-	if sprite.animation != animation:
-		sprite.play(animation)
+	if sprite.animation != animation || _previous_animation == "":
+		if sprite.sprite_frames.has_animation(animation):
+			sprite.play(animation)
+		_previous_animation = animation
 	else:
 		sprite.animation = animation

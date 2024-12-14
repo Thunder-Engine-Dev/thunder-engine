@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=24 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ojh72"]
 [ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_5s16q"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="5_5h0yl"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
+[ext_resource type="Script" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
@@ -115,11 +116,12 @@ lifetime = 0.5
 
 [node name="SkinParticles" type="GPUParticles2D" parent="Sprite"]
 show_behind_parent = true
-emitting = false
-amount = 24
+amount = 48
+amount_ratio = 0.5
 process_material = SubResource("ParticleProcessMaterial_gm2pg")
 texture = ExtResource("6_skpgp")
 lifetime = 0.5
+script = ExtResource("7_wegjq")
 
 [node name="Skid" type="GPUParticles2D" parent="Sprite"]
 physics_interpolation_mode = 2
