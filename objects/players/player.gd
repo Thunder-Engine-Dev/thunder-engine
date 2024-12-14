@@ -265,6 +265,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		skin_particles.modulate = _particle_color
 		skin_particles.show_behind_parent = skin_particle_tweaks.show_behind
 		skin_particles.lifetime = skin_particle_tweaks.lifetime_sec
+		skin_particles.local_coords = skin_particle_tweaks.local_coords
 		skin_particles.amount_ratio = skin_particle_tweaks.amount_ratio
 		var _particle_off = skin_particle_tweaks.offset
 		if !_particle_off is Array:

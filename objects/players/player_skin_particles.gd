@@ -1,23 +1,5 @@
 extends GPUParticles2D
 
-const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
-	"particles_process_material": {
-		"particle_flag_disable_z": true,
-		"emission_shape": "sphere",
-		"emission_sphere_radius": 24,
-		"emission_box_extents": [8, 8],
-		"angle_min": -180,
-		"angle_max": 180,
-		"direction": [1, 0],
-		"spread": 180,
-		"initial_velocity_min": 25,
-		"initial_velocity_max": 75,
-		"gravity": [0, 0],
-		"scale_min": 0.1,
-		"scale_max": 0.3,
-	}
-}
-
 func _ready() -> void:
 	update_particles()
 	SkinsManager.skins_loaded.connect(update_particles)
@@ -53,6 +35,8 @@ func update_particles():
 	new_mat.gravity = _get_vector(mat.gravity)
 	new_mat.scale_min = mat.scale_min
 	new_mat.scale_max = mat.scale_max
+	new_mat.hue_variation_min = mat.hue_variation_min
+	new_mat.hue_variation_max = mat.hue_variation_max
 	
 	process_material = new_mat
 

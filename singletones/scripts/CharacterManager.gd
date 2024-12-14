@@ -73,23 +73,24 @@ const LUIGI_VOICE_LINES: Dictionary = {
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
-	"look_up_animation": false,
-	"attack_air_animation": false,
-	"separate_run_animation": false,
-	"idle_animation": false,
-	"idle_activate_after_sec": 10.0,
-	"stomp_animation": false,
-	"kick_ground_animation": false,
-	"warp_animation": true,
+	"look_up_animation": false, # "look_up"
+	"attack_air_animation": false, # "attack_air"
+	"separate_run_animation": false, # "p_run", "p_jump", "p_fall"
+	"idle_animation": false, # "idle"
+	"idle_activate_after_sec": 10.0, # from 0.1 to inf; no effect if idle animation is disabled
+	"stomp_animation": false, # after stomping an enemy or jumping on springboard
+	"kick_ground_animation": false, # for shells, etc
+	"warp_animation": true, # "warp"; if false, warping vertically will use "jump", and "crouch" or "default"
 	"emit_particles": {
-		"enabled": false,
-		"color": "#ffffffff",
-		"show_behind": true,
-		"lifetime_sec": 0.5,
-		"amount_ratio": 0.5,
-		"offset": [0, 0],
+		"enabled": false, # if no texture is set, the default texture will be starman particles
+		"color": "#ffffffff", # HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency
+		"show_behind": true, # show_behind_parent
+		"lifetime_sec": 0.5, # from 0.04 to 600; the more the value, the less frequently new particles will be generated
+		"amount_ratio": 0.5, # from 0 to 1.0; the maximum particle amount is 48, and this tweak multiplies it
+		"local_coords": false, # should the particles follow player's position? also if true, may fix jitter on movement
+		"offset": [0, 0], # offset particles by this Vector2
 	},
-	"loop_frame_offsets": {
+	"loop_frame_offsets": { # add any animation to the list to set a frame where the animation will continue after looping; 0-based. negative values are ignored
 		"appear": -1,
 		"attack": -1,
 		"attack_air": -1,
@@ -123,22 +124,24 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 }
 
 const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
-	"particles_process_material": {
-		"particle_flag_disable_z": true,
-		"emission_shape": "sphere",
-		"emission_sphere_radius": 24,
-		"emission_box_extents": [1, 1],
-		"angle_min": -180,
-		"angle_max": 180,
-		"direction": [1, 0],
-		"spread": 180,
-		"initial_velocity_min": 25,
-		"initial_velocity_max": 75,
-		"gravity": [0, 0],
-		"scale_min": 0.1,
-		"scale_max": 0.3,
+	"particles_process_material": { # anything wider than 128 pixels in all sides may be cut off and disappear, be aware.
+		"particle_flag_disable_z": true, # should the texture rotate along its velocity?
+		"emission_shape": "sphere", # can be either "point", "box", or "sphere"
+		"emission_sphere_radius": 24, # from 0.01 to 128; in pixels, it will be double that value
+		"emission_box_extents": [1, 1], # from 0.01 to 100; in pixels, it will be double that value
+		"angle_min": -180, # from -180 to 180
+		"angle_max": 180,  # ^
+		"direction": [1, 0], # the first value corresponds to left and right, the second to up and down, as negative and positive values respectively
+		"spread": 180, # from 0 to 180
+		"initial_velocity_min": 25, # from 0 to 1000
+		"initial_velocity_max": 75, # ^
+		"gravity": [0, 0], # any positive or negative value
+		"scale_min": 0.1, # from 0 to 1000
+		"scale_max": 0.3, # ^
+		"hue_variation_min": 0.0, # from -1.0 to 1.0; both -1.0, 0.0, and 1.0 correspond to white color, choose in-between
+		"hue_variation_max": 0.0, # ^
 	},
-	"force_override_death_sound": false,
+	"force_override_death_sound": false, # should the custom death sound also override any level-specific death sound overrides? otherwise, only the default SMW death sound is overriden
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
