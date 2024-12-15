@@ -12,6 +12,7 @@ class_name MarkerSpace extends Node2D
 @export var progress_continue_enabled: bool = true
 @export var progress_title_prefix: String = "world\\n"
 @export var progress_title_level: String = "{0} - {1}"
+@export var progress_title_level_fallback: String = "x"
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -116,6 +117,8 @@ func _save_suspended_progress() -> void:
 	var _saved_level: String = str(get_next_marker_id(false) + 1)
 	if profile.data.saved_profile_data.get("star_world"):
 		_saved_level = uncompleted_levels[0].get_file().get_slice(".", 0).right(1)
+		if !_saved_level.is_valid_int():
+			_saved_level = progress_title_level_fallback
 	profile.data.title_level = progress_title_level.format([str(space_name), _saved_level])
 	profile.data.scene = Scenes.current_scene.scene_file_path
 	
