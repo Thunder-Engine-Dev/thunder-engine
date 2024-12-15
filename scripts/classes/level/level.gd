@@ -223,6 +223,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		var path = scene_file_path if !completion_write_save_path_override else completion_write_save_path_override
 		if Data.values.get("map_force_selected_marker"):
 			Data.values.map_force_go_next = true
+			Data.values.map_force_old_marker = ""
 		if !profile.has_completed(path):
 			profile.complete_level(path)
 			ProfileManager.save_current_profile()

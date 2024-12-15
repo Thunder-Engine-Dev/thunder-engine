@@ -25,6 +25,10 @@ func _ready() -> void:
 	await get_tree().create_timer(1.0, true, false, true).timeout
 	skippable = true
 	
+	Console.executed.connect(func(command_name, args):
+		if command_name == "finish" && !TransitionManager.current_transition:
+			end()
+	)
 
 #func _physics_process(delta: float) -> void:
 #	if skippable: _cutscene_skip_logic()

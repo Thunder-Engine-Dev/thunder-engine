@@ -23,6 +23,7 @@ var dots: Array
 var dots_mapping = []
 var total_levels: Array = []
 var uncompleted_levels: Array[String] = []
+var _stored_selected_marker: String
 
 var map: Node2D
 
@@ -35,6 +36,7 @@ func _init() -> void:
 			!Data.values.get("map_force_go_next") &&
 			Data.values.get("map_force_old_marker")
 		):
+			_stored_selected_marker = Data.values.map_force_selected_marker
 			Data.values.map_force_selected_marker = Data.values.map_force_old_marker
 			print("Map Forced To Old Marker ", Data.values.map_force_selected_marker)
 
@@ -73,6 +75,8 @@ func _ready() -> void:
 		build_dots()
 	
 	if !Engine.is_editor_hint():
+		if allow_saving && _stored_selected_marker:
+			Data.values.map_force_selected_marker = _stored_selected_marker
 		await get_tree().physics_frame
 		if allow_saving && !uncompleted_levels.is_empty():
 			_save_progress()
