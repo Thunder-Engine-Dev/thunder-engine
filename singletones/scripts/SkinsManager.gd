@@ -5,7 +5,7 @@ const CONFIG_SUIT_TWEAKS = "suit_tweaks.json"
 const FOLDER_SUIT_IMAGES = "textures"
 const FOLDER_SUIT_SOUNDS = "sounds"
 const FOLDER_GLOBAL_SOUNDS = "_global_sounds"
-const CONFIG_GLOBAL_SKIN_TWEAKS = "global_skin_tweaks.json"
+const CONFIG_GLOBAL_SKIN_TWEAKS = "global_skin_tweaks"
 
 signal skins_loaded
 signal skins_load_failed
@@ -186,8 +186,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 					print(file_path + ": Not a valid JSON.")
 					continue
 				print(i, " Global skin tweaks loaded")
-				misc_textures[i][CONFIG_GLOBAL_SKIN_TWEAKS] = CharacterManager.DEFAULT_GLOBAL_SKIN_TWEAKS.duplicate(false)
-				_load_json(_json, misc_textures[i][CONFIG_GLOBAL_SKIN_TWEAKS])
+				misc_textures[i][CONFIG_GLOBAL_SKIN_TWEAKS] = _load_json(_json, CharacterManager.DEFAULT_GLOBAL_SKIN_TWEAKS)
 
 
 func _load_sounds(dir_access: DirAccess, dir_path: String) -> Dictionary:
@@ -234,7 +233,6 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		
 		var file_name: String = dir_access.get_next()
 		loaded[j] = {}
-		suit_tweaks[i][j] = CharacterManager.DEFAULT_SUIT_TWEAKS.duplicate(false)
 		
 		while file_name != "":
 			var file_ext: String = file_name.get_extension().to_lower()
@@ -277,7 +275,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 					file_name = dir_access.get_next()
 					continue
 				
-				_load_json(_json, suit_tweaks[i][j])
+				suit_tweaks[i][j] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
 			file_name = dir_access.get_next()
 		
 		dir_access.list_dir_end()
@@ -394,15 +392,16 @@ func _open_file_as_json(file_path: String) -> String:
 	return out_string
 
 # For nested objects in JSON
-func _load_json(_json, load_to) -> void:
+func _load_json(_json, _default) -> Dictionary:
+	var _loaded = _default.duplicate(true)
 	for key in _json.keys():
-		if key in load_to:
+		if key in _loaded:
 			var value = _json[key]
 			if value is Dictionary:
-				load_to[key] = {}
+				#load_to[key] = {}
 				for dict_key in value.keys():
 					if dict_key in value:
-						load_to[key][dict_key] = value[dict_key]
+						_loaded[key][dict_key] = value[dict_key]
 			else:
-				load_to[key] = value
-	
+				_loaded[key] = value
+	return _loaded

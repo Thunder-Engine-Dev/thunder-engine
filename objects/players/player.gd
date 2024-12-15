@@ -196,6 +196,7 @@ func _ready() -> void:
 
 	if !is_starman():
 		sprite.material.set_shader_parameter(&"mixing", false)
+		sprite.material.set_shader_parameter(&"slowed_down", false)
 
 	(func():
 		if Data.values.lives == -1 && death_check_for_lives:
@@ -213,6 +214,7 @@ func _physics_process(delta: float) -> void:
 		timer_starman.time_left < 1.5 && \
 		!_starman_faded:
 			_starman_faded = true
+			sprite.material.set_shader_parameter(&"slowed_down", true)
 			Audio.stop_music_channel(98, true)
 
 	if _stomping_combo_enabled && stomping_combo.get_combo() > 0 && is_on_floor():
@@ -227,10 +229,10 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 	if suit.animation_sprites:
 		sprite.sprite_frames = SkinsManager.apply_player_skin(suit)
-	var _jump = CharacterManager.get_voice_line("jump")
-	var _hurt = CharacterManager.get_voice_line("hurt")
-	var _swim = CharacterManager.get_voice_line("swim")
-	var _death = CharacterManager.get_voice_line("death")
+	var _jump = CharacterManager.get_suit_sound("jump", "", suit.name)
+	var _hurt = CharacterManager.get_suit_sound("hurt", "", suit.name)
+	var _swim = CharacterManager.get_suit_sound("swim", "", suit.name)
+	var _death = CharacterManager.get_suit_sound("death", "", suit.name)
 	suit.physics_config = suit.physics_config.duplicate()
 	if _jump: suit.physics_config.sound_jump = _jump[0]
 	if _swim: suit.physics_config.sound_swim = _swim[0]
@@ -319,6 +321,7 @@ func invincible(duration: float = 2) -> void:
 func starman(duration: float = 10) -> void:
 	invincible(duration)
 	sprite.material.set_shader_parameter(&"mixing", true)
+	sprite.material.set_shader_parameter(&"slowed_down", false)
 	attack.enabled = true
 	timer_starman.start(duration)
 	starmaned.emit(duration)
@@ -402,6 +405,7 @@ func is_starman() -> bool:
 func _on_starman_timeout() -> void:
 	starman_combo.reset_combo()
 	sprite.material.set_shader_parameter(&"mixing", false)
+	sprite.material.set_shader_parameter(&"slowed_down", false)
 	stars.emitting = false
 	attack.enabled = is_sliding
 	_starman_faded = false

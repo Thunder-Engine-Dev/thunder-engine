@@ -1,4 +1,4 @@
-extends GPUParticles2D
+extends "res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd"
 
 func _ready() -> void:
 	update_particles()

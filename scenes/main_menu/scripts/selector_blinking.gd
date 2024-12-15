@@ -1,6 +1,7 @@
 extends Node
 
 @export var menu_items_controller_path: NodePath
+@export var speed: float = 10
 
 var items: Array[Control]
 
@@ -17,7 +18,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if menu_items_controller.focused:
-		_timer += delta * 10
+		_timer += delta * speed
 		items[menu_items_controller.current_item_index].modulate.a = min((cos(_timer) / 2.5) + 0.6, 1.0)
 
 

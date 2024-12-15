@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c7uf7msxw3lc5"]
+[gd_scene load_steps=33 format=3 uid="uid://c7uf7msxw3lc5"]
 
 [ext_resource type="Script" path="res://engine/components/pause/pause.gd" id="1_8mdi1"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_f461o"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_75h8i"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="17_pod7t"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="18_ek8ml"]
+[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="19_fk228"]
 [ext_resource type="PackedScene" uid="uid://1jfyfq3ty6g1" path="res://engine/scenes/main_menu/settings.tscn" id="20_6rkco"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_controls_selection.gd" id="20_44axe"]
 [ext_resource type="Script" path="res://engine/components/pause/opt_exit_selection.gd" id="20_r3d2l"]
@@ -292,6 +293,11 @@ position_padding = 16
 sprite_frames = ExtResource("17_pod7t")
 script = ExtResource("18_ek8ml")
 
+[node name="SelectorBlinking" type="Node" parent="Pause"]
+script = ExtResource("19_fk228")
+menu_items_controller_path = NodePath("../VBoxContainer")
+speed = 5.0
+
 [node name="GamePaused" type="TextureRect" parent="Pause"]
 layout_mode = 1
 anchors_preset = 5
@@ -335,6 +341,7 @@ hide_bg = true
 script = ExtResource("22_rhyed")
 
 [connection signal="selected" from="Pause/VBoxContainer" to="Pause/Selector" method="handle_selection"]
+[connection signal="selected" from="Pause/VBoxContainer" to="Pause/SelectorBlinking" method="handle_selection"]
 
 [editable path="Settings"]
 [editable path="Controls"]

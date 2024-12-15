@@ -13,6 +13,7 @@ var voice_lines: Dictionary = {}
 ## Add new ones with "add_misc_texture" method.
 var misc_textures: Dictionary = {}
 var suit_tweaks: Dictionary = {}
+var suit_sounds: Dictionary = {}
 
 ## Base suits for Mario
 const MARIO_SUITS: Dictionary = {
@@ -48,10 +49,6 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"fall": [
 		preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav")
 	],
-	"jump": null,
-	"swim": null,
-	"hurt": null,
-	"death": null,
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -66,10 +63,13 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"fall": [
 		preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav")
 	],
-	"jump": null,
-	"swim": null,
-	"hurt": null,
-	"death": null,
+}
+
+const DEFAULT_SUIT_SOUNDS: Dictionary = {
+	"jump": [ preload("res://engine/objects/players/prefabs/sounds/jump.wav") ],
+	"swim": [ preload("res://engine/objects/players/prefabs/sounds/swim.wav") ],
+	"hurt": [ preload("res://engine/objects/players/prefabs/sounds/pipe.wav") ],
+	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
@@ -149,8 +149,8 @@ const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
-	add_voice_lines(MARIO_VOICE_LINES, "Mario")
-	add_voice_lines(LUIGI_VOICE_LINES, "Luigi")
+	add_voice_lines(MARIO_VOICE_LINES, voice_lines, "Mario")
+	add_voice_lines(LUIGI_VOICE_LINES, voice_lines, "Luigi")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
 	add_misc_texture(preload("res://engine/scenes/map/textures/mario_icon.png"), "map_icon", "Mario")
@@ -161,10 +161,18 @@ func _ready() -> void:
 	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/cp_star.png"), "particle", "Luigi")
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Mario")
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Luigi")
+	
 	for i in MARIO_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
+		if !i in suit_sounds:
+			suit_sounds[i] = {}
+		add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Mario")
+	
 	for i in LUIGI_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Luigi", i)
+		if !i in suit_sounds:
+			suit_sounds[i] = {}
+		add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Luigi")
 
 
 func get_character_name() -> String:
@@ -203,9 +211,7 @@ func get_suit_names(character_name: String = "") -> Array:
 
 
 func get_voice_line(voice_line: String, character_name: String = "", skinned: bool = true) -> Variant:
-	var skinned_dict = {}
-	if skinned:
-		skinned_dict = SkinsManager.misc_sounds
+	var skinned_dict = SkinsManager.misc_sounds if skinned else {}
 	return _get_something(voice_line, character_name, voice_lines, skinned_dict)
 
 
@@ -214,18 +220,14 @@ func get_misc_texture(texture_name: String, character_name: String = "", skinned
 	return _get_something(texture_name, character_name, misc_textures, skinned_dict)
 
 
-func get_suit_tweak(tweak: String, character_name: String = "", suit_name: String = "", skinned: bool = true) -> Variant:
+func get_suit_tweak(tweak: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Variant:
 	var skinned_dict = SkinsManager.suit_tweaks if skinned else {}
-	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
-	if !suit_name:
-		suit_name = Thunder._current_player_state.name
-	
-	if chara && chara in suit_tweaks && suit_name in suit_tweaks[chara] && tweak in suit_tweaks[chara][suit_name]:
-		if skinned_dict && SkinsManager.current_skin in skinned_dict && suit_name in skinned_dict[SkinsManager.current_skin] && tweak in skinned_dict[SkinsManager.current_skin][suit_name]:
-			return skinned_dict[SkinsManager.current_skin][suit_name][tweak]
-		return suit_tweaks[chara][suit_name][tweak]
-	return null
+	return _get_something_suit(tweak, character_name, suit, suit_tweaks, skinned_dict)
+
+
+func get_suit_sound(sound: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Variant:
+	var skinned_dict = SkinsManager.suit_sounds if skinned else {}
+	return _get_something_suit(sound, character_name, suit, suit_sounds, skinned_dict)
 
 
 func get_character_names() -> Array:
@@ -252,12 +254,12 @@ func add_suits(dict: Dictionary, character: String, override: bool = false) -> v
 	suits = new_suit_dict
 
 
-func add_voice_lines(dict: Dictionary, character: String, override: bool = false) -> void:
-	var new_voice_dict: Dictionary = voice_lines.duplicate(true)
+func add_voice_lines(dict: Dictionary, to_dict: Dictionary, character: String, override: bool = false) -> void:
+	var new_voice_dict: Dictionary = to_dict.duplicate(true)
 	if !character in new_voice_dict:
 		new_voice_dict[character] = {}
 	new_voice_dict[character].merge(dict, override)
-	voice_lines = new_voice_dict
+	to_dict = new_voice_dict
 
 
 func add_misc_texture(texture: Variant, texture_name: String, character: String, override: bool = false) -> void:
@@ -288,4 +290,16 @@ func _get_something(what: String, character_name: String, dict_ref: Dictionary, 
 		if skinned_dict && what in skinned_dict.get(SkinsManager.current_skin, ""):
 			return skinned_dict[SkinsManager.current_skin][what]
 		return dict_ref[chara][what]
+	return null
+
+func _get_something_suit(what: String, character_name: String, suit: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
+	var chara: String = character_name
+	if chara.is_empty(): chara = SettingsManager.settings.character
+	if !suit:
+		suit = Thunder._current_player_state.name
+	
+	if chara && chara in dict_ref && suit in dict_ref[chara] && what in dict_ref[chara][suit]:
+		if skinned_dict && SkinsManager.current_skin in skinned_dict && suit in skinned_dict[SkinsManager.current_skin] && what in skinned_dict[SkinsManager.current_skin][suit]:
+			return skinned_dict[SkinsManager.current_skin][suit][what]
+		return dict_ref[chara][suit][what]
 	return null
