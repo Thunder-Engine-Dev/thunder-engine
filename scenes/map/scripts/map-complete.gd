@@ -6,6 +6,8 @@ extends Node2D
 var skippable: bool = false
 
 func _ready() -> void:
+	if Data.values.get("map_force_selected_marker"):
+		Data.values.map_force_go_next = true
 	if !ProfileManager.current_profile.has_completed_world(world_name):
 		ProfileManager.current_profile.data.current_world = goto_scene
 		ProfileManager.current_profile.complete_world(world_name)

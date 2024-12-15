@@ -28,6 +28,17 @@ var map: Node2D
 
 signal changed
 
+func _init() -> void:
+	if allow_saving:
+		if (
+			Data.values.get("map_force_selected_marker") &&
+			!Data.values.get("map_force_go_next") &&
+			Data.values.get("map_force_old_marker")
+		):
+			Data.values.map_force_selected_marker = Data.values.map_force_old_marker
+			print("Map Forced To Old Marker ", Data.values.map_force_selected_marker)
+
+
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		map = Scenes.current_scene
@@ -72,6 +83,7 @@ func _save_progress() -> void:
 	var next_level_name: String = uncompleted_levels[0].get_file().get_slice(".", 0)
 	
 	if Data.values.get("map_force_selected_marker") && Data.values.get("map_force_go_next"):
+		Data.values.map_force_old_marker = Data.values.map_force_selected_marker
 		Data.values.map_force_selected_marker = uncompleted_levels[0]
 		print("Map Forced To ", Data.values.map_force_selected_marker)
 		Data.values.map_force_go_next = false
