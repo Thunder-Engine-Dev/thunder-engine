@@ -1,5 +1,7 @@
 extends Window
 
+signal executed(command_name: String, args: Array)
+
 var commands: Dictionary
 
 @onready var input: LineEdit = $"UI/CmdInput"

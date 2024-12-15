@@ -50,6 +50,8 @@ func try_execute(args: Array) -> Variant:
 	if res.err != Error.OK:
 		return messages[res.err]
 	
+	Console.executed.emit(name, args)
+	
 	return res.msg
 
 # NOT FOR OVERRIDING
