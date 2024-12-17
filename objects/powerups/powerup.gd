@@ -1,6 +1,10 @@
 extends GravityBody2D
 class_name Powerup
 
+const DEFAULT_APPEARING_SOUND = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
+const DEFAULT_POWERUP_SOUND = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
+const DEFAULT_NEUTRAL_SOUND = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
+
 signal collected
 signal collected_changed_suit
 
@@ -21,9 +25,9 @@ signal collected_changed_suit
 
 @export_group("SFX")
 @export_subgroup("Sounds")
-@export var appearing_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
-@export var pickup_powerup_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
-@export var pickup_neutral_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/powerup.wav")
+@export var appearing_sound: AudioStream = DEFAULT_APPEARING_SOUND
+@export var pickup_powerup_sound: AudioStream = DEFAULT_POWERUP_SOUND
+@export var pickup_neutral_sound: AudioStream = DEFAULT_NEUTRAL_SOUND
 @export_subgroup("Sound Settings")
 @export var sound_pitch: float = 1.0
 

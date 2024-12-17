@@ -30,6 +30,7 @@ var map: Node2D
 signal changed
 
 func _init() -> void:
+	if Engine.is_editor_hint(): return
 	if allow_saving:
 		if (
 			Data.values.get("map_force_selected_marker") &&

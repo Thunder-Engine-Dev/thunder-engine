@@ -138,24 +138,24 @@ func accelerate_y(to: float, a: float) -> void:
 
 ## Reverse [member speed].x
 func turn_x() -> void:
-	if speed_previous.x == 0:
+	if is_zero_approx(speed_previous.x):
 		speed.x *= -1
 		return
 	speed_previous.x *= -1
 	speed.x = speed_previous.x
-	if impulse_move_on_turn_x:
-		do_movement(get_physics_process_delta_time(), false, false)
+	#if impulse_move_on_turn_x && !is_zero_approx(speed.x):
+	#	do_movement(get_physics_process_delta_time(), false, true)
 
 
 ## Reverse [member speed].y
 func turn_y() -> void:
-	if speed_previous.y == 0:
+	if is_zero_approx(speed_previous.y):
 		speed.y *= -1
 		return
 	speed_previous.y *= -1
 	speed.y = speed_previous.y
-	if impulse_move_on_turn_y:
-		do_movement(get_physics_process_delta_time(), false, false)
+	#if impulse_move_on_turn_y && !is_zero_approx(speed.y):
+	#	do_movement(get_physics_process_delta_time(), false, true)
 
 
 ## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always negative(upwards)

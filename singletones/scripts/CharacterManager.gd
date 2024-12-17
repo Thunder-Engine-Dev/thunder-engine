@@ -149,8 +149,8 @@ const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
-	add_voice_lines(MARIO_VOICE_LINES, voice_lines, "Mario")
-	add_voice_lines(LUIGI_VOICE_LINES, voice_lines, "Luigi")
+	voice_lines = add_voice_lines(MARIO_VOICE_LINES, voice_lines, "Mario")
+	voice_lines = add_voice_lines(LUIGI_VOICE_LINES, voice_lines, "Luigi")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
 	add_misc_texture(preload("res://engine/scenes/map/textures/mario_icon.png"), "map_icon", "Mario")
@@ -166,13 +166,13 @@ func _ready() -> void:
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
 		if !i in suit_sounds:
 			suit_sounds[i] = {}
-		add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Mario")
+		suit_sounds[i] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Mario")
 	
 	for i in LUIGI_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Luigi", i)
 		if !i in suit_sounds:
 			suit_sounds[i] = {}
-		add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Luigi")
+		suit_sounds[i] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Luigi")
 
 
 func get_character_name() -> String:
@@ -210,9 +210,10 @@ func get_suit_names(character_name: String = "") -> Array:
 	return suit_name_arr
 
 
-func get_voice_line(voice_line: String, character_name: String = "", skinned: bool = true) -> Variant:
+func get_voice_line(voice_line: String, character_name: String = "", skinned: bool = true) -> Array:
 	var skinned_dict = SkinsManager.misc_sounds if skinned else {}
-	return _get_something(voice_line, character_name, voice_lines, skinned_dict)
+	var out = _get_something(voice_line, character_name, voice_lines, skinned_dict)
+	return out if out else []
 
 
 func get_misc_texture(texture_name: String, character_name: String = "", skinned: bool = true) -> Variant:
@@ -254,12 +255,12 @@ func add_suits(dict: Dictionary, character: String, override: bool = false) -> v
 	suits = new_suit_dict
 
 
-func add_voice_lines(dict: Dictionary, to_dict: Dictionary, character: String, override: bool = false) -> void:
-	var new_voice_dict: Dictionary = to_dict.duplicate(true)
+func add_voice_lines(dict: Dictionary, from_dict: Dictionary, character: String, override: bool = false) -> Dictionary:
+	var new_voice_dict: Dictionary = from_dict.duplicate(true)
 	if !character in new_voice_dict:
 		new_voice_dict[character] = {}
 	new_voice_dict[character].merge(dict, override)
-	to_dict = new_voice_dict
+	return new_voice_dict
 
 
 func add_misc_texture(texture: Variant, texture_name: String, character: String, override: bool = false) -> void:

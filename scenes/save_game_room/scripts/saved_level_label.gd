@@ -42,6 +42,6 @@ func set_empty() -> void:
 
 func set_world_numbers(world_numbers: String) -> void:
 	if _tweak:
-		world_numbers = world_numbers.split("-")[0]
+		world_numbers = world_numbers.get_slice("-", 0)
 	text = text_template % world_numbers.replace("-", " - ")
 	pipe_save.is_empty = false

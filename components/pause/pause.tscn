@@ -296,7 +296,7 @@ script = ExtResource("18_ek8ml")
 [node name="SelectorBlinking" type="Node" parent="Pause"]
 script = ExtResource("19_fk228")
 menu_items_controller_path = NodePath("../VBoxContainer")
-speed = 5.0
+speed = 8.0
 
 [node name="GamePaused" type="TextureRect" parent="Pause"]
 layout_mode = 1
