@@ -3,6 +3,9 @@
 extends AnimatableBody2D
 class_name StaticBumpingBlock
 
+const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+const DEFAULT_BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
+
 ## Base class for blocks that can be bumped by players and enemies[br]
 ## Generally, bricks, question blocks, message blocks, etc. all belong to the class
 
@@ -21,9 +24,9 @@ var _triggered: bool = false
 ## The sound when the block spawns an item
 @export var appear_sound: AudioStream = null
 ## The sound when the block gets bumped
-@export var bump_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+@export var bump_sound: AudioStream = DEFAULT_BUMP
 ## The sound when the block breaks (if possible)
-@export var break_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
+@export var break_sound: AudioStream = DEFAULT_BREAK
 
 @export_group("Block Visibility")
 ## Is initially visible and solid
@@ -53,6 +56,9 @@ var _ignore_colliding_body_correction: bool = false
 @onready var _sprites: Node2D = $Sprites
 @onready var _animated_sprite_2d: AnimatedSprite2D = $Sprites/AnimatedSprite2D
 
+@onready var _old_bump_sfx = bump_sound
+@onready var _old_break_sfx = break_sound
+
 ## Emitted when getting bumped
 signal bumped
 ## Emitted when the item gets spawned
@@ -76,6 +82,9 @@ func _ready() -> void:
 			_collision_shape_2d.set_deferred(&"disabled", true)
 		_ignore_colliding_body_correction = !initially_visible_and_solid
 		_sprites.visible = initially_visible_and_solid
+		
+		bump_sound = CharacterManager.get_sound_replace(bump_sound, DEFAULT_BUMP, "block_bump", false)
+		break_sound = CharacterManager.get_sound_replace(break_sound, DEFAULT_BREAK, "block_break", false)
 
 
 func _physics_process(delta) -> void:
@@ -117,7 +126,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		call_deferred(&"_creation", result.prepare())
 		result_appeared.emit()
 	else:
-		Audio.play_sound(bump_sound, self)
+		if !(_old_bump_sfx == DEFAULT_BUMP && CharacterManager.get_suit_tweak("head_bump_sound")):
+			Audio.play_sound(bump_sound, self)
 	
 	bumped.emit()
 	hit_attack()

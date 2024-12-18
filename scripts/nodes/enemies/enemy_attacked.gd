@@ -8,6 +8,8 @@ extends Node
 
 const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effect.tscn")
 const COIN = preload("res://engine/objects/items/coin/coin.wav")
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+const DEFAULT_STOMP = preload("res://engine/objects/enemies/_sounds/stomp.wav")
 
 const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 
@@ -147,9 +149,11 @@ func _ready() -> void:
 
 
 func _lss():
-	Audio.play_sound(stomping_sound, _center, false, {pitch = sound_pitch})
+	var _custom_sound = CharacterManager.get_sound_replace(stomping_sound, DEFAULT_STOMP, "enemy_stomp", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch})
 func _lks():
-	Audio.play_sound(killing_sound_succeeded, _center, false, {pitch = sound_pitch})
+	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_succeeded, DEFAULT_KICK, "enemy_kick", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch})
 func _lkf():
 	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch})
 func _lkfz():

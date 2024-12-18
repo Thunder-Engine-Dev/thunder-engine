@@ -36,3 +36,4 @@ class_name PlayerConfig
 @export_group("Sound", "sound_")
 @export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")
 @export var sound_swim: AudioStream = preload("res://engine/objects/players/prefabs/sounds/swim.wav")
+@export var sound_skid: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")

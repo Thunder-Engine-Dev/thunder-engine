@@ -45,8 +45,15 @@ const MARIO_VOICE_LINES: Dictionary = {
 	],
 	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav") ],
 	"fall": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
+	"fall_death": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
 	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
 	"level_complete": [],
+	"coin": [],
+	"enemy_stomp": [],
+	"enemy_kick": [],
+	"spring_bounce": [],
+	"block_bump": [],
+	"block_break": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -57,8 +64,15 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	],
 	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav") ],
 	"fall": [ preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav") ],
+	"fall_death": [ preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav") ],
 	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
 	"level_complete": [],
+	"coin": [],
+	"enemy_stomp": [],
+	"enemy_kick": [],
+	"spring_bounce": [],
+	"block_bump": [],
+	"block_break": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
@@ -66,8 +80,13 @@ const DEFAULT_SUIT_SOUNDS: Dictionary = {
 	"swim": [ preload("res://engine/objects/players/prefabs/sounds/swim.wav") ],
 	"hurt": [ preload("res://engine/objects/players/prefabs/sounds/pipe.wav") ],
 	"powerup": [],
-	"powerup_neutral": [],
-	"pipe": [],
+	"pipe_in": [],
+	"pipe_out": [],
+	"look_up": [],
+	"attack": [],
+	"skid": [],
+	"grab": [ preload("res://engine/objects/players/prefabs/sounds/grab.wav") ],
+	"kick": [ preload("res://engine/objects/players/prefabs/sounds/kick.wav") ],
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
@@ -75,10 +94,12 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"attack_air_animation": false, # "attack_air"
 	"separate_run_animation": false, # "p_run", "p_jump", "p_fall"
 	"idle_animation": false, # "idle"
-	"idle_activate_after_sec": 10.0, # from 0.1 to inf; no effect if idle animation is disabled
+	"idle_activate_after_sec": 10.0, # from 0.1 to 9999; no effect if idle animation is disabled
 	"stomp_animation": false, # after stomping an enemy or jumping on springboard
 	"kick_ground_animation": false, # for shells, etc
 	"warp_animation": true, # "warp"; if false, warping vertically will use "jump", and "crouch" or "default"
+	"skid_sound_loop_delay": 0.1, # from 0.05 to 2.0
+	"head_bump_sound": false, # play global sound "block_bump" on every touch of ceiling
 	"emit_particles": {
 		"enabled": false, # if no texture is set, the default texture will be starman particles
 		"color": "#ffffffff", # HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency
@@ -225,9 +246,10 @@ func get_suit_tweak(tweak: String, character_name: String = "", suit: String = "
 	return _get_something_suit(tweak, character_name, suit, suit_tweaks, skinned_dict)
 
 
-func get_suit_sound(sound: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Variant:
+func get_suit_sound(sound: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Array:
 	var skinned_dict = SkinsManager.suit_sounds if skinned else {}
-	return _get_something_suit(sound, character_name, suit, suit_sounds, skinned_dict)
+	var out = _get_something_suit(sound, character_name, suit, suit_sounds, skinned_dict)
+	return out if out else []
 
 
 func get_character_names() -> Array:
@@ -235,6 +257,15 @@ func get_character_names() -> Array:
 	for key in suits.keys():
 		chara_name_arr.append(key)
 	return chara_name_arr
+
+
+func get_sound_replace(sound: AudioStream, default_sound: AudioStream, sound_name: String, from_suit: bool) -> AudioStream:
+	var _custom_snd: Array = (
+		CharacterManager.get_suit_sound(sound_name) if from_suit else CharacterManager.get_voice_line(sound_name)
+	)
+	if !_custom_snd:
+		_custom_snd = [sound]
+	return sound if sound != default_sound else _custom_snd[randi_range(0, len(_custom_snd) - 1)]
 
 
 func add_suit(suit: PlayerSuit, power: String, character: String, override: bool = false) -> void:

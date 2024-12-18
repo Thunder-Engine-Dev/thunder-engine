@@ -7,6 +7,8 @@ class_name Level
 ## Once you selected this node via [b]Create Node Pannel[/b] it will automatically deploy the basic template
 ## of a level, which is more convenient to structure a level from zero.
 
+var DEFAULT_COMPLETION = preload("res://engine/scripts/classes/level/complete.ogg")
+
 ## Emitted when player completes the level
 signal level_completed
 
@@ -16,7 +18,7 @@ signal level_completed
 
 @export_group("Level Completion")
 ## Level completion music
-@export var completion_music: AudioStream = preload("res://engine/scripts/classes/level/complete.ogg")
+@export var completion_music: AudioStream = DEFAULT_COMPLETION
 ## Write info about level completion to save file
 @export var completion_write_save: bool = true
 ## Override scene path that gets written to save file
@@ -25,6 +27,7 @@ signal level_completed
 @export_file("*.tscn", "*.scn") var jump_to_scene: String
 ## If you have a weird misplaced circle transition after jumping to next scene, enable this property
 @export var completion_center_on_player_after_transition: bool = false
+@export var completion_music_delay_sec: float = 8.0
 
 @export_group("Player's Falling Below", "falling_below_")
 ## Enum to decide the bahavior when a player falls from the bottom of the screen[br]
@@ -171,7 +174,8 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_player.completed = true
 	Audio.stop_all_musics()
 	if completion_music:
-		Audio.play_music(completion_music, -1)
+		var _custom_music = CharacterManager.get_sound_replace(completion_music, DEFAULT_COMPLETION, "level_complete", false)
+		Audio.play_music(_custom_music, -1)
 
 	if walking:
 		_force_player_walking = true
@@ -187,7 +191,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 
 	await get_tree().physics_frame
 	if completion_music:
-		await Audio._music_channels[-1].finished
+		await get_tree().create_timer(completion_music_delay_sec, false, false, true).timeout
 
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:

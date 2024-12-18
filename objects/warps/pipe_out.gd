@@ -2,12 +2,14 @@
 @tool
 extends Area2D
 
+const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+
 signal warp_ended
 
 @export_category("PipeOut")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.UP
 @export var warping_speed: float = 50
-@export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+@export var warping_sound: AudioStream = DEFAULT_WARP_SOUND
 @export var trigger_immediately: bool = false
 
 var player: Player
@@ -101,8 +103,9 @@ func pass_player(new_player: Player) -> void:
 	player.warp = Player.Warp.OUT
 	
 	await get_tree().physics_frame
-	Audio.play_sound(warping_sound, self, false)
-	await get_tree().physics_frame
+	var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_out", true)
+	Audio.play_sound(_custom_sound, self, false)
+	#await get_tree().physics_frame
 
 
 func _label() -> void:

@@ -300,6 +300,8 @@ func _head_process() -> void:
 			player.is_underwater_out = false
 			if player.bubbler.is_stopped():
 				player.bubbler.start()
+		elif player.is_on_ceiling() && !player.is_crouching:
+			player.head_bumped.emit()
 		# Bumpable Block
 		if collider is StaticBumpingBlock && \
 		collider.has_method(&"got_bumped") && \

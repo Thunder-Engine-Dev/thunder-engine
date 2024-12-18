@@ -2,6 +2,8 @@
 @tool
 extends Area2D
 
+const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+
 @export_category("Warp")
 @export_group("Editor","warping_editor_")
 @export var warping_editor_display_path: bool = true
@@ -12,7 +14,7 @@ extends Area2D
 @export_file("*.tscn", "*.scn") var warp_to_scene: String
 @export var trigger_finish: bool = false
 @export var warping_speed: float = 60
-@export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+@export var warping_sound: AudioStream = DEFAULT_WARP_SOUND
 @export_group("Tweaks")
 @export var warp_invisible_left_right: bool = true
 @export var warp_disable_smooth_entry: bool = false
@@ -125,7 +127,8 @@ func _warp_initiator() -> void:
 		player.speed = Vector2.ZERO
 		if is_instance_valid(Thunder._current_camera):
 			Thunder._current_camera.teleport()
-		Audio.play_sound(warping_sound, self, false)
+		var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_in", true)
+		Audio.play_sound(_custom_sound, self, false)
 		Thunder._current_hud.timer.paused = true
 
 

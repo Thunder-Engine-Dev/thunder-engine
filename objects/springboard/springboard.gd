@@ -13,6 +13,9 @@ var is_playing_backwards: bool
 func _ready() -> void:
 	animation_player.animation_finished.connect(_animation_finished)
 	is_better = SettingsManager.get_tweak("better_springboards", true)
+	var _custom_sound = CharacterManager.get_sound_replace(enemy_attacked.stomping_sound, enemy_attacked.stomping_sound, "spring_bounce", false)
+	if _custom_sound:
+		enemy_attacked.stomping_sound = _custom_sound
 
 
 func trigger(pl = null) -> void:

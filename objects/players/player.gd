@@ -6,6 +6,7 @@ signal suit_changed(to: PlayerSuit)
 signal swam
 signal shot
 signal threw
+signal head_bumped
 signal grab_init(node: Node2D)
 signal grabbed(side_grabbed: bool)
 signal invinciblized(dur: float)
@@ -29,37 +30,7 @@ enum WarpDir {
 }
 
 @export_group("General")
-@export var suit: PlayerSuit#:
-	#set(to):
-		#if (!to || (suit && suit.name == to.name)) && !_force_suit: return
-		#suit = to.duplicate()
-#
-		#if suit.animation_sprites:
-		#	apply_player_skin.call_deferred(suit)
-#
-		#_physics_behavior = null
-		#_suit_behavior = null
-		#_animation_behavior = null
-		#_extra_behavior = null
-		#
-		#if suit.physics_behavior:
-			#_physics_behavior = ByNodeScript.activate_script(suit.physics_behavior, self)
-		#if suit.grab_behavior:
-			#_grab_behavior = ByNodeScript.activate_script(suit.grab_behavior, self)
-		#if suit.behavior_script:
-			#_suit_behavior = ByNodeScript.activate_script(suit.behavior_script, self, {suit_resource = suit.behavior_resource})
-		#if suit.animation_behavior:
-			#_animation_behavior = ByNodeScript.activate_script(suit.animation_behavior, self)
-		#if suit.extra_behavior:
-			#_extra_behavior = ByNodeScript.activate_script(suit.extra_behavior, self, suit.extra_vars)
-		#if _suit_appear:
-			#_suit_appear = false
-			#suit_appeared.emit()
-		#
-		#if !to.resource_path.is_empty():
-			#Thunder._current_player_state_path = to.resource_path
-		#Thunder._current_player_state = suit
-		#suit_changed.emit(suit)
+@export var suit: PlayerSuit
 @export var circle_transition_on_self: bool = true
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
@@ -147,7 +118,6 @@ var _suit_tree_paused: bool
 @onready var bubbler: Timer = $Underwater/Bubbler
 @onready var stars: GPUParticles2D = $Sprite/Stars
 @onready var skid: GPUParticles2D = $Sprite/Skid
-@onready var skid_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/skid.wav")
 @onready var skin_particles: GPUParticles2D = $Sprite/SkinParticles
 @onready var death_sprite: Sprite2D = $SpriteDeath
 
@@ -230,12 +200,18 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	if suit.animation_sprites:
 		sprite.sprite_frames = SkinsManager.apply_player_skin(suit)
 	var _jump = CharacterManager.get_suit_sound("jump", "", suit.name)
-	var _hurt = CharacterManager.get_suit_sound("hurt", "", suit.name)
 	var _swim = CharacterManager.get_suit_sound("swim", "", suit.name)
-	var _death = CharacterManager.get_suit_sound("death", "", suit.name)
+	var _skid = CharacterManager.get_suit_sound("skid", "", suit.name)
+	var _grab = CharacterManager.get_suit_sound("grab", "", suit.name)
+	var _kick = CharacterManager.get_suit_sound("kick", "", suit.name)
+	var _hurt = CharacterManager.get_suit_sound("hurt", "", suit.name)
+	var _death = CharacterManager.get_voice_line("death", "")
 	suit.physics_config = suit.physics_config.duplicate()
 	if _jump: suit.physics_config.sound_jump = _jump[0]
 	if _swim: suit.physics_config.sound_swim = _swim[0]
+	if _skid: suit.physics_config.sound_skid = _skid[0]
+	if _grab: suit.grab_sound_grab = _grab[0]
+	if _kick: suit.grab_sound_kick = _kick[0]
 	if _hurt: suit.sound_hurt = _hurt[randi_range(0, len(_hurt) - 1)]
 	if _death: suit.sound_death = _death[randi_range(0, len(_death) - 1)]
 

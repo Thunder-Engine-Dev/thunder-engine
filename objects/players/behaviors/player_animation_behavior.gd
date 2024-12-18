@@ -1,6 +1,7 @@
 extends ByNodeScript
 
 const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
+const BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 
 var player: Player
 var sprite: AnimatedSprite2D
@@ -14,6 +15,9 @@ var _look_up_tweak: bool
 var _separate_run_tweak: bool
 var _stomp_anim_tweak: bool
 var _warp_tweak: bool
+var _head_bump_sound: bool
+var _skid_sound_loop_delay: float
+var _look_up_sound: AudioStream
 var _loop_offsets: Dictionary = {}
 
 var _climb_progress: float
@@ -36,6 +40,7 @@ func _ready() -> void:
 	player.threw.connect(_threw)
 	player.grabbed.connect(_grabbed)
 	player.invinciblized.connect(_invincible)
+	player.head_bumped.connect(_head_bumped)
 	
 	player.bubbler.timeout.connect(_bubble_spawn)
 	
@@ -123,9 +128,16 @@ var _skid_sound_timer: bool
 func _skid_sound_loop() -> void:
 	if _skid_sound_timer: return
 	_skid_sound_timer = true
-	Audio.play_sound(player.skid_sound, player)
-	await player.get_tree().create_timer(0.10, false, false, true).timeout
+	Audio.play_sound(config.sound_skid, player)
+	var _clamped_loop: float = clampf(_skid_sound_loop_delay, 0.05, 2.0)
+	await player.get_tree().create_timer(_clamped_loop, false, false, true).timeout
 	_skid_sound_timer = false
+
+
+func _head_bumped() -> void:
+	if !_head_bump_sound: return
+	
+	Audio.play_sound(CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false), player)
 
 
 func _grabbed(side_grabbed: bool) -> void:
@@ -156,6 +168,11 @@ func _setup_tweaks() -> void:
 	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
 	_stomp_anim_tweak = CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
 	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
+	_skid_sound_loop_delay = CharacterManager.get_suit_tweak("skid_sound_loop_delay", "", player.suit.name)
+	_head_bump_sound = CharacterManager.get_suit_tweak("head_bump_sound", "", player.suit.name)
+	var _up_sfx: Array = CharacterManager.get_suit_sound("look_up", "", player.suit.name)
+	if _up_sfx:
+		_look_up_sound = _up_sfx.front()
 	var _off = CharacterManager.get_suit_tweak("loop_frame_offsets", "", player.suit.name)
 	if _off is Dictionary:
 		_loop_offsets = _off
@@ -209,6 +226,8 @@ func _animation_process(delta: float) -> void:
 			else:
 				_p_run_enabled = false
 				if player.up_down == -1 && !player.is_holding && _look_up_tweak:
+					if sprite.animation != &"look_up":
+						Audio.play_sound(_look_up_sound, player, false)
 					_play_anim(&"look_up")
 				else:
 					_idle_timer += delta

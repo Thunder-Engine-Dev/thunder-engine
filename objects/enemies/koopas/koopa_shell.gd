@@ -2,6 +2,8 @@ extends GeneralMovementBody2D
 
 const Shell: Script = preload("./koopa_shell.gd")
 
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.6
@@ -10,8 +12,8 @@ const Shell: Script = preload("./koopa_shell.gd")
 @export_group("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
-@export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
-@export var combo_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+@export var kicked_sound: AudioStream = DEFAULT_KICK
+@export var combo_sound: AudioStream = DEFAULT_KICK
 
 var _delayer: SceneTreeTimer
 
@@ -73,7 +75,8 @@ func status_swap(to: bool) -> void:
 
 
 func sound() -> void:
-	Audio.play_sound(kicked_sound, self)
+	var _custom_sound = CharacterManager.get_sound_replace(kicked_sound, DEFAULT_KICK, "kick", true)
+	Audio.play_sound(_custom_sound, self)
 
 
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
