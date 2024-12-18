@@ -43,12 +43,10 @@ const MARIO_VOICE_LINES: Dictionary = {
 		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_2.ogg"),
 		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_3.ogg"),
 	],
-	"oh_no": [
-		preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav")
-	],
-	"fall": [
-		preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav")
-	],
+	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav") ],
+	"fall": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
+	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
+	"level_complete": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -57,19 +55,19 @@ const LUIGI_VOICE_LINES: Dictionary = {
 		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_2.wav"),
 		preload("res://engine/objects/players/prefabs/sounds/luigi/checkpoint_3.wav"),
 	],
-	"oh_no": [
-		preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav")
-		],
-	"fall": [
-		preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav")
-	],
+	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/luigi/oh_no.wav") ],
+	"fall": [ preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav") ],
+	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
+	"level_complete": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
 	"jump": [ preload("res://engine/objects/players/prefabs/sounds/jump.wav") ],
 	"swim": [ preload("res://engine/objects/players/prefabs/sounds/swim.wav") ],
 	"hurt": [ preload("res://engine/objects/players/prefabs/sounds/pipe.wav") ],
-	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
+	"powerup": [],
+	"powerup_neutral": [],
+	"pipe": [],
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
@@ -146,11 +144,14 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
 
+# Preparing Mario and Luigi characters
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
+	
 	voice_lines = add_voice_lines(MARIO_VOICE_LINES, voice_lines, "Mario")
 	voice_lines = add_voice_lines(LUIGI_VOICE_LINES, voice_lines, "Luigi")
+	
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
 	add_misc_texture(preload("res://engine/scenes/map/textures/mario_icon.png"), "map_icon", "Mario")
@@ -159,20 +160,18 @@ func _ready() -> void:
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/luigi/luigi_dead.png"), "death", "Luigi")
 	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/cp_star.png"), "particle", "Mario")
 	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/cp_star.png"), "particle", "Luigi")
+	
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Mario")
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Luigi")
 	
 	for i in MARIO_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
-		if !i in suit_sounds:
-			suit_sounds[i] = {}
-		suit_sounds[i] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Mario")
 	
 	for i in LUIGI_SUITS.keys():
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Luigi", i)
-		if !i in suit_sounds:
-			suit_sounds[i] = {}
-		suit_sounds[i] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[i], "Luigi")
+	
+	add_default_suit_sounds(MARIO_SUITS, "Mario")
+	add_default_suit_sounds(LUIGI_SUITS, "Luigi")
 
 
 func get_character_name() -> String:
@@ -281,6 +280,13 @@ func add_suit_tweaks(dict: Dictionary, character: String, suit: String, override
 		new_tweak_dict[character][suit] = {}
 	new_tweak_dict[character][suit].merge(dict, override)
 	suit_tweaks = new_tweak_dict
+
+
+func add_default_suit_sounds(suits_dict: Dictionary, character: String) -> void:
+	for i in suits_dict.keys():
+		if !character in suit_sounds:
+			suit_sounds[character] = {}
+		suit_sounds[character] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[character], i)
 
 
 func _get_something(what: String, character_name: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
