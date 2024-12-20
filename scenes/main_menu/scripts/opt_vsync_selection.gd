@@ -13,7 +13,11 @@ func _ready() -> void:
 	SettingsManager.settings_updated.connect(set.bind(&"_saved_value", SettingsManager.settings.vsync))
 
 func _handle_select(mouse_input: bool = false) -> void:
-	return
+	if !focused || !get_parent().focused: return
+	
+	var old_value = int(SettingsManager.settings.vsync)
+	SettingsManager.settings.vsync = wrapi(old_value + 1, 0, 3)
+	_toggled_option(old_value, SettingsManager.settings.vsync)
 
 
 func _physics_process(delta: float) -> void:

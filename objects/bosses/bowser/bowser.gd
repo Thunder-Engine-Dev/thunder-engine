@@ -385,7 +385,6 @@ func die() -> void:
 
 # Gets the facing of the bowser
 func get_facing(dir: int) -> int:
-	var player: Player = Thunder._current_player
 	if !player: return dir
 	return Thunder.Math.look_at(global_position, player.global_position, global_transform)
 
