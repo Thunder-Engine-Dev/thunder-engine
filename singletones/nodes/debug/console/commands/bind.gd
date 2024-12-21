@@ -5,7 +5,7 @@ static func register() -> Command:
 		.add_param("option", TYPE_STRING, true) \
 		.add_param("key", TYPE_STRING, true) \
 		.add_param("command", TYPE_STRING, true) \
-		.set_description("Binds a command to a preferred key.")
+		.set_description("Binds a command to a preferred key. Bind Remove does NOT work with old binds!")
 
 func execute(args: Array) -> Command.ExecuteResult:
 	var option_list: String = "set, remove, reset, list"

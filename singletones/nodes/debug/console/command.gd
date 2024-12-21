@@ -68,6 +68,8 @@ func get_help() -> String:
 			result += " [color=%s%s: %s%s[/color]" % [
 				opening, k, type_string(params[k].type), closing
 			]
+	if debug_only:
+		description += ". Debug only"
 	
 	result += " - %s" % description
 	
