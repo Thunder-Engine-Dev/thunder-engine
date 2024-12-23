@@ -63,6 +63,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		SettingsManager.hide_mouse()
 
 	get_tree().paused = opened if !_no_unpause else true
+	v_box_container.focused = false
 
 	for i in 2:
 		await get_tree().physics_frame

@@ -134,3 +134,6 @@ class_name PlayerSkin
 	"warp": true,
 	"win": true,
 }
+@export var animation_durations: Dictionary = {
+	
+}

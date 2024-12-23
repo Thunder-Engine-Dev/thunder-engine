@@ -6,6 +6,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if Data.technical_values.get("credits_cooldown", 0.0) > Time.get_ticks_msec():
 		return
 	super(mouse_input)
+	Scenes.custom_scenes.pause.get_node("../Settings/SubViewportContainer/SubViewport/Options").focused = false
 	await get_tree().physics_frame
 	if !SettingsManager.request_restart:
 		_screen_back()
