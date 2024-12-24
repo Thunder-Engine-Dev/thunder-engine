@@ -2,8 +2,11 @@ extends MenuSelection
 
 @onready var prog: Control = $"../.."
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
+var _has_started: bool
 
 func _handle_select(mouse_input: bool = false) -> void:
+	if _has_started:
+		return
 	super(mouse_input)
 	
 	Scenes.custom_scenes.pause.open_blocked = false
@@ -18,6 +21,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	ProfileManager.current_profile.data = prog.profile.saved_profile_data
 	
 	_start_transition.call_deferred()
+	_has_started = true
+	get_parent().focused = false
 
 
 func _start_transition() -> void:
