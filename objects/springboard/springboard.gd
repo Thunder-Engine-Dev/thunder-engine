@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("m_jump"):
 		enemy_attacked.stomping_player_jumping_max = spring_jump_height
 		if !is_better:
-			get_tree().create_timer(0.1).timeout.connect(func():
+			get_tree().create_timer(0.14, false).timeout.connect(func():
 				enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 			)
 		

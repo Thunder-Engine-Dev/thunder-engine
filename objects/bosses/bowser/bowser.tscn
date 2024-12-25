@@ -1,58 +1,23 @@
-[gd_scene load_steps=50 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=51 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
 [ext_resource type="Texture2D" uid="uid://bhern0i54yn7v" path="res://engine/objects/bosses/bowser/texture/bowser_idle.png" id="2_72iau"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ertde"]
-[ext_resource type="PackedScene" uid="uid://yreeufpqjft1" path="res://engine/objects/bosses/bowser/projectile/flame.tscn" id="2_inlg6"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_8kobe"]
+[ext_resource type="Resource" uid="uid://bhj2oucfcluw6" path="res://engine/objects/bosses/bowser/attacks/prefabs/flame.tres" id="2_wrnqp"]
 [ext_resource type="Texture2D" uid="uid://dgjk0q20w38ud" path="res://engine/objects/bosses/bowser/texture/bowser_flame.png" id="3_ohwn1"]
-[ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="4_0j30w"]
+[ext_resource type="Resource" uid="uid://b4t8dw4oie34e" path="res://engine/objects/bosses/bowser/attacks/prefabs/hammer.tres" id="3_r55bt"]
+[ext_resource type="Resource" uid="uid://bbss8l3pxvrjn" path="res://engine/objects/bosses/bowser/attacks/prefabs/burst.tres" id="4_dgx6j"]
 [ext_resource type="Texture2D" uid="uid://yhdouckulds5" path="res://engine/objects/bosses/bowser/texture/bowser_jump.png" id="4_tfgcq"]
-[ext_resource type="PackedScene" uid="uid://b24l0bhd2wshk" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.tscn" id="5_u4pxf"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_i07i2"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
 [ext_resource type="Texture2D" uid="uid://bt6e8nxjbyago" path="res://engine/objects/bosses/bowser/texture/bowser_triple_flame.png" id="8_pk18g"]
 [ext_resource type="Texture2D" uid="uid://diyylloivtfrr" path="res://engine/objects/bosses/bowser/texture/killed.png" id="9_sofua"]
-
-[sub_resource type="Resource" id="Resource_5jupm"]
-script = ExtResource("3_8kobe")
-creation_nodepack = ExtResource("2_inlg6")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_obl6r"]
-script = ExtResource("3_8kobe")
-creation_nodepack = ExtResource("4_0j30w")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
-
-[sub_resource type="Resource" id="Resource_gr117"]
-script = ExtResource("3_8kobe")
-creation_nodepack = ExtResource("5_u4pxf")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
+[ext_resource type="Texture2D" uid="uid://duyieyqodtxa8" path="res://engine/objects/bosses/bowser/texture/bowser_hammer_pre.png" id="15_hmdje"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_flame.gd" id="15_vmejy"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_hammer.gd" id="17_1elmc"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_burst.gd" id="17_7x414"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_post_hammer.gd" id="17_ilmyo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmd6v"]
 size = Vector2(64, 64)
@@ -112,6 +77,26 @@ region = Rect2(0, 144, 64, 72)
 atlas = ExtResource("3_ohwn1")
 region = Rect2(0, 72, 64, 72)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ixyp"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(64, 0, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58h8n"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(64, 72, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmk10"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(64, 144, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48njo"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(0, 216, 64, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx218"]
+atlas = ExtResource("8_pk18g")
+region = Rect2(64, 216, 64, 72)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ijvb0"]
 atlas = ExtResource("8_pk18g")
 region = Rect2(0, 0, 64, 72)
@@ -147,6 +132,14 @@ region = Rect2(0, 72, 80, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_xo6r7"]
 atlas = ExtResource("7_pwf7x")
 region = Rect2(0, 144, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hie24"]
+atlas = ExtResource("15_hmdje")
+region = Rect2(0, 0, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnx73"]
+atlas = ExtResource("15_hmdje")
+region = Rect2(0, 72, 80, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0ddoy"]
 animations = [{
@@ -225,14 +218,29 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uic60")
 }, {
-"duration": 4.0,
+"duration": 99.0,
 "texture": SubResource("AtlasTexture_fiyrs")
 }],
-"loop": false,
+"loop": true,
 "name": &"flame_pre",
 "speed": 7.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ixyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58h8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmk10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48njo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx218")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ijvb0")
 }, {
@@ -244,7 +252,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"flame_pre_multiple",
-"speed": 50.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -256,7 +264,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j5xhd")
 }],
-"loop": false,
+"loop": true,
 "name": &"jump",
 "speed": 25.0
 }, {
@@ -273,196 +281,18 @@ animations = [{
 "loop": true,
 "name": &"throw",
 "speed": 30.0
-}]
-
-[sub_resource type="Animation" id="Animation_6qfym"]
-resource_name = "RESET"
-length = 0.001
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Animations")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"bowser/idle", -1, 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_5bisy"]
-resource_name = "doubleflame"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.8, 0.9, 0.901, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"values": [{
-"args": [&"flame_sound"],
-"method": &"play_sound"
 }, {
-"args": [],
-"method": &"attack_flame"
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hie24")
 }, {
-"args": [],
-"method": &"attack_flame"
-}, {
-"args": [],
-"method": &"reset_animation"
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnx73")
+}],
+"loop": true,
+"name": &"throw_pre",
+"speed": 12.0
 }]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [&"flame_pre", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"flame_on", 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_nhmfv"]
-resource_name = "flame"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"values": [{
-"args": [&"flame_sound"],
-"method": &"play_sound"
-}, {
-"args": [],
-"method": &"attack_flame"
-}, {
-"args": [],
-"method": &"reset_animation"
-}]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [&"flame_pre", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"flame_on", 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_bqdyw"]
-resource_name = "idle"
-length = 0.1
-loop_mode = 1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"default", 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_xml0l"]
-resource_name = "jump"
-length = 0.1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"jump", 1.0, false],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_5hbvf"]
-resource_name = "multiple_flames"
-length = 1.7
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [&"flame_pre_multiple", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"flame_on", 1.0, false],
-"method": &"play"
-}]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1.5, 1.6, 1.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"values": [{
-"args": [&"flame_sound"],
-"method": &"play_sound"
-}, {
-"args": [],
-"method": &"multiple_flames"
-}, {
-"args": [],
-"method": &"reset_animation"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_cho8p"]
-_data = {
-"RESET": SubResource("Animation_6qfym"),
-"doubleflame": SubResource("Animation_5bisy"),
-"flame": SubResource("Animation_nhmfv"),
-"idle": SubResource("Animation_bqdyw"),
-"jump": SubResource("Animation_xml0l"),
-"multiple_flames": SubResource("Animation_5hbvf")
-}
 
 [node name="Bowser" type="CharacterBody2D" groups=["#bowser"]]
 collision_layer = 2
@@ -473,10 +303,9 @@ floor_snap_length = 12.0
 script = ExtResource("1_xvg05")
 status_interval = Array[float]([3.0, 1.0, 2.0])
 status = Array[StringName]([&"flame", &"hammer", &"burst"])
-flame = SubResource("Resource_5jupm")
-hammer = SubResource("Resource_obl6r")
-burst_fireball = SubResource("Resource_gr117")
-final_boss = false
+flame = ExtResource("2_wrnqp")
+hammer = ExtResource("3_r55bt")
+burst_fireball = ExtResource("4_dgx6j")
 speed = Vector2(100, 0)
 gravity_scale = 0.15
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"flame", &"hammer", &"burst_fireball"]
@@ -507,6 +336,16 @@ position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_0ddoy")
 autoplay = "default"
 
+[node name="Debug" type="Label" parent="."]
+visible = false
+offset_left = -64.0
+offset_top = 32.0
+offset_right = 64.0
+offset_bottom = 74.0
+theme_override_constants/line_spacing = -4
+text = "t: %6.2f
+run: %s, lup: %d"
+
 [node name="PosFlame" type="Marker2D" parent="."]
 visible = false
 position = Vector2(16, -11)
@@ -515,11 +354,27 @@ position = Vector2(16, -11)
 visible = false
 position = Vector2(21, -7)
 
-[node name="Animations" type="AnimationPlayer" parent="."]
-libraries = {
-"bowser": SubResource("AnimationLibrary_cho8p")
-}
-autoplay = "bowser/idle"
+[node name="attack_flame" type="Node" parent="."]
+script = ExtResource("15_vmejy")
+projectile_inst = ExtResource("2_wrnqp")
+metadata/_edit_pinned_properties_ = [&"projectile_inst"]
+
+[node name="attack_multiflames" type="Node" parent="."]
+script = ExtResource("15_vmejy")
+projectile_inst = ExtResource("2_wrnqp")
+flame_delay = 1.7
+multiple_flames = [0.0, 1.0, 2.0]
+animation_pre = "flame_pre_multiple"
+metadata/_edit_pinned_properties_ = [&"projectile_inst"]
+
+[node name="attack_hammer" type="Node" parent="."]
+script = ExtResource("17_1elmc")
+
+[node name="attack_post_hammer" type="Node" parent="."]
+script = ExtResource("17_ilmyo")
+
+[node name="attack_burst" type="Node" parent="."]
+script = ExtResource("17_7x414")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]

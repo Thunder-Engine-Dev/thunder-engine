@@ -1,14 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://csxupm6tw1xtm"]
+[gd_scene load_steps=8 format=3 uid="uid://csxupm6tw1xtm"]
 
 [ext_resource type="PackedScene" uid="uid://b8q8ngpgfgjl5" path="res://engine/objects/bosses/bowser/bowser.tscn" id="1_mmgfh"]
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/variants/bowser_bullet_launcher.gd" id="2_nck8l"]
 [ext_resource type="Texture2D" uid="uid://b8cntoih5pafh" path="res://engine/objects/bosses/bowser/variants/textures/bullet_launcher.png" id="2_s7l32"]
-[ext_resource type="AudioStream" uid="uid://crhxwje7erjtf" path="res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg" id="3_aw6bu"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/variants/launcher_sprite.gd" id="3_hurpk"]
 [ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="3_ja0l4"]
+[ext_resource type="Script" path="res://engine/objects/bosses/bowser/attacks/bowser_attack_bullet.gd" id="3_umrl2"]
 [ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_37yxv"]
-[ext_resource type="PackedScene" uid="uid://ces7bytc0ugus" path="res://engine/objects/effects/explosion/explosion.tscn" id="5_mtsfp"]
 
-[sub_resource type="Resource" id="Resource_b3ipg"]
+[sub_resource type="Resource" id="Resource_77tl1"]
 script = ExtResource("4_37yxv")
 creation_nodepack = ExtResource("3_ja0l4")
 trans_offset = Vector2(0, 0)
@@ -22,21 +21,17 @@ visi_y_sort_enabled = false
 custom_vars = {}
 
 [node name="BowserWithCannon" instance=ExtResource("1_mmgfh")]
-script = ExtResource("2_nck8l")
-bullet_bill = SubResource("Resource_b3ipg")
-explosion = ExtResource("5_mtsfp")
-bullet_speed = 162.5
-shooting_sound = ExtResource("3_aw6bu")
-sound_pitch_min = 1.0
-sound_pitch_max = 1.2
-sound_volume = -4.0
-status_interval = Array[float]([2.0, 1.5, 1.0, 2.0, 1.5, 1.5, 1.0, 2.0, 0.0])
-status = Array[StringName]([&"bullet", &"flame", &"bullet", &"flame", &"bullet", &"flame", &"bullet", &"multiflames", &"bullet"])
-metadata/_edit_pinned_properties_ = [&"bullet_bill"]
+status_interval = Array[float]([2.0, 1.0, 1.0, 2.0, 0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 2.0, 1.0, 1.0, 2.0, 0.0])
+status = Array[StringName]([&"bullet", &"flame", &"bullet", &"flame", &"bullet", &"bullet", &"flame", &"bullet", &"flame", &"bullet", &"bullet", &"flame", &"bullet", &"multiflames", &"bullet"])
 
 [node name="Launcher" type="Sprite2D" parent="." index="6"]
-position = Vector2(20, 10)
+position = Vector2(22, 10)
 texture = ExtResource("2_s7l32")
+script = ExtResource("3_hurpk")
 
 [node name="PosBullet" type="Marker2D" parent="Launcher" index="0"]
-visible = false
+
+[node name="attack_bullet" type="Node" parent="." index="11"]
+script = ExtResource("3_umrl2")
+bullet_bill = SubResource("Resource_77tl1")
+metadata/_edit_pinned_properties_ = [&"bullet_bill"]
