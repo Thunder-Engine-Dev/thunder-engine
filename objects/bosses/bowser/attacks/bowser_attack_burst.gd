@@ -44,6 +44,7 @@ func middle_attack() -> void:
 	super()
 	
 	bowser.sprite.speed_scale = 1
+	bowser.jump_enabled = false
 	if !projectile_inst: return
 	
 	# Tween to end the process and restore data
@@ -74,3 +75,4 @@ func end_attack() -> void:
 	bowser.sprite.play("default")
 	bowser.lock_movement = false
 	bowser.lock_direction = false
+	bowser.jump_enabled = true
