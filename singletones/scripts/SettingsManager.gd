@@ -73,6 +73,7 @@ var tweaks: Dictionary = {}
 var device_keyboard: bool = true
 var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
+var game_focused: bool = true
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
@@ -111,6 +112,8 @@ func _ready() -> void:
 		if get_tree().root.get_visible_rect().has_point(SettingsManager._current_mouse_pos):
 			_hide_mouse()
 	)
+	get_tree().root.focus_entered.connect(set_deferred.bind("game_focused", true))
+	get_tree().root.focus_exited.connect(set_deferred.bind("game_focused", false))
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
@@ -393,13 +396,15 @@ func get_quality() -> QUALITY:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton && game_focused:
 		if event.is_pressed():
+			_current_mouse_pos = get_tree().root.get_mouse_position()
+			mouse_moved.emit()
 			mouse_pressed.emit(event.button_index)
 		else:
 			mouse_released.emit(event.button_index)
 
-	if event is InputEventMouseMotion:
+	elif event is InputEventMouseMotion:
 		if (
 			get_tree().root.has_focus() &&
 			DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_MINIMIZED &&
