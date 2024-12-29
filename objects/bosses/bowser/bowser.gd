@@ -45,6 +45,7 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export var jumping_chance: float = 0.05
 @export var jumping_speed: float = 300
 @export_group("Level Setting")
+@export var finish_on_death: bool = true
 @export_enum("Left: -1", "Right: 1") var complete_direction: int = 1
 @export_group("HUD")
 @export var y_offset: int = 0
@@ -194,25 +195,6 @@ func attack(state: StringName) -> void:
 	tween_status.pause()
 	_attacking = true
 	_attack_node._accept_attack(self)
-	#match state:
-		#&"flame":
-			#if animations.current_animation == &"bowser/flame": return
-			#animations.play(&"bowser/flame")
-			#tween_status.pause()
-		#&"doubleflame":
-			#if animations.current_animation == &"bowser/flame": return
-			#animations.play(&"bowser/doubleflame")
-			#tween_status.pause()
-		#&"multiflames":
-			#if animations.current_animation == &"bowser/multiple_flames": return
-			#animations.play(&"bowser/multiple_flames")
-			#tween_status.pause()
-		#&"hammer":
-			#attack_hammer()
-			#tween_status.pause()
-		#&"burst":
-			#attack_burst()
-			#tween_status.pause()
 
 
 func _on_sprite_animation_looped() -> void:
@@ -220,120 +202,6 @@ func _on_sprite_animation_looped() -> void:
 		sprite.set_frame_and_progress(sprite.sprite_frames.get_frame_count(sprite.animation) - 1, 0.0)
 	elif sprite.animation == &"flame_pre_multiple":
 		sprite.set_frame_and_progress(sprite.sprite_frames.get_frame_count(sprite.animation) - 3, 0.0)
-
-# Bowser's flame
-#func attack_flame(offset_by_32: int = -1) -> void:
-	#if !flame: return
-	#NodeCreator.prepare_ins_2d(flame, self).create_2d().call_method(
-		#func(flm: Node2D) -> void:
-			#flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 3) if offset_by_32 < 0 else offset_by_32)
-			#flm.global_position = pos_flame.global_position
-			#if flm is Projectile:
-				#flm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-				#flm.speed *= facing
-	#)
-	#if tween_status && !tween_status.is_running(): 
-		#tween_status.play()
-		#_attacking = false
-
-
-# Bowser's multiple flames
-#func multiple_flames() -> void:
-	#for i in multiple_flames_amount:
-		#attack_flame(i)
-
-
-# Bowser's hammer
-#func attack_hammer() -> void:
-	#lock_movement = true
-	#
-	## Animation modification
-	#if sprite.animation != &"throw": sprite.play(&"throw")
-	#sprite.speed_scale = 0
-	#sprite.offset.x = 7 * facing
-	#sprite.reset_physics_interpolation()
-	#
-	## Lock the animation player from running
-	#animations.pause()
-	#
-	## Tween for processing attack
-	#var tween_hammer: Tween = create_tween()
-	#tween_hammer.tween_interval(2)
-	#for i in hammer_amount:
-		#tween_hammer.tween_callback(
-			#func() -> void:
-				#sprite.speed_scale = 1
-				#if !hammer: return
-				#
-				#Audio.play_sound(hammer_sound, self, false)
-				#NodeCreator.prepare_ins_2d(hammer, self).create_2d().call_method(
-					#func(hm: Node2D) -> void:
-						#hm.global_position = pos_hammer.global_position
-						#if hm is Projectile:
-							#hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							#hm.vel_set(Vector2(randf_range(70, 400) * facing, randf_range(-800, -250)))
-				#)
-		#).set_delay(hammer_interval)
-	#tween_hammer.tween_callback(
-		#func() -> void:
-			#sprite.frame = 0
-			#sprite.speed_scale = 0
-	#)
-	#tween_hammer.tween_interval(1)
-	## Tween to end the process and restore data
-	#tween_hammer.tween_callback(
-		#func() -> void:
-			#sprite.offset.x = 0
-			#sprite.speed_scale = 1
-			#sprite.play(&"default")
-			#lock_movement = false
-			#_attacking = false
-			##animations.play(&"bowser/idle")
-			#tween_status.play()
-	#)
-
-
-# Bowser's burst flameball
-#func attack_burst() -> void:
-	#lock_movement = true
-	#lock_direction = true
-	#
-	## Animation modification
-	#if sprite.animation != &"burst": sprite.play(&"burst")
-	#sprite.speed_scale = 0
-	#
-	## Lock the animation player from running
-	#animations.pause()
-	#
-	## Tween for processing attack
-	#var tween_hammer: Tween = create_tween()
-	#tween_hammer.tween_interval(2)
-	#for i in burst_fireball_amount:
-		#tween_hammer.tween_callback(
-			#func() -> void:
-				#sprite.speed_scale = 1
-				#if !burst_fireball: return
-				#
-				#Audio.play_sound(burst_sound, self, false)
-				#NodeCreator.prepare_ins_2d(burst_fireball, self).create_2d().call_method(
-					#func(bf: Node2D) -> void:
-						#bf.global_position = pos_flame.global_position
-						#if bf is Projectile:
-							#bf.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							#bf.vel_set(Vector2(randf_range(400, 800) * facing, randf_range(-400, 0)))
-				#)
-		#).set_delay(0.1)
-	## Tween to end the process and restore data
-	#tween_hammer.tween_callback(
-		#func() -> void:
-			#sprite.speed_scale = 1
-			#sprite.play(&"default")
-			#lock_movement = false
-			#lock_direction = false
-			#_attacking = false
-			##animations.play(&"bowser/idle")
-			#tween_status.play()
-	#)
 
 
 # Bowser's hurt
@@ -393,7 +261,9 @@ func die() -> void:
 	print("[Game] Boss defeated.")
 	Audio.play_sound(death_sound, self)
 	tween_hurt_blinking = null
-	if trigger.has_method(&"stop_music"): trigger.stop_music()
+	if finish_on_death && trigger.has_method(&"stop_music"):
+		trigger.stop_music()
+	
 	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(
 		func(cps: Node2D) -> void:
 			var spr: AnimatedSprite2D = sprite.duplicate()
@@ -405,6 +275,7 @@ func die() -> void:
 			cps.falling_sound = falling_sound
 			cps.into_lava_sound = into_lava_sound
 			cps.direction_to_complete = complete_direction
+			cps.finish_on_free = finish_on_death
 	)
 	queue_free()
 
@@ -413,16 +284,6 @@ func die() -> void:
 func get_facing(dir: int) -> int:
 	if !player: return dir
 	return Thunder.Math.look_at(global_position, player.global_position, global_transform)
-
-
-# Reset the current_animation of Animations node to "bowser/idle"
-#func reset_animation() -> void:
-	#animations.play(&"bowser/idle")
-
-
-# Play a sound via property name
-#func play_sound(sound_name: StringName) -> void:
-	#if get(sound_name) is AudioStream: Audio.play_sound(get(sound_name), self)
 
 
 # Bowser's movement

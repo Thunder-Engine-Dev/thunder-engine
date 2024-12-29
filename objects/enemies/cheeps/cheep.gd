@@ -51,8 +51,6 @@ enum Type {
 var is_spawned: bool:
 	set(to):
 		is_spawned = to
-		if is_spawned:
-			visiblity.scale = 5 * Vector2.ONE
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var swim_x: ShapeCast2D = $SwimX

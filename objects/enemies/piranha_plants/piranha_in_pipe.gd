@@ -10,6 +10,7 @@ extends Node2D
 @export var custom_script: Script
 
 var step: int
+var first_visible: bool = false
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var timer_step: Timer = $Step
@@ -38,6 +39,10 @@ func _physics_process(delta: float) -> void:
 	var ppos: Vector2 = global_transform.affine_inverse().basis_xform(player.global_position if player else Vector2.ZERO)
 	var spos: Vector2 = global_transform.affine_inverse().basis_xform(global_position)
 	var can_stretch_out: bool = vision.is_on_screen() && player && abs(spos.x - ppos.x) > range_in_pipe
+	if !first_visible:
+		first_visible = vision.is_on_screen()
+	if !first_visible:
+		return
 	
 	match step:
 		0:

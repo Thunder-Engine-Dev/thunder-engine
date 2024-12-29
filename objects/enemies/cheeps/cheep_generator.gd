@@ -3,6 +3,7 @@ extends Node
 @export var cheep: = preload("res://engine/objects/enemies/cheeps/cheep_red.tscn")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1
 @export var active: bool = true
+@export var delay_sec: float = 2
 
 var timer: float
 
@@ -14,7 +15,7 @@ func _physics_process(delta):
 	if !player: return
 	
 	timer += delta
-	if timer < 2: return
+	if timer < delay_sec: return
 	timer = 0
 	
 	if player.speed.x < -1: return
@@ -27,6 +28,8 @@ func _physics_process(delta):
 		cam.get_screen_center_position().y + randi_range(-128, 192)
 	)
 	inst.reset_physics_interpolation()
+	inst.is_spawned = true
+
 
 func enable() -> void:
 	active = true

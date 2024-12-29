@@ -14,9 +14,11 @@ var move: bool
 var in_lava: bool
 var velocity: Vector2
 
+var finish_on_free: bool = true
 var direction_to_complete: int
 
 func _ready() -> void:
+	add_to_group(&"#bowser_corpse")
 	await get_tree().create_timer(duration, false).timeout
 	Audio.play_sound(falling_sound, self)
 	move = true
@@ -32,7 +34,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	Scenes.current_scene.finish(true, direction_to_complete)
+	if finish_on_free:
+		Scenes.current_scene.finish(true, direction_to_complete)
 	queue_free()
 
 
