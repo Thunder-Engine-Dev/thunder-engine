@@ -1,19 +1,21 @@
-[gd_scene load_steps=20 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene load_steps=22 format=3 uid="uid://cv4oxp3hprpfk"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
-[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_m1eaf"]
-[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="3_l5y0h"]
-[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_uv5hw"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_pt4ko"]
-[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_t6vqd"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_85764"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_pik1k"]
-[ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="10_wf5qj"]
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_pv05w"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="2_6it7w"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="3_sxn54"]
+[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_tf7hu"]
+[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="5_rya0y"]
+[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_mqgci"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_mfmj6"]
+[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_wfga7"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_7y7fr"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="10_lmflq"]
+[ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="10_ttjsh"]
+[ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="11_cqfc4"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
-script = ExtResource("2_m1eaf")
-creation_nodepack = ExtResource("2_3i2bd")
+script = ExtResource("4_tf7hu")
+creation_nodepack = ExtResource("3_sxn54")
 trans_offset = Vector2(0, -28)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -24,12 +26,12 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
-size = Vector2(30, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qc3d3"]
+size = Vector2(30, 144)
 
 [sub_resource type="Resource" id="Resource_hukh6"]
-script = ExtResource("2_m1eaf")
-creation_nodepack = ExtResource("7_t6vqd")
+script = ExtResource("4_tf7hu")
+creation_nodepack = ExtResource("7_mfmj6")
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -43,18 +45,18 @@ custom_vars = {
 "death_speed": Vector2(0, -250),
 "fast_death_effect": true
 }
-custom_script = ExtResource("8_pik1k")
+custom_script = ExtResource("8_wfga7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5aih"]
-atlas = ExtResource("10_wf5qj")
+atlas = ExtResource("10_ttjsh")
 region = Rect2(0, 0, 31, 47)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oe02n"]
-atlas = ExtResource("10_wf5qj")
+atlas = ExtResource("10_ttjsh")
 region = Rect2(31, 0, 31, 47)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqta4"]
-atlas = ExtResource("10_wf5qj")
+atlas = ExtResource("10_ttjsh")
 region = Rect2(62, 0, 31, 47)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6buyf"]
@@ -88,11 +90,13 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="PiranhaPink" type="Node2D"]
-script = ExtResource("1_2qrva")
+script = ExtResource("1_pv05w")
+stretching_speed = 60.0
+stretching_length = 172.0
 custom_vars = {
 "attack_amount": 1,
 "attack_interval": 0.2,
-"attack_sound": ExtResource("5_uv5hw"),
+"attack_sound": ExtResource("2_6it7w"),
 "attack_thrower": SubResource("Resource_i5haj"),
 "attack_times": 3,
 "projectile_collision": false,
@@ -101,35 +105,36 @@ custom_vars = {
 "projectile_speed_max": Vector2(200, -550),
 "projectile_speed_min": Vector2(-200, -250)
 }
-custom_script = ExtResource("3_l5y0h")
+custom_script = ExtResource("5_rya0y")
 
 [node name="Body" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
-position = Vector2(0, -16)
-shape = SubResource("RectangleShape2D_64hdc")
+visible = false
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_qc3d3")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
-script = ExtResource("7_pt4ko")
+script = ExtResource("6_mqgci")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
-"beetroot": false,
+"beetroot": true,
 "boomerang": false,
-"fireball": false,
+"fireball": true,
 "hammer": false,
-"iceball": false,
-"shell": false,
-"shell_defence": 0,
+"iceball": true,
+"shell": true,
+"shell_defence": 99,
 "shell_forced": false,
 "starman": false
 }
 killing_creation = SubResource("Resource_hukh6")
 killing_scores = 100
-killing_sound_succeeded = ExtResource("8_85764")
+killing_sound_succeeded = ExtResource("9_7y7fr")
+killing_sound_failed = ExtResource("10_lmflq")
 ice_sprite = NodePath("../../Sprite")
 ice_sprite_autoset = false
 ice_fragile = true
@@ -142,10 +147,16 @@ sprite_frames = SubResource("SpriteFrames_6buyf")
 autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
+[node name="Sprite2D" type="Sprite2D" parent="Sprite"]
+texture_repeat = 2
+position = Vector2(0, 80)
+texture = ExtResource("11_cqfc4")
+region_enabled = true
+region_rect = Rect2(0, 0, 31, 112)
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(2.38419e-07, -24)
-scale = Vector2(1.6, 2.4)
+rect = Rect2(-16, -64, 32, 192)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="."]

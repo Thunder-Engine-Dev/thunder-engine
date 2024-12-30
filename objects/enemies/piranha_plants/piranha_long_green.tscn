@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c5ckuqfrnnltw"]
+[gd_scene load_steps=16 format=3 uid="uid://c5ckuqfrnnltw"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_24gpt"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_uclkn"]
@@ -8,9 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_lwvyh"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_l7q4y"]
 [ext_resource type="Texture2D" uid="uid://ehrk7tmgv47w" path="res://engine/objects/enemies/piranha_plants/textures/piranha_green.png" id="8_y2nhm"]
+[ext_resource type="Texture2D" uid="uid://bc63sqiltulom" path="res://engine/objects/enemies/piranha_plants/textures/stem_orange.png" id="9_w6v2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4g34j"]
-size = Vector2(32, 144)
+size = Vector2(30, 144)
 
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_mdlil")
@@ -66,8 +67,7 @@ animations = [{
 self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_24gpt")
 stay_in_pipe_at_first = false
-stay_in_interval = 0.9
-stay_out_interval = 1.0
+stretching_speed = 60.0
 stretching_length = 172.0
 
 [node name="Body" type="Area2D" parent="."]
@@ -89,8 +89,8 @@ killing_immune = {
 "fireball": true,
 "hammer": false,
 "iceball": true,
-"shell": false,
-"shell_defence": 0,
+"shell": true,
+"shell_defence": 99,
 "shell_forced": false,
 "starman": false
 }
@@ -109,52 +109,15 @@ sprite_frames = SubResource("SpriteFrames_ym01l")
 autoplay = "default"
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 32)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 48)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D3" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 64)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D4" type="Sprite2D" parent="Sprite"]
+texture_repeat = 2
 position = Vector2(0, 80)
-texture = ExtResource("8_y2nhm")
+texture = ExtResource("9_w6v2y")
 region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D5" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 96)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D6" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 112)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
-
-[node name="Sprite2D7" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 128)
-texture = ExtResource("8_y2nhm")
-region_enabled = true
-region_rect = Rect2(0, 31, 31, 16)
+region_rect = Rect2(0, 0, 31, 112)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, -24)
-scale = Vector2(1.55, 2.4)
-rect = Rect2(-10, -16, 20, 80)
+rect = Rect2(-16, -64, 32, 192)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="."]

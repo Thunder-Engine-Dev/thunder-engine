@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_wsasv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
-size = Vector2(32, 32)
+size = Vector2(30, 32)
 
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_rspvw")
