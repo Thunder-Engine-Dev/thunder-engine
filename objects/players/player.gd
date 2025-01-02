@@ -285,7 +285,7 @@ func control_process() -> void:
 	is_crouching = Input.is_action_pressed(control.down) \
 		&& is_on_floor() && suit && suit.physics_crouchable && !is_sliding
 	slided = Input.is_action_pressed(control.down) \
-		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39
+		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39 && !get_meta(&"not_slidable", false)
 
 
 #= Status
