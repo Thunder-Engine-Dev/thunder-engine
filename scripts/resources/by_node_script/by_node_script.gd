@@ -71,9 +71,9 @@ func _script_notification(what: _NodeNotification) -> void:
 			_enter_tree()
 		_NodeNotification.NODE_EXIT_TREE:
 			_exit_tree()
-		_NodeNotification.NODE_PROCESS when node.can_process() && node.is_processing():
+		_NodeNotification.NODE_PROCESS when node.is_inside_tree() && node.can_process() && node.is_processing():
 			_process(node.get_process_delta_time())
-		_NodeNotification.NODE_PHYSICS_PROCESS when node.can_process() && node.is_physics_processing():
+		_NodeNotification.NODE_PHYSICS_PROCESS when node.is_inside_tree() && node.can_process() && node.is_physics_processing():
 			_physics_process(node.get_physics_process_delta_time())
 
 
