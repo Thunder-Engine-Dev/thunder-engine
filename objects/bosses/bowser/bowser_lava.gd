@@ -9,7 +9,7 @@ var phases: Array[float]
 var block_logic: bool = true
 
 func _ready() -> void:
-	$Area2D.area_got_in_lava_at.connect(_start_splash_seq, CONNECT_ONE_SHOT)
+	$Area2D.area_got_in_lava_at.connect(_start_splash_seq)
 	for i in get_children():
 		if i is Sprite2D:
 			lava_objects.append(i)
