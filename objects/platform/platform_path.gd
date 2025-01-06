@@ -10,6 +10,7 @@ extends PathFollow2D
 @export var speed: float = 150.0
 @export var loop_backwards: bool = true
 @export var warp_objects_on_end: bool = true
+@export var warping_edge_ignore_px: float = 8.0
 @export_subgroup("Smooth","smooth_")
 @export var smooth_enabled: bool = true
 @export var smooth_turning_length: float = 64.0
@@ -119,7 +120,10 @@ func _on_path_movement_process(delta: float) -> void:
 		if loop:
 			if warp_objects_on_end: return
 			block.set_deferred(
-				&"collision_layer", 0 if progress > max_progress - 8 else init_collision_layer
+				&"collision_layer", 0 if (
+					progress > max_progress - warping_edge_ignore_px ||
+					progress < warping_edge_ignore_px
+				) else init_collision_layer
 			)
 			return
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
