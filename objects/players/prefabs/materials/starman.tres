@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dvi7i7b5bslko"]
+
+[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="1_pfo04"]
+
+[resource]
+shader = ExtResource("1_pfo04")
+shader_parameter/mixing = false
+shader_parameter/slowed_down = false

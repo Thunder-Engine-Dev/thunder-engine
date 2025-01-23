@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c65x6dl8i6pdh"]
+
+[ext_resource type="Shader" path="res://engine/components/transitions/circle_transition/circle.gdshader" id="1_qn8c2"]
+
+[resource]
+shader = ExtResource("1_qn8c2")
+shader_parameter/circle_size = 1.05
+shader_parameter/screen_width = 640.0
+shader_parameter/screen_height = 480.0
+shader_parameter/center = Vector2(0.5, 0.5)

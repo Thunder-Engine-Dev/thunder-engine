@@ -1,23 +1,20 @@
-[gd_scene load_steps=24 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=22 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ojh72"]
-[ext_resource type="Shader" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="2_5s16q"]
+[ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="2_2saki"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
+[ext_resource type="Material" uid="uid://bkck6uoldtwwu" path="res://engine/objects/players/prefabs/materials/stars.tres" id="4_6n413"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="5_n6ctd"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
 [ext_resource type="Script" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
+[ext_resource type="Material" uid="uid://1qmh2i83ni7y" path="res://engine/objects/players/prefabs/materials/skid.tres" id="8_vrjrd"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
 [ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
 size = Vector2(20, 28)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7womw"]
-shader = ExtResource("2_5s16q")
-shader_parameter/mixing = false
-shader_parameter/slowed_down = false
 
 [sub_resource type="Curve" id="Curve_qbg1c"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
@@ -33,22 +30,6 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
 curve = SubResource("Curve_61d7b")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gm2pg"]
-lifetime_randomness = 0.3
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 24.0
-angle_min = -180.0
-angle_max = 180.0
-spread = 180.0
-initial_velocity_min = 25.0
-initial_velocity_max = 75.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.1
-scale_max = 0.3
-scale_curve = SubResource("CurveTexture_ro0d7")
-alpha_curve = SubResource("CurveTexture_btes4")
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s67vk"]
 lifetime_randomness = 0.3
 emission_shape = 1
@@ -63,14 +44,6 @@ scale_min = 0.1
 scale_max = 0.3
 scale_curve = SubResource("CurveTexture_ro0d7")
 alpha_curve = SubResource("CurveTexture_btes4")
-
-[sub_resource type="CurveTexture" id="CurveTexture_43ijr"]
-curve = SubResource("Curve_61d7b")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xos35"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_43ijr")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2r881"]
 size = Vector2(16, 2)
@@ -106,7 +79,7 @@ hit_from_inside = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
-material = SubResource("ShaderMaterial_7womw")
+material = ExtResource("2_2saki")
 sprite_frames = ExtResource("3_uy3nm")
 offset = Vector2(0, -16)
 
@@ -114,7 +87,7 @@ offset = Vector2(0, -16)
 show_behind_parent = true
 emitting = false
 amount = 24
-process_material = SubResource("ParticleProcessMaterial_gm2pg")
+process_material = ExtResource("4_6n413")
 texture = ExtResource("6_skpgp")
 lifetime = 0.5
 script = ExtResource("5_n6ctd")
@@ -136,7 +109,7 @@ show_behind_parent = true
 position = Vector2(0, 15)
 emitting = false
 amount = 12
-process_material = SubResource("ParticleProcessMaterial_xos35")
+process_material = ExtResource("8_vrjrd")
 texture = ExtResource("7_nplxc")
 lifetime = 0.5
 fract_delta = false

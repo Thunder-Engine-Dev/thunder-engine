@@ -75,6 +75,8 @@ var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 var game_focused: bool = true
 
+var enable_shortcut_scene_change_keys: bool = true
+
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
 signal mouse_moved()
@@ -427,6 +429,8 @@ func _hide_mouse() -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if !enable_shortcut_scene_change_keys:
+		return
 	var _path = Scenes.current_scene.get(&"scene_file_path")
 	if !_path || get_tree().paused:
 		return

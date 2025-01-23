@@ -1,18 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0121yqkw7b6i"]
+[gd_scene load_steps=7 format=3 uid="uid://d0121yqkw7b6i"]
 
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="1_uxlj0"]
-[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="2_kptu4"]
-[ext_resource type="Texture2D" uid="uid://cccjyxok3ss1l" path="res://engine/objects/fluid/textures/lava.png" id="3_anev1"]
+[ext_resource type="Material" uid="uid://sbymk46jn3sg" path="res://engine/objects/fluid/textures/lava_material.tres" id="2_4wgyb"]
 [ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_vgprf"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gf034"]
-shader = ExtResource("2_kptu4")
-shader_parameter/frame_size = Vector2(1, 8)
-shader_parameter/frame_count = 8
-shader_parameter/frames_per_row = 1
-shader_parameter/time_scale = 6.0
-shader_parameter/frame_offset = 0
-shader_parameter/sprite_sheet = ExtResource("3_anev1")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
 noise_type = 5
@@ -36,7 +26,7 @@ border_color = Color(0, 0, 1, 0)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 31
-material = SubResource("ShaderMaterial_gf034")
+material = ExtResource("2_4wgyb")
 layout_mode = 2
 size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_sjij6")

@@ -1,18 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://hkhy751lpyx5"]
+[gd_scene load_steps=7 format=3 uid="uid://hkhy751lpyx5"]
 
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
-[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="2_lcqvk"]
-[ext_resource type="Texture2D" uid="uid://bi5kq6ccklanm" path="res://engine/objects/fluid/textures/water_smooth.png" id="3_b15la"]
+[ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="2_g1dno"]
 [ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="10_veqxg"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a78gj"]
-shader = ExtResource("2_lcqvk")
-shader_parameter/frame_size = Vector2(1, 8)
-shader_parameter/frame_count = 8
-shader_parameter/frames_per_row = 1
-shader_parameter/time_scale = 6.0
-shader_parameter/frame_offset = 0
-shader_parameter/sprite_sheet = ExtResource("3_b15la")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_6qe0v"]
 noise_type = 5
@@ -37,7 +27,7 @@ script = ExtResource("10_veqxg")
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 31
 texture_repeat = 2
-material = SubResource("ShaderMaterial_a78gj")
+material = ExtResource("2_g1dno")
 layout_mode = 2
 size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_3cbwp")

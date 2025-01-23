@@ -1,10 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dofejp2f025qw"]
+[gd_scene load_steps=11 format=3 uid="uid://dofejp2f025qw"]
 
 [ext_resource type="Script" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
-[ext_resource type="Shader" path="res://engine/shaders/highlight.gdshader" id="2_ihm4y"]
 [ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_2ogy0"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
+[ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="4_ab1eo"]
 [ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_2o27h"]
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="6_ch7y1"]
 
@@ -16,13 +16,6 @@ size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjc0d"]
 size = Vector2(32, 32)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwnle"]
-shader = ExtResource("2_ihm4y")
-shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/frequency = 0.32
-shader_parameter/highlight_speed = 10.0
-shader_parameter/highlight_width = 32.0
 
 [node name="IceBlock" type="CharacterBody2D"]
 collision_layer = 112
@@ -79,7 +72,7 @@ killer_type = &"iceblock"
 is_reflectable = true
 
 [node name="SpriteNP" type="NinePatchRect" parent="."]
-material = SubResource("ShaderMaterial_jwnle")
+material = ExtResource("4_ab1eo")
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
