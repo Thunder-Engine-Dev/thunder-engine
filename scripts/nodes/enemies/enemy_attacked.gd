@@ -69,8 +69,10 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 }
 ## Corpse of the enemy killed by the attacker
 @export var killing_creation: InstanceNode2D
-## Scores give by the enemy when the enemy gets killed
+## Scores given by the enemy when the enemy gets killed
 @export var killing_scores: int
+## Special attackers, such as starman and koopa shells, can progress combo and earn extra lives
+@export var killing_can_combo: bool = true
 ## Sound triggered when the enemy gets killed successfully
 @export var killing_sound_succeeded: AudioStream
 ## Sound triggered when the enemy blocks the attacker

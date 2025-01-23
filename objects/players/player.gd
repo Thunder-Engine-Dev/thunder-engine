@@ -403,5 +403,6 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 		if !starman_combo.get_combo() <= 0:
 			what.sound_pitch = 1 + starman_combo.get_combo() * 0.135
 		#what.got_killed(&"starman", [&"no_score"])
-		starman_combo.combo()
+		if what.get("killing_can_combo"):
+			starman_combo.combo()
 		starman_attacked.emit()
