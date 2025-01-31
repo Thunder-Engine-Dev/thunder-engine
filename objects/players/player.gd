@@ -103,6 +103,7 @@ var _suit_tree_paused: bool
 @onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
 @warning_ignore("unused_private_class_variable")
 @onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
+@onready var _autorun_tweak = SettingsManager.get_tweak("autorun", false)
 
 @onready var force_override_death_sound: bool = false
 
@@ -279,7 +280,8 @@ func control_process() -> void:
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)
-	running = Input.is_action_pressed(control.run)
+	running = Input.is_action_pressed(control.run) && !_autorun_tweak || \
+		!Input.is_action_pressed(control.run) && _autorun_tweak
 	attacked = Input.is_action_just_pressed(control.attack)
 	attacking = Input.is_action_pressed(control.attack)
 	is_crouching = Input.is_action_pressed(control.down) \

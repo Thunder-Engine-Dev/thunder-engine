@@ -99,10 +99,11 @@ killing_immune = {
 "boomerang": false,
 "fireball": true,
 "hammer": false,
-"iceball": false
+"iceball": false,
+"starman": false
 }
 killing_creation = SubResource("Resource_0b8qp")
-killing_scores = 400
+killing_scores = 800
 killing_sound_succeeded = ExtResource("3_aerwt")
 killing_sound_failed = ExtResource("7_i6ttr")
 frozen_enabled = false

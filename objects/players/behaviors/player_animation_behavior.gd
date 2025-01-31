@@ -166,7 +166,7 @@ func _setup_tweaks() -> void:
 	_idle_tweak = CharacterManager.get_suit_tweak("idle_animation", "", player.suit.name)
 	_idle_activate_after_sec = CharacterManager.get_suit_tweak("idle_activate_after_sec", "", player.suit.name)
 	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
-	_stomp_anim_tweak = CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
+	_stomp_anim_tweak = false #CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
 	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
 	_skid_sound_loop_delay = CharacterManager.get_suit_tweak("skid_sound_loop_delay", "", player.suit.name)
 	_head_bump_sound = CharacterManager.get_suit_tweak("head_bump_sound", "", player.suit.name)
@@ -210,7 +210,7 @@ func _animation_process(delta: float) -> void:
 		if player.is_on_floor():
 			_stomp_enabled = false
 			if !(is_zero_approx(player.speed.x)):
-				if _separate_run_tweak && abs(player.speed.x) >= config.walk_max_running_speed:
+				if _separate_run_tweak && abs(player.speed.x) + 40 >= config.walk_max_running_speed:
 					_play_anim(&"p_run" if !player.is_skidding else &"skid")
 					_p_run_enabled = !player.is_holding
 				else:

@@ -64,10 +64,14 @@ killing_immune = {
 "fireball": true,
 "hammer": false,
 "iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
 "starman": false
 }
 killing_creation = SubResource("Resource_d54bi")
 killing_scores = 100
+killing_can_combo = false
 killing_sound_succeeded = ExtResource("6_dxe3u")
 killing_sound_failed = ExtResource("8_fhq1h")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]

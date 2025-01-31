@@ -18,8 +18,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qxmc"]
 size = Vector2(30, 30)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spw6c"]
+size = Vector2(30, 30)
 
 [sub_resource type="Resource" id="Resource_n7w23"]
 resource_local_to_scene = true
@@ -102,7 +102,7 @@ script = ExtResource("2_tm4ve")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false
-shape = SubResource("RectangleShape2D_w2yun")
+shape = SubResource("RectangleShape2D_spw6c")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
