@@ -5,6 +5,9 @@
 
 [node name="PlatformPathGray" instance=ExtResource("1_upfgi")]
 
+[node name="CollisionPolygon2D" parent="Block" index="0"]
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
+
 [node name="Sprite2D" parent="Block" index="2"]
 texture_repeat = 2
 texture = ExtResource("2_17ukk")

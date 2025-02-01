@@ -1,16 +1,36 @@
 extends StaticBody2D
 
-@onready var _path_follow = $".."
+@export var includes_path_follow: bool = true
+@export var correction_on_player_falling: bool = true
 
-#func _ready() -> void:
+@onready var _path_follow = $".."
+@onready var init_collision_margin = get_shape_owner_one_way_collision_margin(0)
+
+func _ready() -> void:
 	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
+	if !is_shape_owner_one_way_collision_enabled(0):
+		correction_on_player_falling = false
+
 
 # Forward the method call to the main platform script.
 func _player_landed(player: Player) -> void:
-	get_parent()._player_landed(player)
+	if includes_path_follow:
+		get_parent()._player_landed(player)
+
 
 func _physics_process(_delta: float) -> void:
-	global_position = _path_follow.global_position
+	if includes_path_follow:
+		global_position = _path_follow.global_position
+	
+	if correction_on_player_falling:
+		var player = Thunder._current_player
+		if player:
+			if player.speed.y >= 0:
+				shape_owner_set_one_way_collision_margin(0, shape_owner_get_shape(0, 0).get_rect().size.y)
+			else:
+				shape_owner_set_one_way_collision_margin(0, init_collision_margin)
+	
+	if !includes_path_follow: return
 	
 	if "warp_objects_on_end" in _path_follow && !_path_follow.warp_objects_on_end:
 		var _edge = _path_follow.warping_edge_ignore_px
@@ -18,5 +38,3 @@ func _physics_process(_delta: float) -> void:
 			return
 		if _path_follow.progress < _edge || _path_follow.progress + _edge > _path_follow.max_progress:
 			reset_physics_interpolation()
-	
-	

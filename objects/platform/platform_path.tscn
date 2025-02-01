@@ -19,7 +19,7 @@ metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
 visible = false
-polygon = PackedVector2Array(-48, 0, 48, 0, 48, 5, -48, 5)
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
 one_way_collision = true
 
 [node name="Surface" type="Area2D" parent="Block"]
