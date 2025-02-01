@@ -17,6 +17,7 @@ class_name PlayerConfig
 @export var jump_buff_static: float = 1000
 @export var jump_buff_dynamic: float = 1250
 @export var jump_stomp_multiplicator: float = 1.0
+@export var jump_coyote_time_sec: float = 0.05
 @export_group("Swim", "swim_")
 @export var swim_speed: float = 150
 @export var swim_out_speed: float = 450

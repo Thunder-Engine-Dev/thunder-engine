@@ -207,7 +207,7 @@ func _animation_process(delta: float) -> void:
 		player.skid.emitting = player.is_skidding
 		if player.is_skidding:
 			_skid_sound_loop()
-		if player.is_on_floor():
+		if player.is_on_floor() || player.coyote_time > 0.0:
 			_stomp_enabled = false
 			if !(is_zero_approx(player.speed.x)):
 				if _separate_run_tweak && abs(player.speed.x) + 40 >= config.walk_max_running_speed:

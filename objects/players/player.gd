@@ -68,6 +68,7 @@ var slided: bool
 
 @warning_ignore("unused_private_class_variable")
 var _has_jumped: bool
+var coyote_time: float
 
 var is_climbing: bool
 var is_sliding: bool

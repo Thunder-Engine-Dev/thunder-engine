@@ -20,6 +20,7 @@ jump_speed = 700.0
 jump_buff_static = 1200.0
 jump_buff_dynamic = 1500.0
 jump_stomp_multiplicator = 1.0
+jump_coyote_time_sec = 0.067
 swim_speed = 150.0
 swim_out_speed = 450.0
 swim_max_speed = 150.0

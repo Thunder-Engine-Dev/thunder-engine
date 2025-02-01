@@ -3,12 +3,14 @@ extends ByNodeScript
 var player: Player
 var suit: PlayerSuit
 var config: PlayerConfig
+var can_coyote: bool
 
 
 func _ready() -> void:
 	player = node as Player
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
 	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false), CONNECT_REFERENCE_COUNTED)
+	can_coyote = SettingsManager.get_tweak("coyote_time", true)
 
 
 func _physics_process(delta: float) -> void:
@@ -43,6 +45,10 @@ func _physics_process(delta: float) -> void:
 		_movement_x(delta)
 		_movement_y(delta)
 	player.motion_process(delta)
+	if !player.is_on_floor():
+		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
+	elif can_coyote:
+		player.coyote_time = config.jump_coyote_time_sec
 	if player.is_on_wall():
 		player.speed.x = 0
 
@@ -131,6 +137,7 @@ func _movement_y(delta: float) -> void:
 	# Swimming
 	if player.is_underwater:
 		if player.jumped && player.up_down <= 0:
+			player.coyote_time = 0.0
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
 			player._has_jumped = true
 			player.swam.emit()
@@ -140,10 +147,11 @@ func _movement_y(delta: float) -> void:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
-		if player.is_on_floor() && player.up_down <= 0:
+		if (player.is_on_floor() || player.coyote_time > 0.0) && player.up_down <= 0:
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()
 				player._has_jumped = true
+				player.coyote_time = 0.0
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0 && player.speed.y < 0.0:
@@ -329,6 +337,7 @@ func _body_process() -> void:
 		var result: Dictionary = enemy_attacked.got_stomped(player, player_velocity)
 		if result.is_empty(): return
 		if result.result == true:
+			player.coyote_time = 0.0
 			if player.jumping > 0:
 				player.speed.y = -result.jumping_max * config.jump_stomp_multiplicator
 			else:
