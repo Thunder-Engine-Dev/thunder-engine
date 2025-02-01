@@ -13,6 +13,7 @@ signal player_entered_level ## Emitted when the player enters a level.
 
 var to_level: String
 var is_fading: bool
+var enter_on_request_only: bool
 
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
@@ -53,11 +54,16 @@ func _physics_process(delta: float) -> void:
 	if !get_node(player).current_marker.level: return
 	if is_fading: return
 	if !Input.is_action_just_pressed(&"m_jump"): return
+	player_entered_level.emit()
+	is_fading = true
+	
+	if !enter_on_request_only:
+		enter_level_sequence()
+
+
+func enter_level_sequence() -> void:
 	Audio.play_1d_sound(jump_button_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	print("[Game] Going to a level.")
-
-	is_fading = true
-	player_entered_level.emit()
 
 	var music := _get_music()
 	if music && is_instance_valid(music):

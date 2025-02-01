@@ -34,9 +34,10 @@ func collect() -> void:
 	Data.add_coin()
 	Data.values.score += 100
 	
-	NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
-		eff.explode()
-	).create_2d().bind_global_transform()
+	if SettingsManager.get_quality() != SettingsManager.QUALITY.MIN:
+		NodeCreator.prepare_2d(coin_effect, self).call_method( func(eff: Node2D) -> void:
+			eff.explode()
+		).create_2d().bind_global_transform()
 	
 	_play_sound()
 	queue_free()
