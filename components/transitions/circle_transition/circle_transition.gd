@@ -14,6 +14,7 @@ var _on_player_after_middle: bool = false
 
 func _ready() -> void:
 	name = "circle_transition"
+	color_rect.material.set_shader_parameter(&"center", Vector2(0.5, 0.5))
 	#resized.connect(func():
 	#	if !color_rect: return
 	#	var rect = get_rect()
@@ -58,10 +59,10 @@ func with_pause() -> Transition:
 func _process(delta: float) -> void:
 	if paused: return
 	
-	color_rect.material.set_shader_parameter("circle_size", circle)
-	
 	if circle >= 0:
 		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
+	
+	color_rect.material.set_shader_parameter("circle_size", circle)
 
 
 func _physics_process(delta: float) -> void:
