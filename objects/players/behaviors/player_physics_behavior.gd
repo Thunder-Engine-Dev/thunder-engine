@@ -87,6 +87,9 @@ func _movement_x(delta: float) -> void:
 		player.left_right = 0
 		player.jumping = 0
 		player.speed.x = -player.direction * config.stuck_recovery_speed
+		if player.get_which_wall_collided() == -player.direction:
+			player.direction *= -1
+	
 	player.is_skidding = (
 			player._skid_tweak &&
 			(sign(player.left_right) == -player.direction) &&
@@ -351,14 +354,18 @@ func _floor_process() -> void:
 	# If we land on something and function "_player_landed" exists there, we call it.
 
 	if !is_instance_valid(player): return
+	player.is_slippery = false
 	if !player.is_on_floor(): return
-
+	
 	for i in player.get_slide_collision_count():
 		var collision: KinematicCollision2D = player.get_slide_collision(i)
 		if !collision: continue
-
+		
 		var collider = collision.get_collider()
 		if !is_instance_valid(collider): continue
-
+		
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)
+		if collider.is_in_group('#slippery'):
+			player.is_slippery = true
+		

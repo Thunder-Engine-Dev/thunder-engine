@@ -80,6 +80,7 @@ var is_underwater_out: bool
 
 var has_stuck: bool
 var is_sliding_accelerating: bool
+var is_slippery: bool
 
 var completed: bool
 
@@ -289,6 +290,14 @@ func control_process() -> void:
 		&& is_on_floor() && suit && suit.physics_crouchable && !is_sliding
 	slided = Input.is_action_pressed(control.down) \
 		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39 && !get_meta(&"not_slidable", false)
+
+
+## -1 is Left, 1 is Right, 0 is None
+func get_which_wall_collided() -> int:
+	if !is_on_wall():
+		return 0
+	var _c: Vector2 = get_wall_normal()
+	return -sign(_c.x)
 
 
 #= Status

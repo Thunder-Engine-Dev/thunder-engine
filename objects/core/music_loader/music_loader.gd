@@ -97,7 +97,9 @@ func pause_music(ind: int = index, ch_id: int = channel_id) -> void:
 	if !Audio._music_channels.has(ch_id) || !is_instance_valid(Audio._music_channels[ch_id]):
 		return
 	var music_player = Audio._music_channels[ch_id]
-	music_player.playing = false
+	if music_player.process_mode != Node.ProcessMode.PROCESS_MODE_DISABLED:
+		music_player.set_meta("old_process_mode", music_player.process_mode)
+	music_player.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
 	is_paused = true
 	music_paused.emit()
 
@@ -107,7 +109,7 @@ func unpause_music(ind: int = index, ch_id: int = channel_id) -> void:
 		return
 	var music_player = Audio._music_channels[ch_id]
 	index = ind
-	music_player.play()
+	music_player.process_mode = music_player.get_meta("old_process_mode", 3)
 	is_paused = false
 	music_unpaused.emit()
 
