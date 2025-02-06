@@ -3,7 +3,7 @@ extends Command
 static func register() -> Command:
 	return new().set_name("settweak") \
 	.add_param("tweak_name", TYPE_STRING, false) \
-	.add_param("value", TYPE_MAX, true) \
+	.add_param("value", TYPE_STRING, true) \
 	.set_debug().set_description("Sets a specified tweak to a specified value")
 
 func execute(args:Array) -> Command.ExecuteResult:
