@@ -77,6 +77,21 @@ func _do_grab() -> void:
 
 
 func _do_ungrab(player_died: bool) -> void:
+	if player_died:
+		if target_node is GravityBody2D:
+			_grabbed = false
+			target_node.process_mode = Node.PROCESS_MODE_INHERIT
+			_follow_progress = false
+			_following_start = false
+			_following = false
+		
+		if grabbing_defer_mario_collision_until_on_floor && target_node.get_collision_layer_value(5):
+			target_node.set_collision_layer_value(5, false)
+			_wait_until_floor = true
+		
+		ungrabbed.emit()
+		return
+	
 	Audio.play_sound(sound_throw, player)
 	if target_node is GravityBody2D:
 		_grabbed = false
