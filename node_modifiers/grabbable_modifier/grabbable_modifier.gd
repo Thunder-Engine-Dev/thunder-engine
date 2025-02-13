@@ -8,8 +8,24 @@ signal ungrabbed
 signal grab_initiated
 
 @export_group("Grabbing", "grabbing_")
-@export var grabbing_top_enabled: bool = true
-@export var grabbing_side_enabled: bool = true
+@export var grabbing_top_enabled: bool = true:
+	set(value):
+		grabbing_top_enabled = value
+		if !target_node:
+			return
+		if value && !target_node.is_in_group(&"#top_grabbable"):
+			target_node.add_to_group(&"#top_grabbable")
+		elif !value && target_node.is_in_group(&"#top_grabbable"):
+			target_node.remove_from_group(&"#top_grabbable")
+@export var grabbing_side_enabled: bool = true:
+	set(value):
+		grabbing_side_enabled = value
+		if !target_node:
+			return
+		if value && !target_node.is_in_group(&"#side_grabbable"):
+			target_node.add_to_group(&"#side_grabbable")
+		elif !value && target_node.is_in_group(&"#side_grabbable"):
+			target_node.remove_from_group(&"#side_grabbable")
 @export var grabbing_defer_mario_collision_until_on_floor: bool = true
 @export var grabbing_ungrab_throw_power_min: Vector2 = Vector2(150, 200)
 @export var grabbing_ungrab_throw_power_max: Vector2 = Vector2(400, 700)
