@@ -31,32 +31,32 @@ custom_vars = {
 }
 custom_script = ExtResource("4_uv17w")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_88svi"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0lff"]
 atlas = ExtResource("8_y2nhm")
-region = Rect2(0, 0, 31, 47)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3aab"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k477"]
 atlas = ExtResource("8_y2nhm")
-region = Rect2(31, 0, 31, 47)
+region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7280e"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_680xi"]
 atlas = ExtResource("8_y2nhm")
-region = Rect2(62, 0, 31, 47)
+region = Rect2(64, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ym01l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_88svi")
+"texture": SubResource("AtlasTexture_a0lff")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t3aab")
+"texture": SubResource("AtlasTexture_3k477")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7280e")
+"texture": SubResource("AtlasTexture_680xi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t3aab")
+"texture": SubResource("AtlasTexture_3k477")
 }],
 "loop": true,
 "name": &"default",
@@ -113,7 +113,7 @@ texture_repeat = 2
 position = Vector2(0, 80)
 texture = ExtResource("9_w6v2y")
 region_enabled = true
-region_rect = Rect2(0, 0, 31, 112)
+region_rect = Rect2(0, 0, 32, 112)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)

@@ -3,32 +3,32 @@
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="1_vwvis"]
 [ext_resource type="Texture2D" uid="uid://b0l4uqehtliv3" path="res://engine/objects/enemies/piranha_plants/textures/piranha_blue.png" id="2_nqcnj"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5gvdd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6obyg"]
 atlas = ExtResource("2_nqcnj")
-region = Rect2(0, 0, 31, 47)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ib6tl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp4ky"]
 atlas = ExtResource("2_nqcnj")
-region = Rect2(31, 0, 31, 47)
+region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3pl1h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6viu"]
 atlas = ExtResource("2_nqcnj")
-region = Rect2(62, 0, 31, 47)
+region = Rect2(64, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kgok8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5gvdd")
+"texture": SubResource("AtlasTexture_6obyg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ib6tl")
+"texture": SubResource("AtlasTexture_mp4ky")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3pl1h")
+"texture": SubResource("AtlasTexture_h6viu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ib6tl")
+"texture": SubResource("AtlasTexture_mp4ky")
 }],
 "loop": true,
 "name": &"default",

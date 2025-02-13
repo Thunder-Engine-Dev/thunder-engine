@@ -45,32 +45,32 @@ custom_vars = {
 }
 custom_script = ExtResource("8_25a05")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ri5tk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cikoe"]
 atlas = ExtResource("10_68kbm")
-region = Rect2(0, 0, 31, 47)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_org14"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjh8e"]
 atlas = ExtResource("10_68kbm")
-region = Rect2(31, 0, 31, 47)
+region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_okg1t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4ofo"]
 atlas = ExtResource("10_68kbm")
-region = Rect2(62, 0, 31, 47)
+region = Rect2(64, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_csimg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ri5tk")
+"texture": SubResource("AtlasTexture_cikoe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_org14")
+"texture": SubResource("AtlasTexture_tjh8e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_okg1t")
+"texture": SubResource("AtlasTexture_w4ofo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_org14")
+"texture": SubResource("AtlasTexture_tjh8e")
 }],
 "loop": true,
 "name": &"default",
