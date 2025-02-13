@@ -161,6 +161,15 @@ autostart = true
 wait_time = 0.24
 autostart = true
 
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+enabled = false
+shape = SubResource("RectangleShape2D_n0iv4")
+target_position = Vector2(0, 0)
+max_results = 2
+collision_mask = 32
+
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

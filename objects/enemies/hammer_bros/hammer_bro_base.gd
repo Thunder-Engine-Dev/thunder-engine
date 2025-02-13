@@ -45,6 +45,7 @@ var _collision_mask: int
 @onready var posx: float = global_transform.affine_inverse().basis_xform(global_position).x
 @onready var pos_attack: Marker2D = $PosAttack
 @onready var pos_attack_x: float = pos_attack.position.x
+@onready var shape_cast_2d: ShapeCast2D = $ShapeCast2D
 
 
 func _physics_process(delta: float) -> void:
@@ -102,8 +103,10 @@ func _bro_movement(delta: float) -> void:
 func _bro_jump() -> void:
 	# Collision disabling when jumping
 	if _collision_mask > 0 && ((_jump == 1 && speed.y >= 0) || (_jump == 2 && speed.y >= jumping_strength_downward + 90)):
-		collision_mask = _collision_mask
-		_collision_mask = 0
+		_set_collision_logic()
+		if _collision_mask > 0:
+			return
+		
 	# While jumping, stop detection with randomized numbers
 	if _jump in [1, 2]:
 		return
@@ -126,6 +129,13 @@ func _bro_jump() -> void:
 	await collided_floor
 	_jump = 0
 
+
+func _set_collision_logic() -> void:
+	shape_cast_2d.force_shapecast_update()
+	if shape_cast_2d.is_colliding():
+		return
+	collision_mask = _collision_mask
+	_collision_mask = 0
 
 # Turning back
 func _on_walk_timeout() -> void:
