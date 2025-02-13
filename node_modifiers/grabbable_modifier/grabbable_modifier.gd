@@ -4,6 +4,8 @@ extends NodeModifier
 signal grabbed
 ## Emitted when the item is ungrabbed.
 signal ungrabbed
+## Emitted when the item initiates grabbing.
+signal grab_initiated
 
 @export_group("Grabbing", "grabbing_")
 @export var grabbing_top_enabled: bool = true
@@ -49,12 +51,14 @@ func _ready() -> void:
 func _top_grabbed() -> void:
 	Audio.play_sound(sound_grab_top, player)
 	player.is_holding = true
+	grab_initiated.emit()
 	await _do_player_lock()
 	_do_grab()
 
 
 func _side_grabbed() -> void:
 	Audio.play_sound(sound_grab_side, player)
+	grab_initiated.emit()
 	_do_grab()
 
 
