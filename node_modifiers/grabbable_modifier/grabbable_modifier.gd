@@ -6,8 +6,11 @@ signal grabbed
 signal ungrabbed
 ## Emitted when the item initiates grabbing.
 signal grab_initiated
+## Emitted when the player dies, and item gets ungrabbed.
+signal ungrabbed_player_died
 
 @export_group("Grabbing", "grabbing_")
+## Top grabbing will lock the player's movement for a short period and play a unique animation.
 @export var grabbing_top_enabled: bool = true:
 	set(value):
 		grabbing_top_enabled = value
@@ -17,6 +20,10 @@ signal grab_initiated
 			target_node.add_to_group(&"#top_grabbable")
 		elif !value && target_node.is_in_group(&"#top_grabbable"):
 			target_node.remove_from_group(&"#top_grabbable")
+## Side grabbing can be used for anything if player movement lock is not needed.[br]
+## If [code]false[/code], but [member grabbing_top_enabled] is [code]true[/code],
+## the object can only be grabbed from the top side. Else, it can be grabbed from any side.[br][br]
+## If both are [code]true[/code], [member grabbing_top_enabled] has a higher priority.
 @export var grabbing_side_enabled: bool = true:
 	set(value):
 		grabbing_side_enabled = value
@@ -26,11 +33,24 @@ signal grab_initiated
 			target_node.add_to_group(&"#side_grabbable")
 		elif !value && target_node.is_in_group(&"#side_grabbable"):
 			target_node.remove_from_group(&"#side_grabbable")
+@export_range(0.1, 0.5) var grabbing_top_grab_movement_lock_delay: float = 0.3
+## If [code]true[/code], ungrabbing will modify target node's collisions to collide
+## with the player again.
 @export var grabbing_ungrab_collision_with_player: bool = true
+## Use with [member grabbing_ungrab_collision_with_player]. [br][br]
+## If [code]true[/code], collision will not change until the target node hits the floor.
 @export var grabbing_defer_mario_collision_until_on_floor: bool = true
+## Player throwing power while standing still.
 @export var grabbing_ungrab_throw_power_min: Vector2 = Vector2(150, 200)
+## Player throwing power while moving.
 @export var grabbing_ungrab_throw_power_max: Vector2 = Vector2(400, 700)
+## If [code]true[/code], the target node's [member process_mode] will be modified on
+## grabbing and ungrabbing.
 @export var grabbing_disable_process_when_grabbed: bool = true
+@export_group("Signals", "signal_")
+## Whether or not to emit the [signal ungrabbed()] signal when player dies, alongside the
+## [signal ungrabbed_player_died()] signal.
+@export var signal_emit_ungrabbed_when_player_dies: bool = true
 @export_group("Sounds", "sound_")
 @export var sound_grab_top = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
 @export var sound_grab_side = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
@@ -82,7 +102,7 @@ func _side_grabbed() -> void:
 func _do_player_lock() -> void:
 	_player_lock_pos = player.global_position
 	player.no_movement = true
-	await player.get_tree().create_timer(0.3, false, true).timeout
+	await player.get_tree().create_timer(grabbing_top_grab_movement_lock_delay, false, true).timeout
 	player.no_movement = false
 
 
@@ -114,6 +134,7 @@ func _do_ungrab(player_died: bool) -> void:
 			_wait_until_floor = true
 		
 		ungrabbed.emit()
+		ungrabbed_player_died.emit()
 		return
 	
 	Audio.play_sound(sound_throw, player)
