@@ -11,6 +11,7 @@ signal ungrabbed
 @export var grabbing_defer_mario_collision_until_on_floor: bool = true
 @export var grabbing_ungrab_throw_power_min: Vector2 = Vector2(150, 200)
 @export var grabbing_ungrab_throw_power_max: Vector2 = Vector2(400, 700)
+@export var grabbing_ungrab_collision_with_player: bool = true
 @export_group("Sounds", "sound_")
 @export var sound_grab_top = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
 @export var sound_grab_side = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
@@ -136,7 +137,8 @@ func _physics_process(delta: float) -> void:
 		target_node.global_position = get_target_hold_position()
 
 	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
-		target_node.set_collision_layer_value(5, true)
+		if grabbing_ungrab_collision_with_player:
+			target_node.set_collision_layer_value(5, true)
 		_wait_until_floor = false
 
 
