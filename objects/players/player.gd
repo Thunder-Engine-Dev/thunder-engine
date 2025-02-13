@@ -138,7 +138,7 @@ func _ready() -> void:
 			#	await get_tree().physics_frame
 			#while !Scenes.current_scene._is_stage_ready:
 			var trans := TransitionManager.current_transition
-			if is_instance_valid(trans) && trans.has_method("on"):
+			if is_instance_valid(trans) && trans.has_method("on") && trans.paused:
 				trans.on(self)
 				trans.paused = false
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
@@ -146,7 +146,7 @@ func _ready() -> void:
 		Scenes.scene_ready.connect(func():
 			var trans := TransitionManager.current_transition
 			if is_instance_valid(trans) && trans.has_method("on"):
-				trans.on(Vector2(0.5, 0.5))
+				trans.on(Vector2(0.5, 0.5), true)
 				trans.paused = false
 		)
 
