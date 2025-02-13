@@ -26,10 +26,11 @@ signal grab_initiated
 			target_node.add_to_group(&"#side_grabbable")
 		elif !value && target_node.is_in_group(&"#side_grabbable"):
 			target_node.remove_from_group(&"#side_grabbable")
+@export var grabbing_ungrab_collision_with_player: bool = true
 @export var grabbing_defer_mario_collision_until_on_floor: bool = true
 @export var grabbing_ungrab_throw_power_min: Vector2 = Vector2(150, 200)
 @export var grabbing_ungrab_throw_power_max: Vector2 = Vector2(400, 700)
-@export var grabbing_ungrab_collision_with_player: bool = true
+@export var grabbing_disable_process_when_grabbed: bool = true
 @export_group("Sounds", "sound_")
 @export var sound_grab_top = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
 @export var sound_grab_side = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
@@ -88,7 +89,8 @@ func _do_player_lock() -> void:
 func _do_grab() -> void:
 	if target_node is GravityBody2D:
 		_grabbed = true
-		target_node.process_mode = Node.PROCESS_MODE_DISABLED
+		if grabbing_disable_process_when_grabbed:
+			target_node.process_mode = Node.PROCESS_MODE_DISABLED
 		player.is_holding = true
 		player.holding_item = target_node
 		_from_follow_pos = target_node.global_position
@@ -101,7 +103,8 @@ func _do_ungrab(player_died: bool) -> void:
 	if player_died:
 		if target_node is GravityBody2D:
 			_grabbed = false
-			target_node.process_mode = Node.PROCESS_MODE_INHERIT
+			if grabbing_disable_process_when_grabbed:
+				target_node.process_mode = Node.PROCESS_MODE_INHERIT
 			_follow_progress = false
 			_following_start = false
 			_following = false
@@ -116,7 +119,8 @@ func _do_ungrab(player_died: bool) -> void:
 	Audio.play_sound(sound_throw, player)
 	if target_node is GravityBody2D:
 		_grabbed = false
-		target_node.process_mode = Node.PROCESS_MODE_INHERIT
+		if grabbing_disable_process_when_grabbed:
+			target_node.process_mode = Node.PROCESS_MODE_INHERIT
 		player.holding_item = null
 		_follow_progress = false
 		_following_start = false
