@@ -13,6 +13,9 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	Data.values = prog.profile.saved_values.duplicate(true)
 	Data.values.skip_progress_continue = true
+	
+	if "remaining_continues" in prog.profile:
+		Data.technical_values["remaining_continues"] = prog.profile.remaining_continues
 	if "saved_player_state" in prog.profile:
 		Thunder._current_player_state = CharacterManager.get_suit(prog.profile.saved_player_state)
 		Thunder._current_player_state_path = ""

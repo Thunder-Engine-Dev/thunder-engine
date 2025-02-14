@@ -165,6 +165,7 @@ wait_time = 0.24
 autostart = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -8)
 enabled = false
 shape = SubResource("RectangleShape2D_1wgod")

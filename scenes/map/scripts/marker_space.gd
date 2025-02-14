@@ -128,9 +128,12 @@ func _save_suspended_progress() -> void:
 	profile.data.saved_values = Data.values.duplicate(true)
 	if pl_state:
 		profile.data.saved_player_state = Thunder._current_player_state.name
+	profile.data.remaining_continues = Data.technical_values.remaining_continues
+	
 	profile.data.saved_profile = ProfileManager.current_profile.name
 	profile.data.saved_profile_data = ProfileManager.current_profile.data
 	profile.data.title_prefix = progress_title_prefix
+	
 	var _saved_level: String = str(get_next_marker_id(false) + 1)
 	if profile.data.saved_profile_data.get("star_world"):
 		_saved_level = uncompleted_levels[0].get_file().get_slice(".", 0).right(1)
