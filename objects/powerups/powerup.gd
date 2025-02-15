@@ -15,6 +15,7 @@ signal collected_changed_suit
 @export var appear_distance: float = 32
 @export var appear_speed: float = 0.5
 @export var appear_visible: float = 27
+@export var appear_collectable: float = 20
 @export var score: int = 1000
 
 
@@ -34,6 +35,7 @@ signal collected_changed_suit
 @onready var body: Area2D = $Body
 
 var one_overlap: bool = false
+var can_collect: bool = true
 
 func _ready() -> void:
 	super()
@@ -48,6 +50,7 @@ func _physics_process(delta: float) -> void:
 		if !appear_distance:
 			motion_process(delta, slide)
 			modulate.a = 1
+			can_collect = true
 		else:
 			appear_process(Thunder.get_delta(delta))
 
@@ -58,6 +61,9 @@ func _physics_process(delta: float) -> void:
 		if overlaps && Input.is_action_just_pressed(&"m_up"):
 			collect()
 		return
+	
+	if !can_collect:
+		return
 	if overlaps && !one_overlap:
 		collect()
 	if !overlaps && one_overlap:
@@ -67,6 +73,7 @@ func _physics_process(delta: float) -> void:
 func appear_process(delta: float) -> void:
 	if delta:
 		appear_distance = max(appear_distance - appear_speed * delta, 0)
+	can_collect = appear_distance <= appear_collectable
 	modulate.a = 0.01 if (appear_distance > appear_visible) else 1.0
 	if delta:
 		position -= Vector2(0, appear_speed).rotated(global_rotation) * delta

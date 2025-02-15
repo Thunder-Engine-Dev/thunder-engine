@@ -40,7 +40,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TeamLogo:modulate")
+tracks/1/path = NodePath("Title1:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -64,7 +64,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -92,7 +92,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("Title1:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -128,7 +128,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -156,7 +156,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("Title1:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -192,7 +192,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -249,17 +249,17 @@ texture = SubResource("GradientTexture1D_af70a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.867
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.867
 offset_left = -132.0
-offset_top = -21.0
+offset_top = -146.16
 offset_right = 132.0
-offset_bottom = 125.0
+offset_bottom = -0.160034
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_constants/separation = 10
 script = ExtResource("3_plhsm")
 focused = false
@@ -299,7 +299,7 @@ position_paddings_array = Array[float]([-32.0, -1.0, 0.0, -52.0])
 sprite_frames = ExtResource("13_jqjx8")
 script = ExtResource("14_xubmy")
 
-[node name="TeamLogo" type="TextureRect" parent="GameOver"]
+[node name="Title1" type="TextureRect" parent="GameOver"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -312,7 +312,7 @@ grow_horizontal = 2
 pivot_offset = Vector2(83, 0)
 texture = ExtResource("15_e2iqk")
 
-[node name="Hope" type="TextureRect" parent="GameOver"]
+[node name="Title2" type="TextureRect" parent="GameOver"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -331,5 +331,16 @@ libraries = {
 "": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
+
+[node name="Label" type="Label" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 224.0
+offset_right = 64.0
+offset_bottom = 256.0
+grow_horizontal = 2
 
 [connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]

@@ -24,7 +24,9 @@ signal stretched_out
 
 
 func _ready() -> void:
-	if stay_in_pipe_at_first: position = stretching_start
+	if stay_in_pipe_at_first:
+		position = stretching_start
+		reset_physics_interpolation()
 	else: step = 3
 	
 	timer_step.timeout.connect(

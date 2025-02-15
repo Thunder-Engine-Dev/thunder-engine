@@ -6,6 +6,9 @@ var skip_to_save: bool = false
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 
+signal remaining_continues(number: int)
+signal no_remaining_continues
+signal infinite_continues
 
 func _ready() -> void:
 	animation_player.play(&"init")
@@ -53,6 +56,12 @@ func toggle(no_resume: bool = false) -> void:
 		#Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
 		#Audio.play_music(music, 99, { "ignore_pause": true })
 		SettingsManager.show_mouse()
+		if Data.technical_values.remaining_continues == 0:
+			no_remaining_continues.emit()
+		elif Data.technical_values.remaining_continues > 0:
+			remaining_continues.emit(Data.technical_values.remaining_continues)
+		else:
+			infinite_continues.emit()
 	else:
 		animation_player.play_backwards("open")
 		Audio.stop_music_channel(99, false)
@@ -61,7 +70,10 @@ func toggle(no_resume: bool = false) -> void:
 		Data.reset_all_values()
 		Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 		if !no_resume:
-			Scenes.reload_current_scene()
+			if Data.technical_values.remaining_continues > 0:
+				Data.technical_values.remaining_continues -= 1
+			if Data.technical_values.remaining_continues != 0:
+				Scenes.reload_current_scene()
 
 	get_tree().paused = opened
 	await get_tree().physics_frame

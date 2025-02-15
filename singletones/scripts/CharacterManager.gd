@@ -165,6 +165,8 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
 
+var forced_character: String
+
 # Preparing Mario and Luigi characters
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
@@ -196,13 +198,15 @@ func _ready() -> void:
 
 
 func get_character_name() -> String:
+	if !forced_character.is_empty():
+		return forced_character
 	return SettingsManager.settings.character
 
 
 func get_character_display_name() -> String:
 	var character: String = SkinsManager.custom_nicknames.get(SkinsManager.current_skin, "")
 	if character.is_empty():
-		character = SettingsManager.settings.character
+		character = get_character_name()
 	return character
 
 
@@ -221,7 +225,7 @@ func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
 
 func get_suit_names(character_name: String = "") -> Array:
 	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
+	if chara.is_empty(): chara = get_character_name()
 	
 	var suit_name_arr: Array = []
 	if chara && chara in suits:
@@ -322,7 +326,7 @@ func add_default_suit_sounds(suits_dict: Dictionary, character: String) -> void:
 
 func _get_something(what: String, character_name: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
 	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
+	if chara.is_empty(): chara = get_character_name()
 	
 	if chara && chara in dict_ref && what in dict_ref[chara]:
 		if skinned_dict && what in skinned_dict.get(SkinsManager.current_skin, ""):
@@ -332,7 +336,7 @@ func _get_something(what: String, character_name: String, dict_ref: Dictionary, 
 
 func _get_something_suit(what: String, character_name: String, suit: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
 	var chara: String = character_name
-	if chara.is_empty(): chara = SettingsManager.settings.character
+	if chara.is_empty(): chara = get_character_name()
 	if !suit:
 		suit = Thunder._current_player_state.name
 	

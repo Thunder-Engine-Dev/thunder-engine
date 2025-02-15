@@ -100,7 +100,7 @@ func _movement_x(delta: float) -> void:
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		var deceleration: float = (
 			config.walk_crouch_deceleration if (
-				player.is_crouching && player.left_right == 0
+				player.is_crouching && player.left_right != player.direction
 			) else config.walk_deceleration
 		)
 		_decelerate(deceleration, delta)
