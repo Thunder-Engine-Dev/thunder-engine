@@ -6,9 +6,10 @@ var skip_to_save: bool = false
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 
-signal remaining_continues(number: int)
+signal remaining_continues(count: String)
 signal no_remaining_continues
 signal infinite_continues
+signal have_continues
 
 func _ready() -> void:
 	animation_player.play(&"init")
@@ -59,7 +60,8 @@ func toggle(no_resume: bool = false) -> void:
 		if Data.technical_values.remaining_continues == 0:
 			no_remaining_continues.emit()
 		elif Data.technical_values.remaining_continues > 0:
-			remaining_continues.emit(Data.technical_values.remaining_continues)
+			remaining_continues.emit(str(Data.technical_values.remaining_continues))
+			have_continues.emit()
 		else:
 			infinite_continues.emit()
 	else:
@@ -72,8 +74,7 @@ func toggle(no_resume: bool = false) -> void:
 		if !no_resume:
 			if Data.technical_values.remaining_continues > 0:
 				Data.technical_values.remaining_continues -= 1
-			if Data.technical_values.remaining_continues != 0:
-				Scenes.reload_current_scene()
+			Scenes.reload_current_scene()
 
 	get_tree().paused = opened
 	await get_tree().physics_frame

@@ -41,6 +41,10 @@ func game_over() -> void:
 	gameover.show()
 	
 	get_tree().create_timer(6, false).timeout.connect(emit_signal.bind("game_over_finished"))
+	
+	if Data.technical_values.remaining_continues == 0 && "suspended" in ProfileManager.profiles:
+		if ProfileManager.profiles.suspended.data.get("saved_profile") == ProfileManager.current_profile.name:
+			ProfileManager.delete_profile("suspended")
 
 
 func timer_hurry() -> void:

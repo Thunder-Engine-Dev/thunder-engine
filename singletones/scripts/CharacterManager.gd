@@ -165,7 +165,12 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
 
-var forced_character: String
+var forced_character: String:
+	set(value):
+		forced_character = value
+		character_updated.emit()
+
+signal character_updated
 
 # Preparing Mario and Luigi characters
 func _ready() -> void:

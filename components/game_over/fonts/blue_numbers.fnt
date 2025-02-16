@@ -1,0 +1,15 @@
+info face="blue_numbers" size=36 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=0 aa=1 padding=0,0,0,0 spacing=0,0 outline=0
+common lineHeight=36 base=30 scaleW=30 scaleH=380 pages=1 packed=0 alphaChnl=0 redChnl=0 greenChnl=0 blueChnl=0
+page id=0 file="blue_numbers.png"
+chars count=10
+char id=49 x=0 y=0 width=21 height=36 xoffset=0 yoffset=0 xadvance=18 page=0 chnl=15
+char id=50 x=0 y=38 width=29 height=36 xoffset=0 yoffset=0 xadvance=26 page=0 chnl=15
+char id=51 x=0 y=76 width=29 height=36 xoffset=0 yoffset=0 xadvance=26 page=0 chnl=15
+char id=52 x=0 y=114 width=30 height=36 xoffset=0 yoffset=0 xadvance=27 page=0 chnl=15
+char id=53 x=0 y=152 width=27 height=36 xoffset=0 yoffset=0 xadvance=24 page=0 chnl=15
+char id=54 x=0 y=190 width=26 height=36 xoffset=0 yoffset=0 xadvance=23 page=0 chnl=15
+char id=55 x=0 y=228 width=30 height=36 xoffset=0 yoffset=0 xadvance=27 page=0 chnl=15
+char id=56 x=0 y=266 width=26 height=36 xoffset=0 yoffset=0 xadvance=23 page=0 chnl=15
+char id=57 x=0 y=304 width=27 height=36 xoffset=0 yoffset=0 xadvance=24 page=0 chnl=15
+char id=48 x=0 y=342 width=27 height=36 xoffset=0 yoffset=0 xadvance=24 page=0 chnl=15
+kernings count=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene load_steps=26 format=3 uid="uid://c8ql6hro5f6gv"]
 
 [ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
@@ -15,7 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://chj26jw0plkf8" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
 [ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
+[ext_resource type="Texture2D" uid="uid://1e1lijy7nq0l" path="res://engine/components/game_over/textures/cannot_continue.png" id="16_xfa08"]
+[ext_resource type="Texture2D" uid="uid://edbyw0omsvjy" path="res://engine/components/game_over/textures/continues_left.png" id="18_0ol8l"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
+[ext_resource type="FontFile" uid="uid://b0ammhokl853d" path="res://engine/components/game_over/fonts/blue_numbers.fnt" id="19_2idh1"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -85,6 +88,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_8nk1g"]
 resource_name = "init"
@@ -144,6 +159,18 @@ tracks/4/path = NodePath("Selector:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -213,6 +240,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
 _data = {
@@ -269,6 +308,7 @@ layout_mode = 2
 texture = ExtResource("5_d5pn5")
 stretch_mode = 3
 script = ExtResource("6_au7hf")
+block_if_no_continues = true
 
 [node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
@@ -312,6 +352,18 @@ grow_horizontal = 2
 pivot_offset = Vector2(83, 0)
 texture = ExtResource("15_e2iqk")
 
+[node name="Continue1" type="TextureRect" parent="GameOver/Title1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -108.0
+offset_top = 64.0
+offset_right = 108.0
+offset_bottom = 134.0
+grow_horizontal = 2
+texture = ExtResource("16_xfa08")
+
 [node name="Title2" type="TextureRect" parent="GameOver"]
 layout_mode = 1
 anchors_preset = 5
@@ -326,21 +378,47 @@ scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(285.6, 0)
 texture = ExtResource("15_pv04y")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.0
+offset_top = 198.0
+offset_right = 128.0
+offset_bottom = 234.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="GameOver/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_0ol8l")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="GameOver/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("19_2idh1")
+theme_override_font_sizes/font_size = 36
+text = "3"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
 libraries = {
 "": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 
-[node name="Label" type="Label" parent="GameOver"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_top = 224.0
-offset_right = 64.0
-offset_bottom = 256.0
-grow_horizontal = 2
-
+[connection signal="have_continues" from="GameOver" to="GameOver/Title2" method="show"]
+[connection signal="have_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="have_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
+[connection signal="have_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/Title2" method="show"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/HBoxContainer" method="hide"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title2" method="hide"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title1/Continue1" method="show"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(0.4, 0.4, 0.4, 1)]]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text" binds= ["0"]]
+[connection signal="remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text"]
 [connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]

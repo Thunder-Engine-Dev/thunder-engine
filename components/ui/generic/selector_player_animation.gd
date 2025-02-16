@@ -3,6 +3,7 @@ extends AnimatedSprite2D
 func _ready() -> void:
 	_set_frames.call_deferred()
 	SettingsManager.settings_updated.connect(_set_frames)
+	CharacterManager.character_updated.connect(_set_frames)
 	_blink()
 
 
