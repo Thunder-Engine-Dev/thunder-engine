@@ -1,7 +1,6 @@
 @icon("res://engine/objects/bumping_blocks/question_block/textures/icon.png")
-extends StaticBumpingBlock
-
-const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture_null.png")
+@tool
+extends "res://engine/objects/bumping_blocks/question_block/question_block.gd"
 
 @export var debris_effect = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
 ## For coin bricks. Set to 1 for one-time output
@@ -15,6 +14,7 @@ var counter_enabled: bool = false
 
 func _physics_process(_delta):
 	super(_delta)
+	if Engine.is_editor_hint(): return
 	
 	var delta = Thunder.get_delta(_delta)
 	

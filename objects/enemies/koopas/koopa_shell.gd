@@ -41,6 +41,12 @@ func _ready() -> void:
 	status_update()
 
 
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if stopping:
+		speed.x = 0
+
+
 func status_update() -> void:
 	update_dir()
 	vel_set_x(0.0 if stopping else init_speed * -dir)

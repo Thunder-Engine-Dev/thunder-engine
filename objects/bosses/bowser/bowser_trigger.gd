@@ -1,6 +1,8 @@
 @tool
 extends Path2D
 
+signal bowser_triggered
+
 @export_category("Bowser's Trigger")
 @export_group("Trigger", "trigger_")
 @export var trigger_area: Rect2 = Rect2(0, 0, 32, 480)
@@ -66,6 +68,7 @@ func _physics_process(delta: float) -> void:
 					ignore_pause = true,
 				})
 			triggered = true
+			bowser_triggered.emit()
 	else:
 		if route_follower.progress_ratio < 1.0: 
 			route_follower.progress += camera_speed * delta

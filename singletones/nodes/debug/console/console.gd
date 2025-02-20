@@ -12,6 +12,7 @@ var history: Array = ['']
 var position_in_history: int
 
 var player_stats_shown: bool = false
+var item_display_shown: bool = false
 var command_executed: bool = false
 
 

@@ -29,6 +29,11 @@ occluder = SubResource("OccluderPolygon2D_xwmjy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
 sprite_frames = ExtResource("2_p1ujx")
 
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
+position = Vector2(8, 8)
+scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
+
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
 visible = false
 self_modulate = Color(1, 1, 1, 0)
