@@ -16,10 +16,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if _fullscr:
 		Audio.play_1d_sound(bump, true, { "ignore_pause": true, "bus": "1D Sound" })
 		return
-	var user_screen: int = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen()).y
+	var user_screen := float(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen()).y)
 	var max_val: float = 4.0
 	
-	max_val = floor((user_screen / viewport_height) * 2) / 2
+	max_val = floorf((user_screen / viewport_height) * 2.0) / 2.0
 	print(max_val)
 	
 	var old_value = SettingsManager.settings.scale
