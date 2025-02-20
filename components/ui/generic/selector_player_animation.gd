@@ -8,6 +8,8 @@ func _ready() -> void:
 
 
 func _blink() -> void:
+	if !is_inside_tree():
+		return
 	get_tree().create_timer(randf_range(1.0, 8.0)).timeout.connect(_blink)
 	play(&"default")
 
