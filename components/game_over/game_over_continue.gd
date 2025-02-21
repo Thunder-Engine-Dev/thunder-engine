@@ -1,7 +1,10 @@
 extends Control
 
 var opened: bool = false
-var skip_to_save: bool = false
+
+@export var skip_to_save: bool = false
+@export var custom_resume_scene: String
+@export var reset_custom_scene_after_resume: bool = true
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
@@ -74,7 +77,12 @@ func toggle(no_resume: bool = false) -> void:
 		if !no_resume:
 			if Data.technical_values.remaining_continues > 0:
 				Data.technical_values.remaining_continues -= 1
-			Scenes.reload_current_scene()
+			if custom_resume_scene.is_empty():
+				Scenes.reload_current_scene()
+			else:
+				Scenes.goto_scene(custom_resume_scene)
+				if reset_custom_scene_after_resume:
+					custom_resume_scene = ""
 
 	get_tree().paused = opened
 	await get_tree().physics_frame

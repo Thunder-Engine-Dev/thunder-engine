@@ -407,16 +407,16 @@ libraries = {
 }
 autoplay = "RESET"
 
-[connection signal="have_continues" from="GameOver" to="GameOver/Title2" method="show"]
 [connection signal="have_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="have_continues" from="GameOver" to="GameOver/Title2" method="show"]
 [connection signal="have_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
 [connection signal="have_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
-[connection signal="infinite_continues" from="GameOver" to="GameOver/Title2" method="show"]
 [connection signal="infinite_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/Title2" method="show"]
 [connection signal="infinite_continues" from="GameOver" to="GameOver/HBoxContainer" method="hide"]
 [connection signal="infinite_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
-[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title2" method="hide"]
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title1/Continue1" method="show"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title2" method="hide"]
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(0.4, 0.4, 0.4, 1)]]
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text" binds= ["0"]]
