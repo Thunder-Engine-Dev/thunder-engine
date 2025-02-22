@@ -9,6 +9,7 @@ var scene: String
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
+@onready var v_box_container_2: MenuItemsController = $VBoxContainer2
 @onready var level_label: Label = $LevelLabel
 @onready var state_preview: AnimatedSprite2D = $StatePreview
 
@@ -45,6 +46,7 @@ func suspended_game_logic() -> void:
 	label_text += profile.title_level
 	level_label.text = label_text
 	if profile.get(&"saved_player_state"):
+		state_preview.position.x = get_viewport_rect().size.x / 2
 		state_preview.sprite_frames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
 		state_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
@@ -54,7 +56,7 @@ func suspended_game_logic() -> void:
 
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
-	if !v_box_container.focused && opened: return
+	if !v_box_container.focused && !v_box_container_2.focused && opened: return
 
 	opened = !opened
 

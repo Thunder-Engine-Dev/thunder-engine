@@ -106,6 +106,7 @@ var _suit_tree_paused: bool
 @warning_ignore("unused_private_class_variable")
 @onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 @onready var _autorun_tweak = SettingsManager.get_tweak("autorun", false)
+@onready var _damage_tweak = SettingsManager.get_tweak("retro_damage_system", false)
 
 @onready var force_override_death_sound: bool = false
 
@@ -326,7 +327,10 @@ func hurt(tags: Dictionary = {}) -> void:
 	is_hurting = true
 
 	if suit.gets_hurt_to:
-		change_suit(suit.gets_hurt_to)
+		if _damage_tweak:
+			change_suit(CharacterManager.get_suit("small"))
+		else:
+			change_suit(suit.gets_hurt_to)
 		invincible.call_deferred(tags.get(&"hurt_duration", 2))
 		Audio.play_sound(suit.sound_hurt, self, false, {pitch = suit.sound_pitch, ignore_pause = true})
 	else:
