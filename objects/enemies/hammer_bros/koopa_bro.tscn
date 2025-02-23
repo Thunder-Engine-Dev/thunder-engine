@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b1ta344iwb83q"]
+[gd_scene load_steps=22 format=3 uid="uid://b1ta344iwb83q"]
 
 [ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_yqkay"]
 [ext_resource type="PackedScene" uid="uid://bcm2a10a5vcug" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.tscn" id="2_gqerd"]
@@ -59,6 +59,14 @@ region = Rect2(0, 0, 32, 47)
 atlas = ExtResource("10_knc7g")
 region = Rect2(32, 0, 32, 47)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpa12"]
+atlas = ExtResource("10_knc7g")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpp6h"]
+atlas = ExtResource("10_knc7g")
+region = Rect2(32, 0, 32, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_bjg3k"]
 animations = [{
 "frames": [{
@@ -74,10 +82,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x70y4")
+"texture": SubResource("AtlasTexture_dpa12")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vx21o")
+"texture": SubResource("AtlasTexture_cpp6h")
 }],
 "loop": true,
 "name": &"default",

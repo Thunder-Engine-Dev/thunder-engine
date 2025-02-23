@@ -2,22 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="1_7mofp"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_twra5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5swe3"]
 atlas = ExtResource("1_7mofp")
-region = Rect2(0, 0, 32, 47)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x2ge8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s80y"]
 atlas = ExtResource("1_7mofp")
-region = Rect2(32, 0, 32, 47)
+region = Rect2(32, 0, 32, 48)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_twra5")
+"texture": SubResource("AtlasTexture_5swe3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x2ge8")
+"texture": SubResource("AtlasTexture_6s80y")
 }],
 "loop": true,
 "name": &"default",

@@ -48,22 +48,22 @@ custom_vars = {
 }
 custom_script = ExtResource("8_onbsx")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w4e7b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_onbvk"]
 atlas = ExtResource("10_6wrqt")
-region = Rect2(0, 0, 32, 47)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ebe2l"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vamrm"]
 atlas = ExtResource("10_6wrqt")
-region = Rect2(32, 0, 32, 47)
+region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oof6l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w4e7b")
+"texture": SubResource("AtlasTexture_onbvk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ebe2l")
+"texture": SubResource("AtlasTexture_vamrm")
 }],
 "loop": true,
 "name": &"default",
