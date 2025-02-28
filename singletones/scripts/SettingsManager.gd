@@ -144,6 +144,12 @@ func _check_for_validity() -> void:
 	for i in default_settings.keys():
 		if !i in settings:
 			settings[i] = default_settings[i]
+			continue
+		if settings[i] is Dictionary && default_settings.get(i):
+			for j in default_settings[i].keys():
+				if !j in settings[i]:
+					settings[i][j] = default_settings[i][j]
+					print("[Settings] Restored %s in dict %s" % [j, i])
 
 ## Processes certain settings and applies their effects
 func _process_settings() -> void:

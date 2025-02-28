@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=63 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
 [ext_resource type="Texture2D" uid="uid://dek2begmgx1bo" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
+[ext_resource type="Texture2D" uid="uid://b0gg3838odwlc" path="res://engine/scenes/main_menu/textures/press_enter.png" id="10_lb8xl"]
 [ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
 [ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
@@ -43,6 +44,14 @@ region = Rect2(96, 0, 93, 29)
 [sub_resource type="AtlasTexture" id="AtlasTexture_iu4wi"]
 atlas = ExtResource("4_wobiu")
 region = Rect2(0, 29, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl4xt"]
+atlas = ExtResource("10_lb8xl")
+region = Rect2(0, 0, 96, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qd4g"]
+atlas = ExtResource("10_lb8xl")
+region = Rect2(102, 0, 94, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odr5u"]
 atlas = ExtResource("4_wobiu")
@@ -408,6 +417,32 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_iu4wi")
+stretch_mode = 2
+
+[node name="Value" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/Controls"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+
+[node name="Press" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_pl4xt")
+stretch_mode = 2
+
+[node name="Enter" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8qd4g")
+stretch_mode = 2
+
+[node name="JoyIcon" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
 stretch_mode = 2
 
 [node name="Quality" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
