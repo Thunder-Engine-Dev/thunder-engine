@@ -22,6 +22,10 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if selected_sound:
 		Audio.play_1d_sound(selected_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 
+## Called when right clicked on this item if mouse trigger is enabled, extend this
+func _handle_right_click() -> void:
+	pass
+
 
 func _physics_process(delta: float) -> void:
 	if !focused || !get_parent().focused: return

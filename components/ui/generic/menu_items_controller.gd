@@ -96,13 +96,15 @@ func _selection_update(immediate: bool = false, _mouse_input: bool = false) -> v
 func _on_mouse_pressed(index: MouseButton) -> void:
 	if !_can_mouse_process(): return
 	if !_mouse_can_process: return
-	if index != MOUSE_BUTTON_LEFT: return
 	
 	for item in selectors:
 		if !is_instance_valid(item): continue
 		if !item is Control: continue
 		if item.mouse_hovered && item.trigger_mouse:
-			item._handle_select(true)
+			if index == MOUSE_BUTTON_LEFT:
+				item._handle_select(true)
+			elif index == MOUSE_BUTTON_RIGHT:
+				item._handle_right_click()
 
 
 func _on_mouse_moved() -> void:
