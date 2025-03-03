@@ -15,7 +15,7 @@ func _ready():
 	bubbles.process_material.duplicate()
 	bubbles.process_material.emission_box_extents = Vector3(get_rect().size.x / 2, 1, 1)
 	bubbles.global_position = sinking_point
-	bubbles.visibility_rect.size = position / 2
+	bubbles.visibility_rect.position = get_rect().size / -2
 	bubbles.visibility_rect.size = get_rect().size
 
 func _physics_process(delta):
