@@ -142,9 +142,10 @@ func _creation(creation: InstanceNode2D) -> void:
 	var created: Node2D = NodeCreator.prepare_ins_2d(creation, self) \
 		.execute_instance_script({}, &"_pre_ready").create_2d() \
 		.execute_instance_script({}, &"_after_ready").get_node()
-	if created && created.has_method(&"_from_bumping_block"): created._from_bumping_block()
-	
-	Thunder.reorder_on_top_of(created, self)
+	if created:
+		if created.has_method(&"_from_bumping_block"): created._from_bumping_block()
+		
+		Thunder.reorder_on_top_of(created, self)
 	
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	
