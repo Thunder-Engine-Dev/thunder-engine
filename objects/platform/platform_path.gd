@@ -56,6 +56,7 @@ var _path_falling_speed: float
 ).call()
 @onready var max_progress: float = (
 	func() -> float:
+		if !curve: return 0.0
 		var max_length: float
 		var current: float = progress_ratio
 		progress_ratio = 1.0

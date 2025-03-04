@@ -22,7 +22,9 @@ func _ready():
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
 	$"UI/Enter".pressed.connect(execute)
-	$"UI/Paused".pressed.connect(func(): Thunder.set_pause_game($"UI/Paused".button_pressed))
+	$"UI/Paused".pressed.connect(func():
+		Thunder.set_pause_game($"UI/Paused".button_pressed)
+	)
 	close_requested.connect(
 		func():
 			Thunder.set_pause_game(false)

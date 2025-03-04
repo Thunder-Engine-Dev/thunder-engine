@@ -2,6 +2,7 @@ extends Control
 
 @onready var container: SubViewportContainer = $ViewportContainer
 @onready var vp: SubViewport = $ViewportContainer/SubViewport
+@onready var center_container: AspectRatioContainer = $AspectRatioContainer
 
 @onready var keep_aspect: bool = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
 

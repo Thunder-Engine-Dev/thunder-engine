@@ -29,6 +29,7 @@ func _handle_right_click() -> void:
 
 func _physics_process(delta: float) -> void:
 	if !focused || !get_parent().focused: return
+	if !get_window().has_focus(): return
 
 	if Input.is_action_just_pressed(trigger_action):
 		_handle_select(false)

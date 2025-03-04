@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c65x6dl8i6pdh"]
 
-[ext_resource type="Shader" path="res://engine/components/transitions/circle_transition/circle.gdshader" id="1_qn8c2"]
+[ext_resource type="Shader" uid="uid://8q5qqiqaxusq" path="res://engine/components/transitions/circle_transition/circle.gdshader" id="1_qn8c2"]
 
 [resource]
 shader = ExtResource("1_qn8c2")

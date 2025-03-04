@@ -1,13 +1,13 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://sbymk46jn3sg"]
 
-[ext_resource type="Shader" path="res://engine/shaders/animated_texture.gdshader" id="1_f34x3"]
+[ext_resource type="Shader" uid="uid://dluvop86i8qql" path="res://engine/shaders/animated_texture.gdshader" id="1_f34x3"]
 [ext_resource type="Texture2D" uid="uid://cccjyxok3ss1l" path="res://engine/objects/fluid/textures/lava.png" id="2_ol4ve"]
 
 [resource]
 shader = ExtResource("1_f34x3")
+shader_parameter/sprite_sheet = ExtResource("2_ol4ve")
 shader_parameter/frame_size = Vector2(1, 8)
 shader_parameter/frame_count = 8
 shader_parameter/frames_per_row = 1
 shader_parameter/time_scale = 6.0
 shader_parameter/frame_offset = 0
-shader_parameter/sprite_sheet = ExtResource("2_ol4ve")
