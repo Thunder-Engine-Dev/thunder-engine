@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InstanceNode2D" load_steps=3 format=3 uid="uid://bbss8l3pxvrjn"]
 
 [ext_resource type="PackedScene" uid="uid://b24l0bhd2wshk" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.tscn" id="1_camb7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_lu0nx"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_lu0nx"]
 
 [resource]
 script = ExtResource("2_lu0nx")

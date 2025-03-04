@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ypqfmjivkbid"]
 
-[ext_resource type="Script" path="res://engine/objects/areas/climbable_area.gd" id="1_ts70s"]
+[ext_resource type="Script" uid="uid://d2u8s6fmhuixh" path="res://engine/objects/areas/climbable_area.gd" id="1_ts70s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjoov"]
 size = Vector2(32, 32)

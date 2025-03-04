@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dffv08vqiv3dv" path="res://engine/objects/enemies/chain_chomp/texture/chain_chomp_pile.png" id="1_ylgoo"]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvm6e"]
 size = Vector2(32, 32)
 

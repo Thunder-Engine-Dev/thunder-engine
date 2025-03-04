@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdreuoa3gl1ja"]
 
-[ext_resource type="Script" path="res://engine/components/audio_area/audio_area.gd" id="1_3jb2n"]
+[ext_resource type="Script" uid="uid://b1l4ju7qvsdkn" path="res://engine/components/audio_area/audio_area.gd" id="1_3jb2n"]
 
 [node name="AudioArea" type="Area2D"]
 collision_layer = 0

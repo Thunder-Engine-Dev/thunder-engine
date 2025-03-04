@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b15mtpvvr38vx"]
 
-[ext_resource type="Script" path="res://engine/objects/warps/door/door_in.gd" id="1_bjwu6"]
+[ext_resource type="Script" uid="uid://cuxwwcxf7tm13" path="res://engine/objects/warps/door/door_in.gd" id="1_bjwu6"]
 [ext_resource type="Texture2D" uid="uid://c32gr3g5syhnt" path="res://engine/objects/warps/door/door_background.png" id="2_g7vay"]
 [ext_resource type="SpriteFrames" uid="uid://chb2xwhkx80un" path="res://engine/objects/warps/door/door_animation.tres" id="3_4oodk"]
 

@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://xupxs1ig4f5p"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/chain_chomp/chain_chomp.gd" id="1_u8ai7"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g86p0"]
+[ext_resource type="Script" uid="uid://c3ro3mmgstjuw" path="res://engine/objects/enemies/chain_chomp/chain_chomp.gd" id="1_u8ai7"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g86p0"]
 [ext_resource type="Texture2D" uid="uid://dd1idyb1r8h5c" path="res://engine/objects/enemies/chain_chomp/texture/chain_chomp.png" id="2_s7rfi"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_dm4jp"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_riveb"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_e2s24"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_riveb"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_e2s24"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_f4pwu"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_cc0hu"]
 

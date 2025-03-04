@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b2d7bys2llvfr"]
 
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_piehy"]
-[ext_resource type="Script" path="res://engine/objects/bumping_blocks/reset_power_block/reset_power_block.gd" id="2_ko7ra"]
+[ext_resource type="Script" uid="uid://043u4n1kwwce" path="res://engine/objects/bumping_blocks/reset_power_block/reset_power_block.gd" id="2_ko7ra"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="3_dk7wc"]
 [ext_resource type="SpriteFrames" uid="uid://b8y8s1t7hte7h" path="res://engine/objects/bumping_blocks/reset_power_block/reset_power_block.tres" id="4_wn7fc"]
 [ext_resource type="Texture2D" uid="uid://drhsgmwqaacvm" path="res://engine/scripts/classes/bumping_block/texture_null.png" id="5_px5f1"]

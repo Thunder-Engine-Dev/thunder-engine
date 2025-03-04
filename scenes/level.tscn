@@ -1,10 +1,10 @@
 [gd_scene load_steps=19 format=3 uid="uid://3lhn1v4tm4e3"]
 
-[ext_resource type="Script" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
+[ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_rohf5"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_i4f1f"]
 [ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_yq3n0"]
 [ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="5_khowx"]
-[ext_resource type="Script" path="res://engine/objects/players/player_camera_2d.gd" id="6_titgq"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="6_titgq"]
 [ext_resource type="Texture2D" uid="uid://dlcqe8o0t0uih" path="res://engine/tilesets/overworld/cloud.png" id="7_2n42i"]
 [ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_b1hjx"]
 [ext_resource type="Texture2D" uid="uid://bhdvcmxlf3ejv" path="res://engine/tilesets/overworld/default_grass.png" id="8_er3no"]

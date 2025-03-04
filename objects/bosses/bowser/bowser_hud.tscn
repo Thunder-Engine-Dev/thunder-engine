@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxlk30t7xjimp"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_hud.gd" id="1_egrif"]
+[ext_resource type="Script" uid="uid://pallhmdr11jo" path="res://engine/objects/bosses/bowser/bowser_hud.gd" id="1_egrif"]
 [ext_resource type="Texture2D" uid="uid://85psk3wrpgix" path="res://engine/objects/bosses/bowser/hud_texture/bowser_lives.png" id="1_syryh"]
 [ext_resource type="Texture2D" uid="uid://e2a4pqvfjo0f" path="res://engine/objects/bosses/bowser/hud_texture/bowser_life_unit.png" id="2_5srpf"]
 

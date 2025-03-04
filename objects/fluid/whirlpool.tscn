@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://chn8d8bjrm7eu"]
 
-[ext_resource type="Script" path="res://engine/objects/fluid/whirlpool.gd" id="1_dmb2x"]
+[ext_resource type="Script" uid="uid://crrjumj6kfpan" path="res://engine/objects/fluid/whirlpool.gd" id="1_dmb2x"]
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="3_vn1cs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15ybc"]

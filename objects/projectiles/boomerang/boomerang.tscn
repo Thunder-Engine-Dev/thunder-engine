@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://cun8jv47pjvmt"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/boomerang/boomerang.gd" id="1_biice"]
+[ext_resource type="Script" uid="uid://c3bogskxtbxrs" path="res://engine/objects/projectiles/boomerang/boomerang.gd" id="1_biice"]
 [ext_resource type="Texture2D" uid="uid://c6vccfrooupb7" path="res://engine/objects/projectiles/boomerang/textures/boomerang_player.png" id="2_8ng0e"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_c4rlt"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ks1x"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_c4rlt"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ks1x"]
 [ext_resource type="AudioStream" uid="uid://6m5l3lgoy0k1" path="res://engine/objects/projectiles/boomerang/sfx/boomerange_flying.wav" id="5_3nf32"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_js70m"]

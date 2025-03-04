@@ -1,23 +1,23 @@
 [gd_scene load_steps=26 format=3 uid="uid://c8ql6hro5f6gv"]
 
-[ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
-[ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
+[ext_resource type="Script" uid="uid://c0lvhjcec75dw" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
+[ext_resource type="Script" uid="uid://b82vaonfklay3" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
 [ext_resource type="Texture2D" uid="uid://dy68iw8isdo0k" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
-[ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
+[ext_resource type="Script" uid="uid://65gr5kft1cdv" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
 [ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
-[ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
+[ext_resource type="Script" uid="uid://cjdhnq274ccw8" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
 [ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_jqjx8"]
-[ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_xubmy"]
+[ext_resource type="Script" uid="uid://d0i3op5rtbj8x" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_xubmy"]
 [ext_resource type="Texture2D" uid="uid://b70uy0ois6r7v" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
 [ext_resource type="Texture2D" uid="uid://chj26jw0plkf8" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
-[ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
+[ext_resource type="Script" uid="uid://dknbvd8u3g3h1" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
 [ext_resource type="Texture2D" uid="uid://1e1lijy7nq0l" path="res://engine/components/game_over/textures/cannot_continue.png" id="16_xfa08"]
 [ext_resource type="Texture2D" uid="uid://edbyw0omsvjy" path="res://engine/components/game_over/textures/continues_left.png" id="18_0ol8l"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
 [ext_resource type="FontFile" uid="uid://b0ammhokl853d" path="res://engine/components/game_over/fonts/blue_numbers.fnt" id="19_2idh1"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
@@ -255,9 +255,9 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
 _data = {
-"RESET": SubResource("Animation_svgxp"),
-"init": SubResource("Animation_8nk1g"),
-"open": SubResource("Animation_hvhdc")
+&"RESET": SubResource("Animation_svgxp"),
+&"init": SubResource("Animation_8nk1g"),
+&"open": SubResource("Animation_hvhdc")
 }
 
 [node name="GameOverLayer" type="CanvasLayer"]

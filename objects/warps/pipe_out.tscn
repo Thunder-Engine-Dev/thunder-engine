@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://u383towqhd0i"]
 
-[ext_resource type="Script" path="res://engine/objects/warps/pipe_out.gd" id="1_vtxw2"]
+[ext_resource type="Script" uid="uid://ch116cipfscc4" path="res://engine/objects/warps/pipe_out.gd" id="1_vtxw2"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_0pjrc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqxto"]

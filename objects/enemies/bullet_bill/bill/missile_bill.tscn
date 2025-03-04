@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcjv66rihg28l"]
 
 [ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="1_bxwn5"]
-[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.gd" id="2_lak03"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_26igf"]
+[ext_resource type="Script" uid="uid://p43dcfy4c317" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.gd" id="2_lak03"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_26igf"]
 
 [sub_resource type="Animation" id="Animation_qt7bc"]
 resource_name = "default"
@@ -23,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_moq1y"]
 _data = {
-"default": SubResource("Animation_qt7bc")
+&"default": SubResource("Animation_qt7bc")
 }
 
 [sub_resource type="Gradient" id="Gradient_hhgfu"]

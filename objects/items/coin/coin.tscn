@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://b8kgbn8f7lvf0"]
 
-[ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
+[ext_resource type="Script" uid="uid://b5os186kechtf" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o0ga7"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o0ga7"]
 [ext_resource type="PackedScene" uid="uid://ch646rieriyyu" path="res://engine/objects/effects/coin_effect/coin_effect.tscn" id="4_8py2g"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mg6wf"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mg6wf"]
 [ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_v73xb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcllp"]

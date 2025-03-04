@@ -1,13 +1,13 @@
 [gd_scene load_steps=27 format=3 uid="uid://bxyjgsiel1kgl"]
 
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/map-complete.gd" id="1_k7tbx"]
+[ext_resource type="Script" uid="uid://cgmeyo2w81dhx" path="res://engine/scenes/map/scripts/map-complete.gd" id="1_k7tbx"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_so3pp"]
 [ext_resource type="AudioStream" uid="uid://bhqt1f4oegqsp" path="res://engine/scenes/map/music/world_complete.ogg" id="3_0spfl"]
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="4_uxbre"]
 [ext_resource type="Texture2D" uid="uid://b6hnnpa1sdewh" path="res://engine/scenes/map/textures/mario_icon.png" id="5_uqnum"]
 [ext_resource type="Texture2D" uid="uid://bmop2h848sdtf" path="res://engine/scenes/map/textures/world_1.png" id="6_2v7yw"]
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/player_icon.gd" id="6_35kf5"]
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/world_text.gd" id="7_jenna"]
+[ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="6_35kf5"]
+[ext_resource type="Script" uid="uid://dr3vhptgbru6r" path="res://engine/scenes/map/scripts/world_text.gd" id="7_jenna"]
 [ext_resource type="Texture2D" uid="uid://blumff1vegg4c" path="res://engine/scenes/map/textures/completed.png" id="8_trcol"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uckvt"]

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_c2vrp"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_s3d20"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gvvtk"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_xhp64"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gvvtk"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_xhp64"]
 [ext_resource type="Texture2D" uid="uid://cydl63kqnyc5t" path="res://engine/objects/enemies/cheeps/textures/cheep_yellow.png" id="5_hjecj"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="5_ylvhf"]
 

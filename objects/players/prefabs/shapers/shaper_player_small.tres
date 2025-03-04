@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Shaper2D" load_steps=3 format=3 uid="uid://2etad878gceh"]
 
-[ext_resource type="Script" path="res://engine/scripts/resources/shaper/shaper_2d.gd" id="1_hbi32"]
+[ext_resource type="Script" uid="uid://bpmdgdlimero3" path="res://engine/scripts/resources/shaper/shaper_2d.gd" id="1_hbi32"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a2h64"]
 size = Vector2(20, 28)

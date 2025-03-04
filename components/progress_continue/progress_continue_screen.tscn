@@ -1,19 +1,19 @@
 [gd_scene load_steps=25 format=3 uid="uid://cl58fmmyu8xha"]
 
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/progress_continue_screen.gd" id="1_ck85d"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_wya03"]
+[ext_resource type="Script" uid="uid://c2n6ynkin3jw4" path="res://engine/components/progress_continue/scripts/progress_continue_screen.gd" id="1_ck85d"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_wya03"]
 [ext_resource type="Texture2D" uid="uid://b6se5c7m5jif0" path="res://engine/components/progress_continue/textures/yes.png" id="2_1ly8w"]
 [ext_resource type="Texture2D" uid="uid://dsgn8mjkxbovv" path="res://engine/components/progress_continue/textures/no.png" id="4_a3l1u"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/continue_sel.gd" id="4_m2bkh"]
+[ext_resource type="Script" uid="uid://bmlu2snqvlr0o" path="res://engine/components/progress_continue/scripts/continue_sel.gd" id="4_m2bkh"]
 [ext_resource type="Texture2D" uid="uid://cf0nkhetwx0vo" path="res://engine/components/progress_continue/textures/erase.png" id="5_bogmr"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/no_sel.gd" id="6_k11o0"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="6_pq48x"]
-[ext_resource type="Script" path="res://engine/components/progress_continue/scripts/erase_sel.gd" id="7_fpdiu"]
+[ext_resource type="Script" uid="uid://buwjup73b832r" path="res://engine/components/progress_continue/scripts/no_sel.gd" id="6_k11o0"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="6_pq48x"]
+[ext_resource type="Script" uid="uid://cnhidsgtspngq" path="res://engine/components/progress_continue/scripts/erase_sel.gd" id="7_fpdiu"]
 [ext_resource type="Texture2D" uid="uid://dyvymtdao3hwr" path="res://engine/components/progress_continue/textures/progress_title.png" id="7_hedy6"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="8_n72oc"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="10_p7lkf"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="10_s8rqy"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="11_qfik6"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="10_s8rqy"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="11_qfik6"]
 [ext_resource type="Texture2D" uid="uid://dia0f8bnn6ned" path="res://engine/components/progress_continue/textures/progress_clearing.png" id="12_6nsta"]
 [ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="15_rqwc0"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="16_ccim0"]
@@ -97,9 +97,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
 _data = {
-"RESET": SubResource("Animation_8nk1g"),
-"init": SubResource("Animation_x2cu4"),
-"open": SubResource("Animation_hvhdc")
+&"RESET": SubResource("Animation_8nk1g"),
+&"init": SubResource("Animation_x2cu4"),
+&"open": SubResource("Animation_hvhdc")
 }
 
 [sub_resource type="FontVariation" id="FontVariation_k4vin"]

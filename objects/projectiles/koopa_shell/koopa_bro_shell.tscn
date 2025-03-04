@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcm2a10a5vcug"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.gd" id="1_tkugq"]
+[ext_resource type="Script" uid="uid://cnce1poewe88y" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.gd" id="1_tkugq"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="2_t1ltt"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_naewv"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_naewv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pgqm4"]
 size = Vector2(30, 30)

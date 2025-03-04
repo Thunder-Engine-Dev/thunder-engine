@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://df5i2eol1nrof"]
 
 [ext_resource type="Texture2D" uid="uid://b4grcqwkhdc12" path="res://engine/objects/enemies/volcano/volcano.png" id="1_5qyqc"]
-[ext_resource type="Script" path="res://engine/objects/enemies/volcano/volcano.gd" id="1_eni5l"]
+[ext_resource type="Script" uid="uid://dt3t4jlblbs4c" path="res://engine/objects/enemies/volcano/volcano.gd" id="1_eni5l"]
 [ext_resource type="Texture2D" uid="uid://d2pjyhp6b03xp" path="res://engine/objects/enemies/volcano/volcano-heading.png" id="2_p2qnt"]
 
 [sub_resource type="Animation" id="Animation_jdupm"]
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4xvf6"]
 _data = {
-"RESET": SubResource("Animation_jdupm"),
-"volcano-heading": SubResource("Animation_hiemt")
+&"RESET": SubResource("Animation_jdupm"),
+&"volcano-heading": SubResource("Animation_hiemt")
 }
 
 [node name="Volcano" type="Node2D"]

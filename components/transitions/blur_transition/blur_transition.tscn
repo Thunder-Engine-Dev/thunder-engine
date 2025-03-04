@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqwjr21jmsmi6"]
 
-[ext_resource type="Script" path="res://engine/components/transitions/blur_transition/blur_transition.gd" id="1"]
+[ext_resource type="Script" uid="uid://dit55ogfpcnt0" path="res://engine/components/transitions/blur_transition/blur_transition.gd" id="1"]
 [ext_resource type="Material" uid="uid://cjvud11pq1efj" path="res://engine/components/transitions/blur_transition/blur_transition.tres" id="2_cntis"]
 
 [sub_resource type="Animation" id="5"]
@@ -100,9 +100,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lctbs"]
 _data = {
-"Fade": SubResource("5"),
-"FadePixelate": SubResource("3"),
-"RESET": SubResource("4")
+&"Fade": SubResource("5"),
+&"FadePixelate": SubResource("3"),
+&"RESET": SubResource("4")
 }
 
 [node name="Transition" type="Control"]

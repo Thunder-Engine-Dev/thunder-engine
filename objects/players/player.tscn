@@ -1,17 +1,17 @@
 [gd_scene load_steps=22 format=3 uid="uid://1do11cr84k7y"]
 
-[ext_resource type="Script" path="res://engine/objects/players/player.gd" id="1_ojh72"]
+[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="1_ojh72"]
 [ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="2_2saki"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
 [ext_resource type="Material" uid="uid://bkck6uoldtwwu" path="res://engine/objects/players/prefabs/materials/stars.tres" id="4_6n413"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="5_n6ctd"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="5_n6ctd"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
-[ext_resource type="Script" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
+[ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
 [ext_resource type="Material" uid="uid://1qmh2i83ni7y" path="res://engine/objects/players/prefabs/materials/skid.tres" id="8_vrjrd"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
-[ext_resource type="Script" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
+[ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
+[ext_resource type="Script" uid="uid://dga27kf23i4a8" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
 size = Vector2(20, 28)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b12148ytuf8yf"]
 
-[ext_resource type="Script" path="res://engine/components/transitions/fade_transition/fade_transition.gd" id="1_oiirv"]
+[ext_resource type="Script" uid="uid://bxbd47d67vhn3" path="res://engine/components/transitions/fade_transition/fade_transition.gd" id="1_oiirv"]
 
 [sub_resource type="Animation" id="Animation_qsjiv"]
 length = 0.001
@@ -51,9 +51,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4gqb7"]
 _data = {
-"RESET": SubResource("Animation_qsjiv"),
-"to_black": SubResource("Animation_gyau7"),
-"to_white": SubResource("Animation_n7fdo")
+&"RESET": SubResource("Animation_qsjiv"),
+&"to_black": SubResource("Animation_gyau7"),
+&"to_white": SubResource("Animation_n7fdo")
 }
 
 [node name="FadeTransition" type="Control"]

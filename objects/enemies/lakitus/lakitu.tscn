@@ -1,16 +1,16 @@
 [gd_scene load_steps=50 format=3 uid="uid://j4f2gd3x20bj"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_rfja5"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_wpj0n"]
+[ext_resource type="Script" uid="uid://f02wcyi08ks1" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_rfja5"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_wpj0n"]
 [ext_resource type="Texture2D" uid="uid://b4wbjvprni38v" path="res://engine/objects/enemies/lakitus/textures/lakitu.png" id="2_5s1jr"]
-[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_pitching.gd" id="2_aveqo"]
+[ext_resource type="Script" uid="uid://5x84eyswuttw" path="res://engine/objects/enemies/lakitus/lakitu_pitching.gd" id="2_aveqo"]
 [ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="2_y3wvn"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_rbrl7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_rbrl7"]
 [ext_resource type="PackedScene" uid="uid://cgy7tegiodty8" path="res://engine/objects/enemies/lakitus/lakitu_killed.tscn" id="6_qkxjd"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="7_hqpcj"]
-[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_died.gd" id="7_v5tr1"]
+[ext_resource type="Script" uid="uid://ivkcafokyb0o" path="res://engine/objects/enemies/lakitus/lakitu_died.gd" id="7_v5tr1"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_pwsn6"]
-[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_rect_draw.gd" id="11_wdi2v"]
+[ext_resource type="Script" uid="uid://bi5aux4as5lsm" path="res://engine/objects/enemies/lakitus/lakitu_rect_draw.gd" id="11_wdi2v"]
 
 [sub_resource type="Resource" id="Resource_etq5v"]
 script = ExtResource("3_rbrl7")

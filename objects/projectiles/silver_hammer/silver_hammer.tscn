@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://e0knwhbbb2ok"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.gd" id="1_kg4ub"]
+[ext_resource type="Script" uid="uid://h7j8uqk7r1h4" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.gd" id="1_kg4ub"]
 [ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="2_5fl35"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_7xrok"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_7xrok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84swo"]
 

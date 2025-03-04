@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdfqlkg8w5yc8"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
+[ext_resource type="Script" uid="uid://cf4cbmxqe4wdr" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
 [ext_resource type="Texture2D" uid="uid://x1h126m735je" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
 [ext_resource type="Texture2D" uid="uid://c8cqh10bsbdud" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
 

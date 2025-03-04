@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5j7avvs6gxbp"]
 
-[ext_resource type="Texture2D" uid="uid://c667qxsfpodt2" path="res://engine/scenes/map/textures/x.png" id="1_y1ote"]
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_x_marker.gd" id="2_s5auh"]
+[ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="1_y1ote"]
+[ext_resource type="Script" uid="uid://d0fxwixde64aw" path="res://engine/scenes/map/scripts/map_x_marker.gd" id="2_s5auh"]
 
 [node name="X" type="Sprite2D"]
 texture = ExtResource("1_y1ote")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_6idoa"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_gu5kx"]
-[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_gylq0"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="3_gylq0"]
 [ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="3_hnivk"]
 [ext_resource type="Texture2D" uid="uid://3y6dl3ecp4ph" path="res://engine/objects/powerups/beetroot/texture.png" id="5_wne5t"]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cx0wdn3m2f25y"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_lava.gd" id="1_316uv"]
+[ext_resource type="Script" uid="uid://cm118c41ab2p2" path="res://engine/objects/bosses/bowser/bowser_lava.gd" id="1_316uv"]
 [ext_resource type="Material" uid="uid://sbymk46jn3sg" path="res://engine/objects/fluid/textures/lava_material.tres" id="1_w43ky"]
-[ext_resource type="Script" path="res://engine/objects/fluid/lava_area.gd" id="9_4rh78"]
+[ext_resource type="Script" uid="uid://dvunanmdbawqi" path="res://engine/objects/fluid/lava_area.gd" id="9_4rh78"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_mubo6"]
 noise_type = 5

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="1_v57m0"]
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_7h62e"]
-[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_1cey7"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="3_1cey7"]
 
 [sub_resource type="Resource" id="Resource_v1n70"]
 script = ExtResource("3_1cey7")

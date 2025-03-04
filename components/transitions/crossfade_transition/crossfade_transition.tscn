@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cpox2wwjnys00"]
 
-[ext_resource type="Script" path="res://engine/components/transitions/crossfade_transition/crossfade_transition.gd" id="1_16b1m"]
+[ext_resource type="Script" uid="uid://56o2figm1skb" path="res://engine/components/transitions/crossfade_transition/crossfade_transition.gd" id="1_16b1m"]
 
 [node name="CrossfadeTransition" type="Control"]
 layout_mode = 3

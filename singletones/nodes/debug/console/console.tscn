@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://clxyt1pmcd0ij"]
 
-[ext_resource type="Script" path="res://engine/singletones/nodes/debug/console/console.gd" id="1_3pnkp"]
+[ext_resource type="Script" uid="uid://c1kple77827pu" path="res://engine/singletones/nodes/debug/console/console.gd" id="1_3pnkp"]
 [ext_resource type="PackedScene" uid="uid://bquqhbqux15rr" path="res://engine/singletones/nodes/debug/console/console_ui.tscn" id="2_g800c"]
-[ext_resource type="Script" path="res://engine/singletones/nodes/debug/console/bind_logic.gd" id="3_57hln"]
+[ext_resource type="Script" uid="uid://qxj3pgbkver0" path="res://engine/singletones/nodes/debug/console/bind_logic.gd" id="3_57hln"]
 
 [node name="Console" type="Window"]
 process_mode = 3

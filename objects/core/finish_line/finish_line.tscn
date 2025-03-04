@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dfm7d4qtja67b"]
 
 [ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="1_8jdlp"]
-[ext_resource type="Script" path="res://engine/objects/core/finish_line/finish_line.gd" id="1_h4anr"]
-[ext_resource type="Script" path="res://engine/objects/core/finish_line/crossing_bar.gd" id="2_4ss8s"]
+[ext_resource type="Script" uid="uid://co8hpqpiopbda" path="res://engine/objects/core/finish_line/finish_line.gd" id="1_h4anr"]
+[ext_resource type="Script" uid="uid://bsyweosu0l6wt" path="res://engine/objects/core/finish_line/crossing_bar.gd" id="2_4ss8s"]
 [ext_resource type="Texture2D" uid="uid://bitys6p06gwh6" path="res://engine/objects/core/finish_line/textures/crossingbar.png" id="2_35wvr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b44pc"]
@@ -46,8 +46,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3bes0"]
 _data = {
-"RESET": SubResource("Animation_a2di4"),
-"bar": SubResource("Animation_xxwwv")
+&"RESET": SubResource("Animation_a2di4"),
+&"bar": SubResource("Animation_xxwwv")
 }
 
 [node name="FinishLine" type="Node2D"]

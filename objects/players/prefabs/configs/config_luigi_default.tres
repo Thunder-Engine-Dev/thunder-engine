@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerConfig" load_steps=5 format=3 uid="uid://cwfwids6c36ou"]
 
-[ext_resource type="Script" path="res://engine/objects/players/player_config.gd" id="1_eu4im"]
+[ext_resource type="Script" uid="uid://bh0t8gurod3pp" path="res://engine/objects/players/player_config.gd" id="1_eu4im"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="2_3pk8t"]
 [ext_resource type="AudioStream" uid="uid://rv6ojidxbd3v" path="res://engine/objects/players/prefabs/sounds/skid.wav" id="3_aeegy"]
 [ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="3_dgi18"]

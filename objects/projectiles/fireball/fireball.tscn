@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://c4jlbnswk5dlw"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
+[ext_resource type="Script" uid="uid://lyb7iu6i6yul" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ki2u"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ki2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bp6og"]
 size = Vector2(14, 14)

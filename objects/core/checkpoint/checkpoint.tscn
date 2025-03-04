@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://ddwxc43m3q1c6"]
 
-[ext_resource type="Script" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
+[ext_resource type="Script" uid="uid://cgxssnp32gwrc" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
 [ext_resource type="Material" uid="uid://cpd0lft71406i" path="res://engine/objects/core/checkpoint/textures/checkpoint_material.tres" id="4_ae8fc"]
@@ -137,8 +137,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dmaa8"]
 _data = {
-"RESET": SubResource("Animation_4yr7j"),
-"triggered": SubResource("Animation_2cdhs")
+&"RESET": SubResource("Animation_4yr7j"),
+&"triggered": SubResource("Animation_2cdhs")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ta5g1"]
@@ -177,8 +177,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h2w1e"]
 _data = {
-"RESET": SubResource("Animation_o8ube"),
-"checkpoint": SubResource("Animation_xksp8")
+&"RESET": SubResource("Animation_o8ube"),
+&"checkpoint": SubResource("Animation_xksp8")
 }
 
 [node name="Checkpoint" type="Area2D"]

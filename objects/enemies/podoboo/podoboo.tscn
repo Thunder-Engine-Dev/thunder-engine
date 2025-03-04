@@ -1,15 +1,15 @@
 [gd_scene load_steps=19 format=3 uid="uid://uhf6frao7p1m"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
+[ext_resource type="Script" uid="uid://bbjq3x7a2xq2c" path="res://engine/objects/enemies/podoboo/podoboo.gd" id="1_kck43"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_8l667"]
 [ext_resource type="Texture2D" uid="uid://baq22nmp1wdol" path="res://engine/objects/enemies/podoboo/podoboo.png" id="2_wcyj0"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_aerwt"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="3_yf87x"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_8xlh0"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_bdac7"]
+[ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_8xlh0"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_bdac7"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_i6ttr"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="9_6xe0v"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="10_h5xk2"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="9_6xe0v"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="10_h5xk2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8kc8x"]
 radius = 16.0

@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://b71msw28e37a"]
 
-[ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
+[ext_resource type="Script" uid="uid://bxq57dbowstxt" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_qo0md"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
-[ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_qo0md"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
+[ext_resource type="Script" uid="uid://dtibkahwuryoh" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 31)

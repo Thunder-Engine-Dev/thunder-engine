@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="InstanceNode2D" load_steps=4 format=3 uid="uid://ds3br3hi1ydqs"]
 
 [ext_resource type="PackedScene" uid="uid://dj2b5g2smonyu" path="res://engine/objects/enemies/_dead/enemy_stomped.tscn" id="1_uocsv"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_stomped.gd" id="2_cs1x7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_c7vmn"]
+[ext_resource type="Script" uid="uid://bhksimoyhb836" path="res://engine/objects/enemies/_dead/prefabs/do_stomped.gd" id="2_cs1x7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_c7vmn"]
 
 [resource]
 resource_local_to_scene = true

@@ -114,8 +114,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gxcxq"]
 _data = {
-"RESET": SubResource("Animation_q2kwm"),
-"new_animation": SubResource("Animation_xnuwt")
+&"RESET": SubResource("Animation_q2kwm"),
+&"new_animation": SubResource("Animation_xnuwt")
 }
 
 [node name="Lavafall" type="Node2D"]

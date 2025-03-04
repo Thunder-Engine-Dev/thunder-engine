@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=3 uid="uid://dhw4anf23ecng"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/goomba_in_bricks/goomba_in_bricks.gd" id="1_gmc6n"]
+[ext_resource type="Script" uid="uid://bxphu670egbro" path="res://engine/objects/enemies/goomba_in_bricks/goomba_in_bricks.gd" id="1_gmc6n"]
 [ext_resource type="Texture2D" uid="uid://cuponpwydksyj" path="res://engine/objects/enemies/goomba_in_bricks/textures/mini_goomba.png" id="2_d1g5f"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_pkylj"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_pkylj"]
 [ext_resource type="Texture2D" uid="uid://ckiq7mmn7yufe" path="res://engine/objects/bumping_blocks/brick/textures/brick.png" id="3_ui5h8"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_wdsg3"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_wdsg3"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_ndedd"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_v6ufm"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_hchcm"]
-[ext_resource type="Shader" path="res://engine/shaders/highlight.gdshader" id="9_5548o"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_hchcm"]
+[ext_resource type="Shader" uid="uid://dtfrycf4lheaa" path="res://engine/shaders/highlight.gdshader" id="9_5548o"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_ri36l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sornf"]
@@ -76,8 +76,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nxq2d"]
 _data = {
-"RESET": SubResource("Animation_ovms1"),
-"ready_to_jump": SubResource("Animation_ekl3d")
+&"RESET": SubResource("Animation_ovms1"),
+&"ready_to_jump": SubResource("Animation_ekl3d")
 }
 
 [node name="GoombaInBricks" type="CharacterBody2D" node_paths=PackedStringArray("sprite_goomba", "sprite_bricks")]

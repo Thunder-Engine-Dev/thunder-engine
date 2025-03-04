@@ -1,12 +1,12 @@
 [gd_scene load_steps=17 format=3 uid="uid://dt52xvrtre8h3"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
+[ext_resource type="Script" uid="uid://dmwyp48em601h" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="3_6cy8f"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="3_6cy8f"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_pqqwo"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_kcsna"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_yihn6"]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://hkhy751lpyx5"]
 
-[ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
+[ext_resource type="Script" uid="uid://bewdn1cfwoqbp" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
 [ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="2_g1dno"]
-[ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="10_veqxg"]
+[ext_resource type="Script" uid="uid://di182hyy2cddt" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="10_veqxg"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_6qe0v"]
 noise_type = 5

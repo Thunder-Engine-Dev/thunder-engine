@@ -1,36 +1,36 @@
 [gd_scene load_steps=63 format=3 uid="uid://1jfyfq3ty6g1"]
 
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
+[ext_resource type="Script" uid="uid://bqibbs5p33x31" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
 [ext_resource type="Texture2D" uid="uid://ciqt7od7lmtkc" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
+[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
+[ext_resource type="Script" uid="uid://cl1jbbibwvavs" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
 [ext_resource type="Texture2D" uid="uid://cr0xmvg0ljpxj" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
 [ext_resource type="Texture2D" uid="uid://ckrd0kfu2ue28" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
 [ext_resource type="Texture2D" uid="uid://dqvmle8qmxx2g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
+[ext_resource type="Script" uid="uid://cpfsdh7klyuxa" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
+[ext_resource type="Script" uid="uid://bub3yp4s5l32s" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
 [ext_resource type="Texture2D" uid="uid://dek2begmgx1bo" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
+[ext_resource type="Script" uid="uid://dbcubuc6noqka" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
 [ext_resource type="Texture2D" uid="uid://b0gg3838odwlc" path="res://engine/scenes/main_menu/textures/press_enter.png" id="10_lb8xl"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
+[ext_resource type="Script" uid="uid://cq0nqmidrewly" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
+[ext_resource type="Script" uid="uid://dmu03pyw1altm" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
+[ext_resource type="Script" uid="uid://0twwcdhce53w" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
+[ext_resource type="Script" uid="uid://c5j356cdctwsy" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
 [ext_resource type="Texture2D" uid="uid://c5kcdnxqujsym" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
+[ext_resource type="Script" uid="uid://ehrcylpvvsmp" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
 [ext_resource type="Texture2D" uid="uid://xoa25by4iqkt" path="res://engine/scenes/main_menu/textures/buffer.png" id="20_b2kcq"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_0jxgt"]
 [ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="25_5v41g"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="25_n2q6e"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="25_stro5"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/selector_player_animation.gd" id="25_v32i0"]
+[ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="25_n2q6e"]
+[ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="25_stro5"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="25_v32i0"]
 [ext_resource type="Texture2D" uid="uid://ky1pe6qafydf" path="res://engine/scenes/main_menu/textures/restart_now.png" id="27_0x2m0"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/restart_now_selection.gd" id="28_i1fom"]
+[ext_resource type="Script" uid="uid://c1indt3rqvneg" path="res://engine/scenes/main_menu/scripts/restart_now_selection.gd" id="28_i1fom"]
 [ext_resource type="Texture2D" uid="uid://b3emt71nccgh2" path="res://engine/scenes/main_menu/textures/restart_title.png" id="29_2bk6m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
@@ -292,9 +292,9 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
 _data = {
-"RESET": SubResource("Animation_8nk1g"),
-"init": SubResource("Animation_x2cu4"),
-"open": SubResource("Animation_hvhdc")
+&"RESET": SubResource("Animation_8nk1g"),
+&"init": SubResource("Animation_x2cu4"),
+&"open": SubResource("Animation_hvhdc")
 }
 
 [node name="Settings" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ciwuu3ndisvdb"]
 
-[ext_resource type="Script" path="res://engine/components/transitions/circle_transition/circle_transition.gd" id="1_tg3ld"]
+[ext_resource type="Script" uid="uid://dml7qhkbkocrq" path="res://engine/components/transitions/circle_transition/circle_transition.gd" id="1_tg3ld"]
 [ext_resource type="Material" uid="uid://c65x6dl8i6pdh" path="res://engine/components/transitions/circle_transition/circle_transition.tres" id="2_sacq7"]
 
 [node name="Transition" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://0ugpa0ybv34g"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/rotos/roto_center.gd" id="1_6k850"]
+[ext_resource type="Script" uid="uid://dwo0njpyhkxi2" path="res://engine/objects/enemies/rotos/roto_center.gd" id="1_6k850"]
 [ext_resource type="Texture2D" uid="uid://cwwn5i5xn7j32" path="res://engine/objects/enemies/rotos/roto_center.png" id="1_fkmos"]
 
 [node name="RotoCenter" type="Node2D" groups=["#roto_center"]]

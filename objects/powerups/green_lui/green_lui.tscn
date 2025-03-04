@@ -1,9 +1,9 @@
 [gd_scene load_steps=32 format=3 uid="uid://o3k018cbex8g"]
 
-[ext_resource type="Script" path="res://engine/objects/powerups/green_lui/green_lui.gd" id="1_w0eyt"]
+[ext_resource type="Script" uid="uid://bq1r55mygh32s" path="res://engine/objects/powerups/green_lui/green_lui.gd" id="1_w0eyt"]
 [ext_resource type="Texture2D" uid="uid://ctfyip0sy48dp" path="res://engine/objects/powerups/green_lui/texture_red_mar.png" id="2_6w31r"]
 [ext_resource type="Texture2D" uid="uid://skeuracpsv2p" path="res://engine/objects/powerups/green_lui/texture.png" id="3_7ksfc"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="4_wvem1"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_wvem1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpp8j"]
 atlas = ExtResource("2_6w31r")

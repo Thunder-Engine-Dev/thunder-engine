@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://yreeufpqjft1"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
+[ext_resource type="Script" uid="uid://cr6yuoiat01q3" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
 [ext_resource type="Texture2D" uid="uid://1bnxo3a5rbrn" path="res://engine/objects/bosses/bowser/texture/Flame.png" id="2_khrfp"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_qukhs"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="4_jce6f"]

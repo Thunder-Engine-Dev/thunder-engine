@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kc2ukyx68s2q"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/podoboo/podoboo_volcano_launcher.gd" id="1_wxg67"]
+[ext_resource type="Script" uid="uid://6brhpwmjq4qu" path="res://engine/objects/enemies/podoboo/podoboo_volcano_launcher.gd" id="1_wxg67"]
 [ext_resource type="Texture2D" uid="uid://baq22nmp1wdol" path="res://engine/objects/enemies/podoboo/podoboo.png" id="2_1gy3d"]
 
 [node name="PodobooVolcanoLauncher" type="Node2D"]

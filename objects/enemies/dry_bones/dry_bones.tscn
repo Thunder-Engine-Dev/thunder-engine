@@ -1,17 +1,17 @@
 [gd_scene load_steps=22 format=3 uid="uid://b4bjvmqtj8nv0"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/dry_bones/dry_bones.gd" id="1_gjuwm"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_sb3ce"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_m14to"]
+[ext_resource type="Script" uid="uid://e6tybhk6h4lg" path="res://engine/objects/enemies/dry_bones/dry_bones.gd" id="1_gjuwm"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_sb3ce"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_m14to"]
 [ext_resource type="AudioStream" uid="uid://ctfpepe74akjs" path="res://engine/objects/bumping_blocks/_sounds/break.wav" id="4_45lk6"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_tdmyt"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_tdmyt"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_hsdxt"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_keh7h"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_keh7h"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_6dd26"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_vk5nm"]
 [ext_resource type="Texture2D" uid="uid://b2rda0o76djx7" path="res://engine/objects/enemies/dry_bones/textures/dry_bones_crash.png" id="10_yrk1c"]
 [ext_resource type="Texture2D" uid="uid://df7awin576fr5" path="res://engine/objects/enemies/dry_bones/textures/dry_bones.png" id="11_mnn21"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mxggl"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mxggl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lhh31"]
 size = Vector2(32, 32)

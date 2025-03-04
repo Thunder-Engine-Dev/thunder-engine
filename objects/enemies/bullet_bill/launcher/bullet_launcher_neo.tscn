@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://my2f0v28dykx"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_neo.gd" id="1_nvurn"]
+[ext_resource type="Script" uid="uid://bl5ldl6qy36s7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_neo.gd" id="1_nvurn"]
 [ext_resource type="Texture2D" uid="uid://ya1viqbj5hly" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler_and_base.png" id="2_b3qed"]
 [ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="2_t0b50"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_dhr8v"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_dhr8v"]
 [ext_resource type="Texture2D" uid="uid://b25ptq2d2d6g1" path="res://engine/objects/enemies/bullet_bill/launcher/texture/launcher.png" id="4_ebnfm"]
 
 [sub_resource type="Resource" id="Resource_wrdqi"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://lt5lxng3cdo2" path="res://engine/objects/effects/bubble/lava_bubbles.tres" id="1_4o25r"]
 [ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_yfmkj"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="2_1p3d7"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="2_1p3d7"]
 
 [node name="LavaBubbles" type="GPUParticles2D"]
 amount = 25

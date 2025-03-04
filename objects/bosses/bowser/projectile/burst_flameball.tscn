@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b24l0bhd2wshk"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.gd" id="1_2icyp"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_el7gp"]
+[ext_resource type="Script" uid="uid://cypriiqv57ul7" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.gd" id="1_2icyp"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_el7gp"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_2u027"]
 [ext_resource type="Texture2D" uid="uid://3b6nw4w6kymm" path="res://engine/objects/bosses/bowser/texture/bowser_burst_flameball.png" id="4_vslk7"]
 

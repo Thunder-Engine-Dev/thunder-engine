@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnes1ayl6d6ee"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/cannon/cannon.gd" id="1_5uqfp"]
+[ext_resource type="Script" uid="uid://2jpdo6ethxfo" path="res://engine/objects/enemies/cannon/cannon.gd" id="1_5uqfp"]
 [ext_resource type="Texture2D" uid="uid://dox7a67hmnob0" path="res://engine/objects/enemies/cannon/textures/cannon_head.png" id="2_kfrww"]
 [ext_resource type="Texture2D" uid="uid://cy1ilh0qxu3f4" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler.png" id="3_rc1ms"]
 

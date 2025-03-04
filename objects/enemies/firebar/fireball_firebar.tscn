@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cpljjya321uq3"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/firebar/fireball_firebar.gd" id="1_8r468"]
+[ext_resource type="Script" uid="uid://iaehijx84l15" path="res://engine/objects/enemies/firebar/fireball_firebar.gd" id="1_8r468"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_eeikg"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_lndeq"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_lndeq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cbeoj4aqamscv"]
 
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="1_n10yh"]
+[ext_resource type="Script" uid="uid://ckgnfsiavq3jx" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="1_n10yh"]
 [ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="2_7x0e8"]
 [ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="3_yg5oa"]
 [ext_resource type="Texture2D" uid="uid://cqtna1lefejv1" path="res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png" id="4_osvap"]

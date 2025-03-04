@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://bnr3rfhkdf6j2"]
 
-[ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
+[ext_resource type="Script" uid="uid://7ebgkfvqihwp" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
 [ext_resource type="Resource" uid="uid://d14ntnfciec1v" path="res://engine/objects/bumping_blocks/question_block/item_resources/question_default_item.tres" id="2_3xrsj"]
 [ext_resource type="SpriteFrames" uid="uid://ctc2d4okn2gdd" path="res://engine/objects/bumping_blocks/question_block/question_block.tres" id="2_t2orr"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="5_21kjl"]
-[ext_resource type="Script" path="res://engine/objects/bumping_blocks/question_block/invisible_body_checker.gd" id="6_i7yge"]
+[ext_resource type="Script" uid="uid://bx1y6xh3b137a" path="res://engine/objects/bumping_blocks/question_block/invisible_body_checker.gd" id="6_i7yge"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
 size = Vector2(32, 32)

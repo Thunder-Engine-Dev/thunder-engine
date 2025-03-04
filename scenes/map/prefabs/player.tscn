@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://w4jc7nb1lcsy"]
 
 [ext_resource type="SpriteFrames" uid="uid://b1mklmn2aqcx8" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres" id="1_et5ts"]
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_player_view.gd" id="2_2hlka"]
+[ext_resource type="Script" uid="uid://dgwvfwp7iymre" path="res://engine/scenes/map/scripts/map_player_view.gd" id="2_2hlka"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="3_5re0p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wmk0a"]

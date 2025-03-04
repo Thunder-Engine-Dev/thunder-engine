@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://dkquk2byjeol8"]
 
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_67t5y"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_67t5y"]
 [ext_resource type="Texture2D" uid="uid://cf48rsepfm4jo" path="res://engine/scenes/main_menu/textures/start_text.png" id="2_4gh10"]
 [ext_resource type="Texture2D" uid="uid://bloy5vfyv8okk" path="res://engine/scenes/main_menu/textures/options_text.png" id="3_flajg"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/start_selection.gd" id="3_iocfn"]
+[ext_resource type="Script" uid="uid://dcghjeillf84w" path="res://engine/scenes/main_menu/scripts/start_selection.gd" id="3_iocfn"]
 [ext_resource type="Texture2D" uid="uid://8yrsglnn48ca" path="res://engine/scenes/main_menu/textures/quit_text.png" id="4_bw6k8"]
 [ext_resource type="AudioStream" uid="uid://bi0m6xn5201en" path="res://engine/scenes/main_menu/sounds/lets.wav" id="4_jtmrc"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/option_selection.gd" id="6_gmf4k"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quit_selection.gd" id="8_wjgxf"]
+[ext_resource type="Script" uid="uid://c2do7rfg6ssmk" path="res://engine/scenes/main_menu/scripts/option_selection.gd" id="6_gmf4k"]
+[ext_resource type="Script" uid="uid://voic2bihchnr" path="res://engine/scenes/main_menu/scripts/quit_selection.gd" id="8_wjgxf"]
 
 [node name="MainMenuControls" type="VBoxContainer"]
 offset_right = 104.0

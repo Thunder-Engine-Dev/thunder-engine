@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_qcr87"]
 [ext_resource type="PackedScene" uid="uid://b61ivtew2u0gb" path="res://engine/objects/p_switch/p_switch.tscn" id="2_xo3eq"]
-[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="3_82t08"]
-[ext_resource type="Texture2D" uid="uid://b4htvua6mtu1" path="res://engine/objects/p_switch/texture.png" id="4_i0c6y"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="3_82t08"]
+[ext_resource type="Texture2D" uid="uid://bcn1lxv3vx4rt" path="res://engine/objects/p_switch/texture.png" id="4_i0c6y"]
 
 [sub_resource type="GDScript" id="GDScript_520xu"]
 script/source = "extends ByNodeScript

@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=16 format=3 uid="uid://cyjlylh7q8atw"]
 
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_8wu3f"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_8wu3f"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_a4aet"]
 [ext_resource type="PackedScene" uid="uid://e0knwhbbb2ok" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.tscn" id="2_rsdim"]
-[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0vxgn"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_v84mi"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3a8oo"]
+[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0vxgn"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_v84mi"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3a8oo"]
 [ext_resource type="Texture2D" uid="uid://dvy47ukgpxof5" path="res://engine/objects/enemies/hammer_bros/textures/silver_bro.png" id="5_84b2t"]
 [ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="6_fbea0"]
 

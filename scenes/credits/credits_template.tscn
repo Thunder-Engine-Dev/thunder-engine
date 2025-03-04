@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://c3vvhamuiaig6"]
 
-[ext_resource type="Script" path="res://engine/scenes/credits/scripts/credits.gd" id="1_mwb2r"]
+[ext_resource type="Script" uid="uid://cdjnovyxotms7" path="res://engine/scenes/credits/scripts/credits.gd" id="1_mwb2r"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_r223p"]
 [ext_resource type="AudioStream" uid="uid://c54m13b157yo7" path="res://engine/scenes/credits/music/credits.mod" id="3_kgehh"]
 [ext_resource type="Texture2D" uid="uid://gck1i1ncrdk4" path="res://engine/scenes/credits/textures/credits_bg.png" id="4_h8pmh"]
-[ext_resource type="Script" path="res://engine/scenes/credits/credits_text.gd" id="5_fq1lx"]
+[ext_resource type="Script" uid="uid://dbcfigd04ap1h" path="res://engine/scenes/credits/credits_text.gd" id="5_fq1lx"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="6_n42qb"]
 
 [node name="CreditsTemplate" type="Control"]

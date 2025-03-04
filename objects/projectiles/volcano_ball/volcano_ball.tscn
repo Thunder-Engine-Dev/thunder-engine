@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://c7mhi4q06ncu6"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/volcano_ball/volcano_ball.gd" id="1_ao45s"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_jkgpw"]
+[ext_resource type="Script" uid="uid://dg05p0l8jte8n" path="res://engine/objects/projectiles/volcano_ball/volcano_ball.gd" id="1_ao45s"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_jkgpw"]
 [ext_resource type="Texture2D" uid="uid://b1xego2g8w70u" path="res://engine/objects/projectiles/volcano_ball/volcano_ball.png" id="3_dfohs"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_sprite_rotator.gd" id="4_trtc6"]
+[ext_resource type="Script" uid="uid://crv7ntibo024r" path="res://engine/objects/enemies/enemy_sprite_rotator.gd" id="4_trtc6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5oa0m"]
 radius = 12.0

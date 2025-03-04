@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="1_yssub"]
 [ext_resource type="PackedScene" uid="uid://xyhc1e21lihc" path="res://engine/objects/enemies/koopas/koopa_shell_yellow.tscn" id="2_6cgca"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_mc0ec"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_wodb6"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_1daw3"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_wodb6"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_1daw3"]
 [ext_resource type="Texture2D" uid="uid://byht8hd1sml51" path="res://engine/objects/enemies/koopas/textures/koopa_yellow.png" id="5_y1ioo"]
 [ext_resource type="Texture2D" uid="uid://of8f6domdmig" path="res://engine/objects/enemies/koopas/textures/shell_yellow.png" id="6_uwst2"]
 

@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_r3rlh"]
 [ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/projectiles/spikeball/spikeball.tscn" id="2_apjcd"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_g80xd"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_sxow4"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_vkt3x"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_sxow4"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_vkt3x"]
 [ext_resource type="Texture2D" uid="uid://ck3rfp4qvdp2x" path="res://engine/objects/enemies/hammer_bros/textures/gray_bro.png" id="5_ybtb3"]
 [ext_resource type="Texture2D" uid="uid://7xenkrg6v27r" path="res://engine/objects/enemies/hammer_bros/textures/spikeball_projectile.png" id="6_kyteb"]
 

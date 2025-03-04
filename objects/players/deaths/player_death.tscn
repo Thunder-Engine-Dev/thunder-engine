@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://co3r3j0pgil67"]
 
-[ext_resource type="Script" path="res://engine/objects/players/deaths/player_death.gd" id="1_tmjdt"]
+[ext_resource type="Script" uid="uid://xw1lpngf74ff" path="res://engine/objects/players/deaths/player_death.gd" id="1_tmjdt"]
 
 [node name="PlayerDeath" type="CharacterBody2D"]
 z_index = 30

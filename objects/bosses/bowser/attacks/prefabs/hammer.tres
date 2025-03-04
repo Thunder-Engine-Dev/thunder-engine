@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InstanceNode2D" load_steps=3 format=3 uid="uid://b4t8dw4oie34e"]
 
 [ext_resource type="PackedScene" uid="uid://dpef5gdwicyhf" path="res://engine/objects/projectiles/hammer/hammer.tscn" id="1_og60n"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_ydisp"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_ydisp"]
 
 [resource]
 script = ExtResource("2_ydisp")

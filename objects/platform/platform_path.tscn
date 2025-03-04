@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://rhrex2vth7at"]
 
-[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
 [ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="2_cmtwa"]
-[ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_co62k"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_co62k"]
 
 [node name="PlatformPath" type="PathFollow2D"]
 rotates = false

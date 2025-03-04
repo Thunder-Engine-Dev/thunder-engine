@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ckw8xkx6hmy4d"]
 
-[ext_resource type="SpriteFrames" uid="uid://dwi4ghvtivu8w" path="res://engine/objects/warps/door/door_animation.tres" id="1_4uypt"]
-[ext_resource type="Script" path="res://engine/objects/warps/door/door_out.gd" id="1_d7ioi"]
-[ext_resource type="Texture2D" uid="uid://bunro3t3x4yd6" path="res://engine/objects/warps/door/door_background.png" id="2_7n52u"]
+[ext_resource type="SpriteFrames" uid="uid://chb2xwhkx80un" path="res://engine/objects/warps/door/door_animation.tres" id="1_4uypt"]
+[ext_resource type="Script" uid="uid://bcyj6pt3qga7m" path="res://engine/objects/warps/door/door_out.gd" id="1_d7ioi"]
+[ext_resource type="Texture2D" uid="uid://c32gr3g5syhnt" path="res://engine/objects/warps/door/door_background.png" id="2_7n52u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6erbu"]
 

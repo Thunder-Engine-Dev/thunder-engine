@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://djctwyk8b0tpm"]
 
-[ext_resource type="Script" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.gd" id="1_uvkeu"]
+[ext_resource type="Script" uid="uid://bwl67giasy3nw" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.gd" id="1_uvkeu"]
 
 [node name="GrabbableModifier" type="Node"]
 process_mode = 3
