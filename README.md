@@ -6,7 +6,7 @@ Create your own Mario Forever game with Thunder Engine.
 </h3>
 
 <div align="center">
-Thunder Engine is the definitive open platform for Mario Forever games.<br/>
+Thunder Engine is a definitive open platform for Mario Forever games.<br/>
 It allows you to create games with previously unseen level of flexibility and stability.
 </div>
 
@@ -14,7 +14,9 @@ It allows you to create games with previously unseen level of flexibility and st
 
 <h3 align="center">
 Current state: READY FOR SIMPLE PROJECTS<br/>
-Required game engine: Godot 4.2.2
+Required game engine:
+* Main branch: Godot 4.4
+* Stable branch: Godot 4.2.2
 </h3>
 
 ------------
@@ -24,7 +26,7 @@ Required game engine: Godot 4.2.2
 
 1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
 2. Install [Git](https://git-scm.com/downloads).
-3. Install [Godot Engine 4](https://godotengine.org/) (regular edition).
+3. Install [Godot Engine 4](https://godotengine.org/) (regular edition). If you are going to program with C#, please choose **Mono** edition.
 
 <h3>Installation</h3>
 
