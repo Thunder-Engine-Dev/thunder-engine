@@ -13,10 +13,10 @@ It allows you to create games with previously unseen level of flexibility and st
 ------------
 
 <h3 align="center">
-Current state: READY FOR SIMPLE PROJECTS<br/>
-Required game engine:
-* Main branch: Godot 4.4
-* Stable branch: Godot 4.2.2
+Current state: ANY PROJECTS ARE OK<br/>
+Required game engine:<br/>
+Main branch: Godot 4.4<br/>
+Stable branch: Godot 4.2.2
 </h3>
 
 ------------
