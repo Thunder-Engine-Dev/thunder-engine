@@ -26,6 +26,7 @@ class_name MenuItemsController
 signal selected(item_index: int, item_node: Control, immediate: bool, mouse_input: bool)
 
 var selectors: Array
+var selector_repeat_timer: float
 
 func _ready() -> void:
 	_update_selectors()
@@ -42,22 +43,31 @@ var _mouse_can_process: bool
 func _physics_process(delta: float) -> void:
 	_mouse_can_process = false
 	if !focused: return
-
-	var sel = current_item_index
-	if Input.is_action_just_pressed(control_forward):
-		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
-		_selection(false)
-		return
-
-	if Input.is_action_just_pressed(control_backward):
-		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
-		_selection(false)
-		return
+	if selector_repeat_timer > 0: selector_repeat_timer -= delta
 
 	if has_node(prev_screen_node_path) && Input.is_action_just_pressed(prev_screen_control_cancel):
 		get_node(prev_screen_node_path)._handle_select(false)
 	
 	_mouse_can_process = true
+
+func _input(event: InputEvent) -> void:
+	if !focused: return
+	if event.is_echo():
+		if selector_repeat_timer > 0:
+			return
+		else:
+			selector_repeat_timer = 0.06
+	
+	var sel = current_item_index
+	if event.is_action_pressed(control_forward, true):
+		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
+		_selection(false, event.is_echo())
+		return
+
+	if event.is_action_pressed(control_backward, true):
+		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
+		_selection(false, event.is_echo())
+		return
 
 
 func move_selector(index: int, immediate: bool = false) -> void:
@@ -73,9 +83,15 @@ func _update_selectors() -> void:
 		selectors.push_back(child)
 
 
-func _selection(_mouse_input: bool = false) -> void:
+func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
 	if control_sound:
-		Audio.play_1d_sound(control_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		Audio.play_1d_sound(control_sound, true,
+			{
+				"ignore_pause": true,
+				"bus": "1D Sound",
+				"volume": -6.0 if is_echo else 0.0
+			}
+		)
 	_selection_update(false, _mouse_input)
 
 

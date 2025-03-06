@@ -93,7 +93,9 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
+	for i in 3:
+		DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
+		await get_tree().physics_frame
 
 
 ## Add lives for [member _current_player][br]

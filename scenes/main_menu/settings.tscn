@@ -764,7 +764,7 @@ stretch_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RestartPopup/Control"]
 libraries = {
-"": SubResource("AnimationLibrary_5i4gi")
+&"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 

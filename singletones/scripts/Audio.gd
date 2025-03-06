@@ -100,9 +100,9 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	player.stream = resource
 	player.play.call_deferred()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		player.volume_db = other_keys.volume
 	
 	# Make the volume be on the same level as 1d sounds
@@ -129,9 +129,9 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.stream = resource
 	player.play.call_deferred()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		player.volume_db = other_keys.volume
 	player.process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
