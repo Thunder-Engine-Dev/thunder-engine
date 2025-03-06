@@ -107,7 +107,7 @@ func _gamepad_icon_logic(texture: Texture2D, max_icons: int = 15, icon_exception
 			break
 		if (joy_index > max_icons && joy_index < 40) || joy_index > 51 || joy_index in icon_exceptions:
 			icons_array[loop_ind].visible = false
-			placeholder_text.append("Joy " + str(joy_index))
+			placeholder_text.append("Joy " + str(int(joy_index)))
 			if joy_index == -1:
 				placeholder_text.append("Joy Unknown")
 			return

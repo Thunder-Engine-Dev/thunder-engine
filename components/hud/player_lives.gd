@@ -13,4 +13,4 @@ func _physics_process(delta) -> void:
 
 func _update_text() -> void:
 	var value = Data.values[value_name]
-	text = "%s ~ %s" % [CharacterManager.get_character_display_name(), value]
+	text = "%s ~ %s" % [CharacterManager.get_character_display_name(), int(value)]

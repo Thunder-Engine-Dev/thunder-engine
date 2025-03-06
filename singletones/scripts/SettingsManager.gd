@@ -208,9 +208,9 @@ func _get_current_joykey(action: StringName) -> Array[JoyButton]:
 	var array: Array[JoyButton] = []
 	for joykey in buttons:
 		if joykey is InputEventJoypadButton:
-			array.append(joykey.button_index)
+			array.append(int(joykey.button_index))
 		elif joykey is InputEventJoypadMotion && abs(joykey.axis_value) >= 0.5:
-			array.append(40 + (joykey.axis * 2) + (0 if signf(joykey.axis_value) < 0 else 1))
+			array.append(int(40 + (joykey.axis * 2) + (0 if signf(joykey.axis_value) < 0 else 1)))
 	return array
 
 ## Loads controls settings to InputMap

@@ -316,21 +316,32 @@ class Math:
 
 	## Ease In Back
 	static func ease_in_back(x: float) -> float:
-		var c1 = 1.70158
-		var c3 = c1 + 1
+		var c1 := 1.70158
+		var c3 := c1 + 1
 		return c3 * x * x * x - c1 * x * x
 
 	## Ease Out Back
 	static func ease_out_back(x: float) -> float:
-		var c1 = 1.70158
-		var c3 = c1 + 1
+		var c1 := 1.70158
+		var c3 := c1 + 1
 		return 1 + c3 * pow(x - 1, 3) + c1 * pow(x - 1, 2)
 
 	## Ease In Out Back
 	static func ease_in_out_back(x: float) -> float:
-		var c1 = 1.70158;
-		var c2 = c1 * 1.525;
+		var c1 := 1.70158;
+		var c2 := c1 * 1.525;
 		if x < 0.5:
 			return (pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
 		else:
 			return (pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
+	
+	## Add a thousands delimiter to a string to format numbers
+	static func add_delimiter(string: String, delimiter: String = " ") -> String:
+		var remainder: int = len(string) % 3
+		var result: String = string.substr(0, remainder)
+		for i in range(remainder, len(string), 3):
+			if len(result) != 0:
+				result += delimiter
+			result += string.substr(i, 3)
+		
+		return result
