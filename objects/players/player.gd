@@ -90,6 +90,7 @@ var debug_fly: bool
 var warp: Warp
 var warp_dir: WarpDir
 var no_movement: bool
+var ignore_input: bool
 
 var _force_suit: bool
 var _suit_appear: bool
@@ -291,6 +292,20 @@ func control_process() -> void:
 		&& is_on_floor() && suit && suit.physics_crouchable && !is_sliding
 	slided = Input.is_action_pressed(control.down) \
 		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39 && !get_meta(&"not_slidable", false)
+
+
+func set_ignore_input(to: bool = true) -> void:
+	left_right = 0.0
+	up_down = 0.0
+	jumping = 0
+	jumped = false
+	running = false
+	attacked = false
+	attacking = false
+	is_crouching = false
+	slided = false
+	
+	ignore_input = to
 
 
 ## -1 is Left, 1 is Right, 0 is None

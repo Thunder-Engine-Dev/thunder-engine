@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 
 	delta = player.get_physics_process_delta_time()
 	# Control
-	if !player.completed: player.control_process()
+	if !player.completed && !player.ignore_input: player.control_process()
 	# Shape
 	_shape_process()
 	if player.warp != Player.Warp.NONE: return

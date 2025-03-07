@@ -221,7 +221,7 @@ func pass_warp() -> void:
 		target.player_z_index = player_z_index
 		target.warp_invisible_left_right = warp_invisible_left_right
 		_transition_update()
-	elif warp_to_scene:
+	elif warp_to_scene && !use_circle_transition:
 		Scenes.goto_scene(warp_to_scene)
 	elif trigger_finish:
 		Scenes.current_scene.finish(true)
