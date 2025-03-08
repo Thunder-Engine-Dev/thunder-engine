@@ -162,6 +162,6 @@ func _process_collision_deferred(_dir: int, saved_pos: Vector2) -> void:
 					_already_processed.append(id)
 					if l is StaticBumpingBlock:
 						if l.has_method(&"got_bumped"):
-							l.got_bumped.call_deferred(self)
+							l.got_bumped.call_deferred(false)
 						elif l.has_method(&"bricks_break"):
 							l.bricks_break.call_deferred()

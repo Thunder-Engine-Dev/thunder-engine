@@ -59,7 +59,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		_leaving_process(delta)
 	
-	timer_pitching.paused = !visible_on_screen_2d.is_on_screen() || !_movement
+	timer_pitching.paused = (
+		!visible_on_screen_2d.is_on_screen() || !_movement || \
+		player.warp != Player.Warp.NONE
+	)
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
 

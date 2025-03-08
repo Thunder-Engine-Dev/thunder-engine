@@ -11,9 +11,16 @@ var commands: Dictionary
 var history: Array = ['']
 var position_in_history: int
 
-var player_stats_shown: bool = false
-var item_display_shown: bool = false
-var command_executed: bool = false
+var command_executed: bool
+
+# Console Variables
+var cv: Dictionary = {
+	player_stats_shown = false,
+	item_display_shown = false,
+	can_save_with_console = false,
+	can_save_suspended_with_console = false,
+	platform_collision_shown = false,
+}
 
 
 func _ready():
@@ -40,7 +47,7 @@ func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
 		if cmd.ends_with(".uid"): continue
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
-		if command.debug_only: continue
+		if command.debug_only && OS.has_feature("template"): continue
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
@@ -50,11 +57,17 @@ func _physics_process(delta: float) -> void:
 		$UI/Paused.button_pressed = visible
 		Thunder.set_pause_game(visible)
 	
-	if visible && has_focus():
-		if Input.is_action_just_pressed("ui_up"):
-			move_history(1)
-		if Input.is_action_just_pressed("ui_down"):
-			move_history(-1)
+	if !visible || !has_focus(): return
+	
+	if Input.is_action_just_pressed("ui_up"):
+		move_history(1)
+	if Input.is_action_just_pressed("ui_down"):
+		move_history(-1)
+	if Input.is_action_just_pressed(&"ui_focus_prev"):
+		move_suggestion(-1)
+	elif Input.is_action_just_pressed(&"ui_focus_next"):
+		move_suggestion(1)
+
 
 
 func execute() -> void:
@@ -81,7 +94,7 @@ func internal_execute(_in: String) -> void:
 			col_print("Command does not exist!", Color.RED)
 		return
 	
-	if OS.has_feature("template"):
+	if cmdName != "help" && OS.has_feature("template"):
 		command_executed = true
 	
 	self.print(commands[cmdName].try_execute(args))
@@ -96,6 +109,26 @@ func move_history(amount: int) -> void:
 
 func move_history_to_latest(_new_text) -> void:
 	position_in_history = 0
+
+func move_suggestion(amount: int) -> void:
+	var uncompl_text: String = input.text.left(input.caret_column)
+	if " " in uncompl_text:
+		return
+	var found: String
+	var cmd_keys: Array = commands.keys()
+	for i: int in len(cmd_keys):
+		var cmd: String = cmd_keys[i]
+		if cmd.begins_with(uncompl_text) && uncompl_text != cmd:
+			found = cmd
+			break
+		if uncompl_text == cmd:
+			found = cmd_keys[wrapi(i + amount, 0, commands.size() - 1)]
+			break
+	if found:
+		var old_text: String = input.text.get_slice(" ", 1)
+		if old_text: old_text = " " + old_text
+		input.text = found + old_text.right(len(input.text) - len(uncompl_text))
+		input.caret_column = found.length()
 
 func print(msg: Variant) -> void:
 	output.text += "%s\n" % msg

@@ -12,19 +12,19 @@ var current_displaying_item: String = ""
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
-	if !Console.item_display_shown:
+	if !Console.cv.item_display_shown:
 		item_displayer.queue_free()
 	super()
 
 
 func _physics_process(delta):
 	super(delta)
-	if Engine.is_editor_hint() || (Console.item_display_shown && is_instance_valid(item_displayer)):
+	if Engine.is_editor_hint() || (Console.cv.item_display_shown && is_instance_valid(item_displayer)):
 		_item_display()
 		return
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
 	call_bump()
 

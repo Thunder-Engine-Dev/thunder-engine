@@ -33,5 +33,6 @@ polygon = PackedVector2Array(-48, -1, 48, -1, 48, 0, -48, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Block"]
 physics_interpolation_mode = 2
+show_behind_parent = true
 position = Vector2(0, 8)
 texture = ExtResource("2_cmtwa")

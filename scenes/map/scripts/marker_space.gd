@@ -39,7 +39,7 @@ func _init() -> void:
 		):
 			_stored_selected_marker = Data.values.map_force_selected_marker
 			Data.values.map_force_selected_marker = Data.values.map_force_old_marker
-			print("Map Forced To Old Marker ", Data.values.map_force_selected_marker)
+			print("[Map] Forced To Old Marker ", Data.values.map_force_selected_marker)
 
 
 func _ready() -> void:
@@ -90,7 +90,7 @@ func _save_progress() -> void:
 	if Data.values.get("map_force_selected_marker") && Data.values.get("map_force_go_next"):
 		Data.values.map_force_old_marker = Data.values.map_force_selected_marker
 		Data.values.map_force_selected_marker = uncompleted_levels[0]
-		print("Map Forced To ", Data.values.map_force_selected_marker)
+		print("[Map] Forced To ", Data.values.map_force_selected_marker)
 		Data.values.map_force_go_next = false
 	
 	prof.set_next_level_name(next_level_name)
@@ -111,7 +111,7 @@ func _save_progress() -> void:
 			new_level = next_marker_id
 		else:
 			_no_save = true
-			print("No save is needed")
+			print("[Map] No save is needed")
 	if !_no_save:
 		prof.set_world_numbers(
 			new_world,
@@ -121,6 +121,9 @@ func _save_progress() -> void:
 
 
 func _save_suspended_progress() -> void:
+	if ProfileManager.current_profile.data.get("executed") && !Console.cv.can_save_suspended_with_console:
+		print("[Map] Suspended Save rejected due to enabled Console!")
+		return
 	var profile = ProfileManager.Profile.new()
 	profile.name = "suspended"
 	var pl_state: PlayerSuit = Thunder._current_player_state

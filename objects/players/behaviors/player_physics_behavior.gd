@@ -90,12 +90,6 @@ func _movement_x(delta: float) -> void:
 		if player.get_which_wall_collided() == -player.direction:
 			player.direction *= -1
 	
-	player.is_skidding = (
-			player._skid_tweak &&
-			(sign(player.left_right) == -player.direction) &&
-			abs(player.speed.x) > 1 &&
-			player.is_on_floor()
-	)
 	# Crouching / Completed Level motion speed
 	if player.is_crouching || player.left_right == 0 || player.completed:
 		var deceleration: float = (
@@ -104,12 +98,9 @@ func _movement_x(delta: float) -> void:
 			) else config.walk_deceleration
 		)
 		_decelerate(deceleration, delta)
+		player.is_skidding = false
 		return
-	# Initial speed
-	if player.left_right != 0 && abs(player.speed.x) < 1:
-		@warning_ignore("narrowing_conversion")
-		player.direction = sign(player.left_right)
-		player.speed.x = player.direction * config.walk_initial_speed
+	
 	# Acceleration
 	var max_speed: float
 	if sign(player.left_right) == player.direction:
@@ -124,12 +115,27 @@ func _movement_x(delta: float) -> void:
 				config.walk_max_walking_speed
 			)
 		_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+	# Deceleration upon changing direction
 	elif sign(player.left_right) == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
 	if abs(player.speed.x) > max_speed && sign(player.left_right) != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
+	
+	# Initial speed
+	if abs(player.speed.x) < config.walk_initial_speed:
+		if (player.left_right > 0 && player.speed.x >= -1) || (player.left_right < 0 && player.speed.x <= 1):
+			player.direction = sign(player.left_right)
+			player.speed.x = player.direction * config.walk_initial_speed
+			#player.is_skidding = false
+	
+	player.is_skidding = (
+			player._skid_tweak &&
+			(sign(player.left_right) == -player.direction) &&
+			abs(player.speed.x) > 1 &&
+			player.is_on_floor()
+	)
 
 
 func _movement_y(delta: float) -> void:
@@ -320,7 +326,7 @@ func _head_process() -> void:
 				if (player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
 				(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
 				player.is_crouching:
-					collider.got_bumped.call_deferred(player)
+					collider.got_bumped.call_deferred(true)
 
 	player.bubbler.paused = player.is_underwater_out
 

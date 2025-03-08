@@ -16,7 +16,7 @@ func _physics_process(delta):
 		_animated_sprite_2d.animation = &"default"
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
 	call_bump()
 

@@ -164,7 +164,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		pos_y_on_floor = global_transform.affine_inverse().basis_xform(global_position).y
 	
-	debug_text.visible = Console.player_stats_shown
+	debug_text.visible = Console.cv.player_stats_shown
 	
 	# Old bowser stomping (Tweak)
 	if !tweaked_stomping || !_tweaked_stomping_vel: return

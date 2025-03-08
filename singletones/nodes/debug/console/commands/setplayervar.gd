@@ -5,4 +5,7 @@ static func register() -> Command:
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var result: Command.ExecuteResult = Command.ExecuteResult.new(NIY)
+	var pl := Thunder._current_player
+	if !pl: return result
+	pl.set(args[0], args[1])
 	return result

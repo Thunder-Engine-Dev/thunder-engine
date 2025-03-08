@@ -40,7 +40,8 @@ func _ready() -> void:
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(6, false).timeout.connect(emit_signal.bind("game_over_finished"))
+	var _timer: SceneTreeTimer = get_tree().create_timer(6, false)
+	_timer.timeout.connect(emit_signal.bind("game_over_finished"), CONNECT_ONE_SHOT)
 	
 	if Data.technical_values.remaining_continues == 0 && "suspended" in ProfileManager.profiles:
 		if ProfileManager.profiles.suspended.data.get("saved_profile") == ProfileManager.current_profile.name:

@@ -72,7 +72,7 @@ func process_bumping_blocks() -> void:
 				
 				if l is StaticBumpingBlock:
 					if l.has_method(&"got_bumped"):
-						l.got_bumped.call_deferred(self)
+						l.got_bumped.call_deferred(false)
 					elif l.has_method(&"bricks_break"):
 						l.bricks_break.call_deferred()
 

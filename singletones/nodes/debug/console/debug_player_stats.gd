@@ -4,8 +4,8 @@ var target_text: String
 
 
 func _physics_process(delta: float) -> void:
-	visible = Console.player_stats_shown
-	if !Console.player_stats_shown: return
+	visible = Console.cv.player_stats_shown
+	if !Console.cv.player_stats_shown: return
 	var other_text: String = "PAUSE:" + str(get_tree().paused) + "
 NICK: %s CHAR: %s" % [
 		CharacterManager.get_character_display_name(),

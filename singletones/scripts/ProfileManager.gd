@@ -133,6 +133,9 @@ func delete_profile(_name: StringName) -> void:
 
 
 func save_current_profile() -> void:
+	if current_profile.data.get("executed") && !Console.cv.can_save_with_console:
+		print("[Profile Manager] Save rejected! (Console)")
+		return
 	save_profile_data(current_profile.name, current_profile.data)
 
 

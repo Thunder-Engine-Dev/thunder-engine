@@ -1,7 +1,9 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("starman").set_description("Give starman invincibility")
+	return new().set_name("starman") \
+	.add_param("duration_sec", TYPE_FLOAT, true) \
+	.set_description("Give starman invincibility")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var player: Player = Thunder._current_player

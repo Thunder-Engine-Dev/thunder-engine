@@ -35,10 +35,11 @@ func bricks_break() -> void:
 	queue_free()
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered && lock_while_triggered: return
-	if by is Player:
-		if (by.is_on_floor() && !by.is_crouching) || by.warp != Player.Warp.NONE:
+	var pl := Thunder._current_player
+	if by_player:
+		if !pl || (pl.is_on_floor() && !pl.is_crouching) || pl.warp != Player.Warp.NONE:
 			return
 			
 	# Brick with some result
@@ -47,7 +48,7 @@ func got_bumped(by: Node2D) -> void:
 		return
 	
 	# Standard brick
-	if by is Player && by.suit.type == Data.PLAYER_POWER.SMALL:
+	if by_player && pl.suit.type == Data.PLAYER_POWER.SMALL:
 		bump(false)
 	else:
 		hit_attack()

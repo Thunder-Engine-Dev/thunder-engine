@@ -69,6 +69,7 @@ offset_right = -5.0
 offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 0
+focus_mode = 1
 shortcut = SubResource("Shortcut_8ddje")
 text = "Send"
 
@@ -105,6 +106,7 @@ metadata/_edit_lock_ = true
 layout_mode = 0
 offset_right = 85.0
 offset_bottom = 31.0
+focus_mode = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4nxa3")
 button_pressed = true
 shortcut = SubResource("Shortcut_evygy")

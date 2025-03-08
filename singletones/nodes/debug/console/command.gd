@@ -94,12 +94,10 @@ func add_param(key: String, val: int, _optional: bool = false) -> Command:
 	}
 	return self
 
-@warning_ignore("shadowed_variable")
-func set_name(name: String) -> Command:
-	self.name = name
+func set_name(_name: String) -> Command:
+	self.name = _name
 	return self
 
 func set_debug() -> Command:
-	if OS.has_feature("template"):
-		debug_only = true
+	debug_only = true
 	return self

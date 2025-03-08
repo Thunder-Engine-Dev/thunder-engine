@@ -18,6 +18,15 @@ func _player_landed(player: Player) -> void:
 		get_parent()._player_landed(player)
 
 
+var _is_player_falling: bool
+func _draw() -> void:
+	if !Console.cv.platform_collision_shown: return
+	
+	var _the_rect: Rect2 = shape_owner_get_shape(0, 0).get_rect()
+	if !_is_player_falling:
+		_the_rect.size.y = init_collision_margin
+	draw_rect(_the_rect, Color(Color.ORANGE, 0.6), true)
+
 func _physics_process(_delta: float) -> void:
 	if includes_path_follow:
 		global_position = _path_follow.global_position
@@ -25,10 +34,13 @@ func _physics_process(_delta: float) -> void:
 	if correction_on_player_falling:
 		var player = Thunder._current_player
 		if player:
-			if player.speed.y >= 0:
+			_is_player_falling = player.speed.y >= -5
+			if _is_player_falling:
 				shape_owner_set_one_way_collision_margin(0, shape_owner_get_shape(0, 0).get_rect().size.y)
 			else:
 				shape_owner_set_one_way_collision_margin(0, init_collision_margin)
+			if Console.cv.platform_collision_shown:
+				queue_redraw()
 	
 	if !includes_path_follow: return
 	

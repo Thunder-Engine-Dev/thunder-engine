@@ -26,7 +26,7 @@ func _ready() -> void:
 	skippable = true
 	
 	Console.executed.connect(func(command_name, args):
-		if command_name == "finish" && !TransitionManager.current_transition:
+		if command_name == "finish" && !TransitionManager.current_transition && goto_path:
 			end()
 	)
 

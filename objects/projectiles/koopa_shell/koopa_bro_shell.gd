@@ -41,7 +41,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 			collider is StaticBumpingBlock &&
 			collider.has_method(&"got_bumped")
 		):
-			collider.got_bumped(self)
+			collider.got_bumped(false)
 			_has_brick = true
 	if _has_brick:
 		_fix_velocity.call_deferred(speed.x)

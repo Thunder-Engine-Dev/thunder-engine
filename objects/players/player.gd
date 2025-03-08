@@ -168,6 +168,9 @@ func _ready() -> void:
 	change_suit(suit, false, true)
 
 	Thunder._current_player = self
+	
+	Thunder._connect(SettingsManager.settings_updated, _on_settings_updated)
+	_on_settings_updated.call_deferred()
 
 	if !is_starman():
 		sprite.material.set_shader_parameter(&"mixing", false)
@@ -437,3 +440,7 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 		if what.get("killing_can_combo"):
 			starman_combo.combo()
 		starman_attacked.emit()
+
+
+func _on_settings_updated() -> void:
+	skid.visible = SettingsManager.get_quality() != SettingsManager.QUALITY.MIN
