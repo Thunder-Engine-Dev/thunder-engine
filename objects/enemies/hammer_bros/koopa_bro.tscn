@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b1ta344iwb83q"]
+[gd_scene load_steps=23 format=3 uid="uid://b1ta344iwb83q"]
 
 [ext_resource type="Script" uid="uid://dmcn56u26b38a" path="res://engine/objects/enemies/hammer_bros/hammer_bro_base.gd" id="1_yqkay"]
 [ext_resource type="PackedScene" uid="uid://bcm2a10a5vcug" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.tscn" id="2_gqerd"]
@@ -96,6 +96,9 @@ animations = [{
 atlas = ExtResource("11_yfqsf")
 region = Rect2(96, 0, 32, 28)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f1ym"]
+size = Vector2(32, 32)
+
 [node name="KoopaBro" type="CharacterBody2D" groups=["koopa_bro"]]
 collision_layer = 2
 collision_mask = 32
@@ -160,6 +163,15 @@ autostart = true
 [node name="Jump" type="Timer" parent="."]
 wait_time = 0.24
 autostart = true
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+enabled = false
+shape = SubResource("RectangleShape2D_0f1ym")
+target_position = Vector2(0, 0)
+max_results = 2
+collision_mask = 32
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]

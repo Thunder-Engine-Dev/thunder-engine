@@ -10,6 +10,10 @@ var drown: bool = false
 
 signal run_out
 
+func _ready() -> void:
+	offscreen_handler(2.0)
+	super()
+
 func _physics_process(delta: float) -> void:
 	super(delta)
 	if !sprite_node: return

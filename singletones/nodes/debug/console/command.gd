@@ -31,7 +31,7 @@ var description: String = NIY
 var debug_only: bool
 
 
-# NOT FOR OVERRIDING
+## NOT FOR OVERRIDING
 func try_execute(args: Array) -> Variant:
 	var arg_count: int = 0
 	for k in params.keys():
@@ -39,7 +39,10 @@ func try_execute(args: Array) -> Variant:
 			arg_count += 1
 	
 	if args.size() < arg_count:
-		return messages[Error.Param]
+		return "\n".join([
+			messages[Error.Param],
+			"[color=red]Usage:[/color] %s%s" % [name, _get_usage()]
+		])
 	
 	# TODO: Check if param have wrong type
 	# for
@@ -54,20 +57,14 @@ func try_execute(args: Array) -> Variant:
 	
 	return res.msg
 
-# NOT FOR OVERRIDING
+## NOT FOR OVERRIDING
 func get_help() -> String:
 	var result: String = ":"
 	
 	if params.is_empty():
 		result = ""
 	else:
-		for k in params.keys():
-			var opt: bool = params[k].optional
-			var opening: String = "aqua][" if opt else "deep_sky_blue]<"
-			var closing: String = "]" if opt else ">"
-			result += " [color=%s%s: %s%s[/color]" % [
-				opening, k, type_string(params[k].type), closing
-			]
+		result += _get_usage()
 	if debug_only:
 		description += ". Debug only"
 	
@@ -75,13 +72,29 @@ func get_help() -> String:
 	
 	return result
 
-# For overriding
+## NOT FOR OVERRIDING
+func _get_usage() -> String:
+	var result: String = ""
+	if params.is_empty(): return result
+	
+	for k in params.keys():
+		var opt: bool = params[k].optional
+		var opening: String = "aqua][" if opt else "deep_sky_blue]<"
+		var closing: String = "]" if opt else ">"
+		result += " [color=%s%s: %s%s[/color]" % [
+			opening, k, type_string(params[k].type), closing
+		]
+	
+	return result
+
+## For overriding
 static func register() -> Command:
 	return null
 	
-# For overriding
+## For overriding
 func execute(args: Array) -> ExecuteResult:
 	return ExecuteResult.new(NIY)
+
 
 func set_description(desc: String) -> Command:
 	description = desc

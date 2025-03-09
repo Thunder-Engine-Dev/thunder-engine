@@ -49,6 +49,7 @@ var _warp_triggered: bool = false
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
 @onready var pos_player_invisible = $PosPlayerInvisible
+var _gotoscene_patch: bool
 
 signal player_enter
 signal player_exit
@@ -174,6 +175,7 @@ func _warping_process(delta: float) -> void:
 func _circle_transition() -> void:
 	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+		_gotoscene_patch = true
 		pass_warp()
 		TransitionManager.accept_transition(
 			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
@@ -221,7 +223,7 @@ func pass_warp() -> void:
 		target.player_z_index = player_z_index
 		target.warp_invisible_left_right = warp_invisible_left_right
 		_transition_update()
-	elif warp_to_scene && !use_circle_transition:
+	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
 	elif trigger_finish:
 		Scenes.current_scene.finish(true)

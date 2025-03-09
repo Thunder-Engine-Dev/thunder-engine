@@ -12,7 +12,7 @@ var flag: bool = false
 
 
 func _ready() -> void:
-	add_to_group(&"end_level_sequence")
+	super()
 	await get_tree().physics_frame
 	dir = sign(speed.x)
 	

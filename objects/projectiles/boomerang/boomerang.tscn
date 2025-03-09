@@ -28,6 +28,7 @@ script = ExtResource("1_biice")
 turn_sprite = false
 sprite = NodePath("Sprite")
 speed = Vector2(500, -300)
+collision = false
 correct_collision = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

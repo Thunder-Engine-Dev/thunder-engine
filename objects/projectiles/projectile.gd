@@ -26,7 +26,10 @@ func offscreen_handler(delete_offscreen_after_sec: float = 2.0, offscreen_offset
 	if belongs_to == Data.PROJECTILE_BELONGS.ENEMY:
 		# Delete projectile if shot by enemy off-screen
 		if !vision_node.is_on_screen():
-			queue_free()
+			await get_tree().create_timer(0.75, false).timeout
+			if is_inside_tree() && !vision_node.is_on_screen():
+				queue_free()
+			return
 		# Delete projectile if shot by enemy from the top
 		elif !Thunder.view.screen_top(global_position, offscreen_offset, true):
 			queue_free()

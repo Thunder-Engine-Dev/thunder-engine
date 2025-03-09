@@ -1,6 +1,7 @@
 extends Projectile
 
 func _ready() -> void:
+	offscreen_handler(2.0)
 	super()
 	if speed.x < 0 && sprite_node:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed
