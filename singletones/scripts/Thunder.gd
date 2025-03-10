@@ -114,12 +114,11 @@ func add_lives(count: int, parent: Node = Scenes.current_scene):
 
 
 ## Add scores for [member _current_player][br]
-## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be greater than 0, or an error will be sent to console.
-## So if you want to cut down the scores, please code:[br]
-## [code]Data.values.score -= some_count[/code]
+## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must not be equal to 0, 
+## or an error will be sent to console.
 func add_score(count: int):
-	if count <= 0:
-		push_error("[Thunder Engine] add_score: Invalid score count. Must be greater than 0")
+	if count == 0:
+		push_error("[Thunder Engine] add_score: Invalid score count. Must not be equal to 0")
 		return
 
 	Data.add_score(count)

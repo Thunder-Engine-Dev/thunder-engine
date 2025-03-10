@@ -33,8 +33,8 @@ func _physics_process(_delta: float) -> void:
 		triggered = true
 		animation_player.stop(true)
 		if !override_score:
-			Data.values.score += 100
+			Data.add_score(100)
 			ScoreText.new("100", score_text_marker)
 		else:
-			Data.values.score += override_score_value
+			Data.add_score(override_score_value)
 			ScoreText.new(str(override_score_value), score_text_marker)

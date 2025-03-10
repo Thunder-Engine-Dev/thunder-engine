@@ -6,21 +6,21 @@ func _init(string: String, ref: Node2D, parent: Node = Scenes.current_scene):
 	
 	label_settings = LabelSettings.new()
 	label_settings.font = preload("res://engine/components/score/fonts/score.fnt")
+	var _is_negative: bool = text.begins_with("-")
+	if _is_negative:
+		label_settings.font_color = Color(1.0, 0.314, 0.314)
 	
 	parent.add_child(self)
-	var pos = size / 2
-	global_position = ref.global_position - pos
+	global_position = ref.global_position - (size / 2)
 	z_index = 1000
-	# godot developers forgot to implement global_rotation in control nodes :skull:
-	#global_rotation = Thunder._current_player.global_rotation
 	
 	var tw = get_tree().create_tween()
-	tw.tween_property(self, "global_position:y", global_position.y - 48, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	
-	var timer = get_tree().create_timer(2.5, false, true)
-	timer.timeout.connect(disappear.bind(tw))
-
-func disappear(tw):
-	tw = get_tree().create_tween()
+	tw.tween_property(
+		self,
+		"global_position:y",
+		global_position.y - 48 + (96 * int(_is_negative)),
+		1.0
+	).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_interval(2.5)
 	tw.tween_property(self, "modulate:a", 0.0, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_callback(queue_free)

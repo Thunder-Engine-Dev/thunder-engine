@@ -43,6 +43,6 @@ func _on_level_end() -> void:
 		if Thunder.view.is_getting_closer(self, 320):
 			queue_free()
 		return
-	Data.values.score += 100
+	Data.add_score(100)
 	ScoreText.new(str(100), self)
 	queue_free()

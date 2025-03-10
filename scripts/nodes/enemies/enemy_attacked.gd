@@ -187,7 +187,7 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 		if stomping_scores > 0:
 			if !_stomping_combo_enabled:
 				ScoreText.new(str(stomping_scores), _center)
-				Data.values.score += stomping_scores
+				Data.add_score(stomping_scores)
 			elif is_instance_valid(by):
 				var _do_combo: bool = true
 				if by.stomping_combo.get_combo() == 0:
@@ -201,7 +201,7 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 								by.stomping_combo._combo = max(0, i)
 								_do_combo = false
 								ScoreText.new(str(stomping_scores), by)
-								Data.values.score += stomping_scores
+								Data.add_score(stomping_scores)
 								break
 				if _do_combo:
 					by.stomping_combo.combo()
@@ -287,7 +287,7 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		var no_score: bool = &"no_score" in special_tags
 		if killing_scores > 0 && !no_score:
 			ScoreText.new(str(killing_scores), _center)
-			Data.values.score += killing_scores
+			Data.add_score(killing_scores)
 		
 		result = {
 			result = true,

@@ -21,7 +21,7 @@ func _fall() -> void:
 	tw.tween_property(self,"position",(pos + Vector2(0,16)).rotated(rotation),0.2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	tw.tween_callback(func():
 		explode()
-		Data.values.score += score_given
+		Data.add_score(score_given)
 		ScoreText.new(str(score_given), self)
 	)
 

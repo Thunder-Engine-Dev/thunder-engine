@@ -36,10 +36,10 @@ func _add_score() -> void:
 		else:
 			given_score = 200
 		
-		Data.values.score += given_score
+		Data.add_score(given_score)
 		ScoreText.new(str(given_score), score_text_marker)
 	else:
-		Data.values.score += finish_line.override_score_value
+		Data.add_score(finish_line.override_score_value)
 		ScoreText.new(str(finish_line.override_score_value), score_text_marker)
 
 func _create_checker_bar() -> void:

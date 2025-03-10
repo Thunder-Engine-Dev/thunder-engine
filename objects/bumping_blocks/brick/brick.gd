@@ -31,7 +31,7 @@ func bricks_break() -> void:
 			eff.velocity = i
 		)
 		
-	Data.values.score += 10
+	Data.add_score(10)
 	queue_free()
 
 

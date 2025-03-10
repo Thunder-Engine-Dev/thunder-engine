@@ -108,7 +108,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			combo.combo()
 		else:
 			ScoreText.new(str(target_enemy_attacked.killing_scores), target_enemy_attacked._center)
-			Data.values.score += target_enemy_attacked.killing_scores
+			Data.add_score(target_enemy_attacked.killing_scores)
 	# Gets blocked
 	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack"):
 		if &"speed" in target_enemy_attacked.owner:

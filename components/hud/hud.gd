@@ -60,11 +60,11 @@ func time_countdown(_first_time: bool = true) -> void:
 	
 	if Data.values.time > 6:
 		Data.values.time -= 3
-		Data.values.score += 30
+		Data.add_score(30)
 	
 	if Data.values.time > 0:
 		Data.values.time -= 1
-		Data.values.score += 10
+		Data.add_score(10)
 		await get_tree().create_timer(0.01, false, true).timeout
 		time_countdown(false)
 	else:

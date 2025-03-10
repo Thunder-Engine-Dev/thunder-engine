@@ -53,8 +53,11 @@ var technical_values: Dictionary = {
 @onready var _default_values: Dictionary = values.duplicate(true)
 
 signal coin_added
+signal coin_added_arg(amount: int)
 signal score_added
+signal score_added_arg(amount: int)
 signal life_added
+signal life_added_arg(amount: int)
 signal values_reset
 
 
@@ -67,11 +70,13 @@ func add_coin(amount: int = 1) -> void:
 		Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), false)
 		if is_instance_valid(Thunder._current_hud):
 			Thunder._current_hud.pulse_label(Thunder._current_hud.coins)
+	coin_added_arg.emit(amount)
 
 
 func add_score(amount: int) -> void:
 	score_added.emit()
 	values.score += amount
+	score_added_arg.emit(amount)
 	#if SettingsManager.get_tweak("life_every_2_mil_score", false):
 		#var two_mil: int = floor(values.score / 1_000_000)
 		#if two_mil > values.prev_score:
@@ -88,6 +93,7 @@ func add_score(amount: int) -> void:
 func add_lives(amount: int = 1) -> void:
 	life_added.emit()
 	values.lives += amount
+	life_added_arg.emit(amount)
 
 
 func reset_all_values() -> void:
