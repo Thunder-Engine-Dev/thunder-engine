@@ -134,7 +134,8 @@ func _movement_x(delta: float) -> void:
 			player._skid_tweak &&
 			(sign(player.left_right) == -player.direction) &&
 			abs(player.speed.x) > 1 &&
-			player.is_on_floor()
+			player.is_on_floor() &&
+			!player.is_holding
 	)
 
 
@@ -224,6 +225,7 @@ func _movement_sliding(delta: float) -> void:
 
 
 func _start_sliding_movement() -> void:
+	if player.is_holding: return
 	player.attack.killing_detection_scale = 2
 	player.attack.enabled = true
 	var floor_norm = rad_to_deg(player.get_floor_normal().x)

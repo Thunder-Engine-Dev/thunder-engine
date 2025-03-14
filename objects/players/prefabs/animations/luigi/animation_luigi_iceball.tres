@@ -66,6 +66,14 @@ region = Rect2(0, 64, 48, 64)
 atlas = ExtResource("1_105fb")
 region = Rect2(48, 64, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1kev"]
+atlas = ExtResource("1_105fb")
+region = Rect2(336, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5rue"]
+atlas = ExtResource("1_105fb")
+region = Rect2(480, 0, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ut2f8"]
 atlas = ExtResource("1_105fb")
 region = Rect2(48, 64, 48, 64)
@@ -90,10 +98,6 @@ region = Rect2(672, 0, 48, 64)
 atlas = ExtResource("1_105fb")
 region = Rect2(576, 0, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l1kev"]
-atlas = ExtResource("1_105fb")
-region = Rect2(336, 0, 48, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_1taf5"]
 atlas = ExtResource("1_105fb")
 region = Rect2(384, 0, 48, 64)
@@ -101,10 +105,6 @@ region = Rect2(384, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s3mco"]
 atlas = ExtResource("1_105fb")
 region = Rect2(432, 0, 48, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w5rue"]
-atlas = ExtResource("1_105fb")
-region = Rect2(480, 0, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ehgly"]
 atlas = ExtResource("1_105fb")
@@ -239,6 +239,17 @@ animations = [{
 "loop": false,
 "name": &"hold_jump",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1kev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5rue")
+}],
+"loop": true,
+"name": &"hold_swim",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,

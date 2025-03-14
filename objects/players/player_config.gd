@@ -32,7 +32,7 @@ class_name PlayerConfig
 @export var stuck_recovery_speed: float = 60
 @export_group("Animation", "animation_")
 @export var animation_walking_speed: float = 1.5
-@export var animation_max_walking_speed: float = 5
+@export var animation_max_walking_speed: float = 6
 @export var animation_min_walking_speed: float = 1
 @export_group("Sound", "sound_")
 @export var sound_jump: AudioStream = preload("res://engine/objects/players/prefabs/sounds/jump.wav")

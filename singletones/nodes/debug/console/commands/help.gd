@@ -1,7 +1,7 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("help").set_description("Prints this list")
+	return new().set_name("help").set_description("Prints this list").set_not_cheat()
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var cmd = Console.commands

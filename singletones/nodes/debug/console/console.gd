@@ -94,7 +94,7 @@ func internal_execute(_in: String) -> void:
 			col_print("Command does not exist!", Color.RED)
 		return
 	
-	if cmdName != "help" && OS.has_feature("template"):
+	if commands[cmdName].is_cheat && OS.has_feature("template"):
 		command_executed = true
 	
 	self.print(commands[cmdName].try_execute(args))

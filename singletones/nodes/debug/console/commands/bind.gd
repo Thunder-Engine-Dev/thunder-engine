@@ -5,7 +5,8 @@ static func register() -> Command:
 		.add_param("option", TYPE_STRING, true) \
 		.add_param("key", TYPE_STRING, true) \
 		.add_param("command", TYPE_STRING, true) \
-		.set_description("Binds a command to a preferred key.")
+		.set_description("Binds a command to a preferred key") \
+		.set_not_cheat()
 
 func execute(args: Array) -> Command.ExecuteResult:
 	var option_list: String = "set, remove, list"
@@ -45,7 +46,10 @@ func execute(args: Array) -> Command.ExecuteResult:
 		return Command.ExecuteResult.new("[color=red]Error[/color]: Type [color=yellow]bind list[/color] and choose an index of a bind you want to remove.")
 	
 	if len(args) < 3:
-		return Command.ExecuteResult.new("[color=red]Invalid Parameters[/color]")
+		return Command.ExecuteResult.new("\n".join([
+			messages[Error.Param],
+			"[color=red]Usage:[/color] %s%s" % [name, _get_usage()]
+		]))
 	
 	var arg_key: String = args[1]
 	

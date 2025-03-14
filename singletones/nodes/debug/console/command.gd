@@ -29,6 +29,7 @@ var name: StringName = "null"
 var params: Dictionary = {} # Example {"Name of Param": Type } Use typeof
 var description: String = NIY
 var debug_only: bool
+var is_cheat: bool = true
 
 
 ## NOT FOR OVERRIDING
@@ -67,6 +68,8 @@ func get_help() -> String:
 		result += _get_usage()
 	if debug_only:
 		description += ". Debug only"
+	if !is_cheat:
+		description += ". Not a cheat"
 	
 	result += " - %s" % description
 	
@@ -113,4 +116,8 @@ func set_name(_name: String) -> Command:
 
 func set_debug() -> Command:
 	debug_only = true
+	return self
+
+func set_not_cheat() -> Command:
+	is_cheat = false
 	return self

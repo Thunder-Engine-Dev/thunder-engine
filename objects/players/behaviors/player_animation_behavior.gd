@@ -210,9 +210,9 @@ func _animation_process(delta: float) -> void:
 		if player.is_on_floor() || player.coyote_time > 0.0:
 			_stomp_enabled = false
 			if !(is_zero_approx(player.speed.x)):
-				if _separate_run_tweak && abs(player.speed.x) + 40 >= config.walk_max_running_speed:
+				if _separate_run_tweak && abs(player.speed.x) + 25 >= config.walk_max_running_speed && !player.is_holding:
 					_play_anim(&"p_run" if !player.is_skidding else &"skid")
-					_p_run_enabled = !player.is_holding
+					_p_run_enabled = true
 				else:
 					_play_anim(
 						StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
@@ -226,9 +226,9 @@ func _animation_process(delta: float) -> void:
 			else:
 				_p_run_enabled = false
 				if player.up_down == -1 && !player.is_holding && _look_up_tweak:
-					if sprite.animation != &"look_up":
+					if !sprite.animation in [&"look_up", &"hold_look_up"]:
 						Audio.play_sound(_look_up_sound, player, false)
-					_play_anim(&"look_up")
+					_play_anim(_get_animation_prefixed(&"look_up"))
 				else:
 					_idle_timer += delta
 					if _idle_tweak && !player.is_holding && _idle_timer > _idle_activate_after_sec:
@@ -245,7 +245,7 @@ func _animation_process(delta: float) -> void:
 		else:
 			if sprite.animation == &"attack_air": return
 			if _stomp_enabled && !_p_run_enabled:
-				_play_anim(_get_animation_prefixed(&"stomp"))
+				_play_anim(&"stomp")
 			else:
 				if player.speed.y < 0:
 					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_jump")

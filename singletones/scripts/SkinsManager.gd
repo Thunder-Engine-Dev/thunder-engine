@@ -219,6 +219,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 	var loaded: Dictionary = {}
 	loaded = {}
 	var errored: PackedStringArray = []
+	var _show_help_in_error: bool
 	for j in _anims:
 		var file_path: String = base_dir + "/" + i + "/" + j
 		if !FileAccess.file_exists(file_path + "/" + CONFIG_SKIN_SETTINGS):
@@ -226,6 +227,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			continue
 		if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
 			errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
+			_show_help_in_error = true
 			continue
 		
 		dir_access.change_dir(file_path + "/" + FOLDER_SUIT_IMAGES)
@@ -287,6 +289,11 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				print("Suit %s: %s loaded." % [j, FOLDER_SUIT_SOUNDS])
 	
 	if !errored.is_empty():
+		if _show_help_in_error:
+			errored.append("")
+			errored.append(
+				"The skin used may be of an older version. Please refer to the skin guide to convert the skin to the current version."
+			)
 		OS.alert("
 ".join(errored), "Player Skin Load Error")
 	return loaded
@@ -331,6 +338,7 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	var _temp_sprites = old_sprites.duplicate()
 	if CharacterManager.get_suit_tweak("look_up_animation", "", power):
 		_temp_sprites.add_animation("look_up")
+		_temp_sprites.add_animation("hold_look_up")
 	if CharacterManager.get_suit_tweak("stomp_animation", "", power):
 		_temp_sprites.add_animation("stomp")
 	if CharacterManager.get_suit_tweak("separate_run_animation", "", power):
@@ -340,20 +348,18 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	if CharacterManager.get_suit_tweak("idle_animation", "", power):
 		_temp_sprites.add_animation("idle")
 	
+	var errored: PackedStringArray = []
 	for anim in _temp_sprites.get_animation_names():
 		if anim != "default":
 			new_sprites.add_animation(anim)
-		var errored: PackedStringArray = []
 		for dict_check in ["animation_regions", "animation_speeds", "animation_loops"]:
 			if !anim in skins[current_skin][power][dict_check]:
 				errored.append(
-					str(current_skin) + ": Animation '" + anim + "' is not present in " + dict_check
+					"%s: Animation '%s' is not present in %s" % [str(power), anim, dict_check]
 				)
 				continue
 		if !errored.is_empty():
-			OS.alert("
-".join(errored), "Player Skin Load Error")
-			return old_sprites
+			break
 		new_sprites.set_animation_speed(anim, skins[current_skin][power].animation_speeds[anim])
 		new_sprites.set_animation_loop(anim, skins[current_skin][power].animation_loops[anim])
 		var frame_count = _temp_sprites.get_frame_count(anim)
@@ -375,6 +381,13 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 			new_sprites.add_frame(anim, new_tex)
 	#var err = ResourceSaver.save(skins[0], base_dir + "/luigi/%s/skin_settings.tres" % power)
 	#print(err)
+	
+	if !errored.is_empty():
+		errored.append("")
+		errored.append("Please edit the file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
+		OS.alert("
+".join(errored), str(current_skin) + " Player Skin Load Error")
+		return old_sprites
 	return new_sprites
 
 # To allow comments in JSON, using //

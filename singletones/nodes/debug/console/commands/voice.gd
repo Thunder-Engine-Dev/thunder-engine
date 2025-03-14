@@ -1,7 +1,9 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("voice").add_param("ID", TYPE_STRING).set_description("Plays a voice line by current character")
+	return new().set_name("voice").add_param("ID", TYPE_STRING) \
+	.set_description("Plays a voice line by current character") \
+	.set_not_cheat()
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var voice_line = CharacterManager.get_voice_line(args[0])
