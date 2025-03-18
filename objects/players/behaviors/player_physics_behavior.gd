@@ -162,14 +162,26 @@ func _movement_y(delta: float) -> void:
 				_stop_sliding_movement()
 				player._has_jumped = true
 				player.coyote_time = 0.0
+				player.ghost_speed_y = 0.0
 				player.jump(config.jump_speed)
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
-		elif player.jumping > 0 && player.speed.y < 0.0:
-			var buff: float = config.jump_buff_dynamic if (abs(player.speed.x) > 50 && !player.is_on_wall()) else config.jump_buff_static
-			player.speed.y -= abs(buff) * delta
+		elif player.jumping > 0:
+			var buff: float = _calculate_jump_acceleration()
+			if player.speed.y < 0.0:
+				player.speed.y -= abs(buff) * delta
+		if player._super_jump_tweak && player.jumping > 0 && player.ghost_speed_y < 0.0:
+			var buff: float = _calculate_jump_acceleration()
+			player.ghost_speed_y -= abs(buff) * delta
+	
+	if player._super_jump_tweak && player.ghost_speed_y < 0.0 && !player.is_on_floor():
+		player.speed.y = player.ghost_speed_y
+		player.ghost_speed_y = 0.0
 	if !player.jumping && player.speed.y >= 0:
 		player._has_jumped = false
 
+
+func _calculate_jump_acceleration() -> float:
+	return config.jump_buff_dynamic if (abs(player.speed.x) > 50 && !player.is_on_wall()) else config.jump_buff_static
 
 #= Climbing
 func _movement_climbing(delta: float) -> void:
@@ -348,11 +360,20 @@ func _body_process() -> void:
 		var result: Dictionary = enemy_attacked.got_stomped(player, player_velocity)
 		if result.is_empty(): return
 		if result.result == true:
-			player.coyote_time = 0.0
+			var _final_speed_y: float
 			if player.jumping > 0:
-				player.speed.y = -result.jumping_max * config.jump_stomp_multiplicator
+				_final_speed_y = -result.jumping_max * config.jump_stomp_multiplicator
 			else:
-				player.speed.y = -result.jumping_min * config.jump_stomp_multiplicator
+				_final_speed_y = -result.jumping_min * config.jump_stomp_multiplicator
+			
+			if player._super_jump_tweak && player.is_on_floor():
+				if player.ghost_speed_y < 0.0:
+					return
+				player.ghost_speed_y = _final_speed_y
+			else:
+				player.coyote_time = 0.0
+				player.speed.y = _final_speed_y
+
 		else:
 			player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
 

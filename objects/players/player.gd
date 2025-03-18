@@ -69,6 +69,7 @@ var slided: bool
 @warning_ignore("unused_private_class_variable")
 var _has_jumped: bool
 var coyote_time: float
+var ghost_speed_y: float
 
 var is_climbing: bool
 var is_sliding: bool
@@ -111,6 +112,7 @@ var _suit_tree_paused: bool
 @onready var _skid_tweak = SettingsManager.get_tweak("player_skid_animation", false)
 @onready var _autorun_tweak = SettingsManager.get_tweak("autorun", false)
 @onready var _damage_tweak = SettingsManager.get_tweak("retro_damage_system", false)
+@onready var _super_jump_tweak = SettingsManager.get_tweak("super_jump_bug", false)
 
 @onready var force_override_death_sound: bool = false
 
