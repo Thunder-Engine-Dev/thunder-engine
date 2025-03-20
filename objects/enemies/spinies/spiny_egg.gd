@@ -29,11 +29,15 @@ func _physics_process(delta: float) -> void:
 			col.set_deferred(&"disabled", false)
 	
 	if collision_enabled && is_on_floor():
-		NodeCreator.prepare_ins_2d(spiny_creation, self).create_2d().call_method(func(node):
-			var spr = node.get_node(node.sprite)
-			if "free_offscreen" in spr:
-				spr.free_offscreen = free_offscreen
-			if spr.sprite_frames.has_animation(&"appear"):
-				spr.play(&"appear")
-		)
-		queue_free()
+		_create_spiny()
+
+
+func _create_spiny() -> void:
+	NodeCreator.prepare_ins_2d(spiny_creation, self).create_2d().call_method(func(node):
+		var spr = node.get_node(node.sprite)
+		if "free_offscreen" in spr:
+			spr.free_offscreen = free_offscreen
+		if spr.sprite_frames.has_animation(&"appear"):
+			spr.play(&"appear")
+	)
+	queue_free()

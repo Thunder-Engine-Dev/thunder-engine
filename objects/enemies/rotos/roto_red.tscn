@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://cforx4e0v73a7"]
+[gd_scene load_steps=40 format=3 uid="uid://cforx4e0v73a7"]
 
 [ext_resource type="Script" uid="uid://cpw8a2kugg30l" path="res://engine/objects/enemies/rotos/roto_red.gd" id="1_gq7m4"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3420r"]
 [ext_resource type="Texture2D" uid="uid://d1rtgrsfyf0pj" path="res://engine/objects/enemies/rotos/roto_red.png" id="2_ib7bh"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_cjxur"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="4_rm4x7"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_g8kvb"]
 [ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="5_rhdfg"]
@@ -247,8 +248,12 @@ autoplay = "default"
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_25p2b")
+texture_scale = 0.01
+script = ExtResource("3_cjxur")
+duration = 0.1
 
 [node name="EnemyAttacked" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("2_3420r")
 center_node = NodePath("..")
 stomping_standard = Vector2(0, 0)

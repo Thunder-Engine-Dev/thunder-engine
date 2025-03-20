@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd67ta53gnplr"]
+
+[ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_4s0qm"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_obuft"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_5mq0h"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_r5qf2"]
+
+[sub_resource type="Resource" id="Resource_4pp0c"]
+resource_local_to_scene = true
+script = ExtResource("4_r5qf2")
+creation_nodepack = ExtResource("2_obuft")
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("3_5mq0h")
+
+[node name="SpinyRedNoCombo" instance=ExtResource("1_4s0qm")]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+killing_creation = SubResource("Resource_4pp0c")
+killing_can_combo = false

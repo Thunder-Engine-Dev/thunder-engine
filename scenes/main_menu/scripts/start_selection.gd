@@ -34,7 +34,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
-			.with_speeds(0.015, -0.1)
+			.with_speeds(0.02, -0.1)
 	)
 
 	TransitionManager.transition_middle.connect(func():
