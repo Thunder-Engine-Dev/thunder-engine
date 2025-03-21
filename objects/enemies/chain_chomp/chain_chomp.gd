@@ -32,6 +32,7 @@ var _is_ready: bool
 var _rest: SceneTreeTimer
 
 @onready var sprite: AnimatedSprite2D = $Sprite
+@onready var visible_enabler: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _ready() -> void:
@@ -95,8 +96,8 @@ func _walk() -> void:
 		var speed_x: float = speed.x
 		
 		vel_set_x(0)
-		_rest = get_tree().create_timer(walking_rest_duration, false, true)
 		
+		_rest = get_tree().create_timer(walking_rest_duration, false, true)
 		await _rest.timeout
 		
 		vel_set_x(-speed_x)
@@ -107,6 +108,7 @@ func _walk() -> void:
 
 func _attacking_pre(player: Player) -> void:
 	if step != 1: return
+	visible_enabler.enable_node_path = ^"."
 	await get_tree().create_timer(attacking_preparation_duration, false, true).timeout
 	pos_when_attack = global_position
 	if is_instance_valid(player): pos_to_attack = player.global_position
@@ -121,18 +123,19 @@ func _attacking_process() -> void:
 	tween.tween_callback(func() -> void:
 		sprite.speed_scale = 3
 	)
-	tween.tween_property(self, "global_position", to, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
+	tween.tween_property(self, ^"global_position", to, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
 	for i in attacking_barking_times:
 		tween.tween_callback(func() -> void:
 			Audio.play_sound(attacking_sound, self, false)
 		)
 		tween.tween_interval(attacking_rest_duration / attacking_barking_times)
-	tween.tween_property(self, "global_position", pos_when_attack, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
+	tween.tween_property(self, ^"global_position", pos_when_attack, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
 	tween.tween_callback(func() -> void:
 		sprite.speed_scale = 1
 		step = 0
 		tween.kill()
 		tween = null
+		visible_enabler.enable_node_path = ^".."
 	)
 
 
