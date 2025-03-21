@@ -340,13 +340,17 @@ func starman(duration: float = 10) -> void:
 
 
 var is_hurting: bool = false
-func hurt(tags: Dictionary = {}) -> void:
+func hurt(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> void:
 	if !suit || debug_god || is_hurting:
 		return
 	if !tags.get(&"hurt_forced", false) && (is_invincible() || completed || warp > Warp.NONE):
 		return
 	if warp != Warp.NONE: return
 	is_hurting = true
+
+	if override_behavior.is_valid():
+		override_behavior.call(tags)
+		return
 
 	if suit.gets_hurt_to:
 		if _damage_tweak:
@@ -362,10 +366,15 @@ func hurt(tags: Dictionary = {}) -> void:
 
 
 var is_dying: bool = false
-func die(tags: Dictionary = {}) -> void:
+func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> void:
 	if warp != Warp.NONE: return
 	if debug_god: return
 	if is_dying: return
+
+	if override_behavior.is_valid():
+		override_behavior.call(tags)
+		return
+
 	is_dying = true
 
 	if death_stop_music:
