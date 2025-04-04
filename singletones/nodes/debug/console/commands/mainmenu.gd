@@ -3,7 +3,7 @@ extends Command
 var path = ProjectSettings.get("application/thunder_settings/main_menu_path")
 
 static func register() -> Command:
-	return new().set_name("mainmenu").set_description("Go to main menu") \
+	return new().set_name("mainmenu").set_description("Go to main menu. May break with transitions") \
 	.set_not_cheat()
 
 func execute(args:Array) -> Command.ExecuteResult:

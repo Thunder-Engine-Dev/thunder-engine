@@ -3,7 +3,7 @@ extends Command
 var path = ProjectSettings.get("application/thunder_settings/save_game_room_path")
 
 static func register() -> Command:
-	return new().set_name("saveroom").set_description("Go to save room") \
+	return new().set_name("saveroom").set_description("Go to save room. May break with transitions") \
 	.set_not_cheat()
 
 func execute(args:Array) -> Command.ExecuteResult:

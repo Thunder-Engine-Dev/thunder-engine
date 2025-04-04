@@ -235,7 +235,7 @@ func _animation_process(delta: float) -> void:
 						_play_anim(&"idle")
 					else:
 						_play_anim(_get_animation_prefixed(&"default"))
-			if player.is_crouching:
+			if player.is_crouching || player.crouch_forced:
 				_p_run_enabled = false
 				_play_anim(_get_animation_prefixed(&"crouch"))
 				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
@@ -246,6 +246,8 @@ func _animation_process(delta: float) -> void:
 			if sprite.animation == &"attack_air": return
 			if _stomp_enabled && !_p_run_enabled:
 				_play_anim(&"stomp")
+			elif player.crouch_forced:
+				_play_anim(_get_animation_prefixed(&"crouch"))
 			else:
 				if player.speed.y < 0:
 					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_jump")

@@ -26,8 +26,8 @@ class_name PlayerConfig
 @export var climb_speed: float = 150
 @export_group("Slide", "slide_")
 @export var slide_max_speed: float = 450
-@export var slide_acceleration: float = 468.75
-@export var slide_deceleration: float = 468.75
+@export var slide_acceleration: float = 500
+@export var slide_deceleration: float = 500
 @export_group("Stuck", "stuck_")
 @export var stuck_recovery_speed: float = 60
 @export_group("Animation", "animation_")

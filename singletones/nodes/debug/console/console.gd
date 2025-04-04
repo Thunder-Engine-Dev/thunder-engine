@@ -32,6 +32,9 @@ func _ready():
 	$"UI/Paused".pressed.connect(func():
 		Thunder.set_pause_game($"UI/Paused".button_pressed)
 	)
+	mouse_entered.connect(func():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	)
 	close_requested.connect(
 		func():
 			Thunder.set_pause_game(false)
@@ -56,6 +59,8 @@ func _physics_process(delta: float) -> void:
 		visible = !visible
 		$UI/Paused.button_pressed = visible
 		Thunder.set_pause_game(visible)
+	
+	output.modulate.a = 0.5 if Console.cv.player_stats_shown else 0.863
 	
 	if !visible || !has_focus(): return
 	

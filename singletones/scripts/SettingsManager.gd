@@ -391,7 +391,8 @@ func show_mouse() -> void:
 
 func hide_mouse() -> void:
 	mouse_mode = Input.MOUSE_MODE_HIDDEN
-	Input.mouse_mode = mouse_mode
+	if get_tree().root.has_focus():
+		Input.mouse_mode = mouse_mode
 
 
 func get_mouse_position() -> Vector2:

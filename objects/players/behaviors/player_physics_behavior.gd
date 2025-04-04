@@ -80,8 +80,8 @@ func _movement_x(delta: float) -> void:
 		var do_slide = true if \
 			suit.physics_crouchable else true if player.left_right == 0 else false
 		if do_slide:
-			_start_sliding_movement()
-			return
+			if _start_sliding_movement(true):
+				return
 	# Recovery if Super Mario has their head stuck in blocks
 	if !player.is_crouching && player.has_stuck && player.is_on_floor():
 		player.left_right = 0
@@ -90,11 +90,14 @@ func _movement_x(delta: float) -> void:
 		if player.get_which_wall_collided() == -player.direction:
 			player.direction *= -1
 	
+	if player.is_on_floor():
+		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
+	
 	# Crouching / Completed Level motion speed
-	if player.is_crouching || player.left_right == 0 || player.completed:
+	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0 || player.completed:
 		var deceleration: float = (
 			config.walk_crouch_deceleration if (
-				player.is_crouching && player.left_right != player.direction
+				(player.is_crouching && player.is_on_floor()) && player.left_right != player.direction
 			) else config.walk_deceleration
 		)
 		_decelerate(deceleration, delta)
@@ -140,13 +143,14 @@ func _movement_x(delta: float) -> void:
 
 
 func _movement_y(delta: float) -> void:
-	if player.is_crouching && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
+	if player.is_crouching && !player.crouch_forced && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
 		return
 	if player.completed: return
 
 	# Swimming
 	if player.is_underwater:
-		if player.jumped && player.up_down <= 0:
+		player.crouch_forced = false
+		if player.jumped && (player.up_down <= 0 || player._crouch_jump_tweak):
 			player.coyote_time = 0.0
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
 			player._has_jumped = true
@@ -157,13 +161,15 @@ func _movement_y(delta: float) -> void:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
 	else:
-		if (player.is_on_floor() || player.coyote_time > 0.0) && player.up_down <= 0:
+		if (player.is_on_floor() || player.coyote_time > 0.0) && (player.up_down <= 0 || player._crouch_jump_tweak):
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()
 				player._has_jumped = true
 				player.coyote_time = 0.0
 				player.ghost_speed_y = 0.0
 				player.jump(config.jump_speed)
+				if player.is_crouching && player._crouch_jump_tweak:
+					player.crouch_forced = player.up_down > 0
 				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0:
 			var buff: float = _calculate_jump_acceleration()
@@ -215,41 +221,64 @@ func _movement_sliding(delta: float) -> void:
 	var decel: Callable = func(_norm: float) -> void:
 		_decelerate((config.walk_deceleration / 50) * _norm, delta)
 		player.is_sliding_accelerating = false
+	
+	if player.up_down <= 0:
+		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
 
 	# Sliding towards right
 	if floor_normal >= 10.0:
 		@warning_ignore("standalone_ternary")
-		accel.call(abs(floor_normal)) if dir else decel.call(abs(floor_normal))
-		if abs(player.speed.x) < 1: _start_sliding_movement()
+		accel.call(abs(floor_normal)) if dir else decel.call(abs(floor_normal) * 2)
+		if player.get_which_wall_collided() > 0:
+			_stop_sliding_movement()
+			return
+		if abs(player.speed.x) < 1: _start_sliding_movement(false)
 	# Sliding towards left
 	elif floor_normal <= -10.0:
 		@warning_ignore("standalone_ternary")
-		accel.call(abs(floor_normal)) if !dir else decel.call(abs(floor_normal))
-		if abs(player.speed.x) < 1: _start_sliding_movement()
+		accel.call(abs(floor_normal)) if !dir else decel.call(abs(floor_normal) * 2)
+		if player.get_which_wall_collided() < 0:
+			_stop_sliding_movement()
+			return
+		if abs(player.speed.x) < 1: _start_sliding_movement(false)
 	# Momentum on flat surface after sliding
 	else:
 		decel.call(50)
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
 
-	if player.left_right != 0 && sign(player.left_right) != player.direction && !player.slided:
+	if (player.left_right != 0
+		&& (
+			(sign(player.left_right) != player.direction && player.up_down > 0) || player.up_down == 0
+		)
+		|| player.up_down < 0
+	):
 		_stop_sliding_movement()
 
 
-func _start_sliding_movement() -> void:
-	if player.is_holding: return
+func _start_sliding_movement(do_initial_push: bool = true) -> bool:
+	if player.is_holding: return false
+	var floor_norm = rad_to_deg(player.get_floor_normal().x)
+	var _initial_push: float = config.walk_initial_speed if do_initial_push else 1
+	if floor_norm <= -40.0 + (int(!do_initial_push) * 30):
+		if abs(player.speed.x) < _initial_push:
+			if player.test_move(player.transform, Vector2.LEFT.rotated(player.global_rotation)):
+				_stop_sliding_movement()
+				return false
+			player.direction = -1
+			player.speed.x = -_initial_push
+	if floor_norm >= 40.0 - (int(!do_initial_push) * 30):
+		if abs(player.speed.x) < _initial_push:
+			if player.test_move(player.transform, Vector2.RIGHT.rotated(player.global_rotation)):
+				_stop_sliding_movement()
+				return false
+			player.direction = 1
+			player.speed.x = _initial_push
+	
 	player.attack.killing_detection_scale = 2
 	player.attack.enabled = true
-	var floor_norm = rad_to_deg(player.get_floor_normal().x)
-	if floor_norm <= -40.0:
-		if player.speed.x > 0:
-			player.speed.x = 1
-		player.direction = -1
-	if floor_norm >= 40.0:
-		if player.speed.x < 0:
-			player.speed.x = -1
-		player.direction = 1
 	player.is_sliding = true
+	return true
 
 
 func _stop_sliding_movement() -> void:
@@ -317,10 +346,12 @@ func _shape_recovery_process() -> bool:
 
 	return is_colliding
 
-
+var _head_signal_cooldown: int = 0
 #= Head
 func _head_process() -> void:
 	player.is_underwater_out = true
+	var _on_cooldown: bool = _head_signal_cooldown > 0
+	_head_signal_cooldown -= 1
 
 	# Hit block
 	for i in player.head.get_collision_count():
@@ -331,16 +362,19 @@ func _head_process() -> void:
 			player.is_underwater_out = false
 			if player.bubbler.is_stopped():
 				player.bubbler.start()
-		elif player.is_on_ceiling() && !player.is_crouching:
+		elif player.is_on_ceiling() && !(player.is_crouching && player.is_on_floor()) && !_on_cooldown:
 			player.head_bumped.emit()
+			_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
+		
 		# Bumpable Block
-		if collider is StaticBumpingBlock && collider.has_method(&"got_bumped"):
+		if collider is StaticBumpingBlock && collider.has_method(&"got_bumped") && !_on_cooldown:
 			#if collider.global_position.direction_to(player.head.global_position + 8 * Vector2.DOWN.rotated(player.global_rotation)).dot(Vector2.DOWN.rotated(collider.global_rotation)) > cos(PI / 4):
 				#print(player.speed_previous)
 				if (player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
 				(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
-				player.is_crouching:
+				(player.is_crouching && player.is_on_floor()):
 					collider.got_bumped.call_deferred(true)
+					_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
 
 	player.bubbler.paused = player.is_underwater_out
 
