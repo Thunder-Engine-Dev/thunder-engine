@@ -85,7 +85,11 @@ func _text_process() -> void:
 		icon.visible = false
 		icon_2.visible = false
 		or_string.visible = false
-		value.text = "Joy " + str(SettingsManager.settings.controls_joypad.get(action_name))
+		var _action_arr: Array = SettingsManager.settings.controls_joypad.get(action_name)
+		for i in len(_action_arr):
+			_action_arr[i] = int(_action_arr[i])
+		var _action_str: String = " / ".join(_action_arr)
+		value.text = "Joy " + _action_str
 
 
 func _device_check(arr: Array[String]) -> bool:

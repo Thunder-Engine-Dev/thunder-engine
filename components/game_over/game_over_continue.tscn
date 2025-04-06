@@ -403,7 +403,7 @@ text = "3"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
 libraries = {
-"": SubResource("AnimationLibrary_5i4gi")
+&"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 

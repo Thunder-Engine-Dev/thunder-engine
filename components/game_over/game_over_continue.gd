@@ -86,4 +86,7 @@ func toggle(no_resume: bool = false) -> void:
 
 	get_tree().paused = opened
 	await get_tree().physics_frame
-	v_box_container.focused = opened
+	v_box_container.focused = false
+	if opened:
+		await get_tree().physics_frame
+		v_box_container.focused = opened

@@ -17,8 +17,8 @@ func _physics_process(delta: float) -> void:
 	if trail_timer > 0.0: trail_timer -= 1 * Thunder.get_delta(delta)
 	if !player.is_on_floor() && trail_timer <= 0.0:
 		trail_timer = 1.5
-		Effect.trail.call_deferred(
-			player, 
+		Effect.trail(
+			player,
 			player.sprite.sprite_frames.get_frame_texture(player.sprite.animation, player.sprite.frame),
 			player.sprite.position + Vector2(0, -16),
 			player.sprite.flip_h,
