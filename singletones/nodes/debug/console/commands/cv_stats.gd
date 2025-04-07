@@ -9,4 +9,5 @@ func execute(args:Array) -> Command.ExecuteResult:
 	Console.cv.player_stats_shown = !Console.cv.player_stats_shown
 	if Console.cv.player_stats_shown:
 		Thunder.set_pause_game(false)
+		Thunder.get_tree().root.grab_focus()
 	return Command.ExecuteResult.new("Success")

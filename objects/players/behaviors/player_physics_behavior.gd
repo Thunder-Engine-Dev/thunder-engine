@@ -74,6 +74,8 @@ func _decelerate(dece: float, delta: float) -> void:
 	_accelerate(0, dece, delta)
 
 
+var _consistent_crouch_speed: bool
+
 func _movement_x(delta: float) -> void:
 	# Switch to sliding movement if slided on a slope
 	if player.slided:
@@ -92,22 +94,27 @@ func _movement_x(delta: float) -> void:
 	
 	if player.is_on_floor():
 		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
+		if _consistent_crouch_speed:
+			_consistent_crouch_speed = false
+			if player.crouch_forced && sign(player.left_right) != -player.direction:
+				return
 	
 	# Crouching / Completed Level motion speed
 	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0 || player.completed:
-		var deceleration: float = (
-			config.walk_crouch_deceleration if (
-				(player.is_crouching && player.is_on_floor()) && player.left_right != player.direction
-			) else config.walk_deceleration
-		)
-		_decelerate(deceleration, delta)
 		player.is_skidding = false
+		if !player.crouch_forced || player.is_on_floor():
+			var deceleration: float = (
+				config.walk_crouch_deceleration if (
+					(player.is_crouching && player.is_on_floor()) && player.left_right != player.direction
+				) else config.walk_deceleration
+			)
+			_decelerate(deceleration, delta)
 		return
 	
 	# Acceleration
 	var max_speed: float
 	if sign(player.left_right) == player.direction:
-		if player.running:
+		if player.running && !player.crouch_forced:
 			max_speed = (
 				config.underwater_walk_max_running_speed if player.is_underwater else \
 				config.walk_max_running_speed
@@ -117,7 +124,10 @@ func _movement_x(delta: float) -> void:
 				config.underwater_walk_max_walking_speed if player.is_underwater else \
 				config.walk_max_walking_speed
 			)
-		_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+		
+		if (!player.crouch_forced || player.is_on_floor()) || (player.crouch_forced && abs(player.speed.x) < max_speed):
+			_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+			
 	# Deceleration upon changing direction
 	elif sign(player.left_right) == -player.direction:
 		_decelerate(config.walk_turning_acce, delta)
@@ -125,6 +135,8 @@ func _movement_x(delta: float) -> void:
 			player.direction *= -1
 	if abs(player.speed.x) > max_speed && sign(player.left_right) != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
+	
+	_consistent_crouch_speed = sign(player.left_right) != -player.direction
 	
 	# Initial speed
 	if abs(player.speed.x) < config.walk_initial_speed:
@@ -145,7 +157,11 @@ func _movement_x(delta: float) -> void:
 func _movement_y(delta: float) -> void:
 	if player.is_crouching && !player.crouch_forced && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
 		return
-	if player.completed: return
+	if player.completed:
+		if player.crouch_forced && !player.is_on_floor():
+			player.is_crouching = false
+			player.crouch_forced = false
+		return
 
 	# Swimming
 	if player.is_underwater:
