@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InstancePowerup" load_steps=3 format=3 uid="uid://d14ntnfciec1v"]
 
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="1_ivdn7"]
-[ext_resource type="Script" uid="uid://ffh0hebxe8ob" path="res://engine/objects/powerups/instance_powerup.gd" id="2_t2yf5"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="2_t2yf5"]
 
 [resource]
 resource_local_to_scene = true

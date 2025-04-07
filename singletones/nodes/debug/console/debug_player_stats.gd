@@ -6,7 +6,10 @@ var target_text: String
 func _physics_process(delta: float) -> void:
 	visible = Console.cv.player_stats_shown
 	if !Console.cv.player_stats_shown: return
-	var other_text: String = "PAUSE:" + str(get_tree().paused) + "
+	var other_text: String = "PAUSE:" + str(get_tree().paused) + \
+		" TRANS:" + str(
+			TransitionManager.current_transition.name if is_instance_valid(TransitionManager.current_transition) else "None"
+		) + "
 NICK: %s CHAR: %s" % [
 		CharacterManager.get_character_display_name(),
 		SettingsManager.settings.get("character", ""),
@@ -19,17 +22,21 @@ NICK: %s CHAR: %s" % [
 
 	target_text = """
 XY: %v
-SPD: %v
+SPD: %12.6v
+VEL: %12.6v
+REAL:%12.6v
 suit: %s | lr:%s ud:%s
 STUCK:%s SLIDED:%s IS_SLIDING:%s
 COMPL:%s NOMOVE:%s WARP_STATE:%s
-FCWS: %s%s%s%s | Normal: %s
-WALL: %s | BUG_SPD: %s
-CROUCH: %s | FORCED: %s
+FCWS: %s%s%s%s WALL:%s BUG_SPD:%s
+Normal:%5.f° %8.4vR
+CROU:%s FORC:%s COYO:%.5f
 ITEM:%s
 """ % [
 		pl.global_position,
 		pl.speed,
+		pl.velocity,
+		pl.get_real_velocity(),
 		pl.suit.name if pl.get("suit") else null,
 		pl.get("left_right"),
 		pl.get("up_down"),
@@ -43,11 +50,13 @@ ITEM:%s
 		int(pl.is_on_ceiling()),
 		int(pl.is_on_wall()),
 		int(pl.is_on_slope()),
-		rad_to_deg(pl.get_floor_normal().x),
 		pl.get_which_wall_collided(),
 		pl.get("ghost_speed_y"),
+		rad_to_deg(pl.get_floor_normal().x),
+		pl.get_floor_normal(),
 		_get_bool_mono(pl, "is_crouching"),
 		_get_bool_mono(pl, "crouch_forced"),
+		pl.coyote_time,
 		pl.get("holding_item"),
 	]
 	text = other_text + target_text

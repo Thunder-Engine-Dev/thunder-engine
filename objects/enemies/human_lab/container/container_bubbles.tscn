@@ -5,11 +5,9 @@
 [ext_resource type="Material" uid="uid://dyuxem8ku62vf" path="res://engine/objects/enemies/human_lab/container/textures/container_bubbles_material.tres" id="3_3yjj1"]
 [ext_resource type="Texture2D" uid="uid://bbmu3pd1umaal" path="res://engine/objects/enemies/human_lab/container/textures/container_hollow.png" id="3_ancyg"]
 [ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="4_2og7r"]
+[ext_resource type="Texture2D" uid="uid://s0uyg78cefed" path="res://engine/objects/effects/bubble/bubble_anim.png" id="4_63xwh"]
 [ext_resource type="Material" uid="uid://cnc323n6nnfq5" path="res://engine/objects/enemies/human_lab/container/textures/container_bubbles_particles.tres" id="4_ihwad"]
 [ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_pqph3"]
-
-[sub_resource type="Resource" id="Resource_rpflu"]
-metadata/__load_path__ = "res://gfx/misc/bubble_anim.png"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_apohq"]
 cull_mode = 1
@@ -23,12 +21,12 @@ modulate = Color(1, 1, 1, 0.74902)
 z_index = 1
 material = ExtResource("3_3yjj1")
 position = Vector2(0, 52)
-process_material = ExtResource("4_ihwad")
-texture = SubResource("Resource_rpflu")
+texture = ExtResource("4_63xwh")
 lifetime = 3.0
 randomness = 0.5
 collision_base_size = 0.1
-visibility_rect = Rect2(-125, -157.916, 250, 212.678)
+visibility_rect = Rect2(-160, -157.916, 320, 212.678)
+process_material = ExtResource("4_ihwad")
 script = ExtResource("4_2og7r")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." index="2"]

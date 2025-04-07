@@ -62,9 +62,11 @@ func vertical_correction(amount: int) -> void:
 	if velocity.y <= 0 or abs(velocity.x) <= 1: return
 	
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(global_rotation), true)
+	var collide = move_and_collide(Vector2(velocity.x * delta, velocity.y * delta).rotated(global_rotation), true, 0.08, false)
 	
-	if !collide: return
+	if !collide:
+		#print(Time.get_ticks_msec())
+		return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return
 	if Thunder.get_or_null(collide.get_collider(), "_ignore_colliding_body_correction") == true: return
 	
@@ -73,11 +75,11 @@ func vertical_correction(amount: int) -> void:
 	if abs(normal.y) >= 0.1: return
 	
 	for i in range(1, amount + 1):
-		for j in [-1.0, 0]:
-			if !test_move(
-				global_transform.translated(Vector2(0, i * j)),
-				Vector2(velocity.x * delta, 0).rotated(global_rotation)
-			):
-				translate(Vector2(0, i * j).rotated(global_rotation))
-				if velocity.y * j < 0: velocity.y = 0
-				return
+		if !test_move(
+			global_transform.translated(Vector2(0, -i)),
+			Vector2(velocity.x * delta, 0).rotated(global_rotation),
+			collide
+		):
+			translate(Vector2(0, -i).rotated(global_rotation))
+			if -velocity.y < 0: velocity.y = 0
+			return
