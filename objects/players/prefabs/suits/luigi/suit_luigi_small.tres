@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_bhtbx"]
 [ext_resource type="SpriteFrames" uid="uid://bna35rwesy4fq" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_small.tres" id="2_r7q3r"]
-[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="3_2we5g"]
+[ext_resource type="Script" uid="uid://bc7uhxill4nma" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="3_2we5g"]
 [ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="4_i7xnm"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="5_drstm"]
 [ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="6_ga7d1"]
 [ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="7_ku1ya"]
 [ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="8_e6bee"]
-[ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="9_384dj"]
+[ext_resource type="Script" uid="uid://nllhmhkyjfd6" path="res://engine/objects/players/player_suit.gd" id="9_384dj"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="10_4n8wv"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="11_tr74d"]
 

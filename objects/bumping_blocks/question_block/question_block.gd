@@ -35,6 +35,7 @@ func call_bump() -> void:
 
 
 func _item_display() -> void:
+	if not item_displayer: return
 	if !result || !result.creation_nodepack: return _item_display_reset()
 	if result.creation_nodepack.resource_path == current_displaying_item: return
 	
