@@ -399,7 +399,7 @@ new_rect = Rect2(-256, -256, 512, 512)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Node2D")
 libraries = {
-"": SubResource("AnimationLibrary_dqr8a")
+&"": SubResource("AnimationLibrary_dqr8a")
 }
 speed_scale = 2.5
 

@@ -25,8 +25,6 @@ func _physics_process(delta: float) -> void:
 	_shape_process()
 	if player.warp != Player.Warp.NONE: return
 
-	# Head
-	_head_process()
 	# Body
 	_body_process()
 	# Floor
@@ -45,6 +43,8 @@ func _physics_process(delta: float) -> void:
 		_movement_x(delta)
 		_movement_y(delta)
 	player.motion_process(delta)
+	# Head
+	_head_process()
 	if !player.is_on_floor():
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
 	elif can_coyote:
