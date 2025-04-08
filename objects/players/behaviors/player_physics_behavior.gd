@@ -88,9 +88,10 @@ func _movement_x(delta: float) -> void:
 	if !player.is_crouching && player.has_stuck:
 		player.left_right = 0
 		#player.jumping = 0
-		player.speed.x = -player.direction * config.stuck_recovery_speed
-		if player.get_which_wall_collided() == -player.direction:
-			player.direction *= -1
+		if player.is_on_floor():
+			player.speed.x = -player.direction * config.stuck_recovery_speed
+			if player.get_which_wall_collided() == -player.direction:
+				player.direction *= -1
 	# Smoothly go out from recovery process
 	if player.has_stuck_animation:
 		var unstuck_dir: int = int(player.stuck_block_left) - int(player.stuck_block_right)
@@ -382,6 +383,16 @@ func _shape_recovery_process(precise: bool = false) -> bool:
 			var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
 			var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
 			var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
+			if tile_data:
+				var phys_layer = collider.tile_set.get_physics_layers_count()
+				for i in phys_layer:
+					for j in tile_data.get_collision_polygons_count(i):
+						if !tile_data.is_collision_polygon_one_way(i, j):
+							is_colliding[index] = true
+							break
+		elif collider is TileMapLayer:
+			var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
+			var tile_data: TileData = collider.get_cell_tile_data(cell)
 			if tile_data:
 				var phys_layer = collider.tile_set.get_physics_layers_count()
 				for i in phys_layer:
