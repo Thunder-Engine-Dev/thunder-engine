@@ -83,6 +83,9 @@ var is_underwater: bool
 var is_underwater_out: bool
 
 var has_stuck: bool
+var has_stuck_animation: bool
+var stuck_block_left: bool
+var stuck_block_right: bool
 var is_sliding_accelerating: bool
 var is_slippery: bool
 
@@ -294,6 +297,8 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 func control_process() -> void:
 	left_right = clamp(Input.get_axis(control.left, control.right) * 1.25, -1, 1)
+	if stuck_block_left && left_right < 0: left_right = 0
+	if stuck_block_right && left_right > 0: left_right = 0
 	up_down = Input.get_axis(control.up, control.down)
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))

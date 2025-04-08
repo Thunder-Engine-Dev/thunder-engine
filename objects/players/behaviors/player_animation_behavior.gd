@@ -209,7 +209,7 @@ func _animation_process(delta: float) -> void:
 			_skid_sound_loop()
 		if player.is_on_floor() || player.coyote_time > 0.0:
 			_stomp_enabled = false
-			if !(is_zero_approx(player.speed.x)):
+			if !(is_zero_approx(player.speed.x)) && !player.has_stuck && !(player.has_stuck_animation && player.left_right == 0):
 				if _separate_run_tweak && abs(player.speed.x) + 25 >= config.walk_max_running_speed && !player.is_holding:
 					_play_anim(&"p_run" if !player.is_skidding else &"skid")
 					_p_run_enabled = true

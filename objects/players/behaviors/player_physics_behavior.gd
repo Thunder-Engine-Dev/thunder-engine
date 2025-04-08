@@ -85,12 +85,22 @@ func _movement_x(delta: float) -> void:
 			if _start_sliding_movement(true):
 				return
 	# Recovery if Super Mario has their head stuck in blocks
-	if !player.is_crouching && player.has_stuck && player.is_on_floor():
+	if !player.is_crouching && player.has_stuck:
 		player.left_right = 0
-		player.jumping = 0
+		#player.jumping = 0
 		player.speed.x = -player.direction * config.stuck_recovery_speed
 		if player.get_which_wall_collided() == -player.direction:
 			player.direction *= -1
+	# Smoothly go out from recovery process
+	if player.has_stuck_animation:
+		var unstuck_dir: int = int(player.stuck_block_left) - int(player.stuck_block_right)
+		if unstuck_dir == 0: unstuck_dir = -player.direction
+		player.speed.x = unstuck_dir * config.stuck_recovery_speed
+		if player.get_which_wall_collided() == unstuck_dir:
+			player.direction *= -1
+	else:
+		player.stuck_block_left = false
+		player.stuck_block_right = false
 	
 	if player.is_on_floor():
 		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
@@ -274,7 +284,7 @@ func _movement_sliding(delta: float) -> void:
 func _start_sliding_movement(do_initial_push: bool = true) -> bool:
 	if player.is_holding: return false
 	var floor_norm = rad_to_deg(player.get_floor_normal().x)
-	var _initial_push: float = config.walk_initial_speed if do_initial_push else 1
+	var _initial_push: float = config.walk_initial_speed if do_initial_push else 1.0
 	if floor_norm <= -40.0 + (int(!do_initial_push) * 30):
 		if abs(player.speed.x) < _initial_push:
 			if player.test_move(player.transform, Vector2.LEFT.rotated(player.global_rotation)):
@@ -314,52 +324,83 @@ func _shape_process() -> void:
 		suit.physics_shaper_crouch if crouch_shape else suit.physics_shaper
 	)
 	if !shaper: return
-
-	var is_colliding: bool = _shape_recovery_process()
-
-	player.has_stuck = is_colliding
-	if player.has_stuck:
+	
+	var has_previously_stuck: bool = player.has_stuck
+	var is_colliding: bool
+	var is_colliding_in_advance: bool = _shape_recovery_process(false)
+	
+	player.has_stuck = is_colliding_in_advance
+	if !player.has_stuck && (player.has_stuck_animation || has_previously_stuck):
+		if player.is_crouching:
+			is_colliding = false
+		else:
+			is_colliding = _shape_recovery_process(true)
+		player.has_stuck_animation = is_colliding
+		if !is_colliding:
+			player.stuck_block_left = false
+			player.stuck_block_right = false
+			if !player.is_crouching:
+				if (player.left_right >= 0 && player.speed.x < -1) || (player.left_right <= 0 && player.speed.x > 1):
+					player.speed.x = 0
+		else:
+			if player.stuck_block_left && player.left_right < 0: player.left_right = 0
+			if player.stuck_block_right && player.left_right > 0: player.left_right = 0
+	if player.has_stuck || player.has_stuck_animation:
 		shaper = suit.physics_shaper_crouch
-
+	
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
 	shaper.install_shape_for_caster(player.attack)
-
+	
 	if player.collision_shape.shape is RectangleShape2D:
 		player.head.position.y = player.collision_shape.position.y - player.collision_shape.shape.size.y / 2 - 2
 
 
-func _shape_recovery_process() -> bool:
+func _shape_recovery_process(precise: bool = false) -> bool:
 	if player.warp != Player.Warp.NONE || player.completed:
 		return false
 
 	var raycast: RayCast2D = player.collision_recovery
+	var loop_calls: int = 1 + int(precise)
 	raycast.position = suit.physics_shaper.shape_pos
 	raycast.target_position.y = (
 		-suit.physics_shaper.shape.size.y + 16 - suit.physics_shaper.shape_pos.y
 	)
-	raycast.force_raycast_update()
-	var collider = raycast.get_collider()
-	var is_colliding: bool = false
-	if collider is TileMap:
-		var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
-		var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
-		var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
-		if tile_data:
-			var phys_layer = collider.tile_set.get_physics_layers_count()
-			for i in phys_layer:
-				for j in tile_data.get_collision_polygons_count(i):
-					if !tile_data.is_collision_polygon_one_way(i, j):
-						is_colliding = true
-						break
-	elif collider is CollisionObject2D:
-		var i = raycast.get_collider_shape()
-		if !collider.is_shape_owner_one_way_collision_enabled(i):
-			is_colliding = true
-	else:
-		is_colliding = raycast.is_colliding()
-
-	return is_colliding
+	
+	var is_colliding: Array[bool]
+	is_colliding.resize(loop_calls)
+	is_colliding.fill(false)
+	for index in loop_calls:
+		if precise:
+			if index == 0:
+				raycast.position.x = suit.physics_shaper.shape_pos.x - (suit.physics_shaper.shape.size.x / 2)
+			else:
+				raycast.position.x = suit.physics_shaper.shape_pos.x + (suit.physics_shaper.shape.size.x / 2)
+		raycast.force_raycast_update()
+		var collider = raycast.get_collider()
+		if collider is TileMap:
+			var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
+			var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
+			var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
+			if tile_data:
+				var phys_layer = collider.tile_set.get_physics_layers_count()
+				for i in phys_layer:
+					for j in tile_data.get_collision_polygons_count(i):
+						if !tile_data.is_collision_polygon_one_way(i, j):
+							is_colliding[index] = true
+							break
+		elif collider is CollisionObject2D:
+			var i = raycast.get_collider_shape()
+			if !collider.is_shape_owner_one_way_collision_enabled(i):
+				is_colliding[index] = true
+		else:
+			is_colliding[index] = raycast.is_colliding()
+	
+	if precise:
+		player.stuck_block_left = is_colliding.front()
+		player.stuck_block_right = is_colliding.back()
+	
+	return true in is_colliding
 
 var _head_signal_cooldown: int = 0
 #= Head
@@ -382,16 +423,51 @@ func _head_process() -> void:
 			_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
 		
 		# Bumpable Block
-		if collider is StaticBumpingBlock && collider.has_method(&"got_bumped") && !_on_cooldown:
-			#if collider.global_position.direction_to(player.head.global_position + 8 * Vector2.DOWN.rotated(player.global_rotation)).dot(Vector2.DOWN.rotated(collider.global_rotation)) > cos(PI / 4):
-				#print(player.speed_previous)
-				if (player.speed_previous.y < 0 && !collider.initially_visible_and_solid) || \
-				(player.is_on_ceiling() && collider.initially_visible_and_solid) || \
-				(player.is_crouching && player.is_on_floor()):
-					collider.got_bumped.call_deferred(true)
-					_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
-
+		if !player._crouch_jump_tweak && player.is_crouching && player.is_on_floor() && \
+			collider is StaticBumpingBlock && collider.has_method(&"got_bumped") && !_on_cooldown:
+				collider.got_bumped.call_deferred(true)
+				_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
+	
 	player.bubbler.paused = player.is_underwater_out
+	
+	if !player.is_on_ceiling(): return
+	
+	_process_collision_deferred(-1, _on_cooldown)
+
+func _process_collision_deferred(_dir: int, _on_cooldown: bool) -> void:
+	# Patch for doubled detections, which happens if you hold against a wall and try to bump a brick
+	if _on_cooldown: return
+	var max_multiple_breaking_blocks: int = 4
+	
+	var rot: = player.get_global_gravity_dir().angle()
+	var vel = Vector2(0, _dir).rotated(rot - PI/2)
+	if is_zero_approx(vel.x):
+		vel.x = 0
+	
+	# WARNING: Only the first collision shape will be considered!
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.collision_mask = player.collision_mask
+	query.motion = vel
+	
+	var _already_processed: Array[int]
+	
+	for i in player.get_shape_owners():
+		query.transform = (player.shape_owner_get_owner(i) as Node2D).global_transform
+		for j in player.shape_owner_get_shape_count(i):
+			query.shape = player.shape_owner_get_shape(i, j)
+			
+			var cldata: Array[Dictionary] = player.get_world_2d().direct_space_state.intersect_shape(query, max_multiple_breaking_blocks)
+			
+			for k in cldata:
+				var l: Object = k.get(&"collider", null)
+				var id: int = k.get(&"collider_id", 0)
+				
+				if !(id in _already_processed):
+					_already_processed.append(id)
+					if l is StaticBumpingBlock && l.has_method(&"got_bumped"):
+						l.got_bumped.call_deferred(true)
+						_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
+
 
 #= Body
 func _body_process() -> void:
