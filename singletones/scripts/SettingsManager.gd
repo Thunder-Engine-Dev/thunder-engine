@@ -30,6 +30,7 @@ var default_settings: Dictionary = {
 		"m_jump": _get_current_key(&"m_jump"),
 		"m_run": _get_current_key(&"m_run"),
 		"m_attack": _get_current_key(&"m_attack"),
+		"m_extra": _get_current_key(&"m_extra"),
 		"pause_toggle": _get_current_key(&"pause_toggle"),
 		"ui_up": _get_current_key(&"ui_up"),
 		"ui_down": _get_current_key(&"ui_down"),
@@ -49,6 +50,7 @@ var default_settings: Dictionary = {
 		"m_jump": _get_current_joykey(&"m_jump"),
 		"m_run": _get_current_joykey(&"m_run"),
 		"m_attack": _get_current_joykey(&"m_attack"),
+		"m_extra": _get_current_joykey(&"m_extra"),
 		"pause_toggle": _get_current_joykey(&"pause_toggle"),
 		"ui_up": _get_current_joykey(&"ui_up"),
 		"ui_down": _get_current_joykey(&"ui_down"),
@@ -196,6 +198,9 @@ func _process_settings() -> void:
 
 ## Returns the keyboard key label of specified action
 func _get_current_key(action: StringName) -> String:
+	if !InputMap.has_action(action):
+		push_error("Input action " + action + " was not found. Please set up your Input Map in Project Settings to include this action.")
+		return ""
 	var keys = InputMap.action_get_events(action)
 	for key in keys:
 		if key is InputEventKey:
@@ -204,6 +209,8 @@ func _get_current_key(action: StringName) -> String:
 
 ## Returns the joypad button label of specified action
 func _get_current_joykey(action: StringName) -> Array[JoyButton]:
+	if !InputMap.has_action(action):
+		return []
 	var buttons = InputMap.action_get_events(action)
 	var array: Array[JoyButton] = []
 	for joykey in buttons:
@@ -219,7 +226,7 @@ func _load_keys() -> void:
 	for action in controls:
 		if !controls[action] || !controls[action] is String:
 			continue
-
+		
 		var scancode = OS.find_keycode_from_string(controls[action])
 		var key = InputEventKey.new()
 		key.keycode = scancode

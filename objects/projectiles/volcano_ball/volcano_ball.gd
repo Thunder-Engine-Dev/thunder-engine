@@ -1,9 +1,10 @@
 extends Projectile
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@export var remove_offscreen_after: float = 4.0
 
 func _ready() -> void:
-	offscreen_handler(4.0)
+	offscreen_handler(remove_offscreen_after)
 	super()
 	if speed.x < 0 && sprite_node:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed

@@ -24,6 +24,7 @@ metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale"]
 texture = ExtResource("2_xpnjf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_k31xc")
 
 [node name="Attack" type="ShapeCast2D" parent="."]
@@ -41,7 +42,6 @@ metadata/_edit_pinned_properties_ = [&"special_tags"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-10, -10, 20, 512)
 metadata/_edit_lock_ = true
 
 [connection signal="collided_floor" from="." to="." method="jump"]

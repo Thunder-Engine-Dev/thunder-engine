@@ -1,7 +1,9 @@
 extends Projectile
 
+@export var remove_offscreen_after: float = 2.0
+
 func _ready() -> void:
-	offscreen_handler(2.0)
+	offscreen_handler(remove_offscreen_after)
 	super()
 	if speed.x < 0 && sprite_node:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed

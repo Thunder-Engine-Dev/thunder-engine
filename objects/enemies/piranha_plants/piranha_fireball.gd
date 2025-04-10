@@ -64,6 +64,10 @@ func _shoot() -> void:
 			
 			if &"vision" in ball:
 				ball.expand_vision(Vector2(8, 8))
+			if "projectile_offscreen_time" in vars && "remove_offscreen_after" in ball:
+				ball.remove_offscreen_after = vars.projectile_offscreen_time
+			if "projectile_remove_from_top" in vars && "remove_top_offscreen" in ball:
+				ball.remove_top_offscreen = vars.projectile_remove_from_top
 		).create_2d()
 	
 	Audio.play_sound(vars.attack_sound, node, false)

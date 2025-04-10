@@ -3,10 +3,16 @@ extends Projectile
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
 @export var jumping_speed: float = -250.0
+@export var remove_offscreen_after: float = 3.0
+@export var remove_top_offscreen: bool = false
 
 
 func _ready() -> void:
-	offscreen_handler(2.0)
+	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
+		remove_offscreen_after = 2.0
+	if !remove_top_offscreen:
+		vision_node.rect.size.y = 512
+	offscreen_handler(remove_offscreen_after)
 	super()
 
 

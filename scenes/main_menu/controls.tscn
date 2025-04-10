@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene load_steps=39 format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
 [ext_resource type="Script" uid="uid://dwy0ri4q1seia" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
@@ -53,6 +53,10 @@ region = Rect2(1, 256, 52, 26)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhbv2"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(125, 255, 56, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g7i5"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(298, 168, 82, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_shng1"]
 atlas = ExtResource("6_3wm1w")
@@ -153,16 +157,14 @@ size = Vector2i(640, 480)
 render_target_update_mode = 4
 
 [node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
-anchors_preset = 11
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = -448.0
 offset_top = 16.0
 offset_right = -64.0
-offset_bottom = 360.0
+offset_bottom = 840.0
 grow_horizontal = 0
-grow_vertical = 2
 script = ExtResource("3_0brmq")
 focused = false
 control_sound = ExtResource("4_t3dkp")
@@ -227,6 +229,11 @@ displayed_texture = SubResource("AtlasTexture_ne13l")
 layout_mode = 2
 action_name = "m_run"
 displayed_texture = SubResource("AtlasTexture_bhbv2")
+
+[node name="Extra" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_extra"
+displayed_texture = SubResource("AtlasTexture_0g7i5")
 
 [node name="Pause" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
 layout_mode = 2

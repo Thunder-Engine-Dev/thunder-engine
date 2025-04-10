@@ -3,6 +3,7 @@ extends Control
 var opened: bool = false
 var open_blocked: bool = false
 var _no_unpause: bool = false
+var _prev_mouse_mode: Input.MouseMode
 
 const open_sound = preload("./sounds/pause_open.wav")
 const close_sound = null
@@ -33,6 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 	if !v_box_container.focused && opened: return
+	if !is_inside_tree(): return
 
 	if !opened && is_instance_valid(TransitionManager.current_transition):
 		return
@@ -56,11 +58,13 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		animation_player.play("open")
 		if !no_sound_effect:
 			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		_prev_mouse_mode = SettingsManager.mouse_mode
 		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
 		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
-		SettingsManager.hide_mouse()
+		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
+			SettingsManager.hide_mouse()
 
 	get_tree().paused = opened if !_no_unpause else true
 	v_box_container.focused = false

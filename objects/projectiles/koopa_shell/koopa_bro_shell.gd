@@ -3,6 +3,7 @@ extends Projectile
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
+@export var remove_offscreen_after: float = 2.0
 
 var drown: bool = false
 
@@ -11,7 +12,7 @@ var drown: bool = false
 signal run_out
 
 func _ready() -> void:
-	offscreen_handler(2.0)
+	offscreen_handler(remove_offscreen_after)
 	super()
 
 func _physics_process(delta: float) -> void:

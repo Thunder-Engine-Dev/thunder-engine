@@ -18,7 +18,7 @@ func _on_level_end() -> void:
 
 
 ## Call this method in _ready() for optimization
-func offscreen_handler(delete_offscreen_after_sec: float = 2.0, offscreen_offset: float = 32) -> void:
+func offscreen_handler(delete_offscreen_after_sec: float = 3.0, offscreen_offset: float = 32) -> void:
 	assert(vision_node, "Please set up Vision Path in the inspector for the projectile")
 	await get_tree().physics_frame
 	if !is_inside_tree():
@@ -26,7 +26,7 @@ func offscreen_handler(delete_offscreen_after_sec: float = 2.0, offscreen_offset
 	if belongs_to == Data.PROJECTILE_BELONGS.ENEMY:
 		# Delete projectile if shot by enemy off-screen
 		if !vision_node.is_on_screen():
-			await get_tree().create_timer(0.75, false).timeout
+			await get_tree().create_timer(delete_offscreen_after_sec, false).timeout # 0.75
 			if is_inside_tree() && !vision_node.is_on_screen():
 				queue_free()
 			return

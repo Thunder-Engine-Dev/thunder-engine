@@ -13,6 +13,7 @@ signal remaining_continues(count: String)
 signal no_remaining_continues
 signal infinite_continues
 signal have_continues
+signal screen_opened
 
 func _ready() -> void:
 	animation_player.play(&"init")
@@ -60,6 +61,7 @@ func toggle(no_resume: bool = false) -> void:
 		#Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
 		#Audio.play_music(music, 99, { "ignore_pause": true })
 		SettingsManager.show_mouse()
+		screen_opened.emit()
 		if Data.technical_values.remaining_continues == 0:
 			no_remaining_continues.emit()
 		elif Data.technical_values.remaining_continues > 0:

@@ -36,7 +36,7 @@ killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-12, -16, 24, 512)
+rect = Rect2(-12, -16, 24, 32)
 
 [node name="Underwater" type="Node" parent="."]
 script = ExtResource("4_ylopw")

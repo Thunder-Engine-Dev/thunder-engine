@@ -4,6 +4,8 @@ const explosion_effect: PackedScene = preload("res://engine/objects/effects/expl
 const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
+@export var remove_offscreen_after: float = 3.0
+@export var remove_top_offscreen: bool = false
 
 var drown: bool = false
 var _bubble_timer: float
@@ -13,7 +15,9 @@ var _bubble_timer: float
 signal run_out
 
 func _ready() -> void:
-	offscreen_handler(3.0)
+	if !remove_top_offscreen:
+		vision_node.rect.size.y = 512
+	offscreen_handler(remove_offscreen_after)
 	super()
 
 

@@ -313,7 +313,7 @@ texture = ExtResource("14_j3ggr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pause"]
 libraries = {
-"": SubResource("AnimationLibrary_5i4gi")
+&"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 
@@ -337,7 +337,7 @@ script = ExtResource("20_r3d2l")
 process_mode = 3
 hide_bg = true
 
-[node name="Back" parent="Controls/SubViewportContainer/SubViewport/Options" index="22"]
+[node name="Back" parent="Controls/SubViewportContainer/SubViewport/Options" index="23"]
 script = ExtResource("22_rhyed")
 
 [connection signal="selected" from="Pause/VBoxContainer" to="Pause/Selector" method="handle_selection"]
