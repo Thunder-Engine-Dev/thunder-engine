@@ -54,6 +54,7 @@ script = ExtResource("2_hjp83")
 metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
 polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
 one_way_collision = true
 
