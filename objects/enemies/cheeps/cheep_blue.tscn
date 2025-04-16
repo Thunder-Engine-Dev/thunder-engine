@@ -62,7 +62,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 4.5
 }]
 
 [node name="CheepBlue" instance=ExtResource("1_6qc7h")]

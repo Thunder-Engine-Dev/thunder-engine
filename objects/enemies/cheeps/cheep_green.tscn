@@ -43,7 +43,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="CheepGreen" instance=ExtResource("1_uugif")]

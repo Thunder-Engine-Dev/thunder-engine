@@ -53,7 +53,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="CheepRed" type="CharacterBody2D"]
