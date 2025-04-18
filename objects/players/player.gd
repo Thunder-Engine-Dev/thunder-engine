@@ -282,7 +282,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 		get_tree().paused = true
 		Scenes.custom_scenes.pause._no_unpause = true
 		sprite.process_mode = Node.PROCESS_MODE_ALWAYS
-		await get_tree().create_timer(1.0, true, true).timeout
+		await get_tree().create_timer(suit.appearing_time_sec, true, true).timeout
 		sprite.process_mode = Node.PROCESS_MODE_INHERIT
 		_suit_tree_paused = false
 		get_tree().paused = false

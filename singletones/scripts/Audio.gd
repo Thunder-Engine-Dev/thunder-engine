@@ -48,6 +48,9 @@ var _duplicated_sounds: Array[AudioStream]
 var _calculate_player_position = _lcpp.bind()
 
 signal any_music_finished
+signal music_started(channel_id: int)
+signal music_stopped(channel_id: int, fading: bool)
+signal all_musics_stopped()
 
 
 func _init() -> void:
@@ -184,6 +187,7 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		else Node.PROCESS_MODE_PAUSABLE
 	if &"start_from_sec" in other_keys && other_keys.start_from_sec is float && other_keys.start_from_sec > 0.0:
 		_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
+	music_started.emit(channel_id)
 	
 	return music_player if is_instance_valid(music_player) else null
 
@@ -219,6 +223,7 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 		_music_channels[channel_id].stop()
 	else:
 		fade_music_1d_player(_music_channels[channel_id], -40, 2, Tween.TRANS_SINE, true)
+	music_stopped.emit(channel_id, fade)
 
 
 ## Stop all musics from playing
@@ -231,6 +236,8 @@ func stop_all_musics(fade: bool = false) -> void:
 			_music_channels.erase(i)
 		else:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
+		music_stopped.emit(i, fade)
+	all_musics_stopped.emit()
 
 func _stop_all_musics_scene_changed() -> void:
 	for i in _music_channels.keys():
@@ -239,6 +246,8 @@ func _stop_all_musics_scene_changed() -> void:
 		
 		_music_channels[i].queue_free()
 		_music_channels.erase(i)
+		music_stopped.emit(i, false)
+	all_musics_stopped.emit()
 
 
 func stop_all_sounds() -> void:

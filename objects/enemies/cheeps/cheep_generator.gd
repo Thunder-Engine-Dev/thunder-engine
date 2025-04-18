@@ -4,6 +4,7 @@ extends Node
 @export_enum("Left: -1", "Right: 1") var direction: int = 1
 @export var active: bool = true
 @export var delay_sec: float = 2
+@export var delay_stopped_sec: float = 3.5
 
 var timer: float
 
@@ -15,7 +16,8 @@ func _physics_process(delta):
 	if !player: return
 	
 	timer += delta
-	if timer < delay_sec: return
+	var is_moving: bool = player && player.speed.x > 20
+	if timer < (delay_sec if is_moving else delay_stopped_sec): return
 	timer = 0
 	
 	if player.speed.x < -1: return

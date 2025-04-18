@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=14 format=3 uid="uid://cghbrsto3pcaq"]
+
+[ext_resource type="Script" uid="uid://51f62nkmu0tl" path="res://engine/objects/players/behaviors/player_animation_frog_behavior.gd" id="1_ivcya"]
+[ext_resource type="SpriteFrames" uid="uid://bi0opaaunlr1a" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_frog.tres" id="2_ivcya"]
+[ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="4_a6bfp"]
+[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="5_i02wp"]
+[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="6_m1s04"]
+[ext_resource type="Script" uid="uid://c6fawv31jghls" path="res://engine/objects/players/behaviors/player_physics_frog_behavior.gd" id="7_bcl0t"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_y8iu5"]
+[ext_resource type="Resource" uid="uid://d0fc471kio5qd" path="res://engine/objects/players/prefabs/configs/config_luigi_frog.tres" id="8_ivcya"]
+[ext_resource type="Resource" uid="uid://bgweroycf2u6t" path="res://engine/objects/players/prefabs/shapers/shaper_player_frog.tres" id="9_7b03v"]
+[ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="11_34t2k"]
+[ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="12_sov3f"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="13_j01cp"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="14_x5eeg"]
+
+[resource]
+script = ExtResource("12_sov3f")
+name = &"frog"
+type = 2
+gets_hurt_to = ExtResource("4_a6bfp")
+appearing_time_sec = 0.3
+physics_config = ExtResource("8_ivcya")
+physics_behavior = ExtResource("7_bcl0t")
+physics_crouchable = false
+physics_shaper = ExtResource("9_7b03v")
+physics_shaper_crouch = ExtResource("11_34t2k")
+animation_sprites = ExtResource("2_ivcya")
+animation_behavior = ExtResource("1_ivcya")
+animation_underwater_bubble_offset = Vector2(0, -20)
+behavior_crouch_reflect_fireballs = false
+grab_behavior = ExtResource("5_i02wp")
+grab_sound_grab = ExtResource("6_m1s04")
+grab_sound_kick = ExtResource("7_y8iu5")
+extra_vars = {}
+sound_hurt = ExtResource("14_x5eeg")
+sound_death = ExtResource("13_j01cp")
+sound_pitch = 1.0

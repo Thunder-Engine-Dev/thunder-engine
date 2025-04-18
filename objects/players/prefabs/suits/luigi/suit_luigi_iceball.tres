@@ -44,6 +44,7 @@ script = ExtResource("16_vccy5")
 name = &"iceball"
 type = 2
 gets_hurt_to = ExtResource("8_5hs8y")
+appearing_time_sec = 1.0
 physics_config = ExtResource("13_cynh3")
 physics_behavior = ExtResource("12_b7010")
 physics_crouchable = true

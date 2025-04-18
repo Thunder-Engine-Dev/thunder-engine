@@ -64,7 +64,7 @@ func _suit_appeared() -> void:
 	
 	_setup_tweaks()
 	
-	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else 1.0, false, true).timeout
+	await player.get_tree().create_timer(0.02 if _suit_pause_tweak else player.suit.appearing_time_sec, false, true).timeout
 	if sprite.animation == &"appear": sprite.play(&"default")
 
 
@@ -188,90 +188,114 @@ func _animation_process(delta: float) -> void:
 	# Non-warping
 	if player.warp == Player.Warp.NONE:
 		player.skid.emitting = false
-		if sprite.animation in [&"appear", &"attack", &"grab", &"kick"]: return
-		# Climbing
-		if player.is_climbing:
-			_play_anim(&"climb")
-			if player.speed != Vector2.ZERO:
-				_climb_progress += abs(player.speed.length() * delta)
-				if _climb_progress > 20:
-					_climb_progress = 0
-					sprite.flip_h = !sprite.flip_h
-			return
-		if player.is_sliding:
-			_play_anim(&"slide")
-			sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
-			player.skid.emitting = player.is_on_floor()
-			return
-		# Non-climbing
-		player.skid.emitting = player.is_skidding
-		if player.is_skidding:
-			_skid_sound_loop()
-		if player.is_on_floor() || player.coyote_time > 0.0:
-			_stomp_enabled = false
-			if !(is_zero_approx(player.speed.x)) && !player.has_stuck && !(player.has_stuck_animation && player.left_right == 0):
-				if _separate_run_tweak && abs(player.speed.x) + 25 >= config.walk_max_running_speed && !player.is_holding:
-					_play_anim(&"p_run" if !player.is_skidding else &"skid")
-					_p_run_enabled = true
-				else:
-					_play_anim(
-						StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
-					)
-					_p_run_enabled = false
-				sprite.speed_scale = (
-					clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
-					config.animation_min_walking_speed,
-					config.animation_max_walking_speed)
-				)
-			else:
-				_p_run_enabled = false
-				if player.up_down == -1 && !player.is_holding && _look_up_tweak:
-					if !sprite.animation in [&"look_up", &"hold_look_up"]:
-						Audio.play_sound(_look_up_sound, player, false)
-					_play_anim(_get_animation_prefixed(&"look_up"))
-				else:
-					_idle_timer += delta
-					if _idle_tweak && !player.is_holding && _idle_timer > _idle_activate_after_sec:
-						_play_anim(&"idle")
-					else:
-						_play_anim(_get_animation_prefixed(&"default"))
-			if player.is_crouching || player.crouch_forced:
-				_p_run_enabled = false
-				_play_anim(_get_animation_prefixed(&"crouch"))
-				player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
-		elif player.is_underwater:
-			_p_run_enabled = false
-			_play_anim(_get_animation_prefixed(&"swim"))
-		else:
-			if sprite.animation == &"attack_air": return
-			if _stomp_enabled && !_p_run_enabled:
-				_play_anim(&"stomp")
-			elif player.crouch_forced:
-				_play_anim(_get_animation_prefixed(&"crouch"))
-			else:
-				if player.speed.y < 0:
-					_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_jump")
-				else:
-					_play_anim(_get_animation_prefixed(&"fall") if !_p_run_enabled else &"p_fall")
+		_animation_non_warping_process(delta)
 	# Warping
 	else:
-		player.skid.emitting = false
-		_idle_timer = 0.0
-		match player.warp_dir:
-			Player.WarpDir.DOWN:
-				_play_anim(
-					&"warp" if _warp_tweak else (
-						_get_animation_prefixed(
-							&"default" if Thunder.is_player_power(Data.PLAYER_POWER.SMALL) else &"crouch"
-						)
+		_animation_warping_process()
+
+
+func _animation_non_warping_process(delta: float) -> void:
+	if sprite.animation in [&"appear", &"attack", &"grab", &"kick"]: return
+	# Climbing
+	if player.is_climbing:
+		return _animation_climbing_process(delta)
+	if player.is_sliding:
+		return _animation_sliding_process(delta)
+	# Non-climbing
+	player.skid.emitting = player.is_skidding
+	if player.is_skidding:
+		_skid_sound_loop()
+	if player.is_on_floor() || player.coyote_time > 0.0:
+		_animation_floor_process(delta)
+	elif player.is_underwater:
+		_animation_swimming_process(delta)
+	else:
+		_animation_jumping_process(delta)
+
+
+func _animation_floor_process(delta: float) -> void:
+	_stomp_enabled = false
+	if !(is_zero_approx(player.speed.x)) && !player.has_stuck && !(player.has_stuck_animation && player.left_right == 0):
+		if _separate_run_tweak && abs(player.speed.x) + 25 >= config.walk_max_running_speed && !player.is_holding:
+			_play_anim(&"p_run" if !player.is_skidding else &"skid")
+			_p_run_enabled = true
+		else:
+			_play_anim(
+				StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
+			)
+			_p_run_enabled = false
+		sprite.speed_scale = (
+			clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
+			config.animation_min_walking_speed,
+			config.animation_max_walking_speed)
+		)
+	else:
+		_p_run_enabled = false
+		if player.up_down == -1 && !player.is_holding && _look_up_tweak:
+			if !sprite.animation in [&"look_up", &"hold_look_up"]:
+				Audio.play_sound(_look_up_sound, player, false)
+			_play_anim(_get_animation_prefixed(&"look_up"))
+		else:
+			_idle_timer += delta
+			if _idle_tweak && !player.is_holding && _idle_timer > _idle_activate_after_sec:
+				_play_anim(&"idle")
+			else:
+				_play_anim(_get_animation_prefixed(&"default"))
+	if player.is_crouching || player.crouch_forced:
+		_p_run_enabled = false
+		_play_anim(_get_animation_prefixed(&"crouch"))
+		player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
+
+
+func _animation_jumping_process(delta: float) -> void:
+	if sprite.animation == &"attack_air": return
+	if _stomp_enabled && !_p_run_enabled:
+		_play_anim(&"stomp")
+	elif player.crouch_forced:
+		_play_anim(_get_animation_prefixed(&"crouch"))
+	else:
+		if player.speed.y < 0:
+			_play_anim(_get_animation_prefixed(&"jump") if !_p_run_enabled else &"p_jump")
+		else:
+			_play_anim(_get_animation_prefixed(&"fall") if !_p_run_enabled else &"p_fall")
+
+
+func _animation_climbing_process(delta: float) -> void:
+	_play_anim(&"climb")
+	if player.speed != Vector2.ZERO:
+		_climb_progress += abs(player.speed.length() * delta)
+		if _climb_progress > 20:
+			_climb_progress = 0
+			sprite.flip_h = !sprite.flip_h
+
+func _animation_swimming_process(delta: float) -> void:
+	_p_run_enabled = false
+	_play_anim(_get_animation_prefixed(&"swim"))
+
+func _animation_sliding_process(delta: float) -> void:
+	_play_anim(&"slide")
+	sprite.speed_scale = clampf(abs(player.speed.x) * 0.01 * 1.5, 1, 5)
+	player.skid.emitting = player.is_on_floor()
+
+func _animation_warping_process() -> void:
+	player.skid.emitting = false
+	_idle_timer = 0.0
+	match player.warp_dir:
+		Player.WarpDir.DOWN:
+			_play_anim(
+				&"warp" if _warp_tweak else (
+					_get_animation_prefixed(
+						&"default" if Thunder.is_player_power(Data.PLAYER_POWER.SMALL) else &"crouch"
 					)
 				)
-			Player.WarpDir.UP:
-				_play_anim(&"warp" if _warp_tweak else _get_animation_prefixed(&"jump"))
-			Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
-				player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
-				_play_anim(_get_animation_prefixed(&"walk"))
-				sprite.speed_scale = 2
+			)
+		Player.WarpDir.UP:
+			_play_anim(&"warp" if _warp_tweak else _get_animation_prefixed(&"jump"))
+		Player.WarpDir.LEFT, Player.WarpDir.RIGHT:
+			player.direction = -1 if player.warp_dir == Player.WarpDir.LEFT else 1
+			_play_anim(_get_animation_prefixed(&"walk"))
+			sprite.speed_scale = 2
+
 
 func _get_animation_prefixed(anim_name: StringName) -> StringName:
 	if player.is_holding:

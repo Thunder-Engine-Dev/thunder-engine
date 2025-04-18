@@ -24,6 +24,7 @@ const MARIO_SUITS: Dictionary = {
 	"green_lui": preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_green_lui.tres"),
 	"iceball": preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_iceball.tres"),
 	"boomerang": preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_boomerang.tres"),
+	"frog": preload("res://engine/objects/players/prefabs/suits/mario/suit_mario_frog.tres"),
 }
 ## Base suits for Luigi
 const LUIGI_SUITS: Dictionary = {
@@ -34,6 +35,7 @@ const LUIGI_SUITS: Dictionary = {
 	"green_lui": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_green_lui.tres"),
 	"iceball": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_iceball.tres"),
 	"boomerang": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_boomerang.tres"),
+	"frog": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_frog.tres"),
 }
 
 ## Base voice lines for Mario

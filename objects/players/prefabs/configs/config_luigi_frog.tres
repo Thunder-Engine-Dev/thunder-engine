@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="PlayerConfig" load_steps=5 format=3 uid="uid://d0fc471kio5qd"]
+
+[ext_resource type="Script" uid="uid://bh0t8gurod3pp" path="res://engine/objects/players/player_config.gd" id="1_ywmkl"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="2_n0tyo"]
+[ext_resource type="AudioStream" uid="uid://rv6ojidxbd3v" path="res://engine/objects/players/prefabs/sounds/skid.wav" id="3_1417o"]
+[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="4_x1nq6"]
+
+[resource]
+script = ExtResource("1_ywmkl")
+walk_initial_speed = 50.0
+walk_acceleration = 250.0
+walk_deceleration = 250.0
+walk_crouch_deceleration = 625.0
+walk_turning_acce = 834.0
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+underwater_walk_max_walking_speed = 175.0
+underwater_walk_max_running_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1200.0
+jump_buff_dynamic = 1500.0
+jump_stomp_multiplicator = 1.0
+jump_coyote_time_sec = 0.067
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+swim_max_falling_speed = 500.0
+swim_gravity_scale = 0.0
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 500.0
+slide_deceleration = 500.0
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
+animation_max_walking_speed = 3.5
+animation_min_walking_speed = 1.0
+sound_jump = ExtResource("2_n0tyo")
+sound_swim = ExtResource("4_x1nq6")
+sound_skid = ExtResource("3_1417o")

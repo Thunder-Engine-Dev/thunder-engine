@@ -44,6 +44,7 @@ script = ExtResource("16_ahsdd")
 name = &"boomerang"
 type = 2
 gets_hurt_to = ExtResource("8_rswpy")
+appearing_time_sec = 1.0
 physics_config = ExtResource("13_b4jyl")
 physics_behavior = ExtResource("12_cue4j")
 physics_crouchable = true

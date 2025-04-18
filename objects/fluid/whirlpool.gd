@@ -28,6 +28,7 @@ func _physics_process(delta):
 	var camera: Camera2D = Thunder._current_camera
 	
 	if area_2d.overlaps_body(player) && player.is_underwater:
+		if player.suit.name == "frog": return
 		var pos = sinking_point
 		var p_pos = player.global_position
 		

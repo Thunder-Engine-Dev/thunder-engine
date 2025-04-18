@@ -84,24 +84,7 @@ func _movement_x(delta: float) -> void:
 		if do_slide:
 			if _start_sliding_movement(true):
 				return
-	# Recovery if Super Mario has their head stuck in blocks
-	if !player.is_crouching && player.has_stuck:
-		player.left_right = 0
-		#player.jumping = 0
-		if player.is_on_floor():
-			player.speed.x = -player.direction * config.stuck_recovery_speed
-			if player.get_which_wall_collided() == -player.direction:
-				player.direction *= -1
-	# Smoothly go out from recovery process
-	if player.has_stuck_animation:
-		var unstuck_dir: int = int(player.stuck_block_left) - int(player.stuck_block_right)
-		if unstuck_dir == 0: unstuck_dir = -player.direction
-		player.speed.x = unstuck_dir * config.stuck_recovery_speed
-		if player.get_which_wall_collided() == unstuck_dir:
-			player.direction *= -1
-	else:
-		player.stuck_block_left = false
-		player.stuck_block_right = false
+	_movement_x_recovery(delta)
 	
 	if player.is_on_floor():
 		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
@@ -122,6 +105,27 @@ func _movement_x(delta: float) -> void:
 			_decelerate(deceleration, delta)
 		return
 	
+	_movement_x_acceleration(delta)
+	
+	_consistent_crouch_speed = sign(player.left_right) != -player.direction
+	
+	# Initial speed
+	if abs(player.speed.x) < config.walk_initial_speed:
+		if (player.left_right > 0 && player.speed.x >= -1) || (player.left_right < 0 && player.speed.x <= 1):
+			player.direction = sign(player.left_right)
+			player.speed.x = player.direction * config.walk_initial_speed
+			#player.is_skidding = false
+	
+	player.is_skidding = (
+			player._skid_tweak &&
+			(sign(player.left_right) == -player.direction) &&
+			abs(player.speed.x) > 1 &&
+			player.is_on_floor() &&
+			!player.is_holding
+	)
+
+
+func _movement_x_acceleration(delta: float) -> void:
 	# Acceleration
 	var max_speed: float
 	if sign(player.left_right) == player.direction:
@@ -146,23 +150,27 @@ func _movement_x(delta: float) -> void:
 			player.direction *= -1
 	if abs(player.speed.x) > max_speed && sign(player.left_right) != -player.direction && player.is_underwater:
 		_decelerate(config.walk_turning_acce, delta)
-	
-	_consistent_crouch_speed = sign(player.left_right) != -player.direction
-	
-	# Initial speed
-	if abs(player.speed.x) < config.walk_initial_speed:
-		if (player.left_right > 0 && player.speed.x >= -1) || (player.left_right < 0 && player.speed.x <= 1):
-			player.direction = sign(player.left_right)
-			player.speed.x = player.direction * config.walk_initial_speed
-			#player.is_skidding = false
-	
-	player.is_skidding = (
-			player._skid_tweak &&
-			(sign(player.left_right) == -player.direction) &&
-			abs(player.speed.x) > 1 &&
-			player.is_on_floor() &&
-			!player.is_holding
-	)
+
+
+func _movement_x_recovery(delta: float) -> void:
+	# Recovery if Super Mario has their head stuck in blocks
+	if !player.is_crouching && player.has_stuck:
+		player.left_right = 0
+		#player.jumping = 0
+		if player.is_on_floor():
+			player.speed.x = -player.direction * config.stuck_recovery_speed
+			if player.get_which_wall_collided() == -player.direction:
+				player.direction *= -1
+	# Smoothly go out from recovery process
+	if player.has_stuck_animation:
+		var unstuck_dir: int = int(player.stuck_block_left) - int(player.stuck_block_right)
+		if unstuck_dir == 0: unstuck_dir = -player.direction
+		player.speed.x = unstuck_dir * config.stuck_recovery_speed
+		if player.get_which_wall_collided() == unstuck_dir:
+			player.direction *= -1
+	else:
+		player.stuck_block_left = false
+		player.stuck_block_right = false
 
 
 func _movement_y(delta: float) -> void:

@@ -10,6 +10,7 @@ enum Type {
 @export var name: StringName = &"small"
 @export var type: Type = Type.SMALL
 @export var gets_hurt_to: PlayerSuit
+@export var appearing_time_sec: float = 1.0
 @export_group("Physics", "physics_")
 @export var physics_config: PlayerConfig = preload("res://engine/objects/players/prefabs/configs/config_mario_default.tres")
 @export var physics_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_physics_behavior.gd")

@@ -44,6 +44,7 @@ script = ExtResource("8_ib3k0")
 name = &"fireball"
 type = 2
 gets_hurt_to = ExtResource("3_0xukd")
+appearing_time_sec = 1.0
 physics_config = ExtResource("5_3rfr7")
 physics_behavior = ExtResource("4_v73ud")
 physics_crouchable = true

@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvyleahhjj28k"]
+
+[ext_resource type="Script" uid="uid://clqmapaayiiyc" path="res://engine/objects/powerups/frog_suit/frog_suit.gd" id="1_rxwev"]
+[ext_resource type="AudioStream" uid="uid://cea8c8rbn2ls0" path="res://engine/objects/powerups/frog_suit/appear.wav" id="2_o1q7c"]
+[ext_resource type="Texture2D" uid="uid://8cgmkjqf2bkv" path="res://engine/objects/powerups/frog_suit/texture.png" id="3_rxwev"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_6ilvh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(31, 31)
+
+[node name="FrogSuit" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+platform_on_leave = 1
+script = ExtResource("1_rxwev")
+to_suit = "frog"
+pickup_powerup_sound = ExtResource("2_o1q7c")
+speed = Vector2(100, 0)
+gravity_scale = 0.3
+max_falling_speed = 750.0
+metadata/_edit_pinned_properties_ = [&"to_suit"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_rxwev")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-32, -32, 64, 64)
+script = ExtResource("4_6ilvh")
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+monitorable = false
+
+[node name="Collision" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
