@@ -32,7 +32,7 @@ func _physics_process(delta):
 	if (player.speed.x < -1 && direction > 0) || (player.speed.x > 1 && direction < 0): return
 	
 	var inst = cheep.instantiate()
-	inst.look_at_player = false
+	#inst.look_at_player = false
 	Scenes.current_scene.add_child(inst)
 	inst.global_position = Vector2(
 		cam.get_screen_center_position().x + 340 * direction,
