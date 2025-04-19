@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=42 format=3 uid="uid://3njuthtkj3yb"]
+[gd_resource type="SpriteFrames" load_steps=44 format=3 uid="uid://3njuthtkj3yb"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_ljtj5"]
 [ext_resource type="Texture2D" uid="uid://d0cnvf3fx46l6" path="res://engine/objects/players/prefabs/textures/mario/mario_frog.png" id="1_qoe2n"]
@@ -39,9 +39,9 @@ region = Rect2(336, 64, 48, 64)
 atlas = ExtResource("1_ljtj5")
 region = Rect2(384, 64, 48, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qoe2n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfkcf"]
 atlas = ExtResource("1_qoe2n")
-region = Rect2(672, 72, 48, 72)
+region = Rect2(720, 0, 48, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c3b5j"]
 atlas = ExtResource("1_qoe2n")
@@ -54,6 +54,10 @@ region = Rect2(0, 0, 48, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x8v4s"]
 atlas = ExtResource("1_qoe2n")
 region = Rect2(96, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7cop"]
+atlas = ExtResource("1_qoe2n")
+region = Rect2(192, 72, 48, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k1l5e"]
 atlas = ExtResource("1_qoe2n")
@@ -139,6 +143,10 @@ region = Rect2(576, 72, 48, 72)
 atlas = ExtResource("1_qoe2n")
 region = Rect2(624, 72, 48, 72)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qoe2n"]
+atlas = ExtResource("1_qoe2n")
+region = Rect2(672, 72, 48, 72)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_aml7y"]
 atlas = ExtResource("1_qoe2n")
 region = Rect2(0, 0, 48, 72)
@@ -205,7 +213,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qoe2n")
+"texture": SubResource("AtlasTexture_gfkcf")
 }],
 "loop": false,
 "name": &"back",
@@ -245,7 +253,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k1l5e")
+"texture": SubResource("AtlasTexture_v7cop")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k1l5e")
