@@ -3,7 +3,10 @@ extends "res://engine/objects/players/behaviors/player_physics_behavior.gd"
 const small_jump = preload("res://engine/objects/players/prefabs/sounds/small_jump.wav")
 
 var jump_delay: float
+var jump_sound_delay: float
 var swim_delay: float
+
+var small_jump_played: bool = false
 
 func _movement_x(delta: float) -> void:
 	# Switch to sliding movement if slided on a slope
@@ -18,15 +21,28 @@ func _movement_x(delta: float) -> void:
 		return
 	
 	if !player.is_on_floor():
-		jump_delay = -0.05
+		jump_delay = -0.001
+		jump_sound_delay = 0
 	else:
 		if jump_delay < 0:
 			jump_delay += delta
 			player.speed.x = 0
+			small_jump_played = false
+			jump_sound_delay = 0
 			return
-		if abs(player.speed.x) <= 1 && player.left_right == 0:
-			jump_delay = 0
-		jump_delay += delta
+		elif !small_jump_played && jump_sound_delay > 0.2:
+			small_jump_played = true
+			Audio.play_sound(small_jump, player, false, {pitch = suit.sound_pitch})
+		if abs(player.speed.x) > 1:
+			jump_delay += delta
+		if player.sprite.animation == &"walk":
+			jump_sound_delay += delta
+		else:
+			jump_sound_delay = 0
+		if abs(player.speed.x) <= 1 && (player.left_right == 0 || player.is_on_wall()) && jump_sound_delay == 0:
+			jump_delay = -0.001
+			jump_sound_delay = 0
+			small_jump_played = false
 	
 	player.crouch_forced = false
 	player.is_skidding = false
@@ -37,7 +53,6 @@ func _movement_x(delta: float) -> void:
 		if player.is_on_floor() && !player.completed && jump_delay >= 0.45:
 			player.speed.x = 0
 			jump_delay = -0.12
-			Audio.play_sound(small_jump, player, false, {pitch = suit.sound_pitch})
 		return
 	
 	_movement_x_acceleration(delta)
@@ -60,7 +75,6 @@ func _movement_x_acceleration(delta: float) -> void:
 		if jump_delay >= 0.45:
 			player.speed.x = 0
 			jump_delay = -0.12
-			Audio.play_sound(small_jump, player, false, {pitch = suit.sound_pitch})
 	
 	if sign(player.left_right) == player.direction:
 		max_speed = (
@@ -81,6 +95,8 @@ func _movement_y(delta: float) -> void:
 	if player.is_crouching && !player.crouch_forced && !ProjectSettings.get_setting("application/thunder_settings/player/jumpable_when_crouching", false):
 		return
 	if player.completed:
+		jump_delay = 0
+		jump_sound_delay = 0
 		if player.crouch_forced && !player.is_on_floor():
 			player.is_crouching = false
 			player.crouch_forced = false
@@ -102,31 +118,36 @@ func _movement_y(delta: float) -> void:
 				swim_delayed = true
 				player.swam.emit()
 				Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
-			if swim_delay > 0.8:
+			if swim_delay > 1.2:
 				swim_delay = 0
 				swim_delayed = false
 		else:
 			swim_delay = int(player.left_right || player.up_down) * 0.01
+			swim_delayed = false
 		
 		if player.speed.y < -abs(config.swim_max_speed) && !player.is_underwater_out:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 		
-		if !player.left_right && !player.up_down:
-			player.speed.y = move_toward(player.speed.y, 25, delta * 350 * (1 + float(player.speed.y > 200) * 4))
+		# Vertical movement
+		if player.up_down == 0:
+			player.speed.y = move_toward(player.speed.y, 0, 625 * delta)
 		else:
-			if !(player.is_underwater_out && player.up_down == 0):
-				player.speed.y = player.up_down * 125 * (1 + player.jumping * 1.1)
+			player.speed.y = player.up_down * 125 * (1 + player.jumping * 1.1)
+		
+		# Horizontal movement
+		if player.left_right == 0:
+			_decelerate(625, delta)
+		else:
 			player.speed.x = player.left_right * 125 * (1 + player.jumping * 1.2)
-			if player.left_right != 0:
-				player.direction = sign(player.left_right)
+			player.direction = sign(player.left_right)
 		
 		if player.is_underwater_out && player.up_down == 0:
-			player.speed.y = move_toward(player.speed.y, 50, delta * 450 * (1 + float(player.speed.y > 200) * 4))
-		if !player.left_right:
-			player.speed.x = 0
+			player.speed.y = move_toward(player.speed.y, 50, delta * 1000)
+
 	# Jumping
 	else:
-		swim_delay = 0.4
+		swim_delay = 0.01
+		swim_delayed = false
 		if (player.is_on_floor() || player.coyote_time > 0.0) && (player.up_down <= 0 || player._crouch_jump_tweak):
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()
@@ -148,3 +169,12 @@ func _movement_y(delta: float) -> void:
 		player.ghost_speed_y = 0.0
 	if !player.jumping && player.speed.y >= 0:
 		player._has_jumped = false
+
+func _stop_sliding_movement() -> void:
+	super()
+	jump_delay = 0
+
+func _start_sliding_movement(do_initial_push: bool = true) -> bool:
+	jump_delay = 0
+	jump_sound_delay = 0
+	return super(do_initial_push)
