@@ -49,8 +49,8 @@ func _physics_process(delta: float) -> void:
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
 	elif can_coyote:
 		player.coyote_time = config.jump_coyote_time_sec
-	if player.is_on_wall():
-		player.speed.x = 0
+	#if player.is_on_wall():
+	#	player.speed.x = 0
 
 
 func _movement_debug(delta) -> void:

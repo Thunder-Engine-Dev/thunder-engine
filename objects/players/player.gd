@@ -329,14 +329,6 @@ func _set_ignore_input() -> void:
 	_has_jumped = true
 
 
-## -1 is Left, 1 is Right, 0 is None
-func get_which_wall_collided() -> int:
-	if !is_on_wall():
-		return 0
-	var _c: Vector2 = get_wall_normal()
-	return -sign(_c.x)
-
-
 #= Status
 func invincible(duration: float = 2) -> void:
 	timer_invincible.start(duration)

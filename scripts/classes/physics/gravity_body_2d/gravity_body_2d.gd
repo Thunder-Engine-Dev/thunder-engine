@@ -191,6 +191,14 @@ func get_global_gravity_dir() -> Vector2:
 	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
 
 
+## -1 is Left, 1 is Right, 0 is None
+func get_which_wall_collided() -> int:
+	if !is_on_wall():
+		return 0
+	var _c: Vector2 = get_wall_normal()
+	return -sign(_c.x)
+
+
 # Updaters
 ## Update [member up_direction] to suit certain current situation
 func update_up_direction() -> void:
