@@ -8,9 +8,10 @@ var can_coyote: bool
 
 func _ready() -> void:
 	player = node as Player
+	can_coyote = SettingsManager.get_tweak("coyote_time", true)
+	
 	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
 	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false), CONNECT_REFERENCE_COUNTED)
-	can_coyote = SettingsManager.get_tweak("coyote_time", true)
 
 
 func _physics_process(delta: float) -> void:
@@ -25,6 +26,8 @@ func _physics_process(delta: float) -> void:
 	_shape_process()
 	if player.warp != Player.Warp.NONE: return
 
+	# Head
+	_head_process()
 	# Body
 	_body_process()
 	# Floor
@@ -43,8 +46,6 @@ func _physics_process(delta: float) -> void:
 		_movement_x(delta)
 		_movement_y(delta)
 	player.motion_process(delta)
-	# Head
-	_head_process()
 	if !player.is_on_floor():
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
 	elif can_coyote:
@@ -54,15 +55,16 @@ func _physics_process(delta: float) -> void:
 
 
 func _movement_debug(delta) -> void:
-	var speed: float = 400.0
+	var speed: float = 8
 	var dir: Vector2 = Vector2(
 		Input.get_axis(&"m_left", &"m_right"),
 		Input.get_axis(&"m_up", &"m_down")
 	)
+	var extra: float = 4 * int(Input.is_action_pressed(&"m_extra")) + 1
 	var run: int = 1 + int(Input.is_action_pressed(&"m_run"))
 
-	var vel: Vector2 = speed * dir * run
-	player.position += vel * delta
+	var vel: Vector2 = speed * dir * run * extra
+	player.position += vel
 
 
 #= Movement
