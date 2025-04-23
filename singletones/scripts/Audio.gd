@@ -175,17 +175,23 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		print("ERROR: Invalid data provided in method Audio.play_music")
 		return null
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		_music_channels[channel_id].pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		_music_channels[channel_id].volume_db = other_keys.volume
-	if &"fade_duration" in other_keys && other_keys.fade_duration is float:
-		if &"fade_to" in other_keys && other_keys.fade_to is float:
-			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration)
+	if &"fade_duration" in other_keys && (other_keys.fade_duration is float || other_keys.fade_duration is int):
+		if &"fade_to" in other_keys && (other_keys.fade_to is float || other_keys.fade_to is int):
+			var _fade_mtd = Tween.TransitionType.TRANS_LINEAR
+			var _fade_ease = Tween.EaseType.EASE_IN
+			if &"fade_method" in other_keys && other_keys.fade_method is Tween.TransitionType:
+				_fade_mtd = other_keys.fade_method
+			if &"fade_ease" in other_keys && other_keys.fade_ease is Tween.EaseType:
+				_fade_ease = other_keys.fade_ease
+			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration, _fade_mtd, false, _fade_ease)
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
-	if &"start_from_sec" in other_keys && other_keys.start_from_sec is float && other_keys.start_from_sec > 0.0:
+	if &"start_from_sec" in other_keys && (other_keys.start_from_sec is float || other_keys.start_from_sec is int) && other_keys.start_from_sec > 0.0:
 		_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
 	music_started.emit(channel_id)
 	

@@ -61,10 +61,12 @@ func _physics_process(delta: float) -> void:
 					volume = boss_music_volume,
 					ignore_pause = true,
 				} if !boss_music_fading else {
-					volume = -40,
+					volume = -20,
 					start_from_sec = boss_music_start_from_sec,
-					fade_duration = 1.5,
+					fade_duration = 1.0,
 					fade_to = boss_music_volume,
+					fade_method = Tween.TransitionType.TRANS_EXPO,
+					fade_ease = Tween.EaseType.EASE_OUT,
 					ignore_pause = true,
 				})
 			triggered = true

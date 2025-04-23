@@ -4,5 +4,6 @@ extends Control
 @export var main_menu_controls: String
 
 func _ready() -> void:
+	reset_physics_interpolation()
 	if hide_bg:
 		$Bg.queue_free()

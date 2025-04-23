@@ -452,6 +452,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
 		var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 		if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false) && _path != menu_path:
+			Data.technical_values._skip_menu_transition = true
 			Scenes.goto_scene(menu_path)
 			for i in 3:
 				if TransitionManager.current_transition:

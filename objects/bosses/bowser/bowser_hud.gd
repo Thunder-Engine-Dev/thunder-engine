@@ -8,6 +8,7 @@ var bowser: Node2D
 @onready var life: TextureRect = $Head/Life
 @onready var init_pos_y: float = head.get_viewport_transform().affine_inverse().origin.y - 256 + y_offset
 @onready var to_pos_y: float = head.position.y + y_offset
+var tween: Tween
 
 
 func _ready() -> void:
@@ -18,10 +19,12 @@ func life_changed(lives: int) -> void:
 	if !is_instance_valid(life): return
 	
 	if lives > 0 && head.position.y != to_pos_y:
-		var tween: Tween = create_tween()
-		tween.tween_property(head, "position:y", to_pos_y, 1)
+		if !tween || !tween.is_valid():
+			tween = create_tween()
+			tween.tween_property(head, "position:y", to_pos_y, 1)
 	elif lives <= 0 && head.position.y != init_pos_y:
-		var tween: Tween = create_tween()
+		if tween && tween.is_valid(): tween.kill()
+		tween = create_tween()
 		tween.tween_property(head, "position:y", init_pos_y, 1)
 	
 	if lives <= 0: life.visible = false
