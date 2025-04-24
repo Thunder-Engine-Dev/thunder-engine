@@ -59,10 +59,10 @@ func _tweak_process() -> void:
 	if !warp_invisible_left_right: return
 	if !is_instance_valid(player.get("sprite")): return
 	
-	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
-		player.sprite.visible = true
-	elif warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
-		player.sprite.visible = true
+	if warp_direction == Player.WarpDir.RIGHT:
+		player.sprite.visible = player.global_position.x > pos_player_invisible.global_position.x
+	elif warp_direction == Player.WarpDir.LEFT:
+		player.sprite.visible = player.global_position.x < pos_player_invisible.global_position.x
 	elif warp_direction == Player.WarpDir.UP || warp_direction == Player.WarpDir.DOWN:
 		player.sprite.visible = true
 
