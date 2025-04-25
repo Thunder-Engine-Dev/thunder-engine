@@ -46,6 +46,7 @@ func _exit_tree() -> void:
 
 func _add_effect(player: Node2D) -> void:
 	if !is_shown(): return
+	if has_filter: return
 	var p := Thunder._current_player
 	if !p:
 		print_debug("failed!")
