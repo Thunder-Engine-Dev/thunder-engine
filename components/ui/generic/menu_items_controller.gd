@@ -80,6 +80,8 @@ func _update_selectors() -> void:
 	for child in get_children():
 		if child is HSeparator || child is VSeparator:
 			continue
+		if child.is_queued_for_deletion():
+			continue
 		selectors.push_back(child)
 
 

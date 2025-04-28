@@ -13,6 +13,7 @@ signal skins_load_failed
 var current_skin: String = ""
 
 var base_dir: String = OS.get_executable_path().get_base_dir() + "/skins"
+var _is_default_skin: bool = false
 
 var custom_textures: Dictionary
 var custom_sprite_frames: Dictionary
@@ -80,18 +81,30 @@ func load_external_textures() -> String:
 	
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	for i in directories:
+		_is_default_skin = false
+		if i == "none":
+			if ProjectSettings.get_setting(
+				"application/thunder_settings/allow_overriding_default_suit_tweaks_by_user",
+				false
+			):
+				_is_default_skin = true
+			else:
+				continue
+		
 		dir_access.change_dir(base_dir + "/" + i)
 		
 		# Initiating a skin in dictionaries
-		misc_textures[i] = {}
-		misc_sounds[i] = {}
-		custom_nicknames[i] = i.left(15)
-		custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
+		if !_is_default_skin:
+			misc_textures[i] = {}
+			misc_sounds[i] = {}
+			custom_nicknames[i] = i.left(15)
+			custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
 		suit_tweaks[i] = {}
 		suit_sounds[i] = {}
 		
 		# Loading miscellaneous textures and configs
-		_load_misc_files(dir_access, i)
+		if !_is_default_skin:
+			_load_misc_files(dir_access, i)
 		
 		# Initiating animations
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
@@ -104,8 +117,9 @@ func load_external_textures() -> String:
 		
 		# Loading textures and setting up sprite frames
 		custom_textures[i] = _load_animations(dir_access, i, _anims)
+		if !_is_default_skin:
 		# Loading global sounds
-		misc_sounds[i] = _load_sounds(dir_access, "%s/%s/%s" % [base_dir, i, FOLDER_GLOBAL_SOUNDS])
+			misc_sounds[i] = _load_sounds(dir_access, "%s/%s/%s" % [base_dir, i, FOLDER_GLOBAL_SOUNDS])
 		
 		# Printing errors
 		var comp_1 := PackedStringArray(skins[i].keys())
@@ -141,7 +155,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 		var arrayed_filename: String = j.get_basename().left(-2)
 		# If it's PNG, then load to memory under "misc_textures" variable
 		# Can load as a texture object, or as an array
-		if file_ext == "png":
+		if file_ext == "png" && !_is_default_skin:
 			if is_array && !arrayed_filename in misc_textures[i]:
 				misc_textures[i][arrayed_filename] = []
 			var img: Image = Image.load_from_file(file_path)
@@ -152,7 +166,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				misc_textures[i][j.get_basename()] = file
 		
 		# If it's TXT, then check what name it has, and load only valid files to memory
-		elif file_ext == "txt":
+		elif file_ext == "txt" && !_is_default_skin:
 			# Name for HUD, variable "custom_nicknames"
 			if j.get_basename().to_lower() == "name":
 				var file = FileAccess.open(file_path, FileAccess.READ)
@@ -222,40 +236,47 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 	var _show_help_in_error: bool
 	for j in _anims:
 		var file_path: String = base_dir + "/" + i + "/" + j
-		if !FileAccess.file_exists(file_path + "/" + CONFIG_SKIN_SETTINGS):
-			print("No %s found at %s. Skipping" % [CONFIG_SKIN_SETTINGS, file_path])
-			continue
-		if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
-			errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
-			_show_help_in_error = true
-			continue
+		var file_name: String
+		if !_is_default_skin:
+			if !FileAccess.file_exists(file_path + "/" + CONFIG_SKIN_SETTINGS):
+				print("No %s found at %s. Skipping" % [CONFIG_SKIN_SETTINGS, file_path])
+				continue
+			if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
+				errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
+				_show_help_in_error = true
+				continue
 		
-		dir_access.change_dir(file_path + "/" + FOLDER_SUIT_IMAGES)
-		dir_access.list_dir_begin()
-		
-		var file_name: String = dir_access.get_next()
-		loaded[j] = {}
-		
-		while file_name != "":
-			var file_ext: String = file_name.get_extension().to_lower()
-			# Loading external skin textures to cache
-			if !dir_access.current_is_dir() && file_ext == "png":
-				var texture_name: String = file_name.trim_suffix("." + file_ext)
-				
-				var file: Image = Image.load_from_file(file_path + "/" + FOLDER_SUIT_IMAGES + "/" + file_name)
-				var file_texture: ImageTexture = ImageTexture.create_from_image(file)
-				#print(i + "/" + j + "/" + file_name)
-				loaded[j][texture_name] = file_texture
+			dir_access.change_dir(file_path + "/" + FOLDER_SUIT_IMAGES)
+			dir_access.list_dir_begin()
+			
 			file_name = dir_access.get_next()
-		dir_access.list_dir_end()
+			loaded[j] = {}
+			
+			while file_name != "":
+				var file_ext: String = file_name.get_extension().to_lower()
+				# Loading external skin textures to cache
+				if !dir_access.current_is_dir() && file_ext == "png":
+					var texture_name: String = file_name.trim_suffix("." + file_ext)
+					
+					var file: Image = Image.load_from_file(file_path + "/" + FOLDER_SUIT_IMAGES + "/" + file_name)
+					var file_texture: ImageTexture = ImageTexture.create_from_image(file)
+					#print(i + "/" + j + "/" + file_name)
+					loaded[j][texture_name] = file_texture
+				file_name = dir_access.get_next()
+			dir_access.list_dir_end()
 		
 		dir_access.change_dir(file_path)
 		dir_access.list_dir_begin()
 		file_name = dir_access.get_next()
 		while file_name != "":
 			# Loading skin settings (regions, loops etc.) to cache
-			if !dir_access.current_is_dir() && file_name == CONFIG_SKIN_SETTINGS:
-				var _skin = ResourceLoader.load(file_path + "/" + CONFIG_SKIN_SETTINGS, "Resource", ResourceLoader.CACHE_MODE_REPLACE)
+			if !dir_access.current_is_dir() && file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
+				var _skin = ResourceLoader.load(
+					file_path + "/" + CONFIG_SKIN_SETTINGS,
+					"Resource",
+					ResourceLoader.CACHE_MODE_REPLACE
+				)
+				
 				if (
 					!_skin || !"animation_regions" in _skin ||
 					!"animation_loops" in _skin ||
@@ -282,6 +303,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		
 		dir_access.list_dir_end()
 		
+		if _is_default_skin: continue
 		var suit_sounds_path: String = file_path + "/" + FOLDER_SUIT_SOUNDS
 		if DirAccess.dir_exists_absolute(suit_sounds_path):
 			suit_sounds[i][j] = _load_sounds(dir_access, suit_sounds_path)
@@ -339,8 +361,8 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	if CharacterManager.get_suit_tweak("look_up_animation", "", power):
 		_temp_sprites.add_animation("look_up")
 		_temp_sprites.add_animation("hold_look_up")
-	if CharacterManager.get_suit_tweak("stomp_animation", "", power):
-		_temp_sprites.add_animation("stomp")
+	#if CharacterManager.get_suit_tweak("stomp_animation", "", power):
+	#	_temp_sprites.add_animation("stomp")
 	if CharacterManager.get_suit_tweak("separate_run_animation", "", power):
 		_temp_sprites.add_animation("p_run")
 		_temp_sprites.add_animation("p_jump")

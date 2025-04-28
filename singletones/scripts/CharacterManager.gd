@@ -97,7 +97,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"separate_run_animation": false, # "p_run", "p_jump", "p_fall"
 	"idle_animation": false, # "idle"
 	"idle_activate_after_sec": 10.0, # from 0.1 to 9999; no effect if idle animation is disabled
-	"stomp_animation": false, # after stomping an enemy or jumping on springboard
+	#"stomp_animation": false, # after stomping an enemy or jumping on springboard
 	"kick_ground_animation": false, # for shells, etc
 	"warp_animation": true, # "warp"; if false, warping vertically will use "jump", and "crouch" or "default"
 	"skid_sound_loop_delay": 0.1, # from 0.05 to 2.0
@@ -131,6 +131,8 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 		"skid": -1,
 		"slide": -1,
 		"swim": 6,
+		"swim_up": -1,
+		"swim_down": -1,
 		"walk": -1,
 		"warp": -1,
 		"win": -1,
@@ -139,8 +141,9 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 		"p_jump": -1,
 		"p_fall": -1,
 		"idle": -1,
-		"stomp": -1,
+		#"stomp": -1,
 		"hold_swim": -1,
+		"hold_look_up": -1,
 	},
 }
 
@@ -346,9 +349,10 @@ func _get_something_suit(what: String, character_name: String, suit: String, dic
 	if chara.is_empty(): chara = get_character_name()
 	if !suit:
 		suit = Thunder._current_player_state.name
+	var _cur_skin = SkinsManager.current_skin if SkinsManager.current_skin else "none"
 	
 	if chara && chara in dict_ref && suit in dict_ref[chara] && what in dict_ref[chara][suit]:
-		if skinned_dict && SkinsManager.current_skin in skinned_dict && suit in skinned_dict[SkinsManager.current_skin] && what in skinned_dict[SkinsManager.current_skin][suit]:
-			return skinned_dict[SkinsManager.current_skin][suit][what]
+		if skinned_dict && _cur_skin in skinned_dict && suit in skinned_dict[_cur_skin] && what in skinned_dict[_cur_skin][suit]:
+			return skinned_dict[_cur_skin][suit][what]
 		return dict_ref[chara][suit][what]
 	return null
