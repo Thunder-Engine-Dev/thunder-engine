@@ -372,13 +372,13 @@ func load_data(from_path: String, id: String = "Custom") -> Dictionary:
 	return dict
 
 ## Saves the data
-func save_data(data: Dictionary, to_path: String, id: String = "Custom") -> void:
-	var json: String = JSON.stringify(data)
-
+func save_data(data: Dictionary, to_path: String, id: String = "Custom", prettify: bool = false) -> void:
+	var json: String = JSON.stringify(data, "" if !prettify else "    ")
+	
 	var file: FileAccess = FileAccess.open(to_path, FileAccess.WRITE)
 	file.store_string(json)
 	file.close()
-
+	
 	data_saved.emit(id)
 
 

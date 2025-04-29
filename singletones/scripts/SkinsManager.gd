@@ -290,15 +290,9 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				skins[i][_skin.name] = _skin
 			# Loading Suit Tweaks to "suit_tweaks" variable
 			elif !dir_access.current_is_dir() && file_name == CONFIG_SUIT_TWEAKS:
-				var _out: String = _open_file_as_json(file_path + "/" + CONFIG_SUIT_TWEAKS)
-				if !_out: continue
-				var _json = JSON.parse_string(_out)
-				if !_json || !_json is Dictionary:
-					errored.append(file_path + "/" + CONFIG_SUIT_TWEAKS + " is invalid.")
-					file_name = dir_access.get_next()
-					continue
-				
-				suit_tweaks[i][j] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
+				var err = _load_suit_tweaks(dir_access, i, j, file_path)
+				if err:
+					errored.append(err)
 			file_name = dir_access.get_next()
 		
 		dir_access.list_dir_end()
@@ -319,6 +313,17 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		OS.alert("
 ".join(errored), "Player Skin Load Error")
 	return loaded
+
+
+func _load_suit_tweaks(dir_access: DirAccess, skin, power, file_path: String) -> String:
+	var _out: String = _open_file_as_json(file_path + "/" + CONFIG_SUIT_TWEAKS)
+	if !_out: return ""
+	var _json = JSON.parse_string(_out)
+	if !_json || !_json is Dictionary:
+		return file_path + "/" + CONFIG_SUIT_TWEAKS + " is invalid."
+	
+	suit_tweaks[skin][power] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
+	return ""
 
 
 func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, power: String) -> SpriteFrames:
