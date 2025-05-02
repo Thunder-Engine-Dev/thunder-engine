@@ -5,7 +5,6 @@ extends Node2D
 @export_enum("Left: -1", "Right: 1") var direction_to_complete: int = 1
 @export var use_strict_detection_area: bool
 @export var strict_completion_area_path: NodePath = ^"CompletionArea"
-@export var player_walking_speed: float = 125
 @export var override_score: bool = false
 @export var override_score_value: int = 0
 

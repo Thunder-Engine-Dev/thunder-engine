@@ -5,6 +5,6 @@
 
 [node name="SlideEffect" type="GPUParticles2D"]
 amount = 16
-process_material = ExtResource("1_u8j1r")
 texture = ExtResource("1_crevu")
 lifetime = 0.25
+process_material = ExtResource("1_u8j1r")

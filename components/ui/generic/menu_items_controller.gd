@@ -86,7 +86,8 @@ func _update_selectors() -> void:
 
 
 func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
-	if control_sound:
+	var _tw = SettingsManager.get_tweak("mouse_select_sound", true)
+	if control_sound && ((!_tw && !_mouse_input) || _tw):
 		Audio.play_1d_sound(control_sound, true,
 			{
 				"ignore_pause": true,

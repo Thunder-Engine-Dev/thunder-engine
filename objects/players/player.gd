@@ -87,7 +87,8 @@ var has_stuck_animation: bool
 var stuck_block_left: bool
 var stuck_block_right: bool
 var is_sliding_accelerating: bool
-var is_slippery: bool
+
+var slippery_strength: float
 
 var completed: bool
 
