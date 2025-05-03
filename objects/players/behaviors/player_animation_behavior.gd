@@ -13,9 +13,11 @@ var _idle_tweak: bool
 var _idle_activate_after_sec: float
 var _look_up_tweak: bool
 var _separate_run_tweak: bool
+var _ground_kick_tweak: bool
 var _stomp_anim_tweak: bool
 var _warp_tweak: bool
 var _head_bump_sound: bool
+var _fall_anim_tweak: bool
 var _skid_sound_loop_delay: float
 var _look_up_sound: AudioStream
 var _loop_offsets: Dictionary = {}
@@ -38,6 +40,7 @@ func _ready() -> void:
 	player.swam.connect(_swam)
 	player.shot.connect(_shot)
 	player.threw.connect(_threw)
+	player.ground_kicked.connect(_ground_kicked)
 	player.grabbed.connect(_grabbed)
 	player.invinciblized.connect(_invincible)
 	player.head_bumped.connect(_head_bumped)
@@ -119,6 +122,7 @@ func _sprite_finish() -> void:
 	match sprite.animation:
 		&"attack", &"idle":
 			_play_anim(&"default")
+			_animation_process(0)
 			_idle_timer = 0.0
 		&"attack_air":
 			_play_anim(&"jump" if player.speed.y < 0 else &"fall")
@@ -153,9 +157,21 @@ func _threw() -> void:
 		_handle_grabbed_finished()
 
 
+func _ground_kicked() -> void:
+	if !sprite: return
+	if !_ground_kick_tweak: return
+	if sprite.animation != &"appear" && player.is_on_floor():
+		sprite.play(&"kick")
+		sprite.animation_finished.connect(func():
+			sprite.play(&"default")
+			_animation_process(0)
+		, CONNECT_ONE_SHOT)
+
+
 func _handle_grabbed_finished() -> void:
 	sprite.animation_finished.connect(func():
 		sprite.play(&"hold_default")
+		_animation_process(0)
 	, CONNECT_ONE_SHOT)
 	
 
@@ -166,10 +182,12 @@ func _setup_tweaks() -> void:
 	_idle_tweak = CharacterManager.get_suit_tweak("idle_animation", "", player.suit.name)
 	_idle_activate_after_sec = CharacterManager.get_suit_tweak("idle_activate_after_sec", "", player.suit.name)
 	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
+	_ground_kick_tweak = CharacterManager.get_suit_tweak("kick_ground_animation", "", player.suit.name)
 	_stomp_anim_tweak = false #CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
 	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
 	_skid_sound_loop_delay = CharacterManager.get_suit_tweak("skid_sound_loop_delay", "", player.suit.name)
 	_head_bump_sound = CharacterManager.get_suit_tweak("head_bump_sound", "", player.suit.name)
+	_fall_anim_tweak = CharacterManager.get_suit_tweak("fall_animation", "", player.suit.name)
 	var _up_sfx: Array = CharacterManager.get_suit_sound("look_up", "", player.suit.name)
 	if _up_sfx:
 		_look_up_sound = _up_sfx.front()
@@ -298,6 +316,9 @@ func _animation_warping_process() -> void:
 
 
 func _get_animation_prefixed(anim_name: StringName) -> StringName:
+	if _fall_anim_tweak:
+		if anim_name == &"fall": anim_name = &"jump"
+		elif anim_name == &"p_fall": anim_name = &"p_jump"
 	if player.is_holding:
 		return &"hold_%s" % anim_name
 	return anim_name

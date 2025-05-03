@@ -123,6 +123,7 @@ func _on_body_entered(player: Node2D) -> void:
 	if player != Thunder._current_player: return
 	if Thunder._current_player.warp > Player.Warp.NONE: return
 	if is_instance_valid(_delayer) || enemy_attacked.get_stomping_delayer(): return
+	player.ground_kicked.emit()
 	status_swap(false)
 	sound()
 

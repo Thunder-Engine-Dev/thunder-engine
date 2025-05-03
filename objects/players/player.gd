@@ -6,6 +6,7 @@ signal suit_changed(to: PlayerSuit)
 signal swam
 signal shot
 signal threw
+signal ground_kicked
 signal head_bumped
 signal grab_init(node: Node2D)
 signal grabbed(side_grabbed: bool)

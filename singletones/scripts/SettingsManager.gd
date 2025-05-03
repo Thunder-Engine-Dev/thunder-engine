@@ -375,7 +375,12 @@ func load_data(from_path: String, id: String = "Custom") -> Dictionary:
 func save_data(data: Dictionary, to_path: String, id: String = "Custom", prettify: bool = false) -> void:
 	var json: String = JSON.stringify(data, "" if !prettify else "    ")
 	
+	if !DirAccess.dir_exists_absolute(to_path.get_base_dir()):
+		DirAccess.make_dir_recursive_absolute(to_path.get_base_dir())
 	var file: FileAccess = FileAccess.open(to_path, FileAccess.WRITE)
+	if !file:
+		OS.alert("Failed to save %s to path:\n%s" % [id, to_path], "Can't save file!")
+		return
 	file.store_string(json)
 	file.close()
 	

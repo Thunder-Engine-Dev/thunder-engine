@@ -100,7 +100,8 @@ func load_external_textures() -> String:
 			custom_nicknames[i] = i.left(15)
 			custom_story_text[i] = CharacterManager.DEFAULT_STORY_TEXT.duplicate()
 		suit_tweaks[i] = {}
-		suit_sounds[i] = {}
+		if !_is_default_skin:
+			suit_sounds[i] = {}
 		
 		# Loading miscellaneous textures and configs
 		if !_is_default_skin:
@@ -126,7 +127,7 @@ func load_external_textures() -> String:
 		comp_1.sort()
 		var comp_2 := _anims
 		comp_2.sort()
-		if comp_1 != comp_2:
+		if comp_1 != comp_2 && !_is_default_skin:
 			out.append("[Skins Manager] [color=red]ALERT![/color] For [color=yellow]" + str(i) + """[/color], Some animations have not been loaded properly!
 	[color=red]Found[/color]: [color=cyan]""" + "[/color], [color=cyan]".join(comp_2) + """[/color].
 	[color=red]Loaded without errors[/color]: [color=cyan]""" + "[/color], [color=cyan]".join(comp_1) + "[/color].")
@@ -290,7 +291,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				skins[i][_skin.name] = _skin
 			# Loading Suit Tweaks to "suit_tweaks" variable
 			elif !dir_access.current_is_dir() && file_name == CONFIG_SUIT_TWEAKS:
-				var err = _load_suit_tweaks(dir_access, i, j, file_path)
+				var err = _load_suit_tweaks(i, j, file_path)
 				if err:
 					errored.append(err)
 			file_name = dir_access.get_next()
@@ -315,13 +316,18 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 	return loaded
 
 
-func _load_suit_tweaks(dir_access: DirAccess, skin, power, file_path: String) -> String:
+func _load_suit_tweaks(skin, power, file_path: String) -> String:
+	if _is_default_skin && power != "global": return ""
 	var _out: String = _open_file_as_json(file_path + "/" + CONFIG_SUIT_TWEAKS)
 	if !_out: return ""
 	var _json = JSON.parse_string(_out)
 	if !_json || !_json is Dictionary:
 		return file_path + "/" + CONFIG_SUIT_TWEAKS + " is invalid."
 	
+	if power == "global":
+		for suit in CharacterManager.MARIO_SUITS.keys():
+			suit_tweaks[skin][suit] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
+		return ""
 	suit_tweaks[skin][power] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
 	return ""
 
