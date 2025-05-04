@@ -78,6 +78,7 @@ func _swam() -> void:
 
 func _shot() -> void:
 	if !sprite: return
+	if sprite.animation == &"slide": return
 	if sprite.animation == &"swim":
 		sprite.frame = 3
 		return
@@ -159,18 +160,18 @@ func _threw() -> void:
 
 func _ground_kicked() -> void:
 	if !sprite: return
-	if !_ground_kick_tweak: return
-	if sprite.animation != &"appear" && player.is_on_floor():
+	if !_ground_kick_tweak || player.is_holding: return
+	if sprite.animation in [&"appear", &"crouch", &"grab", &"slide"]: return
+	
+	if player.is_on_floor() || player.speed.y >= 8:
 		sprite.play(&"kick")
-		sprite.animation_finished.connect(func():
-			sprite.play(&"default")
-			_animation_process(0)
-		, CONNECT_ONE_SHOT)
+		_idle_timer = 0.0
+		_handle_grabbed_finished()
 
 
 func _handle_grabbed_finished() -> void:
 	sprite.animation_finished.connect(func():
-		sprite.play(&"hold_default")
+		sprite.play(&"default")
 		_animation_process(0)
 	, CONNECT_ONE_SHOT)
 	
