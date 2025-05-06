@@ -2,6 +2,12 @@
 @tool
 extends Area2D
 
+signal player_enter
+signal player_exit
+signal player_warped_to_pipe_out
+signal warp_started
+signal warp_ended
+
 const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
 
 @export_category("Warp")
@@ -45,16 +51,13 @@ var _duration: float
 var _target: float = 1.2
 var _warp_triggered: bool = false
 
+var _gotoscene_patch: bool
+
 @onready var target: Area2D = get_node_or_null(warp_to)
 @onready var shape: CollisionShape2D = $CollisionShape2D
 @onready var pos_player: Marker2D = $PosPlayer
 @onready var pos_player_invisible = $PosPlayerInvisible
-var _gotoscene_patch: bool
 
-signal player_enter
-signal player_exit
-signal warp_started
-signal warp_ended
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -222,6 +225,7 @@ func pass_warp() -> void:
 		target.pass_player(player)
 		target.player_z_index = player_z_index
 		target.warp_invisible_left_right = warp_invisible_left_right
+		player_warped_to_pipe_out.emit()
 		_transition_update()
 	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
