@@ -32,6 +32,7 @@ func _ready() -> void:
 			time_counter.text = "0"
 			Thunder._current_player.die()
 	)
+	Console.executed.connect(_on_console_executed)
 	
 	await get_tree().physics_frame
 	if Data.values.time < 0:
@@ -95,3 +96,8 @@ func pulse_label(node: CanvasItem) -> void:
 	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
 	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
 	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
+
+
+func _on_console_executed(cmd: String, args) -> void:
+	if cmd.to_lower() == "hud":
+		visible = !visible

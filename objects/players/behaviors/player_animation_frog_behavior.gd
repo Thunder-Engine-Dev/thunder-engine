@@ -58,10 +58,17 @@ func _animation_floor_process(delta: float) -> void:
 				StringName(_get_animation_prefixed(&"walk")) if !player.is_skidding else &"skid"
 			)
 			_p_run_enabled = false
-		sprite.speed_scale = 1
+		if !player.is_holding:
+			sprite.speed_scale = 1
+		else:
+			sprite.speed_scale = (
+				clampf(abs(player.speed.x) * 0.008 * config.animation_walking_speed,
+				config.animation_min_walking_speed,
+				config.animation_max_walking_speed)
+			)
 	else:
 		_p_run_enabled = false
-		if !(player.sprite.animation == _get_animation_prefixed(&"walk") && player.sprite.is_playing()):
+		if !(player.sprite.animation == &"walk" && player.sprite.is_playing()):
 			if player.up_down == -1 && !player.is_holding && _look_up_tweak:
 				if !sprite.animation in [&"look_up", &"hold_look_up"]:
 					Audio.play_sound(_look_up_sound, player, false)
@@ -76,7 +83,7 @@ func _animation_floor_process(delta: float) -> void:
 	#if player._physics_behavior.jump_delay < 0 && !player.completed:
 	#	sprite.set_frame_and_progress(0, 0.8)
 	player.skid.emitting = false
-	if player.completed && sprite.animation == &"walk":
+	if player.completed && sprite.animation == _get_animation_prefixed(&"walk"):
 		sprite.speed_scale = 2.4
 		sprite.play()
 

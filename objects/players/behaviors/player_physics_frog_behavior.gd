@@ -24,7 +24,7 @@ func _movement_x(delta: float) -> void:
 		jump_delay = -0.001
 		jump_sound_delay = 0
 	else:
-		if jump_delay < 0:
+		if jump_delay < 0 && !player.is_holding:
 			jump_delay += delta
 			player.speed.x = 0
 			small_jump_played = false
@@ -50,7 +50,7 @@ func _movement_x(delta: float) -> void:
 	# Crouching / Completed Level motion speed
 	if player.left_right == 0 || player.completed:
 		_decelerate(config.walk_deceleration, delta)
-		if player.is_on_floor() && !player.completed && jump_delay >= 0.45:
+		if player.is_on_floor() && !player.completed && jump_delay >= 0.45 && !player.is_holding:
 			player.speed.x = 0
 			jump_delay = -0.12
 		return
@@ -72,7 +72,7 @@ func _movement_x_acceleration(delta: float) -> void:
 	if player.is_on_floor():
 		acce_multiplier = 2.25 if player.running else 1.5
 		
-		if jump_delay >= 0.45:
+		if jump_delay >= 0.45 && !player.is_holding:
 			player.speed.x = 0
 			jump_delay = -0.12
 	

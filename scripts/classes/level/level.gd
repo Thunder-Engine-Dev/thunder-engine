@@ -142,7 +142,7 @@ func _physics_process(delta: float) -> void:
 	# Force player walking when completed
 	if _force_player_walking && !_forced_player_on_wall:
 		player.direction = _force_player_walking_dir
-		player.speed.x = 120 * player.direction
+		player.speed.x = 120 * _force_player_walking_dir
 		_forced_player_on_wall = player.is_on_wall()
 		if _forced_player_on_wall:
 			player.speed.x = 0
