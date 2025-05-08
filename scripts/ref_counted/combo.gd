@@ -46,3 +46,11 @@ func reset_combo() -> void:
 
 func get_combo() -> int:
 	return _combo
+
+
+func get_pitch() -> float:
+	var _arr: PackedFloat32Array = [1.0, 1.1, 1.25]
+	var pitch_combo: int = clampi(get_combo(), 0, 6)
+	if pitch_combo < _arr.size():
+		return _arr[pitch_combo]
+	return 0.8 + pitch_combo * 0.2

@@ -100,8 +100,8 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
 		var _can_combo: bool = target_enemy_attacked.killing_can_combo
-		if !combo.get_combo() <= 0 && _can_combo:
-			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
+		if combo.get_combo() > 0 && _can_combo:
+			target_enemy_attacked.sound_pitch = combo.get_pitch()
 		target_enemy_attacked.set_meta(&"attacker_speed", speed)
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
 		if _can_combo:

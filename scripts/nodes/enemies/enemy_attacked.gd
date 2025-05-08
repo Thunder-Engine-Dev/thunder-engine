@@ -133,10 +133,10 @@ var _on_killed: bool # To prevent multiple creation by multiple attackers
 
 
 func _ready() -> void:
-	stomped_succeeded.connect(_lss)
-	killed_succeeded.connect(_lks)
-	killed_failed.connect(_lkf)
-	killed_frozen.connect(_lkfz)
+	stomped_succeeded.connect(_lss, CONNECT_DEFERRED)
+	killed_succeeded.connect(_lks, CONNECT_DEFERRED)
+	killed_failed.connect(_lkf, CONNECT_DEFERRED)
+	killed_frozen.connect(_lkfz, CONNECT_DEFERRED)
 	stomping_delay()
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")

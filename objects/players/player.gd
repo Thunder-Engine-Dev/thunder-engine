@@ -455,8 +455,8 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 	if what == self: return
 	# Combo
 	if result.result:
-		if !starman_combo.get_combo() <= 0:
-			what.sound_pitch = 1 + starman_combo.get_combo() * 0.135
+		if starman_combo.get_combo() > 0:
+			what.sound_pitch = starman_combo.get_pitch()
 		#what.got_killed(&"starman", [&"no_score"])
 		if what.get("killing_can_combo"):
 			starman_combo.combo()
