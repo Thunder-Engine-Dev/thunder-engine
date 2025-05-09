@@ -2,7 +2,7 @@ extends Node
 
 const CONFIG_SKIN_SETTINGS = "skin_settings.tres"
 const CONFIG_SUIT_TWEAKS = "suit_tweaks.json"
-const FOLDER_SUIT_IMAGES = "textures"
+#const FOLDER_SUIT_IMAGES = "textures"
 const FOLDER_SUIT_SOUNDS = "sounds"
 const FOLDER_GLOBAL_SOUNDS = "_global_sounds"
 const CONFIG_GLOBAL_SKIN_TWEAKS = "global_skin_tweaks"
@@ -14,6 +14,7 @@ var current_skin: String = ""
 
 var base_dir: String = OS.get_executable_path().get_base_dir() + "/skins"
 var _is_default_skin: bool = false
+var _error_buffer: PackedStringArray = []
 
 var custom_textures: Dictionary
 var custom_sprite_frames: Dictionary
@@ -45,9 +46,9 @@ func _update_current_skin_from_settings() -> void:
 
 
 ## Returns SpriteFrames of a player suit with skin (if available)
-func apply_player_skin(_suit) -> SpriteFrames:
-	if SkinsManager.custom_sprite_frames.has(SkinsManager.current_skin):
-		return SkinsManager.get_custom_sprite_frames(_suit.animation_sprites, SkinsManager.current_skin, _suit.name)
+func apply_player_skin(_suit, force_errors: bool = false) -> SpriteFrames:
+	if custom_sprite_frames.has(current_skin):
+		return get_custom_sprite_frames(_suit.animation_sprites, current_skin, _suit.name, force_errors)
 	return _suit.animation_sprites
 
 
@@ -172,7 +173,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 			if j.get_basename().to_lower() == "name":
 				var file = FileAccess.open(file_path, FileAccess.READ)
 				custom_nicknames[i] = file.get_line().left(15)
-				print(i, " Custom nick: ", custom_nicknames[i])
+				Console.print("[Skins Manager] " + i + " Custom nick: " + custom_nicknames[i])
 				file.close()
 			# For story text, includes pronouns and basic description about the player skin
 			# Variable "custom_story_text"
@@ -198,7 +199,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 				if !_out: continue
 				var _json: Variant = JSON.parse_string(_out)
 				if !_json || !_json is Dictionary:
-					print(file_path + ": Not a valid JSON.")
+					Console.print("[Skins Manager] " + file_path + ": Not a valid JSON.")
 					continue
 				print(i, " Global skin tweaks loaded")
 				misc_textures[i][CONFIG_GLOBAL_SKIN_TWEAKS] = _load_json(_json, CharacterManager.DEFAULT_GLOBAL_SKIN_TWEAKS)
@@ -207,7 +208,7 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 func _load_sounds(dir_access: DirAccess, dir_path: String) -> Dictionary:
 	var loaded: Dictionary = {}
 	if !DirAccess.dir_exists_absolute(dir_path):
-		print("Global sounds skipped: " + dir_path)
+		Console.print("[Skins Manager] Global sounds skipped: " + dir_path)
 		return loaded
 	dir_access.change_dir(dir_path)
 	var _misc_files: PackedStringArray = dir_access.get_files()
@@ -240,38 +241,36 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		var file_name: String
 		if !_is_default_skin:
 			if !FileAccess.file_exists(file_path + "/" + CONFIG_SKIN_SETTINGS):
-				print("No %s found at %s. Skipping" % [CONFIG_SKIN_SETTINGS, file_path])
+				Console.print("[Skins Manager] No %s found at %s. Skipping" % [CONFIG_SKIN_SETTINGS, file_path])
 				continue
-			if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
-				errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
-				_show_help_in_error = true
-				continue
+			#if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
+			#	errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
+			#	_show_help_in_error = true
+			#	continue
 		
-			dir_access.change_dir(file_path + "/" + FOLDER_SUIT_IMAGES)
-			dir_access.list_dir_begin()
+			#dir_access.change_dir(file_path + "/" + FOLDER_SUIT_IMAGES)
+			#dir_access.list_dir_begin()
 			
-			file_name = dir_access.get_next()
+			#file_name = dir_access.get_next()
+			#dir_access.list_dir_end()
 			loaded[j] = {}
-			
-			while file_name != "":
-				var file_ext: String = file_name.get_extension().to_lower()
-				# Loading external skin textures to cache
-				if !dir_access.current_is_dir() && file_ext == "png":
-					var texture_name: String = file_name.trim_suffix("." + file_ext)
-					
-					var file: Image = Image.load_from_file(file_path + "/" + FOLDER_SUIT_IMAGES + "/" + file_name)
-					var file_texture: ImageTexture = ImageTexture.create_from_image(file)
-					#print(i + "/" + j + "/" + file_name)
-					loaded[j][texture_name] = file_texture
-				file_name = dir_access.get_next()
-			dir_access.list_dir_end()
 		
 		dir_access.change_dir(file_path)
 		dir_access.list_dir_begin()
 		file_name = dir_access.get_next()
 		while file_name != "":
+			var file_ext: String = file_name.get_extension().to_lower()
+			# Loading external skin textures to cache
+			if !dir_access.current_is_dir() && file_ext == "png" && !_is_default_skin:
+				var texture_name: String = file_name.trim_suffix("." + file_ext)
+				
+				var file: Image = Image.load_from_file(file_path + "/" + file_name)
+				var file_texture: ImageTexture = ImageTexture.create_from_image(file)
+				#print(i + "/" + j + "/" + file_name)
+				loaded[j][texture_name] = file_texture
+			
 			# Loading skin settings (regions, loops etc.) to cache
-			if !dir_access.current_is_dir() && file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
+			elif !dir_access.current_is_dir() && file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
 				var _skin = ResourceLoader.load(
 					file_path + "/" + CONFIG_SKIN_SETTINGS,
 					"Resource",
@@ -303,7 +302,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		if DirAccess.dir_exists_absolute(suit_sounds_path):
 			suit_sounds[i][j] = _load_sounds(dir_access, suit_sounds_path)
 			if suit_sounds[i][j]:
-				print("Suit %s: %s loaded." % [j, FOLDER_SUIT_SOUNDS])
+				Console.print("[Skins Manager] Suit %s: %s loaded." % [j, FOLDER_SUIT_SOUNDS])
 	
 	if !errored.is_empty():
 		if _show_help_in_error:
@@ -332,7 +331,7 @@ func _load_suit_tweaks(skin, power, file_path: String) -> String:
 	return ""
 
 
-func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, power: String) -> SpriteFrames:
+func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, power: String, force_err: bool = false) -> SpriteFrames:
 	var custom_tex: Dictionary = {}
 	
 	# Loading cached sprite frames, if exist
@@ -344,7 +343,7 @@ func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, powe
 		custom_tex = custom_textures[skin_name][power]
 	
 	# Loading external sprite frames to cache
-	var new_sprites: SpriteFrames = new_custom_sprite_frames(old_sprites, custom_tex, power) #load_sprite_frames(skin_name, power)
+	var new_sprites: SpriteFrames = new_custom_sprite_frames(old_sprites, custom_tex, power, force_err) #load_sprite_frames(skin_name, power)
 	if !skin_name in custom_sprite_frames:
 		custom_sprite_frames[skin_name] = {}
 	custom_sprite_frames[skin_name][power] = new_sprites
@@ -353,22 +352,51 @@ func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, powe
 	
 	# Fallback
 	push_warning('[Skins Manager] Textures for power "%s" do not exist.' % power)
+	#if force_errors:
+	#	OS.alert('[Skins Manager] Textures for suit "%s" do not exist.' % power, skin_name)
 	return old_sprites
 
 
-#func load_sprite_frames(skin_name: String, power: String) -> SpriteFrames:
-	#var frames = ResourceLoader.load(base_dir + "/animation_mario_%s.tres" % power, "SpriteFrames")
-	#return frames
+func dupe_if_no_anim(anim_from: StringName, anim_to: StringName, sk_setts: PlayerSkin) -> PlayerSkin:
+	if !anim_from in sk_setts.animation_regions || !anim_from in sk_setts.animation_speeds || !anim_from in sk_setts.animation_loops:
+		return sk_setts
+	if !anim_to in sk_setts.animation_regions || !anim_to in sk_setts.animation_speeds || !anim_to in sk_setts.animation_loops:
+		sk_setts.animation_regions[anim_to] = sk_setts.animation_regions[anim_from]
+		sk_setts.animation_speeds[anim_to] = sk_setts.animation_speeds[anim_from]
+		sk_setts.animation_loops[anim_to] = sk_setts.animation_loops[anim_from]
+		Console.print("[Skins Manager] Fallback " + anim_from + " was applied to " + anim_to)
+	return sk_setts
 
+func _apply_fallback_anims(sk_setts: PlayerSkin) -> PlayerSkin:
+	sk_setts = dupe_if_no_anim( &"swim", &"hold_swim", sk_setts)
+	sk_setts = dupe_if_no_anim( &"default", &"crouch", sk_setts)
+	sk_setts = dupe_if_no_anim( &"crouch", &"slide", sk_setts)
+	sk_setts = dupe_if_no_anim( &"crouch", &"grab", sk_setts)
+	sk_setts = dupe_if_no_anim( &"warp", &"win", sk_setts)
+	sk_setts = dupe_if_no_anim( &"walk", &"hold_walk", sk_setts)
+	sk_setts = dupe_if_no_anim( &"default", &"hold_default", sk_setts)
+	sk_setts = dupe_if_no_anim( &"jump", &"fall", sk_setts)
+	sk_setts = dupe_if_no_anim( &"jump", &"hold_jump", sk_setts)
+	sk_setts = dupe_if_no_anim( &"fall", &"hold_fall", sk_setts)
+	sk_setts = dupe_if_no_anim( &"hold_default", &"hold_crouch", sk_setts)
+	sk_setts = dupe_if_no_anim( &"attack", &"attack_air", sk_setts)
+	#if !sprites.has_animation(&"kick"): sprites.add_animation(&"kick")
+	#if !sprites.has_animation(&"back"): sprites.add_animation(&"back")
+	#if !sprites.has_animation(&"skid"): sprites.add_animation(&"skid")
+	#if !sprites.has_animation(&"climb"): sprites.add_animation(&"climb")
+	#if !sprites.has_animation(&"warp"): sprites.add_animation(&"warp")
+	#if !sprites.has_animation(&"win"): sprites.add_animation(&"win")
+	return sk_setts
+	
 
-func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, power: String) -> SpriteFrames:
+func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, power: String, force_err: bool = false) -> SpriteFrames:
 	if !old_sprites: return null
 	if textures.is_empty(): return old_sprites
 	if !current_skin in skins || !power in skins[current_skin]: return old_sprites
 	
 	var new_sprites := SpriteFrames.new()
 	var _regions: Dictionary = skins[current_skin][power].animation_regions
-	var _temp_sprites = old_sprites.duplicate()
+	var _temp_sprites: SpriteFrames = old_sprites.duplicate()
 	if CharacterManager.get_suit_tweak("look_up_animation", "", power):
 		_temp_sprites.add_animation("look_up")
 		_temp_sprites.add_animation("hold_look_up")
@@ -381,20 +409,29 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	if CharacterManager.get_suit_tweak("idle_animation", "", power):
 		_temp_sprites.add_animation("idle")
 	
-	var errored: PackedStringArray = []
+	if !force_err:
+		skins[current_skin][power] = _apply_fallback_anims(skins[current_skin][power])
+	_error_buffer = []
+	
+	var _player_skin: PlayerSkin = skins[current_skin][power]
+	
 	for anim in _temp_sprites.get_animation_names():
 		if anim != "default":
 			new_sprites.add_animation(anim)
 		for dict_check in ["animation_regions", "animation_speeds", "animation_loops"]:
-			if !anim in skins[current_skin][power][dict_check]:
-				errored.append(
+			if !anim in _player_skin[dict_check]:
+				_error_buffer.append(
 					"%s: Animation '%s' is not present in %s" % [str(power), anim, dict_check]
 				)
 				continue
-		if !errored.is_empty():
-			break
-		new_sprites.set_animation_speed(anim, skins[current_skin][power].animation_speeds[anim])
-		new_sprites.set_animation_loop(anim, skins[current_skin][power].animation_loops[anim])
+		if !_error_buffer.is_empty():
+			if force_err:
+				continue
+			else:
+				break
+		new_sprites.set_animation_speed(anim, _player_skin.animation_speeds[anim])
+		new_sprites.set_animation_loop(anim, _player_skin.animation_loops[anim])
+		var count_durations: bool = "animation_durations" in _player_skin
 		var frame_count = _temp_sprites.get_frame_count(anim)
 		if len(_regions[anim]) > 0:
 			frame_count = len(_regions[anim])
@@ -411,15 +448,19 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 				new_tex.region = _region
 			else:
 				new_tex = tex
-			new_sprites.add_frame(anim, new_tex)
+			var frame_dur: float = 1.0
+			if count_durations && anim in _player_skin.animation_durations:
+				if frame < len(_player_skin.animation_durations[anim]):
+					frame_dur = _player_skin.animation_durations[anim][frame]
+			new_sprites.add_frame(anim, new_tex, frame_dur)
 	#var err = ResourceSaver.save(skins[0], base_dir + "/luigi/%s/skin_settings.tres" % power)
 	#print(err)
 	
-	if !errored.is_empty():
-		errored.append("")
-		errored.append("Please edit the file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
+	if !_error_buffer.is_empty():
+		_error_buffer.append("")
+		_error_buffer.append("Please edit the file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
 		OS.alert("
-".join(errored), str(current_skin) + " Player Skin Load Error")
+".join(_error_buffer), str(current_skin) + " Player Skin Load Error")
 		return old_sprites
 	return new_sprites
 
@@ -428,7 +469,7 @@ func _open_file_as_json(file_path: String) -> String:
 	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
 	var out_string: String = ""
 	if !file:
-		print("Error upon opening skin JSON file")
+		Console.print("[Skins Manager] Error upon opening skin JSON file")
 		return out_string
 	while !file.eof_reached():
 		var _line: String = file.get_line()

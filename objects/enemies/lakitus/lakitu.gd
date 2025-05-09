@@ -1,5 +1,8 @@
 extends Node2D
 
+signal ended_pitching
+signal started_pitching
+
 @export_category("Lakitu")
 @export var movement_area: Rect2
 @export var draw_area_rect: bool
@@ -96,6 +99,7 @@ func _pitch() -> void:
 		NodeCreator.prepare_ins_2d(pitched, self).create_2d().execute_instance_script()
 	Audio.play_sound(sounds.pick_random(), self)
 	timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+	ended_pitching.emit()
 
 
 func _on_animation_timeout() -> void:
@@ -114,6 +118,7 @@ func _on_animation_finished() -> void:
 
 
 func _on_pitching() -> void:
+	started_pitching.emit()
 	sprite.play(&"pitch")
 	if !skip_pitch_animation_delay:
 		await sprite.animation_finished

@@ -24,7 +24,7 @@ func _ready() -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE && launcher:
+	if what == NOTIFICATION_PREDELETE && launcher && is_instance_valid(Scenes.current_scene):
 		launcher.cancel_free()
 		launcher.reparent(Scenes.current_scene)
 		launcher.reset_physics_interpolation()

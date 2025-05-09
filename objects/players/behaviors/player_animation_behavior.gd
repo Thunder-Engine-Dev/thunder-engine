@@ -317,7 +317,7 @@ func _animation_warping_process() -> void:
 
 
 func _get_animation_prefixed(anim_name: StringName) -> StringName:
-	if _fall_anim_tweak:
+	if !_fall_anim_tweak:
 		if anim_name == &"fall": anim_name = &"jump"
 		elif anim_name == &"p_fall": anim_name = &"p_jump"
 	if player.is_holding:

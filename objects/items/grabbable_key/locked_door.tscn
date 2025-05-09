@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cto3gw6xa6yw7"]
+
+[ext_resource type="Script" uid="uid://relaxh7qau25" path="res://engine/objects/items/grabbable_key/locked_door.gd" id="1_h4x1c"]
+[ext_resource type="Texture2D" uid="uid://gd3eklr3usc0" path="res://engine/objects/items/grabbable_key/textures/locked_door.png" id="2_kp6co"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1wse"]
+size = Vector2(20, 96)
+
+[node name="KeyLockedObstacle" type="Area2D"]
+editor_description = "This can only be unlocked with bodies in \"unlocking_key\" group."
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("1_h4x1c")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n1wse")
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 48
+collision_mask = 0
+
+[node name="Keyhole" type="Sprite2D" parent="Body"]
+texture = ExtResource("2_kp6co")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_n1wse")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

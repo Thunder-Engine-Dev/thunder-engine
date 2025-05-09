@@ -9,6 +9,7 @@ const debris_effect = preload("res://engine/objects/effects/brick_debris/grabbab
 
 var activated: bool
 var flasher: Tween
+var old_z_index: int
 
 @onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
@@ -67,12 +68,15 @@ func _on_grab_initiated() -> void:
 
 
 func _on_ungrabbed() -> void:
+	z_index = old_z_index
 	_attack.enabled = true
 	activated = true
 	reset_timers()
 
 
 func _on_grabbed() -> void:
+	old_z_index = z_index
+	z_index = 1
 	_timer_destroy_flash.paused = true
 	if grab_timeout_sec > 1.5:
 		_timer_destroy.paused = false

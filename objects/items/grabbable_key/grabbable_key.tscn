@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://cs876qciayw8e"]
+
+[ext_resource type="Script" uid="uid://bafuhi6acb664" path="res://engine/objects/items/grabbable_key/grabbable_key.gd" id="1_iqgwp"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_iqgwp"]
+[ext_resource type="Texture2D" uid="uid://bhkorel3swbc8" path="res://engine/objects/items/grabbable_key/textures/key.png" id="3_01sfi"]
+[ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="3_i8ho5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01sfi"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4mw3"]
+size = Vector2(30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4mw3"]
+atlas = ExtResource("3_01sfi")
+region = Rect2(0, 0, 28, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vat45"]
+atlas = ExtResource("3_01sfi")
+region = Rect2(28, 0, 28, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbpjh"]
+atlas = ExtResource("3_01sfi")
+region = Rect2(56, 0, 28, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yybvm"]
+atlas = ExtResource("3_01sfi")
+region = Rect2(84, 0, 28, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_88lke"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4mw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vat45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbpjh")
+}, {
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_yybvm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="GrabbableKey" type="CharacterBody2D" groups=["unlocking_key"]]
+script = ExtResource("1_iqgwp")
+sprite = NodePath("AnimatedSprite2D")
+metadata/_custom_type_script = "uid://ng3vu4qwreu5"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_01sfi")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+enabled = false
+shape = SubResource("RectangleShape2D_i4mw3")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("2_iqgwp")
+killer_type = &"starman"
+killing_detection_scale = 2.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_88lke")
+autoplay = "default"
+
+[node name="GrabbableModifier" parent="." instance=ExtResource("3_i8ho5")]
+grabbing_ungrab_throw_power_min = Vector2(250, 100)
+grabbing_ungrab_throw_power_max = Vector2(350, 400)

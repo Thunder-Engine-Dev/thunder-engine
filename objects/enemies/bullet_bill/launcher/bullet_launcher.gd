@@ -10,7 +10,7 @@ extends AnimatableBody2D
 @export var first_shooting_delay: float = 0.5
 @export var shooting_delay_min: float = 1.5
 @export var shooting_delay_max: float = 4.5
-@export var shooting_force_dir: int = 0
+@export_enum("Both:0", "Left:-1", "Right:1") var shooting_force_dir: int = 0
 @export_group("Sound")
 @export var shooting_sound: AudioStream = preload("../bill/sounds/bullet.ogg")
 @export var sound_pitch_min: float = 1.0
@@ -34,21 +34,23 @@ func _on_bullet_launched() -> void:
 	
 	if player.completed: return
 	
+	var dir: int
+	var dir_force_no_shoot: bool
+	dir = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
+	if shooting_force_dir != 0:
+		if dir != shooting_force_dir:
+			dir_force_no_shoot = true
+		dir = shooting_force_dir
+	
 	var legacy_not_shooting: bool = ProjectSettings.get_setting("application/thunder_settings/tweaks/legacy_bullet_launcher_not_shooting_range", false)
 	var not_allowed_shooting := (
 		absf(global_transform.affine_inverse().basis_xform(player.global_position).x - global_transform.affine_inverse().basis_xform(global_position).x) <= stop_shooting_radius \
 		if legacy_not_shooting else \
 		player.global_position.distance_squared_to(global_position) <= stop_shooting_radius ** 2
 	)
-	if not_allowed_shooting:
+	if not_allowed_shooting || dir_force_no_shoot:
 		interval.start(0.1)
 		return
-	
-	var dir: int
-	if shooting_force_dir == 0:
-		dir = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
-	else:
-		dir = shooting_force_dir
 	
 	Audio.play_sound(
 		shooting_sound, pos_bullet, false, {

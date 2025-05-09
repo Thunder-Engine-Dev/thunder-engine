@@ -136,7 +136,7 @@ func move_suggestion(amount: int) -> void:
 		input.caret_column = found.length()
 
 func print(msg: Variant) -> void:
-	output.text += "%s\n" % msg
+	if output: output.text += "%s\n" % msg
 	
 	print_rich(msg)
 

@@ -1,0 +1,1 @@
+extends GeneralMovementBody2D
