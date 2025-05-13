@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="6_djh65"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8h8fu"]
+resource_local_to_scene = true
 size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5d3q"]
@@ -52,6 +53,7 @@ collision_mask = 64
 slide_on_ceiling = false
 floor_constant_speed = true
 script = ExtResource("1_jh337")
+turn_sprite = false
 sprite = NodePath("Sprite")
 gravity_scale = 0.5
 auto_update_up_direction = false
@@ -124,7 +126,7 @@ one_shot = true
 
 [node name="GrabbableModifier" parent="." instance=ExtResource("6_djh65")]
 grabbing_ungrab_collision_with_player = false
-grabbing_ungrab_throw_power_min = Vector2(300, 100)
+grabbing_ungrab_throw_power_min = Vector2(300, 0)
 
 [connection signal="killed_failed" from="Attack" to="." method="break_object"]
 [connection signal="timeout" from="TimerDestroy" to="." method="_on_timer_destroy_timeout"]

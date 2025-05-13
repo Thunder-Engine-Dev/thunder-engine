@@ -85,6 +85,47 @@ func _ready() -> void:
 	target_node.connect(&"grabbing_got_thrown", _do_ungrab)
 
 
+func _physics_process(delta: float) -> void:
+	if _grabbed && _following_start:
+		var _target = get_target_hold_position()
+		target_node.global_position = lerp(_from_follow_pos, _target, _follow_progress)
+		_follow_progress = min(_follow_progress + 5 * delta, 1)
+		if _follow_progress == 1:
+			_follow_progress = 0
+			_following_start = false
+			_following = true
+
+	if _grabbed && _following:
+		target_node.global_position = get_target_hold_position()
+
+	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
+		var pl = Thunder._current_player
+		if pl && grabbing_ungrab_collision_with_player:
+			if _check_for_player_collision(pl):
+				target_node.set_collision_layer_value(5, true)
+				_wait_until_floor = false
+		else:
+			_wait_until_floor = false
+
+
+func _check_for_player_collision(pl: Player) -> bool:
+	var space_state: PhysicsDirectSpaceState2D = target_node.get_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	query.collision_mask = 1
+	
+	for i in target_node.get_shape_owners():
+		query.transform = (target_node.shape_owner_get_owner(i) as Node2D).global_transform
+		for j in target_node.shape_owner_get_shape_count(i):
+			query.shape = target_node.shape_owner_get_shape(i, j)
+			
+			var results = space_state.intersect_shape(query, 16)
+			for k in results:
+				var l: Object = k.get(&"collider", null)
+				if l && l is Player:
+					return false
+	return true
+
+
 func _top_grabbed() -> void:
 	Audio.play_sound(sound_grab_top, player)
 	player.is_holding = true
@@ -162,30 +203,10 @@ func _do_ungrab(player_died: bool) -> void:
 			target_node.set_collision_layer_value(5, false)
 			_wait_until_floor = true
 
-		await player.get_tree().physics_frame
-		player.is_holding = false
+		#await player.get_tree().physics_frame
+		player.set_deferred("is_holding", false)
 
 	ungrabbed.emit()
-
-
-func _physics_process(delta: float) -> void:
-	if _grabbed && _following_start:
-		var _target = get_target_hold_position()
-		target_node.global_position = lerp(_from_follow_pos, _target, _follow_progress)
-		_follow_progress = min(_follow_progress + 5 * delta, 1)
-		if _follow_progress == 1:
-			_follow_progress = 0
-			_following_start = false
-			_following = true
-
-	if _grabbed && _following:
-		target_node.global_position = get_target_hold_position()
-
-	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
-		if grabbing_ungrab_collision_with_player:
-			target_node.set_collision_layer_value(5, true)
-		_wait_until_floor = false
-
 
 func get_target_hold_position() -> Vector2:
 	return player.global_position + player.suit.physics_shaper.shape_pos + Vector2(16 * player.direction, 0)

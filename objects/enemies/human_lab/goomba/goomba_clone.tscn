@@ -250,6 +250,7 @@ stomping_sound = ExtResource("7_yjslt")
 killing_creation = SubResource("Resource_8814w")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("10_t02xd")
+sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

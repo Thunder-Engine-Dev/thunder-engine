@@ -64,6 +64,7 @@ func reset_timers() -> void:
 
 func _on_grab_initiated() -> void:
 	disable_mode = CollisionObject2D.DISABLE_MODE_REMOVE
+	shape_owner_get_shape(0, 0).size = 30 * Vector2.ONE
 	reset_timers()
 
 

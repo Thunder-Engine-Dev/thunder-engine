@@ -208,6 +208,7 @@ stomping_creation = SubResource("Resource_6rql1")
 stomping_sound = ExtResource("4_t72s8")
 killing_creation = SubResource("Resource_5x01k")
 killing_sound_succeeded = ExtResource("4_t72s8")
+sound_ignore_pitch_modification = true
 
 [node name="Node" type="Node2D" parent="Body" index="2"]
 script = ExtResource("7_0gc58")

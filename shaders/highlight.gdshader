@@ -12,6 +12,12 @@ uniform float highlight_speed : hint_range(0.0, 25.0) = 6.0;
 // How much area each flash covers (width)
 uniform float highlight_width : hint_range(0.0, 50.0) = 15.0;
 
+varying vec4 v_vertex_color;
+
+void vertex() {
+	v_vertex_color = COLOR;
+}
+
 void fragment( )
 {
 	vec4 input_color = texture(TEXTURE, UV);
@@ -26,5 +32,5 @@ void fragment( )
 	// used to control when to use input color vs highlight color
 	float highlight = value > 0.5? 1.0: 0.0;
 	vec3 new_color = input_color.rgb * (1.0 - highlight) + highlight_color.rgb * highlight;
-	COLOR = vec4(new_color, input_color.a);
+	COLOR = v_vertex_color * vec4(new_color, input_color.a);
 }

@@ -40,6 +40,7 @@ animations = [{
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_sound_succeeded = ExtResource("3_pbree")
+sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_1t8pg")

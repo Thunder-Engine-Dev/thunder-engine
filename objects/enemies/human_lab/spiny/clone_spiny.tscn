@@ -239,17 +239,14 @@ animations = [{
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_d26ok")
 
-[node name="Body" parent="." index="1"]
-visible = true
-
 [node name="Collision" parent="Body" index="0"]
-visible = false
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_d26ok")
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_creation = SubResource("Resource_rn71a")
 killing_sound_succeeded = ExtResource("5_12kt0")
+sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_kdbtc")

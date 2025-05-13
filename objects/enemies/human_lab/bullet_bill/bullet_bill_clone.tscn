@@ -24,6 +24,7 @@ killing_immune = {
 "starman": false
 }
 killing_sound_succeeded = ExtResource("2_8cp88")
+sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2"]
 texture = ExtResource("3_25l04")

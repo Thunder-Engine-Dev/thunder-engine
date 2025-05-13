@@ -192,6 +192,7 @@ stomping_creation = SubResource("Resource_gxwoo")
 stomping_sound = ExtResource("5_13l8y")
 killing_creation = SubResource("Resource_gxwoo")
 killing_sound_succeeded = ExtResource("5_13l8y")
+sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_jwl4n")

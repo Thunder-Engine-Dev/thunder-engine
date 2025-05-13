@@ -96,6 +96,7 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 @export var frozen_sound: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 @export_group("Sound", "sound_")
 @export var sound_pitch: float = 1.0
+@export var sound_ignore_pitch_modification: bool = false
 @export_group("Extra")
 ## Custom vars for [member custom_scipt][br]
 @export var custom_vars: Dictionary
@@ -152,14 +153,14 @@ func _ready() -> void:
 
 func _lss():
 	var _custom_sound = CharacterManager.get_sound_replace(stomping_sound, DEFAULT_STOMP, "enemy_stomp", false)
-	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch})
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 func _lks():
 	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_succeeded, DEFAULT_KICK, "enemy_kick", false)
-	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch})
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 func _lkf():
-	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch})
+	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 func _lkfz():
-	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch})
+	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 
 
 ## Makes the enemy stomped by the player, usually triggered

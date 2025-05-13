@@ -48,8 +48,12 @@ animations = [{
 }]
 
 [node name="GrabbableKey" type="CharacterBody2D" groups=["unlocking_key"]]
+collision_layer = 112
+collision_mask = 64
 script = ExtResource("1_iqgwp")
+turn_sprite = false
 sprite = NodePath("AnimatedSprite2D")
+gravity_scale = 0.5
 metadata/_custom_type_script = "uid://ng3vu4qwreu5"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -57,6 +61,7 @@ visible = false
 shape = SubResource("RectangleShape2D_01sfi")
 
 [node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
 enabled = false
 shape = SubResource("RectangleShape2D_i4mw3")
 target_position = Vector2(0, 0)
@@ -72,9 +77,12 @@ special_tags = Array[StringName]([])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+process_mode = 3
 sprite_frames = SubResource("SpriteFrames_88lke")
 autoplay = "default"
 
 [node name="GrabbableModifier" parent="." instance=ExtResource("3_i8ho5")]
 grabbing_ungrab_throw_power_min = Vector2(250, 100)
-grabbing_ungrab_throw_power_max = Vector2(350, 400)
+grabbing_ungrab_throw_power_max = Vector2(350, 500)
+
+[connection signal="grab_initiated" from="GrabbableModifier" to="." method="_on_grab_initiated"]
