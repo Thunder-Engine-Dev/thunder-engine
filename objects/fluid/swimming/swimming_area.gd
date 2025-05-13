@@ -19,6 +19,8 @@ func _ready() -> void:
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
+			if !is_instance_valid(body) || body.is_queued_for_deletion():
+				return
 			if body.has_node("Underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()

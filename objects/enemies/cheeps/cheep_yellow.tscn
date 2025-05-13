@@ -21,7 +21,9 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"gravity_scale": 0.25,
+"max_falling_speed": 500.0
 }
 custom_script = ExtResource("3_gvvtk")
 
@@ -54,6 +56,7 @@ metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_tm8dl")
+stomping_scores = 200
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -66,6 +69,7 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_tm8dl")
+killing_scores = 200
 killing_sound_failed = ExtResource("5_ylvhf")
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
