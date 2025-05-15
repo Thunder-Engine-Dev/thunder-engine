@@ -156,6 +156,8 @@ func _do_grab() -> void:
 		player.holding_item = target_node
 		_from_follow_pos = target_node.global_position
 		_following_start = true
+		if grabbing_defer_mario_collision_until_on_floor:
+			target_node.set_collision_layer_value(5, false)
 
 	grabbed.emit()
 
@@ -170,7 +172,7 @@ func _do_ungrab(player_died: bool) -> void:
 			_following_start = false
 			_following = false
 		
-		if grabbing_defer_mario_collision_until_on_floor && target_node.get_collision_layer_value(5):
+		if grabbing_defer_mario_collision_until_on_floor:
 			target_node.set_collision_layer_value(5, false)
 			_wait_until_floor = true
 		
@@ -199,7 +201,7 @@ func _do_ungrab(player_died: bool) -> void:
 		if player.up_down == 0:
 			target_node.speed.y = grabbing_ungrab_throw_power_min.y * -1
 
-		if grabbing_defer_mario_collision_until_on_floor && target_node.get_collision_layer_value(5):
+		if grabbing_defer_mario_collision_until_on_floor:
 			target_node.set_collision_layer_value(5, false)
 			_wait_until_floor = true
 
