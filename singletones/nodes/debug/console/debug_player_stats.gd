@@ -6,6 +6,7 @@ var target_text: String
 func _physics_process(delta: float) -> void:
 	visible = Console.cv.player_stats_shown
 	if !Console.cv.player_stats_shown: return
+	@warning_ignore("incompatible_ternary")
 	var other_text: String = "PAUSE:" + str(get_tree().paused) + \
 		" TRANS:" + str(
 			TransitionManager.current_transition.name if is_instance_valid(TransitionManager.current_transition) else "None"
@@ -20,6 +21,7 @@ NICK: %s CHAR: %s" % [
 		text = "Player Not Found " + other_text + target_text
 		return
 
+	@warning_ignore("incompatible_ternary")
 	target_text = """
 XY: %v
 SPD: %12.6v

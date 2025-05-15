@@ -4,6 +4,7 @@ extends AnimatableBody2D
 @export var delay: float = 50
 @export var force_fall: bool = false
 @export var fall_speed: float = 0.2
+@export var one_way_collision: bool = true
 @export_enum("X", "Y") var shake_axis: int = 0
 
 var counting: bool = false
@@ -12,6 +13,10 @@ var speed_y: float
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var first_pos: Vector2 = position
+
+func _ready() -> void:
+	for i in get_shape_owners():
+		shape_owner_set_one_way_collision.call_deferred(i, one_way_collision)
 
 
 func _physics_process(delta):

@@ -19,7 +19,7 @@ var _warp_tweak: bool
 var _head_bump_sound: bool
 var _fall_anim_tweak: bool
 var _skid_sound_loop_delay: float
-var _look_up_sound: AudioStream
+var _look_up_sound: Array = [null]
 var _loop_offsets: Dictionary = {}
 
 var _climb_progress: float
@@ -133,7 +133,8 @@ var _skid_sound_timer: bool
 func _skid_sound_loop() -> void:
 	if _skid_sound_timer: return
 	_skid_sound_timer = true
-	Audio.play_sound(config.sound_skid, player)
+	var _sndfx: AudioStream = config.sound_skid[randi_range(0, len(config.sound_skid) - 1)]
+	Audio.play_sound(_sndfx, player)
 	var _clamped_loop: float = clampf(_skid_sound_loop_delay, 0.05, 2.0)
 	await player.get_tree().create_timer(_clamped_loop, false, false, true).timeout
 	_skid_sound_timer = false
@@ -191,7 +192,7 @@ func _setup_tweaks() -> void:
 	_fall_anim_tweak = CharacterManager.get_suit_tweak("fall_animation", "", player.suit.name)
 	var _up_sfx: Array = CharacterManager.get_suit_sound("look_up", "", player.suit.name)
 	if _up_sfx:
-		_look_up_sound = _up_sfx.front()
+		_look_up_sound = _up_sfx
 	var _off = CharacterManager.get_suit_tweak("loop_frame_offsets", "", player.suit.name)
 	if _off is Dictionary:
 		_loop_offsets = _off
@@ -252,7 +253,8 @@ func _animation_floor_process(delta: float) -> void:
 		_p_run_enabled = false
 		if player.up_down == -1 && !player.is_holding && _look_up_tweak:
 			if !sprite.animation in [&"look_up", &"hold_look_up"]:
-				Audio.play_sound(_look_up_sound, player, false)
+				var _sndfx: AudioStream = _look_up_sound[randi_range(0, len(_look_up_sound) - 1)]
+				Audio.play_sound(_sndfx, player, false)
 			_play_anim(_get_animation_prefixed(&"look_up"))
 		else:
 			_idle_timer += delta

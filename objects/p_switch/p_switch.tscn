@@ -11,7 +11,7 @@ size = Vector2(32, 16)
 size = Vector2(32, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1mer2"]
-size = Vector2(32, 13)
+size = Vector2(32, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5c86w"]
 atlas = ExtResource("1_u4da8")
@@ -74,7 +74,7 @@ metadata/_edit_lock_ = true
 
 [node name="Collision2" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0, -6.5)
+position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_1mer2")
 disabled = true
 
@@ -85,7 +85,7 @@ autoplay = "default"
 metadata/_edit_lock_ = true
 
 [node name="Duration" type="Timer" parent="."]
-wait_time = 11.4
+wait_time = 11.5
 one_shot = true
 
 [connection signal="timeout" from="Duration" to="." method="_on_duration_timeout"]

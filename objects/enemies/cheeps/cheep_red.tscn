@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8mms5q7m2lk7"]
+[gd_scene load_steps=17 format=3 uid="uid://c8mms5q7m2lk7"]
 
 [ext_resource type="Script" uid="uid://c7wcbmd5pnq1n" path="res://engine/objects/enemies/cheeps/cheep.gd" id="1_86ols"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_0vv4i"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_63gk1"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_w3gcv"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="9_wfl3o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_urkew"]
+size = Vector2(28, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8v3i3"]
 size = Vector2(28, 28)
@@ -29,7 +32,7 @@ custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
 "gravity_scale": 0.25,
-"max_falling_speed": 500.0
+"max_falling_speed": 300.0
 }
 custom_script = ExtResource("7_63gk1")
 
@@ -44,7 +47,7 @@ region = Rect2(0, 0, 31, 32)
 atlas = ExtResource("2_sfi0e")
 region = Rect2(0, 32, 31, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_7tauq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_34jvi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -70,15 +73,15 @@ metadata/_edit_pinned_properties_ = [&"sprite", &"look_at_player", &"speed"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource("RectangleShape2D_8v3i3")
+shape = SubResource("RectangleShape2D_urkew")
 disabled = true
 
 [node name="Body" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
 shape = SubResource("RectangleShape2D_8v3i3")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
@@ -121,7 +124,7 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_7tauq")
+sprite_frames = SubResource("SpriteFrames_34jvi")
 autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

@@ -6,6 +6,7 @@ const JUMP_SOUND = preload("res://engine/objects/players/prefabs/sounds/kick.wav
 @onready var sprite: AnimatedSprite2D = $Sprite
 
 var has_velset: bool
+var has_jumped: bool
 
 func _ready() -> void:
 	if CharacterManager.get_character_name() == "Luigi":
@@ -28,4 +29,6 @@ func _physics_process(delta: float) -> void:
 		return
 	if is_on_floor():
 		jump(350)
-		audio_stream_player_2d.play()
+		if has_jumped:
+			audio_stream_player_2d.play()
+		has_jumped = true

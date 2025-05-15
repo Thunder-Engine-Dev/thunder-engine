@@ -230,12 +230,12 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	var _kick = CharacterManager.get_suit_sound("kick", "", suit.name)
 	var _hurt = CharacterManager.get_suit_sound("hurt", "", suit.name)
 	var _death = CharacterManager.get_voice_line("death", "")
-	suit.physics_config = suit.physics_config.duplicate()
-	if _jump: suit.physics_config.sound_jump = _jump[0]
-	if _swim: suit.physics_config.sound_swim = _swim[0]
-	if _skid: suit.physics_config.sound_skid = _skid[0]
-	if _grab: suit.grab_sound_grab = _grab[0]
-	if _kick: suit.grab_sound_kick = _kick[0]
+	suit.physics_config = suit.physics_config.duplicate(true)
+	if _jump: suit.physics_config.sound_jump = _jump
+	if _swim: suit.physics_config.sound_swim = _swim
+	if _skid: suit.physics_config.sound_skid = _skid
+	if _grab: suit.grab_sound_grab = _grab
+	if _kick: suit.grab_sound_kick = _kick
 	if _hurt: suit.sound_hurt = _hurt[randi_range(0, len(_hurt) - 1)]
 	if _death: suit.sound_death = _death[randi_range(0, len(_death) - 1)]
 

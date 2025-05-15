@@ -22,7 +22,7 @@ custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
 "gravity_scale": 0.25,
-"max_falling_speed": 500.0
+"max_falling_speed": 300.0
 }
 custom_script = ExtResource("3_aeycw")
 

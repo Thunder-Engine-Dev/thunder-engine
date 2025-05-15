@@ -30,10 +30,14 @@ func _ready() -> void:
 	death_node.visible = true
 	death_node.set(&"speed_scale", 0)
 	if attacker_speed != Vector2.ZERO && node is GravityBody2D:
+		node.speed.y *= 2 * gravity_scale
+		node.gravity_scale = gravity_scale
+		node.max_falling_speed = max_falling_speed
 		fancy_death_effect()
 	else:
-		if node is GravityBody2D: 
+		if node is GravityBody2D:
 			node.speed = speed
+			node.speed.y *= 2 * gravity_scale
 			node.gravity_scale = gravity_scale
 			node.max_falling_speed = max_falling_speed
 			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D

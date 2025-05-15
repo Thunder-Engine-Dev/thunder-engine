@@ -71,7 +71,8 @@ func _animation_floor_process(delta: float) -> void:
 		if !(player.sprite.animation == &"walk" && player.sprite.is_playing()):
 			if player.up_down == -1 && !player.is_holding && _look_up_tweak:
 				if !sprite.animation in [&"look_up", &"hold_look_up"]:
-					Audio.play_sound(_look_up_sound, player, false)
+					var _sndfx: AudioStream = _look_up_sound[randi_range(0, len(_look_up_sound) - 1)]
+					Audio.play_sound(_sndfx, player, false)
 				_play_anim(_get_animation_prefixed(&"look_up"))
 			else:
 				_idle_timer += delta

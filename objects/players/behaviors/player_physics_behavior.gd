@@ -192,7 +192,8 @@ func _movement_y(delta: float) -> void:
 			player.jump(config.swim_out_speed if player.is_underwater_out else config.swim_speed)
 			player._has_jumped = true
 			player.swam.emit()
-			Audio.play_sound(config.sound_swim, player, false, {pitch = suit.sound_pitch})
+			var _sndfx: AudioStream = config.sound_swim[randi_range(0, len(config.sound_swim) - 1)]
+			Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
 		if player.speed.y < -abs(config.swim_max_speed) && !player.is_underwater_out:
 			player.speed.y = lerp(player.speed.y, -abs(config.swim_max_speed), 0.125)
 	# Jumping
@@ -206,7 +207,8 @@ func _movement_y(delta: float) -> void:
 				player.jump(config.jump_speed)
 				if player.is_crouching && player._crouch_jump_tweak:
 					player.crouch_forced = player.up_down > 0
-				Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
+				var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
+				Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
 		elif player.jumping > 0:
 			var buff: float = _calculate_jump_acceleration()
 			if player.speed.y < 0.0:
@@ -241,7 +243,8 @@ func _movement_climbing(delta: float) -> void:
 		player.is_climbing = false
 		player.direction = sign(player.left_right)
 		player.jump(config.jump_speed)
-		Audio.play_sound(config.sound_jump, player, false, {pitch = suit.sound_pitch})
+		var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
+		Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
 
 
 #= Sliding from slopes

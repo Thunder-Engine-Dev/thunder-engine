@@ -44,7 +44,7 @@ enum Type {
 @export var swimming_back_to_water: bool = true
 @export_group("Cheep Tracking", "tracking_")
 @export var tracking_interval: float = 1
-@export var tracking_speed: float = 60
+@export var tracking_speed: float = 50
 @export_group("Cheep Leaping", "leaping_")
 @export var leaping_gravity_scale: float = 0.2
 

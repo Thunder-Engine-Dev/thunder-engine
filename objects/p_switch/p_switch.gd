@@ -3,11 +3,14 @@ extends GravityBody2D
 signal activated
 signal timed_out
 
+const P_SWITCH_RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
+
 @export var is_once: bool
 @export var source_coins: Array[PackedScene] = [preload("res://engine/objects/items/coin/coin.tscn")]
 @export var source_bricks: Array[PackedScene] = [preload("res://engine/objects/bumping_blocks/brick/brick.tscn")]
 @export var explosion_effect: PackedScene = preload("res://engine/objects/effects/smoke/smoke.tscn")
-@export var p_switch_music = preload("res://engine/objects/p_switch/p_switch_music.mp3")
+@export var p_switch_music = preload("res://engine/objects/p_switch/p_switch_music.ogg")
+@export var p_switch_activation_sound = preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
 
 @onready var collision_shape: CollisionShape2D = $Collision
 @onready var collision_shape_stomped: CollisionShape2D = $Collision2
@@ -19,6 +22,8 @@ signal timed_out
 @export var appear_speed: float = 0.5
 @export var appear_visible: float = 28
 
+var _music_faded: int = 0
+
 func _physics_process(delta: float) -> void:
 	if !appear_distance:
 		motion_process(delta)
@@ -27,6 +32,22 @@ func _physics_process(delta: float) -> void:
 	else:
 		appear_process(Thunder.get_delta(delta))
 		z_index = -1
+	
+	if !duration.is_stopped() && \
+		duration.time_left > 0.0 && \
+		duration.time_left < 2 && \
+		_music_faded == 0:
+			_music_faded = 1
+			Audio.play_1d_sound(P_SWITCH_RUNOUT, false)
+	
+	if !duration.is_stopped() && \
+		duration.time_left > 0.0 && \
+		duration.time_left < 1.5 && \
+		_music_faded < 2:
+			_music_faded = 2
+			var pl: Player = Thunder._current_player
+			if pl && !pl.is_starman():
+				Audio.stop_music_channel(98, true)
 
 
 func appear_process(delta: float) -> void:
@@ -41,7 +62,7 @@ func active() -> void:
 	collision_shape_activator.set_deferred(&"disabled", true)
 	
 	sprite.play(&"activated")
-	Audio.play_sound(preload("res://engine/objects/core/checkpoint/sounds/switch.wav"), self)
+	Audio.play_sound(p_switch_activation_sound, self)
 	duration.start()
 	_swap_coins_and_bricks.call_deferred()
 	
@@ -57,16 +78,21 @@ func active() -> void:
 func _on_activation(player: Player) -> void:
 	if !duration.is_stopped(): return
 	
+	_music_faded = 0
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if !mus_loader: return
 	mus_loader.play_immediately = false
 	mus_loader.pause_music()
+	for i in Audio._music_tweens:
+		i.kill()
+	if Audio._music_channels.has(98) && is_instance_valid(Audio._music_channels[98]):
+		_stop_music()
 	if !is_instance_valid(player): return
 	if !player.died.is_connected(_stop_music):
 		player.died.connect(_stop_music, CONNECT_ONE_SHOT)
 	activated.emit()
 	active()
-	Audio.play_music(p_switch_music, 98, {}, false, false)
+	Audio.play_music(p_switch_music, 98, { volume = 0 }, false, false)
 
 
 func _on_duration_timeout() -> void:
@@ -85,11 +111,12 @@ func _on_duration_timeout() -> void:
 	if player.completed: return
 	if player.died.is_connected(_stop_music):
 		player.died.disconnect(_stop_music)
+	_music_faded = 0
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if !mus_loader: return
 	if mus_loader.is_paused:
-		mus_loader.unpause_music()
 		mus_loader.play_immediately = true
+		mus_loader.unpause_music()
 	elif !mus_loader.buffer.is_empty():
 		mus_loader.play_immediately = true
 		mus_loader.play_buffered()
