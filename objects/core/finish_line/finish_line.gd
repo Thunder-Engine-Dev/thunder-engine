@@ -16,6 +16,7 @@ var triggered: bool = false
 
 func _physics_process(_delta: float) -> void:
 	if triggered: return
+	if !detect_by_position: return
 	
 	var player = Thunder._current_player
 	if !player: return

@@ -2,6 +2,8 @@ shader_type canvas_item;
 
 uniform bool mixing = false;
 uniform bool slowed_down = false;
+uniform float hsv_speed = 1.0;
+uniform bool blinking = true;
 
 // https://godotengine.org/qa/53831/using-hsv-values-in-shaders-instead-of-rgb
 vec4 hsv_to_rgb(float h, float s, float v, float a){
@@ -53,10 +55,10 @@ void fragment() {
     vec4 col_a = texture(TEXTURE, UV) + vec4(0.3, 0.3, 0.3, 0);
     // vec4 col_b = texture(pallet, vec2(s, 1)) * vec4(1.3, 1.3, 1.3, 0);
     vec4 col_b = hsv_to_rgb(
-      TIME * 1.0f, slowed_down ? 0.5f : 1.0f, 1, 1
+      TIME * hsv_speed, slowed_down ? 0.5f : 1.0f, 1, 1
     ) * vec4(1.3f, 1.3f, 1.3f, 0);
     vec4 f_color;
-    if (int(TIME * 20.0f * (slowed_down ? 0.5f : 1.0f)) % 2 == 0) {
+    if ((int(TIME * 20.0 * (slowed_down ? 0.5f : 1.0f)) % 2 == 0) && blinking) {
       f_color = col_a * col_b;
     } else {
       f_color = col_a * vec4(0.7, 0.7, 0.7, 0) * col_b;
