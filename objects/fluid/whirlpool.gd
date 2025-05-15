@@ -1,6 +1,7 @@
 @tool
 extends "res://engine/objects/fluid/swimming/control_resize_logic.gd"
 
+@export var correct_particles_position: bool = true
 @export_group("Physics")
 @export var sucking_motion: Vector2 = Vector2(100, 50)
 
@@ -14,7 +15,8 @@ func _ready():
 	if Engine.is_editor_hint(): return
 	bubbles.process_material.duplicate()
 	bubbles.process_material.emission_box_extents = Vector3(get_rect().size.x / 2, 1, 1)
-	bubbles.global_position = sinking_point
+	if correct_particles_position:
+		bubbles.global_position = sinking_point
 	bubbles.visibility_rect.position = get_rect().size / -2
 	bubbles.visibility_rect.size = get_rect().size
 
