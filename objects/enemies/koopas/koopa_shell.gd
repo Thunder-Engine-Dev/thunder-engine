@@ -133,6 +133,7 @@ var _already_processed: Array[int]
 func _on_collided_wall() -> void:
 	var _dir = 1 if speed_previous.x > 0 else -1
 	var saved_pos = global_position
+	_already_processed.clear()
 	_process_collision_deferred(_dir, saved_pos)
 	turn_x()
 
