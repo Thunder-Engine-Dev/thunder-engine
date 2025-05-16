@@ -11,6 +11,7 @@ extends AnimatableBody2D
 @export var shooting_delay_min: float = 1.5
 @export var shooting_delay_max: float = 4.5
 @export_enum("Both:0", "Left:-1", "Right:1") var shooting_force_dir: int = 0
+@export var shooting_force_no_shoot_on_wrong_dir: bool = true
 @export_group("Sound")
 @export var shooting_sound: AudioStream = preload("../bill/sounds/bullet.ogg")
 @export var sound_pitch_min: float = 1.0
@@ -38,7 +39,7 @@ func _on_bullet_launched() -> void:
 	var dir_force_no_shoot: bool
 	dir = Thunder.Math.look_at(pos_bullet.global_position, player.global_position, pos_bullet.global_transform)
 	if shooting_force_dir != 0:
-		if dir != shooting_force_dir:
+		if dir != shooting_force_dir && shooting_force_no_shoot_on_wrong_dir:
 			dir_force_no_shoot = true
 		dir = shooting_force_dir
 	

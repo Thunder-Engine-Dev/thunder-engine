@@ -6,4 +6,5 @@
 shader = ExtResource("1_pfo04")
 shader_parameter/mixing = false
 shader_parameter/slowed_down = false
-shader_parameter/hsv_speed = 20.0
+shader_parameter/hsv_speed = 1.0
+shader_parameter/blinking = true
