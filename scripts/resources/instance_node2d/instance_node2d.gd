@@ -10,6 +10,8 @@ class_name InstanceNode2D
 @export_group("Creation","creation_")
 ## The [Node2D] you have packed as the root, also the instance you are going to add via [method NodeCreator.prepare_ins_2d]
 @export var creation_nodepack: PackedScene
+## When [method NodeCreator.NodeCreation.create_2d] is called for this instance, ticking this will force creation as a sibling, rather than directly under current scene node.
+@export var creation_force_sibling: bool = false
 @export_group("Transform","trans_")
 ## The offset of the created, related to its [member Node2D.global_transform]
 @export var trans_offset: Vector2

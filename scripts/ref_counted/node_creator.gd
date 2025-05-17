@@ -100,7 +100,7 @@ class NodeCreation extends RefCounted:
 	func create_2d(as_sibling: bool = false, ins2d: InstanceNode2D = null) -> NodeCreation:
 		if !_node: return self
 		
-		if as_sibling:
+		if as_sibling || (_ins2d && _ins2d.creation_force_sibling):
 			_on.add_sibling(_node)
 		elif Scenes.current_scene:
 			Scenes.current_scene.add_child(_node)
