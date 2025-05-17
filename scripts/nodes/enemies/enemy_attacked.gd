@@ -10,6 +10,7 @@ const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effec
 const COIN = preload("res://engine/objects/items/coin/coin.wav")
 const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 const DEFAULT_STOMP = preload("res://engine/objects/enemies/_sounds/stomp.wav")
+const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 
 const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 
@@ -154,11 +155,15 @@ func _ready() -> void:
 func _lss():
 	var _custom_sound = CharacterManager.get_sound_replace(stomping_sound, DEFAULT_STOMP, "enemy_stomp", false)
 	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
 func _lks():
 	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_succeeded, DEFAULT_KICK, "enemy_kick", false)
 	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
 func _lkf():
-	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_failed, DEFAULT_BUMP, "enemy_bump", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
 func _lkfz():
 	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 
@@ -333,7 +338,9 @@ func _on_level_end() -> void:
 		if Thunder.view.is_getting_closer(_center, 320):
 			_center.queue_free.call_deferred()
 		return
-	Audio.play_1d_sound(COIN)
+	
+	var _custom_sound = CharacterManager.get_sound_replace(COIN, COIN, "coin", false)
+	Audio.play_1d_sound(_custom_sound)
 	NodeCreator.prepare_2d(COIN_EFFECT, _center).bind_global_transform().create_2d().call_method(func(node):
 		node.score_given = 1000
 		node.global_rotation = 0

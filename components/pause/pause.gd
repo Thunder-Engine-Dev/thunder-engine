@@ -57,12 +57,14 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		if !no_sound_effect:
-			Audio.play_1d_sound(open_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+			var _sfx = CharacterManager.get_sound_replace(open_sound, open_sound, "hud_pause_open", false)
+			Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		_prev_mouse_mode = SettingsManager.mouse_mode
 		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
-		Audio.play_1d_sound(close_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		var _sfx = CharacterManager.get_sound_replace(close_sound, close_sound, "hud_pause_close", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
 			SettingsManager.hide_mouse()
 

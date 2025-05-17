@@ -52,10 +52,17 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"level_complete": [],
 	"coin": [],
 	"enemy_stomp": [],
+	"enemy_bump": [],
 	"enemy_kick": [],
 	"spring_bounce": [],
+	"block_appear": [],
 	"block_bump": [],
 	"block_break": [],
+	"hud_timeout": [],
+	"hud_pause_open": [],
+	"hud_pause_close": [],
+	"menu_start_song": [],
+	"level_cutscene_song": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -71,10 +78,17 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"level_complete": [],
 	"coin": [],
 	"enemy_stomp": [],
+	"enemy_bump": [],
 	"enemy_kick": [],
 	"spring_bounce": [],
+	"block_appear": [],
 	"block_bump": [],
 	"block_break": [],
+	"hud_timeout": [],
+	"hud_pause_open": [],
+	"hud_pause_close": [],
+	"menu_start_song": [],
+	"level_cutscene_song": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {

@@ -43,7 +43,8 @@ func _ready() -> void:
 		appear_process(0)
 
 func _from_bumping_block() -> void:
-	Audio.play_sound(appearing_sound, self)
+	var sfx = CharacterManager.get_sound_replace(appearing_sound, DEFAULT_APPEARING_SOUND, "block_appear", false)
+	Audio.play_sound(sfx, self)
 
 func _physics_process(delta: float) -> void:
 	if !supply_behavior:

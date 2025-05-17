@@ -1,11 +1,15 @@
+@warning_ignore("missing_tool")
 class_name LevelCutscene extends Stage2D
+
+const LETS = preload("res://engine/scenes/main_menu/sounds/lets.wav")
+const FADEOUT = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
 @export_file("*.tscn", "*.scn") var goto_path: String
 @export var fade_out_time: float = 0.04
 @export var fade_out_focus_on_player: bool = true
 @export_group("Cutscene Options")
-@export var intro_music: AudioStream = preload("res://engine/scenes/main_menu/sounds/lets.wav")
-@export var transition_sound: AudioStream = preload("res://engine/components/ui/_sounds/fadeout.wav")
+@export var intro_music: AudioStream = LETS
+@export var transition_sound: AudioStream = FADEOUT
 
 @onready var player_state = Thunder._current_player_state
 @onready var player: Player = Thunder._current_player
@@ -20,7 +24,8 @@ func _ready() -> void:
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
-	Audio.play_1d_sound(intro_music, false, { "bus": "Music" })
+	var _sfx = CharacterManager.get_sound_replace(intro_music, LETS, "level_cutscene_song", false)
+	Audio.play_1d_sound(_sfx, false, { "bus": "Music" })
 	
 	await get_tree().create_timer(1.0, true, false, true).timeout
 	skippable = true

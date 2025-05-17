@@ -3,6 +3,7 @@
 extends AnimatableBody2D
 class_name StaticBumpingBlock
 
+const DEFAULT_APPEAR = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
 const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 const DEFAULT_BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
 
@@ -82,6 +83,8 @@ func _ready() -> void:
 		_ignore_colliding_body_correction = !initially_visible_and_solid
 		_sprites.visible = initially_visible_and_solid
 		
+		if appear_sound && appear_sound == DEFAULT_APPEAR:
+			appear_sound = CharacterManager.get_sound_replace(appear_sound, DEFAULT_APPEAR, "block_appear", false)
 		bump_sound = CharacterManager.get_sound_replace(bump_sound, DEFAULT_BUMP, "block_bump", false)
 		break_sound = CharacterManager.get_sound_replace(break_sound, DEFAULT_BREAK, "block_break", false)
 
