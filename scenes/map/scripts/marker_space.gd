@@ -280,11 +280,11 @@ func add_uncompleted_levels_after(marker: String) -> void:
 	uncompleted_levels.clear()
 	var switched_to_uncompleted: bool = false
 	for i in total_levels:
-		if i._level_save == marker:
+		if Scenes.get_scene_path(i._level_save) == marker:
 			switched_to_uncompleted = true
 			continue
 		if switched_to_uncompleted:
-			uncompleted_levels.append(i._level_save)
+			uncompleted_levels.append(Scenes.get_scene_path(i._level_save))
 	
 	#print("Uncompleted levels:", uncompleted_levels)
 
@@ -292,7 +292,7 @@ func add_all_uncompleted_levels() -> void:
 	if !uncompleted_levels.is_empty(): return
 	for i in total_levels:
 		if !i.get("_level_save"): continue
-		uncompleted_levels.append(i._level_save)
+		uncompleted_levels.append(Scenes.get_scene_path(i._level_save))
 	
 	#print("Added all levels:", uncompleted_levels)
 

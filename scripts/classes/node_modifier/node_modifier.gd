@@ -9,7 +9,7 @@ class_name NodeModifier
 
 ## Connecting the custom handlers of generic signals, not interfering with the custom code.
 func _init() -> void:
-	ready.connect(_custom_ready)
+	Thunder._connect(ready, _custom_ready)
 
 ## Checking if the base class of the target node is valid.
 func _custom_ready() -> void:

@@ -22,6 +22,7 @@
 [sub_resource type="Resource" id="Resource_npf7v"]
 script = ExtResource("4_jp2q6")
 creation_nodepack = ExtResource("3_34x5w")
+creation_force_sibling = false
 trans_offset = Vector2(0, -16)
 trans_inheritances = 7
 trans_rotation = 0.0
