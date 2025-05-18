@@ -8,6 +8,8 @@ func _ready() -> void:
 	# Body in/out of water
 	body_entered.connect(
 		func(body: Node2D) -> void:
+			if !is_instance_valid(body) || body.is_queued_for_deletion():
+				return
 			if body == Thunder._current_player:
 				body.die()
 			if body.is_in_group(&"#lava_body"):
@@ -24,6 +26,8 @@ func _ready() -> void:
 	
 	body_exited.connect(
 		func(body: Node2D) -> void:
+			if !is_instance_valid(body) || body.is_queued_for_deletion():
+				return
 			if body.is_in_group(&"#lava_body"):
 				self._spray.call_deferred(body, Vector2.ZERO)
 	)

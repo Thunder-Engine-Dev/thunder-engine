@@ -34,6 +34,7 @@ flip_v = true
 [node name="Area2D" type="Area2D" parent="Spike"]
 script = ExtResource("3_n4gg2")
 type = 2
+ignore_starman = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spike/Area2D"]
 shape = SubResource("RectangleShape2D_faog7")

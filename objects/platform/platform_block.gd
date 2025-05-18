@@ -14,8 +14,9 @@ func _ready() -> void:
 
 # Forward the method call to the main platform script.
 func _player_landed(player: Player) -> void:
-	if includes_path_follow:
-		get_parent()._player_landed(player)
+	if !includes_path_follow: return
+	if _path_follow.has_method(&"_player_landed"):
+		_path_follow._player_landed(player)
 
 
 var _is_player_falling: bool

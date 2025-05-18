@@ -31,11 +31,13 @@ enum Type {
 			collision_shape.set_deferred(&"disabled", true)
 		if type != Type.LEAP:
 			gravity_scale = 0
-			enemy_attacked.stomping_standard = Vector2.ZERO
+			if !always_stompable:
+				enemy_attacked.stomping_standard = Vector2.ZERO
 		if always_unstompable:
 			enemy_attacked.stomping_standard = Vector2.ZERO
 @export_group("Cheep General")
 @export var always_unstompable: bool
+@export var always_stompable: bool
 @export var turn_x_enabled: bool = true
 @export var turn_y_enabled: bool = true
 @export_group("Cheep Swimming", "swimming_")

@@ -129,11 +129,11 @@ region = Rect2(120, 58, 112, 27)
 atlas = ExtResource("4_wobiu")
 region = Rect2(188, 0, 61, 29)
 
-[sub_resource type="Gradient" id="Gradient_akj06"]
+[sub_resource type="Gradient" id="Gradient_hacvj"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_e6t31"]
-gradient = SubResource("Gradient_akj06")
+gradient = SubResource("Gradient_hacvj")
 
 [sub_resource type="Animation" id="Animation_8nk1g"]
 length = 0.001
