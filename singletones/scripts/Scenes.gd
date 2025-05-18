@@ -95,3 +95,9 @@ func reload_current_scene() -> void:
 	scene_reloaded.emit()
 	pre_scene_changed.emit()
 	goto_scene(current_scene.scene_file_path)
+
+
+func get_scene_path(scene_path_or_uid: String) -> String:
+	if ResourceUID.has_id(ResourceUID.text_to_id(scene_path_or_uid)):
+		return ResourceUID.get_id_path(ResourceUID.text_to_id(scene_path_or_uid))
+	return scene_path_or_uid
