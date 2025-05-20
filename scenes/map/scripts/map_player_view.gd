@@ -70,7 +70,7 @@ func move(delta: float) -> void:
 				player.flip_h = direction.x < 0.0
 		
 		if current_marker.is_level() && reached:
-			map.to_level = current_marker.level
+			map.to_level = Scenes.get_scene_path(current_marker.level)
 			
 		
 		if !current_marker.is_level() && reached:

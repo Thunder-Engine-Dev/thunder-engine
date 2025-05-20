@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	if (
 		(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
-		Data.values.get('map_force_selected_marker') == _level_save
+		Data.values.get('map_force_selected_marker') == Scenes.get_scene_path(_level_save)
 	):
 		(func():
 			if (
@@ -59,7 +59,7 @@ func _ready() -> void:
 				player.camera.reset_physics_interpolation()
 			
 			marker_space.make_dots_visible_before(self)
-			marker_space.add_uncompleted_levels_after(_level_save)
+			marker_space.add_uncompleted_levels_after(Scenes.get_scene_path(_level_save))
 			Scenes.current_scene.next_level_ready.emit(
 				marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
 			)
@@ -91,7 +91,7 @@ func is_level() -> bool:
 func is_level_completed() -> bool:
 	return (
 		ProfileManager.current_profile.data.has(&"completed_levels") &&
-		ProfileManager.current_profile.data[&"completed_levels"].has(_level_save)
+		ProfileManager.current_profile.data[&"completed_levels"].has(Scenes.get_scene_path(_level_save))
 	)
 
 func set_level_path(value: String) -> void:
