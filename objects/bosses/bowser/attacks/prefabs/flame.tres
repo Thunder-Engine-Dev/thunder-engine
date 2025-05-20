@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_1psv4")
 creation_nodepack = ExtResource("1_qqi6n")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bquqhbqux15rr"]
+[gd_scene load_steps=10 format=3 uid="uid://bquqhbqux15rr"]
 
 [ext_resource type="Script" uid="uid://bqkr8canlrhtq" path="res://engine/singletones/nodes/debug/console/debug_player_stats.gd" id="1_4vh8i"]
 [ext_resource type="Script" uid="uid://b3yyjtr21es3b" path="res://engine/singletones/nodes/debug/console/debug_update_fps.gd" id="1_xl6s5"]
+[ext_resource type="Script" uid="uid://dtphrsyoenlwa" path="res://engine/singletones/nodes/debug/console/debug_general_stats.gd" id="3_evygy"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_seusf"]
 action = &"ui_accept"
@@ -147,3 +148,17 @@ theme_override_fonts/font = SubResource("SystemFont_xl6s5")
 theme_override_font_sizes/font_size = 17
 text = "Debug Stats"
 script = ExtResource("1_4vh8i")
+
+[node name="GeneralDebugStats" type="Label" parent="."]
+layout_mode = 1
+offset_left = 27.0
+offset_top = 39.0
+offset_right = 137.0
+offset_bottom = 62.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.196078, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("SystemFont_xl6s5")
+theme_override_font_sizes/font_size = 12
+text = "Debug Stats"
+script = ExtResource("3_evygy")

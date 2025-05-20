@@ -22,6 +22,7 @@
 [sub_resource type="Resource" id="Resource_yudqa"]
 script = ExtResource("4_rbsff")
 creation_nodepack = ExtResource("3_tjuyv")
+creation_force_sibling = false
 trans_offset = Vector2(0, -20)
 trans_inheritances = 7
 trans_rotation = 0.0

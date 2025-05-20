@@ -8,10 +8,7 @@ func _physics_process(delta: float) -> void:
 	if !Console.cv.player_stats_shown: return
 	@warning_ignore("incompatible_ternary")
 	var other_text: String = "PAUSE:" + str(get_tree().paused) + \
-		" TRANS:" + str(
-			TransitionManager.current_transition.name if is_instance_valid(TransitionManager.current_transition) else "None"
-		) + "
-NICK: %s CHAR: %s" % [
+		"\nNICK: %s CHAR: %s" % [
 		CharacterManager.get_character_display_name(),
 		SettingsManager.settings.get("character", ""),
 	]

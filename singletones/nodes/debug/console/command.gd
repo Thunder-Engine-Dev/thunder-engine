@@ -66,9 +66,9 @@ func get_help() -> String:
 		result = ""
 	else:
 		result += _get_usage()
-	if debug_only:
+	if debug_only && !". Debug only" in description:
 		description += ". Debug only"
-	if !is_cheat:
+	if !is_cheat && !". Not a cheat" in description:
 		description += ". Not a cheat"
 	
 	result += " - %s" % description

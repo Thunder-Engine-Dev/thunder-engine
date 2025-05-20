@@ -16,6 +16,7 @@ var command_executed: bool
 # Console Variables
 var cv: Dictionary = {
 	player_stats_shown = false,
+	general_stats_shown = false,
 	item_display_shown = false,
 	can_save_with_console = false,
 	can_save_suspended_with_console = false,
@@ -60,7 +61,7 @@ func _physics_process(delta: float) -> void:
 		$UI/Paused.button_pressed = visible
 		Thunder.set_pause_game(visible)
 	
-	output.modulate.a = 0.5 if Console.cv.player_stats_shown else 0.863
+	output.modulate.a = 0.5 if (Console.cv.player_stats_shown || Console.cv.general_stats_shown) else 0.863
 	
 	if !visible || !has_focus(): return
 	
