@@ -1,7 +1,6 @@
 class_name Combo
 extends RefCounted
 
-const LIFE_UP_SOUND: AudioStream = preload("res://engine/objects/players/prefabs/sounds/1up.wav")
 const DEFAULT_COMBO_ARRAY: Array[int] = [100, 200, 500, 1000, 2000, 5000]
 const STOMP_COMBO_ARRAY: Array[int] = [100, 200, 400, 500, 800, 1000, 2000, 5000, 8000]
 
@@ -32,7 +31,8 @@ func combo() -> void:
 	else:
 		ScoreTextLife.new("%sUP" % 1, _on)
 		Data.add_lives(1)
-		Audio.play_sound(LIFE_UP_SOUND, _on, false)
+		var _sfx = CharacterManager.get_sound_replace(Data.LIFE_SOUND, Data.LIFE_SOUND, "1up", false)
+		Audio.play_sound(_sfx, _on, false)
 		
 		if _reset_combo:
 			reset_combo()

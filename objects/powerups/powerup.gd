@@ -101,7 +101,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 	if !to: return
 	
 	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
-	var neutral_sfx = CharacterManager.get_sound_replace(pickup_neutral_sound, DEFAULT_NEUTRAL_SOUND, "powerup", true)
+	var neutral_sfx = CharacterManager.get_sound_replace(pickup_neutral_sound, DEFAULT_NEUTRAL_SOUND, "powerup_no_transform", true)
 	
 	if force_powerup:
 		if to.name != Thunder._current_player_state.name:

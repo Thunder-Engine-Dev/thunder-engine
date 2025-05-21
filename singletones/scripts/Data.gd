@@ -15,6 +15,8 @@ const ATTACKERS: Dictionary = {
 	boomerang = &"boomerang"
 }
 
+const LIFE_SOUND = preload("res://engine/objects/players/prefabs/sounds/1up.wav")
+
 ## Defines player's basic power-up status
 enum PLAYER_POWER {
 	SMALL, ## Self-explanable, e.g. small Mario
@@ -67,7 +69,8 @@ func add_coin(amount: int = 1) -> void:
 	if values.coins > 99:
 		values.coins = 0
 		Thunder.add_lives(1)
-		Audio.play_1d_sound(preload("res://engine/objects/players/prefabs/sounds/1up.wav"), false)
+		var _sfx = CharacterManager.get_sound_replace(LIFE_SOUND, LIFE_SOUND, "1up", false)
+		Audio.play_1d_sound(_sfx, false)
 		if is_instance_valid(Thunder._current_hud):
 			Thunder._current_hud.pulse_label(Thunder._current_hud.coins)
 	coin_added_arg.emit(amount)

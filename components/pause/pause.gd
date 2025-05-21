@@ -6,7 +6,6 @@ var _no_unpause: bool = false
 var _prev_mouse_mode: Input.MouseMode
 
 const open_sound = preload("./sounds/pause_open.wav")
-const close_sound = null
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
@@ -63,8 +62,6 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		SettingsManager.show_mouse()
 	else:
 		animation_player.play_backwards("open")
-		var _sfx = CharacterManager.get_sound_replace(close_sound, close_sound, "hud_pause_close", false)
-		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
 			SettingsManager.hide_mouse()
 

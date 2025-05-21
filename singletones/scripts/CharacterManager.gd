@@ -62,7 +62,11 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"hud_pause_open": [],
 	"hud_pause_close": [],
 	"menu_start_song": [],
+	"menu_enter": [],
 	"level_cutscene_song": [],
+	"1up": [],
+	"hud_acceptance": [],
+	"message_box": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -88,7 +92,11 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"hud_pause_open": [],
 	"hud_pause_close": [],
 	"menu_start_song": [],
+	"menu_enter": [],
 	"level_cutscene_song": [],
+	"1up": [],
+	"hud_acceptance": [],
+	"message_box": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
@@ -96,6 +104,7 @@ const DEFAULT_SUIT_SOUNDS: Dictionary = {
 	"swim": [ preload("res://engine/objects/players/prefabs/sounds/swim.wav") ],
 	"hurt": [ preload("res://engine/objects/players/prefabs/sounds/pipe.wav") ],
 	"powerup": [],
+	"powerup_no_transform": [],
 	"pipe_in": [],
 	"pipe_out": [],
 	"look_up": [],
@@ -181,6 +190,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 		"hue_variation_max": 0.0, # ^
 	},
 	"force_override_death_sound": false, # should the custom death sound also override any level-specific death sound overrides? otherwise, only the default SMW death sound is overriden
+	"load_sounds_from_siblings_on_fallback": true, # to decrease unnecessary duplication of sounds, if the sound has a sibling and only one of them is provided in a skin, the sibling will use it too (pipe_in - pipe_out, enemy_bump - block_bump, etc)
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
@@ -268,6 +278,12 @@ func get_voice_line(voice_line: String, character_name: String = "", skinned: bo
 func get_misc_texture(texture_name: String, character_name: String = "", skinned: bool = true) -> Variant:
 	var skinned_dict = SkinsManager.misc_textures if skinned else {}
 	return _get_something(texture_name, character_name, misc_textures, skinned_dict)
+
+
+func get_global_tweak(tweak: String) -> Variant:
+	var global_skin_tweaks = get_misc_texture("global_skin_tweaks")
+	if !global_skin_tweaks || !global_skin_tweaks is Dictionary: return null
+	return global_skin_tweaks.get(tweak)
 
 
 func get_suit_tweak(tweak: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Variant:

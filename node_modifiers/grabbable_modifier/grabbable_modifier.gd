@@ -9,6 +9,9 @@ signal grab_initiated
 ## Emitted when the player dies, and item gets ungrabbed.
 signal ungrabbed_player_died
 
+const DEFAULT_GRAB_SOUND = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
+const DEFAULT_KICK_SOUND = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+
 @export_group("Grabbing", "grabbing_")
 ## Top grabbing will lock the player's movement for a short period and play a unique animation.
 @export var grabbing_top_enabled: bool = true:
@@ -52,9 +55,9 @@ signal ungrabbed_player_died
 ## [signal ungrabbed_player_died()] signal.
 @export var signal_emit_ungrabbed_when_player_dies: bool = true
 @export_group("Sounds", "sound_")
-@export var sound_grab_top = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
-@export var sound_grab_side = preload("res://engine/objects/players/prefabs/sounds/grab.wav")
-@export var sound_throw = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+@export var sound_grab_top = DEFAULT_GRAB_SOUND
+@export var sound_grab_side = DEFAULT_GRAB_SOUND
+@export var sound_throw = DEFAULT_KICK_SOUND
 
 @onready var player: Player = Thunder._current_player
 
@@ -127,7 +130,8 @@ func _check_for_player_collision(pl: Player) -> bool:
 
 
 func _top_grabbed() -> void:
-	Audio.play_sound(sound_grab_top, player)
+	var _sfx = CharacterManager.get_sound_replace(sound_grab_top, DEFAULT_GRAB_SOUND, "grab", true)
+	Audio.play_sound(_sfx, player, false)
 	player.is_holding = true
 	grab_initiated.emit()
 	await _do_player_lock()
@@ -135,7 +139,8 @@ func _top_grabbed() -> void:
 
 
 func _side_grabbed() -> void:
-	Audio.play_sound(sound_grab_side, player)
+	var _sfx = CharacterManager.get_sound_replace(sound_grab_side, DEFAULT_GRAB_SOUND, "grab", true)
+	Audio.play_sound(_sfx, player, false)
 	grab_initiated.emit()
 	_do_grab()
 
@@ -180,7 +185,8 @@ func _do_ungrab(player_died: bool) -> void:
 		ungrabbed_player_died.emit()
 		return
 	
-	Audio.play_sound(sound_throw, player)
+	var _sfx = CharacterManager.get_sound_replace(sound_throw, DEFAULT_KICK_SOUND, "kick", true)
+	Audio.play_sound(_sfx, player, false)
 	if target_node is GravityBody2D:
 		_grabbed = false
 		if grabbing_disable_process_when_grabbed:

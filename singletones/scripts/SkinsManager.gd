@@ -239,10 +239,11 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 	for j in _anims:
 		var file_path: String = base_dir + "/" + i + "/" + j
 		var file_name: String
+		var do_not_load_animations: bool = false
 		if !_is_default_skin:
 			if !FileAccess.file_exists(file_path + "/" + CONFIG_SKIN_SETTINGS):
 				Console.print("[Skins Manager] No %s found at %s. Skipping" % [CONFIG_SKIN_SETTINGS, file_path])
-				continue
+				do_not_load_animations = true
 			#if !DirAccess.dir_exists_absolute(file_path + "/" + FOLDER_SUIT_IMAGES):
 			#	errored.append("No %s folder found at %s." % [FOLDER_SUIT_IMAGES, file_path])
 			#	_show_help_in_error = true
@@ -259,9 +260,22 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 		dir_access.list_dir_begin()
 		file_name = dir_access.get_next()
 		while file_name != "":
+			if dir_access.current_is_dir():
+				file_name = dir_access.get_next()
+				continue
 			var file_ext: String = file_name.get_extension().to_lower()
+			# Loading Suit Tweaks to "suit_tweaks" variable
+			if file_name == CONFIG_SUIT_TWEAKS:
+				var err = _load_suit_tweaks(i, j, file_path)
+				if err:
+					errored.append(err)
+			
+			if do_not_load_animations:
+				file_name = dir_access.get_next()
+				continue
+				
 			# Loading external skin textures to cache
-			if !dir_access.current_is_dir() && file_ext == "png" && !_is_default_skin:
+			if file_ext == "png" && !_is_default_skin:
 				var texture_name: String = file_name.trim_suffix("." + file_ext)
 				
 				var file: Image = Image.load_from_file(file_path + "/" + file_name)
@@ -270,7 +284,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				loaded[j][texture_name] = file_texture
 			
 			# Loading skin settings (regions, loops etc.) to cache
-			elif !dir_access.current_is_dir() && file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
+			elif file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
 				var _skin = ResourceLoader.load(
 					file_path + "/" + CONFIG_SKIN_SETTINGS,
 					"Resource",
@@ -288,17 +302,13 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 					continue
 				
 				skins[i][_skin.name] = _skin
-			# Loading Suit Tweaks to "suit_tweaks" variable
-			elif !dir_access.current_is_dir() && file_name == CONFIG_SUIT_TWEAKS:
-				var err = _load_suit_tweaks(i, j, file_path)
-				if err:
-					errored.append(err)
 			file_name = dir_access.get_next()
 		
 		dir_access.list_dir_end()
-		
-		if _is_default_skin: continue
-		var suit_sounds_path: String = file_path + "/" + FOLDER_SUIT_SOUNDS
+	
+	for j in _anims:
+		if _is_default_skin: break
+		var suit_sounds_path: String = base_dir + "/" + i + "/" + j + "/" + FOLDER_SUIT_SOUNDS
 		if DirAccess.dir_exists_absolute(suit_sounds_path):
 			suit_sounds[i][j] = _load_sounds(dir_access, suit_sounds_path)
 			if suit_sounds[i][j]:

@@ -27,8 +27,6 @@ enum Type {
 @export var behavior_crouch_reflect_fireballs: bool = false
 @export_group("Grabbing & Holding", "grab_")
 @export var grab_behavior: GDScript = preload("res://engine/objects/players/behaviors/player_grab_behavior.gd")
-@export var grab_sound_grab: Array = [preload("res://engine/objects/players/prefabs/sounds/grab.wav")]
-@export var grab_sound_kick: Array = [preload("res://engine/objects/players/prefabs/sounds/kick.wav")]
 @export_group("Extra", "extra_")
 @export var extra_vars: Dictionary
 @export var extra_behavior: GDScript

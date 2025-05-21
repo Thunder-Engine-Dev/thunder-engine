@@ -65,7 +65,7 @@ func toggle(no_resume: bool = false) -> void:
 		if Data.technical_values.remaining_continues == 0:
 			no_remaining_continues.emit()
 		elif Data.technical_values.remaining_continues > 0:
-			remaining_continues.emit(str(Data.technical_values.remaining_continues))
+			remaining_continues.emit(str(int(Data.technical_values.remaining_continues)))
 			have_continues.emit()
 		else:
 			infinite_continues.emit()

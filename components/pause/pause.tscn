@@ -248,6 +248,7 @@ size_flags_horizontal = 4
 texture = ExtResource("2_yh8vt")
 stretch_mode = 3
 script = ExtResource("5_0q8y4")
+use_skinned_hud_pause_close_sfx = true
 
 [node name="TextureRect2" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
