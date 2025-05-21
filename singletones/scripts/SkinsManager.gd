@@ -122,6 +122,12 @@ func load_external_textures() -> String:
 		if !_is_default_skin:
 		# Loading global sounds
 			misc_sounds[i] = _load_sounds(dir_access, "%s/%s/%s" % [base_dir, i, FOLDER_GLOBAL_SOUNDS])
+			var global_skin_tweaks = misc_textures[i].get("global_skin_tweaks")
+			var _is_snd_flbck = true
+			if global_skin_tweaks:
+				_is_snd_flbck = global_skin_tweaks.get("load_sounds_from_siblings_on_fallback")
+			if (suit_sounds[i] || misc_sounds[i]) && _is_snd_flbck:
+				_apply_fallback_sounds(i)
 		
 		# Printing errors
 		var comp_1 := PackedStringArray(skins[i].keys())
@@ -366,6 +372,40 @@ func get_custom_sprite_frames(old_sprites: SpriteFrames, skin_name: String, powe
 	#	OS.alert('[Skins Manager] Textures for suit "%s" do not exist.' % power, skin_name)
 	return old_sprites
 
+
+func _apply_fallback_sounds(i: String) -> void:
+	dupe_if_no_sound("block_bump", "enemy_bump", i, true)
+	dupe_if_no_sound("fall", "fall_death", i, true)
+	dupe_if_no_sound("bonus_activate", "hud_acceptance", i, true)
+	dupe_if_no_sound("menu_start_song", "level_cutscene_song", i, true, "", false)
+	dupe_if_no_sound("hud_pause_close", "menu_enter", i, true, "", false)
+	for j in suit_sounds[i]:
+		dupe_if_no_sound("powerup_no_transform", "powerup", i, false, j, false)
+		dupe_if_no_sound("pipe_in", "pipe_out", i, false, j)
+		dupe_if_no_sound("hurt", "pipe_in", i, false, j, false)
+		dupe_if_no_snd_mix("kick", "enemy_kick", i, j)
+
+func dupe_if_no_sound(replace: String, with: String, skin: String, global: bool, power: String = "", vice_versa: bool = true) -> void:
+	var dict: Dictionary = misc_sounds[skin] if global else suit_sounds[skin][power]
+	var sfx_with = dict.get(with)
+	var sfx_rep = dict.get(replace)
+	if (!sfx_with && !sfx_rep) || (sfx_with && sfx_rep): return
+	if !sfx_with && sfx_rep:
+		if !vice_versa: return
+		sfx_with = dict.get(replace)
+		replace = with
+	if global:
+		misc_sounds[skin][replace] = sfx_with
+	else:
+		suit_sounds[skin][power][replace] = sfx_with
+
+func dupe_if_no_snd_mix(suit_replace: String, global_with: String, skin: String, power: String) -> void:
+	var dict_global: Dictionary = misc_sounds[skin]
+	var dict_suit: Dictionary = suit_sounds[skin][power]
+	var sfx_with = dict_global.get(global_with)
+	if !sfx_with: return
+	if dict_suit.get(suit_replace): return
+	misc_sounds[skin][suit_replace] = sfx_with
 
 func dupe_if_no_anim(anim_from: StringName, anim_to: StringName, sk_setts: PlayerSkin) -> PlayerSkin:
 	if !anim_from in sk_setts.animation_regions || !anim_from in sk_setts.animation_speeds || !anim_from in sk_setts.animation_loops:
