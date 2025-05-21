@@ -1,0 +1,149 @@
+[gd_scene load_steps=15 format=3 uid="uid://u6gxj4cj5m4f"]
+
+[ext_resource type="Script" uid="uid://bvdodyia5xjt" path="res://engine/objects/bumping_blocks/message_block/message_block.gd" id="1_uafpb"]
+[ext_resource type="Material" uid="uid://ruf2y5h6b0fa" path="res://engine/objects/bumping_blocks/message_block/message_block.tres" id="2_huypv"]
+[ext_resource type="Texture2D" uid="uid://bmteptlwacmyg" path="res://engine/objects/bumping_blocks/message_block/switch.png" id="4_pl7ln"]
+[ext_resource type="Texture2D" uid="uid://bullhcct0hurt" path="res://engine/objects/bumping_blocks/question_block/textures/empty.png" id="5_qouyg"]
+[ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="6_gmgc3"]
+[ext_resource type="Script" uid="uid://bpegp7rd16gl6" path="res://engine/objects/bumping_blocks/message_block/blinking_text.gd" id="6_gvh8q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_denue"]
+size = Vector2(32, 32)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_h6cop"]
+cull_mode = 1
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cke8p"]
+atlas = ExtResource("4_pl7ln")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5qs8"]
+atlas = ExtResource("4_pl7ln")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_da7mb"]
+atlas = ExtResource("4_pl7ln")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bi0c8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cke8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5qs8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_da7mb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qouyg")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_h2vw0"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.14902, 0.513726, 0.505882)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xj0fk"]
+gradient = SubResource("Gradient_h2vw0")
+width = 284
+
+[node name="MessageBlock" type="AnimatableBody2D"]
+collision_layer = 112
+sync_to_physics = false
+script = ExtResource("1_uafpb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_denue")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
+occluder = SubResource("OccluderPolygon2D_h6cop")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+process_mode = 3
+material = ExtResource("2_huypv")
+sprite_frames = SubResource("SpriteFrames_bi0c8")
+autoplay = "default"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 2
+layer = 4
+
+[node name="Box" type="Node2D" parent="CanvasLayer"]
+process_mode = 3
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Texture" type="TextureRect" parent="CanvasLayer/Box"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -64.0
+offset_right = 128.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_xj0fk")
+
+[node name="Text" type="Label" parent="CanvasLayer/Box/Texture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("6_gmgc3")
+theme_override_font_sizes/font_size = 18
+text = "MESSAGE BOX"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Text2" type="Label" parent="CanvasLayer/Box/Texture"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("6_gmgc3")
+theme_override_font_sizes/font_size = 18
+text = "PRESS JUMP BUTTON"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("6_gvh8q")

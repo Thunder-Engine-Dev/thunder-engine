@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://dym6dmtca3rhi"]
+
+[ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="1_a321h"]
+[ext_resource type="Script" uid="uid://b8bgcxgd7yfvr" path="res://engine/objects/bumping_blocks/message_block/message_block_choicer.gd" id="2_gsgqq"]
+[ext_resource type="Shader" uid="uid://cnljy5svxs637" path="res://engine/objects/bumping_blocks/message_block/hsv.gdshader" id="2_h62d5"]
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="3_yw6ft"]
+[ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="4_gsgqq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ouvlt"]
+font = ExtResource("3_yw6ft")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0.341176, 1)
+shadow_size = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsgqq"]
+resource_local_to_scene = true
+shader = ExtResource("2_h62d5")
+shader_parameter/hue = 0.12
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[node name="MessageBlockChoicer" instance=ExtResource("1_a321h")]
+script = ExtResource("2_gsgqq")
+font_size = 24
+message_label_settings = SubResource("LabelSettings_ouvlt")
+
+[node name="AnimatedSprite2D" parent="Sprites" index="1"]
+material = SubResource("ShaderMaterial_gsgqq")
+
+[node name="Texture" parent="CanvasLayer/Box" index="0"]
+offset_left = -160.0
+offset_top = -48.0
+offset_right = 160.0
+offset_bottom = 48.0
+
+[node name="Text3" type="Label" parent="CanvasLayer/Box/Texture" index="0"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -23.0
+offset_bottom = -2.0
+grow_horizontal = 2
+pivot_offset = Vector2(0, 27)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 0.513726, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.439216, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_gsgqq")
+theme_override_font_sizes/font_size = 16
+text = "PLEASE CONFIRM..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Text" parent="CanvasLayer/Box/Texture" index="1"]
+theme_override_constants/outline_size = 8
+uppercase = true
+
+[node name="Text2" parent="CanvasLayer/Box/Texture" index="2"]
+offset_top = 2.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 16
+text = "PRESS ENTER TO ACCEPT
+PRESS ESC TO CANCEL"

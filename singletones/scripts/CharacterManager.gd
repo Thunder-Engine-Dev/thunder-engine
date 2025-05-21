@@ -67,6 +67,7 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"1up": [],
 	"hud_acceptance": [],
 	"message_box": [],
+	"bonus_activate": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -97,6 +98,7 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"1up": [],
 	"hud_acceptance": [],
 	"message_box": [],
+	"bonus_activate": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
