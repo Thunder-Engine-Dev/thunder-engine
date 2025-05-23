@@ -15,6 +15,7 @@
 [sub_resource type="Resource" id="Resource_ihim1"]
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("2_cfngx")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -35,6 +36,7 @@ radius = 16.0
 resource_local_to_scene = true
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("6_84axb")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -102,6 +104,19 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("5_x5hqt")
 stomping_standard = Vector2(0, 0)
+killing_immune = {
+&"beetroot": false,
+&"boomerang": false,
+&"fireball": false,
+&"hammer": false,
+&"head": true,
+&"iceball": false,
+&"iceblock": false,
+&"shell": false,
+&"shell_defence": 0,
+&"shell_forced": false,
+&"starman": false
+}
 killing_creation = SubResource("Resource_2cclf")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_3spov")

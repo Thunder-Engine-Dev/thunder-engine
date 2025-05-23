@@ -332,14 +332,14 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 
 
 func _load_suit_tweaks(skin, power, file_path: String) -> String:
-	if _is_default_skin && power != "global": return ""
+	if _is_default_skin && power != "_all_suits": return ""
 	var _out: String = _open_file_as_json(file_path + "/" + CONFIG_SUIT_TWEAKS)
 	if !_out: return ""
 	var _json = JSON.parse_string(_out)
 	if !_json || !_json is Dictionary:
 		return file_path + "/" + CONFIG_SUIT_TWEAKS + " is invalid."
 	
-	if power == "global":
+	if power == "_all_suits":
 		for suit in CharacterManager.MARIO_SUITS.keys():
 			suit_tweaks[skin][suit] = _load_json(_json, CharacterManager.DEFAULT_SUIT_TWEAKS)
 		return ""

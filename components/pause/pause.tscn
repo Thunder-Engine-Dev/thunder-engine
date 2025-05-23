@@ -240,9 +240,9 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 script = ExtResource("1_f461o")
 focused = false
-prev_screen_node_path = NodePath("TextureRect")
+prev_screen_node_path = NodePath("ResumeGame")
 
-[node name="TextureRect" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="ResumeGame" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("2_yh8vt")
@@ -250,35 +250,35 @@ stretch_mode = 3
 script = ExtResource("5_0q8y4")
 use_skinned_hud_pause_close_sfx = true
 
-[node name="TextureRect2" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="RestartLevel" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("4_o7liu")
 stretch_mode = 3
 script = ExtResource("8_os0ko")
 
-[node name="TextureRect3" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="Options" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("5_qqso8")
 stretch_mode = 3
 script = ExtResource("10_ce2br")
 
-[node name="TextureRect4" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="GoToSaveRoom" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("6_0jdfj")
 stretch_mode = 3
 script = ExtResource("12_ul4c7")
 
-[node name="TextureRect5" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="GoToMainMenu" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("7_idns1")
 stretch_mode = 3
 script = ExtResource("14_guhqa")
 
-[node name="TextureRect6" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="QuitGame" type="TextureRect" parent="Pause/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("8_o0n1s")

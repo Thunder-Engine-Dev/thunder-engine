@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=21 format=3 uid="uid://b8srdwwtm4jtf"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://b8srdwwtm4jtf"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_ovkpw"]
 [ext_resource type="SpriteFrames" uid="uid://bmherqvbmxpdy" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_boomerang.tres" id="2_b3msi"]
@@ -9,8 +9,6 @@
 [ext_resource type="Script" uid="uid://dnhrbcixsf6bc" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_jdwu0"]
 [ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="8_rswpy"]
 [ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_kk3q6"]
-[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_f2gno"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_5ejmo"]
 [ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="12_cue4j"]
 [ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="13_b4jyl"]
 [ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_t8j14"]
@@ -58,8 +56,6 @@ behavior_resource = SubResource("Resource_6ny41")
 behavior_script = ExtResource("7_jdwu0")
 behavior_crouch_reflect_fireballs = true
 grab_behavior = ExtResource("9_kk3q6")
-grab_sound_grab = [ExtResource("10_f2gno")]
-grab_sound_kick = [ExtResource("11_5ejmo")]
 extra_vars = {}
 sound_hurt = ExtResource("18_7mo0l")
 sound_death = ExtResource("17_efnbh")

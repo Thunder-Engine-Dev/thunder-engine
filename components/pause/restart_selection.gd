@@ -49,7 +49,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 		super()
 		Thunder._current_player_state = null
 		Thunder._current_player_state_path = ""
-		Scenes.reload_current_scene()
+		Scenes.current_scene.restart()
 		Data.values.lives -= 1
 		Data.values.onetime_blocks = false
 		is_dead = false

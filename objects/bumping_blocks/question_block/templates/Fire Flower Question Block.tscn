@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_dgsf2"]
 [ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_elxcs"]
 [ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="3_61n17"]
-[ext_resource type="Script" uid="uid://ffh0hebxe8ob" path="res://engine/objects/powerups/instance_powerup.gd" id="4_x7lti"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="4_x7lti"]
 [ext_resource type="Texture2D" uid="uid://dr27m02d1hglo" path="res://engine/objects/powerups/fire_flower/texture.png" id="5_kqyyc"]
 
 [sub_resource type="Resource" id="Resource_v7vml"]
@@ -11,6 +11,7 @@ resource_local_to_scene = true
 script = ExtResource("4_x7lti")
 creation_fallback_node = ExtResource("2_elxcs")
 creation_nodepack = ExtResource("3_61n17")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

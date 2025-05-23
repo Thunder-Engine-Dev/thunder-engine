@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=21 format=3 uid="uid://daebho1nypc6v"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://daebho1nypc6v"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_8u73f"]
 [ext_resource type="SpriteFrames" uid="uid://co67sm7im1ylg" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_iceball.tres" id="2_aul86"]
@@ -9,8 +9,6 @@
 [ext_resource type="Script" uid="uid://dnhrbcixsf6bc" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_saisp"]
 [ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="8_5hs8y"]
 [ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_q0v04"]
-[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_anj3y"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_xmn2v"]
 [ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="12_b7010"]
 [ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="13_cynh3"]
 [ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_fuivj"]
@@ -58,8 +56,6 @@ behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_saisp")
 behavior_crouch_reflect_fireballs = false
 grab_behavior = ExtResource("9_q0v04")
-grab_sound_grab = [ExtResource("10_anj3y")]
-grab_sound_kick = [ExtResource("11_xmn2v")]
 extra_vars = {}
 sound_hurt = ExtResource("18_d08is")
 sound_death = ExtResource("17_g8hsj")

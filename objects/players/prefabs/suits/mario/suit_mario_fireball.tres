@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=21 format=3 uid="uid://bs6nsxnb62dn4"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://bs6nsxnb62dn4"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_ibg3l"]
 [ext_resource type="SpriteFrames" uid="uid://ccq78jb2slkov" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_fireball.tres" id="2_0gbpq"]
@@ -13,9 +13,7 @@
 [ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="8_ib3k0"]
 [ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_3d64c"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="9_u1nrf"]
-[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="10_s0q1h"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="10_w8s7l"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="11_1d5w0"]
 [ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_0hp2k"]
 [ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="15_ed3lw"]
 
@@ -58,8 +56,6 @@ behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_fo208")
 behavior_crouch_reflect_fireballs = false
 grab_behavior = ExtResource("9_3d64c")
-grab_sound_grab = [ExtResource("10_s0q1h")]
-grab_sound_kick = [ExtResource("11_1d5w0")]
 extra_vars = {}
 sound_hurt = ExtResource("10_w8s7l")
 sound_death = ExtResource("9_u1nrf")

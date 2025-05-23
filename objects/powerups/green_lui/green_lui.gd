@@ -1,8 +1,7 @@
 extends Powerup
 
-@export var luigi_spriteframes: SpriteFrames
 const JUMP_SOUND = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
-@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@export var luigi_spriteframes: SpriteFrames
 @onready var sprite: AnimatedSprite2D = $Sprite
 
 var has_velset: bool
@@ -15,7 +14,6 @@ func _ready() -> void:
 		gravity_scale = 0.5
 		collided_wall.connect(turn_x)
 	super()
-	audio_stream_player_2d.stream = JUMP_SOUND
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -30,5 +28,5 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		jump(350)
 		if has_jumped:
-			audio_stream_player_2d.play()
+			Audio.play_sound(JUMP_SOUND, self, false)
 		has_jumped = true

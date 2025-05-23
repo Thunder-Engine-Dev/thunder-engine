@@ -80,7 +80,7 @@ func toggle(no_resume: bool = false) -> void:
 			if Data.technical_values.remaining_continues > 0:
 				Data.technical_values.remaining_continues -= 1
 			if custom_resume_scene.is_empty():
-				Scenes.reload_current_scene()
+				Scenes.current_scene.restart()
 			else:
 				Scenes.goto_scene(custom_resume_scene)
 				if reset_custom_scene_after_resume:

@@ -86,7 +86,7 @@ func _transition_circle() -> void:
 	await TransitionManager.transition_middle
 
 	if jump_to_scene.is_empty():
-		Scenes.reload_current_scene()
+		Scenes.current_scene.restart()
 	else:
 		Scenes.goto_scene(jump_to_scene)
 		get_tree().paused = false

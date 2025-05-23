@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://usqpoqnb1aqi"]
+
+[ext_resource type="PackedScene" uid="uid://8a7nemgi0b6q" path="res://engine/objects/powerups/beetroot/beetroot.tscn" id="1_0l8xn"]
+
+[node name="BeetrootForced" instance=ExtResource("1_0l8xn")]
+force_powerup_state = true

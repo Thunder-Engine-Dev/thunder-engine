@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bybqr7heg8cg6"]
+
+[ext_resource type="PackedScene" uid="uid://bvyleahhjj28k" path="res://engine/objects/powerups/frog_suit/frog_suit.tscn" id="1_ottre"]
+
+[node name="FrogSuitForced" instance=ExtResource("1_ottre")]
+force_powerup_state = true

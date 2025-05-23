@@ -50,6 +50,7 @@ animations = [{
 [node name="GrabbableKey" type="CharacterBody2D" groups=["unlocking_key"]]
 collision_layer = 112
 collision_mask = 64
+collision_priority = 0.01
 script = ExtResource("1_iqgwp")
 turn_sprite = false
 sprite = NodePath("AnimatedSprite2D")
