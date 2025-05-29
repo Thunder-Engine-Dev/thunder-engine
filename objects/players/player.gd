@@ -59,6 +59,7 @@ var _extra_behavior: ByNodeScript
 
 var flasher: Tween
 var holding_item: Node2D = null
+var config_buffer: PlayerConfig
 
 var left_right: float
 var up_down: float
@@ -234,6 +235,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	if _skid: suit.physics_config.sound_skid = _skid
 	if _hurt: suit.sound_hurt = _hurt[randi_range(0, len(_hurt) - 1)]
 	if _death: suit.sound_death = _death[randi_range(0, len(_death) - 1)]
+	config_buffer = suit.physics_config.duplicate()
 
 	_physics_behavior = null
 	_suit_behavior = null

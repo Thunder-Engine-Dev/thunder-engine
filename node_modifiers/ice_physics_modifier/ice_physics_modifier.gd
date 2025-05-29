@@ -94,6 +94,7 @@ func _end_slide(end: bool) -> void:
 	dupeff.global_transform = sliding_effect_emitter.global_transform
 	dupeff.one_shot = true
 	dupeff.restart()
+	dupeff.reset_physics_interpolation()
 	dupeff.finished.connect(
 		func() -> void:
 			dupeff.queue_free()

@@ -213,6 +213,7 @@ func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 			var debris := NodeCreator.prepare_2d(ICE_DEBRIS, self).create_2d().get_node()
 			debris.global_position = global_position + get_ellipse_point.call(angle)
 			debris.velocity = debris_speed * Vector2.RIGHT.rotated(angle)
+			debris.reset_physics_interpolation()
 	
 	queue_free()
 

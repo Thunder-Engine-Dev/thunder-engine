@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="3_i8ho5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01sfi"]
-size = Vector2(32, 32)
+size = Vector2(30, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4mw3"]
 size = Vector2(30, 30)

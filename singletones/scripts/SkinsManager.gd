@@ -82,7 +82,13 @@ func load_external_textures() -> String:
 	
 	var directories: PackedStringArray = DirAccess.get_directories_at(base_dir)
 	for i in directories:
+		# Skip hidden directories
+		if i.begins_with("."):
+			continue
+		
 		_is_default_skin = false
+		# Overriding skin tweaks when no skin is loaded.
+		# This can be disabled in Project Settings.
 		if i == "none":
 			if ProjectSettings.get_setting(
 				"application/thunder_settings/allow_overriding_default_suit_tweaks_by_user",

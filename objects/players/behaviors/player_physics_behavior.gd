@@ -532,7 +532,6 @@ func _floor_process() -> void:
 	# If we land on something and function "_player_landed" exists there, we call it.
 
 	if !is_instance_valid(player): return
-	player.slippery_strength = 0.0
 	if !player.is_on_floor(): return
 	
 	for i in player.get_slide_collision_count():
@@ -542,31 +541,31 @@ func _floor_process() -> void:
 		var collider = collision.get_collider()
 		if !is_instance_valid(collider): continue
 		
-		if collider is TileMapLayer && collider.tile_set:
-			_process_custom_tile_data(collider, collision)
+		#if collider is TileMapLayer && collider.tile_set:
+			#_process_custom_tile_data(collider, collision)
 		
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)
 		
 
-func _process_custom_tile_data(tile: TileMapLayer, kc: KinematicCollision2D) -> void:
-	var custom_data_arr: PackedStringArray = [
-		"slippery"
-	]
-	var has_data: bool
-	for i in tile.tile_set.get_custom_data_layers_count():
-		if custom_data_arr.has(tile.tile_set.get_custom_data_layer_name(i)):
-			has_data = true
-	if !has_data: return
-	
-	var coord: Vector2i = tile.get_coords_for_body_rid(kc.get_collider_rid())
-	var tile_data: TileData = tile.get_cell_tile_data(coord)
-	if !tile_data: return
-	
-	for data_name in custom_data_arr:
-		var _custom_data = tile_data.get_custom_data(data_name)
-		if data_name == custom_data_arr[0]:
-			if _custom_data:
-				player.slippery_strength = _custom_data
-		else:
-			return
+#func _process_custom_tile_data(tile: TileMapLayer, kc: KinematicCollision2D) -> void:
+	#var custom_data_arr: PackedStringArray = [
+		#"slippery"
+	#]
+	#var has_data: bool
+	#for i in tile.tile_set.get_custom_data_layers_count():
+		#if custom_data_arr.has(tile.tile_set.get_custom_data_layer_name(i)):
+			#has_data = true
+	#if !has_data: return
+	#
+	#var coord: Vector2i = tile.get_coords_for_body_rid(kc.get_collider_rid())
+	#var tile_data: TileData = tile.get_cell_tile_data(coord)
+	#if !tile_data: return
+	#
+	#for data_name in custom_data_arr:
+		#var _custom_data = tile_data.get_custom_data(data_name)
+		#if data_name == custom_data_arr[0]:
+			#if _custom_data:
+				#player.slippery_strength = _custom_data
+		#else:
+			#return
