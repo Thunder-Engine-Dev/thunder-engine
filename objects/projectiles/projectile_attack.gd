@@ -43,11 +43,14 @@ func _physics_process(delta: float) -> void:
 		belongs_to = par.belongs_to
 	
 	match belongs_to:
-		Data.PROJECTILE_BELONGS.PLAYER: _kill_enemy()
-		Data.PROJECTILE_BELONGS.ENEMY: _hurt_player()
+		Data.PROJECTILE_BELONGS.PLAYER:
+			_kill_enemy()
+		Data.PROJECTILE_BELONGS.ENEMY:
+			_hurt_player()
+			_kill_enemy(true)
 
 
-func _kill_enemy() -> void:
+func _kill_enemy(by_enemy: bool = false) -> void:
 	var result: Dictionary = {}
 	var enemy_attacked: Node = null
 	
@@ -58,6 +61,8 @@ func _kill_enemy() -> void:
 		
 		enemy_attacked = ins.get_node_or_null(^"EnemyAttacked")
 		if !enemy_attacked:
+			continue
+		if by_enemy && enemy_attacked.killing_only_by_player:
 			continue
 		
 		enemy_attacked.set_meta(&"attacker_speed", velocity)
@@ -88,10 +93,9 @@ func _hurt_player() -> void:
 		if !ins:
 			continue
 		elif ins is Player:
-			if &"suit" in ins && ins.suit && \
-				&"behavior_crouch_reflect_fireballs" in ins.suit && \
-				ins.suit.behavior_crouch_reflect_fireballs == true && \
-				ins.is_crouching == true && is_reflectable:
+			if is_reflectable && ins.get(&"suit") && \
+				ins.suit.get(&"behavior_crouch_reflect_fireballs") == true && \
+				ins.is_crouching == true:
 					damaged_player_failed.emit()
 					break
 			

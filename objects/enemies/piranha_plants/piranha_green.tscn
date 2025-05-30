@@ -15,6 +15,7 @@ size = Vector2(30, 32)
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_rspvw")
 creation_nodepack = ExtResource("3_1xsw0")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -106,8 +107,8 @@ autoplay = "default"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, -24)
-scale = Vector2(1.55, 2.4)
+position = Vector2(0.5, -32)
+scale = Vector2(1.55, 3.2)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="."]

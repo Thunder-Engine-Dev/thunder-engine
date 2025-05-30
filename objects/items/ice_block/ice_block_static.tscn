@@ -54,6 +54,7 @@ killing_immune = {
 "shell_forced": true,
 "starman": true
 }
+killing_only_by_player = false
 turn_into_coin_on_level_end = false
 frozen_enabled = false
 
