@@ -44,7 +44,6 @@ var _path_falling_speed: float
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: StaticBody2D = $Block
-@onready var surface: Area2D = $Block/Surface
 @onready var sprite_node: Node2D = get_node_or_null(sprite)
 
 @onready var on_moving: bool = !touching_player_touched_movement
@@ -73,19 +72,13 @@ func _ready() -> void:
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:
-	_bodies_standing_check()
-	
 	if !on_moving: return
+	if get_child_count() == 0: return
 	
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
 	
 	#if block is AnimatableBody2D && block.sync_to_physics: block.global_position = block.global_position
-
-
-func _bodies_standing_check() -> void:
-	for body in surface.get_overlapping_bodies():
-		_body_check(body)
 
 
 func _body_check(body: CharacterBody2D) -> void:

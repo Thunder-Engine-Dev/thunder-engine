@@ -23,15 +23,6 @@ visible = false
 polygon = PackedVector2Array(-320, 0, 320, 0, 320, 5, -320, 5)
 one_way_collision = true
 
-[node name="Surface" type="Area2D" parent="Block"]
-collision_layer = 0
-collision_mask = 7
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
-visible = false
-modulate = Color(0.921569, 0, 0.647059, 1)
-polygon = PackedVector2Array(-320, -1, 320, -1, 320, 0, -320, 0)
-
 [node name="Sprite2D" type="Sprite2D" parent="Block"]
 texture_repeat = 2
 position = Vector2(0, 32)

@@ -58,15 +58,6 @@ visible = false
 polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
 one_way_collision = true
 
-[node name="Surface" type="Area2D" parent="Block"]
-collision_layer = 0
-collision_mask = 7
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
-visible = false
-modulate = Color(0.921569, 0, 0.647059, 1)
-polygon = PackedVector2Array(-64, -1, 63, -1, 63, 0, -64, 0)
-
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Block"]
 position = Vector2(-1, 16)
 sprite_frames = SubResource("SpriteFrames_gc88a")
