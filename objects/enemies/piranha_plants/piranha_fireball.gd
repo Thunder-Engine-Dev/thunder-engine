@@ -43,11 +43,11 @@ func _shoot() -> void:
 					speed_corrected.y = cos(node.rotation) / 4 + 0.75
 				
 				var ball_speed: Vector2 = Vector2(
-					randf_range(
+					Thunder.rng.get_randf_range(
 						vars.projectile_speed_min.x,
 						vars.projectile_speed_max.x
 					),
-					randf_range(
+					Thunder.rng.get_randf_range(
 						vars.projectile_speed_min.y * speed_corrected.x,
 						vars.projectile_speed_max.y * speed_corrected.y
 					),

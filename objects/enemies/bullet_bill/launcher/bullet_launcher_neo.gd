@@ -153,7 +153,7 @@ func _on_interval_timeout() -> void:
 	var pos := _pos_bullet_l if dir < 0 else _pos_bullet_r
 	_shoot_bullet(pos, dir)
 	
-	_itrvl.start(randf_range(shooting_delay_min, shooting_delay_max))
+	_itrvl.start(Thunder.rng.get_randf_range(shooting_delay_min, shooting_delay_max))
 
 func _on_screen_entered() -> void:
 	_itrvl.paused = false

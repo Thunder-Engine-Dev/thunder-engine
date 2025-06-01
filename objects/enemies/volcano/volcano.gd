@@ -29,8 +29,8 @@ func _fire() -> void:
 	while _amount > 0:
 		NodeCreator.prepare_2d(VOLCANO_BALL, marker_2d).bind_global_transform().call_method(
 			func(ball):
-				ball.speed.x = randi_range(-5, 5) * 50
-				ball.speed.y = randf_range(14, 16) * -50
+				ball.speed.x = Thunder.rng.get_randi_range(-5, 5) * 50
+				ball.speed.y = Thunder.rng.get_randf_range(14, 16) * -50
 				ball.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
 		).create_2d()
 		await get_tree().create_timer(volcano_ball_fire_interval, false, true).timeout

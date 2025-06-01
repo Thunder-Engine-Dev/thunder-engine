@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 func _cheep_swimming() -> void:
 	match type:
 		Type.SWIM:
-			vel_set_y(randf_range(-swimming_y_speed, swimming_y_speed))
+			vel_set_y(Thunder.rng.get_randf_range(-swimming_y_speed, swimming_y_speed))
 		Type.TRACK:
 			var player: Player = Thunder._current_player
 			if !player:

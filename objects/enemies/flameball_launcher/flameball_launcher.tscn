@@ -11,6 +11,7 @@
 [sub_resource type="Resource" id="Resource_rtj67"]
 script = ExtResource("3_ccoqt")
 creation_nodepack = ExtResource("2_poow3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 4
 trans_rotation = 0.0
@@ -69,9 +70,6 @@ position = Vector2(16, 16)
 wait_time = 3.0
 one_shot = true
 
-[node name="IntervalFlame" type="Timer" parent="."]
-wait_time = 3.0
-
 [node name="IntervalSound" type="Timer" parent="."]
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
@@ -81,5 +79,4 @@ rect = Rect2(0, 0, 64, 32)
 metadata/_edit_lock_ = true
 
 [connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]
-[connection signal="timeout" from="IntervalFlame" to="." method="_on_interval_flame_timeout"]
 [connection signal="timeout" from="IntervalSound" to="." method="_on_interval_sound_timeout"]

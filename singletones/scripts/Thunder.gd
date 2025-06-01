@@ -8,6 +8,8 @@ extends Node
 
 ## Used to get access to [Thunder.View] subsingleton
 var view: View = View.new() # View subsingleton
+## Used to get access to [Thunder.RNG] subsingleton
+var rng: RNG = RNG.new()
 ## Default gravity speed
 var gravity_speed: float = 50
 var _target_speed: int = 50
@@ -347,3 +349,18 @@ class Math:
 			result += string.substr(i, 3)
 		
 		return result
+
+class RNG:
+	var rng_inst := RandomNumberGenerator.new()
+	
+	func get_randi_range(from: int, to: int) -> int:
+		return rng_inst.randi_range(from, to)
+	
+	func get_randf_range(from: float, to: float) -> float:
+		return rng_inst.randf_range(from, to)
+	
+	func set_seed(seed: int) -> void:
+		rng_inst.seed = seed
+	
+	func randomize_seed() -> void:
+		rng_inst.randomize()

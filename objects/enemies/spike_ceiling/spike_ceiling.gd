@@ -23,6 +23,7 @@ var _falling_vel: float
 func _ready() -> void:
 	resized.connect(_set_scale)
 	_set_scale()
+	reset_physics_interpolation.call_deferred()
 
 
 func _physics_process(delta: float) -> void:

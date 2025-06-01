@@ -33,8 +33,8 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	
 	turn_x()
 	turn_y()
-	speed.x *= randf_range(1.1, 1.3)
-	speed.y *= randf_range(0.7, 0.9)
+	speed.x *= Thunder.rng.get_randf_range(1.1, 1.3)
+	speed.y *= Thunder.rng.get_randf_range(0.7, 0.9)
 	
 	bounces_left -= 1
 	

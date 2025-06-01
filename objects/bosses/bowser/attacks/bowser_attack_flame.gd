@@ -35,7 +35,7 @@ func middle_attack() -> void:
 		for _j in execute_times_per_attack:
 			NodeCreator.prepare_ins_2d(projectile_inst, bowser).create_2d().call_method(
 				func(flm: Node2D) -> void:
-					var offset = randi_range(0, 3) if len(multiple_flames) == 0 else multiple_flames[i]
+					var offset = Thunder.rng.get_randi_range(0, 3) if len(multiple_flames) == 0 else multiple_flames[i]
 					flm.to_pos_y = bowser.pos_y_on_floor + 16 - 32 * offset
 					flm.global_position = pos_flame.global_position
 					if flm is Projectile:

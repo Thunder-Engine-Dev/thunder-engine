@@ -33,7 +33,7 @@ var _step_attacking: int
 
 
 func _ready() -> void:
-	if random_phase: phase = randf_range(-180, 180)
+	if random_phase: phase = Thunder.rng.get_randf_range(-180, 180)
 
 
 func _physics_process(delta: float) -> void:
@@ -75,7 +75,7 @@ func _on_attack_timeout() -> void:
 	match _step_attacking:
 		# Detection for attack
 		0:
-			var chance: float = randf_range(0, 1)
+			var chance: float = Thunder.rng.get_randf_range(0, 1)
 			if chance < attacking_chance:
 				_step_attacking = 1
 				timer_attack.start(attacking_delay)

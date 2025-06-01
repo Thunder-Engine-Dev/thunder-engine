@@ -39,7 +39,7 @@ var _movement: bool:
 			return
 		_movement = to
 		if _movement && timer_pitching.is_stopped():
-			timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+			timer_pitching.start(Thunder.rng.get_randf_range(pitching_interval_min, pitching_interval_max))
 		elif !timer_pitching.is_stopped():
 			timer_pitching.stop()
 
@@ -98,7 +98,7 @@ func _pitch() -> void:
 	if pitched:
 		NodeCreator.prepare_ins_2d(pitched, self).create_2d().execute_instance_script()
 	Audio.play_sound(sounds.pick_random(), self)
-	timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+	timer_pitching.start(Thunder.rng.get_randf_range(pitching_interval_min, pitching_interval_max))
 	ended_pitching.emit()
 
 

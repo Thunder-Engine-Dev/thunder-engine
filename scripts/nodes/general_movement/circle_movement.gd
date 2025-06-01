@@ -13,7 +13,7 @@ enum FacingMethod {
 	set(rph):
 		random_phase = rph
 		if random_phase:
-			phase = randf_range(0, 360)
+			phase = Thunder.rng.get_randf_range(0, 360)
 @export var frequency: float = 1
 @export_group("Sprite")
 @export var sprite_path: NodePath

@@ -73,7 +73,7 @@ func _on_bullet_launched() -> void:
 				enemy_attacked.stomping_standard = enemy_attacked.stomping_standard.rotated(-bul.global_rotation)
 	)
 	NodeCreator.prepare_2d(explosion, pos_bullet).create_2d().bind_global_transform(Vector2.RIGHT * 16 * dir)
-	interval.start(randf_range(shooting_delay_min, shooting_delay_max))
+	interval.start(Thunder.rng.get_randf_range(shooting_delay_min, shooting_delay_max))
 
 
 func _on_screen_entered() -> void:

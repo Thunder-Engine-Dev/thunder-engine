@@ -26,7 +26,7 @@ func disconnect_chomp() -> void:
 	if is_inside_tree():
 		vis.queue_free()
 		freeze = false
-		linear_velocity = -get_gravity().normalized().rotated(randf_range(-PI / 6, PI / 6)) * randf_range(250, 350)
+		linear_velocity = -get_gravity().normalized().rotated(Thunder.rng.get_randf_range(-PI / 6, PI / 6)) * Thunder.rng.get_randf_range(250, 350)
 		
 		await get_tree().create_timer(1.5, false).timeout
 		var tw: Tween = create_tween()

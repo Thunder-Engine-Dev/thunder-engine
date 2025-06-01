@@ -36,7 +36,7 @@ func _physics_process(delta):
 	Scenes.current_scene.add_child(inst)
 	inst.global_position = Vector2(
 		cam.get_screen_center_position().x + 340 * direction,
-		cam.get_screen_center_position().y + randi_range(min_offset_y, max_offset_y)
+		cam.get_screen_center_position().y + Thunder.rng.get_randi_range(min_offset_y, max_offset_y)
 	)
 	inst.reset_physics_interpolation()
 	inst.add_to_group("obj_by_" + str(get_instance_id()))

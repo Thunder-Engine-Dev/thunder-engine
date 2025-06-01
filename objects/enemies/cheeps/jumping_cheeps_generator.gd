@@ -21,17 +21,17 @@ func _time() -> void:
 	
 	if !enabled: return
 	
-	if randi_range(0, random_pool) == random_equals:
+	if Thunder.rng.get_randi_range(0, random_pool) == random_equals:
 		if get_tree().get_node_count_in_group("obj_by_" + str(get_instance_id())) >= max_on_screen:
 			return
 		Thunder.view.cam_border()
-		var to_pos = Vector2(Thunder.view.border.end) + Vector2(randi_range(-100, 0), 0)
+		var to_pos = Vector2(Thunder.view.border.end) + Vector2(Thunder.rng.get_randi_range(-100, 0), 0)
 		
 		var fish = cheep_scene.instantiate()
 		fish.global_position = to_pos
 		fish.reset_physics_interpolation()
-		fish.speed.x = randi_range(speed_min.x, speed_max.x)
-		fish.speed.y = randi_range(speed_min.y, speed_max.y)
+		fish.speed.x = Thunder.rng.get_randi_range(speed_min.x, speed_max.x)
+		fish.speed.y = Thunder.rng.get_randi_range(speed_min.y, speed_max.y)
 		fish.add_to_group("obj_by_" + str(get_instance_id()))
 		Scenes.current_scene.add_child(fish)
 

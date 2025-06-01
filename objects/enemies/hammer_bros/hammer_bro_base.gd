@@ -111,7 +111,7 @@ func _bro_jump() -> void:
 	if _jump in [1, 2]:
 		return
 	
-	_jump_count = randi_range(0, jumping_frequency)
+	_jump_count = Thunder.rng.get_randi_range(0, jumping_frequency)
 	
 	if _jump_count == 1 && _jump_up:
 		_jump = 1
@@ -140,8 +140,8 @@ func _set_collision_logic() -> void:
 # Turning back
 func _on_walk_timeout() -> void:
 	_dir *= -1
-	_radius = randf_range(moving_radius_min, moving_radius_max)
-	_duration = randf_range(moving_duration_min, moving_duration_max)
+	_radius = Thunder.rng.get_randf_range(moving_radius_min, moving_radius_max)
+	_duration = Thunder.rng.get_randf_range(moving_duration_min, moving_duration_max)
 	_step_moving = 1
 	vel_set_x(_speed * _dir)
 
@@ -153,7 +153,7 @@ func _on_attack_timeout() -> void:
 		0:
 			if !Thunder.view.is_getting_closer(self, 32):
 				return
-			var chance: float = randf_range(0, 1)
+			var chance: float = Thunder.rng.get_randf_range(0, 1)
 			if chance < attacking_chance:
 				_step_attacking = 1
 				timer_attack.start(attacking_delay)

@@ -65,7 +65,7 @@ func _on_cannon_interval_timeout() -> void:
 		eff.global_transform = global_transform
 		eff.global_position = _pos_cball.global_position
 	
-	_cannon_itrvl.start(randf_range(shooting_delay_min, shooting_delay_max))
+	_cannon_itrvl.start(Thunder.rng.get_randf_range(shooting_delay_min, shooting_delay_max))
 
 
 func _on_screen_entered() -> void:
