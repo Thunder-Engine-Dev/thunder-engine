@@ -1,12 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene load_steps=26 format=3 uid="uid://c8ql6hro5f6gv"]
 
 [ext_resource type="Script" uid="uid://c0lvhjcec75dw" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" uid="uid://b82vaonfklay3" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
 [ext_resource type="Texture2D" uid="uid://dy68iw8isdo0k" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
 [ext_resource type="Script" uid="uid://dw4eu5g7yjp58" path="res://engine/components/game_over/game_over_continue_sel.gd" id="5_q1vrx"]
-[ext_resource type="Script" uid="uid://c7mpmnr2hx6le" path="res://engine/components/game_over/game_over_restart_sel.gd" id="6_6653k"]
-[ext_resource type="Texture2D" uid="uid://bburcr6wh4n13" path="res://engine/components/game_over/textures/restart_from_save.png" id="6_q1vrx"]
 [ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
 [ext_resource type="Script" uid="uid://cjdhnq274ccw8" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
 [ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
@@ -292,16 +290,17 @@ texture = SubResource("GradientTexture1D_af70a")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.867
+anchor_top = 0.748
 anchor_right = 0.5
-anchor_bottom = 0.867
+anchor_bottom = 0.748
 offset_left = -132.0
-offset_top = -153.16
+offset_top = -84.04
 offset_right = 132.0
-offset_bottom = 31.84
+offset_bottom = 83.96
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 10
+alignment = 1
 script = ExtResource("3_plhsm")
 focused = false
 
@@ -312,13 +311,6 @@ texture = ExtResource("5_d5pn5")
 stretch_mode = 3
 script = ExtResource("5_q1vrx")
 block_if_no_continues = true
-
-[node name="TextureRect2" type="TextureRect" parent="GameOver/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("6_q1vrx")
-stretch_mode = 3
-script = ExtResource("6_6653k")
 
 [node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
@@ -353,38 +345,45 @@ script = ExtResource("14_xubmy")
 
 [node name="Title1" type="TextureRect" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.133
 anchor_right = 0.5
+anchor_bottom = 0.133
 offset_left = -83.5
-offset_top = 32.0
+offset_top = -29.84
 offset_right = 83.5
-offset_bottom = 60.0
+offset_bottom = -1.84
 grow_horizontal = 2
 pivot_offset = Vector2(83, 0)
 texture = ExtResource("15_e2iqk")
 
 [node name="Continue1" type="TextureRect" parent="GameOver/Title1"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 2.286
 anchor_right = 0.5
+anchor_bottom = 4.786
 offset_left = -108.0
-offset_top = 64.0
+offset_top = -0.00800323
 offset_right = 108.0
-offset_bottom = 134.0
+offset_bottom = -0.00801086
 grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("16_xfa08")
 
 [node name="Title2" type="TextureRect" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.333
 anchor_right = 0.5
+anchor_bottom = 0.333
 offset_left = -200.0
-offset_top = 96.0
+offset_top = -61.84
 offset_right = 157.0
-offset_bottom = 182.0
+offset_bottom = 24.16
 grow_horizontal = 2
 scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(285.6, 0)
@@ -392,14 +391,17 @@ texture = ExtResource("15_pv04y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.467
 anchor_right = 0.5
-offset_left = -144.0
-offset_top = 198.0
-offset_right = 128.0
-offset_bottom = 234.0
+anchor_bottom = 0.467
+offset_left = -136.0
+offset_top = -18.16
+offset_right = 136.0
+offset_bottom = 17.84
 grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="GameOver/HBoxContainer"]
@@ -433,5 +435,4 @@ autoplay = "RESET"
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(0.4, 0.4, 0.4, 1)]]
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text" binds= ["0"]]
 [connection signal="remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text"]
-[connection signal="screen_opened" from="GameOver" to="GameOver/VBoxContainer/TextureRect2" method="setup_button"]
 [connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]

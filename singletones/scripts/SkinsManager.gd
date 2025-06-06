@@ -297,6 +297,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			
 			# Loading skin settings (regions, loops etc.) to cache
 			elif file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
+				#var _skin: PlayerSkin = _load_skin_settings(file_path + "/" + CONFIG_SKIN_SETTINGS)
 				var _skin = ResourceLoader.load(
 					file_path + "/" + CONFIG_SKIN_SETTINGS,
 					"Resource",
@@ -436,12 +437,6 @@ func _apply_fallback_anims(sk_setts: PlayerSkin) -> PlayerSkin:
 	sk_setts = dupe_if_no_anim( &"fall", &"hold_fall", sk_setts)
 	sk_setts = dupe_if_no_anim( &"hold_default", &"hold_crouch", sk_setts)
 	sk_setts = dupe_if_no_anim( &"attack", &"attack_air", sk_setts)
-	#if !sprites.has_animation(&"kick"): sprites.add_animation(&"kick")
-	#if !sprites.has_animation(&"back"): sprites.add_animation(&"back")
-	#if !sprites.has_animation(&"skid"): sprites.add_animation(&"skid")
-	#if !sprites.has_animation(&"climb"): sprites.add_animation(&"climb")
-	#if !sprites.has_animation(&"warp"): sprites.add_animation(&"warp")
-	#if !sprites.has_animation(&"win"): sprites.add_animation(&"win")
 	return sk_setts
 	
 
@@ -548,3 +543,22 @@ func _load_json(_json, _default) -> Dictionary:
 			else:
 				_loaded[key] = value
 	return _loaded
+
+
+func _load_skin_settings(path: String) -> PlayerSkin:
+	var output := PlayerSkin.new()
+	var file = FileAccess.open(path, FileAccess.READ)
+	if !file:
+		Console.print("[color=red][SkinsManager] Error accessing skin settings at:
+	%s[/color]" % path)
+		return output
+	if file.get_length() > 2_097_152:
+		Console.print("[color=red][SkinsManager] Error: File is larger than the limit of 2 MB:
+	%s[/color]" % path)
+		return output
+	
+	#var new_speeds: Dictionary
+	#var new_regions: Dictionary
+	#var new_loops: Dictionary
+	#var new_durations: Dictionary
+	return output

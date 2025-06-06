@@ -359,8 +359,11 @@ class RNG:
 	func get_randf_range(from: float, to: float) -> float:
 		return rng_inst.randf_range(from, to)
 	
-	func set_seed(seed: int) -> void:
-		rng_inst.seed = seed
+	func get_randf() -> float:
+		return rng_inst.randf()
+	
+	func set_seed(_seed: int) -> void:
+		rng_inst.seed = _seed
 	
 	func randomize_seed() -> void:
 		rng_inst.randomize()

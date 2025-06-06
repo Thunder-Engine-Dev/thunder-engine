@@ -16,6 +16,7 @@
 [sub_resource type="Resource" id="Resource_naguj"]
 script = ExtResource("3_wqa12")
 creation_nodepack = ExtResource("2_mpneg")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -40,6 +41,7 @@ size = Vector2(26, 40)
 resource_local_to_scene = true
 script = ExtResource("3_wqa12")
 creation_nodepack = ExtResource("3_ti4wd")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

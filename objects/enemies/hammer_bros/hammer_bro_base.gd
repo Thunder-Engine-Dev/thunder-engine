@@ -50,6 +50,7 @@ var _collision_mask: int
 
 func _physics_process(delta: float) -> void:
 	_direction()
+	_timer_pausing()
 	_animation()
 	_bro_movement(delta)
 	motion_process(delta)
@@ -64,6 +65,11 @@ func _direction() -> void:
 	sprite_projectile.flip_h = sprite.flip_h
 	pos_attack.position.x = pos_attack_x * dir
 	pos_attack.reset_physics_interpolation()
+
+
+func _timer_pausing() -> void:
+	if _step_attacking <= 0:
+		timer_attack.paused = !Thunder.view.is_getting_closer(self, 32)
 
 
 func _animation() -> void:
@@ -153,16 +159,19 @@ func _on_attack_timeout() -> void:
 		0:
 			if !Thunder.view.is_getting_closer(self, 32):
 				return
-			var chance: float = Thunder.rng.get_randf_range(0, 1)
-			if chance < attacking_chance:
-				_step_attacking = 1
-				timer_attack.start(attacking_delay)
-				timer_attack.one_shot = true
+			var chance: float = Thunder.rng.get_randf()
+			var random_delay: int = floori(log(chance) / log(1 - attacking_chance))
+			_step_attacking = -1
+			timer_attack.start(random_delay * attacking_count_unit)
+			timer_attack.one_shot = true
+		# Delaying the attack
+		-1:
+			_step_attacking = 1
+			timer_attack.start(attacking_delay)
 		# Attack
 		1:
 			_step_attacking = 0
 			timer_attack.start(attacking_count_unit)
-			timer_attack.one_shot = false
 			NodeCreator.prepare_ins_2d(projectile, self).call_method(
 				func(proj: Node2D) -> void:
 					proj.set(&"belongs_to", Data.PROJECTILE_BELONGS.ENEMY)
