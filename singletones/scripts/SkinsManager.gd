@@ -6,6 +6,13 @@ const CONFIG_SUIT_TWEAKS = "suit_tweaks.json"
 const FOLDER_SUIT_SOUNDS = "sounds"
 const FOLDER_GLOBAL_SOUNDS = "_global_sounds"
 const CONFIG_GLOBAL_SKIN_TWEAKS = "global_skin_tweaks"
+const BAD_NAMES = [
+	"object", "script", "_init", "_enter_tree", "_exit_tree", "_ready",
+	"_process", "extends", "refcounted", "func ", "func()",
+]
+const SETTINGS_DICT_NAMES = [
+	"animation_speeds", "animation_regions", "animation_loops", "animation_durations",
+]
 
 signal skins_loaded
 signal skins_load_failed
@@ -247,7 +254,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 	var loaded: Dictionary = {}
 	loaded = {}
 	var errored: PackedStringArray = []
-	var _show_help_in_error: bool
+	#var _show_help_in_error: bool
 	for j in _anims:
 		var file_path: String = base_dir + "/" + i + "/" + j
 		var file_name: String
@@ -297,24 +304,14 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			
 			# Loading skin settings (regions, loops etc.) to cache
 			elif file_name == CONFIG_SKIN_SETTINGS && !_is_default_skin:
-				#var _skin: PlayerSkin = _load_skin_settings(file_path + "/" + CONFIG_SKIN_SETTINGS)
-				var _skin = ResourceLoader.load(
-					file_path + "/" + CONFIG_SKIN_SETTINGS,
-					"Resource",
-					ResourceLoader.CACHE_MODE_REPLACE
-				)
+				var _skin: PlayerSkin = _load_skin_settings(file_path + "/" + CONFIG_SKIN_SETTINGS, j)
 				
-				if (
-					!_skin || !"animation_regions" in _skin ||
-					!"animation_loops" in _skin ||
-					!"animation_speeds" in _skin ||
-					!"name" in _skin
-				):
+				if !_skin:
 					errored.append(file_path + "/" + CONFIG_SKIN_SETTINGS + " is invalid.")
 					file_name = dir_access.get_next()
 					continue
 				
-				skins[i][_skin.name] = _skin
+				skins[i][j] = _skin
 			file_name = dir_access.get_next()
 		
 		dir_access.list_dir_end()
@@ -328,11 +325,11 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 				Console.print("[Skins Manager] Suit %s: %s loaded." % [j, FOLDER_SUIT_SOUNDS])
 	
 	if !errored.is_empty():
-		if _show_help_in_error:
-			errored.append("")
-			errored.append(
-				"The skin used may be of an older version. Please refer to the skin guide to convert the skin to the current version."
-			)
+		#if _show_help_in_error:
+			#errored.append("")
+			#errored.append(
+				#"The skin used may be of an older version. Please refer to the skin guide to convert the skin to the current version."
+			#)
 		OS.alert("
 ".join(errored), "Player Skin Load Error")
 	return loaded
@@ -482,7 +479,7 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 				break
 		new_sprites.set_animation_speed(anim, _player_skin.animation_speeds[anim])
 		new_sprites.set_animation_loop(anim, _player_skin.animation_loops[anim])
-		var count_durations: bool = "animation_durations" in _player_skin
+		var count_durations: bool = "animation_durations" in _player_skin && _player_skin.animation_durations
 		var frame_count = _temp_sprites.get_frame_count(anim)
 		if len(_regions[anim]) > 0:
 			frame_count = len(_regions[anim])
@@ -509,7 +506,7 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	
 	if !_error_buffer.is_empty():
 		_error_buffer.append("")
-		_error_buffer.append("Please edit the file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
+		_error_buffer.append("Please fix animations using the skin editor, or manually edit a file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
 		OS.alert("
 ".join(_error_buffer), str(current_skin) + " Player Skin Load Error")
 		return old_sprites
@@ -524,6 +521,7 @@ func _open_file_as_json(file_path: String) -> String:
 		return out_string
 	while !file.eof_reached():
 		var _line: String = file.get_line()
+		
 		if _line.find("//"):
 			out_string += _line.get_slice("//", 0) + "
 "
@@ -544,21 +542,64 @@ func _load_json(_json, _default) -> Dictionary:
 				_loaded[key] = value
 	return _loaded
 
-
-func _load_skin_settings(path: String) -> PlayerSkin:
+# We are parsing the file manually to avoid malicious code execution, while still maintaining
+# compatibility with old skins! Although any mention of scripts is now ignored.
+func _load_skin_settings(path: String, power: String) -> PlayerSkin:
 	var output := PlayerSkin.new()
 	var file = FileAccess.open(path, FileAccess.READ)
 	if !file:
-		Console.print("[color=red][SkinsManager] Error accessing skin settings at:
+		Console.print("[color=red][Skins Manager] Error accessing skin settings at:
 	%s[/color]" % path)
-		return output
+		return null
 	if file.get_length() > 2_097_152:
-		Console.print("[color=red][SkinsManager] Error: File is larger than the limit of 2 MB:
+		Console.print("[color=red][Skins Manager] Error: File is larger than the limit of 2 MB:
 	%s[/color]" % path)
-		return output
+		return null
 	
-	#var new_speeds: Dictionary
-	#var new_regions: Dictionary
-	#var new_loops: Dictionary
-	#var new_durations: Dictionary
+	var reading_buffer: String
+	var dict_index_buffer: Dictionary = {}
+	
+	while !file.eof_reached():
+		var line = file.get_line()
+		if reading_buffer.is_empty():
+			for i in SETTINGS_DICT_NAMES:
+				if line.begins_with(i) && !i in dict_index_buffer:
+					reading_buffer = i
+					dict_index_buffer[reading_buffer] = []
+		if reading_buffer.is_empty():
+			continue
+		var starting_pos: int
+		if len(dict_index_buffer[reading_buffer]) == 0:
+			var ind_start = line.find("{")
+			if ind_start >= 0:
+				dict_index_buffer[reading_buffer].append(file.get_position() - len(line) + ind_start - 1)
+				starting_pos = ind_start
+		if len(dict_index_buffer[reading_buffer]) == 1:
+			var ind_start = line.find("}", starting_pos)
+			if ind_start >= 0:
+				dict_index_buffer[reading_buffer].append(file.get_position() - len(line) + ind_start - 1)
+				reading_buffer = ""
+				continue
+	
+	for i in dict_index_buffer:
+		if len(dict_index_buffer[i]) != 2:
+			print("Array size mismatch: %s" % i)
+			continue
+		file.seek(dict_index_buffer[i][0])
+		
+		var dict_str: String = file.get_buffer(dict_index_buffer[i][1] - dict_index_buffer[i][0]).get_string_from_utf8()
+		if !dict_str: continue
+		
+		dict_str += "}"
+		var clean_dict: String = dict_str
+		for bad_string in BAD_NAMES:
+			clean_dict = clean_dict.replacen(bad_string, "")
+		var parsed = str_to_var(clean_dict)
+		#print(parsed)
+		if parsed && parsed is Dictionary:
+			output[i] = parsed
+		else:
+			Console.print("[color=orange][Skins Manager] Warning: %s: Field %s is invalid. Loaded defaults.[/color]" % [power, i])
+	
+	output.name = power
 	return output
