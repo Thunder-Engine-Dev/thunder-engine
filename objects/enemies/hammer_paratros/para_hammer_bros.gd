@@ -52,7 +52,7 @@ func _direction() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	dir = Thunder.Math.look_at(global_position, player.global_position, global_transform)
-	sprite.flip_h = (dir < 0 && dir != 0)
+	sprite.flip_h = dir < 0
 	sprite_projectile.flip_h = sprite.flip_h
 	pos_attack.position.x = pos_attack_x * dir
 
