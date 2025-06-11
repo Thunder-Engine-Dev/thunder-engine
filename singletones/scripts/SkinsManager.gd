@@ -156,8 +156,7 @@ func load_external_textures() -> String:
 	dir_access.list_dir_end()
 	out.append("Skins loaded!")
 	skins_loaded.emit()
-	return "
-".join(out)
+	return "\n".join(out)
 
 
 func _load_misc_files(dir_access: DirAccess, i: String):
