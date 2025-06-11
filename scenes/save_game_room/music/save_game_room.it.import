@@ -15,5 +15,6 @@ dest_files=["res://.godot/imported/save_game_room.it-c2fe329e8f875f027dfe26219b7
 force/mono=false
 playback/loop_mode=1
 playback/interpolation=2
+playback/emulate_amiga_filter=0
 load/skip_plugins=false
 load/skip_subsongs_init=false

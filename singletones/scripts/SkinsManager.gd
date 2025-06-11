@@ -206,7 +206,10 @@ func _load_misc_files(dir_access: DirAccess, i: String):
 					index += 1
 					if len(custom_story_text[i]) < index + 1:
 						custom_story_text[i].resize(index + 1)
-					custom_story_text[i][index] = file.get_line().left(50)
+					var loaded_line = file.get_line().left(50)
+					if loaded_line.is_empty() && len(CharacterManager.DEFAULT_STORY_TEXT) > index:
+						loaded_line = CharacterManager.DEFAULT_STORY_TEXT[index]
+					custom_story_text[i][index] = loaded_line
 				print(i, " Custom story text: ", custom_story_text[i])
 				file.close()
 				
