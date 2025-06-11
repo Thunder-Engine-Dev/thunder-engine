@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="6_n42qb"]
 
 [node name="CreditsTemplate" type="Control"]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,15 +30,27 @@ play_globally = 2
 texture = ExtResource("4_h8pmh")
 centered = false
 
-[node name="Text" type="Node2D" parent="."]
-position = Vector2(0, 496)
+[node name="Text" type="Control" parent="."]
+physics_interpolation_mode = 0
+anchors_preset = 0
+offset_top = 480.0
+offset_right = 640.0
+offset_bottom = 752.0
 script = ExtResource("5_fq1lx")
 speed = 50.0
+metadata/_edit_group_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Text"]
+physics_interpolation_mode = 0
 clip_contents = false
-offset_right = 640.0
-offset_bottom = 231.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 8
 mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0.466667, 1)
@@ -56,7 +69,8 @@ MADE USING THUNDER ENGINE ON GODOT
 YUKANA(ELECTRONIC BOY)
 REFLEXGURU
 JUE13
-"
+
+https://github.com/thunder-Engine-Dev/thunder-engine"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
