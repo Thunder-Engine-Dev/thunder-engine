@@ -1,8 +1,10 @@
 extends Area2D
 
+const DEFAULT_SWITCH_SOUND := preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
+
 @export var id: int = 0
 @export var permanent_checked: bool
-@export var sound = preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
+@export var sound = DEFAULT_SWITCH_SOUND
 ## This will override standard universal player voice lines. Leave this array empty if you do not want that.
 @export var voice_lines: Array[AudioStream] = []
 
@@ -43,7 +45,8 @@ func _physics_process(delta) -> void:
 
 
 func activate() -> void:
-	Audio.play_1d_sound(sound, false)
+	var _sfx = CharacterManager.get_sound_replace(sound, DEFAULT_SWITCH_SOUND, "checkpoint_switch", false)
+	Audio.play_1d_sound(_sfx, false)
 	
 	var tween = create_tween()
 	tween.tween_property(text, ^"modulate:a", 1.0, 0.2)
@@ -56,7 +59,10 @@ func activate() -> void:
 		_voices = voice_lines
 	else:
 		_voices = CharacterManager.get_voice_line("checkpoint")
-	get_tree().create_timer(0.5, false, true).timeout.connect(func() -> void:
+	var checkpoint_wait_tweak = CharacterManager.get_global_tweak("checkpoint_sound_delay_sec")
+	if !checkpoint_wait_tweak || !checkpoint_wait_tweak is int || !checkpoint_wait_tweak is float:
+		checkpoint_wait_tweak = 0.5
+	get_tree().create_timer(maxf(0.05, checkpoint_wait_tweak), false, false, true).timeout.connect(func() -> void:
 		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
 	)
 	

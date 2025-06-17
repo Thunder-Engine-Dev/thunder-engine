@@ -28,6 +28,13 @@ func _physics_process(delta: float) -> void:
 	elif !is_holding:
 		for i in player.get_slide_collision_count():
 			var collision: KinematicCollision2D = player.get_slide_collision(i)
+		#for i in 2:
+			#var collision: KinematicCollision2D
+			#if i == 0:
+				#collision = player.move_and_collide(Vector2(player.direction, 0).rotated(player.global_rotation), true, 0.08, true)
+			#else:
+				#collision = player.move_and_collide(Vector2.DOWN.rotated(player.global_rotation), true, 0.08, true)
+			#if !collision: continue
 			var collider: Node2D = collision.get_collider() as Node2D
 			var normal = collision.get_normal().rotated(player.global_rotation)
 			if !is_instance_valid(collider):

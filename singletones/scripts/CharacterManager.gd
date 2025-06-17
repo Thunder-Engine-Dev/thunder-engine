@@ -68,6 +68,7 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"hud_acceptance": [],
 	"message_box": [],
 	"bonus_activate": [],
+	"checkpoint_switch": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -99,6 +100,7 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"hud_acceptance": [],
 	"message_box": [],
 	"bonus_activate": [],
+	"checkpoint_switch": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
@@ -193,6 +195,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 	},
 	"force_override_death_sound": false, # should the custom death sound also override any level-specific death sound overrides? otherwise, only the default SMW death sound is overriden
 	"load_sounds_from_siblings_on_fallback": true, # to decrease unnecessary duplication of sounds, if the sound has a sibling and only one of them is provided in a skin, the sibling will use it too (pipe_in - pipe_out, enemy_bump - block_bump, etc)
+	"checkpoint_sound_delay_sec": 0.5,
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
