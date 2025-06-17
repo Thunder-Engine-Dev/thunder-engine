@@ -19,6 +19,7 @@ size = Vector2(30, 30)
 resource_local_to_scene = true
 script = ExtResource("7_lpy2n")
 creation_nodepack = ExtResource("5_dgxdb")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

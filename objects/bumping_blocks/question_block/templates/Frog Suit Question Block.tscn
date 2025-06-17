@@ -11,6 +11,7 @@ resource_local_to_scene = true
 script = ExtResource("4_acidb")
 creation_fallback_node = ExtResource("2_si8c4")
 creation_nodepack = ExtResource("3_of3ty")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

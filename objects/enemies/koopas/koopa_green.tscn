@@ -20,6 +20,7 @@ size = Vector2(30, 30)
 [sub_resource type="Resource" id="Resource_iogvd"]
 script = ExtResource("5_yicjg")
 creation_nodepack = ExtResource("3_arw64")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -34,6 +35,7 @@ custom_vars = {}
 resource_local_to_scene = true
 script = ExtResource("5_yicjg")
 creation_nodepack = ExtResource("7_5whu3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

@@ -13,6 +13,7 @@
 [sub_resource type="Resource" id="Resource_6oa5f"]
 script = ExtResource("4_xsrff")
 creation_nodepack = ExtResource("2_rfsl6")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -31,6 +32,7 @@ custom_script = ExtResource("3_76cf1")
 resource_local_to_scene = true
 script = ExtResource("4_xsrff")
 creation_nodepack = ExtResource("2_gx87h")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

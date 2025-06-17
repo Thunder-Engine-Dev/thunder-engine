@@ -55,6 +55,7 @@ func _ready():
 [sub_resource type="Resource" id="Resource_223t5"]
 script = ExtResource("5_mg6wf")
 creation_nodepack = ExtResource("4_8py2g")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 0
 trans_rotation = 0.0

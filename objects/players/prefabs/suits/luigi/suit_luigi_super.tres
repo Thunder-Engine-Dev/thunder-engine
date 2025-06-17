@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=14 format=3 uid="uid://6w8kwrifbv6m"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://6w8kwrifbv6m"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_55ho3"]
 [ext_resource type="SpriteFrames" uid="uid://b36it0nioiiri" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_super.tres" id="2_0dg5g"]
 [ext_resource type="Resource" uid="uid://cirtkvdvviy47" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_small.tres" id="3_yhqau"]
 [ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="4_0u5pp"]
-[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="5_fe31j"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_khwjg"]
 [ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="7_02udf"]
 [ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="8_k84qo"]
 [ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="9_xqarx"]
@@ -19,6 +17,7 @@ script = ExtResource("11_klr50")
 name = &"super"
 type = 1
 gets_hurt_to = ExtResource("3_yhqau")
+appearing_time_sec = 1.0
 physics_config = ExtResource("8_k84qo")
 physics_behavior = ExtResource("7_02udf")
 physics_crouchable = true
@@ -29,8 +28,6 @@ animation_behavior = ExtResource("1_55ho3")
 animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_crouch_reflect_fireballs = false
 grab_behavior = ExtResource("4_0u5pp")
-grab_sound_grab = ExtResource("5_fe31j")
-grab_sound_kick = ExtResource("6_khwjg")
 extra_vars = {}
 sound_hurt = ExtResource("13_i3ss2")
 sound_death = ExtResource("12_1mcds")

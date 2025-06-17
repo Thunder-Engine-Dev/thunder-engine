@@ -12,6 +12,7 @@
 [sub_resource type="Resource" id="Resource_awi2w"]
 script = ExtResource("4_gbw3c")
 creation_nodepack = ExtResource("2_svm64")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -27,6 +28,7 @@ custom_script = ExtResource("3_nys84")
 resource_local_to_scene = true
 script = ExtResource("4_gbw3c")
 creation_nodepack = ExtResource("2_m1cbn")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

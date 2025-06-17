@@ -18,6 +18,7 @@
 [sub_resource type="Resource" id="Resource_iubp8"]
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("2_nvwv3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -39,6 +40,7 @@ size = Vector2(32, 40)
 resource_local_to_scene = true
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("6_cgqsc")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -54,6 +56,7 @@ custom_script = ExtResource("7_4w4ym")
 resource_local_to_scene = true
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("3_24k5o")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

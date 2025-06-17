@@ -10,6 +10,7 @@
 resource_local_to_scene = true
 script = ExtResource("4_i4t37")
 creation_nodepack = ExtResource("2_ltnvf")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

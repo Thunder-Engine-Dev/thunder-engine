@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_vtp0b"]
 script = ExtResource("3_j5nq2")
 creation_nodepack = ExtResource("2_pb4ej")
+creation_force_sibling = false
 trans_offset = Vector2(0, -24)
 trans_inheritances = 6
 trans_rotation = 0.0

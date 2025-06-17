@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://dkrwf64pscu5h"]
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=10 format=3 uid="uid://dkrwf64pscu5h"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_36482"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="2_4cms1"]
 [ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="3_r451b"]
 [ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="3_uxny4"]
 [ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="4_8yoqk"]
-[ext_resource type="AudioStream" uid="uid://crqd1768xhf58" path="res://engine/objects/players/prefabs/sounds/grab.wav" id="4_txk8y"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="5_7bqg8"]
 [ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="7_p8pjw"]
 [ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="8_3bry2"]
 [ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="8_f2g7m"]
@@ -16,6 +14,7 @@
 script = ExtResource("9_c212q")
 name = &"small"
 type = 0
+appearing_time_sec = 1.0
 physics_config = ExtResource("4_8yoqk")
 physics_behavior = ExtResource("3_r451b")
 physics_crouchable = false
@@ -26,8 +25,6 @@ animation_behavior = ExtResource("1_36482")
 animation_underwater_bubble_offset = Vector2(0, 0)
 behavior_crouch_reflect_fireballs = false
 grab_behavior = ExtResource("3_uxny4")
-grab_sound_grab = ExtResource("4_txk8y")
-grab_sound_kick = ExtResource("5_7bqg8")
 extra_vars = {}
 sound_hurt = ExtResource("8_f2g7m")
 sound_death = ExtResource("7_p8pjw")

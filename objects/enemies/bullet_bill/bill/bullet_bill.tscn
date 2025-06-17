@@ -19,6 +19,7 @@ size = Vector2(28, 20)
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("4_6v8k6")
 creation_nodepack = ExtResource("3_iuxfx")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

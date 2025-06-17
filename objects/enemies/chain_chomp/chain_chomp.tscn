@@ -16,6 +16,7 @@ size = Vector2(32, 24)
 resource_local_to_scene = true
 script = ExtResource("5_e2s24")
 creation_nodepack = ExtResource("3_dm4jp")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

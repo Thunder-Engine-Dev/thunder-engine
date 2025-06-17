@@ -16,6 +16,7 @@ func _ready() -> void:
 resource_local_to_scene = true
 script = ExtResource("3_82t08")
 creation_nodepack = ExtResource("2_xo3eq")
+creation_force_sibling = false
 trans_offset = Vector2(0, 16)
 trans_inheritances = 7
 trans_rotation = 0.0

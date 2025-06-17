@@ -60,6 +60,7 @@ size = Vector2(20, 16)
 [sub_resource type="Resource" id="Resource_6dehk"]
 script = ExtResource("7_2pk1m")
 creation_nodepack = ExtResource("5_nbc6o")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
