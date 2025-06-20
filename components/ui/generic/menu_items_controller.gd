@@ -2,6 +2,8 @@ extends Control
 class_name MenuItemsController
 ## Helps you create vertical and horizontal boxes with selection
 
+const SELECT_MOUSE_HOVER = preload("res://engine/components/ui/_sounds/select_mouse_hover.mp3")
+
 ## Does this controller currently accept input?
 @export var focused: bool = true
 ## Currently selected item
@@ -87,14 +89,23 @@ func _update_selectors() -> void:
 
 func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
 	var _tw = SettingsManager.get_tweak("mouse_select_sound", true)
-	if control_sound && ((!_tw && !_mouse_input) || _tw):
-		Audio.play_1d_sound(control_sound, true,
-			{
-				"ignore_pause": true,
-				"bus": "1D Sound",
-				"volume": -6.0 if is_echo else 0.0
-			}
-		)
+	if control_sound:
+		if _mouse_input && _tw:
+			Audio.play_1d_sound(SELECT_MOUSE_HOVER, true,
+				{
+					"ignore_pause": true,
+					"bus": "1D Sound",
+					"volume": -3.0
+				}
+			)
+		else:
+			Audio.play_1d_sound(control_sound, true,
+				{
+					"ignore_pause": true,
+					"bus": "1D Sound",
+					"volume": -6.0 if is_echo else 0.0
+				}
+			)
 	_selection_update(false, _mouse_input)
 
 

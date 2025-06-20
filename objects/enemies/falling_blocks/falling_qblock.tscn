@@ -75,7 +75,7 @@ custom_vars = {
 }
 custom_script = ExtResource("6_71f7t")
 
-[node name="FallingQBlock" type="CharacterBody2D" groups=["sasitehui"]]
+[node name="FallingQBlock" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_nhrl0")

@@ -34,6 +34,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		SettingsManager.show_mouse()
+		
 	else:
 		animation_player.play_backwards("open")
 
