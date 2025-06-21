@@ -3,6 +3,7 @@ class_name MenuItemsController
 ## Helps you create vertical and horizontal boxes with selection
 
 const SELECT_MOUSE_HOVER = preload("res://engine/components/ui/_sounds/select_mouse_hover.mp3")
+const DEFAULT_SELECT_SOUND = preload("res://engine/components/ui/_sounds/select_main.wav")
 
 ## Does this controller currently accept input?
 @export var focused: bool = true
@@ -13,7 +14,7 @@ const SELECT_MOUSE_HOVER = preload("res://engine/components/ui/_sounds/select_mo
 ## Control name that triggers the backward selection
 @export var control_backward: StringName = "ui_up"
 ## Sound of selection
-@export var control_sound: AudioStream = preload("res://engine/components/ui/_sounds/select_main.wav")
+@export var control_sound: AudioStream = DEFAULT_SELECT_SOUND
 ## Can this controller accept input from the mouse cursor?
 @export var mouse_input: bool = true
 ## Whether to fire the selected event once immediately to update the selector's position
@@ -91,7 +92,8 @@ func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
 	var _tw = SettingsManager.get_tweak("mouse_select_sound", true)
 	if control_sound:
 		if _mouse_input && _tw:
-			Audio.play_1d_sound(SELECT_MOUSE_HOVER, true,
+			var _sfx = CharacterManager.get_sound_replace(SELECT_MOUSE_HOVER, SELECT_MOUSE_HOVER, "menu_mouse_hover", false)
+			Audio.play_1d_sound(_sfx, true,
 				{
 					"ignore_pause": true,
 					"bus": "1D Sound",
@@ -99,7 +101,14 @@ func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
 				}
 			)
 		else:
-			Audio.play_1d_sound(control_sound, true,
+			var replace_all_tweak = CharacterManager.get_global_tweak("force_override_menu_select_sound")
+			var _sfx = CharacterManager.get_sound_replace(
+				control_sound,
+				control_sound if replace_all_tweak else DEFAULT_SELECT_SOUND,
+				"menu_select",
+				false
+			)
+			Audio.play_1d_sound(_sfx, true,
 				{
 					"ignore_pause": true,
 					"bus": "1D Sound",

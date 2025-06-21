@@ -137,7 +137,8 @@ func _input(event: InputEvent) -> void:
 			# Scan for Conflicts
 			for i in conflict_list:
 				if SettingsManager.settings.controls.get(get_node(i).action_name) == scancode:
-					Audio.play_1d_sound(fail_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+					var sfx = CharacterManager.get_sound_replace(fail_sound, fail_sound, "menu_failure", false)
+					Audio.play_1d_sound(sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 					var _nod = get_node(i)
 					if _nod._tw:
 						_nod._tw.stop()
@@ -150,19 +151,22 @@ func _input(event: InputEvent) -> void:
 			# Saving the key to config
 			SettingsManager.settings.controls[action_name] = scancode
 			SettingsManager._load_keys()
-			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+			var _sfx = CharacterManager.get_sound_replace(change_sound, change_sound, "menu_toggle", false)
+			Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 		_after_change()
 	elif event is InputEventJoypadButton && event.is_pressed():
 		if !SettingsManager.device_keyboard:
 			# Saving the key to config
 			set_joy_control(event.button_index)
-			Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+			var _sfx = CharacterManager.get_sound_replace(change_sound, change_sound, "menu_toggle", false)
+			Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 		_after_change()
 	elif event is InputEventJoypadMotion && abs(event.axis_value) >= 0.5 && !SettingsManager.device_keyboard:
 		set_joy_control(40 + (event.axis * 2) + (0 if signf(event.axis_value) < 0 else 1))
-		Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+		var _sfx = CharacterManager.get_sound_replace(change_sound, change_sound, "menu_toggle", false)
+		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 		_after_change()
 

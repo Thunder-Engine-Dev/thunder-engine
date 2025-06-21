@@ -29,7 +29,8 @@ func _physics_process(delta: float) -> void:
 
 func _toggle_setting() -> void:
 	SettingsManager.settings[setting_name] = !SettingsManager.settings[setting_name]
-	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()
 
 

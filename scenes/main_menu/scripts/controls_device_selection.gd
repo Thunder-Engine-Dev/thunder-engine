@@ -43,7 +43,8 @@ func _physics_process(delta: float) -> void:
 func _toggler() -> void:
 	SettingsManager.device_keyboard = !SettingsManager.device_keyboard
 	SettingsManager.device_name = Input.get_joy_name(0)
-	Audio.play_1d_sound(toggle_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	
 func _on_mouse_pressed(index: MouseButton) -> void:
 	if !mouse_hovered || !focused || !get_parent().focused: return
