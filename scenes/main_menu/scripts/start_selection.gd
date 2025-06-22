@@ -19,7 +19,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	await get_tree().create_timer(wait_time, true, false, true).timeout
 
 	if is_instance_valid(music): music.stop()
-	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(transition_sound, transition_sound, "menu_fade_out", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 	Data.technical_values.impulse_progress_continue = true
 

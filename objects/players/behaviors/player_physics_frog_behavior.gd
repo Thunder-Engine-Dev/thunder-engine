@@ -32,7 +32,8 @@ func _movement_x(delta: float) -> void:
 			return
 		elif !small_jump_played && jump_sound_delay > 0.2:
 			small_jump_played = true
-			Audio.play_sound(small_jump, player, false, {pitch = suit.sound_pitch})
+			var _sfx = CharacterManager.get_sound_replace(small_jump, small_jump, "jump_small", true)
+			Audio.play_sound(_sfx, player, false, {pitch = suit.sound_pitch})
 		if abs(player.speed.x) > 1:
 			jump_delay += delta
 		if player.sprite.animation == &"walk":

@@ -13,6 +13,7 @@ var _idle_tweak: bool
 var _idle_activate_after_sec: float
 var _look_up_tweak: bool
 var _separate_run_tweak: bool
+var _swim_idle_tweak: bool
 var _ground_kick_tweak: bool
 var _stomp_anim_tweak: bool
 var _warp_tweak: bool
@@ -79,7 +80,16 @@ func _swam() -> void:
 func _shot() -> void:
 	if !sprite: return
 	if sprite.animation == &"slide": return
+	if sprite.animation == &"swim_idle":
+		if _attack_air_tweak:
+			_play_anim(&"attack_air")
+			return
+		_play_anim(&"swim")
+		sprite.frame = 3
 	if sprite.animation == &"swim":
+		if _attack_air_tweak:
+			_play_anim(&"attack_air")
+			return
 		sprite.frame = 3
 		return
 	if player.is_climbing: return
@@ -126,7 +136,11 @@ func _sprite_finish() -> void:
 			_animation_process(0)
 			_idle_timer = 0.0
 		&"attack_air":
+			if player.is_underwater:
+				return _play_anim(&"swim")
 			_play_anim(&"jump" if player.speed.y < 0 else &"fall")
+		&"swim" when _swim_idle_tweak:
+			_play_anim(&"swim_idle")
 
 
 var _skid_sound_timer: bool
@@ -142,7 +156,6 @@ func _skid_sound_loop() -> void:
 
 func _head_bumped() -> void:
 	if !_head_bump_sound: return
-	
 	Audio.play_sound(CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false), player)
 
 
@@ -175,7 +188,6 @@ func _handle_grabbed_finished() -> void:
 		sprite.play(&"default")
 		_animation_process(0)
 	, CONNECT_ONE_SHOT)
-	
 
 
 func _setup_tweaks() -> void:
@@ -184,6 +196,7 @@ func _setup_tweaks() -> void:
 	_idle_tweak = CharacterManager.get_suit_tweak("idle_animation", "", player.suit.name)
 	_idle_activate_after_sec = CharacterManager.get_suit_tweak("idle_activate_after_sec", "", player.suit.name)
 	_separate_run_tweak = CharacterManager.get_suit_tweak("separate_run_animation", "", player.suit.name)
+	_swim_idle_tweak = CharacterManager.get_suit_tweak("separate_swim_idle_animation", "", player.suit.name)
 	_ground_kick_tweak = CharacterManager.get_suit_tweak("kick_ground_animation", "", player.suit.name)
 	_stomp_anim_tweak = false #CharacterManager.get_suit_tweak("stomp_animation", "", player.suit.name)
 	_warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
@@ -291,6 +304,8 @@ func _animation_climbing_process(delta: float) -> void:
 
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false
+	if _swim_idle_tweak && sprite.animation == &"swim_idle":
+		return
 	_play_anim(_get_animation_prefixed(&"swim"))
 
 func _animation_sliding_process(delta: float) -> void:
@@ -323,6 +338,8 @@ func _get_animation_prefixed(anim_name: StringName) -> StringName:
 		if anim_name == &"fall": anim_name = &"jump"
 		elif anim_name == &"p_fall": anim_name = &"p_jump"
 	if player.is_holding:
+		if anim_name == &"swim_idle":
+			return &"hold_swim"
 		return &"hold_%s" % anim_name
 	return anim_name
 

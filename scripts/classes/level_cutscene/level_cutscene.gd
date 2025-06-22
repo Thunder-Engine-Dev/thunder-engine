@@ -47,7 +47,8 @@ func _cutscene_skip_logic() -> void:
 
 func end() -> void:
 	if has_skipped: return
-	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(transition_sound, transition_sound, "menu_fade_out", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_start_transition.call_deferred()
 
 

@@ -62,7 +62,8 @@ func _physics_process(delta: float) -> void:
 
 
 func enter_level_sequence() -> void:
-	Audio.play_1d_sound(jump_button_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx2 = CharacterManager.get_sound_replace(jump_button_sound, jump_button_sound, "map_level_enter", false)
+	Audio.play_1d_sound(_sfx2, true, { "ignore_pause": true, "bus": "1D Sound" })
 	print("[Game] Going to a level.")
 
 	var music := _get_music()
@@ -70,6 +71,7 @@ func enter_level_sequence() -> void:
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
 
 	await get_tree().create_timer(0.4, false).timeout
+	var _sfx = CharacterManager.get_sound_replace(transition_sound, transition_sound, "menu_fade_out", false)
 	Audio.play_1d_sound(transition_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_start_transition.call_deferred()
 

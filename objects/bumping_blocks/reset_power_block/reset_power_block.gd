@@ -26,4 +26,5 @@ func call_bump() -> void:
 	if !active: return
 	_animated_sprite_2d.animation = &"empty"
 	Thunder._current_player.change_suit(CharacterManager.get_suit("small"), false)
+	bump_sound = CharacterManager.get_sound_replace(bump_sound, bump_sound, "hurt", true)
 	Data.values.lives = ProjectSettings.get_setting(&"application/thunder_settings/player/default_lives", 4)

@@ -456,6 +456,8 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 		_temp_sprites.add_animation("p_run")
 		_temp_sprites.add_animation("p_jump")
 		_temp_sprites.add_animation("p_fall")
+	if CharacterManager.get_suit_tweak("separate_swim_idle_animation", "", power):
+		_temp_sprites.add_animation("swim_idle")
 	if CharacterManager.get_suit_tweak("idle_animation", "", power):
 		_temp_sprites.add_animation("idle")
 	

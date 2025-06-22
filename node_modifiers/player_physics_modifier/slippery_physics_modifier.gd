@@ -47,4 +47,6 @@ func _slide() -> void:
 	sliding_sound_interval = get_tree().create_timer(0.15, false)
 	await sliding_sound_interval.timeout
 	sliding_sound_interval = null
-	if player: Audio.play_sound(sound_sliding, player)
+	if player:
+		var _sfx = CharacterManager.get_sound_replace(sound_sliding, sound_sliding, "ice_slide", true)
+		Audio.play_sound(_sfx, player)

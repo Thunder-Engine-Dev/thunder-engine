@@ -73,6 +73,8 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"menu_mouse_hover": [],
 	"menu_failure": [],
 	"menu_toggle": [],
+	"menu_fade_out": [],
+	"map_level_enter": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -109,6 +111,8 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"menu_mouse_hover": [],
 	"menu_failure": [],
 	"menu_toggle": [],
+	"menu_fade_out": [],
+	"map_level_enter": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
@@ -124,6 +128,7 @@ const DEFAULT_SUIT_SOUNDS: Dictionary = {
 	"skid": [],
 	"grab": [ preload("res://engine/objects/players/prefabs/sounds/grab.wav") ],
 	"kick": [ preload("res://engine/objects/players/prefabs/sounds/kick.wav") ],
+	"ice_slide": [],
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
@@ -138,6 +143,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"skid_sound_loop_delay": 0.1, # from 0.05 to 2.0
 	"head_bump_sound": false, # play global sound "block_bump" on every touch of ceiling
 	"fall_animation": true, # if false, "fall" animation and the derivatives are replaced by "jump"
+	"separate_swim_idle_animation": false,
 	"emit_particles": {
 		"enabled": false, # if no texture is set, the default texture will be starman particles
 		"color": "#ffffffff", # HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency
@@ -167,6 +173,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 		"skid": -1,
 		"slide": -1,
 		"swim": 6,
+		"swim_idle": -1,
 		"swim_up": -1,
 		"swim_down": -1,
 		"walk": -1,

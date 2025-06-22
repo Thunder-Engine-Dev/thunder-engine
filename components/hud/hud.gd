@@ -36,10 +36,11 @@ func _ready() -> void:
 	)
 	Console.executed.connect(_on_console_executed)
 	
-	await get_tree().physics_frame
-	if Data.values.time < 0:
-		time_text.visible = false
-		time_counter.visible = false
+	(func():
+		if Data.values.time < 0:
+			time_text.visible = false
+			time_counter.visible = false
+	).call_deferred()
 
 
 func game_over() -> void:
