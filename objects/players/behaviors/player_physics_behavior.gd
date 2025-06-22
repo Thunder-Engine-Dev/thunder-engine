@@ -229,7 +229,7 @@ func _calculate_jump_acceleration() -> float:
 
 #= Climbing
 func _movement_climbing(delta: float) -> void:
-	if player.is_crouching || player.completed: return
+	if (player.is_crouching && !player.crouch_forced) || player.completed: return
 	if player.is_sliding: _stop_sliding_movement()
 	player.vel_set(Vector2(player.left_right, player.up_down) * suit.physics_config.climb_speed)
 	if player.left_right != 0:
@@ -241,7 +241,8 @@ func _movement_climbing(delta: float) -> void:
 	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:
 		player._has_jumped = true
 		player.is_climbing = false
-		player.direction = sign(player.left_right)
+		if sign(player.left_right) != 0:
+			player.direction = sign(player.left_right)
 		player.jump(config.jump_speed)
 		var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
 		Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})

@@ -25,7 +25,7 @@ SPD: %12.6v
 VEL: %12.6v
 REAL:%12.6v
 suit: %s | lr:%s ud:%s
-SLIDED:%s IS_SLIDING:%s
+SLIDED:%s IS_SLDNG:%s CLIMB:%s
 COMPL:%s NOMOVE:%s WARP_STATE:%s
 FCWS: %s%s%s%s WALL:%s BUG_SPD:%s
 Normal:%5.f° %8.4vR
@@ -42,6 +42,7 @@ ITEM:%s
 		pl.get("up_down"),
 		_get_bool_mono(pl, "slided"),
 		_get_bool_mono(pl, "is_sliding"),
+		_get_bool_mono(pl, "is_climbing"),
 		_get_bool_mono(pl, "completed"),
 		_get_bool_mono(pl, "no_movement"),
 		pl.get("warp"),

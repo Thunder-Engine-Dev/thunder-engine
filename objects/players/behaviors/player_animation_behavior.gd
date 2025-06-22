@@ -297,7 +297,9 @@ func _animation_jumping_process(delta: float) -> void:
 func _animation_climbing_process(delta: float) -> void:
 	_play_anim(&"climb")
 	if player.speed != Vector2.ZERO:
-		_climb_progress += abs(player.speed.length() * delta)
+		var pl_speed = abs(player.speed.length())
+		if pl_speed > 50:
+			_climb_progress += pl_speed * delta
 		if _climb_progress > 20:
 			_climb_progress = 0
 			sprite.flip_h = !sprite.flip_h
