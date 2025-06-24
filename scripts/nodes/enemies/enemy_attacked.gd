@@ -338,7 +338,7 @@ func get_stomping_delayer() -> SceneTreeTimer:
 func _on_level_end() -> void:
 	if !killing_enabled: return
 	if !Thunder.view.is_getting_closer(_center, 32):
-		if Thunder.view.is_getting_closer(_center, 320):
+		if Thunder.view.is_getting_closer(_center, 2048):
 			_center.queue_free.call_deferred()
 		return
 	

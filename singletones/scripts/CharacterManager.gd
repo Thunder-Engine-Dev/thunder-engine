@@ -58,7 +58,8 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"block_appear": [],
 	"block_bump": [],
 	"block_break": [],
-	"hud_timeout": [],
+	"hud_time_hurry": [],
+	"hud_time_score": [],
 	"hud_pause_open": [],
 	"hud_pause_close": [],
 	"menu_start_song": [],
@@ -75,6 +76,8 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"menu_toggle": [],
 	"menu_fade_out": [],
 	"map_level_enter": [],
+	"game_over": [],
+	"menu_select_short": [],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -96,7 +99,8 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"block_appear": [],
 	"block_bump": [],
 	"block_break": [],
-	"hud_timeout": [],
+	"hud_time_hurry": [],
+	"hud_time_score": [],
 	"hud_pause_open": [],
 	"hud_pause_close": [],
 	"menu_start_song": [],
@@ -113,6 +117,8 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"menu_toggle": [],
 	"menu_fade_out": [],
 	"map_level_enter": [],
+	"game_over": [],
+	"menu_select_short": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {

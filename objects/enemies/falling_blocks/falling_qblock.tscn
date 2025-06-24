@@ -117,7 +117,7 @@ killing_immune = {
 "shell_defence": 99
 }
 killing_creation = SubResource("Resource_6dehk")
-killing_scores = 800
+killing_scores = 400
 killing_sound_succeeded = ExtResource("8_gtxia")
 killing_sound_failed = ExtResource("9_5fedk")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]

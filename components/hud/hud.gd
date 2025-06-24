@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 const DEFAULT_HURRY = preload("res://engine/components/hud/sounds/timeout.wav")
+const DEFAULT_SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
 
 @onready var timer = $Timer
 @onready var time_text = $Control/Time
@@ -12,7 +13,7 @@ const DEFAULT_HURRY = preload("res://engine/components/hud/sounds/timeout.wav")
 
 var game_over_timer: SceneTreeTimer
 
-@export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
+@export var scoring_sound = DEFAULT_SCORING
 @export var timer_hurry_sound = DEFAULT_HURRY
 
 signal time_countdown_finished
@@ -65,7 +66,7 @@ func _input(event: InputEvent) -> void:
 
 
 func timer_hurry() -> void:
-	var _sfx = CharacterManager.get_sound_replace(timer_hurry_sound, DEFAULT_HURRY, "hud_timeout", false)
+	var _sfx = CharacterManager.get_sound_replace(timer_hurry_sound, DEFAULT_HURRY, "hud_time_hurry", false)
 	Audio.play_1d_sound(_sfx, false, { "bus": "1D Sound" })
 	var tw = get_tree().create_tween().set_loops(8)
 	tw.tween_property(time_text, "scale:y", 0.5, 0.125)
@@ -89,7 +90,8 @@ func time_countdown(_first_time: bool = true) -> void:
 
 func _time_countdown_sound_loop() -> void:
 	if Data.values.time > 0:
-		Audio.play_1d_sound(scoring_sound, false, { "bus": "1D Sound" })
+		var _sfx = CharacterManager.get_sound_replace(scoring_sound, DEFAULT_SCORING, "hud_time_score", false)
+		Audio.play_1d_sound(_sfx, false, { "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()
 

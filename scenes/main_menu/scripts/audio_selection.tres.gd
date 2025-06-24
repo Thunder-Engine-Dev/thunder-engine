@@ -1,9 +1,11 @@
 extends MenuSelection
 
+const DEFAULT_SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+
 @export var type: String
+@export var change_sound := DEFAULT_SCORING
 @onready var value: ProgressBar = $Value
 
-var change_sound = preload("res://engine/components/hud/sounds/scoring.wav")
 var _mouse_can_process: bool = false
 var selector_repeat_timer: float
 
@@ -57,7 +59,8 @@ func _input(event: InputEvent) -> void:
 
 func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
-	Audio.play_1d_sound(change_sound, true, { "ignore_pause": true, "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(change_sound, DEFAULT_SCORING, "menu_select_short", false)
+	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()
 	
 

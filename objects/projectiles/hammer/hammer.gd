@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 32):
-		if Thunder.view.is_getting_closer(self, 320):
+		if Thunder.view.is_getting_closer(self, 2048):
 			queue_free()
 		return
 	Data.add_score(200)

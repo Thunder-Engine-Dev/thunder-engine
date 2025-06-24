@@ -1,5 +1,7 @@
 extends Node2D
 
+const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+
 @export var move_down_by_px: float = 42
 @onready var first_pos: float = position.y
 @onready var progress: TextureProgressBar = $Progress
@@ -17,7 +19,8 @@ func _physics_process(delta: float) -> void:
 	var is_pressed: bool = Input.is_action_pressed("a_delete")
 	progress.visible = deletion_progress > 0.0
 	if Input.is_action_just_pressed("a_delete"):
-		Audio.play_1d_sound(preload("res://engine/components/hud/sounds/scoring.wav"))
+		var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
+		Audio.play_1d_sound(_sfx, false)
 	if is_pressed:
 		deletion_progress = clampf(deletion_progress + delta / 3, 0, 1)
 	else:

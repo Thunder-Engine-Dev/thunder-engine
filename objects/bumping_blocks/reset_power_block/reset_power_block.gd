@@ -22,9 +22,12 @@ func got_bumped(by_player: bool = false) -> void:
 
 
 func call_bump() -> void:
+	if active:
+		bump_sound = CharacterManager.get_sound_replace(bump_sound, bump_sound, "hurt", true)
+	else:
+		bump_sound = CharacterManager.get_sound_replace(DEFAULT_BUMP, DEFAULT_BUMP, "block_bump", false)
 	bump(false)
 	if !active: return
 	_animated_sprite_2d.animation = &"empty"
 	Thunder._current_player.change_suit(CharacterManager.get_suit("small"), false)
-	bump_sound = CharacterManager.get_sound_replace(bump_sound, bump_sound, "hurt", true)
 	Data.values.lives = ProjectSettings.get_setting(&"application/thunder_settings/player/default_lives", 4)

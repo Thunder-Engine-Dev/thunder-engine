@@ -58,12 +58,14 @@ func _on_cannon_interval_timeout() -> void:
 			.get_node()
 		if cball:
 			cball.velocity = Vector2.RIGHT.rotated(global_rotation + sprite_head_rotation) * cannon_ball_speed
+			cball.reset_physics_interpolation()
 	if cannon_explosion_effect:
 		var eff := NodeCreator.prepare_2d(cannon_explosion_effect, self) \
 			.create_2d() \
 			.get_node()
 		eff.global_transform = global_transform
 		eff.global_position = _pos_cball.global_position
+		eff.reset_physics_interpolation()
 	
 	_cannon_itrvl.start(Thunder.rng.get_randf_range(shooting_delay_min, shooting_delay_max))
 

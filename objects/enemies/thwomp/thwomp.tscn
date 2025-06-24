@@ -152,7 +152,7 @@ killing_immune = {
 "shell_defence": 99
 }
 killing_creation = SubResource("Resource_j7a5f")
-killing_scores = 800
+killing_scores = 400
 killing_sound_succeeded = ExtResource("6_cdkox")
 killing_sound_failed = ExtResource("7_58bjx")
 ice_sprite = NodePath("../../Sprite")

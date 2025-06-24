@@ -120,6 +120,8 @@ func load_external_textures() -> String:
 		# Loading miscellaneous textures and configs
 		if !_is_default_skin:
 			_load_misc_files(dir_access, i)
+			if !CONFIG_GLOBAL_SKIN_TWEAKS in misc_textures[i]:
+				misc_textures[i][CONFIG_GLOBAL_SKIN_TWEAKS] = CharacterManager.DEFAULT_GLOBAL_SKIN_TWEAKS.duplicate(true)
 		
 		# Initiating animations
 		var _anims: PackedStringArray = DirAccess.get_directories_at(base_dir + "/" + i)
@@ -332,8 +334,7 @@ func _load_animations(dir_access: DirAccess, i: String, _anims: PackedStringArra
 			#errored.append(
 				#"The skin used may be of an older version. Please refer to the skin guide to convert the skin to the current version."
 			#)
-		OS.alert("
-".join(errored), "Player Skin Load Error")
+		OS.alert("\n".join(errored), "Player Skin Load Error")
 	return loaded
 
 
@@ -511,8 +512,7 @@ func new_custom_sprite_frames(old_sprites: SpriteFrames, textures: Dictionary, p
 	if !_error_buffer.is_empty():
 		_error_buffer.append("")
 		_error_buffer.append("Please fix animations using the skin editor, or manually edit a file at %s/%s/%s using text editor" % [str(current_skin), str(power), CONFIG_SKIN_SETTINGS])
-		OS.alert("
-".join(_error_buffer), str(current_skin) + " Player Skin Load Error")
+		OS.alert("\n".join(_error_buffer), str(current_skin) + " Player Skin Load Error")
 		return old_sprites
 	return new_sprites
 

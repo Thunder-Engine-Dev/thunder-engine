@@ -1,13 +1,33 @@
-[gd_scene load_steps=11 format=3 uid="uid://yreeufpqjft1"]
+[gd_scene load_steps=15 format=3 uid="uid://yreeufpqjft1"]
 
 [ext_resource type="Script" uid="uid://cr6yuoiat01q3" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
 [ext_resource type="Texture2D" uid="uid://1bnxo3a5rbrn" path="res://engine/objects/bosses/bowser/texture/Flame.png" id="2_khrfp"]
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="3_8nc5l"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_qukhs"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="4_jce6f"]
+[ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="4_q2etw"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_cwhce"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
 size = Vector2(40, 20)
+
+[sub_resource type="Resource" id="Resource_nu7ap"]
+script = ExtResource("5_cwhce")
+creation_nodepack = ExtResource("3_8nc5l")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 2
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"amount": 15
+}
+custom_script = ExtResource("4_q2etw")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l13ct"]
 atlas = ExtResource("2_khrfp")
@@ -63,9 +83,12 @@ script = ExtResource("2_g8g0o")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
 "beetroot": true,
+"boomerang": false,
 "fireball": true,
-"iceball": false
+"iceball": false,
+"starman": false
 }
+killing_creation = SubResource("Resource_nu7ap")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("3_qukhs")
 killing_sound_failed = ExtResource("4_jce6f")

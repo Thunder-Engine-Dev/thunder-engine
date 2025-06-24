@@ -45,7 +45,8 @@ func _init_game_over() -> bool:
 	if check_for_lives && Data.values.lives == 0:
 		if is_instance_valid(Thunder._current_hud):
 			Thunder._current_hud.game_over()
-			Audio.play_music(game_over_music, 1, { "ignore_pause": true }, false, false)
+			var _sfx = CharacterManager.get_sound_replace(game_over_music, game_over_music, "game_over", false)
+			Audio.play_music(_sfx, 1, { "ignore_pause": true }, false, false)
 		return true
 	return false
 
