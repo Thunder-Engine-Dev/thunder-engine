@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btsmfgkalyjsi"]
+[gd_scene load_steps=21 format=3 uid="uid://btsmfgkalyjsi"]
 
 [ext_resource type="Script" uid="uid://c08gsw7pt6yrv" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_rhuw5"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_msyao"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_w2s07"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="7_lpy2n"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_owukt"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_ajsvx"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="9_phcx2"]
 [ext_resource type="Texture2D" uid="uid://cssyev4qnanbb" path="res://engine/objects/enemies/buzzle_bettle/textures/shell_buzzle.png" id="10_c67kg"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_eoa1r"]
@@ -126,6 +127,7 @@ killing_immune = {
 killing_creation = SubResource("Resource_jc284")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("8_owukt")
+killing_sound_failed = ExtResource("9_ajsvx")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
 [node name="Attack" type="ShapeCast2D" parent="."]

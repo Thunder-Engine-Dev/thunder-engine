@@ -106,7 +106,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 	if force_powerup:
 		if to.name != Thunder._current_player_state.name:
 			player.change_suit(to)
-			powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
+			powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, pickup_powerup_sound, "powerup", true)
 			Audio.play_sound(powerup_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
 			collected_changed_suit.emit()
 		elif !supply_behavior:
@@ -124,7 +124,7 @@ func _change_state_logic(force_powerup: bool) -> void:
 			player.change_suit(to.gets_hurt_to)
 		else:
 			player.change_suit(to)
-		powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "powerup", true)
+		powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, pickup_powerup_sound, "powerup", true)
 		Audio.play_sound(powerup_sfx, self, false, {pitch = sound_pitch, ignore_pause = true})
 		collected_changed_suit.emit()
 	else:
