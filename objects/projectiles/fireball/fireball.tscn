@@ -62,8 +62,8 @@ texture_scale = 0.01
 script = ExtResource("4_5ki2u")
 
 [connection signal="collided_floor" from="." to="." method="jump"]
-[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="collided_wall" from="." to="." method="explode"]
+[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
 [connection signal="damaged_player_failed" from="Attack" to="." method="explode"]
 [connection signal="killed_notify" from="Attack" to="." method="explode"]

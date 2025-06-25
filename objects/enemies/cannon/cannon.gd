@@ -57,6 +57,7 @@ func _on_cannon_interval_timeout() -> void:
 			.create_2d() \
 			.get_node()
 		if cball:
+			cball.global_position = _pos_cball.global_position
 			cball.velocity = Vector2.RIGHT.rotated(global_rotation + sprite_head_rotation) * cannon_ball_speed
 			cball.reset_physics_interpolation()
 	if cannon_explosion_effect:

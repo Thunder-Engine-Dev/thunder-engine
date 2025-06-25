@@ -63,12 +63,14 @@ func _shoot(index: int) -> void:
 		if cball:
 			cball.global_position = sprite_pos_markers[index].global_position
 			cball.velocity = Vector2.RIGHT.rotated(global_rotation + sprite_head_rotation - PI / 2 * index) * cannon_ball_speed
+			cball.reset_physics_interpolation()
 	if cannon_explosion_effect:
 		var eff := NodeCreator.prepare_2d(cannon_explosion_effect, self) \
 			.create_2d() \
 			.get_node()
 		eff.global_transform = global_transform
 		eff.global_position = sprite_pos_markers[index].global_position
+		eff.reset_physics_interpolation()
 
 func _shoot_balls() -> void:
 	if sprite_pos_markers.is_empty():
