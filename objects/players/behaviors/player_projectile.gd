@@ -20,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 	if resource.amount_extra >= 0:
 		var extras := StringName("bul_extra" + resource.resource_path)
 		var extra_count: int = player.get_tree().get_node_count_in_group(extras)
-		if extra_count > resource.amount_extra:
+		if extra_count >= resource.amount_extra:
 			return
 	if bull_count < resource.amount:
 		var _custom_sfx = CharacterManager.get_sound_replace(resource.sound_attack, resource.sound_attack, "attack", true)

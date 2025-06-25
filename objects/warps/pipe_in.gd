@@ -9,6 +9,7 @@ signal warp_started
 signal warp_ended
 
 const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+const WARP_CUTSCENE = preload("res://engine/objects/players/prefabs/sounds/pipe_cutscene.wav")
 
 @export_category("Warp")
 @export_group("Editor","warping_editor_")
@@ -132,6 +133,8 @@ func _warp_initiator() -> void:
 		if is_instance_valid(Thunder._current_camera):
 			Thunder._current_camera.teleport()
 		var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_in", true)
+		if warping_sound == WARP_CUTSCENE:
+			_custom_sound = CharacterManager.get_sound_replace(WARP_CUTSCENE, WARP_CUTSCENE, "pipe_cutscene", false)
 		Audio.play_sound(_custom_sound, self, false)
 		Thunder._current_hud.timer.paused = true
 

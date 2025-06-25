@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func _stun() -> void:
 	stun.emit()
-	Audio.play_sound(stunning_sound, self)
+	var _sfx = CharacterManager.get_sound_replace(stunning_sound, stunning_sound, "stun", false)
+	Audio.play_sound(_sfx, self)
 	if Thunder._current_camera.has_method(&"shock"):
 		Thunder._current_camera.shock(0.1, Vector2.ONE * 2)
-

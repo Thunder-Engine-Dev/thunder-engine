@@ -36,7 +36,7 @@ script = ExtResource("5_ysgl2")
 projectile = SubResource("Resource_xpeqw")
 speed = Vector2(100, -250)
 amount = 2
-amount_extra = 8
+amount_extra = 6
 sound_attack = ExtResource("6_m5gcq")
 
 [resource]

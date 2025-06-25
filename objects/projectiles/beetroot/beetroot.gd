@@ -2,6 +2,7 @@ extends Projectile
 
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
+const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
 @export var remove_offscreen_after: float = 3.0
@@ -26,18 +27,21 @@ func _physics_process(delta: float) -> void:
 	if drown:
 		_bubble_timer += delta
 		speed = Vector2(0, 75)
-		if _bubble_timer > 0.18:
+		var bubble_count = get_tree().get_node_count_in_group("#beetroot_bubble")
+		if _bubble_timer > 0.17 + (bubble_count * 0.008):
 			_bubble_timer = 0
 			var bubble = BUBBLE.instantiate()
 			bubble.transform = global_transform
 			Scenes.current_scene.add_child(bubble)
+			bubble.add_to_group("#beetroot_bubble")
 
 
 func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if bounces_left <= 0: return
 	
 	if with_sound:
-		Audio.play_sound(preload("res://engine/objects/projectiles/sounds/stun.wav"), self)
+		var _sfx = CharacterManager.get_sound_replace(STUN, STUN, "stun", false)
+		Audio.play_sound(_sfx, self)
 	
 	process_bumping_blocks()
 	

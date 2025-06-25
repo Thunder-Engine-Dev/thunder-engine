@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 	if !sprite_node: return
 	sprite_node.rotation_degrees += 12 * (-1 if speed.x < 0 else 1) * Thunder.get_delta(delta)
-	if speed.x == 0: explode()
+	if is_zero_approx(speed.x): explode()
 
 
 func jump(jspeed:float = jumping_speed) -> void:
@@ -45,3 +45,9 @@ func _on_level_end() -> void:
 	Data.add_score(100)
 	ScoreText.new(str(100), self)
 	queue_free()
+
+
+func _on_collided_wall() -> void:
+	var _sfx = CharacterManager.get_sound_replace(null, null, "fireball_bump", false)
+	if _sfx:
+		Audio.play_sound(_sfx, self, false)

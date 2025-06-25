@@ -214,7 +214,8 @@ func hurt(_external_damage_source: bool = false) -> void:
 	
 	_bullet_received = 0
 	if health > 0:
-		Audio.play_sound(hurt_sound, self)
+		var _sfx = CharacterManager.get_sound_replace(hurt_sound, hurt_sound, "bowser_hurt", false)
+		Audio.play_sound(_sfx, self)
 		health -= 1
 	if health <= 0:
 		die()
@@ -259,7 +260,8 @@ func bullet_hurt() -> void:
 # Bowser's death
 func die() -> void:
 	print("[Game] Boss defeated.")
-	Audio.play_sound(death_sound, self)
+	var _sfx = CharacterManager.get_sound_replace(death_sound, death_sound, "bowser_be_happy", false)
+	Audio.play_sound(_sfx, self)
 	tween_hurt_blinking = null
 	if finish_on_death && trigger.has_method(&"stop_music"):
 		trigger.stop_music()
@@ -272,8 +274,10 @@ func die() -> void:
 			spr.speed_scale = 1
 			spr.play.call_deferred(&"death")
 			cps.add_child(collision_shape.duplicate())
-			cps.falling_sound = falling_sound
-			cps.into_lava_sound = into_lava_sound
+			var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
+			cps.falling_sound = _sfx2
+			_sfx2 = CharacterManager.get_sound_replace(into_lava_sound, into_lava_sound, "bowser_lava_love", false)
+			cps.into_lava_sound = _sfx2
 			cps.direction_to_complete = complete_direction
 			cps.finish_on_free = finish_on_death
 	)

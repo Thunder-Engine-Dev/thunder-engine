@@ -38,18 +38,8 @@ const LUIGI_SUITS: Dictionary = {
 	"frog": preload("res://engine/objects/players/prefabs/suits/luigi/suit_luigi_frog.tres"),
 }
 
-## Base voice lines for Mario
-const MARIO_VOICE_LINES: Dictionary = {
-	"checkpoint": [
-		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_1.ogg"),
-		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_2.ogg"),
-		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_3.ogg"),
-	],
-	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav") ],
-	"fall": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
-	"fall_death": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
-	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
-	"level_complete": [],
+## Base global sound effects for all default players
+const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"coin": [],
 	"enemy_stomp": [],
 	"enemy_bump": [],
@@ -64,7 +54,9 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"hud_pause_close": [],
 	"menu_start_song": [],
 	"menu_enter": [],
+	"level_complete": [],
 	"level_cutscene_song": [],
+	"pipe_cutscene": [],
 	"1up": [],
 	"hud_acceptance": [],
 	"message_box": [],
@@ -78,6 +70,26 @@ const MARIO_VOICE_LINES: Dictionary = {
 	"map_level_enter": [],
 	"game_over": [],
 	"menu_select_short": [],
+	"fireball_bump": [],
+	"stun": [],
+	"starman": [],
+	"bowser_hurt": [],
+	"bowser_fall": [],
+	"bowser_be_happy": [],
+	"bowser_lava_love": [],
+}
+
+## Base voice lines for Mario
+const MARIO_VOICE_LINES: Dictionary = {
+	"checkpoint": [
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_1.ogg"),
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_2.ogg"),
+		preload("res://engine/objects/players/prefabs/sounds/mario/checkpoint_3.ogg"),
+	],
+	"oh_no": [ preload("res://engine/objects/players/prefabs/sounds/mario/oh_no.wav") ],
+	"fall": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
+	"fall_death": [ preload("res://engine/objects/players/prefabs/sounds/mario/uwaah.wav") ],
+	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
 }
 ## Base voice lines for Luigi
 const LUIGI_VOICE_LINES: Dictionary = {
@@ -90,35 +102,6 @@ const LUIGI_VOICE_LINES: Dictionary = {
 	"fall": [ preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav") ],
 	"fall_death": [ preload("res://engine/objects/players/prefabs/sounds/luigi/uwaah.wav") ],
 	"death": [ preload("res://engine/objects/players/prefabs/sounds/music-die.ogg") ],
-	"level_complete": [],
-	"coin": [],
-	"enemy_stomp": [],
-	"enemy_bump": [],
-	"enemy_kick": [],
-	"spring_bounce": [],
-	"block_appear": [],
-	"block_bump": [],
-	"block_break": [],
-	"hud_time_hurry": [],
-	"hud_time_score": [],
-	"hud_pause_open": [],
-	"hud_pause_close": [],
-	"menu_start_song": [],
-	"menu_enter": [],
-	"level_cutscene_song": [],
-	"1up": [],
-	"hud_acceptance": [],
-	"message_box": [],
-	"bonus_activate": [],
-	"checkpoint_switch": [],
-	"menu_select": [],
-	"menu_mouse_hover": [],
-	"menu_failure": [],
-	"menu_toggle": [],
-	"menu_fade_out": [],
-	"map_level_enter": [],
-	"game_over": [],
-	"menu_select_short": [],
 }
 
 const DEFAULT_SUIT_SOUNDS: Dictionary = {
@@ -236,6 +219,8 @@ func _ready() -> void:
 	
 	voice_lines = add_voice_lines(MARIO_VOICE_LINES, voice_lines, "Mario")
 	voice_lines = add_voice_lines(LUIGI_VOICE_LINES, voice_lines, "Luigi")
+	voice_lines = add_voice_lines(GLOBAL_SOUNDS_BASE, voice_lines, "Mario")
+	voice_lines = add_voice_lines(GLOBAL_SOUNDS_BASE, voice_lines, "Luigi")
 	
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/mario/selector.tres"), "selector", "Mario")
 	add_misc_texture(preload("res://engine/objects/players/prefabs/animations/luigi/selector.tres"), "selector", "Luigi")
