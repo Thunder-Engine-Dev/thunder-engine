@@ -50,6 +50,7 @@ func _input(event) -> void:
 func load_commands(dir: String) -> void:
 	for cmd in DirAccess.get_files_at(dir):
 		if cmd.ends_with(".uid"): continue
+		if cmd.begins_with("."): continue
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
 		if command.debug_only && OS.has_feature("template"): continue
 		commands[command.name] = command

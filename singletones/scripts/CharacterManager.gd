@@ -74,9 +74,9 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"stun": [],
 	"starman": [],
 	"bowser_hurt": [],
-	"bowser_fall": [],
+	#"bowser_fall": [],
 	"bowser_be_happy": [],
-	"bowser_lava_love": [],
+	#"bowser_lava_love": [],
 }
 
 ## Base voice lines for Mario

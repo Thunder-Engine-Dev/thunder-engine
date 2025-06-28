@@ -62,6 +62,7 @@ func _ready() -> void:
 		return
 
 	Data.values.time = time
+	Data.values.stopwatch = 0.0
 
 	super()
 

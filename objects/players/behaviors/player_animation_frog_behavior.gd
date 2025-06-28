@@ -20,6 +20,10 @@ func _swam() -> void:
 		sprite.play()
 
 
+func _head_bumped() -> void:
+	return
+
+
 func _sprite_loop() -> void:
 	if !sprite: return
 	super()

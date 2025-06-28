@@ -217,4 +217,6 @@ func _do_ungrab(player_died: bool) -> void:
 	ungrabbed.emit()
 
 func get_target_hold_position() -> Vector2:
+	if player.warp != player.Warp.NONE && player.warp_dir >= player.WarpDir.UP:
+		return player.global_position + player.suit.physics_shaper.shape_pos
 	return player.global_position + player.suit.physics_shaper.shape_pos + Vector2(16 * player.direction, 0)

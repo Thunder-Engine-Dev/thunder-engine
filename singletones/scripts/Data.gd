@@ -15,7 +15,7 @@ const ATTACKERS: Dictionary = {
 	boomerang = &"boomerang"
 }
 
-const LIFE_SOUND = preload("res://engine/objects/players/prefabs/sounds/1up.wav")
+var LIFE_SOUND = preload("res://engine/objects/players/prefabs/sounds/1up.wav")
 
 ## Defines player's basic power-up status
 enum PLAYER_POWER {
@@ -40,7 +40,8 @@ var values: Dictionary = {
 	time = -1,
 	checkpoint = -1,
 	checked_cps = [],
-	onetime_blocks = true
+	onetime_blocks = true,
+	stopwatch = 0.0,
 }
 
 ## Internal values that require preservation between scenes, but don't have to be saved
