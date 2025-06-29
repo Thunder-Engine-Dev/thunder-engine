@@ -26,6 +26,9 @@ var cv: Dictionary = {
 
 
 func _ready():
+	if "--developer-commands" in OS.get_cmdline_user_args():
+		allow_developer_commands = true
+	
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
 	
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
@@ -43,8 +46,6 @@ func _ready():
 			hide()
 	)
 	
-	if "--developer-commands" in OS.get_cmdline_user_args():
-		allow_developer_commands = true
 
 func _input(event) -> void:
 	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
@@ -56,7 +57,7 @@ func load_commands(dir: String) -> void:
 		if cmd.ends_with(".uid"): continue
 		if cmd.begins_with("."): continue
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
-		if command.debug_only && OS.has_feature("template"): continue
+		if command.debug_only && (OS.has_feature("template") && !Console.allow_developer_commands): continue
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
