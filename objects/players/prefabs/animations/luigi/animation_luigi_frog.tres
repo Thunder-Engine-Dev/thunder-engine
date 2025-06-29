@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=44 format=3 uid="uid://bi0opaaunlr1a"]
+[gd_resource type="SpriteFrames" load_steps=45 format=3 uid="uid://bi0opaaunlr1a"]
 
 [ext_resource type="Texture2D" uid="uid://cyjx8gwk5l8rq" path="res://engine/objects/players/prefabs/textures/luigi/luigi_green_lui.png" id="1_dtggk"]
 [ext_resource type="Texture2D" uid="uid://bfpjel0t00lm1" path="res://engine/objects/players/prefabs/textures/luigi/luigi_frog.png" id="1_sq74e"]
@@ -46,6 +46,10 @@ region = Rect2(720, 0, 48, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mpkc"]
 atlas = ExtResource("1_sq74e")
 region = Rect2(528, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq74e"]
+atlas = ExtResource("1_sq74e")
+region = Rect2(480, 0, 48, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_122sw"]
 atlas = ExtResource("1_sq74e")
@@ -222,10 +226,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3mpkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sq74e")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

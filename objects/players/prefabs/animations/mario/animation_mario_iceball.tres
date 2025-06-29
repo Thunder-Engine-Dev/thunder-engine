@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://boq3ykcdoxnb5"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://boq3ykcdoxnb5"]
 
 [ext_resource type="Texture2D" uid="uid://kmfa1hdjbsch" path="res://engine/objects/players/prefabs/textures/mario/mario_iceball.png" id="1_ddvwu"]
 
@@ -34,6 +34,10 @@ region = Rect2(720, 0, 48, 64)
 atlas = ExtResource("1_ddvwu")
 region = Rect2(528, 0, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xakwa"]
+atlas = ExtResource("1_ddvwu")
+region = Rect2(528, 64, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6c7g3"]
 atlas = ExtResource("1_ddvwu")
 region = Rect2(288, 0, 48, 64)
@@ -53,6 +57,10 @@ region = Rect2(144, 64, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ms22q"]
 atlas = ExtResource("1_ddvwu")
 region = Rect2(192, 64, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tja1"]
+atlas = ExtResource("1_ddvwu")
+region = Rect2(288, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gyiwm"]
 atlas = ExtResource("1_ddvwu")
@@ -168,10 +176,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6qad2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xakwa")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -208,7 +219,10 @@ animations = [{
 "name": &"grab",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tja1")
+}],
 "loop": false,
 "name": &"hold_crouch",
 "speed": 0.0

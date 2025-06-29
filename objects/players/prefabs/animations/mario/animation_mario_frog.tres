@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=44 format=3 uid="uid://3njuthtkj3yb"]
+[gd_resource type="SpriteFrames" load_steps=45 format=3 uid="uid://3njuthtkj3yb"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_ljtj5"]
 [ext_resource type="Texture2D" uid="uid://d0cnvf3fx46l6" path="res://engine/objects/players/prefabs/textures/mario/mario_frog.png" id="1_qoe2n"]
@@ -46,6 +46,10 @@ region = Rect2(720, 0, 48, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_c3b5j"]
 atlas = ExtResource("1_qoe2n")
 region = Rect2(528, 0, 48, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh47t"]
+atlas = ExtResource("1_qoe2n")
+region = Rect2(480, 0, 48, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qx53f"]
 atlas = ExtResource("1_qoe2n")
@@ -222,10 +226,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c3b5j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh47t")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

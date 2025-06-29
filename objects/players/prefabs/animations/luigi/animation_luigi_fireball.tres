@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://c80jiowoibk80"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://c80jiowoibk80"]
 
 [ext_resource type="Texture2D" uid="uid://b1iw5dwaenvc5" path="res://engine/objects/players/prefabs/textures/luigi/luigi_fireball.png" id="1_ksl0h"]
 
@@ -34,6 +34,10 @@ region = Rect2(720, 0, 48, 64)
 atlas = ExtResource("1_ksl0h")
 region = Rect2(528, 0, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hfsw"]
+atlas = ExtResource("1_ksl0h")
+region = Rect2(528, 64, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_bc1as"]
 atlas = ExtResource("1_ksl0h")
 region = Rect2(288, 0, 48, 64)
@@ -53,6 +57,10 @@ region = Rect2(144, 64, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bgllv"]
 atlas = ExtResource("1_ksl0h")
 region = Rect2(192, 64, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl6c3"]
+atlas = ExtResource("1_ksl0h")
+region = Rect2(288, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdx3x"]
 atlas = ExtResource("1_ksl0h")
@@ -168,10 +176,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pbiow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hfsw")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -208,7 +219,10 @@ animations = [{
 "name": &"grab",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rl6c3")
+}],
 "loop": false,
 "name": &"hold_crouch",
 "speed": 0.0

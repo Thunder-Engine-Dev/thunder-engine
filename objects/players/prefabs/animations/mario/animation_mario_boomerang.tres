@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://gm8i477hwytp"]
+[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://gm8i477hwytp"]
 
 [ext_resource type="Texture2D" uid="uid://cb6i8p16hixy1" path="res://engine/objects/players/prefabs/textures/mario/mario_boomerang.png" id="1_c67an"]
 
@@ -34,6 +34,10 @@ region = Rect2(720, 0, 48, 64)
 atlas = ExtResource("1_c67an")
 region = Rect2(528, 0, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dbyk"]
+atlas = ExtResource("1_c67an")
+region = Rect2(528, 64, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_oa2uw"]
 atlas = ExtResource("1_c67an")
 region = Rect2(288, 0, 48, 64)
@@ -53,6 +57,10 @@ region = Rect2(144, 64, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4skn"]
 atlas = ExtResource("1_c67an")
 region = Rect2(192, 64, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qdur"]
+atlas = ExtResource("1_c67an")
+region = Rect2(288, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ay5hh"]
 atlas = ExtResource("1_c67an")
@@ -176,10 +184,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nl073")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dbyk")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -216,7 +227,10 @@ animations = [{
 "name": &"grab",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qdur")
+}],
 "loop": false,
 "name": &"hold_crouch",
 "speed": 0.0

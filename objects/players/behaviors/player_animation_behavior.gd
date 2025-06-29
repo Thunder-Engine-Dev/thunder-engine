@@ -23,7 +23,7 @@ var _skid_sound_loop_delay: float
 var _look_up_sound: Array = [null]
 var _loop_offsets: Dictionary = {}
 
-var _climb_progress: float
+#var _climb_progress: float
 var _p_run_enabled: bool
 var _stomp_enabled: bool
 var _idle_timer: float
@@ -299,10 +299,13 @@ func _animation_climbing_process(delta: float) -> void:
 	if player.speed != Vector2.ZERO:
 		var pl_speed = abs(player.speed.length())
 		if pl_speed > 50:
-			_climb_progress += pl_speed * delta
-		if _climb_progress > 20:
-			_climb_progress = 0
-			sprite.flip_h = !sprite.flip_h
+			sprite.speed_scale = 1.2
+		else:
+			sprite.speed_scale = 0.0
+			#_climb_progress += pl_speed * delta
+		#if _climb_progress > 20:
+		#	_climb_progress = 0
+		#	sprite.flip_h = !sprite.flip_h
 
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false

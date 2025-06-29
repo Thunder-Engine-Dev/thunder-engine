@@ -12,6 +12,7 @@ var history: Array = ['']
 var position_in_history: int
 
 var command_executed: bool
+var allow_developer_commands: bool
 
 # Console Variables
 var cv: Dictionary = {
@@ -41,6 +42,9 @@ func _ready():
 			Thunder.set_pause_game(false)
 			hide()
 	)
+	
+	if "--developer-commands" in OS.get_cmdline_user_args():
+		allow_developer_commands = true
 
 func _input(event) -> void:
 	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return

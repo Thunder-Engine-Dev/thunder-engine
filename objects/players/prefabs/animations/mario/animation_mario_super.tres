@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=32 format=3 uid="uid://b1mklmn2aqcx8"]
+[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://b1mklmn2aqcx8"]
 
 [ext_resource type="Texture2D" uid="uid://wgy3e7a8hx8" path="res://engine/objects/players/prefabs/textures/mario/mario_super.png" id="2_etu0p"]
 
@@ -26,6 +26,10 @@ region = Rect2(768, 0, 48, 64)
 atlas = ExtResource("2_etu0p")
 region = Rect2(576, 0, 48, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_f46vc"]
+atlas = ExtResource("2_etu0p")
+region = Rect2(576, 64, 48, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_tty5b"]
 atlas = ExtResource("2_etu0p")
 region = Rect2(336, 0, 48, 64)
@@ -45,6 +49,10 @@ region = Rect2(144, 64, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_woc8m"]
 atlas = ExtResource("2_etu0p")
 region = Rect2(192, 64, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g5gt"]
+atlas = ExtResource("2_etu0p")
+region = Rect2(288, 64, 48, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ajoe"]
 atlas = ExtResource("2_etu0p")
@@ -165,10 +173,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wxx2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f46vc")
 }],
-"loop": false,
+"loop": true,
 "name": &"climb",
-"speed": 0.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,7 +218,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tty5b")
+"texture": SubResource("AtlasTexture_1g5gt")
 }],
 "loop": false,
 "name": &"hold_crouch",
