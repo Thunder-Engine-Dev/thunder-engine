@@ -1,11 +1,11 @@
 [gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://1qmh2i83ni7y"]
 
-[sub_resource type="Curve" id="Curve_61d7b"]
+[sub_resource type="Curve" id="Curve_217v7"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_43ijr"]
-curve = SubResource("Curve_61d7b")
+curve = SubResource("Curve_217v7")
 
 [resource]
 particle_flag_disable_z = true

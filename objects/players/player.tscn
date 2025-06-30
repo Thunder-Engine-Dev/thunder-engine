@@ -1,15 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=28 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="1_ojh72"]
 [ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="2_2saki"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
-[ext_resource type="Material" uid="uid://bkck6uoldtwwu" path="res://engine/objects/players/prefabs/materials/stars.tres" id="4_6n413"]
-[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="5_n6ctd"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
 [ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
-[ext_resource type="Material" uid="uid://1qmh2i83ni7y" path="res://engine/objects/players/prefabs/materials/skid.tres" id="8_vrjrd"]
 [ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
 [ext_resource type="Script" uid="uid://dga27kf23i4a8" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
 [ext_resource type="Script" uid="uid://cp2mj8ibe2l2m" path="res://engine/node_modifiers/player_physics_modifier/slippery_physics_modifier.gd" id="13_217v7"]
@@ -21,6 +18,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
 size = Vector2(20, 28)
 
+[sub_resource type="Curve" id="Curve_61d7b"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_qbg1c"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
 point_count = 2
@@ -28,12 +29,12 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_btes4"]
 curve = SubResource("Curve_qbg1c")
 
-[sub_resource type="Curve" id="Curve_61d7b"]
+[sub_resource type="Curve" id="Curve_l3s3a"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
-curve = SubResource("Curve_61d7b")
+curve = SubResource("Curve_l3s3a")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s67vk"]
 lifetime_randomness = 0.3
@@ -49,6 +50,10 @@ scale_min = 0.1
 scale_max = 0.3
 scale_curve = SubResource("CurveTexture_ro0d7")
 alpha_curve = SubResource("CurveTexture_btes4")
+
+[sub_resource type="Curve" id="Curve_217v7"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2r881"]
 size = Vector2(16, 2)
@@ -155,14 +160,23 @@ material = ExtResource("2_2saki")
 sprite_frames = ExtResource("3_uy3nm")
 offset = Vector2(0, -16)
 
-[node name="Stars" type="GPUParticles2D" parent="Sprite"]
+[node name="Stars" type="CPUParticles2D" parent="Sprite"]
 show_behind_parent = true
 emitting = false
 amount = 24
 texture = ExtResource("6_skpgp")
 lifetime = 0.5
-process_material = ExtResource("4_6n413")
-script = ExtResource("5_n6ctd")
+emission_shape = 1
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_61d7b")
 
 [node name="SkinParticles" type="GPUParticles2D" parent="Sprite"]
 show_behind_parent = true
@@ -175,8 +189,7 @@ visibility_rect = Rect2(-128, -128, 256, 256)
 process_material = SubResource("ParticleProcessMaterial_s67vk")
 script = ExtResource("7_wegjq")
 
-[node name="Skid" type="GPUParticles2D" parent="Sprite"]
-physics_interpolation_mode = 2
+[node name="Skid" type="CPUParticles2D" parent="Sprite"]
 show_behind_parent = true
 position = Vector2(0, 15)
 emitting = false
@@ -184,8 +197,8 @@ amount = 12
 texture = ExtResource("7_nplxc")
 lifetime = 0.5
 fract_delta = false
-process_material = ExtResource("8_vrjrd")
-script = ExtResource("5_n6ctd")
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_217v7")
 
 [node name="SpriteDeath" type="Sprite2D" parent="."]
 visible = false

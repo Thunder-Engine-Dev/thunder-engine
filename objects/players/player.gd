@@ -89,6 +89,7 @@ var has_stuck_animation: bool
 var stuck_block_left: bool
 var stuck_block_right: bool
 var is_sliding_accelerating: bool
+var is_able_to_skid: bool
 
 var slippery_strength: float
 
@@ -138,8 +139,8 @@ var _suit_tree_paused: bool
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubbler: Timer = $Underwater/Bubbler
-@onready var stars: GPUParticles2D = $Sprite/Stars
-@onready var skid: GPUParticles2D = $Sprite/Skid
+@onready var stars: CPUParticles2D = $Sprite/Stars
+@onready var skid: CPUParticles2D = $Sprite/Skid
 @onready var skin_particles: GPUParticles2D = $Sprite/SkinParticles
 @onready var death_sprite: Sprite2D = $SpriteDeath
 

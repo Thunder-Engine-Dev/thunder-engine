@@ -235,7 +235,7 @@ func _animation_non_warping_process(delta: float) -> void:
 	if player.is_sliding:
 		return _animation_sliding_process(delta)
 	# Non-climbing
-	player.skid.emitting = player.is_skidding
+	player.skid.emitting = player.is_skidding && player.is_on_floor()
 	if player.is_skidding:
 		_skid_sound_loop()
 	if player.is_on_floor() || player.coyote_time > 0.0:

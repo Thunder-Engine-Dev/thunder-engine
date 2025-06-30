@@ -87,6 +87,7 @@ func _movement_x(delta: float) -> void:
 			if _start_sliding_movement(true):
 				return
 	_movement_x_recovery(delta)
+	player.is_able_to_skid = false
 	
 	if player.is_on_floor():
 		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
@@ -118,12 +119,16 @@ func _movement_x(delta: float) -> void:
 			player.speed.x = player.direction * config.walk_initial_speed
 			#player.is_skidding = false
 	
+	if abs(player.speed.x) > 100 || player.is_skidding:
+		player.is_able_to_skid = true
+	
 	player.is_skidding = (
 			player._skid_tweak &&
 			(sign(player.left_right) == -player.direction) &&
 			abs(player.speed.x) > 1 &&
 			player.is_on_floor() &&
-			!player.is_holding
+			!player.is_holding &&
+			player.is_able_to_skid
 	)
 
 
