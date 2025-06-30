@@ -50,6 +50,8 @@ func load_scene_deferred(scene: Node) -> void:
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.unpause_igt()
 	scene_ready.emit()
 
 
@@ -68,6 +70,8 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.unpause_igt()
 	scene_ready.emit()
 	get_tree().paused = false
 
@@ -75,6 +79,8 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 ## Loads the scene from the given path and instantiates it
 func goto_scene(path: String) -> void:
 	pre_scene_changed.emit()
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.pause_igt()
 	if !_current_scene_buffer || _current_scene_buffer.resource_path != path:
 		_current_scene_buffer = load(path)
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
@@ -85,6 +91,8 @@ func goto_scene_with_loading(path: String) -> void:
 		reload_current_scene()
 		return
 	pre_scene_changed.emit()
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.pause_igt()
 	var loading: Control = LOADING_SCREEN.instantiate()
 	loading.scene = path
 	load_scene_deferred.call_deferred(loading)

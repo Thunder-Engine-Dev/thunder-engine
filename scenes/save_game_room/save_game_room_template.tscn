@@ -1,7 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://boof65r1nifb"]
+[gd_scene load_steps=49 format=3 uid="uid://boof65r1nifb"]
 
 [ext_resource type="Script" uid="uid://dh7ob1sbo8lx7" path="res://engine/scripts/classes/level/level.gd" id="1_gva46"]
 [ext_resource type="PackedScene" uid="uid://d3srfe2r6fg2u" path="res://engine/objects/core/music_loader/music_loader.tscn" id="2_4qycq"]
+[ext_resource type="AudioStream" uid="uid://bqiy8kvcsy0rk" path="res://engine/scripts/classes/level/complete.ogg" id="2_m6rko"]
 [ext_resource type="Script" uid="uid://db8widi15epm" path="res://engine/scenes/save_game_room/scripts/save_room_logic.gd" id="2_omaog"]
 [ext_resource type="AudioStream" uid="uid://c1va567cln81n" path="res://engine/scenes/save_game_room/music/save_game_room.it" id="3_u27fl"]
 [ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="4_a46rj"]
@@ -194,6 +195,7 @@ radius = 24.0
 script = ExtResource("1_gva46")
 time = -1
 enable_restart_in_pause = false
+completion_music = ExtResource("2_m6rko")
 falling_below_screen_action = 3
 falling_below_warp_to = NodePath("PipeOut")
 metadata/_edit_lock_ = true

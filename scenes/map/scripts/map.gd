@@ -65,7 +65,8 @@ func enter_level_sequence() -> void:
 	var _sfx2 = CharacterManager.get_sound_replace(jump_button_sound, jump_button_sound, "map_level_enter", false)
 	Audio.play_1d_sound(_sfx2, true, { "ignore_pause": true, "bus": "1D Sound" })
 	print("[Game] Going to a level.")
-
+	if Thunder.autosplitter.can_start_on("map_start"):
+		Thunder.autosplitter.start_timer()
 	var music := _get_music()
 	if music && is_instance_valid(music):
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)

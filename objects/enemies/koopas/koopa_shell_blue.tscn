@@ -62,7 +62,7 @@ animations = [{
 }]
 
 [node name="KoopaShellBlue" instance=ExtResource("1_6gqyp")]
-speed = Vector2(300, 0)
+speed = Vector2(350, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]

@@ -264,6 +264,9 @@ func die() -> void:
 	Audio.play_sound(_sfx, self)
 	tween_hurt_blinking = null
 	if finish_on_death && trigger.has_method(&"stop_music"):
+		if Thunder.autosplitter.can_split_on("boss_defeat"):
+			Thunder.autosplitter.split()
+		Scenes.current_scene.set_meta(&"boss_got_defeated", true)
 		trigger.stop_music()
 	
 	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(

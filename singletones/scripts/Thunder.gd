@@ -10,6 +10,7 @@ extends Node
 var view: View = View.new() # View subsingleton
 ## Used to get access to [Thunder.RNG] subsingleton
 var rng: RNG = RNG.new()
+var autosplitter: AutoSplitter
 ## Default gravity speed
 var gravity_speed: float = 50
 var _target_speed: int = 50
@@ -96,10 +97,14 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	autosplitter = AutoSplitter.new()
 	for i in 3:
 		DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 		await get_tree().physics_frame
 
+func _physics_process(delta: float) -> void:
+	if !autosplitter.has_closed:
+		autosplitter.update()
 
 ## Add lives for [member _current_player][br]
 ## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be between 1 and 10, or an error will be sent to console.
@@ -367,3 +372,111 @@ class RNG:
 	
 	func randomize_seed() -> void:
 		rng_inst.randomize()
+
+class AutoSplitter:
+	signal connected
+	signal closed
+	signal igt_paused
+	signal igt_resumed
+	signal has_split
+	signal has_reset
+	signal received_packet(packet: PackedByteArray)
+	
+	const ASWS_CONFIG_PATH = "user://autosplitter.thss"
+	
+	var default_config := {
+		"enabled" = false,
+		"pause_on_loading" = true,
+		"split_on" = ["boss_defeat", "level_end_no_boss", "warp_pipes"],
+		"start_on" = ["map_start"],
+		"reset_on" = ["save_room"],
+	}
+	
+	var ws := WebSocketPeer.new()
+	var config: Dictionary = default_config
+	var has_connected: bool
+	var has_closed: bool
+	
+	func _init() -> void:
+		var loaded_config := SettingsManager.load_data(ASWS_CONFIG_PATH, "AutoSplitter")
+		if !loaded_config.is_empty():
+			config = loaded_config
+		if !config.get("enabled", false):
+			has_closed = true
+			return
+		
+		connect_websocket()
+	
+	func save_config() -> void:
+		SettingsManager.save_data(config, ASWS_CONFIG_PATH, "AutoSplitter")
+	
+	func connect_websocket() -> Error:
+		var err = ws.connect_to_url("ws://localhost:16834/livesplit")
+		print("AutoSplitterWebSocket: " + error_string(err))
+		if err:
+			has_closed = true
+			return err
+		ws.poll()
+		return err
+	
+	func _send_message(text: String) -> void:
+		ws.poll()
+		var state = ws.get_ready_state()
+		if state == WebSocketPeer.STATE_OPEN:
+			print_verbose("ASWS: Sending message: %s" % [text])
+			ws.send_text(text)
+	
+	## Call this during [method Node._process] to get web socket in a clean state.
+	func update() -> void:
+		if has_closed: return
+		ws.poll()
+		var state = ws.get_ready_state()
+		if state == WebSocketPeer.STATE_OPEN:
+			if !has_connected:
+				has_connected = true
+				connected.emit()
+				print("ASWS: Connection established")
+			while ws.get_available_packet_count():
+				received_packet.emit(ws.get_packet())
+				print_verbose("ASWS Packet: ", ws.get_packet())
+		elif state == WebSocketPeer.STATE_CLOSED:
+			var code = ws.get_close_code()
+			var reason = ws.get_close_reason()
+			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+			has_closed = true
+			closed.emit()
+	
+	func pause_igt() -> void:
+		_send_message("pausegametime")
+	
+	func unpause_igt() -> void:
+		_send_message("unpausegametime")
+	
+	func reset() -> void:
+		_send_message("reset")
+	
+	func start_or_split() -> void:
+		_send_message("startorsplit")
+	
+	func split() -> void:
+		_send_message("split")
+	
+	func start_timer() -> void:
+		_send_message("starttimer")
+	
+	func get_conf(config_key: String, default_value: Variant = null) -> Variant:
+		if default_value == null && default_config.get(config_key):
+			default_value = default_config.get(config_key)
+		return config.get(config_key, default_value)
+	
+	## "checkpoint", "boss_defeat", "world_complete", "level_end_no_boss", "level_end_always", etc.
+	func can_split_on(what: String) -> bool:
+		return get_conf("split_on").has(what)
+	
+	## "map_start", "pipe_warp"
+	func can_start_on(what: String) -> bool:
+		return get_conf("start_on").has(what)
+	
+	## "save_room"
+	func can_reset_on(what: String) -> bool:
+		return get_conf("reset_on").has(what)
