@@ -387,7 +387,7 @@ class AutoSplitter:
 	var default_config := {
 		"enabled" = false,
 		"pause_on_loading" = true,
-		"split_on" = ["boss_defeat", "level_end_no_boss", "warp_pipes"],
+		"split_on" = ["boss_defeat", "level_end_no_boss", "world_warps"],
 		"start_on" = ["map_start"],
 		"reset_on" = ["save_room"],
 	}

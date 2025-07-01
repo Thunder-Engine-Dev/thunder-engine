@@ -9,6 +9,8 @@ var deletion_progress: float
 var is_empty: bool
 var _tweak: bool
 
+@onready var faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
+
 signal save_deleted
 
 func _ready() -> void:
@@ -26,7 +28,10 @@ func _physics_process(delta: float) -> void:
 func _deletion_process(delta: float) -> void:
 	if player != null:
 		if Input.is_action_pressed(&"a_delete"):
-			deletion_progress = clampf(deletion_progress + delta / 3, 0, 1)
+			var mod_delta: float = delta / 3
+			if faster_deletion_tw:
+				mod_delta = delta / 0.6
+			deletion_progress = clampf(deletion_progress + mod_delta, 0, 1)
 			if deletion_progress == 1:
 				delete_save()
 				deletion_progress = 0.0

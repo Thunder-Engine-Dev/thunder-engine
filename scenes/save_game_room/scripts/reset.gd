@@ -5,6 +5,7 @@ const SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
 @export var move_down_by_px: float = 42
 @onready var first_pos: float = position.y
 @onready var progress: TextureProgressBar = $Progress
+@onready var faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
 
 var tw: Tween
 var deletion_progress: float
@@ -22,7 +23,10 @@ func _physics_process(delta: float) -> void:
 		var _sfx = CharacterManager.get_sound_replace(SCORING, SCORING, "menu_select_short", false)
 		Audio.play_1d_sound(_sfx, false)
 	if is_pressed:
-		deletion_progress = clampf(deletion_progress + delta / 3, 0, 1)
+		var mod_delta: float = delta / 3
+		if faster_deletion_tw:
+			mod_delta = delta / 0.6
+		deletion_progress = clampf(deletion_progress + mod_delta, 0, 1)
 	else:
 		deletion_progress = clampf(deletion_progress - delta, 0, 1)
 	if progress.visible:
