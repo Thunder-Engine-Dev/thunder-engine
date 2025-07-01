@@ -49,7 +49,8 @@ func _physics_process(delta: float) -> void:
 		
 		speed.y = move_toward(speed.y, 0, 12.5 * delta)
 	
-	speed.x = move_toward(speed.x, -500 * dir, 10 * delta)
+	var mod_speed: float = 10 * (delta / clampf(abs(speed.x) / 100, 0.1, 1.0))
+	speed.x = move_toward(speed.x, -500 * dir, mod_speed)
 
 
 func explode():
