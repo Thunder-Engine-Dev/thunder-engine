@@ -411,7 +411,7 @@ class AutoSplitter:
 		SettingsManager.save_data(config, ASWS_CONFIG_PATH, "AutoSplitter")
 	
 	func connect_websocket() -> Error:
-		var err = ws.connect_to_url("ws://localhost:16834/livesplit")
+		var err = ws.connect_to_url("ws://127.0.0.1:16834/livesplit")
 		print("AutoSplitterWebSocket: " + error_string(err))
 		if err:
 			has_closed = true
