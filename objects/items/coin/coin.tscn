@@ -45,7 +45,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l6em3"]
 size = Vector2(20, 30)
 
-[sub_resource type="GDScript" id="GDScript_twjsq"]
+[sub_resource type="GDScript" id="GDScript_p7plw"]
 script/source = "extends ByNodeScript
 
 func _ready():
@@ -65,7 +65,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-custom_script = SubResource("GDScript_twjsq")
+custom_script = SubResource("GDScript_p7plw")
 
 [node name="Coin" type="Area2D" groups=["coin"]]
 collision_layer = 4

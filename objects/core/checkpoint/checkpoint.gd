@@ -37,6 +37,8 @@ func _physics_process(delta) -> void:
 	if player && overlaps_body(player) && Data.values.checkpoint != id:
 		Data.values.checkpoint = id
 		activate()
+		Data.checkpoint_set.emit()
+		Data.checkpoint_set_arg.emit(id)
 	# Deactivation
 	if Data.values.checkpoint != id && animation_player.current_animation == "checkpoint":
 		animation_player.play(&"RESET")

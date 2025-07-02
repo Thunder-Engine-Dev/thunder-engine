@@ -23,18 +23,7 @@ signal game_over_finished
 func _ready() -> void:
 	Thunder._current_hud = self
 	
-	timer.timeout.connect(func() -> void:
-		if !Thunder._current_player: return
-		if Data.values.time < 0: return
-		
-		Data.values.time -= 1
-		
-		if Data.values.time == 100:
-			timer_hurry()
-		elif Data.values.time == 0:
-			time_counter.text = "0"
-			Thunder._current_player.die()
-	)
+	timer.timeout.connect(_on_timer_timeout)
 	Console.executed.connect(_on_console_executed)
 	
 	(func():
@@ -63,6 +52,19 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"ui_accept"):
 		game_over_timer = null
 		game_over_finished.emit()
+
+
+func _on_timer_timeout() -> void:
+	if !Thunder._current_player: return
+	if Data.values.time < 0: return
+	
+	Data.values.time -= 1
+	
+	if Data.values.time == 100:
+		timer_hurry()
+	elif Data.values.time == 0:
+		time_counter.text = "0"
+		Thunder._current_player.die()
 
 
 func timer_hurry() -> void:

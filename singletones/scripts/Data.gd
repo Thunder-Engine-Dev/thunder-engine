@@ -61,6 +61,8 @@ signal score_added
 signal score_added_arg(amount: int)
 signal life_added
 signal life_added_arg(amount: int)
+signal checkpoint_set
+signal checkpoint_set_arg(to_id: int)
 signal values_reset
 
 
