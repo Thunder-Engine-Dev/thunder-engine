@@ -20,6 +20,7 @@ func _physics_process(delta):
 	if !cam: return
 	var player = Thunder._current_player
 	if !player: return
+	if player.completed || Data.values.stopwatch > 0: return
 	
 	if get_tree().get_node_count_in_group("obj_by_" + str(get_instance_id())) >= max_on_screen:
 		return

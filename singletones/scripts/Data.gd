@@ -63,6 +63,8 @@ signal life_added
 signal life_added_arg(amount: int)
 signal checkpoint_set
 signal checkpoint_set_arg(to_id: int)
+signal stopwatch_activated
+signal stopwatch_cancelled
 signal values_reset
 
 

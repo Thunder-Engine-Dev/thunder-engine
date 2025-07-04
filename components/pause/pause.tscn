@@ -201,7 +201,6 @@ script = ExtResource("1_mxgx1")
 
 [node name="Pause" type="Control" parent="."]
 process_mode = 3
-process_priority = 1
 physics_interpolation_mode = 1
 layout_mode = 3
 anchors_preset = 15

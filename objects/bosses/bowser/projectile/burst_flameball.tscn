@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://b24l0bhd2wshk"]
+[gd_scene load_steps=9 format=3 uid="uid://b24l0bhd2wshk"]
 
 [ext_resource type="Script" uid="uid://cypriiqv57ul7" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.gd" id="1_2icyp"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_el7gp"]
-[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_2u027"]
 [ext_resource type="Texture2D" uid="uid://3b6nw4w6kymm" path="res://engine/objects/bosses/bowser/texture/bowser_burst_flameball.png" id="4_vslk7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
@@ -65,9 +64,11 @@ shape = SubResource("RectangleShape2D_3yefo")
 script = ExtResource("2_el7gp")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
-"iceball": false
+"iceball": false,
+"starman": false
 }
-killing_sound_failed = ExtResource("3_2u027")
+killing_can_combo = false
+killing_sound_failed = null
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -80,4 +81,5 @@ position = Vector2(4.76837e-06, 9.53674e-07)
 scale = Vector2(4.8, 3.2)
 metadata/_edit_lock_ = true
 
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

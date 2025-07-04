@@ -182,6 +182,7 @@ _data = {
 }
 
 [node name="Checkpoint" type="Area2D"]
+z_index = -1
 script = ExtResource("1_ssh5j")
 
 [node name="Sign" type="Sprite2D" parent="."]
@@ -204,13 +205,13 @@ texture = ExtResource("2_13hdd")
 show_behind_parent = true
 emitting = false
 amount = 24
-process_material = ExtResource("4_ae8fc")
 texture = ExtResource("4_wmifw")
 lifetime = 0.5
+process_material = ExtResource("4_ae8fc")
 
 [node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying"]
 libraries = {
-"": SubResource("AnimationLibrary_dmaa8")
+&"": SubResource("AnimationLibrary_dmaa8")
 }
 autoplay = "RESET"
 
@@ -221,5 +222,5 @@ shape = SubResource("RectangleShape2D_ta5g1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_h2w1e")
+&"": SubResource("AnimationLibrary_h2w1e")
 }

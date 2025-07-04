@@ -28,7 +28,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Scenes.current_scene is Stage2D ||
 		Scenes.current_scene is Map2D
 	) && !(opened && event.is_action_pressed("ui_cancel")) && !Scenes.current_scene.get(&"disable_pause_menu"):
-		toggle.call_deferred()
+		toggle()
 
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
@@ -64,7 +64,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		animation_player.play_backwards("open")
 		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
 			SettingsManager.hide_mouse()
-
+	
 	get_tree().paused = opened if !_no_unpause else true
 	v_box_container.focused = false
 
@@ -80,7 +80,6 @@ func _physics_process(delta: float) -> void:
 	if !opened: return
 	if !get_tree().paused:
 		get_tree().paused = true
-
 
 var autopause_timer: SceneTreeTimer
 
@@ -102,7 +101,7 @@ func _notification(what: int) -> void:
 
 func _autopause_toggle() -> void:
 	if !opened:
-		toggle.bind(false, true).call_deferred()
+		toggle(false, true)
 
 
 func _on_scene_changed(to: Node) -> void:

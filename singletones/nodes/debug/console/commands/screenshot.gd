@@ -1,7 +1,8 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("screenshot").set_description("Save a screenshot of a current Camera Area. Recommended to stay at the top left corner")
+	return new().set_name("screenshot") \
+	.set_description("Save a screenshot of a current Camera Area. Recommended to stay at the top left corner. Note that this may break things in-game.")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var cam: Camera2D = Thunder._current_camera
@@ -40,4 +41,4 @@ func execute(args:Array) -> Command.ExecuteResult:
 		GlobalViewport._update_view()
 	, CONNECT_ONE_SHOT)
 	
-	return Command.ExecuteResult.new("Success")
+	return Command.ExecuteResult.new("Success; screenshot has been saved to %s" % [OS.get_user_data_dir()])

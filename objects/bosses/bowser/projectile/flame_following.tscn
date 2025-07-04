@@ -105,4 +105,5 @@ scale = Vector2(4.8, 3.2)
 rect = Rect2(-8, -24, 16, 48)
 metadata/_edit_lock_ = true
 
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

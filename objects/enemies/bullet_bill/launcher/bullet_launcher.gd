@@ -34,6 +34,7 @@ func _on_bullet_launched() -> void:
 		return
 	
 	if player.completed: return
+	if Data.values.stopwatch > 0: return
 	
 	var dir: int
 	var dir_force_no_shoot: bool

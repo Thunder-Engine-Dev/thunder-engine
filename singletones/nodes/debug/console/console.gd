@@ -22,6 +22,7 @@ var cv: Dictionary = {
 	can_save_with_console = false,
 	can_save_suspended_with_console = false,
 	platform_collision_shown = false,
+	unlimited_player_projectiles = false,
 }
 
 

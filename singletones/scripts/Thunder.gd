@@ -98,6 +98,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	autosplitter = AutoSplitter.new()
+	
 	for i in 3:
 		DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 		await get_tree().physics_frame
@@ -387,6 +388,7 @@ class AutoSplitter:
 	var default_config := {
 		"enabled" = false,
 		"pause_on_loading" = true,
+		"restart_hotkey" = false,
 		"split_on" = ["boss_defeat", "level_end_no_boss", "world_warps"],
 		"start_on" = ["map_start"],
 		"reset_on" = ["save_room"],

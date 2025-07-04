@@ -118,6 +118,11 @@ func _ready() -> void:
 	)
 	get_tree().root.focus_entered.connect(set_deferred.bind("game_focused", true))
 	get_tree().root.focus_exited.connect(set_deferred.bind("game_focused", false))
+	
+	InputMap.add_action(&"asws_restart")
+	var event = InputEventKey.new()
+	event.keycode = KEY_F5
+	InputMap.action_add_event(&"asws_restart", event)
 
 
 ## Returns a ProjectSettings "tweak" located in path "application/thunder_settings/tweaks"
@@ -440,6 +445,10 @@ func _input(event: InputEvent) -> void:
 		
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		_mouse_timer.start(1.5)
+	
+	elif event is InputEventAction && event.is_action(&"asws_restart"):
+		if Thunder.autosplitter && Thunder.autosplitter.config.restart_hotkey:
+			Thunder.autosplitter.connect_websocket()
 
 
 func _hide_mouse() -> void:

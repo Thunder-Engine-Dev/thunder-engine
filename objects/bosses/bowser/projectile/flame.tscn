@@ -104,4 +104,5 @@ position = Vector2(4.76837e-06, 9.53674e-07)
 scale = Vector2(4.8, 3.2)
 metadata/_edit_lock_ = true
 
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

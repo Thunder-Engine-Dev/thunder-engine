@@ -1,5 +1,6 @@
 extends Label
 
+@export var empty_text: String = "empty..."
 @onready var pipe_save: Area2D = $".."
 @onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
 @onready var text_template: String = text
@@ -36,7 +37,7 @@ func update_label() -> void:
 
 
 func set_empty() -> void:
-	text = "empty..."
+	text = empty_text
 	pipe_save.is_empty = true
 
 

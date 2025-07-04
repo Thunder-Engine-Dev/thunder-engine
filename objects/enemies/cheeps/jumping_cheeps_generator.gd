@@ -20,6 +20,8 @@ func _time() -> void:
 	_time()
 	
 	if !enabled: return
+	if Data.values.stopwatch > 0: return
+	if Thunder._current_player && Thunder._current_player.completed: return
 	
 	if Thunder.rng.get_randi_range(0, random_pool) == random_equals:
 		if get_tree().get_node_count_in_group("obj_by_" + str(get_instance_id())) >= max_on_screen:

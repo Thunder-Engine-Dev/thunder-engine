@@ -39,6 +39,7 @@ func activate_stopwatch(hide_original: bool = true) -> void:
 		return
 	stopwatch_active = true
 	_pause_enemies()
+	Data.stopwatch_activated.emit()
 	
 	if !stopwatch_tw:
 		stopwatch_tw = create_tween().set_loops()
@@ -55,6 +56,7 @@ func _physics_process(delta: float) -> void:
 ## Cancelling Stopwatch Item
 func _cancel_stopwatch() -> void:
 	Data.values.stopwatch = 0.0
+	Data.stopwatch_cancelled.emit()
 	if stopwatch_tw:
 		stopwatch_tw.kill()
 		stopwatch_tw = null
@@ -73,7 +75,11 @@ func _pause_enemies() -> void:
 			continue
 		if !i.get(&"_center"): continue
 		var vis = Thunder.get_child_by_class_name(i._center, "VisibleOnScreenNotifier2D")
-		if vis: vis.hide()
+		if vis:
+			var connections := vis.get_signal_connection_list(&"screen_exited")
+			for j in connections:
+				print(j.callable)
+			vis.hide()
 		i._center.process_mode = Node.PROCESS_MODE_DISABLED
 		if i._center.has_node(^"Body"):
 			i._center.get_node(^"Body").process_mode = Node.PROCESS_MODE_ALWAYS
