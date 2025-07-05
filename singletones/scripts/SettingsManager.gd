@@ -448,6 +448,7 @@ func _input(event: InputEvent) -> void:
 	
 	elif event is InputEventAction && event.is_action(&"asws_restart"):
 		if Thunder.autosplitter && Thunder.autosplitter.config.restart_hotkey:
+			Thunder.autosplitter.restarting.emit()
 			Thunder.autosplitter.connect_websocket()
 
 

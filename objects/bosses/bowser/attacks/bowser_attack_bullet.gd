@@ -24,6 +24,7 @@ func _ready() -> void:
 
 
 func _notification(what: int) -> void:
+	if !is_inside_tree(): return
 	if what == NOTIFICATION_PREDELETE && launcher && is_instance_valid(Scenes.current_scene):
 		launcher.cancel_free()
 		launcher.reparent(Scenes.current_scene)

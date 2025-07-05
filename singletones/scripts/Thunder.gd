@@ -381,6 +381,7 @@ class AutoSplitter:
 	signal igt_resumed
 	signal has_split
 	signal has_reset
+	signal restarting
 	signal received_packet(packet: PackedByteArray)
 	
 	const ASWS_CONFIG_PATH = "user://autosplitter.thss"

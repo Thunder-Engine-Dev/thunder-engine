@@ -1,6 +1,6 @@
 extends Label
 
-@export var empty_text: String = "empty..."
+@export_multiline var empty_text: String = "empty..."
 @onready var pipe_save: Area2D = $".."
 @onready var _tweak: bool = SettingsManager.get_tweak("load_save_from_world_start", false)
 @onready var text_template: String = text

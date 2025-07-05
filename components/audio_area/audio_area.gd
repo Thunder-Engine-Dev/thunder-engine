@@ -31,6 +31,8 @@ func _update_visibility() -> void:
 
 
 func is_shown() -> bool:
+	if SettingsManager.get_tweak("no_audio_effects", false):
+		return false
 	quality = SettingsManager.settings.quality
 	var res: bool = (
 		(maximum && quality == QUALITY.MAX) ||
