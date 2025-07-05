@@ -48,8 +48,12 @@ func activate_stopwatch(hide_original: bool = true) -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	super(delta)
 	if stopwatch_active:
 		Data.values.stopwatch = max(Data.values.stopwatch - delta, 0)
+		if Thunder._current_player && Thunder._current_player.completed:
+			_cancel_stopwatch()
+			return
 		if !is_instance_valid(Thunder._current_player) || Data.values.stopwatch <= 0:
 			_cancel_stopwatch()
 
@@ -74,6 +78,10 @@ func _pause_enemies() -> void:
 			i.queue_free()
 			continue
 		if !i.get(&"_center"): continue
+		if i._center.has_method("stopwatch_pause"):
+			i._center.stopwatch_pause(true)
+			continue
+		
 		var vis = Thunder.get_child_by_class_name(i._center, "VisibleOnScreenNotifier2D")
 		if vis:
 			var connections := vis.get_signal_connection_list(&"screen_exited")
@@ -89,6 +97,11 @@ func _pause_enemies() -> void:
 func _resume_enemies() -> void:
 	for i in get_tree().get_nodes_in_group(&"end_level_sequence"):
 		if !i.get(&"_center"): continue
+		if i.is_queued_for_deletion(): continue
+		if i._center.has_method("stopwatch_unpause"):
+			i._center.stopwatch_unpause(true)
+			continue
+		
 		var vis = Thunder.get_child_by_class_name(i._center, "VisibleOnScreenNotifier2D") as VisibleOnScreenNotifier2D
 		if vis: vis.show()
 		if vis && "enable_node_path" in vis && vis.enable_node_path == vis.get_path_to(i._center):

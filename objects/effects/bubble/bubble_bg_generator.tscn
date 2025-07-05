@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://eyqjecs0sfv0"]
+
+[ext_resource type="Script" uid="uid://d00pgg7t811jr" path="res://engine/objects/effects/bubble/pipe_bg_bubbles.gd" id="1_bomth"]
+
+[node name="BubbleBGGenerator" type="Marker2D"]
+modulate = Color(1, 1, 1, 0.498039)
+script = ExtResource("1_bomth")

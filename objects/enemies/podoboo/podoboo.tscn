@@ -101,6 +101,8 @@ killing_immune = {
 "fireball": true,
 "hammer": false,
 "iceball": false,
+"shell": false,
+"shell_defence": 0,
 "starman": false
 }
 killing_creation = SubResource("Resource_0b8qp")

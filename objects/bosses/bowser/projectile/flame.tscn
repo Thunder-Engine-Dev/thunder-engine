@@ -86,6 +86,9 @@ killing_immune = {
 "boomerang": false,
 "fireball": true,
 "iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
 "starman": false
 }
 killing_creation = SubResource("Resource_nu7ap")

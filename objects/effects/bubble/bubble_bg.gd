@@ -1,5 +1,7 @@
 extends Area2D
 
+@export var speed: Vector2
+
 var _cracked: bool
 var _start: bool
 
@@ -13,24 +15,24 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if !Thunder.view.is_getting_closer(self, 32):
+	if !Thunder.view.is_getting_closer(self, 128):
 		queue_free()
-		return
 	
 	if !_cracked:
-		global_position += Vector2.UP.rotated(global_rotation) * randi_range(0, 100) * delta
-		position.x += randf_range(-100,100) * delta
+		global_position += speed * delta
 	else:
 		return
 	
 	if !_start:
 		return
 	
-	_cracked = true
+	_cracked = false
 	for i in get_overlapping_areas():
-		if i.is_in_group(&"#water"):
-			_cracked = false
+		if i.is_in_group(&"#no_bubbles"):
+			queue_free()
 			return
+		if i.is_in_group(&"#crack_bubbles"):
+			_cracked = true
 	if _cracked:
 		break_bubble()
 

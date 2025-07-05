@@ -55,3 +55,27 @@ func update_dir() -> void:
 
 func speed_to_dir() -> void:
 	speed.x = abs(speed.x) * dir
+
+
+func stopwatch_pause(from_stopwatch: bool = false) -> void:
+	var vis = Thunder.get_child_by_class_name(self, "VisibleOnScreenNotifier2D")
+	if vis:
+		vis.hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	if has_node(^"Body"):
+		get_node(^"Body").process_mode = Node.PROCESS_MODE_ALWAYS
+	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
+		sprite_node.flip_h = speed.x < 0
+
+
+func stopwatch_unpause(from_stopwatch: bool = false) -> void:
+	var vis = Thunder.get_child_by_class_name(self, "VisibleOnScreenNotifier2D") as VisibleOnScreenNotifier2D
+	if vis:
+		vis.show()
+	if vis && "enable_node_path" in vis && vis.enable_node_path == vis.get_path_to(self):
+		if vis.is_on_screen():
+			process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		process_mode = Node.PROCESS_MODE_INHERIT
+	if has_node(^"Body"):
+		get_node(^"Body").process_mode = Node.PROCESS_MODE_INHERIT
