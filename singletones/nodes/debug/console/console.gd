@@ -31,6 +31,8 @@ func _ready():
 		allow_developer_commands = true
 	
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
+	if DirAccess.dir_exists_absolute("res://commands"):
+		load_commands("res://commands/")
 	
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
