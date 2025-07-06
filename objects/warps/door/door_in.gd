@@ -26,6 +26,7 @@ var _on_warp: bool
 var _duration: float
 var _target: float = 0.8
 var _warp_triggered: bool = false
+var _gotoscene_patch: bool
 
 @onready var target: Area2D = get_node_or_null(warp_to)
 @onready var shape: CollisionShape2D = $CollisionShape2D
@@ -108,6 +109,7 @@ func _physics_process(delta: float) -> void:
 func _circle_transition() -> void:
 	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
+		_gotoscene_patch = true
 		if player && "sprite" in player && player.sprite:
 			player.sprite.visible = false
 		pass_warp()
@@ -159,7 +161,7 @@ func pass_warp() -> void:
 		target.sprite.z_index = 10
 		target.sprite_bg.z_index = 1
 		target.sprite_bg.visible = true
-	elif warp_to_scene:
+	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
 	player = null
 
