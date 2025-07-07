@@ -266,6 +266,8 @@ func die(corpse_intro: bool = true) -> void:
 	var _sfx = CharacterManager.get_sound_replace(death_sound, death_sound, "bowser_be_happy", false)
 	Audio.play_sound(_sfx, self)
 	tween_hurt_blinking = null
+	if health > 0: health = 0
+	
 	if finish_on_death && trigger.has_method(&"stop_music"):
 		if Thunder.autosplitter.can_split_on("boss_defeat"):
 			Thunder.autosplitter.split()

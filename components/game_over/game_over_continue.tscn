@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene load_steps=27 format=3 uid="uid://c8ql6hro5f6gv"]
 
 [ext_resource type="Script" uid="uid://c0lvhjcec75dw" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" uid="uid://b82vaonfklay3" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://edbyw0omsvjy" path="res://engine/components/game_over/textures/continues_left.png" id="18_0ol8l"]
 [ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
 [ext_resource type="FontFile" uid="uid://b0ammhokl853d" path="res://engine/components/game_over/fonts/blue_numbers.fnt" id="19_2idh1"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="20_6653k"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -421,6 +422,11 @@ libraries = {
 }
 autoplay = "RESET"
 
+[node name="SelectorBlinking" type="Node" parent="GameOver"]
+script = ExtResource("20_6653k")
+menu_items_controller_path = NodePath("../VBoxContainer")
+speed = 8.0
+
 [connection signal="have_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
 [connection signal="have_continues" from="GameOver" to="GameOver/Title2" method="show"]
 [connection signal="have_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
@@ -436,3 +442,4 @@ autoplay = "RESET"
 [connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text" binds= ["0"]]
 [connection signal="remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text"]
 [connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]
+[connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/SelectorBlinking" method="handle_selection"]
