@@ -19,7 +19,9 @@ var direction_to_complete: int
 
 func _ready() -> void:
 	add_to_group(&"#bowser_corpse")
-	await get_tree().create_timer(duration, false).timeout
+	if duration > 0:
+		await get_tree().create_timer(duration, false).timeout
+	elif duration < 0: return
 	Audio.play_sound(falling_sound, self)
 	move = true
 
@@ -43,6 +45,7 @@ func got_in_lava() -> void:
 	if in_lava: return
 	Audio.play_sound(into_lava_sound, self)
 	in_lava = true
+	move = true
 	var bubbles = LAVA_BUBBLES.instantiate()
 	Scenes.current_scene.add_child(bubbles)
 	bubbles.position = global_position + Vector2(0, 32)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://b8q8ngpgfgjl5"]
+[gd_scene load_steps=52 format=3 uid="uid://b8q8ngpgfgjl5"]
 
 [ext_resource type="Script" uid="uid://cqrle108cqk6p" path="res://engine/objects/bosses/bowser/bowser.gd" id="1_xvg05"]
 [ext_resource type="Texture2D" uid="uid://cf0t1b7iuc6mw" path="res://engine/objects/bosses/bowser/texture/bowser_burst.png" id="2_2ap45"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://b4t8dw4oie34e" path="res://engine/objects/bosses/bowser/attacks/prefabs/hammer.tres" id="3_r55bt"]
 [ext_resource type="Resource" uid="uid://bbss8l3pxvrjn" path="res://engine/objects/bosses/bowser/attacks/prefabs/burst.tres" id="4_dgx6j"]
 [ext_resource type="Texture2D" uid="uid://yhdouckulds5" path="res://engine/objects/bosses/bowser/texture/bowser_jump.png" id="4_tfgcq"]
+[ext_resource type="Script" uid="uid://bd8lyhmdqx8um" path="res://engine/objects/bosses/bowser/bowser_body.gd" id="5_ytwnj"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_i07i2"]
 [ext_resource type="Texture2D" uid="uid://dbgvw6betc1oc" path="res://engine/objects/bosses/bowser/texture/bowser_hammer.png" id="7_pwf7x"]
 [ext_resource type="Texture2D" uid="uid://bt6e8nxjbyago" path="res://engine/objects/bosses/bowser/texture/bowser_triple_flame.png" id="8_pk18g"]
@@ -318,6 +319,7 @@ shape = SubResource("RectangleShape2D_dmd6v")
 visible = false
 collision_layer = 2
 collision_mask = 5
+script = ExtResource("5_ytwnj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 shape = SubResource("RectangleShape2D_0q7nw")

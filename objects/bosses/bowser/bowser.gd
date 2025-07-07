@@ -15,6 +15,7 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export var hardness: int = 5
 @export var invincible_flashing_interval: float = 0.8
 @export var invincible_duration: float = 2
+@export var instakill_from_lava: bool = true
 @export_subgroup("Sounds")
 @export var hurt_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav")
 @export var death_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
@@ -93,6 +94,8 @@ var hud: CanvasLayer
 
 func _ready() -> void:
 	super()
+	if instakill_from_lava:
+		$Body.add_to_group(&"#lava_body")
 	sprite.animation_looped.connect(_on_sprite_animation_looped)
 	_speed = speed.x
 	facing = get_facing(facing)
@@ -258,7 +261,7 @@ func bullet_hurt() -> void:
 
 
 # Bowser's death
-func die() -> void:
+func die(corpse_intro: bool = true) -> void:
 	print("[Game] Boss defeated.")
 	var _sfx = CharacterManager.get_sound_replace(death_sound, death_sound, "bowser_be_happy", false)
 	Audio.play_sound(_sfx, self)
@@ -269,14 +272,18 @@ func die() -> void:
 		Scenes.current_scene.set_meta(&"boss_got_defeated", true)
 		trigger.stop_music()
 	
-	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(
+	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().call_method(
+		func(cps: Node2D) -> void:
+			if !corpse_intro:
+				cps.duration = -1
+	).create_2d().call_method(
 		func(cps: Node2D) -> void:
 			var spr: AnimatedSprite2D = sprite.duplicate()
 			cps.add_child(spr)
 			spr.modulate.a = 1.0
 			spr.speed_scale = 1
 			spr.play.call_deferred(&"death")
-			cps.add_child(collision_shape.duplicate())
+			cps.add_child.call_deferred(collision_shape.duplicate())
 			var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
 			cps.falling_sound = _sfx2
 			_sfx2 = CharacterManager.get_sound_replace(into_lava_sound, into_lava_sound, "bowser_lava_love", false)

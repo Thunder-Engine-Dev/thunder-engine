@@ -186,6 +186,7 @@ func _ready() -> void:
 	change_suit(suit, false, true)
 
 	Thunder._current_player = self
+	add_to_group(&"#lava_body")
 	
 	Thunder._connect(SettingsManager.settings_updated, _on_settings_updated)
 	_on_settings_updated.call_deferred()
