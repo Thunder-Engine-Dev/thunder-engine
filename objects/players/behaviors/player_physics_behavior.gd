@@ -50,8 +50,8 @@ func _physics_process(delta: float) -> void:
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
 	elif can_coyote:
 		player.coyote_time = config.jump_coyote_time_sec
-	#if player.is_on_wall():
-	#	player.speed.x = 0
+	if player.is_on_slope() && player.is_on_wall() && (player.get_which_wall_collided() == sign(player.left_right)):
+		player.speed.x = 0
 
 
 func _movement_debug(delta) -> void:
@@ -81,9 +81,9 @@ var _consistent_crouch_speed: bool
 func _movement_x(delta: float) -> void:
 	# Switch to sliding movement if slided on a slope
 	if player.slided:
-		var do_slide = true if \
-			suit.physics_crouchable else true if player.left_right == 0 else false
-		if do_slide:
+		#var do_slide = true if \
+		#	suit.physics_crouchable else true if player.left_right == 0 else false
+		#if do_slide:
 			if _start_sliding_movement(true):
 				return
 	_movement_x_recovery(delta)
@@ -291,7 +291,9 @@ func _movement_sliding(delta: float) -> void:
 		decel.call(50)
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
-
+	
+	if player.up_down > 0:
+		return
 	if (player.left_right != 0
 		&& (
 			(sign(player.left_right) != player.direction && player.up_down > 0) || player.up_down == 0
