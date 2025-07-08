@@ -1,7 +1,10 @@
 extends Label
 class_name ScoreText
 
-func _init(string: String, ref: Node2D, parent: Node = Scenes.current_scene):
+func _init(string: String, ref: Node2D, parent: Node = Scenes.current_scene, accept_zero: bool = false):
+	if !accept_zero && string == "0":
+		queue_free()
+		return
 	text = string
 	
 	label_settings = LabelSettings.new()

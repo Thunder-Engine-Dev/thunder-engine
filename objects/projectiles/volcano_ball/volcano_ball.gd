@@ -5,6 +5,7 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var remove_offscreen_after: float = 4.0
 @onready var point_light_2d: PointLight2D = $PointLight2D
+@onready var attack: ShapeCast2D = $Attack
 
 func _ready() -> void:
 	offscreen_handler(remove_offscreen_after)
@@ -13,8 +14,13 @@ func _ready() -> void:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed
 	
 	if sprite_node:
+		attack.set_deferred(&"enabled", false)
 		var tw = create_tween()
 		tw.tween_property(sprite_node, "scale", Vector2.ONE, 0.05)
+		tw.tween_callback(func():
+			if is_instance_valid(attack):
+				attack.set_deferred(&"enabled", true)
+		)
 
 func explode():
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
