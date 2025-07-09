@@ -15,7 +15,8 @@ static func trail(
 	duration: float = 1.0,
 	material: Material = null,
 	z_index: int = 0,
-	interpolation_support: bool = true
+	interpolation_support: bool = true,
+	texture_filter: CanvasItem.TextureFilter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
 ) -> Sprite2D:
 	if !on:
 		return null
@@ -31,6 +32,7 @@ static func trail(
 			tra.lifetime = duration
 			tra.material = material
 			tra.z_index = on.z_index + z_index
+			tra.texture_filter = texture_filter
 			tra.add_to_group(&"Trail")
 			
 			if interpolation_support:
@@ -43,16 +45,20 @@ static func trail(
 	return effect_node
 
 
-static func flash(on: CanvasItem, duration: float, interval: float = 0.06, pause_mode = Tween.TWEEN_PAUSE_BOUND) -> Tween:
+static func flash(on: CanvasItem, duration: float, interval: float = 0.06, pause_mode = Tween.TWEEN_PAUSE_BOUND, self_modulate: bool = false) -> Tween:
 	if !on:
 		return null
-	var alpha: float = on.modulate.a
+	var alpha: float = on.modulate.a if !self_modulate else on.self_modulate.a
+	var modulate_path: NodePath = ^"modulate:a" if !self_modulate else ^"self_modulate:a"
 	var tw: Tween = on.create_tween().set_loops(int(ceilf(duration / interval))).set_pause_mode(pause_mode)
-	tw.tween_property(on, "modulate:a", 0, interval / 2)
-	tw.tween_property(on, "modulate:a", alpha, interval / 2)
+	tw.tween_property(on, modulate_path, 0, interval / 2)
+	tw.tween_property(on, modulate_path, alpha, interval / 2)
 	tw.tween_callback(
 		func() -> void:
 			if tw.get_loops_left() <= 0:
-				on.modulate.a = alpha
+				if !self_modulate:
+					on.modulate.a = alpha
+				else:
+					on.self_modulate.a = alpha
 	)
 	return tw

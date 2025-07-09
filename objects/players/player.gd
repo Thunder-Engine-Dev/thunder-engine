@@ -338,11 +338,11 @@ func invincible(duration: float = 2) -> void:
 
 
 func starman(duration: float = 10) -> void:
-	invincible(duration)
 	sprite.material.set_shader_parameter(&"mixing", true)
 	sprite.material.set_shader_parameter(&"slowed_down", false)
 	attack.enabled = true
 	timer_starman.start(duration)
+	invincible(duration)
 	starmaned.emit(duration)
 	stars.emitting = true
 

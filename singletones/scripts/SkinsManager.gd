@@ -432,6 +432,7 @@ func _apply_fallback_anims(sk_setts: PlayerSkin) -> PlayerSkin:
 	sk_setts = dupe_if_no_anim( &"warp", &"win", sk_setts)
 	sk_setts = dupe_if_no_anim( &"walk", &"hold_walk", sk_setts)
 	sk_setts = dupe_if_no_anim( &"default", &"hold_default", sk_setts)
+	sk_setts = dupe_if_no_anim( &"default", &"back", sk_setts)
 	sk_setts = dupe_if_no_anim( &"jump", &"fall", sk_setts)
 	sk_setts = dupe_if_no_anim( &"jump", &"hold_jump", sk_setts)
 	sk_setts = dupe_if_no_anim( &"fall", &"hold_fall", sk_setts)

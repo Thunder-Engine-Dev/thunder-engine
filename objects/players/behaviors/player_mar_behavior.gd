@@ -28,5 +28,7 @@ func _physics_process(delta: float) -> void:
 			0.05,
 			1.0,
 			null,
-			1
+			1,
+			true,
+			CanvasItem.TEXTURE_FILTER_NEAREST
 		)

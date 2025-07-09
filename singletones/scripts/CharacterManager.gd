@@ -61,6 +61,7 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"hud_acceptance": [],
 	"message_box": [],
 	"bonus_activate": [],
+	"bonus_reserve": [],
 	"checkpoint_switch": [],
 	"menu_select": [],
 	"menu_mouse_hover": [],
@@ -118,6 +119,7 @@ const DEFAULT_SUIT_SOUNDS: Dictionary = {
 	"grab": [ preload("res://engine/objects/players/prefabs/sounds/grab.wav") ],
 	"kick": [ preload("res://engine/objects/players/prefabs/sounds/kick.wav") ],
 	"ice_slide": [],
+	"jump_small": [],
 }
 
 const DEFAULT_SUIT_TWEAKS: Dictionary = {
