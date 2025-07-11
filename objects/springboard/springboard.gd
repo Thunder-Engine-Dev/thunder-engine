@@ -16,7 +16,7 @@ var leniency_timer: float
 
 func _ready() -> void:
 	animation_player.animation_finished.connect(_animation_finished)
-	is_better = SettingsManager.get_tweak("better_springboards", true)
+	is_better = SettingsManager.get_tweak("better_springboards", false)
 	var _custom_sound = CharacterManager.get_sound_replace(enemy_attacked.stomping_sound, enemy_attacked.stomping_sound, "spring_bounce", false)
 	if _custom_sound:
 		enemy_attacked.stomping_sound = _custom_sound

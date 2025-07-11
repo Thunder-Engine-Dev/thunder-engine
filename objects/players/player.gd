@@ -125,7 +125,7 @@ var _suit_tree_paused: bool
 @warning_ignore("unused_private_class_variable")
 @onready var _super_jump_tweak = SettingsManager.get_tweak("super_jump_bug", false)
 @warning_ignore("unused_private_class_variable")
-@onready var _crouch_jump_tweak = SettingsManager.get_tweak("crouch_jumping", false)
+@onready var _crouch_jump_tweak = SettingsManager.get_tweak("crouch_jumping", true)
 
 @onready var force_override_death_sound: bool = false
 
