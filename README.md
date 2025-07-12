@@ -13,7 +13,7 @@ It allows you to create games with previously unseen level of flexibility and st
 ------------
 
 <h3 align="center">
-Current state: ANY PROJECTS ARE OK<br/>
+Current state: ANY PROJECT IS OK<br/>
 Required game engine:<br/>
 Main branch: Godot 4.4<br/>
 Stable branch: Godot 4.2.2
@@ -24,7 +24,8 @@ Stable branch: Godot 4.2.2
 
 <h3>Preparation</h3>
 
-1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
+1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) (stable, Godot 4.2.2) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
+- Use the [unstable template](https://github.com/Thunder-Engine-Dev/te-unstable-template) to try out the latest features of the engine.
 2. Install [Git](https://git-scm.com/downloads).
 3. Install [Godot Engine 4](https://godotengine.org/) (regular edition). If you are going to program with C#, please choose **Mono** edition.
 
@@ -43,7 +44,7 @@ Stable branch: Godot 4.2.2
 4. Update the engine:
 
 <code>git submodule update --remote</code><br/>
-- If it gives an error, then enter these commands one by one: <code>cd engine</code>, <code>git reset --hard</code>, <code>cd..</code>
+- If it gives an error, then enter these commands one by one: <code>cd engine</code>, <code>git reset --hard</code>, <code>cd ..</code>
 
 5. Import the project to Godot Engine.
 
@@ -53,11 +54,11 @@ Stable branch: Godot 4.2.2
 
 - To make a new level, add a new scene with "Level" class as the root node. All required elements for the level will be created automatically.
 
-- To make a new map, duplicate the scene at "res://engine/scenes/map/template.tscn" to your project. Similarly, you can duplicate "complete_template.tscn".
+- To make a new map, copy the scene at "res://engine/scenes/map/template.tscn" to your project. Similarly, you can copy "complete_template.tscn".
 
-- To replace the default save room, main menu and credits scenes, duplicate the corresponding template scenes to your project first. To change references, open up Project Settings, click "Advanced Settings", go to the Application/Thunder Settings section and replace the paths to match your project.
+- To replace the default save room, main menu and credits scenes, copy the corresponding template scenes to your project first (The templates already include them). To change references, open up Project Settings, turn on "Advanced Settings", go to the Application/Thunder Settings section and replace the paths to match your project.
 
-- Please keep an eye whenever the stable branch of the engine receives a new update. New updates provide more functions and stability. To update it in your project, see Step 4 in the Installation section of this README document. Note that any changes you made inside the engine folder will be reset, unless you fork it and update the fork instead. (Forks cannot be private)
+- Please keep an eye whenever the engine receives a new update. You can press the Watch button in this repository to get notifications, or join our Discord server and follow the `#github-updates` channel. New updates provide more functions and stability. To update it in your project, see Step 4 in the Installation section of this README document. Note that any changes you make inside the `engine` folder will be reset, unless you fork it and update the fork instead. (Forks cannot be private)
 
 - Join our [Discord Server](https://discord.gg/VwgV6GmwXv) for assistance.
 
