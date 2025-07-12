@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bpmc3ps3mbeig"]
+[gd_scene load_steps=20 format=3 uid="uid://bpmc3ps3mbeig"]
 
 [ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_nqrd2"]
 [ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="2_nqrd2"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://lhitd3wwtgwm" path="res://engine/objects/enemies/hammer_paratros/paratros_spawn_bros.gd" id="6_wlq00"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_k7h3c"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_qg1ol"]
-[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="9_mrb0s"]
 [ext_resource type="Texture2D" uid="uid://ywg0vr64iyos" path="res://engine/objects/enemies/hammer_bros/textures/light_blue_bro.png" id="10_nqrd2"]
 [ext_resource type="Texture2D" uid="uid://dkelkj1uvmo1s" path="res://engine/objects/projectiles/iceball/texture.png" id="11_nqrd2"]
 
@@ -66,13 +65,13 @@ custom_vars = {
 }
 custom_script = ExtResource("8_qg1ol")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ydctw"]
-atlas = ExtResource("9_mrb0s")
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqrd2"]
+atlas = ExtResource("10_nqrd2")
 region = Rect2(0, 0, 33, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0pkg"]
-atlas = ExtResource("9_mrb0s")
-region = Rect2(0, 96, 33, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jh1w7"]
+atlas = ExtResource("10_nqrd2")
+region = Rect2(0, 48, 33, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s00ft"]
 atlas = ExtResource("10_nqrd2")
@@ -86,10 +85,10 @@ region = Rect2(0, 48, 33, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ydctw")
+"texture": SubResource("AtlasTexture_nqrd2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_h0pkg")
+"texture": SubResource("AtlasTexture_jh1w7")
 }],
 "loop": true,
 "name": &"attack",
@@ -121,6 +120,7 @@ metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_jh1w7")
+animation = &"attack"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="SpriteProjectile" parent="." index="3"]

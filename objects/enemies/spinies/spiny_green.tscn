@@ -114,5 +114,4 @@ metadata/_edit_lock_ = true
 
 [node name="Sprite" parent="." index="3"]
 sprite_frames = SubResource("SpriteFrames_4nea6")
-animation = &"appear"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
