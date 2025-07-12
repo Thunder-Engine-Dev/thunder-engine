@@ -1,0 +1,151 @@
+[gd_scene load_steps=23 format=3 uid="uid://bosk1a5ntcl2f"]
+
+[ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_e41j4"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_q4vp6"]
+[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_4ym0i"]
+[ext_resource type="Script" uid="uid://lhitd3wwtgwm" path="res://engine/objects/enemies/hammer_paratros/paratros_spawn_bros.gd" id="3_htqvh"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_hqgy1"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_4ym0i"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_ljj2u"]
+[ext_resource type="PackedScene" uid="uid://diu2ipea3k8qy" path="res://engine/objects/enemies/hammer_bros/fire_bro.tscn" id="6_4ym0i"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_q4vp6"]
+[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="7_ug28p"]
+[ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/hammer_bros/textures/red_bro.png" id="8_htqvh"]
+[ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="9_hqgy1"]
+
+[sub_resource type="Resource" id="Resource_6oa5f"]
+script = ExtResource("4_hqgy1")
+creation_nodepack = ExtResource("2_q4vp6")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(387.5, 0),
+"speed_min": Vector2(387.5, 0)
+}
+custom_script = ExtResource("3_4ym0i")
+
+[sub_resource type="Resource" id="Resource_4ym0i"]
+resource_local_to_scene = true
+script = ExtResource("4_hqgy1")
+creation_nodepack = ExtResource("6_4ym0i")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = ExtResource("3_htqvh")
+
+[sub_resource type="Resource" id="Resource_errlo"]
+resource_local_to_scene = true
+script = ExtResource("4_hqgy1")
+creation_nodepack = ExtResource("5_ljj2u")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("6_q4vp6")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydctw"]
+atlas = ExtResource("7_ug28p")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0pkg"]
+atlas = ExtResource("7_ug28p")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqgy1"]
+atlas = ExtResource("8_htqvh")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljj2u"]
+atlas = ExtResource("8_htqvh")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htqvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydctw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0pkg")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqgy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljj2u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_x4r1h"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hqgy1"]
+gradient = SubResource("Gradient_x4r1h")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
+[node name="ParaFireBros" instance=ExtResource("1_e41j4")]
+amplitude = Vector2(50, 0)
+projectile = SubResource("Resource_6oa5f")
+sound = ExtResource("5_4ym0i")
+sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
+metadata/_edit_pinned_properties_ = [&"sprite_projectile_animation_transform", &"projectile", &"amplitude", &"sound"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_4ym0i")
+killing_creation = SubResource("Resource_errlo")
+metadata/_edit_pinned_properties_ = [&"stomping_creation"]
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_htqvh")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="SpriteProjectile" parent="." index="3"]
+position = Vector2(14, -4)
+texture = ExtResource("9_hqgy1")
+metadata/_edit_pinned_properties_ = [&"position", &"texture"]
+
+[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0"]
+visible = false
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_hqgy1")
+
+[node name="PosAttack" parent="." index="5"]
+position = Vector2(14, -4)
+metadata/_edit_pinned_properties_ = [&"position"]
