@@ -1,0 +1,132 @@
+[gd_scene load_steps=21 format=3 uid="uid://bpmc3ps3mbeig"]
+
+[ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_nqrd2"]
+[ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="2_nqrd2"]
+[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_7ujn7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_jh1w7"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="5_chm7j"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="5_s00ft"]
+[ext_resource type="Script" uid="uid://lhitd3wwtgwm" path="res://engine/objects/enemies/hammer_paratros/paratros_spawn_bros.gd" id="6_wlq00"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_k7h3c"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_qg1ol"]
+[ext_resource type="Texture2D" uid="uid://dryaolxjr37di" path="res://engine/objects/enemies/hammer_bros/textures/green_bro.png" id="9_mrb0s"]
+[ext_resource type="Texture2D" uid="uid://ywg0vr64iyos" path="res://engine/objects/enemies/hammer_bros/textures/light_blue_bro.png" id="10_nqrd2"]
+[ext_resource type="Texture2D" uid="uid://dkelkj1uvmo1s" path="res://engine/objects/projectiles/iceball/texture.png" id="11_nqrd2"]
+
+[sub_resource type="Resource" id="Resource_s00ft"]
+script = ExtResource("4_jh1w7")
+creation_nodepack = ExtResource("2_nqrd2")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(387.5, 0),
+"speed_min": Vector2(387.5, 0)
+}
+custom_script = ExtResource("3_7ujn7")
+
+[sub_resource type="Resource" id="Resource_4ym0i"]
+resource_local_to_scene = true
+script = ExtResource("4_jh1w7")
+creation_nodepack = ExtResource("5_chm7j")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+custom_script = ExtResource("6_wlq00")
+
+[sub_resource type="Resource" id="Resource_errlo"]
+resource_local_to_scene = true
+script = ExtResource("4_jh1w7")
+creation_nodepack = ExtResource("7_k7h3c")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0)
+}
+custom_script = ExtResource("8_qg1ol")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydctw"]
+atlas = ExtResource("9_mrb0s")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0pkg"]
+atlas = ExtResource("9_mrb0s")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s00ft"]
+atlas = ExtResource("10_nqrd2")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ujn7"]
+atlas = ExtResource("10_nqrd2")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jh1w7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydctw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0pkg")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s00ft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ujn7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="ParaIceBros" instance=ExtResource("1_nqrd2")]
+amplitude = Vector2(50, 0)
+projectile = SubResource("Resource_s00ft")
+sound = ExtResource("5_s00ft")
+sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
+metadata/_edit_pinned_properties_ = [&"sprite_projectile_animation_transform", &"projectile", &"amplitude", &"sound"]
+
+[node name="EnemyAttacked" parent="Body" index="1"]
+stomping_creation = SubResource("Resource_4ym0i")
+killing_creation = SubResource("Resource_errlo")
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_jh1w7")
+metadata/_edit_pinned_properties_ = [&"sprite_frames"]
+
+[node name="SpriteProjectile" parent="." index="3"]
+position = Vector2(14, -4)
+texture = ExtResource("11_nqrd2")
+metadata/_edit_pinned_properties_ = [&"position", &"texture"]
+
+[node name="PosAttack" parent="." index="5"]
+position = Vector2(14, -4)
+metadata/_edit_pinned_properties_ = [&"position"]
