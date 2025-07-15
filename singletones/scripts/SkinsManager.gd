@@ -34,13 +34,10 @@ var suit_tweaks: Dictionary
 var suit_sounds: Dictionary
 
 
-func _init() -> void:
-	var _tex: String = load_external_textures()
-	print_rich(_tex)
-
-
 func _ready() -> void:
 	current_skin = SettingsManager.settings.skin
+	var _tex: String = load_external_textures()
+	print_rich(_tex)
 	SettingsManager.settings_updated.connect(_update_current_skin_from_settings)
 	
 	# Saving animation sprite frames
