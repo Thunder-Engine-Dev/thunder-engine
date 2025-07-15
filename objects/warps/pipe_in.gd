@@ -125,8 +125,8 @@ func _warp_initiator() -> void:
 			if Scenes.current_scene.has_meta(&"save_room_level"):
 				if Thunder.autosplitter.can_start_on("save_room"):
 					Thunder.autosplitter.start_timer()
-			elif Thunder.autosplitter.can_split_on("world_warps"):
-				Thunder.autosplitter.split()
+			#elif Thunder.autosplitter.can_split_on("world_warps"):
+			#	Thunder.autosplitter.split("World Warp")
 		player.warp = Player.Warp.IN
 		player.warp_dir = warp_direction
 		if !warp_disable_smooth_entry:

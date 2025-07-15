@@ -8,7 +8,7 @@ const FOLDER_GLOBAL_SOUNDS = "_global_sounds"
 const CONFIG_GLOBAL_SKIN_TWEAKS = "global_skin_tweaks"
 const BAD_NAMES = [
 	"object", "script", "_init", "_enter_tree", "_exit_tree", "_ready",
-	"_process", "extends", "refcounted", "func ", "func()",
+	"_process", "extends", "refcounted", "func ", "func()", "notification",
 ]
 const SETTINGS_DICT_NAMES = [
 	"animation_speeds", "animation_regions", "animation_loops", "animation_durations",
@@ -104,6 +104,20 @@ func load_external_textures() -> String:
 				_is_default_skin = true
 			else:
 				continue
+		
+		# Load only the current skin
+		if i != current_skin && i != "none":
+			custom_sprite_frames[i] = {}
+			var _selector_path := base_dir + "/" + i + "/selector.png"
+			if !FileAccess.file_exists(_selector_path): continue
+			var img: Image = Image.load_from_file(_selector_path)
+			if !img: continue
+			
+			var file := ImageTexture.create_from_image(img)
+			misc_textures[i] = {
+				"selector": file,
+			}
+			continue
 		
 		dir_access.change_dir(base_dir + "/" + i)
 		

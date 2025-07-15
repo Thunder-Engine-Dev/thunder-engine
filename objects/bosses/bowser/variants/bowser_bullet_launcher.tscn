@@ -25,14 +25,14 @@ custom_vars = {}
 status_interval = Array[float]([2.0, 1.0, 1.0, 2.0, 0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 2.0, 1.0, 1.0, 2.0, 0.0])
 status = Array[StringName]([&"bullet", &"flame", &"bullet", &"flame", &"bullet", &"bullet", &"flame", &"bullet", &"flame", &"bullet", &"bullet", &"flame", &"bullet", &"multiflames", &"bullet"])
 
-[node name="Launcher" type="Sprite2D" parent="." index="6"]
+[node name="attack_bullet" type="Node" parent="." index="10"]
+script = ExtResource("3_umrl2")
+bullet_bill = SubResource("Resource_77tl1")
+metadata/_edit_pinned_properties_ = [&"bullet_bill"]
+
+[node name="Launcher" type="Sprite2D" parent="." index="12"]
 position = Vector2(22, 10)
 texture = ExtResource("2_s7l32")
 script = ExtResource("3_hurpk")
 
 [node name="PosBullet" type="Marker2D" parent="Launcher" index="0"]
-
-[node name="attack_bullet" type="Node" parent="." index="11"]
-script = ExtResource("3_umrl2")
-bullet_bill = SubResource("Resource_77tl1")
-metadata/_edit_pinned_properties_ = [&"bullet_bill"]

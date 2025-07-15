@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c02e27qkcrmvw"]
+[gd_scene load_steps=5 format=3 uid="uid://c02e27qkcrmvw"]
 
 [ext_resource type="Script" uid="uid://5ykrxcryikj0" path="res://engine/objects/centipede/centipede.gd" id="1_44y8h"]
 [ext_resource type="Texture2D" uid="uid://cv6u8e4c5pt07" path="res://engine/objects/centipede/gfx/centipede_block.png" id="3_dwtbs"]
 [ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/projectiles/spikeball/spikeball.png" id="3_etl1t"]
+[ext_resource type="Script" uid="uid://dh3ngdb7vv6ln" path="res://engine/objects/centipede/centipede_draw_area.gd" id="4_7hyx0"]
 
 [node name="Centipede" type="StaticBody2D"]
 collision_layer = 112
@@ -32,3 +33,6 @@ bus = &"Sound"
 process_callback = 0
 wait_time = 0.25
 one_shot = true
+
+[node name="DrawArea" type="Node2D" parent="."]
+script = ExtResource("4_7hyx0")

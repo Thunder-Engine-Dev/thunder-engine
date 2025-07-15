@@ -48,7 +48,7 @@ func _physics_process(delta) -> void:
 
 func activate() -> void:
 	if Thunder.autosplitter.can_split_on("checkpoint"):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Checkpoint Activated")
 	var _sfx = CharacterManager.get_sound_replace(sound, DEFAULT_SWITCH_SOUND, "checkpoint_switch", false)
 	Audio.play_1d_sound(_sfx, false)
 	

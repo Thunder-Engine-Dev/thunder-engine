@@ -7,7 +7,7 @@ var skippable: bool = false
 
 func _ready() -> void:
 	if Thunder.autosplitter.can_split_on("world_complete"):
-		Thunder.autosplitter.split()
+		Thunder.autosplitter.split("Map Completed")
 	if Data.values.get("map_force_selected_marker"):
 		Data.values.map_force_go_next = true
 	if !ProfileManager.current_profile.has_completed_world(world_name):

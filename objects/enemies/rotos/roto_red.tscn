@@ -267,7 +267,7 @@ killing_immune = {
 "starman": true
 }
 killing_creation = SubResource("Resource_caaoh")
-killing_scores = 800
+killing_scores = 400
 killing_sound_succeeded = ExtResource("6_ile01")
 metadata/_edit_pinned_properties_ = [&"killing_enabled", &"stomping_standard", &"center_node"]
 

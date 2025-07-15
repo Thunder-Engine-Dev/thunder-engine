@@ -27,7 +27,7 @@ var _current_player: Player:
 ## Current state of the player. (Path to state resource)
 @warning_ignore("unused_private_class_variable")
 var _current_player_state_path: String
-## DEPRECATED: Current state of the player
+## Current state of the player
 var _current_player_state: PlayerSuit
 
 ## Reference to level HUD
@@ -55,6 +55,7 @@ func get_child_by_class_name(ref: Node, classname: String) -> Node:
 	for child in ref.get_children():
 		if child.is_class(classname): return child
 	return null
+
 
 ## Connects a signal to a callable without throwing errors if it's already connected
 @warning_ignore("int_as_enum_without_match", "int_as_enum_without_cast")
@@ -99,13 +100,14 @@ func _init() -> void:
 func _ready() -> void:
 	autosplitter = AutoSplitter.new()
 	
-	for i in 3:
-		DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
-		await get_tree().physics_frame
+	#for i in 3:
+	#	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
+	#	await get_tree().physics_frame
 
 func _physics_process(delta: float) -> void:
 	if !autosplitter.has_closed:
 		autosplitter.update()
+
 
 ## Add lives for [member _current_player][br]
 ## [color=orange][b]Note:[/b][/color] The [code]count[/code] you input must be between 1 and 10, or an error will be sent to console.
@@ -461,8 +463,9 @@ class AutoSplitter:
 	func start_or_split() -> void:
 		_send_message("startorsplit")
 	
-	func split() -> void:
+	func split(info_message: String) -> void:
 		_send_message("split")
+		print("[SPLIT] %s" % info_message)
 	
 	func start_timer() -> void:
 		_send_message("starttimer")

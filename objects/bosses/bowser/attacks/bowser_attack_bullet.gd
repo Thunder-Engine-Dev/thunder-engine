@@ -23,13 +23,13 @@ func _ready() -> void:
 	launcher_x = launcher.position.x
 
 
-func _notification(what: int) -> void:
-	if !is_inside_tree(): return
-	if what == NOTIFICATION_PREDELETE && launcher && is_instance_valid(Scenes.current_scene):
-		launcher.cancel_free()
-		launcher.reparent(Scenes.current_scene)
-		launcher.reset_physics_interpolation()
-		launcher.fall()
+#func _notification(what: int) -> void:
+#	if !is_inside_tree(): return
+#	if what == NOTIFICATION_PREDELETE && launcher && is_instance_valid(Scenes.current_scene):
+#		launcher.cancel_free()
+#		launcher.reparent(Scenes.current_scene)
+#		launcher.reset_physics_interpolation()
+#		launcher.fall()
 
 
 func _physics_process(delta: float) -> void:

@@ -270,7 +270,7 @@ func die(corpse_intro: bool = true) -> void:
 	
 	if finish_on_death && trigger.has_method(&"stop_music"):
 		if Thunder.autosplitter.can_split_on("boss_defeat"):
-			Thunder.autosplitter.split()
+			Thunder.autosplitter.split("Boss Defeat")
 		Scenes.current_scene.set_meta(&"boss_got_defeated", true)
 		trigger.stop_music()
 	
