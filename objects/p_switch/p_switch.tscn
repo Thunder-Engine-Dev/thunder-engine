@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bcn1lxv3vx4rt" path="res://engine/objects/p_switch/texture.png" id="1_u4da8"]
 [ext_resource type="Script" uid="uid://vrae8826yda4" path="res://engine/objects/p_switch/p_switch_activator.gd" id="2_4s5dc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_se3ij"]
-size = Vector2(32, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hn60"]
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abx5o"]
 size = Vector2(32, 28)
@@ -48,7 +48,7 @@ animations = [{
 }]
 
 [node name="PSwitch" type="CharacterBody2D"]
-collision_layer = 116
+collision_layer = 100
 collision_mask = 64
 script = ExtResource("1_ko4hk")
 gravity_scale = 0.5
@@ -62,9 +62,8 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Activator"]
 visible = false
-position = Vector2(0, -24)
-shape = SubResource("RectangleShape2D_se3ij")
-one_way_collision = true
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_3hn60")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false

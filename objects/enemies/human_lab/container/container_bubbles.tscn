@@ -19,6 +19,7 @@ radius_x = 28.0
 gen_z_index = 0
 min_speed = 20.0
 max_speed = 200.0
+delay_range_sec = Vector2(0.4, 1)
 
 [node name="ContainerHollow" type="Sprite2D" parent="." index="2"]
 z_index = 1
