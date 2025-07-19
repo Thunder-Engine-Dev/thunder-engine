@@ -267,7 +267,7 @@ apply_config = Dictionary[String, ExtResource("14_217v7")]({
 "Luigi": SubResource("Resource_217v7"),
 "Mario": SubResource("Resource_hly0o")
 })
-apply_properties = PackedStringArray("walk_initial_speed", "walk_acceleration", "walk_deceleration", "walk_crouch_deceleration", "walk_turning_acce")
+apply_properties = PackedStringArray("walk_initial_speed", "walk_acceleration", "walk_deceleration", "walk_crouch_deceleration", "walk_turning_acce", "animation_min_walking_speed", "animation_max_walking_speed")
 metadata/_custom_type_script = "uid://fulkctmku6s1"
 
 [connection signal="timeout" from="Starman" to="." method="_on_starman_timeout"]

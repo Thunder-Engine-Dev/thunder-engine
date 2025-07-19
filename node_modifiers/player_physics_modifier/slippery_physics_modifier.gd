@@ -12,13 +12,14 @@ func _logic() -> void:
 			sliding_effect_emitter = sliding_effect.instantiate()
 			sliding_effect_emitter.z_index = 2
 			add_sibling.call_deferred(sliding_effect_emitter)
+			sliding_effect_emitter.reset_physics_interpolation()
 		_slide()
 	else: _end_logic(false)
 
 func _end_logic(remove: bool) -> void:
 	if !is_instance_valid(sliding_effect_emitter): return
-	if is_instance_valid(player) && !remove:
-		player.suit.physics_config.animation_min_walking_speed = 1
+	#if is_instance_valid(player) && !remove:
+	#	player.suit.physics_config.animation_min_walking_speed = 1
 	var dupeff := sliding_effect_emitter.duplicate() as GPUParticles2D
 	get_parent().add_sibling.call_deferred(dupeff)
 	dupeff.global_transform = sliding_effect_emitter.global_transform
@@ -38,8 +39,8 @@ func _deinitialise() -> void:
 
 func _slide() -> void:
 	if !is_instance_valid(player): return
-	player.suit.physics_config.animation_min_walking_speed = 6
-	player.suit.physics_config.animation_max_walking_speed = 6
+	player.suit.physics_config.animation_min_walking_speed = 5
+	player.suit.physics_config.animation_max_walking_speed = 5
 	if sliding_sound_interval: return
 	if is_instance_valid(sliding_effect_emitter):
 		sliding_effect_emitter.global_position = player.global_transform.translated_local(Vector2.DOWN * 16).get_origin()

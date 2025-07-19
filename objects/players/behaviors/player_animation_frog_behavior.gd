@@ -21,7 +21,8 @@ func _swam() -> void:
 
 
 func _head_bumped() -> void:
-	return
+	if player.is_underwater: return
+	super()
 
 
 func _sprite_loop() -> void:
@@ -88,9 +89,12 @@ func _animation_floor_process(delta: float) -> void:
 	#if player._physics_behavior.jump_delay < 0 && !player.completed:
 	#	sprite.set_frame_and_progress(0, 0.8)
 	player.skid.emitting = false
-	if player.completed && sprite.animation == _get_animation_prefixed(&"walk"):
-		sprite.speed_scale = 2.4
-		sprite.play()
+	if player.completed:
+		if sprite.animation in [&"swim", &"swim_up", &"swim_down"]:
+			sprite.animation = _get_animation_prefixed(&"walk")
+		if sprite.animation == _get_animation_prefixed(&"walk"):
+			sprite.speed_scale = 2.4
+			sprite.play()
 
 
 func _animation_swimming_process(delta: float) -> void:

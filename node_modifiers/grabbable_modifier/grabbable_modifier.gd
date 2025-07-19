@@ -50,6 +50,8 @@ const DEFAULT_KICK_SOUND = preload("res://engine/objects/players/prefabs/sounds/
 ## If [code]true[/code], the target node's [member process_mode] will be modified on
 ## grabbing and ungrabbing.
 @export var grabbing_disable_process_when_grabbed: bool = true
+## Z-Index of the target node will match that of player's, e.g. when warping.
+@export var grabbing_match_player_z_index: bool = true
 @export_group("Signals", "signal_")
 ## Whether or not to emit the [signal ungrabbed()] signal when player dies, alongside the
 ## [signal ungrabbed_player_died()] signal.
@@ -60,6 +62,7 @@ const DEFAULT_KICK_SOUND = preload("res://engine/objects/players/prefabs/sounds/
 @export var sound_throw = DEFAULT_KICK_SOUND
 
 @onready var player: Player = Thunder._current_player
+@onready var old_z_index: int = target_node.z_index
 
 var _player_lock_pos: Vector2
 var _from_follow_pos: Vector2
@@ -68,6 +71,7 @@ var _grabbed: bool
 var _following_start: bool
 var _following: bool
 var _wait_until_floor: bool
+var _match_z_index: bool
 
 
 func _ready() -> void:
@@ -98,8 +102,11 @@ func _physics_process(delta: float) -> void:
 			_following_start = false
 			_following = true
 
-	if _grabbed && _following:
-		target_node.global_position = get_target_hold_position()
+	if _grabbed && _following && is_instance_valid(player):
+		var _warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
+		target_node.global_position = get_target_hold_position(_warp_tweak)
+		if _match_z_index:
+			target_node.z_index = player.z_index + int(_warp_tweak)
 
 	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
 		var pl = Thunder._current_player
@@ -153,6 +160,9 @@ func _do_player_lock() -> void:
 
 
 func _do_grab() -> void:
+	if grabbing_match_player_z_index:
+		_match_z_index = true
+	
 	if target_node is GravityBody2D:
 		_grabbed = true
 		if grabbing_disable_process_when_grabbed:
@@ -168,6 +178,10 @@ func _do_grab() -> void:
 
 
 func _do_ungrab(player_died: bool) -> void:
+	if grabbing_match_player_z_index:
+		_match_z_index = false
+		target_node.z_index = old_z_index
+	
 	if player_died:
 		if target_node is GravityBody2D:
 			_grabbed = false
@@ -216,7 +230,10 @@ func _do_ungrab(player_died: bool) -> void:
 
 	ungrabbed.emit()
 
-func get_target_hold_position() -> Vector2:
-	if player.warp != player.Warp.NONE && player.warp_dir >= player.WarpDir.UP:
+func get_target_hold_position(_warp_tweak: bool = false) -> Vector2:
+	if !_warp_tweak && player.warp != player.Warp.NONE && player.warp_dir >= player.WarpDir.UP:
 		return player.global_position + player.suit.physics_shaper.shape_pos
-	return player.global_position + player.suit.physics_shaper.shape_pos + Vector2(16 * player.direction, 0)
+	return player.global_position + player.suit.physics_shaper.shape_pos + Vector2(
+		16 * player.direction,
+		12 * int(player.is_crouching)
+	)

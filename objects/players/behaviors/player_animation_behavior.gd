@@ -1,7 +1,7 @@
 extends ByNodeScript
 
 const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
-const BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+const BUMP = preload("res://engine/objects/players/prefabs/sounds/head_bump.wav")
 
 var player: Player
 var sprite: AnimatedSprite2D
@@ -155,7 +155,8 @@ func _skid_sound_loop() -> void:
 
 func _head_bumped() -> void:
 	if !_head_bump_sound: return
-	Audio.play_sound(CharacterManager.get_sound_replace(BUMP, BUMP, "block_bump", false), player)
+	if player.is_climbing: return
+	Audio.play_sound(CharacterManager.get_sound_replace(BUMP, BUMP, "head_bump", false), player)
 
 
 func _grabbed(side_grabbed: bool) -> void:

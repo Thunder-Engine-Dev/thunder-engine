@@ -128,8 +128,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		call_deferred(&"_creation", result.prepare())
 		result_appeared.emit()
 	else:
-		if !(_old_bump_sfx == DEFAULT_BUMP && CharacterManager.get_suit_tweak("head_bump_sound")):
-			Audio.play_sound(bump_sound, self)
+		#if !(CharacterManager.get_suit_tweak("head_bump_sound")):
+		Audio.play_sound(bump_sound, self)
 	
 	bumped.emit()
 	hit_attack()

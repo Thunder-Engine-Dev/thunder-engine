@@ -19,7 +19,6 @@ metadata/_snap_enabled = true
 metadata/_snap_count = 8
 
 [node name="Explosion" type="AnimatedSprite2D"]
-modulate = Color(1.2, 1.2, 1.2, 1)
 z_index = 5
 sprite_frames = ExtResource("1_dslx6")
 autoplay = "default"

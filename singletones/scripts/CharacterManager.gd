@@ -58,6 +58,7 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"level_cutscene_song": [],
 	"pipe_cutscene": [],
 	"1up": [],
+	"head_bump": [],
 	"hud_acceptance": [],
 	"message_box": [],
 	"bonus_activate": [],

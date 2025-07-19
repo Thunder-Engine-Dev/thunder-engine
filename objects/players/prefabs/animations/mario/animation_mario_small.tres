@@ -58,9 +58,9 @@ region = Rect2(192, 64, 32, 64)
 atlas = ExtResource("1_j7ix7")
 region = Rect2(0, 64, 32, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ajfj1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqtww"]
 atlas = ExtResource("1_j7ix7")
-region = Rect2(64, 64, 32, 64)
+region = Rect2(32, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d8ipg"]
 atlas = ExtResource("1_j7ix7")
@@ -70,9 +70,9 @@ region = Rect2(256, 0, 32, 64)
 atlas = ExtResource("1_j7ix7")
 region = Rect2(352, 0, 32, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rqtww"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajfj1"]
 atlas = ExtResource("1_j7ix7")
-region = Rect2(32, 64, 32, 64)
+region = Rect2(64, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfopu"]
 atlas = ExtResource("1_j7ix7")
@@ -234,7 +234,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ajfj1")
+"texture": SubResource("AtlasTexture_rqtww")
 }],
 "loop": false,
 "name": &"hold_fall",
@@ -242,7 +242,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ajfj1")
+"texture": SubResource("AtlasTexture_rqtww")
 }],
 "loop": false,
 "name": &"hold_jump",
@@ -261,10 +261,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ajfj1")
+"texture": SubResource("AtlasTexture_rqtww")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rqtww")
+"texture": SubResource("AtlasTexture_ajfj1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_34fd0")
