@@ -59,5 +59,6 @@ texture = SubResource("GradientTexture2D_g0as3")
 texture_scale = 0.01
 script = ExtResource("5_g0as3")
 duration = 0.3
+stage2d_vis_controlled = false
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

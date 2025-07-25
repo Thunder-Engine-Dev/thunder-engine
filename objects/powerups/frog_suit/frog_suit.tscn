@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvyleahhjj28k"]
+[gd_scene load_steps=9 format=3 uid="uid://bvyleahhjj28k"]
 
 [ext_resource type="Script" uid="uid://clqmapaayiiyc" path="res://engine/objects/powerups/frog_suit/frog_suit.gd" id="1_rxwev"]
 [ext_resource type="AudioStream" uid="uid://cea8c8rbn2ls0" path="res://engine/objects/powerups/frog_suit/appear.wav" id="2_o1q7c"]
 [ext_resource type="Texture2D" uid="uid://8cgmkjqf2bkv" path="res://engine/objects/powerups/frog_suit/texture.png" id="3_rxwev"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_6ilvh"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_o1q7c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(31, 31)
+
+[sub_resource type="Gradient" id="Gradient_jy2tl"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_711s5"]
+gradient = SubResource("Gradient_jy2tl")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
 
 [node name="FrogSuit" type="CharacterBody2D"]
 collision_layer = 4
@@ -55,5 +68,12 @@ monitorable = false
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_711s5")
+script = ExtResource("5_o1q7c")
+duration = 0.3
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]

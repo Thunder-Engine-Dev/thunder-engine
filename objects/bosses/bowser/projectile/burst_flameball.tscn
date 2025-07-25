@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b24l0bhd2wshk"]
+[gd_scene load_steps=12 format=3 uid="uid://b24l0bhd2wshk"]
 
 [ext_resource type="Script" uid="uid://cypriiqv57ul7" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.gd" id="1_2icyp"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_el7gp"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_t0026"]
 [ext_resource type="Texture2D" uid="uid://3b6nw4w6kymm" path="res://engine/objects/bosses/bowser/texture/bowser_burst_flameball.png" id="4_vslk7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yefo"]
@@ -38,6 +39,18 @@ animations = [{
 "name": &"default",
 "speed": 20.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_7m83b"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hujyx"]
+gradient = SubResource("Gradient_7m83b")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
 
 [node name="BurstFlameball" type="CharacterBody2D"]
 collision_layer = 0
@@ -80,6 +93,12 @@ modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(4.76837e-06, 9.53674e-07)
 scale = Vector2(4.8, 3.2)
 metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_hujyx")
+script = ExtResource("4_t0026")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

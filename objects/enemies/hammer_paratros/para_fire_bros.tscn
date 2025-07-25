@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bosk1a5ntcl2f"]
+[gd_scene load_steps=23 format=3 uid="uid://cxpw0m5lgwly2"]
 
 [ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_e41j4"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_q4vp6"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_q4vp6"]
 [ext_resource type="Texture2D" uid="uid://b528adctx21jm" path="res://engine/objects/enemies/hammer_bros/textures/red_bro.png" id="8_htqvh"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="9_hqgy1"]
+[ext_resource type="Script" uid="uid://dufc72buf55ad" path="res://engine/scripts/classes/effecters/item_visibility_stage2d_controlled.gd" id="12_4ym0i"]
 
 [sub_resource type="Resource" id="Resource_6oa5f"]
 script = ExtResource("4_hqgy1")
@@ -145,6 +146,7 @@ visible = false
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_hqgy1")
+script = ExtResource("12_4ym0i")
 
 [node name="PosAttack" parent="." index="5"]
 position = Vector2(14, -4)

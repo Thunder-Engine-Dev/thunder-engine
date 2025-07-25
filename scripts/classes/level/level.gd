@@ -12,8 +12,10 @@ var DEFAULT_COMPLETION = preload("res://engine/scripts/classes/level/complete.og
 ## Emitted when player completes the level
 signal level_completed
 
-## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.
+## Rest time of the level. If going to [color=red]0[/color], the player alive will be killed in force.[br][br]
+## Set to -1 to disable the time limit completely.
 @export var time: int = 360
+## If [code]false[/code], the Restart Level option will not be available in-game. Used for save rooms.
 @export var enable_restart_in_pause: bool = true
 
 @export_group("Level Completion")

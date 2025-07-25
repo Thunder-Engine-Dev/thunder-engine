@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cv4oxp3hprpfk"]
+[gd_scene load_steps=23 format=3 uid="uid://cv4oxp3hprpfk"]
 
 [ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_pv05w"]
 [ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="2_6it7w"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="10_lmflq"]
 [ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="10_ttjsh"]
 [ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="11_cqfc4"]
+[ext_resource type="Script" uid="uid://dufc72buf55ad" path="res://engine/scripts/classes/effecters/item_visibility_stage2d_controlled.gd" id="13_qo35m"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("4_tf7hu")
@@ -174,6 +175,7 @@ position = Vector2(0, -32)
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_g3ldy")
+script = ExtResource("13_qo35m")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

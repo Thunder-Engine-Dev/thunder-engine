@@ -246,7 +246,7 @@ use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_rg5pr")
 autoplay = "default"
 
-[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+[node name="PointLight2D" type="PointLight2D" parent="Sprite" groups=["stage2d_ctrl_light"]]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_25p2b")
