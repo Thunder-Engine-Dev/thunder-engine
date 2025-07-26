@@ -10,6 +10,7 @@ const DEFAULT_SCORING = preload("res://engine/components/hud/sounds/scoring.wav"
 @onready var gameover = $Control/GameOver
 @onready var mario_score: Label = $Control/MarioScore
 @onready var coins: Label = $Control/Control/Coins
+@onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 
 var game_over_timer: SceneTreeTimer
 
@@ -35,6 +36,9 @@ func _ready() -> void:
 
 func game_over() -> void:
 	gameover.show()
+	
+	var _sfx = CharacterManager.get_sound_replace(game_over_music, game_over_music, "game_over", false)
+	Audio.play_music(_sfx, 1, { "ignore_pause": true }, false, false)
 	
 	game_over_timer = get_tree().create_timer(6, false)
 	Thunder._connect(game_over_timer.timeout, emit_signal.bind("game_over_finished"), CONNECT_ONE_SHOT)

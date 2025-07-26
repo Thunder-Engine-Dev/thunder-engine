@@ -9,7 +9,6 @@ var circle_opening_speed: float = 0.1
 
 var movement: bool
 
-@onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 @onready var _is_simple_fade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 
@@ -45,8 +44,6 @@ func _init_game_over() -> bool:
 	if check_for_lives && Data.values.lives == 0:
 		if is_instance_valid(Thunder._current_hud):
 			Thunder._current_hud.game_over()
-			var _sfx = CharacterManager.get_sound_replace(game_over_music, game_over_music, "game_over", false)
-			Audio.play_music(_sfx, 1, { "ignore_pause": true }, false, false)
 		return true
 	return false
 
