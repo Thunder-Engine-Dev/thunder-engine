@@ -77,6 +77,7 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_kck43")
 sprite = NodePath("Sprite")
+visible_on_screen_notifier = NodePath("VisibleOnScreenNotifier2D")
 gravity_scale = 0.2
 collision = false
 metadata/_edit_pinned_properties_ = [&"sprite", &"gravity_scale", &"collision"]

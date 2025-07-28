@@ -113,6 +113,7 @@ floor_snap_length = 20.0
 script = ExtResource("1_vksuw")
 look_at_player = true
 sprite = NodePath("Sprite")
+visible_on_screen_notifier = NodePath("Vision")
 speed = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"look_at_player", &"speed", &"gravity_scale"]

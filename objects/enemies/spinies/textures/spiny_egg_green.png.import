@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brb4hqhlc1jad"
-path="res://.godot/imported/spiny_green_appear.png-5dcb9e4bc54eda5df1c1fe911f1083fa.ctex"
+uid="uid://cxpy5lfulrkhd"
+path="res://.godot/imported/spiny_egg_green.png-f323b5908f435329597b49a32692320d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/enemies/spinies/spiny_green_appear.png"
-dest_files=["res://.godot/imported/spiny_green_appear.png-5dcb9e4bc54eda5df1c1fe911f1083fa.ctex"]
+source_file="res://engine/objects/enemies/spinies/textures/spiny_egg_green.png"
+dest_files=["res://.godot/imported/spiny_egg_green.png-f323b5908f435329597b49a32692320d.ctex"]
 
 [params]
 
