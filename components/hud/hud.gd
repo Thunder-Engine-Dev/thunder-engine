@@ -53,7 +53,7 @@ func _input(event: InputEvent) -> void:
 	if game_over_timer.time_left == 0:
 		game_over_timer = null
 		return
-	if event.is_action_pressed(&"ui_accept"):
+	if event.is_action_pressed(&"ui_accept") || event.is_action_pressed(&"m_jump") || event.is_action_pressed(&"m_attack"):
 		game_over_timer = null
 		game_over_finished.emit()
 

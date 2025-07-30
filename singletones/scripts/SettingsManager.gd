@@ -449,7 +449,12 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventAction && event.is_action(&"asws_restart"):
 		if Thunder.autosplitter && Thunder.autosplitter.config.restart_hotkey:
 			Thunder.autosplitter.restarting.emit()
-			Thunder.autosplitter.connect_websocket()
+			Thunder.autosplitter.ws.poll()
+			var state = Thunder.autosplitter.ws.get_ready_state()
+			if state != WebSocketPeer.STATE_OPEN:
+				Thunder.autosplitter.has_closed = false
+				Thunder.autosplitter.has_connected = false
+				Thunder.autosplitter.connect_websocket()
 
 
 func _hide_mouse() -> void:
