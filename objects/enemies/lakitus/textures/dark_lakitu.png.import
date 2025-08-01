@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp7cgcrfr8x2x"
-path="res://.godot/imported/dark_lakitu_throwing.png-9d507ee0e84faf29b70c0091c167fe9e.ctex"
+uid="uid://cgcda5qncav58"
+path="res://.godot/imported/dark_lakitu.png-ae57f230e6eaba1c2b9193a2710b66f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/enemies/lakitus/textures/dark_lakitu_throwing.png"
-dest_files=["res://.godot/imported/dark_lakitu_throwing.png-9d507ee0e84faf29b70c0091c167fe9e.ctex"]
+source_file="res://engine/objects/enemies/lakitus/textures/dark_lakitu.png"
+dest_files=["res://.godot/imported/dark_lakitu.png-ae57f230e6eaba1c2b9193a2710b66f9.ctex"]
 
 [params]
 

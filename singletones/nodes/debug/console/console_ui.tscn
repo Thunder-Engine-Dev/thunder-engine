@@ -107,6 +107,7 @@ grow_vertical = 2
 bbcode_enabled = true
 scroll_following = true
 threaded = true
+selection_enabled = true
 metadata/_edit_lock_ = true
 
 [node name="Paused" type="CheckBox" parent="."]

@@ -454,7 +454,8 @@ func _input(event: InputEvent) -> void:
 			if state != WebSocketPeer.STATE_OPEN:
 				Thunder.autosplitter.has_closed = false
 				Thunder.autosplitter.has_connected = false
-				Thunder.autosplitter.connect_websocket()
+				var err = Thunder.autosplitter.connect_websocket()
+				if err: print(err)
 
 
 func _hide_mouse() -> void:
@@ -480,6 +481,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 				await get_tree().physics_frame
 			_process_settings()
 		elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false) && _path != sgr_path:
+			Data.technical_values.impulse_progress_continue = true
 			Scenes.goto_scene(sgr_path)
 			for i in 3:
 				if TransitionManager.current_transition:

@@ -11,7 +11,8 @@ static func register() -> Command:
 func execute(args: Array) -> Command.ExecuteResult:
 	var option_list: String = "set, remove, list"
 	if args.is_empty():
-		return Command.ExecuteResult.new(option_list)
+		return Command.ExecuteResult.new(option_list + "\nFor a list of valid keys to bind, see
+[url]https://docs.godotengine.org/en/4.4/classes/class_@globalscope.html#enum-globalscope-key[/url]")
 
 	var arg_option: String = args[0]
 	
