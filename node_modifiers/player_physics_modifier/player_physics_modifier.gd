@@ -51,14 +51,11 @@ func _deinitialise() -> void:
 
 func _add_config() -> void:
 	if !player: return
-	if !_cached_config:
-		var new_config = player.config_buffer.duplicate(true)
+	if !is_applied:
 		var character_config = apply_config.get(CharacterManager.get_character_name(), "Mario")
 		for prop in apply_properties:
-			new_config[prop] = character_config[prop]
-		_cached_config = new_config
+			player.suit.physics_config[prop] = character_config[prop]
 	
-	player.suit.physics_config = _cached_config
 	is_applied = true
 
 
@@ -66,5 +63,7 @@ func _remove_config() -> void:
 	if !is_instance_valid(player): return
 	if !is_applied: return
 	
-	player.suit.physics_config = player.config_buffer
+	for prop in apply_properties:
+		player.suit.physics_config[prop] = player.config_buffer[prop]
+	
 	is_applied = false
