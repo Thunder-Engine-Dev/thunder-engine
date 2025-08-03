@@ -28,7 +28,7 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 ## Enable breaking by speed
 @export var break_by_speed: bool = false
 ## Speed at or over which the ice block will break when it hits the ground.
-@export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var breaking_speed: float = 300
+@export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var breaking_speed: float = 450
 ## Speed of ice debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var debris_speed: float = 6
 @export_group("Push")
@@ -54,6 +54,8 @@ var unfreeze_offset: Vector2
 
 var _is_inside_tree: bool = false
 var _being_grabbed: bool
+
+var _break_blocked: bool = false
 
 @onready var _sprite: NinePatchRect = $SpriteNP
 @onready var _collision_shapes: Array[CollisionShape2D] = [$CollisionShape2D, $Body/Collision] 
@@ -132,12 +134,13 @@ func _physics_process(delta: float) -> void:
 				collider.bricks_break()
 				break_ice(true, false)
 	
-	if absf(speed_previous.x) > breaking_speed && is_on_wall() && break_by_speed:
-		break_ice(true, false)
-	if speed_previous.y < 0 && is_on_ceiling() && break_by_speed:
-		break_ice(true, false)
-	if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
-		break_ice(true, true)
+	if !_break_blocked:
+		if absf(speed_previous.x) > breaking_speed && is_on_wall() && break_by_speed:
+			break_ice(true, false)
+		if speed_previous.y < 0 && is_on_ceiling() && break_by_speed:
+			break_ice(true, false)
+		if speed_previous.y > breaking_speed && is_on_floor() && break_by_speed:
+			break_ice(true, true)
 	
 	_attack.enabled = !is_zero_approx(velocity.length_squared())
 	
@@ -263,9 +266,13 @@ func _get_in_ice_sprite_size(drawn_sprite: Node2D) -> Vector2:
 	return size[0]
 
 func _on_ungrabbed() -> void:
+	_break_blocked = true
 	gravity_scale = _gravity_scale
 	
-	await get_tree().physics_frame
+	for i in 4:
+		await get_tree().physics_frame
+
+	_break_blocked = false
 	
 	if speed_previous.y < 250:
 		break_by_speed = true
