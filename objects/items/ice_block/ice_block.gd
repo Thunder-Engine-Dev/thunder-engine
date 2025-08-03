@@ -10,6 +10,15 @@ signal grabbing_got_thrown(is_ungrab: bool)
 ##
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
 
+## If [code]true[/code], the ice block will keep affected by gravity till it is grabbed.
+@export var ice_fallable: bool = true:
+	set(value):
+		ice_fallable = value
+		
+		if ice_fallable: return
+		
+		_gravity_scale = gravity_scale
+		gravity_scale = 0.0
 ## Whether to destroy the ice after a delay.
 @export var destroy_enabled: bool = false
 ## Delay to destroy the ice.
@@ -53,6 +62,8 @@ var _being_grabbed: bool
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 #@onready var _body: Area2D = $Body
 #@onready var _body_collision: CollisionShape2D = $Body/Collision
+
+@onready var _gravity_scale: float = gravity_scale
 
 func _ready() -> void:
 	_is_inside_tree = true
@@ -252,6 +263,9 @@ func _get_in_ice_sprite_size(drawn_sprite: Node2D) -> Vector2:
 	return size[0]
 
 func _on_ungrabbed() -> void:
+	gravity_scale = _gravity_scale
+	
 	await get_tree().physics_frame
+	
 	if speed_previous.y < 250:
 		break_by_speed = true

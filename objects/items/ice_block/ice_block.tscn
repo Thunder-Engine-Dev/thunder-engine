@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c4fgg2rbu56x" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_2ogy0"]
-[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
+[ext_resource type="Script" uid="uid://cvqgu0bl63dn2" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
 [ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="4_ab1eo"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_2o27h"]
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="6_ch7y1"]

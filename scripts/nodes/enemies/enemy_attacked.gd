@@ -96,6 +96,8 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 @export var ice_sprite_offset: Vector2
 ## If [code]true[/code], the enemy will be killed even if the ice is not get heavily broken.
 @export var ice_fragile: bool
+## If [code]true[/code], the ice is fallable (with gravity) till it is grabbed.
+@export var ice_fallable: bool = true
 ## Sound triggered when the enemy becomes frozen.
 @export var frozen_sound: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 @export_group("Sound", "sound_")
@@ -258,16 +260,19 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			_add_pos = _ice_sprite.position
 		
 		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center) \
+			.bind_global_transform(_add_pos) \
 			.create_2d() \
-			.get_node()as PhysicsBody2D
+			.get_node() as PhysicsBody2D
 		ice.ready.connect(ice.move_and_collide.bind(Vector2.DOWN.rotated(ice.global_rotation)))
+		
 		(func() -> void:
-			ice.global_transform = _center.global_transform.translated_local(_add_pos)
+			#ice.global_transform = _center.global_transform.translated_local(_add_pos)
 			ice.unfreeze_offset = -_add_pos
 			ice.destroy_enabled = true
 			ice.contained_item = _center
 			ice.contained_item_enemy_killed = self
 			ice.forced_heavy_break = ice_fragile
+			ice.ice_fallable = ice_fallable
 			
 			var in_ice_spr: Node2D = null
 			if is_instance_valid(_ice_sprite):
