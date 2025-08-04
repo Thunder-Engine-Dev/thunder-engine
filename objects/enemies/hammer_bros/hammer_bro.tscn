@@ -32,7 +32,7 @@ custom_vars = {
 custom_script = ExtResource("3_i5uci")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iv4"]
-size = Vector2(32, 40)
+size = Vector2(28, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbcir"]
 size = Vector2(26, 40)

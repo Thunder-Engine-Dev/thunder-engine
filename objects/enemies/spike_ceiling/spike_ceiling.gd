@@ -69,6 +69,6 @@ func _on_activation_timeout() -> void:
 
 
 func _set_scale() -> void:
-	var _size := Vector2(get_rect().size.x, spike.get_rect().size.y)
+	var _size := Vector2(get_rect().size.x, spike.get_rect().size.y - 6)
 	area.scale = _size
 	area.position = _size / 2
