@@ -40,6 +40,7 @@ func _ready():
 	$"UI/Paused".pressed.connect(func():
 		Thunder.set_pause_game($"UI/Paused".button_pressed)
 	)
+	$"UI/OutputContainer/Output".focus_mode = Control.FOCUS_CLICK
 	mouse_entered.connect(func():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	)
