@@ -9,6 +9,7 @@ signal grabbing_got_thrown(is_ungrab: bool)
 
 ##
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
+const PREMULT_MATERIAL = preload("res://engine/objects/items/ice_block/premultiplied_material.tres")
 
 ## If [code]true[/code], the ice block will keep affected by gravity till it is grabbed.
 @export var ice_fallable: bool = true:
@@ -31,6 +32,7 @@ const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var breaking_speed: float = 450
 ## Speed of ice debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var debris_speed: float = 6
+@export var break_if_stuck: bool = true
 @export_group("Push")
 ## If [code]true[/code], the block is pushable.
 @export var pushable: bool = true
@@ -62,6 +64,7 @@ var _break_blocked: bool = false
 @onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
+@onready var _solid_checker: Area2D = $SolidChecker
 #@onready var _body: Area2D = $Body
 #@onready var _body_collision: CollisionShape2D = $Body/Collision
 
@@ -159,10 +162,7 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	drawn_sprite.position = offset
 	drawn_sprite.modulate.a = 0.25
 	
-	var mat := CanvasItemMaterial.new()
-	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
-	
-	drawn_sprite.material = mat
+	drawn_sprite.material = PREMULT_MATERIAL
 	drawn_sprite.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	var size := _get_in_ice_sprite_size(drawn_sprite)
@@ -181,6 +181,13 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	if _attack.shape is RectangleShape2D:
 		_attack.shape = _attack.shape.duplicate(true)
 		(_attack.shape as RectangleShape2D).size = rect.size
+	
+	if !break_if_stuck:
+		return
+	var _solid_checker_col = _solid_checker.get_child(0)
+	if _solid_checker_col.shape is RectangleShape2D:
+		_solid_checker_col.shape = _solid_checker_col.shape.duplicate(true)
+		(_solid_checker_col.shape as RectangleShape2D).size = rect.size - Vector2(8, 8)
 
 ## Breaks the ice.[br]
 ## If [param heavy] is [code]true[/code], the object in the block will be destroyed.[br]
@@ -267,6 +274,11 @@ func _get_in_ice_sprite_size(drawn_sprite: Node2D) -> Vector2:
 
 func _on_ungrabbed() -> void:
 	_break_blocked = true
+	print.call_deferred(_solid_checker.get_overlapping_bodies())
+	if break_if_stuck && _solid_checker.get_overlapping_bodies().size() > 0:
+		break_ice(true)
+		return
+	
 	gravity_scale = _gravity_scale
 	
 	for i in 4:

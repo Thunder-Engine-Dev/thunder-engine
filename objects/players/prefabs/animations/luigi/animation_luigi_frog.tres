@@ -372,13 +372,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_u5fe8")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_u5fe8")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_c46vr")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kljt0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u5fe8")
 }],
 "loop": true,
 "name": &"swim",

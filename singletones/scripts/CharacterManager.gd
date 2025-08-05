@@ -206,7 +206,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 	"force_override_menu_select_sound": true,
 }
 
-const DEFAULT_STORY_TEXT = ["they", "them", "the intrepid and determined plumber"]
+const DEFAULT_STORY_TEXT = ["they", "them", "plumber", "their"]
 
 var forced_character: String:
 	set(value):
@@ -266,6 +266,7 @@ func get_character_story_text(index: int) -> String:
 		text = DEFAULT_STORY_TEXT.duplicate()
 		text[0] = "he"
 		text[1] = "him"
+		text[3] = "his"
 	return text[index]
 
 

@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 const ICE_DEBRIS = preload("res://engine/objects/effects/brick_debris/ice_debris.tscn")
+const PREMULT_MATERIAL = preload("res://engine/objects/items/ice_block/premultiplied_material.tres")
 
 ## Speed of ice debris
 @export_range(0, 9999, 0.1, "or_greater", "hide_slider", "suffix:px/s") var debris_speed: float = 6
@@ -41,8 +42,7 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	drawn_sprite.position = offset
 	drawn_sprite.modulate.a = 0.25
 	
-	var mat := CanvasItemMaterial.new()
-	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
+	var mat := PREMULT_MATERIAL
 	
 	drawn_sprite.material = mat
 	drawn_sprite.process_mode = Node.PROCESS_MODE_DISABLED

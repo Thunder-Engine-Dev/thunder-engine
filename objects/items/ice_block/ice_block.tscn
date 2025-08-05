@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dofejp2f025qw"]
+[gd_scene load_steps=12 format=3 uid="uid://dofejp2f025qw"]
 
 [ext_resource type="Script" uid="uid://c4fgg2rbu56x" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
@@ -16,6 +16,9 @@ size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjc0d"]
 size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ouc48"]
+size = Vector2(24, 24)
 
 [node name="IceBlock" type="CharacterBody2D" groups=["slippery"]]
 collision_layer = 112
@@ -100,6 +103,15 @@ process_mode = 1
 one_shot = true
 
 [node name="GrabbableModifier" parent="." instance=ExtResource("6_ch7y1")]
+
+[node name="SolidChecker" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 96
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+shape = SubResource("RectangleShape2D_ouc48")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="break_ice" binds= [true, true]]
 [connection signal="killed_notify" from="Attack" to="." method="break_ice" binds= [true, false]]
