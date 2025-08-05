@@ -1,6 +1,13 @@
 extends Node
 ## Class that can load and save profiles, as well as store them in memory.
 
+signal all_profiles_loaded
+signal profile_created(name: String)
+signal profile_data_saved(name: String)
+signal profile_deleted(name: String)
+signal current_profile_set(name: String)
+signal current_profile_saved
+
 class Profile:
 	var name: String
 	var data: Dictionary
@@ -76,6 +83,7 @@ func load_all_profiles() -> void:
 			if err:
 				printerr("[Profile Manager] %s has failed to load!" % file)
 	
+	all_profiles_loaded.emit()
 	print("[Profile Manager] All profiles loaded!")
 
 
@@ -85,6 +93,7 @@ func create_new_profile(_name: StringName) -> void:
 	save_current_profile()
 	profiles[_name] = current_profile
 	
+	profile_created.emit(_name)
 	print("[Profile Manager] Profile %s created!" % _name)
 
 #func profile_exists(name: StringName) -> bool:
@@ -94,9 +103,11 @@ func create_new_profile(_name: StringName) -> void:
 func set_current_profile(_name: StringName) -> bool:
 	if profiles.has(_name):
 		current_profile = profiles[_name]
+		current_profile_set.emit(_name)
 		return false
 	else:
 		create_new_profile(_name)
+		current_profile_set.emit(_name)
 		return true
 
 
@@ -129,6 +140,7 @@ func delete_profile(_name: StringName) -> void:
 		profiles.erase(_name)
 	
 	DirAccess.remove_absolute(path)
+	profile_deleted.emit(_name)
 	print("[Profile Manager] Profile deleted!")
 
 
@@ -136,6 +148,7 @@ func save_current_profile() -> void:
 	if current_profile.data.get("executed") && !Console.cv.can_save_with_console:
 		print("[Profile Manager] Save rejected! (Console)")
 		return
+	current_profile_saved.emit()
 	save_profile_data(current_profile.name, current_profile.data)
 
 
@@ -148,6 +161,7 @@ func save_profile_data(_name: StringName, _data: Dictionary) -> void:
 	)
 	file.store_string(data)
 	file = null
+	profile_data_saved.emit(_name)
 	print("[Profile Manager] Profile %s saved!" % _name)
 
 
