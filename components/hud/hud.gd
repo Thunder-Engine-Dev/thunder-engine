@@ -16,6 +16,7 @@ var game_over_timer: SceneTreeTimer
 
 @export var scoring_sound = DEFAULT_SCORING
 @export var timer_hurry_sound = DEFAULT_HURRY
+@export var pause_timer_countdown: bool = false
 
 signal time_countdown_finished
 signal game_over_finished
@@ -32,6 +33,13 @@ func _ready() -> void:
 			time_text.visible = false
 			time_counter.visible = false
 	).call_deferred()
+
+
+func pause_timer() -> void:
+	pause_timer_countdown = true
+
+func unpause_timer() -> void:
+	pause_timer_countdown = false
 
 
 func game_over() -> void:
@@ -59,6 +67,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_timer_timeout() -> void:
+	if pause_timer_countdown: return
 	if !Thunder._current_player: return
 	if Data.values.time < 0: return
 	

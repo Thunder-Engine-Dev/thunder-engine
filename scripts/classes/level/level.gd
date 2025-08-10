@@ -153,16 +153,24 @@ func _physics_process(delta: float) -> void:
 	# Falling behavior
 	if !player || !_is_stage_ready:
 		return
-	if !Thunder.view.screen_bottom(player.global_position, falling_below_y_offset - 16, true):
-		match falling_below_screen_action:
-			1: player.die()
-			2: player.position.y -= 608
-			3 when player.warp == player.Warp.NONE:
-				assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
-				"ERROR: falling_below_warp_target contains an invalid Out Warp")
+	if Thunder.view.screen_bottom(player.global_position, falling_below_y_offset - 16, true):
+		return
+	match falling_below_screen_action:
+		1:
+			if !Console.cv.get("starman_pit_bounce", false):
+				player.die()
+			else:
+				player.speed.y = -1200
+				const SPRINGBOARD = preload("res://engine/objects/springboard/sounds/springboard.wav")
+				var _sfx = CharacterManager.get_sound_replace(SPRINGBOARD, SPRINGBOARD, "spring_bounce", false)
+				Audio.play_sound(_sfx, player, false)
+		2: player.position.y -= 608
+		3 when player.warp == player.Warp.NONE:
+			assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
+			"ERROR: falling_below_warp_target contains an invalid Out Warp")
 
-				player.speed = Vector2.ZERO
-				falling_below_warp_target.pass_player(player)
+			player.speed = Vector2.ZERO
+			falling_below_warp_target.pass_player(player)
 
 
 func finish(walking: bool = false, walking_dir: int = 1) -> void:

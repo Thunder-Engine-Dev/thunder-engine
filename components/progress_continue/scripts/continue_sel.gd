@@ -16,6 +16,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	if "remaining_continues" in prog.profile:
 		Data.technical_values["remaining_continues"] = int(prog.profile.remaining_continues)
+	if "custom_technical_values" in prog.profile:
+		Data.technical_values.custom_saved_values = prog.profile["custom_technical_values"]
 	if "saved_player_state" in prog.profile:
 		Thunder._current_player_state = CharacterManager.get_suit(prog.profile.saved_player_state)
 		Thunder._current_player_state_path = ""

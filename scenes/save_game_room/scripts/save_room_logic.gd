@@ -14,3 +14,4 @@ func _ready() -> void:
 	Data.technical_values.remaining_continues = ProjectSettings.get_setting(
 		"application/thunder_settings/player/gameover_continues", -1
 	)
+	Data.technical_values.custom_saved_values = {}

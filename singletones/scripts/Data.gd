@@ -44,12 +44,14 @@ var values: Dictionary = {
 	stopwatch = 0.0,
 }
 
-## Internal values that require preservation between scenes, but don't have to be saved
+## Internal values that require preservation between scenes, but don't have to be saved.
+## If inside "custom_saved_values", then they are saved in the suspended profile.
 var technical_values: Dictionary = {
 	impulse_progress_continue = false,
 	remaining_continues = ProjectSettings.get_setting(
 		"application/thunder_settings/player/gameover_continues", -1
 	),
+	custom_saved_values = {}
 }
 
 @warning_ignore("unused_private_class_variable")

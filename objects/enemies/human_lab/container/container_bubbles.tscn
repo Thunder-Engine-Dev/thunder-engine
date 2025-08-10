@@ -13,7 +13,6 @@ size = Vector2(68, 24)
 script = ExtResource("2_v6nvq")
 
 [node name="BubbleBGGenerator" parent="." index="1" instance=ExtResource("3_yn4c8")]
-modulate = Color(1, 1, 1, 1)
 position = Vector2(0, 48)
 radius_x = 28.0
 gen_z_index = 0
