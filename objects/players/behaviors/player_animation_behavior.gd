@@ -174,7 +174,7 @@ func _threw() -> void:
 
 func _ground_kicked() -> void:
 	if !sprite: return
-	if !_ground_kick_tweak || player.is_holding: return
+	if !_ground_kick_tweak || player.is_holding || player.is_underwater: return
 	if sprite.animation in [&"appear", &"crouch", &"grab", &"slide"]: return
 	
 	if player.is_on_floor() || player.speed.y >= 8:

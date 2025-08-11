@@ -44,7 +44,7 @@ func _animation_non_warping_process(delta: float) -> void:
 		return _animation_sliding_process(delta)
 	# Non-climbing
 	player.skid.emitting = false
-	if player.is_underwater:
+	if player.is_underwater && !player.completed:
 		return _animation_swimming_process(delta)
 	if player.is_on_floor() || player.coyote_time > 0.0:
 		#sprite.sprite_frames.set_animation_loop(&"walk", false)
@@ -99,6 +99,11 @@ func _animation_floor_process(delta: float) -> void:
 
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false
+	if player.left_right == 0 && player.up_down == 0:
+		if sprite.animation == &"swim_idle": return
+		_play_anim(_get_animation_prefixed(&"swim_idle"))
+		return
+		
 	if player.up_down > 0 && player.left_right == 0:
 		if sprite.animation == &"swim_down": return
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=64 format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" uid="uid://bqibbs5p33x31" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://ehrcylpvvsmp" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
 [ext_resource type="Texture2D" uid="uid://xoa25by4iqkt" path="res://engine/scenes/main_menu/textures/buffer.png" id="20_b2kcq"]
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_0jxgt"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="24_fqkuj"]
 [ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="25_5v41g"]
 [ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="25_n2q6e"]
 [ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="25_stro5"]
@@ -667,6 +668,13 @@ position_padding = 16
 sprite_frames = ExtResource("24_0jxgt")
 script = ExtResource("25_v32i0")
 
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("24_fqkuj")
+menu_items_controller_path = NodePath("../Options")
+modulate_division = 4.5
+modulate_offset = 0.82
+modulate_first_child = true
+
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
 physics_interpolation_mode = 1
 process_callback = 0
@@ -770,4 +778,5 @@ autoplay = "RESET"
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]
 [connection signal="selected" from="RestartPopup/Control/VBoxContainer" to="RestartPopup/Control/Selector" method="handle_selection"]

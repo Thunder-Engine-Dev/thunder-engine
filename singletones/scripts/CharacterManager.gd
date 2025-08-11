@@ -135,7 +135,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"skid_sound_loop_delay": 0.1, # from 0.05 to 2.0
 	"head_bump_sound": false, # play global sound "block_bump" on every touch of ceiling
 	"fall_animation": true, # if false, "fall" animation and the derivatives are replaced by "jump"
-	"separate_swim_idle_animation": false,
+	"separate_swim_idle_animation": false, # "swim_idle"
 	"emit_particles": {
 		"enabled": false, # if no texture is set, the default texture will be starman particles
 		"color": "#ffffffff", # HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency
@@ -238,9 +238,19 @@ func _ready() -> void:
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Luigi")
 	
 	for i in MARIO_SUITS.keys():
+		if i == "frog":
+			var suit_tweaks_frog = DEFAULT_SUIT_TWEAKS.duplicate()
+			suit_tweaks_frog.separate_swim_idle_animation = true
+			add_suit_tweaks(suit_tweaks_frog, "Mario", i)
+			continue
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Mario", i)
 	
 	for i in LUIGI_SUITS.keys():
+		if i == "frog":
+			var suit_tweaks_frog = DEFAULT_SUIT_TWEAKS.duplicate()
+			suit_tweaks_frog.separate_swim_idle_animation = true
+			add_suit_tweaks(suit_tweaks_frog, "Luigi", i)
+			continue
 		add_suit_tweaks(DEFAULT_SUIT_TWEAKS, "Luigi", i)
 	
 	add_default_suit_sounds(MARIO_SUITS, "Mario")

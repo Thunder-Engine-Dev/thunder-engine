@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene load_steps=40 format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
 [ext_resource type="Script" uid="uid://dwy0ri4q1seia" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
@@ -15,6 +15,7 @@
 [ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_pkdou"]
 [ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_sobst"]
 [ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="15_k5vhu"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="16_jvgix"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5kct"]
 atlas = ExtResource("7_3opa8")
@@ -354,5 +355,13 @@ position_smoothing_speed = 25.0
 editor_draw_screen = false
 script = ExtResource("15_k5vhu")
 
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("16_jvgix")
+menu_items_controller_path = NodePath("../Options")
+modulate_division = 4.5
+modulate_offset = 0.82
+modulate_first_child = true
+
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]

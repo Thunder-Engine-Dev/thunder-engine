@@ -10,6 +10,7 @@ func _physics_process(delta: float) -> void:
 		valu.modulate.a = min((cos(_timer) / 4) + 0.75, 1.0)
 	else:
 		valu.modulate.a = 0.0
+		_timer = 0
 
 func _handle_select(mouse_input: bool = false) -> void:
 	# :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: :cringe: 

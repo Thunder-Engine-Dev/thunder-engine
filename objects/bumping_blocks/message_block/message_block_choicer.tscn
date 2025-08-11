@@ -35,6 +35,7 @@ offset_right = 160.0
 offset_bottom = 48.0
 
 [node name="Text3" type="Label" parent="CanvasLayer/Box/Texture" index="0"]
+physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
