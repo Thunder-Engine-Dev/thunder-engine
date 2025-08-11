@@ -4,6 +4,8 @@ extends StaticBumpingBlock
 @export var font_size: int = 18
 @export var box_size := Vector2(320, 96)
 @export var message_label_settings: LabelSettings
+@export var hide_by_accept_cancel: bool = false
+@export var hide_by_mouse_click: bool = false
 
 const MESSAGE_BLOCK = preload("res://engine/objects/bumping_blocks/message_block/message_block.wav")
 
@@ -30,7 +32,10 @@ func _physics_process(delta: float) -> void:
 	if !activated: return
 	if !get_tree().paused:
 		get_tree().paused = true
-	if Input.is_action_just_pressed(&"m_jump"):
+	
+	if Input.is_action_just_pressed(&"m_jump") || (hide_by_accept_cancel && (
+		Input.is_action_just_pressed(&"ui_accept") || Input.is_action_just_pressed(&"ui_cancel")
+	)) || (hide_by_mouse_click && Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		hide_message()
 		activated = false
 

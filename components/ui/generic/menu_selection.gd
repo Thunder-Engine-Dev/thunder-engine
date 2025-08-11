@@ -5,6 +5,9 @@ class_name MenuSelection
 const LETS = preload("res://engine/scenes/main_menu/sounds/lets.wav")
 const SELECT_ENTER = preload("res://engine/components/ui/_sounds/select_enter.wav")
 
+signal menu_selected()
+signal menu_right_clicked()
+
 ## Is this item currently selected?
 var focused: bool = false
 ## Is this item currently hovered under mouse cursor?
@@ -22,11 +25,12 @@ func _handle_focused(focus: bool) -> void:
 
 ## Called when this item has been selected, extend this
 func _handle_select(mouse_input: bool = false) -> void:
+	menu_selected.emit()
 	_play_sound()
 
 ## Called when right clicked on this item if mouse trigger is enabled, extend this
 func _handle_right_click() -> void:
-	pass
+	menu_right_clicked.emit()
 
 
 func _play_sound() -> void:

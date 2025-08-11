@@ -12,7 +12,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 		if cmd[c].debug_only:
 			_name = "[color=deep_pink]" + _name + "[/color]"
 		elif cmd[c].is_cheat:
-			_name = "[color=indian_red]" + _name + "[/color]"
+			_name = "[color=light_pink]" + _name + "[/color]"
 		msg_arr.append("\t- %s%s" % [ _name, cmd[c].get_help() ])
 	
 	message += "\n".join(msg_arr)

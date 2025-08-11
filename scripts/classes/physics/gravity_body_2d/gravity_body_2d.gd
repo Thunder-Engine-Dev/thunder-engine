@@ -33,9 +33,6 @@ const GRAVITY: float = 2500.0
 @export_group("Up Direction")
 ## If [code]true[/code], calling [method motion_process] will update [member CharacterBody2D.up_direction].
 @export var auto_update_up_direction: bool = true
-@export_group("Turning")
-@export var impulse_move_on_turn_x: bool = true
-@export var impulse_move_on_turn_y: bool = false
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
