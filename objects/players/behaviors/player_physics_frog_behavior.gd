@@ -114,13 +114,13 @@ func _movement_y(delta: float) -> void:
 			return
 		
 		if swim_delay > 0:
-			swim_delay += delta * (1 + player.jumping)
+			swim_delay += delta * (1.0 + (player.jumping * 0.9))
 			if !swim_delayed:
 				swim_delayed = true
 				player.swam.emit()
 				var _sndfx: AudioStream = config.sound_swim[randi_range(0, len(config.sound_swim) - 1)]
 				Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
-			if swim_delay > 1.2:
+			if swim_delay > 1.0:
 				swim_delay = 0
 				swim_delayed = false
 		else:
@@ -148,8 +148,12 @@ func _movement_y(delta: float) -> void:
 
 	# Jumping
 	else:
-		swim_delay = 0.01
-		swim_delayed = false
+		if swim_delay > 0.8:
+			swim_delay = 0
+		if swim_delay > 0:
+			swim_delay += delta * (0.9 + player.jumping)
+		else:
+			swim_delayed = false
 		if (player.is_on_floor() || player.coyote_time > 0.0) && (player.up_down <= 0 || player._crouch_jump_tweak):
 			if player.jumping > 0 && !player._has_jumped:
 				_stop_sliding_movement()

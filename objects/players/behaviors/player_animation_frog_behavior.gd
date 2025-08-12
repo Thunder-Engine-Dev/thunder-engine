@@ -1,5 +1,8 @@
 extends "res://engine/objects/players/behaviors/player_animation_behavior.gd"
 
+var _swim_frame_progress: float
+var _swim_frame: int
+var _can_swim_idle: bool
 
 #= Connected
 func _suit_appeared() -> void:
@@ -15,6 +18,9 @@ func _suit_appeared() -> void:
 
 func _swam() -> void:
 	if !sprite: return
+	_swim_frame_progress = 0
+	_swim_frame = 0
+	_can_swim_idle = false
 	if sprite.animation in [&"swim", &"swim_up", &"swim_down"]:
 		sprite.frame = 0
 		sprite.play()
@@ -30,6 +36,12 @@ func _sprite_loop() -> void:
 	super()
 	if sprite.animation == &"walk":
 		sprite.stop()
+
+func _sprite_finish() -> void:
+	if !sprite: return
+	super()
+	if sprite.animation != &"swim_idle":
+		_can_swim_idle = true
 
 
 #= Main
@@ -90,7 +102,7 @@ func _animation_floor_process(delta: float) -> void:
 	#	sprite.set_frame_and_progress(0, 0.8)
 	player.skid.emitting = false
 	if player.completed:
-		if sprite.animation in [&"swim", &"swim_up", &"swim_down"]:
+		if sprite.animation in [&"swim", &"swim_up", &"swim_down", &"swim_idle", &"hold_swim"]:
 			sprite.animation = _get_animation_prefixed(&"walk")
 		if sprite.animation == _get_animation_prefixed(&"walk"):
 			sprite.speed_scale = 2.4
@@ -99,34 +111,29 @@ func _animation_floor_process(delta: float) -> void:
 
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false
-	if player.left_right == 0 && player.up_down == 0:
+	if sprite.animation in [&"swim", &"swim_up", &"swim_down"]:
+		_swim_frame = sprite.get_frame()
+		_swim_frame_progress = sprite.get_frame_progress()
+	
+	if _can_swim_idle && player.left_right == 0 && player.up_down == 0:
 		if sprite.animation == &"swim_idle": return
 		_play_anim(_get_animation_prefixed(&"swim_idle"))
 		return
 		
 	if player.up_down > 0 && player.left_right == 0:
 		if sprite.animation == &"swim_down": return
-		
-		#sprite.frame = sprite.sprite_frames.get_frame_count(&"swim_down") - 1
-		var current_frame = sprite.get_frame()
-		var current_progress = sprite.get_frame_progress()
 		_play_anim(&"swim_down" if !player.is_holding else &"hold_swim")
-		sprite.set_frame_and_progress(current_frame, current_progress)
+		sprite.set_frame_and_progress(_swim_frame, _swim_frame_progress)
 
 	elif player.up_down < 0 && player.left_right == 0:
 		if sprite.animation == &"swim_up": return
-		
-		var current_frame = sprite.get_frame()
-		var current_progress = sprite.get_frame_progress()
 		_play_anim(&"swim_up" if !player.is_holding else &"hold_swim")
-		sprite.set_frame_and_progress(current_frame, current_progress)
+		sprite.set_frame_and_progress(_swim_frame, _swim_frame_progress)
 		
 	else:
 		if sprite.animation == &"swim": return
-		var current_frame = sprite.get_frame()
-		var current_progress = sprite.get_frame_progress()
 		_play_anim(_get_animation_prefixed(&"swim"))
-		sprite.set_frame_and_progress(current_frame, current_progress)
+		sprite.set_frame_and_progress(_swim_frame, _swim_frame_progress)
 
 
 func _animation_warping_process() -> void:
