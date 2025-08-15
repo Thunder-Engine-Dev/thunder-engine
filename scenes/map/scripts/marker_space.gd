@@ -72,8 +72,8 @@ func _ready() -> void:
 		if !_next_space.changed.is_connected(queue_redraw):
 			_next_space.changed.connect(queue_redraw)
 	
-	if draw_dots:
-		build_dots()
+	#if draw_dots:
+	#	build_dots()
 	
 	if !Engine.is_editor_hint():
 		if allow_saving && _stored_selected_marker:
@@ -258,22 +258,19 @@ func make_dot(pos: Vector2) -> void:
 
 func make_dots_visible_before(current_marker: MapPlayerMarker) -> void:
 	var found: int = -1
-	var pos: Vector2 = current_marker.global_position
+	var pos: Vector2 = Vector2(current_marker.global_position / 32).round()
 	
 	for i in len(dots_mapping):
-		var dot_pos = dots_mapping[i][0]
-		#print(round(dot_pos.x / 32), " ", round(pos.x / 32), " : ", round(dot_pos.y / 32), " ", round(pos.y / 32))
+		var dot_pos: Vector2 = Vector2(dots_mapping[i][0] / 32).round()
+		#print(dot_pos.x, " ", pos.x, " : ", dot_pos.y, " ", pos.y)
 		
-		if (
-			round(dot_pos.x / 32) == round(pos.x / 32) &&
-			round(dot_pos.y / 32) == round(pos.y / 32) &&
-			dots_mapping[i][1] is AnimatedSprite2D
-		):
+		if dot_pos.x == pos.x && dot_pos.y == pos.y:
 			found = i
 			break
 	
 	while found >= 0:
-		dots_mapping[found][1].visible = true
+		if dots_mapping[found][1] is AnimatedSprite2D:
+			dots_mapping[found][1].visible = true
 		found -= 1
 
 
@@ -358,12 +355,14 @@ func dot_building_logic(child: MapPlayerMarker, next_child: Node2D) -> void:
 	var computed_interval = length / amount
 	
 	for dot in range(amount):
+		var f_pos = child.global_position + direction * (dot * computed_interval)
+		if !Engine.is_editor_hint():
+			dots_mapping.append([f_pos, child])
 		if dot == 0:
 			if child.is_level():
+				#print(child)
 				continue
-		var f_pos = child.global_position + direction * (dot * computed_interval)
 		dots.push_back(f_pos)
-		dots_mapping.append([f_pos, child])
 
 
 # Updates lines

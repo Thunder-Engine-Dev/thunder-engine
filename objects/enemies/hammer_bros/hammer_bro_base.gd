@@ -155,6 +155,9 @@ func _on_walk_timeout() -> void:
 
 # Attack
 func _on_attack_timeout() -> void:
+	if is_queued_for_deletion():
+		print("Patching hammer bro projectile creation")
+		return
 	match _step_attacking:
 		# Detection for attack
 		0:

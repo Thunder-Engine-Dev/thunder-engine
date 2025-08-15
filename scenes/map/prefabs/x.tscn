@@ -4,5 +4,7 @@
 [ext_resource type="Script" uid="uid://d0fxwixde64aw" path="res://engine/scenes/map/scripts/map_x_marker.gd" id="2_s5auh"]
 
 [node name="X" type="Sprite2D"]
+z_index = 1
 texture = ExtResource("1_y1ote")
+offset = Vector2(-1, -1)
 script = ExtResource("2_s5auh")

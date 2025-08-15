@@ -7,6 +7,7 @@ extends GeneralMovementBody2D
 @onready var solid_checker: Area2D = $SolidChecker
 @onready var col: CollisionShape2D = $Collision
 @onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
+@onready var enemy_attacked: Node = $Body/EnemyAttacked
 
 var collision_enabled: bool = false
 var _is_ready: bool = false
@@ -29,10 +30,13 @@ func _physics_process(delta: float) -> void:
 			col.set_deferred(&"disabled", false)
 	
 	if collision_enabled && is_on_floor():
-		_create_spiny()
+		_create_spiny.call_deferred()
 
 
 func _create_spiny() -> void:
+	if is_queued_for_deletion():
+		#print("Spiny egg queued for deletion, cancelling spiny creation!")
+		return
 	NodeCreator.prepare_ins_2d(spiny_creation, self).create_2d().call_method(func(node):
 		var spr = node.get_node(node.sprite)
 		if "free_offscreen" in spr:

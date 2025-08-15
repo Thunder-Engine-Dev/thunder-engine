@@ -208,7 +208,7 @@ texture = ExtResource("8_vc1bf")
 
 [node name="Head" type="ShapeCast2D" parent="."]
 visible = false
-position = Vector2(0, -12)
+position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_2r881")
 target_position = Vector2(0, -2)
 max_results = 16

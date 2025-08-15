@@ -3,6 +3,7 @@ extends Control
 
 @export var border_color: Color = Color.BLUE
 @onready var area: Area2D = $Area2D
+@export var border_enabled: bool = true
 
 
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
+	if !border_enabled: return
 	draw_set_transform(-global_position, rotation, Vector2.ONE)
 	draw_rect(get_rect().abs(), border_color, false, 4)
 

@@ -69,6 +69,7 @@ animations = [{
 [sub_resource type="AtlasTexture" id="AtlasTexture_igr41"]
 atlas = ExtResource("10_6slpf")
 region = Rect2(0, 33, 31, 31)
+filter_clip = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3cd5"]
 size = Vector2(32, 31)

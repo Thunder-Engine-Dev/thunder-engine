@@ -393,9 +393,11 @@ func save_data(data: Dictionary, to_path: String, id: String = "Custom", prettif
 
 
 ## Restarts the application
-func restart_application() -> void:
-	var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
-	var cmd_args: PackedStringArray = [menu_path]
+func restart_application(start_on_menu: bool = true) -> void:
+	var cmd_args := PackedStringArray([])
+	if start_on_menu:
+		var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
+		cmd_args = PackedStringArray([menu_path])
 	cmd_args.append_array(OS.get_cmdline_args())
 	OS.set_restart_on_exit(true, cmd_args)
 	get_tree().quit()
