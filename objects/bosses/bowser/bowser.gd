@@ -268,7 +268,7 @@ func die(corpse_intro: bool = true) -> void:
 	tween_hurt_blinking = null
 	if health > 0: health = 0
 	
-	if finish_on_death && trigger.has_method(&"stop_music"):
+	if finish_on_death && trigger && trigger.has_method(&"stop_music"):
 		if Thunder.autosplitter.can_split_on("boss_defeat"):
 			Thunder.autosplitter.split("Boss Defeat")
 		Scenes.current_scene.set_meta(&"boss_got_defeated", true)

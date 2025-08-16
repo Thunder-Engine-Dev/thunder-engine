@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhfwqgt43qcg5"]
+
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://engine/objects/effects/wide_clouds_moving/texture.png" id="1_ps7pc"]
+[ext_resource type="Script" uid="uid://cg3pyfbjfcydc" path="res://engine/objects/effects/wide_clouds_moving/wide_clouds_moving.gd" id="2_xqkwd"]
+
+[node name="WideCloudsMoving2" type="Sprite2D"]
+z_index = 25
+texture_repeat = 2
+texture = ExtResource("1_ps7pc")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("2_xqkwd")
+speed = 100.0

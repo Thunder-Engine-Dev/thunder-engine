@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmpxknv0aw4o8"]
+
+[ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_1tovy"]
+[ext_resource type="Texture2D" uid="uid://f5m8lxtm1527" path="res://engine/objects/platform/castle_platforms/platform_castle_small.png" id="2_4e13b"]
+
+[node name="PlatformPath" instance=ExtResource("1_1tovy")]
+
+[node name="CollisionPolygon2D" parent="Block" index="0"]
+polygon = PackedVector2Array(-16, 0, 16, 0, 16, 34, -16, 34)
+
+[node name="Sprite2D" parent="Block" index="1"]
+position = Vector2(0, 16)
+texture = ExtResource("2_4e13b")

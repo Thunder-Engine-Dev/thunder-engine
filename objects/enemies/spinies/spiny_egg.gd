@@ -7,7 +7,6 @@ extends GeneralMovementBody2D
 @onready var solid_checker: Area2D = $SolidChecker
 @onready var col: CollisionShape2D = $Collision
 @onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
-@onready var enemy_attacked: Node = $Body/EnemyAttacked
 
 var collision_enabled: bool = false
 var _is_ready: bool = false

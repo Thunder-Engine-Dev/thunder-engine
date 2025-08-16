@@ -30,7 +30,10 @@ func execute(args:Array) -> Command.ExecuteResult:
 	#cam.offset = area.get_rect().position + (area.get_viewport_rect().size / 2)
 	
 	RenderingServer.frame_post_draw.connect(func():
-		GlobalViewport.vp.get_texture().get_image().save_png("user://Screenshot.png")
+		if !DirAccess.dir_exists_absolute("user://screenshots"):
+			DirAccess.make_dir_absolute("user://screenshots")
+		var filename := get_unique_filename("user://screenshots", "Screenshot_", ".png")
+		GlobalViewport.vp.get_texture().get_image().save_png(filename)
 		GlobalViewport.size = old_size
 		GlobalViewport.vp.size = old_size
 		if hud && old_visible:
@@ -41,4 +44,16 @@ func execute(args:Array) -> Command.ExecuteResult:
 		GlobalViewport._update_view()
 	, CONNECT_ONE_SHOT)
 	
-	return Command.ExecuteResult.new("Success; screenshot has been saved to %s" % [OS.get_user_data_dir()])
+	return Command.ExecuteResult.new("Success. [url=%s]Open directory with the image[/url]" % [
+		OS.get_user_data_dir().path_join("screenshots")
+	])
+
+func get_unique_filename(base_path: String, base_name: String, extension: String) -> String:
+	var counter: int = 1
+	var file_path: String = base_path + "/" + base_name + str(counter) + extension
+
+	while FileAccess.file_exists(file_path):
+		counter += 1
+		file_path = base_path + "/" + base_name + str(counter) + extension
+		
+	return file_path

@@ -74,6 +74,7 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"menu_select_short": [],
 	"fireball_bump": [],
 	"stun": [],
+	"stun_beetroot": [],
 	"starman": [],
 	"bowser_hurt": [],
 	#"bowser_fall": [],

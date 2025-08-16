@@ -68,6 +68,8 @@ func _add_effect(player: Node2D) -> void:
 func _remove_effects(_p: Node2D = null) -> void:
 	if keep_without_player && _p != null && Thunder._current_player && Thunder._current_player.is_dying:
 		return
+	if _p != null && !_p is Player:
+		return
 	var sound_channel := audio.get_bus_index(&"Sound")
 	for i in audio.get_bus_effect_count(sound_channel):
 		audio.remove_bus_effect(sound_channel, i)

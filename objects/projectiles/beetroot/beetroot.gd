@@ -40,7 +40,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	if bounces_left <= 0: return
 	
 	if with_sound:
-		var _sfx = CharacterManager.get_sound_replace(STUN, STUN, "stun", false)
+		var _sfx = CharacterManager.get_sound_replace(STUN, STUN, "stun_beetroot", false)
 		Audio.play_sound(_sfx, self)
 	
 	process_bumping_blocks()
