@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0f1uy0wgci6x"]
+[gd_scene load_steps=14 format=3 uid="uid://b0f1uy0wgci6x"]
 
 [ext_resource type="Script" uid="uid://bxq57dbowstxt" path="res://engine/objects/powerups/powerup.gd" id="1_qfrll"]
 [ext_resource type="Texture2D" uid="uid://cy6delerkofbo" path="res://engine/objects/powerups/ice_flower/texture.png" id="3_0ewov"]
@@ -6,7 +6,10 @@
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_n1n7i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1t3xg"]
+size = Vector2(31, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e20fa"]
 atlas = ExtResource("3_0ewov")
@@ -67,6 +70,7 @@ gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
@@ -75,7 +79,7 @@ collision_layer = 4
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
 visible = false
-shape = SubResource("RectangleShape2D_w2yun")
+shape = SubResource("RectangleShape2D_1t3xg")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

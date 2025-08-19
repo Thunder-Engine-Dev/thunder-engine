@@ -7,7 +7,7 @@ func _ready() -> void:
 	# Body in/out of water
 	body_entered.connect(
 		func(body: Node2D) -> void:
-			if body.has_node("Underwater"):
+			if body.has_node("Underwater") && !body.get(&"is_underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.in_water()
 				if !_is_ready:
@@ -21,7 +21,7 @@ func _ready() -> void:
 		func(body: Node2D) -> void:
 			if !is_instance_valid(body) || body.is_queued_for_deletion():
 				return
-			if body.has_node("Underwater"):
+			if body.has_node("Underwater") && body.get(&"is_underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
 				if !_is_ready:

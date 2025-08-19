@@ -14,7 +14,7 @@ func _ready() -> void:
 			if body == Thunder._current_player:
 				if !body.is_starman():
 					body.die()
-				elif body.has_node("Underwater"):
+				elif body.has_node("Underwater") && !body.get(&"is_underwater"):
 					var underwater: Node = body.get_node("Underwater")
 					underwater.in_water()
 					Thunder._connect(body.timer_starman.timeout, _player_death_after_starman, CONNECT_ONE_SHOT)
@@ -37,7 +37,7 @@ func _ready() -> void:
 		func(body: Node2D) -> void:
 			if !is_instance_valid(body) || body.is_queued_for_deletion():
 				return
-			if body == Thunder._current_player && body.is_starman() && body.has_node("Underwater"):
+			if body == Thunder._current_player && body.is_starman() && body.has_node("Underwater") && body.get(&"is_underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
 				Thunder._disconnect(body.timer_starman.timeout, _player_death_after_starman)
