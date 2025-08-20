@@ -32,7 +32,9 @@ func _physics_process(delta):
 	target_node.test_move(target_node.global_transform, Vector2.DOWN.rotated(target_node.global_rotation), kc)
 	if kc:
 		var collider: = kc.get_collider()
-		if collider && collider.is_in_group(scene_group_name):
+		if collider && (
+			scene_group_name.is_empty() || (scene_group_name && collider.is_in_group(scene_group_name))
+		):
 			_player = target_node
 			_logic()
 	
