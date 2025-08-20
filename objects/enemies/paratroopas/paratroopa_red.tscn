@@ -43,22 +43,22 @@ custom_vars = {
 }
 custom_script = ExtResource("3_vffgk")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ae7p0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_irof6"]
 atlas = ExtResource("5_q8vae")
-region = Rect2(0, 0, 31, 48)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dc6fw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uumhy"]
 atlas = ExtResource("5_q8vae")
-region = Rect2(31, 0, 31, 48)
+region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xquq7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_82uh0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ae7p0")
+"texture": SubResource("AtlasTexture_irof6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dc6fw")
+"texture": SubResource("AtlasTexture_uumhy")
 }],
 "loop": true,
 "name": &"default",
@@ -91,7 +91,7 @@ killing_creation = SubResource("Resource_nghi6")
 metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
 [node name="Sprite" parent="." index="1"]
-sprite_frames = SubResource("SpriteFrames_xquq7")
+sprite_frames = SubResource("SpriteFrames_82uh0")
 
 [node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_x6d0m")

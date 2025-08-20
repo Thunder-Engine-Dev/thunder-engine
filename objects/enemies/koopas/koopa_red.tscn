@@ -42,22 +42,22 @@ custom_vars = {
 }
 custom_script = ExtResource("3_okgwa")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_675ia"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_irof6"]
 atlas = ExtResource("5_0ec7t")
-region = Rect2(0, 0, 31, 48)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ll87i"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uumhy"]
 atlas = ExtResource("5_0ec7t")
-region = Rect2(31, 0, 31, 48)
+region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_82uh0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_675ia")
+"texture": SubResource("AtlasTexture_irof6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ll87i")
+"texture": SubResource("AtlasTexture_uumhy")
 }],
 "loop": true,
 "name": &"default",
@@ -96,7 +96,6 @@ hit_from_inside = true
 script = ExtResource("5_d1njq")
 
 [node name="Sprite" parent="." index="3"]
-position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_82uh0")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
