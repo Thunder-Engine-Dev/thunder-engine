@@ -69,11 +69,14 @@ var _path_falling_speed: float
 var _movement_blocked: bool = false
 
 func _ready() -> void:
+	_detach_platform_block.call_deferred()
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:
+	_fix_position()
+	
 	if !on_moving: return
-	if get_child_count() == 0: return
+	if get_child_count() == 0 && !is_instance_valid(block): return
 	
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
@@ -124,7 +127,7 @@ func _on_path_movement_process(delta: float) -> void:
 		else: _sharp_movement()
 	
 	if falling_acceleration != 0:
-		position += linear_velocity * Thunder.get_delta(delta)
+		global_position += linear_velocity * Thunder.get_delta(delta)
 	
 	#linear_velocity = (global_position - pos) / delta
 	# Emit Falling
@@ -182,3 +185,23 @@ func _smooth_movement(delta: float) -> void:
 func _sign_up_points() -> void:
 	for i in smooth_points: smooth_next_points.append(curve.get_point_position(i))
 	if speed < 0.0: smooth_next_points.reverse()
+
+
+var _par: Node
+func _find_parent_to_detach() -> void:
+	while _par is Path2D || _par == self:
+		_par = _par.get_parent()
+	print('found parent', _par)
+
+
+func _detach_platform_block() -> void:
+	_par = block.get_parent()
+	_find_parent_to_detach()
+	block.reparent(_par)
+	_fix_position()
+
+func _fix_position() -> void:
+	if block.includes_path_follow: return
+	var _player = Thunder._current_player
+	var _set_pos: Vector2 = global_position.round()
+	block.global_position = _set_pos

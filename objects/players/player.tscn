@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://1do11cr84k7y"]
+[gd_scene load_steps=29 format=3 uid="uid://1do11cr84k7y"]
 
 [ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="1_ojh72"]
 [ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="2_2saki"]
 [ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
+[ext_resource type="Script" uid="uid://dwvmw4hh4t2v6" path="res://engine/objects/players/player_sprite.gd" id="4_ng5qt"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
 [ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
@@ -159,6 +160,7 @@ z_index = 5
 material = ExtResource("2_2saki")
 sprite_frames = ExtResource("3_uy3nm")
 offset = Vector2(0, -16)
+script = ExtResource("4_ng5qt")
 
 [node name="Stars" type="CPUParticles2D" parent="Sprite"]
 show_behind_parent = true

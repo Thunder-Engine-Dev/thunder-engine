@@ -30,7 +30,7 @@ func _draw() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if includes_path_follow:
-		global_position = _path_follow.global_position
+		_set_position()
 	
 	if correction_on_player_falling:
 		var player = Thunder._current_player
@@ -51,3 +51,8 @@ func _physics_process(_delta: float) -> void:
 			return
 		if _path_follow.progress < _edge || _path_follow.progress + _edge > _path_follow.max_progress:
 			reset_physics_interpolation()
+
+func _set_position() -> void:
+	var _player = Thunder._current_player
+	var _set_pos: Vector2 = _path_follow.global_position.round()
+	global_position = _set_pos

@@ -109,6 +109,7 @@ var ignore_input: bool:
 var _force_suit: bool
 var _suit_appear: bool
 var _suit_tree_paused: bool
+var _sprite_ready: bool = false
 
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
@@ -199,6 +200,8 @@ func _ready() -> void:
 		if Data.values.lives == -1 && death_check_for_lives:
 			Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 	).call_deferred()
+	
+	_detach_sprite.call_deferred()
 
 
 var _starman_faded: bool
@@ -465,3 +468,13 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 
 func _on_settings_updated() -> void:
 	skid.visible = SettingsManager.get_quality() != SettingsManager.QUALITY.MIN
+
+
+func _detach_sprite() -> void:
+	sprite.reparent(get_parent())
+	_sprite_ready = true
+
+
+func _exit_tree() -> void:
+	if !_sprite_ready: return
+	sprite.queue_free()
