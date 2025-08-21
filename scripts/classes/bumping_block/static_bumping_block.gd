@@ -34,7 +34,8 @@ var _triggered: bool = false
 @export var initially_visible_and_solid: bool = true:
 	set(to):
 		initially_visible_and_solid = to
-		if !Engine.is_editor_hint(): return
+		if !Engine.is_editor_hint() && !Console.cv.item_display_shown:
+			return
 		if !initially_visible_and_solid:
 			$Sprites.modulate.a = 0.25
 		else:
@@ -82,6 +83,8 @@ func _ready() -> void:
 			_collision_shape_2d.set_deferred(&"disabled", true)
 		_ignore_colliding_body_correction = !initially_visible_and_solid
 		_sprites.visible = initially_visible_and_solid
+		if Console.cv.item_display_shown:
+			_sprites.visible = true
 		
 		if appear_sound && appear_sound == DEFAULT_APPEAR:
 			appear_sound = CharacterManager.get_sound_replace(appear_sound, DEFAULT_APPEAR, "block_appear", false)
@@ -107,6 +110,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if !active: return
 	
 	_sprites.visible = true
+	if Console.cv.item_display_shown:
+		_sprites.modulate.a = 1
 	_ignore_colliding_body_correction = false
 	if !initially_visible_and_solid:
 		collision_layer = collision_layer_ori

@@ -14,8 +14,11 @@ func _ready() -> void:
 	visible = false
 	if includes_path_follow:
 		_set_position.call_deferred()
-	while is_inside_tree() && (get_tree().paused || TransitionManager.current_transition):
+	while is_inside_tree():
 		await get_tree().physics_frame
+		var trans := TransitionManager.current_transition
+		if !is_instance_valid(trans): break
+		if trans.name != "crossfade_transition": break
 	await get_tree().physics_frame
 	
 	if includes_path_follow:
