@@ -460,7 +460,7 @@ func _on_starman_timeout() -> void:
 		elif !mus_loader.buffer.is_empty():
 			mus_loader.play_immediately = true
 			mus_loader.play_buffered()
-			print("Played buffered")
+			print("Buffered play")
 
 
 func _on_starman_killed(what: Node, result: Dictionary) -> void:

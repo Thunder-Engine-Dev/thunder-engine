@@ -11,15 +11,20 @@ func _ready() -> void:
 	physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	if !is_shape_owner_one_way_collision_enabled(0):
 		correction_on_player_falling = false
+	visible = false
 	if includes_path_follow:
-		visible = false
 		_set_position.call_deferred()
-		#reset_physics_interpolation()
-		#reset_physics_interpolation.call_deferred()
+	while is_inside_tree() && (get_tree().paused || TransitionManager.current_transition):
+		await get_tree().physics_frame
 	await get_tree().physics_frame
+	
 	if includes_path_follow:
 		visible = _path_follow.visible
+	else:
+		visible = true
+	#print("set to visible.")
 	physics_interpolation_mode = old_interp
+	reset_physics_interpolation.call_deferred()
 
 
 # Forward the method call to the main platform script.
@@ -62,15 +67,8 @@ func _physics_process(_delta: float) -> void:
 		if _path_follow.progress < _edge || _path_follow.progress + _edge > _path_follow.max_progress:
 			reset_physics_interpolation()
 
-#var _is_broken = false
 func _set_position() -> void:
 	if !is_instance_valid(_path_follow):
-		#_is_broken = true
-		#visible = false
 		return
-	#if _is_broken:
-		#_is_broken = false
-		#visible = true
-	#var _player = Thunder._current_player
 	var _set_pos: Vector2 = _path_follow.global_position.round()
 	global_position = _set_pos
