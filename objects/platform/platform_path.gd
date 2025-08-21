@@ -78,6 +78,7 @@ func _physics_process(delta: float) -> void:
 	
 	if !on_moving: return
 	if get_child_count() == 0 && !is_instance_valid(block): return
+	if !_block_ready: return
 	
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
@@ -192,18 +193,25 @@ var _par: Node
 func _find_parent_to_detach() -> void:
 	while _par is Path2D || _par == self:
 		_par = _par.get_parent()
+		if _par == get_tree().root:
+			_par = null
+			break
 
 
 func _detach_platform_block() -> void:
 	_par = block.get_parent()
 	_find_parent_to_detach()
+	if !_par:
+		printerr("Unable to find a parent of " + name)
+		return
 	block.reparent(_par)
 	_fix_position()
+	if modulate != Color.WHITE:
+		block.modulate = modulate
 	_block_ready = true
 
 func _fix_position() -> void:
 	if block.includes_path_follow: return
-	var _player = Thunder._current_player
 	var _set_pos: Vector2 = global_position.round()
 	block.global_position = _set_pos
 

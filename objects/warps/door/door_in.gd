@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 			@warning_ignore("int_as_enum_without_cast")
 			player.warp_dir = int(player.direction > 0)
 			player.global_position = pos_player.global_position
+			player.sync_position()
 			player.speed = Vector2.ZERO
 			Audio.play_sound(warping_sound, self, false)
 			Thunder._current_hud.timer.paused = true
@@ -73,6 +74,7 @@ func _physics_process(delta: float) -> void:
 	
 	if _duration < _target:
 		player.global_position = pos_player.global_position
+		player.sync_position()
 		player.sprite.play(&"default")
 		_duration += delta
 	
@@ -110,7 +112,7 @@ func _circle_transition() -> void:
 	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
 		_gotoscene_patch = true
-		if player && "sprite" in player && player.sprite:
+		if player && player.sprite:
 			player.sprite.visible = false
 		pass_warp()
 		TransitionManager.accept_transition(

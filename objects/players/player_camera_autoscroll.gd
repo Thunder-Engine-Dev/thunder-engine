@@ -8,7 +8,7 @@ extends PathFollow2D
 
 var _stopped: bool
 
-@onready var player = Thunder._current_player
+@onready var player := Thunder._current_player
 
 signal scroll_stopped
 

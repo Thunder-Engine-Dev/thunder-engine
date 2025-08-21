@@ -36,8 +36,10 @@ func _physics_process(delta):
 	if !player.test_move(player.global_transform, Vector2.ZERO):
 		if !(_is_frog && player.left_right != 0):
 			player.global_position.x += delta * sucking_motion.x * signf(pos.x - p_pos.x)
+			player.sync_position()
 		if !(_is_frog && player.up_down != 0):
 			player.global_position.y += delta * sucking_motion.y * signf(pos.y - p_pos.y)
+			player.sync_position()
 	if !camera: return
 	camera.teleport()
 		

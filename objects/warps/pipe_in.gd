@@ -129,25 +129,30 @@ func _warp_initiator() -> void:
 			#	Thunder.autosplitter.split("World Warp")
 		player.warp = Player.Warp.IN
 		player.warp_dir = warp_direction
-		if !warp_disable_smooth_entry:
-			var pos_tw = create_tween()
-			pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
-		else:
-			player.global_position = pos_player.global_position
-		player.sprite_container.z_index = -5
 		player.speed = Vector2.ZERO
-		if is_instance_valid(Thunder._current_camera):
-			Thunder._current_camera.teleport()
+		player.sprite_container.z_index = -5
 		var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_in", true)
 		if warping_sound == WARP_CUTSCENE:
 			_custom_sound = CharacterManager.get_sound_replace(WARP_CUTSCENE, WARP_CUTSCENE, "pipe_cutscene", false)
 		Audio.play_sound(_custom_sound, self, false)
 		Thunder._current_hud.timer.paused = true
+		
+		if !warp_disable_smooth_entry:
+			var pos_tw = create_tween()
+			pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
+			while pos_tw && pos_tw.is_running():
+				player.sync_position()
+				await get_tree().physics_frame
+				if !is_inside_tree() || !is_instance_valid(player): break
+		else:
+			player.global_position = pos_player.global_position
+			player.sync_position()
 
 
 func _warping_process(delta: float) -> void:
 	if _duration < _target:
 		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
+		player.sync_position()
 		_duration += delta
 		_tweak_process()
 

@@ -7,11 +7,19 @@ extends StaticBody2D
 @onready var init_collision_margin = get_shape_owner_one_way_collision_margin(0)
 
 func _ready() -> void:
-	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
+	var old_interp = physics_interpolation_mode
+	physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	if !is_shape_owner_one_way_collision_enabled(0):
 		correction_on_player_falling = false
 	if includes_path_follow:
-		_set_position()
+		visible = false
+		_set_position.call_deferred()
+		#reset_physics_interpolation()
+		#reset_physics_interpolation.call_deferred()
+	await get_tree().physics_frame
+	if includes_path_follow:
+		visible = _path_follow.visible
+	physics_interpolation_mode = old_interp
 
 
 # Forward the method call to the main platform script.
@@ -54,15 +62,15 @@ func _physics_process(_delta: float) -> void:
 		if _path_follow.progress < _edge || _path_follow.progress + _edge > _path_follow.max_progress:
 			reset_physics_interpolation()
 
-var _is_broken = false
+#var _is_broken = false
 func _set_position() -> void:
 	if !is_instance_valid(_path_follow):
-		_is_broken = true
-		visible = false
+		#_is_broken = true
+		#visible = false
 		return
-	if _is_broken:
-		_is_broken = false
-		visible = true
-	var _player = Thunder._current_player
+	#if _is_broken:
+		#_is_broken = false
+		#visible = true
+	#var _player = Thunder._current_player
 	var _set_pos: Vector2 = _path_follow.global_position.round()
 	global_position = _set_pos

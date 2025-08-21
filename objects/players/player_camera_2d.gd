@@ -45,6 +45,7 @@ func _physics_process(delta: float) -> void:
 
 func teleport(sync_position_only = false, reset_interpolation: bool = false) -> void:
 	player = Thunder._current_player
+	if player && player.is_queued_for_deletion(): return
 	if !par is PathFollow2D && player:
 		global_position = player.global_position.round()
 		if reset_interpolation:
@@ -72,12 +73,14 @@ func _screen_border_logic() -> void:
 			left_col = enable_left_border_death
 			if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
 				player.vel_set_x.call_deferred(0)
+			player.sync_position.call_deferred(false)
 		while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - border_push_offset:
 			kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
 			left_col = false
 			right_col = enable_right_border_death
 			if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
 				player.vel_set_x.call_deferred(0)
+			player.sync_position.call_deferred(false)
 		if kc && kc.get_collider() && (left_col || right_col):
 			player.die()
 

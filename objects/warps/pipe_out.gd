@@ -41,6 +41,7 @@ func _physics_process(delta: float) -> void:
 	if !is_instance_valid(player): return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
+	player.sync_position()
 	_tweak_process()
 
 

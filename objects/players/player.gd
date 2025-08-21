@@ -437,6 +437,14 @@ func is_starman() -> bool:
 	return !timer_starman.is_stopped()
 
 
+func sync_position(sync_camera: bool = true) -> void:
+	sprite_container.global_position = global_position.round()
+	if !sync_camera: return
+	var cam: Camera2D = Thunder._current_camera
+	if cam && cam is PlayerCamera2D:
+		cam.teleport(true)
+
+
 func _on_starman_timeout() -> void:
 	starman_combo.reset_combo()
 	sprite.material.set_shader_parameter(&"mixing", false)
@@ -474,6 +482,7 @@ func _on_settings_updated() -> void:
 func _detach_sprite() -> void:
 	sprite_container.reparent(get_parent())
 	Thunder.reorder_on_top_of(sprite_container, self)
+	sprite_container.reset_physics_interpolation()
 	_sprite_ready = true
 
 
@@ -483,7 +492,7 @@ func _exit_tree() -> void:
 
 func _on_reset_interpolation() -> void:
 	if !is_instance_valid(sprite_container): return
-	sprite_container.reset_physics_interpolation()
+	sprite_container.reset_physics_interpolation.call_deferred()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
