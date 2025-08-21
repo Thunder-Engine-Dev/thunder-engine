@@ -75,3 +75,6 @@ func _set_position() -> void:
 		return
 	var _set_pos: Vector2 = _path_follow.global_position.round()
 	global_position = _set_pos
+	modulate = _path_follow.modulate
+	z_index = _path_follow.z_index
+	material = _path_follow.material

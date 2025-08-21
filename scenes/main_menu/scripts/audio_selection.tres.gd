@@ -49,11 +49,11 @@ func _input(event: InputEvent) -> void:
 	
 	var old_value = SettingsManager.settings[type]
 	if event.is_action("ui_right"):
-		SettingsManager.settings[type] = clamp(old_value + 0.1, 0, 1)
+		SettingsManager.settings[type] = clampf(old_value + 0.1, 0.0, 1.0)
 		_toggled_option(old_value, SettingsManager.settings[type])
 		
 	if event.is_action("ui_left"):
-		SettingsManager.settings[type] = clamp(old_value - 0.1, 0, 1)
+		SettingsManager.settings[type] = clampf(old_value - 0.1, 0.0, 1.0)
 		_toggled_option(old_value, SettingsManager.settings[type])
 
 

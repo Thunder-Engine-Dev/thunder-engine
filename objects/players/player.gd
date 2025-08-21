@@ -488,6 +488,9 @@ func _detach_sprite() -> void:
 
 func _exit_tree() -> void:
 	if !_sprite_ready: return
+	if !is_instance_valid(sprite_container):
+		assert(false, "Trying to free an already freed sprite container")
+		return
 	sprite_container.queue_free()
 
 func _on_reset_interpolation() -> void:
