@@ -15,5 +15,6 @@ dest_files=["res://.godot/imported/main_menu.xm-ec86f2c723a6e84ca1ba3f4b64bdec01
 force/mono=false
 playback/loop_mode=1
 playback/interpolation=2
+playback/emulate_amiga_filter=0
 load/skip_plugins=false
 load/skip_subsongs_init=false

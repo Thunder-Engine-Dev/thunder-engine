@@ -106,7 +106,7 @@ func _physics_process(delta: float) -> void:
 		var _warp_tweak = CharacterManager.get_suit_tweak("warp_animation", "", player.suit.name)
 		target_node.global_position = get_target_hold_position(_warp_tweak)
 		if _match_z_index:
-			target_node.z_index = player.z_index + int(_warp_tweak)
+			target_node.z_index = player.sprite_container.z_index + int(_warp_tweak)
 
 	if !_grabbed && _wait_until_floor && target_node.is_on_floor():
 		var pl = Thunder._current_player

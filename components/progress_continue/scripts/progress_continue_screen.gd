@@ -87,7 +87,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 func trigger_pipe() -> void:
 	var player: Player = Thunder._current_player
 	_pipe_out.player = player
-	_pipe_out.player_z_index = player.z_index
+	_pipe_out.player_z_index = player.sprite_container.z_index
 	player.speed = Vector2.ZERO
 	player.no_movement = false
 	_pipe_out.pass_player.call_deferred(player)

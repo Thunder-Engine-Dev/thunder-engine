@@ -118,7 +118,7 @@ func _warp_initiator() -> void:
 		pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 16)
 
 	if _on_warp:
-		player_z_index = player.z_index
+		player_z_index = player.sprite_container.z_index
 
 		warp_started.emit()
 		if !warp_to_scene.is_empty() && !Scenes.current_scene is LevelCutscene:
@@ -134,7 +134,7 @@ func _warp_initiator() -> void:
 			pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
 		else:
 			player.global_position = pos_player.global_position
-		player.z_index = -5
+		player.sprite_container.z_index = -5
 		player.speed = Vector2.ZERO
 		if is_instance_valid(Thunder._current_camera):
 			Thunder._current_camera.teleport()

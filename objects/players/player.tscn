@@ -133,6 +133,7 @@ sound_skid = [ExtResource("16_i8gk3")]
 metadata/_custom_type_script = "uid://bh0t8gurod3pp"
 
 [node name="Player" type="CharacterBody2D"]
+physics_interpolation_mode = 2
 collision_mask = 16
 slide_on_ceiling = false
 floor_max_angle = 0.837758
@@ -155,14 +156,16 @@ target_position = Vector2(0, 0)
 collision_mask = 16
 hit_from_inside = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="SpriteContainer" type="Node2D" parent="."]
+script = ExtResource("4_ng5qt")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="SpriteContainer"]
 z_index = 5
 material = ExtResource("2_2saki")
 sprite_frames = ExtResource("3_uy3nm")
 offset = Vector2(0, -16)
-script = ExtResource("4_ng5qt")
 
-[node name="Stars" type="CPUParticles2D" parent="Sprite"]
+[node name="Stars" type="CPUParticles2D" parent="SpriteContainer/Sprite"]
 show_behind_parent = true
 emitting = false
 amount = 24
@@ -180,7 +183,7 @@ scale_amount_min = 0.1
 scale_amount_max = 0.3
 scale_amount_curve = SubResource("Curve_61d7b")
 
-[node name="SkinParticles" type="GPUParticles2D" parent="Sprite"]
+[node name="SkinParticles" type="GPUParticles2D" parent="SpriteContainer/Sprite"]
 show_behind_parent = true
 emitting = false
 amount = 48
@@ -191,7 +194,7 @@ visibility_rect = Rect2(-128, -128, 256, 256)
 process_material = SubResource("ParticleProcessMaterial_s67vk")
 script = ExtResource("7_wegjq")
 
-[node name="Skid" type="CPUParticles2D" parent="Sprite"]
+[node name="Skid" type="CPUParticles2D" parent="SpriteContainer/Sprite"]
 show_behind_parent = true
 position = Vector2(0, 15)
 emitting = false

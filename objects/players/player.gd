@@ -130,7 +130,8 @@ var _sprite_ready: bool = false
 
 @onready var force_override_death_sound: bool = false
 
-@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var sprite_container: Node2D = $SpriteContainer
+@onready var sprite: AnimatedSprite2D = $SpriteContainer/Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var collision_recovery: RayCast2D = $CollisionRecovery
 @onready var body: ShapeCast2D = $Body
@@ -140,9 +141,9 @@ var _sprite_ready: bool = false
 @onready var timer_starman: Timer = $Starman
 @onready var attack: ShapeCast2D = $Attack
 @onready var bubbler: Timer = $Underwater/Bubbler
-@onready var stars: CPUParticles2D = $Sprite/Stars
-@onready var skid: CPUParticles2D = $Sprite/Skid
-@onready var skin_particles: GPUParticles2D = $Sprite/SkinParticles
+@onready var stars: CPUParticles2D = $SpriteContainer/Sprite/Stars
+@onready var skid: CPUParticles2D = $SpriteContainer/Sprite/Skid
+@onready var skin_particles: GPUParticles2D = $SpriteContainer/Sprite/SkinParticles
 @onready var death_sprite: Sprite2D = $SpriteDeath
 
 
@@ -471,10 +472,19 @@ func _on_settings_updated() -> void:
 
 
 func _detach_sprite() -> void:
-	sprite.reparent(get_parent())
+	sprite_container.reparent(get_parent())
+	Thunder.reorder_on_top_of(sprite_container, self)
 	_sprite_ready = true
 
 
 func _exit_tree() -> void:
 	if !_sprite_ready: return
-	sprite.queue_free()
+	sprite_container.queue_free()
+
+func _on_reset_interpolation() -> void:
+	if !is_instance_valid(sprite_container): return
+	sprite_container.reset_physics_interpolation()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
+		_on_reset_interpolation()

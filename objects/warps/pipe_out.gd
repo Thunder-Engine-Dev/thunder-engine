@@ -28,7 +28,7 @@ func _ready() -> void:
 	
 	if trigger_immediately && Data.values.checkpoint == -1:
 		player = Thunder._current_player
-		player_z_index = player.z_index
+		player_z_index = player.sprite_container.z_index
 		player.speed = Vector2.ZERO
 		player.warp = Player.Warp.OUT
 		pass_player.call_deferred(player)
@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
 		player.warp = Player.Warp.NONE
-		player.z_index = player_z_index
+		player.sprite_container.z_index = player_z_index
 		player = null
 		Thunder._current_hud.timer.paused = false
 		
@@ -73,7 +73,7 @@ func pass_player(new_player: Player) -> void:
 	player = new_player
 	
 	# Recover z_index if called directly
-	player_z_index = player.z_index
+	player_z_index = player.sprite_container.z_index
 	
 	var player_warp_dir: Player.WarpDir
 	
@@ -99,7 +99,7 @@ func pass_player(new_player: Player) -> void:
 		
 	
 	player.warp_dir = player_warp_dir
-	player.z_index = -5
+	player.sprite_container.z_index = -5
 	player.warp = Player.Warp.OUT
 	
 	await get_tree().physics_frame

@@ -41,6 +41,7 @@ var non_players_have_stood: bool
 
 var linear_velocity: Vector2
 var _path_falling_speed: float
+var _block_ready: bool = false
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: StaticBody2D = $Block
@@ -191,7 +192,6 @@ var _par: Node
 func _find_parent_to_detach() -> void:
 	while _par is Path2D || _par == self:
 		_par = _par.get_parent()
-	print('found parent', _par)
 
 
 func _detach_platform_block() -> void:
@@ -199,9 +199,14 @@ func _detach_platform_block() -> void:
 	_find_parent_to_detach()
 	block.reparent(_par)
 	_fix_position()
+	_block_ready = true
 
 func _fix_position() -> void:
 	if block.includes_path_follow: return
 	var _player = Thunder._current_player
 	var _set_pos: Vector2 = global_position.round()
 	block.global_position = _set_pos
+
+func _exit_tree() -> void:
+	if !_block_ready: return
+	block.queue_free()

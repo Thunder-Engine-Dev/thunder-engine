@@ -47,7 +47,6 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 	player = Thunder._current_player
 	if !par is PathFollow2D && player:
 		global_position = player.global_position.round()
-		print("camera", global_position)
 		if reset_interpolation:
 			reset_physics_interpolation()
 			_xscroll = 0
