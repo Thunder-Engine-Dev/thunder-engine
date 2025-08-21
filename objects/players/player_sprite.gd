@@ -14,3 +14,4 @@ func _set_pos() -> void:
 	global_rotation = node.global_rotation
 	visible = node.visible
 	scale = node.scale
+	modulate = node.modulate
