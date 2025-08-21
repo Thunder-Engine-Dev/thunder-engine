@@ -205,6 +205,7 @@ func _detach_platform_block() -> void:
 		printerr("Unable to find a parent of " + name)
 		return
 	block.reparent(_par)
+	Thunder.reorder_on_top_of(block, self)
 	_fix_position()
 	if modulate != Color.WHITE:
 		block.modulate = modulate
