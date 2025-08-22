@@ -7,27 +7,27 @@ extends StaticBody2D
 @onready var init_collision_margin = get_shape_owner_one_way_collision_margin(0)
 
 func _ready() -> void:
-	var old_interp = physics_interpolation_mode
-	physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
+	#var old_interp = physics_interpolation_mode
+	#physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF
 	if !is_shape_owner_one_way_collision_enabled(0):
 		correction_on_player_falling = false
-	visible = false
+	#visible = false
 	if includes_path_follow:
-		_set_position.call_deferred()
-	while is_inside_tree():
-		await get_tree().physics_frame
-		var trans := TransitionManager.current_transition
-		if !is_instance_valid(trans): break
-		if trans.name != "crossfade_transition": break
-	await get_tree().physics_frame
-	
-	if includes_path_follow:
-		visible = _path_follow.visible
-	else:
-		visible = true
+		_set_position()
+	#while is_inside_tree():
+		#await get_tree().physics_frame
+		#var trans := TransitionManager.current_transition
+		#if !is_instance_valid(trans): break
+		#if trans.name != "crossfade_transition": break
+	#await get_tree().physics_frame
+	#
+	#if includes_path_follow:
+		#visible = _path_follow.visible
+	#else:
+		#visible = true
 	#print("set to visible.")
-	physics_interpolation_mode = old_interp
-	reset_physics_interpolation.call_deferred()
+	#physics_interpolation_mode = old_interp
+	#reset_physics_interpolation.call_deferred()
 
 
 # Forward the method call to the main platform script.
@@ -48,7 +48,8 @@ func _draw() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if includes_path_follow:
-		_set_position()
+		global_position = _path_follow.global_position
+		#_set_position()
 	
 	if correction_on_player_falling:
 		var player = Thunder._current_player
@@ -73,8 +74,8 @@ func _physics_process(_delta: float) -> void:
 func _set_position() -> void:
 	if !is_instance_valid(_path_follow):
 		return
-	var _set_pos: Vector2 = _path_follow.global_position.round()
+	var _set_pos: Vector2 = _path_follow.global_position#.round()
 	global_position = _set_pos
-	modulate = _path_follow.modulate
-	z_index = _path_follow.z_index
-	material = _path_follow.material
+	#modulate = _path_follow.modulate
+	#z_index = _path_follow.z_index
+	#material = _path_follow.material

@@ -133,7 +133,6 @@ sound_skid = [ExtResource("16_i8gk3")]
 metadata/_custom_type_script = "uid://bh0t8gurod3pp"
 
 [node name="Player" type="CharacterBody2D"]
-physics_interpolation_mode = 2
 collision_mask = 16
 slide_on_ceiling = false
 floor_max_angle = 0.837758

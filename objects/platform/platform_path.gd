@@ -41,7 +41,7 @@ var non_players_have_stood: bool
 
 var linear_velocity: Vector2
 var _path_falling_speed: float
-var _block_ready: bool = false
+#var _block_ready: bool = false
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: StaticBody2D = $Block
@@ -70,15 +70,15 @@ var _block_ready: bool = false
 var _movement_blocked: bool = false
 
 func _ready() -> void:
-	_detach_platform_block.call_deferred()
+	#_detach_platform_block.call_deferred()
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:
-	_fix_position()
+	#_fix_position()
 	
 	if !on_moving: return
 	if get_child_count() == 0 && !is_instance_valid(block): return
-	if !_block_ready: return
+	#if !_block_ready: return
 	
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
@@ -189,33 +189,33 @@ func _sign_up_points() -> void:
 	if speed < 0.0: smooth_next_points.reverse()
 
 
-var _par: Node
-func _find_parent_to_detach() -> void:
-	while _par is Path2D || _par == self:
-		_par = _par.get_parent()
-		if _par == get_tree().root:
-			_par = null
-			break
-
-
-func _detach_platform_block() -> void:
-	_par = block.get_parent()
-	_find_parent_to_detach()
-	if !_par:
-		printerr("Unable to find a parent of " + name)
-		return
-	block.reparent(_par)
-	Thunder.reorder_on_top_of(block, self)
-	_fix_position()
-	if modulate != Color.WHITE:
-		block.modulate = modulate
-	_block_ready = true
+#var _par: Node
+#func _find_parent_to_detach() -> void:
+	#while _par is Path2D || _par == self:
+		#_par = _par.get_parent()
+		#if _par == get_tree().root:
+			#_par = null
+			#break
+#
+#
+#func _detach_platform_block() -> void:
+	#_par = block.get_parent()
+	#_find_parent_to_detach()
+	#if !_par:
+		#printerr("Unable to find a parent of " + name)
+		#return
+	#block.reparent(_par)
+	#Thunder.reorder_on_top_of(block, self)
+	#_fix_position()
+	#if modulate != Color.WHITE:
+		#block.modulate = modulate
+	#_block_ready = true
 
 func _fix_position() -> void:
 	if block.includes_path_follow: return
 	var _set_pos: Vector2 = global_position.round()
 	block.global_position = _set_pos
 
-func _exit_tree() -> void:
-	if !_block_ready: return
-	block.queue_free()
+#func _exit_tree() -> void:
+	#if !_block_ready: return
+	#block.queue_free()

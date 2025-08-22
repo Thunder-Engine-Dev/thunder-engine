@@ -438,7 +438,7 @@ func is_starman() -> bool:
 
 
 func sync_position(sync_camera: bool = true) -> void:
-	sprite_container.global_position = global_position.round()
+	#sprite_container.global_position = global_position.round()
 	if !sync_camera: return
 	var cam: Camera2D = Thunder._current_camera
 	if cam && cam is PlayerCamera2D:
@@ -480,23 +480,23 @@ func _on_settings_updated() -> void:
 
 
 func _detach_sprite() -> void:
-	sprite_container.reparent(get_parent())
-	Thunder.reorder_on_top_of(sprite_container, self)
-	sprite_container.reset_physics_interpolation()
+#	sprite_container.reparent(get_parent())
+#	Thunder.reorder_on_top_of(sprite_container, self)
+#	sprite_container.reset_physics_interpolation()
 	_sprite_ready = true
 
 
-func _exit_tree() -> void:
-	if !_sprite_ready: return
-	if !is_instance_valid(sprite_container):
-		assert(false, "Trying to free an already freed sprite container")
-		return
-	sprite_container.queue_free()
+#func _exit_tree() -> void:
+	#if !_sprite_ready: return
+	#if !is_instance_valid(sprite_container):
+		#assert(false, "Trying to free an already freed sprite container")
+		#return
+	#sprite_container.queue_free()
 
 func _on_reset_interpolation() -> void:
 	if !is_instance_valid(sprite_container): return
 	sprite_container.reset_physics_interpolation.call_deferred()
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
-		_on_reset_interpolation()
+#func _notification(what: int) -> void:
+	#if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
+		#_on_reset_interpolation()
