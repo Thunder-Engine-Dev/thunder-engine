@@ -40,6 +40,8 @@ signal level_completed
 @export_enum("Nothing", "Death", "Wrap", "Pipe Warp") var falling_below_screen_action: int = 1
 ## Modifies the bottom line that detect player as "falling below the screen"
 @export var falling_below_y_offset: float = 64.0
+## When screen wrapping, teleport the player on Y axis by this amount of pixels
+@export var falling_below_wrap_teleport_by: float = -608.0
 ## Warp out node, if Screen Action is set to Pipe Warp
 @export_node_path("Area2D") var falling_below_warp_to: NodePath
 
@@ -164,7 +166,9 @@ func _physics_process(delta: float) -> void:
 				const SPRINGBOARD = preload("res://engine/objects/springboard/sounds/springboard.wav")
 				var _sfx = CharacterManager.get_sound_replace(SPRINGBOARD, SPRINGBOARD, "spring_bounce", false)
 				Audio.play_sound(_sfx, player, false)
-		2: player.position.y -= 608
+		2:
+			player.position.y += falling_below_wrap_teleport_by
+			player.reset_physics_interpolation()
 		3 when player.warp == player.Warp.NONE:
 			assert(falling_below_warp_target && falling_below_warp_target.has_method("pass_player"),
 			"ERROR: falling_below_warp_target contains an invalid Out Warp")
