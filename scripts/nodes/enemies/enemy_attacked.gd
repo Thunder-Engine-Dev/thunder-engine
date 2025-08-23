@@ -66,6 +66,7 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 	Data.ATTACKERS.iceblock: false,
 	Data.ATTACKERS.hammer: false,
 	Data.ATTACKERS.boomerang: false,
+	Data.ATTACKERS.lava: false,
 	
 }
 ## Corpse of the enemy killed by the attacker

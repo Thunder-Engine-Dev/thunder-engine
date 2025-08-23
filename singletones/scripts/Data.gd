@@ -12,7 +12,8 @@ const ATTACKERS: Dictionary = {
 	iceball = &"iceball",
 	iceblock = &"iceblock",
 	hammer = &"hammer",
-	boomerang = &"boomerang"
+	boomerang = &"boomerang",
+	lava = &"lava",
 }
 
 var LIFE_SOUND = preload("res://engine/objects/players/prefabs/sounds/1up.wav")

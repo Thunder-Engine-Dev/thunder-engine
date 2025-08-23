@@ -31,6 +31,11 @@ func _ready() -> void:
 				if area.has_method(&"got_in_lava"):
 					area.got_in_lava()
 					area_got_in_lava_at.emit(area.global_position)
+			if area.has_node(^"EnemyAttacked"):
+				var enemy_att = area.get_node(^"EnemyAttacked")
+				if enemy_att.killing_immune.has(&"lava"):
+					if enemy_att.killing_immune.lava == false:
+						enemy_att.got_killed(&"lava", [&"no_score"])
 	)
 	
 	body_exited.connect(
