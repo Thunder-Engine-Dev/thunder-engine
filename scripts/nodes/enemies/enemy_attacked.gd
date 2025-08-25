@@ -134,8 +134,12 @@ signal killed_succeeded
 signal killed_failed
 ## Emitted when the type of enemy attack is marked as "signal"
 signal attack_custom_signal
-## Emitted when the enemy gets frozen.
+## Emitted when the enemy gets frozen
 signal killed_frozen
+## Emitted when the enemy gets killed successfully, with attacker name
+signal killed_succeeded_by(attacker: StringName)
+## Emitted when the enemy blocks the attacker, with attacker name
+signal killed_failed_by(attacker: StringName)
 
 var _on_killed: bool # To prevent multiple creation by multiple attackers
 
@@ -249,6 +253,7 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 	if by != &"self" && killing_immune[by]:
 		if trigger_killed_failed:
 			killed_failed.emit()
+			killed_failed_by.emit(by)
 		
 		result = {
 			result = false,
@@ -296,6 +301,7 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 			shell_attack = true
 		
 		killed_succeeded.emit()
+		killed_succeeded_by.emit(by)
 		
 		_creation(killing_creation)
 		
