@@ -13,13 +13,14 @@ class_name GeneralMovementBody2D
 @export var turn_sprite: bool = true
 ##
 @export var slide: bool
+## How many seconds the enemy should live. When elapsed, disappears off-screen. 0 to disable
+@export var life_time: float
 @export_group("References")
 ##
 @export var sprite: NodePath
 @export_node_path("VisibleOnScreenNotifier2D") var visible_on_screen_notifier := NodePath("VisibleOnScreenEnabler2D")
 
 var dir: int
-var life_time: float
 
 @onready var sprite_node: Node2D = get_node_or_null(sprite)
 @onready var vis_notifier_node: VisibleOnScreenNotifier2D = get_node_or_null(visible_on_screen_notifier)

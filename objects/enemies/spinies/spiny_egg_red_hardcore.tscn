@@ -54,7 +54,7 @@ animations = [{
 [node name="SpinyRedEggHardcore" instance=ExtResource("1_t2l00")]
 spiny_creation = SubResource("Resource_wwk28")
 rotation_speed = 11.25
-free_offscreen = true
+life_time = 3.0
 gravity_scale = 0.3
 
 [node name="EnemyAttacked" parent="Body" index="1"]
