@@ -251,11 +251,13 @@ func hurt(_external_damage_source: bool = false) -> void:
 	, CONNECT_ONE_SHOT)
 
 # Hurt from bullets
-func bullet_hurt() -> void:
+func bullet_hurt(attacker: StringName) -> void:
 	if tween_hurt: return
 	
+	if attacker == &"beetroot":
+		_bullet_received += 1
 	_bullet_received += 1
-	if _bullet_received >= hardness:
+	if _bullet_received >= hardness || attacker == &"head":
 		_bullet_received = 0
 		hurt(true)
 

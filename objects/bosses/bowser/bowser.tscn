@@ -391,5 +391,5 @@ script = ExtResource("17_ilmyo")
 [node name="attack_burst" type="Node" parent="."]
 script = ExtResource("17_7x414")
 
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
+[connection signal="killed_succeeded_by" from="Body/EnemyAttacked" to="." method="bullet_hurt"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="hurt"]
