@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5uo5vjv642ag"]
+[gd_scene load_steps=5 format=3 uid="uid://b5uo5vjv642ag"]
 
 [ext_resource type="Shader" uid="uid://bgsmsk3a4qlel" path="res://engine/singletones/nodes/viewport/bilinear_scaling.gdshader" id="1_sowlm"]
 [ext_resource type="Script" uid="uid://cq5ehm8ukqur8" path="res://engine/singletones/nodes/viewport/viewport.gd" id="2_qdvbk"]
+[ext_resource type="Script" uid="uid://cntkbsj4bsxdl" path="res://engine/singletones/nodes/viewport/debug_player_speed.gd" id="3_8cgfx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aijpq"]
 shader = ExtResource("1_sowlm")
@@ -56,3 +57,27 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 ratio = 1.3333
+
+[node name="PlayerSpeed" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -26.0
+offset_top = -1.0
+offset_right = -3.0
+offset_bottom = 29.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 12
+text = "%.2f
+%.2f"
+horizontal_alignment = 2
+script = ExtResource("3_8cgfx")
