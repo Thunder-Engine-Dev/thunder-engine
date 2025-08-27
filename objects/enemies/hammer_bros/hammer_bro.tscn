@@ -147,7 +147,7 @@ texture = ExtResource("11_8ytaf")
 
 [node name="PosAttack" type="Marker2D" parent="."]
 visible = false
-position = Vector2(8, -17)
+position = Vector2(6, -17)
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)

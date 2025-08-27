@@ -161,7 +161,7 @@ metadata/_edit_lock_ = true
 
 [node name="PosAttack" type="Marker2D" parent="."]
 visible = false
-position = Vector2(8, -17)
+position = Vector2(6, -17)
 
 [node name="Attack" type="Timer" parent="."]
 wait_time = 0.06
