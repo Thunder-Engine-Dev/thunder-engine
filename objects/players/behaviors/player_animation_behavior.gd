@@ -75,7 +75,7 @@ func _swam() -> void:
 	if !sprite: return
 	if sprite.animation == &"swim" && sprite.frame > 1: sprite.frame = 0
 	if sprite.animation == &"swim_idle":
-		sprite.animation = &"swim"
+		_play_anim(_get_animation_prefixed(&"swim"))
 		sprite.frame = 0
 
 
@@ -310,7 +310,7 @@ func _animation_climbing_process(delta: float) -> void:
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false
 	if _swim_idle_tweak && !sprite.animation in [_get_animation_prefixed(&"swim"), &"swim_idle"] && !player.jumped:
-		_play_anim(&"swim_idle")
+		_play_anim(&"swim_idle" if !player.is_holding else &"hold_swim")
 		return
 	if _swim_idle_tweak && sprite.animation == &"swim_idle":
 		return
