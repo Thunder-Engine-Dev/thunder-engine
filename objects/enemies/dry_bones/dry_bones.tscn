@@ -105,7 +105,7 @@ visible = false
 shape = SubResource("RectangleShape2D_lhh31")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_sb3ce")

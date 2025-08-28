@@ -220,6 +220,7 @@ func hurt(_external_damage_source: bool = false) -> void:
 		var _sfx = CharacterManager.get_sound_replace(hurt_sound, hurt_sound, "bowser_hurt", false)
 		Audio.play_sound(_sfx, self)
 		health -= 1
+		Thunder.autosplitter.update_il_counter()
 	if health <= 0:
 		die()
 		return
@@ -265,6 +266,7 @@ func bullet_hurt(attacker: StringName) -> void:
 # Bowser's death
 func die(corpse_intro: bool = true) -> void:
 	print("[Game] Boss defeated.")
+	Thunder.autosplitter.update_il_counter()
 	var _sfx = CharacterManager.get_sound_replace(death_sound, death_sound, "bowser_be_happy", false)
 	Audio.play_sound(_sfx, self)
 	tween_hurt_blinking = null

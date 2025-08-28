@@ -73,7 +73,7 @@ func _suit_appeared() -> void:
 
 func _swam() -> void:
 	if !sprite: return
-	if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
+	if sprite.animation == &"swim" && sprite.frame > 1: sprite.frame = 0
 	if sprite.animation == &"swim_idle":
 		sprite.animation = &"swim"
 		sprite.frame = 0

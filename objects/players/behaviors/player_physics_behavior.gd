@@ -4,6 +4,8 @@ var player: Player
 var suit: PlayerSuit
 var config: PlayerConfig
 var can_coyote: bool
+var is_max_speed: bool
+var _old_is_max_speed: bool
 
 
 func _ready() -> void:
@@ -88,6 +90,11 @@ func _movement_x(delta: float) -> void:
 				return
 	_movement_x_recovery(delta)
 	player.is_able_to_skid = false
+	is_max_speed = is_equal_approx(abs(player.speed.x), config.walk_max_running_speed)
+	if _old_is_max_speed != is_max_speed:
+		if is_max_speed:
+			Thunder.autosplitter.update_il_counter()
+		_old_is_max_speed = is_max_speed
 	
 	if player.is_on_floor():
 		player.crouch_forced = player.is_crouching && player._crouch_jump_tweak
@@ -291,6 +298,12 @@ func _movement_sliding(delta: float) -> void:
 		decel.call(50)
 		if abs(player.speed.x) < 1 || player.left_right != 0:
 			_stop_sliding_movement()
+	
+	is_max_speed = is_equal_approx(abs(player.speed.x), config.slide_max_speed)
+	if _old_is_max_speed != is_max_speed:
+		if is_max_speed:
+			Thunder.autosplitter.update_il_counter()
+		_old_is_max_speed = is_max_speed
 	
 	if player.up_down > 0:
 		return

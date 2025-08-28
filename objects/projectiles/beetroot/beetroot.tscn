@@ -8,13 +8,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
 size = Vector2(20, 32)
 
-[node name="Beetroot" type="CharacterBody2D"]
+[node name="Beetroot" type="CharacterBody2D" groups=["#lava_body"]]
 collision_layer = 4
 collision_mask = 192
 script = ExtResource("1_qd3dy")
 speed = Vector2(120, -300)
 gravity_scale = 0.4
-impulse_move_on_turn_x = false
 correct_collision = false
 
 [node name="Texture" type="Sprite2D" parent="."]

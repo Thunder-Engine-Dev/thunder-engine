@@ -52,6 +52,8 @@ func load_scene_deferred(scene: Node) -> void:
 	scene_changed.emit(current_scene)
 	if Thunder.autosplitter.get_conf("pause_on_loading"):
 		Thunder.autosplitter.unpause_igt()
+	Thunder.autosplitter.il_internal = 0
+	Thunder.autosplitter.update_il_counter()
 	scene_ready.emit()
 
 
@@ -72,6 +74,8 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	scene_changed.emit(current_scene)
 	if Thunder.autosplitter.get_conf("pause_on_loading"):
 		Thunder.autosplitter.unpause_igt()
+	Thunder.autosplitter.il_internal = 0
+	Thunder.autosplitter.update_il_counter()
 	scene_ready.emit()
 	get_tree().paused = false
 

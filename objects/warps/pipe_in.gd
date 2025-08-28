@@ -121,6 +121,7 @@ func _warp_initiator() -> void:
 		player_z_index = player.sprite_container.z_index
 
 		warp_started.emit()
+		Thunder.autosplitter.update_il_counter()
 		if !warp_to_scene.is_empty() && !Scenes.current_scene is LevelCutscene:
 			if Scenes.current_scene.has_meta(&"save_room_level"):
 				if Thunder.autosplitter.can_start_on("save_room"):

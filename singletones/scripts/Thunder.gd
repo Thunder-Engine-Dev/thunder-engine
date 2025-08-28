@@ -107,6 +107,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !autosplitter.has_closed:
 		autosplitter.update()
+	autosplitter.il_internal += 1
 
 
 ## Add lives for [member _current_player][br]
@@ -402,6 +403,7 @@ class AutoSplitter:
 	var has_connected: bool
 	var has_closed: bool
 	var il_frame: int = 0
+	var il_internal: int = 0
 	
 	func _init() -> void:
 		var loaded_config := SettingsManager.load_data(ASWS_CONFIG_PATH, "AutoSplitter")
@@ -490,3 +492,6 @@ class AutoSplitter:
 	## "save_room"
 	func can_reset_on(what: String) -> bool:
 		return get_conf("reset_on").has(what)
+	
+	func update_il_counter() -> void:
+		il_frame = il_internal
