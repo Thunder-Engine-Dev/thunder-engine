@@ -74,6 +74,9 @@ func _suit_appeared() -> void:
 func _swam() -> void:
 	if !sprite: return
 	if sprite.animation == &"swim" && sprite.frame > 2: sprite.frame = 0
+	if sprite.animation == &"swim_idle":
+		sprite.animation = &"swim"
+		sprite.frame = 0
 
 
 func _shot() -> void:
@@ -136,7 +139,7 @@ func _sprite_finish() -> void:
 			_idle_timer = 0.0
 		&"attack_air":
 			if player.is_underwater:
-				return _play_anim(&"swim")
+				return _play_anim(&"swim" if !_swim_idle_tweak else &"swim_idle")
 			_play_anim(&"jump" if player.speed.y < 0 else &"fall")
 		&"swim" when _swim_idle_tweak:
 			_play_anim(&"swim_idle")
@@ -261,7 +264,7 @@ func _animation_floor_process(delta: float) -> void:
 		)
 	else:
 		_p_run_enabled = false
-		if player.up_down == -1 && !player.is_holding && _look_up_tweak:
+		if player.up_down == -1 && _look_up_tweak:
 			if Input.is_action_just_pressed(&"m_up"):
 				var _sfx = CharacterManager.get_sound_replace(null, null, "look_up", true)
 				Audio.play_sound(_sfx, player, false)
@@ -306,6 +309,9 @@ func _animation_climbing_process(delta: float) -> void:
 
 func _animation_swimming_process(delta: float) -> void:
 	_p_run_enabled = false
+	if _swim_idle_tweak && !sprite.animation in [_get_animation_prefixed(&"swim"), &"swim_idle"] && !player.jumped:
+		_play_anim(&"swim_idle")
+		return
 	if _swim_idle_tweak && sprite.animation == &"swim_idle":
 		return
 	_play_anim(_get_animation_prefixed(&"swim"))

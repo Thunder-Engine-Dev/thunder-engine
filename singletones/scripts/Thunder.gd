@@ -401,6 +401,7 @@ class AutoSplitter:
 	var config: Dictionary = default_config
 	var has_connected: bool
 	var has_closed: bool
+	var il_frame: int = 0
 	
 	func _init() -> void:
 		var loaded_config := SettingsManager.load_data(ASWS_CONFIG_PATH, "AutoSplitter")

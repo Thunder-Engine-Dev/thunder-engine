@@ -1,6 +1,6 @@
 extends Label
 
-@onready var template := "%.2f\n%.2f"
+@onready var template := "%.2f\n%.2f\n%d"
 
 func _ready() -> void:
 	hide()
@@ -14,5 +14,5 @@ func _physics_process(delta: float) -> void:
 	if !pl:
 		text = "--"
 		return
-	text = template % [pl.speed.x, pl.speed.y]
+	text = template % [pl.speed.x, pl.speed.y, Thunder.autosplitter.il_frame]
 	

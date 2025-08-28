@@ -78,6 +78,7 @@ theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 0
 theme_override_font_sizes/font_size = 12
 text = "%.2f
-%.2f"
+%.2f
+%d"
 horizontal_alignment = 2
 script = ExtResource("3_8cgfx")
