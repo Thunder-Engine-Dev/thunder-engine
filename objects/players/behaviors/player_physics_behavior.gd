@@ -217,6 +217,7 @@ func _movement_y(delta: float) -> void:
 				player.coyote_time = 0.0
 				player.ghost_speed_y = 0.0
 				player.jump(config.jump_speed)
+				Thunder.autosplitter.update_il_counter()
 				if player.is_crouching && player._crouch_jump_tweak:
 					player.crouch_forced = player.up_down > 0
 				var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
@@ -232,6 +233,7 @@ func _movement_y(delta: float) -> void:
 	if player._super_jump_tweak && player.ghost_speed_y < 0.0 && !player.is_on_floor():
 		player.speed.y = player.ghost_speed_y
 		player.ghost_speed_y = 0.0
+		Thunder.autosplitter.update_il_counter()
 	if !player.jumping && player.speed.y >= 0:
 		player._has_jumped = false
 
@@ -256,6 +258,7 @@ func _movement_climbing(delta: float) -> void:
 		if sign(player.left_right) != 0:
 			player.direction = sign(player.left_right)
 		player.jump(config.jump_speed)
+		Thunder.autosplitter.update_il_counter()
 		var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
 		Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
 
