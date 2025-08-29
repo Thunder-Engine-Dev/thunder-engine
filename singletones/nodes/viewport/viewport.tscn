@@ -76,7 +76,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = -3
 theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "%.2f
 %.2f
 %d"
