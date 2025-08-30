@@ -33,9 +33,9 @@ func _create_spiny() -> void:
 	if is_queued_for_deletion():
 		#print("Spiny egg queued for deletion, cancelling spiny creation!")
 		return
-	NodeCreator.prepare_ins_2d(spiny_creation, self).create_2d().call_method(func(node):
+	NodeCreator.prepare_ins_2d(spiny_creation, self).execute_instance_script().create_2d().call_method(func(node):
 		var spr = node.get_node(node.sprite)
 		if spr.sprite_frames.has_animation(&"appear"):
 			spr.play(&"appear")
-	).execute_instance_script()
+	)
 	queue_free()
