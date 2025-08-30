@@ -90,7 +90,6 @@ animations = [{
 [node name="KoopaParatroopaGreen" type="Node2D" groups=["#circle"]]
 script = ExtResource("1_nfn03")
 amplitude = Vector2(0, 50)
-phase = 179.952
 frequency = 2.0
 random_phase = true
 sprite_path = NodePath("Sprite")
