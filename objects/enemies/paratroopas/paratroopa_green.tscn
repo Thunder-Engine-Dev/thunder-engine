@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://dp2mvur34jdbv"]
 
-[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="1_1t3xj"]
+[ext_resource type="Script" uid="uid://c7rfddc57l6oj" path="res://engine/objects/enemies/paratroopas/paratroopa_green.gd" id="1_nfn03"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qci5y"]
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="3_j2mvx"]
 [ext_resource type="Script" uid="uid://jk1chlh3hlmf" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="4_c143b"]
@@ -88,10 +88,10 @@ animations = [{
 }]
 
 [node name="KoopaParatroopaGreen" type="Node2D" groups=["#circle"]]
-script = ExtResource("1_1t3xj")
+script = ExtResource("1_nfn03")
 amplitude = Vector2(0, 50)
-random_phase = true
 frequency = 2.0
+random_phase = true
 sprite_path = NodePath("Sprite")
 metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"]
 
