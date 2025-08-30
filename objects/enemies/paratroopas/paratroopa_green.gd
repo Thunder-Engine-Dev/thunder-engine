@@ -79,7 +79,8 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = (facing < 0 && facing != 0)
 
 func randomize_phase():
-	var undo_redo = EditorInterface.get_editor_undo_redo()
+	var undo_redo = Engine.get_singleton(&"EditorInterface").get_editor_undo_redo()
+	if !undo_redo: return
 	undo_redo.create_action("Randomized Paratroopa Phase")
 	undo_redo.add_do_property(self, &"phase", randf_range(0, 360))
 	undo_redo.add_undo_property(self, &"phase", phase)
