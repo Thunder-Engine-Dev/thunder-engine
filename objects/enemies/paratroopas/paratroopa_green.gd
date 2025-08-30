@@ -7,7 +7,6 @@ enum FacingMethod {
 	Y_COSINE
 }
 
-@export_group("Physics")
 @export var amplitude: Vector2 = Vector2(50, 50)
 @export_range(0, 360, 0.01, "suffix: °") var phase: float = -1.0
 @export_tool_button("Randomize Phase", "RandomNumberGenerator") var set_random_phase = randomize_phase
