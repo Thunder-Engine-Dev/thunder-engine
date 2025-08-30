@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://b5gdceq2m1qmo"]
+
+[ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_supui"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_xgnul"]
+[ext_resource type="PackedScene" uid="uid://b0f1uy0wgci6x" path="res://engine/objects/powerups/ice_flower/ice_flower.tscn" id="3_afeuy"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="4_6bv2x"]
+[ext_resource type="Texture2D" uid="uid://cy6delerkofbo" path="res://engine/objects/powerups/ice_flower/texture.png" id="5_gwgss"]
+
+[sub_resource type="Resource" id="Resource_jhvsf"]
+resource_local_to_scene = true
+script = ExtResource("4_6bv2x")
+creation_fallback_node = ExtResource("2_xgnul")
+creation_nodepack = ExtResource("3_afeuy")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e20fa"]
+atlas = ExtResource("5_gwgss")
+region = Rect2(0, 0, 32, 32)
+
+[node name="IceFlowerQuestionBlock" instance=ExtResource("1_supui")]
+result = SubResource("Resource_jhvsf")
+
+[node name="ItemDisplayer" parent="Sprites" index="2"]
+texture = SubResource("AtlasTexture_e20fa")

@@ -152,3 +152,4 @@ metadata/_edit_lock_ = true
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/Wings" method="fall"]
