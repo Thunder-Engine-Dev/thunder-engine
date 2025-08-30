@@ -86,7 +86,7 @@ func _animation_floor_process(delta: float) -> void:
 	else:
 		_p_run_enabled = false
 		if !(player.sprite.animation == &"walk" && player.sprite.is_playing()):
-			if player.up_down == -1 && !player.is_holding && _look_up_tweak:
+			if player.up_down == -1 && _look_up_tweak:
 				if Input.is_action_just_pressed(&"m_up"):
 					var _sfx = CharacterManager.get_sound_replace(null, null, "look_up", true)
 					Audio.play_sound(_sfx, player, false)
