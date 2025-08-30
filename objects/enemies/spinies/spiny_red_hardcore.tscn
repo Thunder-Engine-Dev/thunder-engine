@@ -25,7 +25,6 @@ custom_vars = {
 custom_script = ExtResource("3_hesdv")
 
 [node name="SpinyRedHardcore" instance=ExtResource("1_neak0")]
-life_time = 4.0
 speed = Vector2(100, 0)
 
 [node name="EnemyAttacked" parent="Body" index="1"]

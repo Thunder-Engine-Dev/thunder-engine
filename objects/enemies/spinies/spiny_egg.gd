@@ -37,5 +37,5 @@ func _create_spiny() -> void:
 		var spr = node.get_node(node.sprite)
 		if spr.sprite_frames.has_animation(&"appear"):
 			spr.play(&"appear")
-	)
+	).execute_instance_script()
 	queue_free()
