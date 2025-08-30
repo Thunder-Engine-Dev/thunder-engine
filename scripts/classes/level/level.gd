@@ -213,10 +213,19 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	await get_tree().physics_frame
 	if completion_music:
 		await get_tree().create_timer(completion_music_delay_sec, false, false, true).timeout
+	
+	# In case the player dies after finish line (e.g. falling in a pit or by touching lava)
+	if !Thunder._current_player:
+		print_verbose("[Level] Player not found, aborting the level completion sequence.")
+		return
 
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
 			await get_tree().create_timer(0.8, false, false).timeout
+			# Do not switch scenes if game over screen is opened, might be rare but just in case
+			if Scenes.custom_scenes.get("game_over"):
+				if Scenes.custom_scenes.game_over.get("opened"):
+					return
 			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 			Data.values.checkpoint = -1
 			Data.values.checked_cps = []
