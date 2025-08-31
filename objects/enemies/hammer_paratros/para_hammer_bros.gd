@@ -30,9 +30,12 @@ var _step_attacking: int
 @onready var posx: float = global_transform.affine_inverse().basis_xform(global_position).x
 @onready var pos_attack: Marker2D = $PosAttack
 @onready var pos_attack_x: float = pos_attack.position.x
+@onready var vision: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _ready() -> void:
+	vision.rect.size = vision.rect.size.max(amplitude * 2)
+	vision.rect.position = -(vision.rect.position.max(amplitude))
 	if random_phase: phase = Thunder.rng.get_randf_range(-180, 180)
 
 

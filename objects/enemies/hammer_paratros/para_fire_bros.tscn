@@ -148,6 +148,11 @@ range_layer_min = -100
 texture = SubResource("GradientTexture2D_hqgy1")
 script = ExtResource("12_4ym0i")
 
+[node name="VisibleOnScreenEnabler2D" parent="." index="4"]
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+rect = Rect2(-16, -32, 32, 48)
+
 [node name="PosAttack" parent="." index="5"]
 position = Vector2(14, -4)
 metadata/_edit_pinned_properties_ = [&"position"]
