@@ -34,7 +34,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 process_mode = 1
@@ -49,7 +49,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 process_mode = 1
@@ -64,7 +64,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D4" type="Sprite2D" parent="."]
 process_mode = 1
@@ -79,7 +79,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D5" type="Sprite2D" parent="."]
 process_mode = 1
@@ -94,7 +94,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D6" type="Sprite2D" parent="."]
 process_mode = 1
@@ -109,7 +109,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D7" type="Sprite2D" parent="."]
 process_mode = 1
@@ -124,7 +124,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D8" type="Sprite2D" parent="."]
 process_mode = 1
@@ -139,7 +139,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D9" type="Sprite2D" parent="."]
 process_mode = 1
@@ -154,7 +154,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D10" type="Sprite2D" parent="."]
 process_mode = 1
@@ -169,7 +169,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D11" type="Sprite2D" parent="."]
 process_mode = 1
@@ -184,7 +184,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D12" type="Sprite2D" parent="."]
 process_mode = 1
@@ -199,7 +199,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D13" type="Sprite2D" parent="."]
 process_mode = 1
@@ -214,7 +214,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D14" type="Sprite2D" parent="."]
 process_mode = 1
@@ -229,7 +229,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Sprite2D15" type="Sprite2D" parent="."]
 process_mode = 1
@@ -244,7 +244,7 @@ offset_top = 6.0
 offset_right = 16.0
 offset_bottom = 86.0
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
 
 [node name="Area2D" type="Area2D" parent="." groups=["#water"]]
 collision_layer = 128
