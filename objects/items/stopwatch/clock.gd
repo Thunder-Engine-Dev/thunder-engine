@@ -14,11 +14,8 @@ func collect() -> void:
 		ScoreText.new(str(score), self)
 		Data.add_score(score)
 	
-	if Data.values.stopwatch <= 0.0:
-		Data.values.stopwatch = active_for_sec
-		activate_stopwatch()
-	else:
-		Data.values.stopwatch = active_for_sec
+	activate_stopwatch()
+	Data.values.stopwatch = active_for_sec
 	
 	var powerup_sfx = CharacterManager.get_sound_replace(pickup_powerup_sound, DEFAULT_POWERUP_SOUND, "bonus_activate", false)
 	
@@ -35,7 +32,7 @@ func activate_stopwatch(hide_original: bool = true) -> void:
 		$PointLight2D.enabled = false
 		$Collision.set_deferred(&"disabled", true)
 		
-	if stopwatch_active:
+	if stopwatch_active || Data.values.stopwatch > 0.0:
 		return
 	stopwatch_active = true
 	_pause_enemies()
@@ -70,7 +67,7 @@ func _cancel_stopwatch() -> void:
 
 
 func _pause_enemies() -> void:
-	print(get_groups())
+	#print(get_groups())
 	for i in get_tree().get_nodes_in_group(&"end_level_sequence"):
 		if i is Projectile:
 			if i.belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
