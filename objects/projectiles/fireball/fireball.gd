@@ -50,6 +50,8 @@ func _on_level_end() -> void:
 
 
 func _on_collided_wall() -> void:
+	if belongs_to != Data.PROJECTILE_BELONGS.PLAYER:
+		return
 	var _sfx = CharacterManager.get_sound_replace(null, null, "fireball_bump", false)
 	if _sfx:
 		Audio.play_sound(_sfx, self, false)
