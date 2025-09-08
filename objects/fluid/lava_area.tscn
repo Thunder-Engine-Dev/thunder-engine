@@ -46,4 +46,4 @@ shape = SubResource("RectangleShape2D_08xmy")
 z_index = 31
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0.470588, 0, 0, 1)
+color = Color(0.482353, 0, 0, 1)
