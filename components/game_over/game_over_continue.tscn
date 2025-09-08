@@ -262,7 +262,7 @@ _data = {
 }
 
 [node name="GameOverLayer" type="CanvasLayer"]
-layer = 128
+layer = 127
 script = ExtResource("1_3cank")
 
 [node name="GameOver" type="Control" parent="."]

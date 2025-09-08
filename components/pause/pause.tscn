@@ -196,7 +196,7 @@ _data = {
 }
 
 [node name="PauseLayer" type="CanvasLayer"]
-layer = 128
+layer = 127
 script = ExtResource("1_mxgx1")
 
 [node name="Pause" type="Control" parent="."]
