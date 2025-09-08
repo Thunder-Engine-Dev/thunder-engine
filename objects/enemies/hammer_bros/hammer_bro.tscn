@@ -42,7 +42,7 @@ resource_local_to_scene = true
 script = ExtResource("3_wqa12")
 creation_nodepack = ExtResource("3_ti4wd")
 creation_force_sibling = false
-trans_offset = Vector2(0, -8)
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
 trans_scale = Vector2(1, 1)
@@ -52,7 +52,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"min_quality_offset": Vector2(0, -16)
 }
 custom_script = ExtResource("4_5lxra")
 

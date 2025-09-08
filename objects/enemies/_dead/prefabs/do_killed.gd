@@ -7,9 +7,9 @@ var attacker_speed: Vector2
 
 func _ready() -> void:
 	enemy_attacked = vars.enemy_attacked as Node
-	var quality: SettingsManager.QUALITY = SettingsManager.settings.quality
+	var is_fast_quality: bool = SettingsManager.settings.quality == SettingsManager.QUALITY.MIN
 	if &"fast_death_effect" in vars && vars.fast_death_effect:
-		if quality == SettingsManager.QUALITY.MIN:
+		if is_fast_quality:
 			return
 	
 	if !enemy_attacked: return
@@ -19,6 +19,7 @@ func _ready() -> void:
 	var speed: Vector2 = vars.death_speed as Vector2
 	var gravity_scale: float = vars.gravity_scale if "gravity_scale" in vars else 0.5
 	var max_falling_speed: float = vars.max_falling_speed if "max_falling_speed" in vars else 1000
+	var min_quality_offset: Vector2 = vars.get("min_quality_offset", Vector2.ZERO)
 	
 	if death.is_empty(): return
 	var death_node: Node2D = enemy_attacked.get_node_or_null(death).duplicate()
@@ -33,6 +34,8 @@ func _ready() -> void:
 		node.speed.y *= 2 * gravity_scale
 		node.gravity_scale = gravity_scale
 		node.max_falling_speed = max_falling_speed
+		if is_fast_quality:
+			death_node.offset -= min_quality_offset
 		fancy_death_effect()
 	else:
 		if node is GravityBody2D:
@@ -40,6 +43,8 @@ func _ready() -> void:
 			node.speed.y *= 2 * gravity_scale
 			node.gravity_scale = gravity_scale
 			node.max_falling_speed = max_falling_speed
+			if is_fast_quality:
+				death_node.offset -= min_quality_offset
 			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
 			if root:
 				node.gravity_dir = root.gravity_dir

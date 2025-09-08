@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpmc3ps3mbeig"]
+[gd_scene load_steps=20 format=3 uid="uid://bxmgja5kruo01"]
 
 [ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_nqrd2"]
 [ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="2_nqrd2"]
@@ -61,7 +61,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"min_quality_offset": Vector2(0, -16)
 }
 custom_script = ExtResource("8_qg1ol")
 

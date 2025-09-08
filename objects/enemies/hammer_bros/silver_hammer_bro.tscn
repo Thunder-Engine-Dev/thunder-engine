@@ -42,7 +42,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"min_quality_offset": Vector2(0, -16)
 }
 custom_script = ExtResource("3_v84mi")
 
