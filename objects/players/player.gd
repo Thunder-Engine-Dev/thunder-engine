@@ -283,7 +283,7 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 	Thunder._current_player_state = suit
 	suit_changed.emit(suit)
 	
-	if appear && _suit_pause_tweak:
+	if appear && _suit_pause_tweak && !is_dying:
 		_suit_tree_paused = true
 		get_tree().paused = true
 		Scenes.custom_scenes.pause._no_unpause = true
