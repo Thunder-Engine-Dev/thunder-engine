@@ -8,7 +8,7 @@ atlas = ExtResource("2_jjyfb")
 region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pkefl"]
-size = Vector2(64, 32)
+size = Vector2(62, 30)
 
 [node name="FallingStone" instance=ExtResource("1_36y77")]
 trigger_area = Rect2(-128, -32, 256, 496)

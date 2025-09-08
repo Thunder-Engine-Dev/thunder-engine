@@ -242,6 +242,7 @@ amplitude_changing_speed = 0.0
 shape = SubResource("CircleShape2D_pi0fq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_rg5pr")
 autoplay = "default"
