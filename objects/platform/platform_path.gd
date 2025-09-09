@@ -45,6 +45,7 @@ var _path_falling_speed: float
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
 @onready var block: StaticBody2D = $Block
+@onready var block_enemy: StaticBody2D = get_node_or_null(^"Block2")
 @onready var sprite_node: Node2D = get_node_or_null(sprite)
 
 @onready var on_moving: bool = !touching_player_touched_movement
@@ -65,12 +66,15 @@ var _path_falling_speed: float
 		return max_length
 ).call()
 @onready var init_collision_layer: int = block.collision_layer
+@onready var init_collision_layer_enemy: int
 
 # Block movement of the platform in scripts
 var _movement_blocked: bool = false
 
 func _ready() -> void:
 	#_detach_platform_block.call_deferred()
+	if block_enemy:
+		init_collision_layer_enemy = block_enemy.collision_layer
 	if smooth_turning_length > 0: _sign_up_points()
 
 func _physics_process(delta: float) -> void:
@@ -124,6 +128,13 @@ func _on_path_movement_process(delta: float) -> void:
 					progress < warping_edge_ignore_px
 				) else init_collision_layer
 			)
+			if block_enemy:
+				block_enemy.set_deferred(
+					&"collision_layer", 0 if (
+						progress > max_progress - warping_edge_ignore_px ||
+						progress < warping_edge_ignore_px
+					) else init_collision_layer_enemy
+				)
 			return
 		if smooth_enabled && smooth_turning_length > 0: _smooth_movement(delta)
 		else: _sharp_movement()
