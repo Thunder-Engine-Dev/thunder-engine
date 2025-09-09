@@ -237,6 +237,7 @@ func if_level_make_x(mark: MapPlayerMarker) -> void:
 		var m = map.get_node(map.player).x.instantiate()
 		m.global_position = mark.global_position
 		m.visible = mark.is_level_completed()
+		mark.x_ref = m
 		map.add_child.call_deferred(m)
 
 func make_dot(pos: Vector2) -> void:
@@ -269,9 +270,19 @@ func make_dots_visible_before(current_marker: MapPlayerMarker) -> void:
 			break
 	
 	while found >= 0:
-		if dots_mapping[found][1] is AnimatedSprite2D:
-			dots_mapping[found][1].visible = true
+		var dot_node = dots_mapping[found][1]
+		if dot_node is AnimatedSprite2D:
+			dot_node.visible = true
+			found -= 1
+			continue
+		if "forced_completed" in dot_node && dot_node.get("x_ref") && Data.values.get("map_force_selected_marker"):
+			dot_node.x_ref.visible = true
+			dot_node.forced_completed = true
 		found -= 1
+	
+	if Data.values.get("map_force_selected_marker") && current_marker.get(&"x_ref"):
+		current_marker.x_ref.visible = true
+		current_marker.forced_completed = true
 
 
 func add_uncompleted_levels_after(marker: String) -> void:

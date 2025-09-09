@@ -222,7 +222,7 @@ stretch_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_5i4gi")
+&"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 
@@ -278,15 +278,6 @@ focused = false
 trigger_selection_immediately = false
 prev_screen_node_path = NodePath("TextureRect2")
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-texture = ExtResource("5_bogmr")
-stretch_mode = 3
-script = ExtResource("7_fpdiu")
-really_erase = true
-
 [node name="TextureRect2" type="TextureRect" parent="VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -295,6 +286,15 @@ texture = ExtResource("4_a3l1u")
 stretch_mode = 3
 script = ExtResource("6_k11o0")
 cancel_erase = true
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("5_bogmr")
+stretch_mode = 3
+script = ExtResource("7_fpdiu")
+really_erase = true
 
 [connection signal="selected" from="VBoxContainer" to="Selector" method="handle_selection"]
 [connection signal="selected" from="VBoxContainer" to="Node" method="handle_selection"]

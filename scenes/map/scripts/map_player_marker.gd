@@ -17,6 +17,8 @@ var _level_save: String = ""
 
 @onready var marker_space = get_parent()
 var player
+var forced_completed: bool
+var x_ref
 
 signal changed
 signal current_active
@@ -92,7 +94,7 @@ func is_level_completed() -> bool:
 	return (
 		ProfileManager.current_profile.data.has(&"completed_levels") &&
 		ProfileManager.current_profile.data[&"completed_levels"].has(Scenes.get_scene_path(_level_save))
-	)
+	) || forced_completed
 
 func set_level_path(value: String) -> void:
 	changed.emit()
