@@ -1,5 +1,7 @@
 extends Window
 
+const EnableDebug = preload("res://engine/singletones/nodes/debug/enable_debug.gd")
+
 signal executed(command_name: String, args: Array)
 
 var commands: Dictionary
@@ -11,6 +13,7 @@ var commands: Dictionary
 var history: Array = ['']
 var position_in_history: int
 
+var debug_mode: bool
 var command_executed: bool
 var allow_developer_commands: bool
 
@@ -29,10 +32,18 @@ var cv: Dictionary = {
 func _ready():
 	if "--developer-commands" in OS.get_cmdline_user_args():
 		allow_developer_commands = true
+		if EnableDebug.DEBUG_ENABLED:
+			debug_mode = true
+	
+	if !OS.has_feature("template"):
+		debug_mode = true
 	
 	load_commands("res://engine/singletones/nodes/debug/console/commands/")
 	if DirAccess.dir_exists_absolute("res://commands"):
 		load_commands("res://commands/")
+	
+	if debug_mode:
+		self.print("[b]Debug Mode is enabled.[/b]")
 	
 	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
 	
@@ -55,7 +66,7 @@ func _ready():
 	
 
 func _input(event) -> void:
-	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
+	if !debug_mode && !SettingsManager.get_tweak("console_enabled", false): return
 	if event.is_action_pressed("ui_accept") && has_focus():
 		execute()
 
@@ -64,11 +75,11 @@ func load_commands(dir: String) -> void:
 		if cmd.ends_with(".uid"): continue
 		if cmd.begins_with("."): continue
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
-		if command.debug_only && (OS.has_feature("template") && !Console.allow_developer_commands): continue
+		if command.debug_only && (!debug_mode && !Console.allow_developer_commands): continue
 		commands[command.name] = command
 
 func _physics_process(delta: float) -> void:
-	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
+	if !debug_mode && !SettingsManager.get_tweak("console_enabled", false): return
 	if Input.is_action_just_pressed("a_console"):
 		visible = !visible
 		$UI/Paused.button_pressed = visible
@@ -113,7 +124,7 @@ func internal_execute(_in: String) -> void:
 			col_print("Command does not exist!", Color.RED)
 		return
 	
-	if commands[cmdName].is_cheat && OS.has_feature("template"):
+	if commands[cmdName].is_cheat && !debug_mode:
 		command_executed = true
 	
 	self.print(commands[cmdName].try_execute(args))
