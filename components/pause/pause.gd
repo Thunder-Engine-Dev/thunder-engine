@@ -82,26 +82,45 @@ func _physics_process(delta: float) -> void:
 		get_tree().paused = true
 
 var autopause_timer: SceneTreeTimer
+var autopause_timer_2: SceneTreeTimer
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		if !Scenes.current_scene is Level: return
+		if !_can_autopause(): return
 		if DisplayServer.window_can_draw() && !SettingsManager.settings.get("autopause", true): return
-		if !&"game_over" in Scenes.custom_scenes: return
-		if opened || Scenes.custom_scenes.game_over.opened: return
-		if get_tree().paused: return
-		if autopause_timer == null:
-			autopause_timer = get_tree().create_timer(0.2)
-			autopause_timer.timeout.connect(_autopause_toggle, CONNECT_ONE_SHOT)
-	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		if is_instance_valid(autopause_timer) && autopause_timer.timeout.is_connected(_autopause_toggle):
-			autopause_timer.timeout.disconnect(_autopause_toggle)
+		if is_instance_valid(autopause_timer):
+			Thunder._disconnect(autopause_timer.timeout, _autopause_toggle)
 		autopause_timer = null
+		autopause_timer = get_tree().create_timer(0.2)
+		Thunder._connect(autopause_timer.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		await get_tree().physics_frame
+		if DisplayServer.window_can_draw():
+			if is_instance_valid(autopause_timer):
+				Thunder._disconnect(autopause_timer.timeout, _autopause_toggle)
+			autopause_timer = null
+			return
+		if !_can_autopause(): return
+		if is_instance_valid(autopause_timer_2):
+			Thunder._disconnect(autopause_timer_2.timeout, _autopause_toggle)
+		autopause_timer_2 = null
+		autopause_timer_2 = get_tree().create_timer(0.2)
+		Thunder._connect(autopause_timer_2.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
 
 
 func _autopause_toggle() -> void:
+	if DisplayServer.window_can_draw() && !SettingsManager.settings.get("autopause", true):
+		return
 	if !opened:
 		toggle(false, true)
+
+
+func _can_autopause() -> bool:
+	if !Scenes.current_scene is Level: return false
+	if !&"game_over" in Scenes.custom_scenes: return false
+	if opened || Scenes.custom_scenes.game_over.opened: return false
+	if get_tree().paused: return false
+	return true
 
 
 func _on_scene_changed(to: Node) -> void:
