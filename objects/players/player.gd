@@ -74,6 +74,7 @@ var slided: bool
 var _has_jumped: bool
 var coyote_time: float
 var ghost_speed_y: float
+var running_grace: float
 var crouch_forced: bool
 
 var is_climbing: bool
@@ -309,7 +310,9 @@ func control_process() -> void:
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))
 	jumped = Input.is_action_just_pressed(control.jump)
-	running = Input.is_action_pressed(control.run) && !_autorun_tweak || \
+	if Input.is_action_pressed(control.run):
+		running_grace = suit.physics_config.walk_running_grace_time
+	running = running_grace > 0.0 && !_autorun_tweak || \
 		!Input.is_action_pressed(control.run) && _autorun_tweak
 	attacked = Input.is_action_just_pressed(control.attack)
 	attacking = Input.is_action_pressed(control.attack)
@@ -328,6 +331,7 @@ func _set_ignore_input() -> void:
 	jumping = 0
 	jumped = false
 	running = false
+	running_grace = 0.0
 	attacked = false
 	attacking = false
 	is_crouching = false

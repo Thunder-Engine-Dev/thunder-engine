@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
 	elif can_coyote:
 		player.coyote_time = config.jump_coyote_time_sec
+	player.running_grace = move_toward(player.running_grace, 0.0, delta)
 	if player.is_on_slope() && player.is_on_wall() && (player.get_which_wall_collided() == sign(player.left_right)) && abs(player.speed.x) < 70:
 		player.speed.x = 0
 
