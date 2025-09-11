@@ -34,7 +34,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="PoisonousMushroom" type="CharacterBody2D"]
+[node name="PoisonousMushroom" type="CharacterBody2D" groups=["end_level_sequence"]]
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true

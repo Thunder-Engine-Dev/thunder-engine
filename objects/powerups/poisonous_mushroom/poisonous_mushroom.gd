@@ -11,3 +11,7 @@ func collect() -> void:
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 	queue_free()
+
+func _on_level_end() -> void:
+	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
+	queue_free()
