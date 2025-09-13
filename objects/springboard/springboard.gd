@@ -35,6 +35,8 @@ func trigger(pl = null) -> void:
 		leniency_timer = LENIENCY_AFTER_BOUNCE_SEC
 
 	if animation_node.visible:
+		is_playing_backwards = false
+		animation_player.stop()
 		animation_player.play(&"jump")
 
 
