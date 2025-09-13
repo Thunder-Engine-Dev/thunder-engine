@@ -14,6 +14,7 @@ walk_crouch_deceleration = 625.0
 walk_turning_acce = 834.0
 walk_max_walking_speed = 175.0
 walk_max_running_speed = 350.0
+walk_running_grace_time = 0.05
 underwater_walk_max_walking_speed = 175.0
 underwater_walk_max_running_speed = 175.0
 jump_speed = 700.0

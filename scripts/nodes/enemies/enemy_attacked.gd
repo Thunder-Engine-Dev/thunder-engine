@@ -336,6 +336,7 @@ func _creation(creation: InstanceNode2D) -> void:
 
 
 func stomping_delay() -> void:
+	if !is_inside_tree(): return
 	_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * stomping_delay_frames)
 	_stomping_delayer.timeout.connect(
 		func() -> void:
