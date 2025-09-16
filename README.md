@@ -13,10 +13,10 @@ It allows you to create games with previously unseen level of flexibility and st
 ------------
 
 <h3 align="center">
-Current state: ANY PROJECT IS OK<br/>
+Current state: PRODUCTION READY<br/>
 Required game engine:<br/>
-Main branch: Godot 4.4<br/>
-Stable branch: Godot 4.2.2
+Main branch: Godot 4.5<br/>
+Stable branch: Godot 4.4.1
 </h3>
 
 ------------
@@ -24,7 +24,7 @@ Stable branch: Godot 4.2.2
 
 <h3>Preparation</h3>
 
-1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) (stable, Godot 4.2.2) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
+1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) (stable, Godot 4.4.1) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
 - Use the [unstable template](https://github.com/Thunder-Engine-Dev/te-unstable-template) to try out the latest features of the engine.
 2. Install [Git](https://git-scm.com/downloads).
 3. Install [Godot Engine 4](https://godotengine.org/) (regular edition). If you are going to program with C#, please choose **Mono** edition.
