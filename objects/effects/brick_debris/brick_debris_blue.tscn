@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1q6x5rlqt71n"]
+
+[ext_resource type="Texture2D" uid="uid://bxft45vh5og47" path="res://engine/objects/effects/brick_debris/brick_debris_blue.png" id="1_47ynm"]
+[ext_resource type="Script" uid="uid://41ncuvtaeig5" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_o076k"]
+
+[node name="BrickDebris" type="Sprite2D"]
+z_index = 5
+texture = ExtResource("1_47ynm")
+script = ExtResource("2_o076k")

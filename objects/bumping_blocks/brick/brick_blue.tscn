@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://3tgyqgylcvji"]
+
+[ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="1_jmfct"]
+[ext_resource type="PackedScene" uid="uid://c1q6x5rlqt71n" path="res://engine/objects/effects/brick_debris/brick_debris_blue.tscn" id="2_r1cly"]
+[ext_resource type="SpriteFrames" uid="uid://bwl1v3hc3muho" path="res://engine/objects/bumping_blocks/brick/brick_blue.tres" id="3_r1cly"]
+
+[node name="Brick" instance=ExtResource("1_jmfct")]
+debris_effect = ExtResource("2_r1cly")
+
+[node name="AnimatedSprite2D" parent="Sprites" index="1"]
+sprite_frames = ExtResource("3_r1cly")
