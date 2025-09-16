@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://d20tu17c32ipm"]
+
+[ext_resource type="PackedScene" uid="uid://bnr3rfhkdf6j2" path="res://engine/objects/bumping_blocks/question_block/question_block.tscn" id="1_epn63"]
+[ext_resource type="PackedScene" uid="uid://b71msw28e37a" path="res://engine/objects/powerups/red_mushroom/red_mushroom.tscn" id="2_wtx0v"]
+[ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="3_owivm"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="4_fb45x"]
+[ext_resource type="Texture2D" uid="uid://c8q6ln4xewo0i" path="res://engine/objects/powerups/boomerang_flower/texture.png" id="5_2objc"]
+
+[sub_resource type="Resource" id="Resource_arxix"]
+resource_local_to_scene = true
+script = ExtResource("4_fb45x")
+creation_fallback_node = ExtResource("2_wtx0v")
+creation_nodepack = ExtResource("3_owivm")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[node name="QuestionBlockBoomerang" instance=ExtResource("1_epn63")]
+result = SubResource("Resource_arxix")
+
+[node name="ItemDisplayer" parent="Sprites" index="2"]
+texture = ExtResource("5_2objc")

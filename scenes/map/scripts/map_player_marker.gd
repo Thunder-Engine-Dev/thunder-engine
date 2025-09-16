@@ -15,8 +15,10 @@ class_name MapPlayerMarker extends Marker2D
 var _level: String
 var _level_save: String = ""
 
-@onready var marker_space: MarkerSpace = get_parent()
+@onready var marker_space = get_parent()
 var player
+var forced_completed: bool
+var x_ref
 
 signal changed
 signal current_active
@@ -32,20 +34,21 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	player = Scenes.current_scene.get_node(Scenes.current_scene.player)
+	#print(Data.values.get('map_force_selected_marker'), " and ", _level_save)
 	
 	if (
-			is_level_completed() && !Data.values.get('map_force_selected_marker') ||
-			Data.values.get('map_force_selected_marker') == _level_save
+		(is_level_completed() && !Data.values.get('map_force_selected_marker')) ||
+		Data.values.get('map_force_selected_marker') == Scenes.get_scene_path(_level_save)
 	):
 		(func():
 			if (
-					get_index() == marker_space.get_child_count() - 1 &&
-					!is_instance_valid(marker_space.next_space)
+				get_index() == marker_space.get_child_count() - 1 &&
+				!is_instance_valid(marker_space.next_space)
 			):
 				return
 			player.current_marker = get_next_marker()
-			#print(marker_space.get_next_marker_id())
 			player.global_position = global_position
+			player.reset_physics_interpolation()
 			
 			current_active.emit()
 			
@@ -55,9 +58,10 @@ func _ready() -> void:
 			
 			if is_instance_valid(player.camera):
 				player.camera.reset_smoothing.call_deferred()
+				player.camera.reset_physics_interpolation()
 			
 			marker_space.make_dots_visible_before(self)
-			marker_space.add_uncompleted_levels_after(_level_save)
+			marker_space.add_uncompleted_levels_after(Scenes.get_scene_path(_level_save))
 			Scenes.current_scene.next_level_ready.emit(
 				marker_space.total_levels.size() - marker_space.uncompleted_levels.size()
 			)
@@ -89,8 +93,8 @@ func is_level() -> bool:
 func is_level_completed() -> bool:
 	return (
 		ProfileManager.current_profile.data.has(&"completed_levels") &&
-		ProfileManager.current_profile.data[&"completed_levels"].has(_level_save)
-	)
+		ProfileManager.current_profile.data[&"completed_levels"].has(Scenes.get_scene_path(_level_save))
+	) || forced_completed
 
 func set_level_path(value: String) -> void:
 	changed.emit()
@@ -104,4 +108,3 @@ func get_level_path() -> String:
 func set_level_save_path(value: String) -> void:
 	_level_save = value
 	level_override_save = value
-

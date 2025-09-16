@@ -7,21 +7,29 @@ func _ready() -> void:
 	# Body in/out of water
 	body_entered.connect(
 		func(body: Node2D) -> void:
-			if body.has_node("Underwater"):
+			if body.has_node("Underwater") && !body.get(&"is_underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.in_water()
 				if !_is_ready:
 					return
-				self._spray.call_deferred(body, underwater.spray_offset)
+				if "warp" in body && body.warp != 0:
+					return
+				if "spray_offset" in underwater:
+					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	body_exited.connect(
 		func(body: Node2D) -> void:
-			if body.has_node("Underwater"):
+			if !is_instance_valid(body) || body.is_queued_for_deletion():
+				return
+			if body.has_node("Underwater") && body.get(&"is_underwater"):
 				var underwater: Node = body.get_node("Underwater")
 				underwater.out_of_water()
 				if !_is_ready:
 					return
-				self._spray.call_deferred(body, underwater.spray_offset)
+				if "warp" in body && body.warp != 0:
+					return
+				if "spray_offset" in underwater:
+					self._spray.call_deferred(body, underwater.spray_offset)
 	)
 	if Scenes.current_scene is Stage2D:
 		await Scenes.current_scene.stage_ready

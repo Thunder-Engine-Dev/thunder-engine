@@ -42,16 +42,29 @@ func _shoot() -> void:
 					speed_corrected.x = cos(node.rotation) / 2 + 0.5
 					speed_corrected.y = cos(node.rotation) / 4 + 0.75
 				
-				var ball_speed: Vector2 = Vector2(
-					randf_range(
-						vars.projectile_speed_min.x,
-						vars.projectile_speed_max.x
-					),
-					randf_range(
-						vars.projectile_speed_min.y * speed_corrected.x,
-						vars.projectile_speed_max.y * speed_corrected.y
-					),
-				)
+				var ball_speed: Vector2
+				if vars.get("projectile_integer_speed", false):
+					ball_speed = Vector2(
+						Thunder.rng.get_randi_range(
+							floori(vars.projectile_speed_min.x / 50),
+							floori(vars.projectile_speed_max.x / 50),
+						),
+						Thunder.rng.get_randi_range(
+							floori((vars.projectile_speed_min.y * speed_corrected.x) / 50),
+							floori((vars.projectile_speed_max.y * speed_corrected.y) / 50)
+						),
+					) * 50
+				else:
+					ball_speed = Vector2(
+						Thunder.rng.get_randf_range(
+							vars.projectile_speed_min.x,
+							vars.projectile_speed_max.x
+						),
+						Thunder.rng.get_randf_range(
+							vars.projectile_speed_min.y * speed_corrected.x,
+							vars.projectile_speed_max.y * speed_corrected.y
+						),
+					)
 				
 				ball.rotation = 0.0
 				ball.speed = ball_speed.rotated(node.rotation)
@@ -64,6 +77,10 @@ func _shoot() -> void:
 			
 			if &"vision" in ball:
 				ball.expand_vision(Vector2(8, 8))
+			if "projectile_offscreen_time" in vars && "remove_offscreen_after" in ball:
+				ball.remove_offscreen_after = vars.projectile_offscreen_time
+			if "projectile_remove_from_top" in vars && "remove_top_offscreen" in ball:
+				ball.remove_top_offscreen = vars.projectile_remove_from_top
 		).create_2d()
 	
 	Audio.play_sound(vars.attack_sound, node, false)

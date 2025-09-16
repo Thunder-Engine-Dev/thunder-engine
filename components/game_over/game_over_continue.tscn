@@ -1,121 +1,31 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene load_steps=27 format=3 uid="uid://c8ql6hro5f6gv"]
 
-[ext_resource type="Script" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
-[ext_resource type="Script" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
+[ext_resource type="Script" uid="uid://c0lvhjcec75dw" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
+[ext_resource type="Script" uid="uid://b82vaonfklay3" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_plhsm"]
 [ext_resource type="Texture2D" uid="uid://dy68iw8isdo0k" path="res://engine/components/pause/textures/continue.png" id="5_d5pn5"]
-[ext_resource type="Script" path="res://engine/components/pause/continue_selection.gd" id="6_au7hf"]
+[ext_resource type="Script" uid="uid://dw4eu5g7yjp58" path="res://engine/components/game_over/game_over_continue_sel.gd" id="5_q1vrx"]
 [ext_resource type="Texture2D" uid="uid://dm5dfjmqyke8i" path="res://engine/components/pause/textures/save_room.png" id="11_dfbjn"]
-[ext_resource type="Script" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="12_vow7r"]
+[ext_resource type="Script" uid="uid://cjdhnq274ccw8" path="res://engine/components/pause/sgr_selection.gd" id="12_uwbd2"]
 [ext_resource type="Texture2D" uid="uid://cp6iqfds8dd8j" path="res://engine/components/pause/textures/main_menu.png" id="13_7iopd"]
-[ext_resource type="Script" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_jqjx8"]
+[ext_resource type="Script" uid="uid://d0i3op5rtbj8x" path="res://engine/components/pause/main_menu_selection.gd" id="14_vbxud"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_xubmy"]
 [ext_resource type="Texture2D" uid="uid://b70uy0ois6r7v" path="res://engine/components/game_over/textures/game_over.png" id="15_e2iqk"]
 [ext_resource type="Texture2D" uid="uid://chj26jw0plkf8" path="res://engine/components/pause/textures/quit_game.png" id="15_o8bh8"]
 [ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="15_pv04y"]
-[ext_resource type="Script" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
+[ext_resource type="Script" uid="uid://dknbvd8u3g3h1" path="res://engine/components/pause/quit_selection.gd" id="16_5gtqw"]
+[ext_resource type="Texture2D" uid="uid://1e1lijy7nq0l" path="res://engine/components/game_over/textures/cannot_continue.png" id="16_xfa08"]
+[ext_resource type="Texture2D" uid="uid://edbyw0omsvjy" path="res://engine/components/game_over/textures/continues_left.png" id="18_0ol8l"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="18_7lia2"]
+[ext_resource type="FontFile" uid="uid://b0ammhokl853d" path="res://engine/components/game_over/fonts/blue_numbers.fnt" id="19_2idh1"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="20_6653k"]
 
 [sub_resource type="Gradient" id="Gradient_akj06"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_af70a"]
 gradient = SubResource("Gradient_akj06")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("12_vow7r")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_oiqgu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
 
 [sub_resource type="Animation" id="Animation_svgxp"]
 length = 0.001
@@ -134,7 +44,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TeamLogo:modulate")
+tracks/1/path = NodePath("Title1:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -158,7 +68,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -179,6 +89,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_8nk1g"]
 resource_name = "init"
@@ -186,7 +108,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("Title1:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -222,7 +144,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -243,6 +165,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_hvhdc"]
 resource_name = "open"
@@ -250,7 +184,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeamLogo:modulate")
+tracks/0/path = NodePath("Title1:modulate")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -286,7 +220,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hope:modulate")
+tracks/3/path = NodePath("Title2:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -307,16 +241,28 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HBoxContainer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
 _data = {
-"RESET": SubResource("Animation_svgxp"),
-"init": SubResource("Animation_8nk1g"),
-"open": SubResource("Animation_hvhdc")
+&"RESET": SubResource("Animation_svgxp"),
+&"init": SubResource("Animation_8nk1g"),
+&"open": SubResource("Animation_hvhdc")
 }
 
 [node name="GameOverLayer" type="CanvasLayer"]
-layer = 128
+layer = 127
 script = ExtResource("1_3cank")
 
 [node name="GameOver" type="Control" parent="."]
@@ -343,89 +289,157 @@ texture = SubResource("GradientTexture1D_af70a")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.748
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.748
 offset_left = -132.0
-offset_top = -21.0
+offset_top = -84.04
 offset_right = 132.0
-offset_bottom = 125.0
+offset_bottom = 83.96
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_constants/separation = 10
+alignment = 1
 script = ExtResource("3_plhsm")
 focused = false
 
 [node name="TextureRect" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("5_d5pn5")
 stretch_mode = 3
-script = ExtResource("6_au7hf")
+script = ExtResource("5_q1vrx")
+block_if_no_continues = true
 
 [node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("11_dfbjn")
 stretch_mode = 3
 script = ExtResource("12_uwbd2")
 
 [node name="TextureRect5" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("13_7iopd")
 stretch_mode = 3
 script = ExtResource("14_vbxud")
 
 [node name="TextureRect6" type="TextureRect" parent="GameOver/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("15_o8bh8")
 stretch_mode = 3
 script = ExtResource("16_5gtqw")
 
-[node name="Selector" type="AnimatedSprite2D" parent="GameOver"]
-sprite_frames = SubResource("SpriteFrames_oiqgu")
+[node name="Selector" type="Node2D" parent="GameOver"]
+physics_interpolation_mode = 1
 script = ExtResource("18_7lia2")
 smooth_speed = 0.4
 position_padding = 16
-position_paddings_array = Array[float]([-32.0, -1.0, 0.0, -52.0])
 
-[node name="TeamLogo" type="TextureRect" parent="GameOver"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver/Selector"]
+sprite_frames = ExtResource("13_jqjx8")
+script = ExtResource("14_xubmy")
+
+[node name="Title1" type="TextureRect" parent="GameOver"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -403.0
-offset_top = -208.0
-offset_right = -236.0
-offset_bottom = -180.0
-grow_horizontal = 0
-grow_vertical = 2
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.133
+anchor_right = 0.5
+anchor_bottom = 0.133
+offset_left = -83.5
+offset_top = -29.84
+offset_right = 83.5
+offset_bottom = -1.84
+grow_horizontal = 2
 pivot_offset = Vector2(83, 0)
 texture = ExtResource("15_e2iqk")
 
-[node name="Hope" type="TextureRect" parent="GameOver"]
+[node name="Continue1" type="TextureRect" parent="GameOver/Title1"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 2.286
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -384.0
-offset_right = 157.0
-offset_bottom = -298.0
+anchor_bottom = 4.786
+offset_left = -108.0
+offset_top = -0.00800323
+offset_right = 108.0
+offset_bottom = -0.00801086
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+texture = ExtResource("16_xfa08")
+
+[node name="Title2" type="TextureRect" parent="GameOver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.333
+anchor_right = 0.5
+anchor_bottom = 0.333
+offset_left = -200.0
+offset_top = -61.84
+offset_right = 157.0
+offset_bottom = 24.16
+grow_horizontal = 2
 scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(285.6, 0)
 texture = ExtResource("15_pv04y")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.467
+anchor_right = 0.5
+anchor_bottom = 0.467
+offset_left = -136.0
+offset_top = -18.16
+offset_right = 136.0
+offset_bottom = 17.84
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="GameOver/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_0ol8l")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="GameOver/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("19_2idh1")
+theme_override_font_sizes/font_size = 36
+text = "3"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
 libraries = {
-"": SubResource("AnimationLibrary_5i4gi")
+&"": SubResource("AnimationLibrary_5i4gi")
 }
 autoplay = "RESET"
 
+[node name="SelectorBlinking" type="Node" parent="GameOver"]
+script = ExtResource("20_6653k")
+menu_items_controller_path = NodePath("../VBoxContainer")
+speed = 8.0
+
+[connection signal="have_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="have_continues" from="GameOver" to="GameOver/Title2" method="show"]
+[connection signal="have_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
+[connection signal="have_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/Title1/Continue1" method="hide"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/Title2" method="show"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/HBoxContainer" method="hide"]
+[connection signal="infinite_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(1, 1, 1, 1)]]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title1/Continue1" method="show"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/Title2" method="hide"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer" method="show"]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/VBoxContainer/TextureRect" method="set_modulate" binds= [Color(0.4, 0.4, 0.4, 1)]]
+[connection signal="no_remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text" binds= ["0"]]
+[connection signal="remaining_continues" from="GameOver" to="GameOver/HBoxContainer/Label" method="set_text"]
 [connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/Selector" method="handle_selection"]
+[connection signal="selected" from="GameOver/VBoxContainer" to="GameOver/SelectorBlinking" method="handle_selection"]

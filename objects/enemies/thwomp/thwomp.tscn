@@ -1,12 +1,12 @@
 [gd_scene load_steps=23 format=3 uid="uid://bcgt87mbq40gx"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/thwomp/thwomp.gd" id="1_2gn4n"]
+[ext_resource type="Script" uid="uid://df7hukm1uq7kb" path="res://engine/objects/enemies/thwomp/thwomp.gd" id="1_2gn4n"]
 [ext_resource type="Texture2D" uid="uid://chcnsi17bk4x2" path="res://engine/objects/enemies/thwomp/textures/thwomp.png" id="2_3s0r0"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_phoms"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_phoms"]
 [ext_resource type="Texture2D" uid="uid://dbv8uhcppf5t0" path="res://engine/objects/enemies/thwomp/textures/thwompsmile.png" id="3_3okpa"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_cpvp7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_iejvm"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_pc6pk"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_iejvm"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_pc6pk"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_cdkox"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_58bjx"]
 
@@ -16,6 +16,7 @@ size = Vector2(47, 62)
 [sub_resource type="Resource" id="Resource_j7a5f"]
 script = ExtResource("4_iejvm")
 creation_nodepack = ExtResource("3_cpvp7")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -146,15 +147,15 @@ killing_immune = {
 "boomerang": false,
 "fireball": true,
 "hammer": false,
-"iceball": true,
+"iceball": false,
 "shell": true,
 "shell_defence": 99
 }
 killing_creation = SubResource("Resource_j7a5f")
-killing_scores = 800
+killing_scores = 400
 killing_sound_succeeded = ExtResource("6_cdkox")
 killing_sound_failed = ExtResource("7_58bjx")
-turn_into_coin_on_level_end = false
+ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
 
 [node name="LeftExplosion" type="RayCast2D" parent="."]

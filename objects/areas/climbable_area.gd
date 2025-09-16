@@ -18,7 +18,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if player && (
+	if player && !player.is_holding && (
 		Input.is_action_pressed(player.control.up) ||
 		(Input.is_action_pressed(player.control.down) && !player.is_on_floor())
 	):

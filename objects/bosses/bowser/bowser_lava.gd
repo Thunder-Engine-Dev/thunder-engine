@@ -1,5 +1,7 @@
 extends Node2D
 
+signal splash_sequence_started(pos: Vector2)
+
 var lava_objects: Array[Sprite2D]
 var lava_velocity: Array[float]
 var phases: Array[float]
@@ -7,7 +9,7 @@ var phases: Array[float]
 var block_logic: bool = true
 
 func _ready() -> void:
-	$Area2D.area_got_in_lava_at.connect(_start_splash_seq, CONNECT_ONE_SHOT)
+	$Area2D.area_got_in_lava_at.connect(_start_splash_seq)
 	for i in get_children():
 		if i is Sprite2D:
 			lava_objects.append(i)
@@ -19,6 +21,7 @@ func _ready() -> void:
 
 func _start_splash_seq(pos: Vector2) -> void:
 	block_logic = false
+	splash_sequence_started.emit(pos)
 	for i in len(lava_objects):
 		var lava: Sprite2D = lava_objects[i]
 		var _pos: Vector2 = pos
@@ -52,4 +55,3 @@ func _physics_process(delta: float) -> void:
 			phases[i] += 5 * 50 * delta
 			lava_objects[i].position.y = vel * sin(phases[i] / 50.0)
 			lava_velocity[i] -= 0.1 * Thunder.get_delta(delta)
-

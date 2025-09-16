@@ -28,9 +28,16 @@ func _on_shooting() -> void:
 			func(spk: Node2D) -> void:
 				if spk is Projectile:
 					spk.rotation = 0
-					spk.vel_set(Vector2(randf_range(spikeball_velocity_min.x, spikeball_velocity_max.x), randf_range(spikeball_velocity_min.y, spikeball_velocity_max.y)).rotated(global_rotation))
+					spk.vel_set(Vector2(
+						Thunder.rng.get_randf_range(spikeball_velocity_min.x, spikeball_velocity_max.x),
+						Thunder.rng.get_randf_range(spikeball_velocity_min.y, spikeball_velocity_max.y)
+					).rotated(global_rotation))
 					spk.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
 		).create_2d()
 	
 	if !explosion: return
-	NodeCreator.prepare_2d(explosion, self).bind_global_transform(Vector2.UP * 24).create_2d()
+	var expl = explosion.instantiate()
+	add_sibling(expl)
+	expl.global_position = global_position
+	expl.position += Vector2.UP.rotated(global_rotation) * 24
+	expl.reset_physics_interpolation()

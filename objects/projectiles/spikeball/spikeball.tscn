@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://wgf8bo5dyeik"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/spikeball/spikeball.gd" id="1_o7ocy"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_5bgjq"]
+[ext_resource type="Script" uid="uid://dsy1ls33urnrs" path="res://engine/objects/projectiles/spikeball/spikeball.gd" id="1_o7ocy"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_5bgjq"]
 [ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/projectiles/spikeball/spikeball.png" id="2_cx84u"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_sprite_rotator.gd" id="4_5dc7u"]
+[ext_resource type="Script" uid="uid://crv7ntibo024r" path="res://engine/objects/enemies/enemy_sprite_rotator.gd" id="4_5dc7u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5oa0m"]
 radius = 12.0
@@ -37,7 +37,7 @@ metadata/_edit_pinned_properties_ = [&"rotation_speed"]
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
-scale = Vector2(6.4, 6.4)
+rect = Rect2(-32, -32, 64, 512)
 
 [node name="Trail" type="Timer" parent="."]
 process_callback = 0

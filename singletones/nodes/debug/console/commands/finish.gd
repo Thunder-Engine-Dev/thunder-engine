@@ -11,4 +11,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 	level.completion_music = null
 	level.finish()
 	return Command.ExecuteResult.new("Success")
-

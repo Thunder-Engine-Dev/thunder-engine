@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://beu6ovtvrvpfc"]
 
 [ext_resource type="SpriteFrames" uid="uid://cswh7qii8qpjn" path="res://engine/scenes/map/prefabs/dot_style.tres" id="1_8lxv4"]
-[ext_resource type="Script" path="res://engine/scenes/map/scripts/map_dot.gd" id="2_6he3g"]
+[ext_resource type="Script" uid="uid://cy038rle5rd5y" path="res://engine/scenes/map/scripts/map_dot.gd" id="2_6he3g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ry1p5"]
 radius = 6.0

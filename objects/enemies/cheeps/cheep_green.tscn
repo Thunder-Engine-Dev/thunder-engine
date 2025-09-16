@@ -2,14 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_uugif"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yo1h7"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_aeycw"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_bjagl"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_aeycw"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_bjagl"]
 [ext_resource type="Texture2D" uid="uid://cluoseai66up" path="res://engine/objects/enemies/cheeps/textures/cheep_green.png" id="5_vqem1"]
 
 [sub_resource type="Resource" id="Resource_sl1dd"]
 resource_local_to_scene = true
 script = ExtResource("4_bjagl")
 creation_nodepack = ExtResource("2_yo1h7")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -20,7 +21,9 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"gravity_scale": 0.25,
+"max_falling_speed": 300.0
 }
 custom_script = ExtResource("3_aeycw")
 
@@ -43,7 +46,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="CheepGreen" instance=ExtResource("1_uugif")]

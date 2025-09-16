@@ -15,3 +15,4 @@ func _physics_process(delta: float) -> void:
 			var efekt = STARFALL_EFFECT.instantiate()
 			add_child(efekt)
 			efekt.global_position = Vector2(cam_pos.x + randi_range(-220, 500), -8)
+			efekt.reset_physics_interpolation()

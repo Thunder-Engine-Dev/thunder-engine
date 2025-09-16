@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7n6rgscihi7p"]
+
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_7w67m"]
+[ext_resource type="Script" uid="uid://b1ewwo32cyixe" path="res://engine/objects/items/ice_block/ice_block_static.gd" id="1_8haom"]
+[ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="2_8haom"]
+[ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="3_ylx4q"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8haom"]
+cull_mode = 2
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3kee"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hrbb"]
+size = Vector2(32, 32)
+
+[node name="IceBlockStatic" type="StaticBody2D" groups=["slippery"]]
+disable_mode = 1
+collision_layer = 112
+script = ExtResource("1_8haom")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_8haom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_c3kee")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_0hrbb")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("1_7w67m")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": false,
+"boomerang": true,
+"fireball": false,
+"hammer": true,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": true,
+"starman": true
+}
+killing_only_by_player = false
+turn_into_coin_on_level_end = false
+frozen_enabled = false
+
+[node name="SpriteNP" type="NinePatchRect" parent="."]
+material = ExtResource("2_8haom")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(16, 16)
+texture = ExtResource("3_ylx4q")
+region_rect = Rect2(0, 0, 40, 40)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-17, -17, 34, 34)
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="break_ice"]

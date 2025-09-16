@@ -1,15 +1,16 @@
 [gd_scene load_steps=7 format=3 uid="uid://b0bnba81jh6tn"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling.gd" id="1_pee6d"]
+[ext_resource type="Script" uid="uid://6g4x8gjajd1l" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling.gd" id="1_pee6d"]
 [ext_resource type="Texture2D" uid="uid://crgf5xxx3jvlu" path="res://engine/tilesets/overworld/hard_block_only.png" id="1_sqhu3"]
 [ext_resource type="Texture2D" uid="uid://pujov6sbhglg" path="res://engine/objects/enemies/spikes/textures/spike_hard_block.png" id="2_yxmcg"]
-[ext_resource type="Script" path="res://engine/objects/enemies/spikes/spike.gd" id="3_n4gg2"]
-[ext_resource type="Script" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling_rect_draw.gd" id="5_tk3o3"]
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="3_n4gg2"]
+[ext_resource type="Script" uid="uid://di54mek238dju" path="res://engine/objects/enemies/spike_ceiling/spike_ceiling_rect_draw.gd" id="5_tk3o3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faog7"]
 size = Vector2(1, 1)
 
 [node name="SpikeCeiling" type="VBoxContainer"]
+physics_interpolation_mode = 1
 z_index = 11
 offset_right = 32.0
 offset_bottom = 64.0
@@ -33,6 +34,7 @@ flip_v = true
 [node name="Area2D" type="Area2D" parent="Spike"]
 script = ExtResource("3_n4gg2")
 type = 2
+ignore_starman = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spike/Area2D"]
 shape = SubResource("RectangleShape2D_faog7")

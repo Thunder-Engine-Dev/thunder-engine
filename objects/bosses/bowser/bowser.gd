@@ -13,8 +13,9 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 		(func() -> void: health_changed.emit(health)).call_deferred()
 ## Projectile health, will remove a point from [member health] when it hits 0
 @export var hardness: int = 5
-@export var invincible_flashing_interval: float = 0.5
+@export var invincible_flashing_interval: float = 0.8
 @export var invincible_duration: float = 2
+@export var instakill_from_lava: bool = true
 @export_subgroup("Sounds")
 @export var hurt_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_hurt.wav")
 @export var death_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_died.wav")
@@ -36,21 +37,22 @@ const CORPSE: PackedScene = preload("./corpse/bowser_corpse.tscn")
 @export var hammer_interval: float = 0.08
 @export var burst_fireball: InstanceNode2D
 @export var burst_fireball_amount: int = 30
-@export_subgroup("Sounds")
-@export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
-@export var hammer_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
-@export var burst_sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
+#@export_subgroup("Sounds")
+#@export var flame_sound: AudioStream = preload("res://engine/objects/bosses/bowser/sounds/bowser_flame.wav")
+#@export var hammer_sound: AudioStream = preload("res://engine/objects/projectiles/sounds/throw.wav")
+#@export var burst_sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
 @export_group("Jumping")
 @export var jumping_interval: float = 0.15
 @export var jumping_chance: float = 0.05
 @export var jumping_speed: float = 300
 @export_group("Level Setting")
+@export var finish_on_death: bool = true
 @export_enum("Left: -1", "Right: 1") var complete_direction: int = 1
-@export var final_boss: bool = true
 @export_group("HUD")
 @export var y_offset: int = 0
 
 var tween_hurt: Tween
+var tween_hurt_blinking: Tween
 var tween_status: Tween
 
 var active: bool
@@ -58,39 +60,43 @@ var direction: int
 var facing: int
 var lock_direction: bool
 var lock_movement: bool
-var jump_enabled: bool
+var jump_enabled: bool = true
 
 var trigger: Node2D
 
-var current_status: StringName
-var next_status: Array[StringName]
 var pos_y_on_floor: float
 
 var _speed: float
-var _walking_pausing_factor: float
-var _walking_paused: bool
+var _walking_counter: float
+var _walking_move_distance: float
 var _jump_factor: float
 
 var _bullet_received: int
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var animations: AnimationPlayer = $Animations
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
-@onready var pos_flame: Marker2D = $PosFlame
-@onready var pos_flame_x: float = pos_flame.position.x
-@onready var pos_hammer: Marker2D = $PosHammer
-@onready var pos_hammer_x: float = pos_hammer.position.x
+#@onready var pos_flame: Marker2D = $PosFlame
+#@onready var pos_flame_x: float = pos_flame.position.x
+#@onready var pos_hammer: Marker2D = $PosHammer
+#@onready var pos_hammer_x: float = pos_hammer.position.x
+@onready var debug_text: Label = $Debug
+@onready var debug_text_template: String = debug_text.text
 
 @onready var initial_killing_immune: Dictionary = enemy_attacked.killing_immune.duplicate(true)
 @onready var tweaked_stomping: bool = SettingsManager.get_tweak("bowser_stomping", false)
 @onready var player: Player = Thunder._current_player
+
+var _attacking: bool
 var _tweaked_stomping_vel: float
 var hud: CanvasLayer
 
 
 func _ready() -> void:
 	super()
+	if instakill_from_lava:
+		$Body.add_to_group(&"#lava_body")
+	sprite.animation_looped.connect(_on_sprite_animation_looped)
 	_speed = speed.x
 	facing = get_facing(facing)
 	direction = facing
@@ -113,51 +119,61 @@ func _physics_process(delta: float) -> void:
 		facing = get_facing(facing)
 		if sprite.animation == &"throw":
 			sprite.offset.x = 7 * facing
+			sprite.reset_physics_interpolation()
+	
 	# Animation
 	if facing != 0:
 		sprite.flip_h = (facing < 0)
 	
 	if !active: return
+	if is_on_floor() && sprite.animation == &"jump" || !sprite.is_playing():
+		sprite.play(&"default")
+	if sprite.animation == &"default" && !is_on_floor():
+		sprite.play(&"jump")
 	
-	match sprite.animation:
-		&"default":
-			if !is_on_floor(): animations.play(&"bowser/jump")
-		&"jump":
-			if is_on_floor(): animations.play(&"bowser/idle")
 	# Pos markers
-	pos_flame.position.x = pos_flame_x * facing
-	pos_hammer.position.x = pos_hammer_x * facing
+	#pos_flame.position.x = pos_flame_x * facing
+	#pos_hammer.position.x = pos_hammer_x * facing
+	
 	# Movement
 	if !lock_movement:
 		_movement(delta)
 	elif speed.x != 0:
 		_speed = abs(speed.x)
 		vel_set_x(0)
+	
 	# Jump
 	if jump_enabled:
 		_jumping(delta)
+	
 	# Attack
 	if !tween_status:
 		tween_status = create_tween()
 		for i in status.size():
 			tween_status.tween_interval(status_interval[i])
-			tween_status.tween_callback(
-				func() -> void:
-					attack(status[i])
-			)
-			tween_status.finished.connect(func() -> void:
-				tween_status = null
-			)
+			tween_status.tween_callback(attack.bind(status[i]))
+		if _attacking:
+			tween_status.pause()
+		tween_status.finished.connect(func() -> void:
+			tween_status = null
+		)
+	else:
+		debug_text.text = debug_text_template % [
+			tween_status.get_total_elapsed_time(), tween_status.is_running(), tween_status.get_loops_left()
+		]
+	
 	# Physics
 	motion_process(delta)
 	if is_on_floor():
 		pos_y_on_floor = global_transform.affine_inverse().basis_xform(global_position).y
 	
+	debug_text.visible = Console.cv.player_stats_shown
+	
 	# Old bowser stomping (Tweak)
-	if !tweaked_stomping: return
-	_tweaked_stomping_vel = move_toward(_tweaked_stomping_vel, 0.0, 50 * delta)
+	if !tweaked_stomping || !_tweaked_stomping_vel: return
 	if is_instance_valid(player) && !player.is_on_wall():
 		player.position.x += _tweaked_stomping_vel * 50 * delta
+	_tweaked_stomping_vel = move_toward(_tweaked_stomping_vel, 0.0, 50 * delta)
 
 
 func activate() -> void:
@@ -165,6 +181,7 @@ func activate() -> void:
 	active = true
 	direction = get_facing(facing)
 	speed.x = _speed * direction
+	_walking_move_distance = randf_range(0, 64)
 	# Emit the signal
 	health = health
 	#enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
@@ -173,136 +190,21 @@ func activate() -> void:
 
 # Bowser's attack
 func attack(state: StringName) -> void:
-	match state:
-		&"flame":
-			if animations.current_animation == &"bowser/flame": return
-			animations.play(&"bowser/flame")
-			tween_status.pause()
-		&"doubleflame":
-			if animations.current_animation == &"bowser/flame": return
-			animations.play(&"bowser/doubleflame")
-			tween_status.pause()
-		&"multiflames":
-			if animations.current_animation == &"bowser/multiple_flames": return
-			animations.play(&"bowser/multiple_flames")
-			tween_status.pause()
-		&"hammer":
-			attack_hammer()
-			tween_status.pause()
-		&"burst":
-			attack_burst()
-			tween_status.pause()
-
-
-# Bowser's flame
-func attack_flame(offset_by_32: int = -1) -> void:
-	if !flame: return
-	NodeCreator.prepare_ins_2d(flame, self).create_2d().call_method(
-		func(flm: Node2D) -> void:
-			flm.to_pos_y = pos_y_on_floor + 16 - 32 * (randi_range(0, 3) if offset_by_32 < 0 else offset_by_32)
-			flm.global_position = pos_flame.global_position
-			if flm is Projectile:
-				flm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-				flm.speed *= facing
-	)
-	if tween_status && !tween_status.is_running(): 
-		tween_status.play()
-
-
-# Bowser's multiple flames
-func multiple_flames() -> void:
-	for i in multiple_flames_amount:
-		attack_flame(i)
-
-
-# Bowser's hammer
-func attack_hammer() -> void:
-	lock_movement = true
+	var _attack_node: BowserAttack = get_node_or_null("attack_" + state)
+	assert(_attack_node && _attack_node is BowserAttack, "Please attach a BowserAttack node named attack_" + state + ".")
+	if !_attack_node is BowserAttack:
+		return
 	
-	# Animation modification
-	if sprite.animation != &"throw": sprite.play(&"throw")
-	sprite.speed_scale = 0
-	sprite.offset.x = 7 * facing
-	
-	# Lock the animation player from running
-	animations.pause()
-	
-	# Tween for processing attack
-	var tween_hammer: Tween = create_tween()
-	tween_hammer.tween_interval(2)
-	for i in hammer_amount:
-		tween_hammer.tween_callback(
-			func() -> void:
-				sprite.speed_scale = 1
-				if !hammer: return
-				
-				Audio.play_sound(hammer_sound, self, false)
-				NodeCreator.prepare_ins_2d(hammer, self).create_2d().call_method(
-					func(hm: Node2D) -> void:
-						hm.global_position = pos_hammer.global_position
-						if hm is Projectile:
-							hm.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							hm.vel_set(Vector2(randf_range(50, 400) * facing, randf_range(-800, -200)))
-				)
-		).set_delay(hammer_interval)
-	tween_hammer.tween_callback(
-		func() -> void:
-			sprite.frame = 0
-			sprite.speed_scale = 0
-	)
-	tween_hammer.tween_interval(1)
-	# Tween to end the process and restore data
-	tween_hammer.tween_callback(
-		func() -> void:
-			sprite.offset.x = 0
-			sprite.speed_scale = 1
-			sprite.play(&"default")
-			lock_movement = false
-			animations.play(&"bowser/idle")
-			tween_status.play()
-	)
+	tween_status.pause()
+	_attacking = true
+	_attack_node._accept_attack(self)
 
 
-# Bowser's burst flameball
-func attack_burst() -> void:
-	lock_movement = true
-	lock_direction = true
-	
-	# Animation modification
-	if sprite.animation != &"burst": sprite.play(&"burst")
-	sprite.speed_scale = 0
-	
-	# Lock the animation player from running
-	animations.pause()
-	
-	# Tween for processing attack
-	var tween_hammer: Tween = create_tween()
-	tween_hammer.tween_interval(2)
-	for i in burst_fireball_amount:
-		tween_hammer.tween_callback(
-			func() -> void:
-				sprite.speed_scale = 1
-				if !burst_fireball: return
-				
-				Audio.play_sound(burst_sound, self, false)
-				NodeCreator.prepare_ins_2d(burst_fireball, self).create_2d().call_method(
-					func(bf: Node2D) -> void:
-						bf.global_position = pos_flame.global_position
-						if bf is Projectile:
-							bf.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-							bf.vel_set(Vector2(randf_range(400, 800) * facing, randf_range(-400, 0)))
-				)
-		).set_delay(0.1)
-	# Tween to end the process and restore data
-	tween_hammer.tween_callback(
-		func() -> void:
-			sprite.speed_scale = 1
-			sprite.play(&"default")
-			lock_movement = false
-			lock_direction = false
-			animations.play(&"bowser/idle")
-			tween_status.play()
-	)
+func _on_sprite_animation_looped() -> void:
+	if sprite.animation in [&"jump", &"throw_pre"]:
+		sprite.set_frame_and_progress(sprite.sprite_frames.get_frame_count(sprite.animation) - 1, 0.0)
+	elif sprite.animation == &"flame_pre_multiple":
+		sprite.set_frame_and_progress(sprite.sprite_frames.get_frame_count(sprite.animation) - 3, 0.0)
 
 
 # Bowser's hurt
@@ -311,17 +213,18 @@ func hurt(_external_damage_source: bool = false) -> void:
 	enemy_attacked.killing_immune = {}
 	
 	if !_external_damage_source && tweaked_stomping && is_instance_valid(player):
-		_tweaked_stomping_vel = 10 * player.direction
+		_tweaked_stomping_vel = 8 * player.direction
 	
 	_bullet_received = 0
 	if health > 0:
-		Audio.play_sound(hurt_sound, self)
+		var _sfx = CharacterManager.get_sound_replace(hurt_sound, hurt_sound, "bowser_hurt", false)
+		Audio.play_sound(_sfx, self)
 		health -= 1
+		Thunder.autosplitter.update_il_counter()
 	if health <= 0:
 		die()
 		return
 	
-	var alpha: float = modulate.a
 	var stomp_standard: Vector2 = enemy_attacked.stomping_standard
 	
 	tween_hurt = create_tween()
@@ -329,92 +232,106 @@ func hurt(_external_damage_source: bool = false) -> void:
 		func() -> void:
 			enemy_attacked.stomping_standard = Vector2.ZERO
 	)
+	tween_hurt.tween_interval(invincible_duration)
+	
+	if tween_hurt_blinking:
+		tween_hurt_blinking.stop()
+	sprite.modulate.a = 1.0
+	tween_hurt_blinking = create_tween()
 	
 	for i in ceili(invincible_duration / invincible_flashing_interval):
-		tween_hurt.tween_property(self, "modulate:a", 0, invincible_flashing_interval / 2)
-		tween_hurt.tween_property(self, "modulate:a", alpha, invincible_flashing_interval / 2)
+		tween_hurt_blinking.tween_property(sprite, "modulate:a", 0.25, invincible_flashing_interval / 2)
+		tween_hurt_blinking.tween_property(sprite, "modulate:a", 1.0, invincible_flashing_interval / 2)
 	
-	tween_hurt.tween_callback(
-		func() -> void:
-			tween_hurt.kill()
-			tween_hurt = null
-			modulate.a = alpha
-			enemy_attacked.stomping_standard = stomp_standard
-			enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
-	)
+	tween_hurt.finished.connect(func() -> void:
+		tween_hurt.kill()
+		tween_hurt = null
+		sprite.modulate.a = 1.0
+		enemy_attacked.stomping_standard = stomp_standard
+		enemy_attacked.killing_immune = initial_killing_immune.duplicate(true)
+	, CONNECT_ONE_SHOT)
 
 # Hurt from bullets
-func bullet_hurt() -> void:
+func bullet_hurt(attacker: StringName) -> void:
 	if tween_hurt: return
 	
+	if attacker == &"beetroot":
+		_bullet_received += 1
 	_bullet_received += 1
-	if _bullet_received >= hardness:
+	if _bullet_received >= hardness || attacker == &"head":
 		_bullet_received = 0
 		hurt(true)
 
 
 # Bowser's death
-func die() -> void:
+func die(corpse_intro: bool = true) -> void:
 	print("[Game] Boss defeated.")
-	Audio.play_sound(death_sound, self)
-	if trigger.has_method(&"stop_music"): trigger.stop_music()
-	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().create_2d().call_method(
+	Thunder.autosplitter.update_il_counter()
+	var _sfx = CharacterManager.get_sound_replace(death_sound, death_sound, "bowser_be_happy", false)
+	Audio.play_sound(_sfx, self)
+	tween_hurt_blinking = null
+	if health > 0: health = 0
+	
+	if finish_on_death && trigger && trigger.has_method(&"stop_music"):
+		if Thunder.autosplitter.can_split_on("boss_defeat"):
+			Thunder.autosplitter.split("Boss Defeat")
+		Scenes.current_scene.set_meta(&"boss_got_defeated", true)
+		trigger.stop_music()
+	
+	NodeCreator.prepare_2d(CORPSE, self).bind_global_transform().call_method(
+		func(cps: Node2D) -> void:
+			if !corpse_intro:
+				cps.duration = -1
+	).create_2d().call_method(
 		func(cps: Node2D) -> void:
 			var spr: AnimatedSprite2D = sprite.duplicate()
 			cps.add_child(spr)
+			spr.modulate.a = 1.0
 			spr.speed_scale = 1
 			spr.play.call_deferred(&"death")
-			cps.add_child(collision_shape.duplicate())
-			cps.falling_sound = falling_sound
-			cps.into_lava_sound = into_lava_sound
+			cps.add_child.call_deferred(collision_shape.duplicate())
+			var _sfx2 = CharacterManager.get_sound_replace(falling_sound, falling_sound, "bowser_fall", false)
+			cps.falling_sound = _sfx2
+			_sfx2 = CharacterManager.get_sound_replace(into_lava_sound, into_lava_sound, "bowser_lava_love", false)
+			cps.into_lava_sound = _sfx2
 			cps.direction_to_complete = complete_direction
+			cps.finish_on_free = finish_on_death
 	)
 	queue_free()
 
 
 # Gets the facing of the bowser
 func get_facing(dir: int) -> int:
-	var player: Player = Thunder._current_player
 	if !player: return dir
 	return Thunder.Math.look_at(global_position, player.global_position, global_transform)
 
 
-# Reset the current_animation of Animations node to "bowser/idle"
-func reset_animation() -> void:
-	animations.play(&"bowser/idle")
-
-
-# Play a sound via property name
-func play_sound(sound_name: StringName) -> void:
-	if get(sound_name) is AudioStream: Audio.play_sound(get(sound_name), self)
-
-
 # Bowser's movement
 func _movement(delta: float) -> void:
-	# Random pausing
-	_walking_pausing_factor += delta
-	if _walking_pausing_factor < 0.12: return
-	_walking_pausing_factor = 0
-	# Pausing
-	var chance1: float = randf_range(0, 1)
-	if chance1 < 0.1 && !_walking_paused:
-		_walking_paused = true
-		_speed = abs(speed.x)
-		vel_set_x(0)
-	# Resuming
-	var chance2: float = randf_range(0, 1)
-	if chance2 < 0.16 && _walking_paused:
-		_walking_paused = false
+	# Update the random pausing every second
+	if _walking_counter < 1.0:
+		_walking_counter += delta
+	else:
+	# Setting random distance to walk
+		_walking_move_distance = randf_range(0, 64)
+		_walking_counter = 0.0
 	
-	# Keeps moving
-	if !_walking_paused: vel_set_x(_speed * direction)
+	if _walking_move_distance > 0.0:
+		vel_set_x(_speed * direction)
+		_walking_move_distance -= delta * 50
+	# Pausing
+	else:
+		vel_set_x(0)
 
 
 # Bowser's Jumping
 func _jumping(delta: float) -> void:
-	if !is_on_floor(): return
+	if !is_on_floor():
+		return
 	_jump_factor += delta
-	if _jump_factor <= jumping_interval: return
+	if _jump_factor < jumping_interval:
+		return
+	
 	_jump_factor = 0
 	# Jumping
 	var chance: float = randf_range(0, 1)

@@ -1,60 +1,42 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckblbi2g1ps1y"]
+[gd_scene load_steps=7 format=3 uid="uid://ckblbi2g1ps1y"]
 
 [ext_resource type="PackedScene" uid="uid://bwy11odywkm4d" path="res://engine/objects/enemies/human_lab/container/container.tscn" id="1_vxiw2"]
-[ext_resource type="Texture2D" uid="uid://s0uyg78cefed" path="res://gfx/misc/bubble_anim.png" id="2_qhjfe"]
-[ext_resource type="Script" path="res://engine/objects/enemies/human_lab/container/container_bubbles.gd" id="2_v6nvq"]
+[ext_resource type="Script" uid="uid://cj64y6gtsdjw8" path="res://engine/objects/enemies/human_lab/container/container_bubbles.gd" id="2_v6nvq"]
 [ext_resource type="Texture2D" uid="uid://bbmu3pd1umaal" path="res://engine/objects/enemies/human_lab/container/textures/container_hollow.png" id="3_ancyg"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_pqph3"]
+[ext_resource type="PackedScene" uid="uid://eyqjecs0sfv0" path="res://engine/objects/effects/bubble/bubble_bg_generator.tscn" id="3_yn4c8"]
+[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_pqph3"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aj0pq"]
-particles_animation = true
-particles_anim_h_frames = 5
-particles_anim_v_frames = 1
-particles_anim_loop = true
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yy7fg"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(28, 0, 0)
-direction = Vector3(0, -1, 0)
-spread = 0.0
-initial_velocity_min = 50.0
-initial_velocity_max = 250.0
-gravity = Vector3(0, 0, 0)
-anim_speed_min = 25.0
-anim_speed_max = 25.0
-collision_mode = 2
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_apohq"]
-cull_mode = 1
-polygon = PackedVector2Array(-34, -28, 34, -28, 34, 4, -34, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwbb2"]
+size = Vector2(68, 24)
 
 [node name="ContainerBubbles" instance=ExtResource("1_vxiw2")]
 script = ExtResource("2_v6nvq")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="1"]
-modulate = Color(1, 1, 1, 0.74902)
-z_index = 1
-material = SubResource("CanvasItemMaterial_aj0pq")
-position = Vector2(0, 52)
-process_material = SubResource("ParticleProcessMaterial_yy7fg")
-texture = ExtResource("2_qhjfe")
-lifetime = 3.0
-randomness = 0.5
-collision_base_size = 0.1
-visibility_rect = Rect2(-125, -157.916, 250, 212.678)
+[node name="BubbleBGGenerator" parent="." index="1" instance=ExtResource("3_yn4c8")]
+position = Vector2(0, 48)
+radius_x = 28.0
+gen_z_index = 0
+min_speed = 20.0
+max_speed = 200.0
+delay_range_sec = Vector2(0.4, 1)
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="." index="2"]
-position = Vector2(0, -40)
-occluder = SubResource("OccluderPolygon2D_apohq")
-
-[node name="ContainerHollow" type="Sprite2D" parent="." index="3"]
+[node name="ContainerHollow" type="Sprite2D" parent="." index="2"]
 z_index = 1
 texture = ExtResource("3_ancyg")
 
-[node name="Node2D" type="Node2D" parent="." index="4"]
+[node name="Node2D" type="Node2D" parent="." index="3"]
 script = ExtResource("4_pqph3")
 amplitude = Vector2(0, 12)
 random_phase = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D" index="0"]
+
+[node name="Area2D" type="Area2D" parent="." index="4" groups=["#no_bubbles"]]
+visible = false
+collision_layer = 4096
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -56)
+shape = SubResource("RectangleShape2D_gwbb2")

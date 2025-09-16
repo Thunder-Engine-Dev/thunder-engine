@@ -5,19 +5,22 @@ static func register() -> Command:
 		.add_param("option", TYPE_STRING, true) \
 		.add_param("key", TYPE_STRING, true) \
 		.add_param("command", TYPE_STRING, true) \
-		.set_description("Binds a command to a preferred key.")
+		.set_description("Binds a command to a preferred key") \
+		.set_not_cheat()
 
 func execute(args: Array) -> Command.ExecuteResult:
-	var option_list: String = "set, remove, reset, list"
+	var option_list: String = "set, remove, list"
 	if args.is_empty():
-		return Command.ExecuteResult.new(option_list)
+		return Command.ExecuteResult.new(option_list + "\nFor a list of valid keys to bind, see [url=https://docs.godotengine.org/en/4.4/classes/class_@globalscope.html#enum-globalscope-key]the Godot documentation[/url].")
 
 	var arg_option: String = args[0]
 	
 	if arg_option == "list":
 		return Command.ExecuteResult.new(_get_bind_list())
+	elif arg_option == "rawlist":
+		return Command.ExecuteResult.new(_get_bind_raw_list())
 		
-	if !arg_option in ["set", "remove", "reset"]:
+	if !arg_option in ["set", "remove"]:
 		return Command.ExecuteResult.new(option_list)
 	
 	if arg_option == "reset":
@@ -26,15 +29,33 @@ func execute(args: Array) -> Command.ExecuteResult:
 			Console.bind_logic.reload_binds()
 			return Command.ExecuteResult.new("Binds have been reset successfully")
 		else:
-			return Command.ExecuteResult.new("Be careful with resetting ALL binds. Nothing happened")
+			return Command.ExecuteResult.new("[color=red]Be careful with resetting ALL binds. Nothing happened[/color]")
+	
+	elif arg_option == "remove":
+		if len(args) == 2 && args[1].is_valid_int():
+			var ind := int(args[1])
+			var rawlist: Dictionary = _get_bind_raw_list()
+			var _bind = rawlist.get(ind)
+			if !_bind:
+				return Command.ExecuteResult.new("[color=red]Bind with such index does not exist[/color]")
+			Console.bind_logic.binds["_bind_" + _bind.command].erase(_bind.key_combo)
+			Console.bind_logic.reload_binds()
+			Console.bind_logic.save_binds()
+			return Command.ExecuteResult.new("Bind removed successfully")
+		
+		return Command.ExecuteResult.new("[color=red]Error[/color]: Type [color=yellow]bind list[/color] and choose an index of a bind you want to remove.")
 	
 	if len(args) < 3:
-		return Command.ExecuteResult.new("[color=red]Invalid Parameters[/color]")
+		return Command.ExecuteResult.new("\n".join([
+			messages[Error.Param],
+			"[color=red]Usage:[/color] %s%s" % [name, _get_usage()]
+		]))
 	
 	var arg_key: String = args[1]
 	
 	var keycodes := []
 	for i in arg_key.split("+"):
+		i = i.replacen("_", " ")
 		var key = OS.find_keycode_from_string(i)
 		if !key:
 			return Command.ExecuteResult.new("[color=red]Invalid Key[/color]")
@@ -58,18 +79,7 @@ func execute(args: Array) -> Command.ExecuteResult:
 			
 			return Command.ExecuteResult.new("Bind set successfully")
 			
-		"remove": # TODO: this is Broken for some reason.
-			print(Console.bind_logic.binds.keys())
-			print(Console.bind_logic.binds["_bind_" + arg_command])
-			print(keycodes)
-			#if (
-			#	!"_bind_" + arg_command in Console.bind_logic.binds ||
-			#	!keycodes in Console.bind_logic.binds["_bind_" + arg_command]
-			#):
-			#	return Command.ExecuteResult.new("[color=red]Unable to remove bind[/color]")
-			Console.bind_logic.binds["_bind_" + arg_command].erase(keycodes)
-			if len(Console.bind_logic.binds["_bind_" + arg_command]) == 0:
-				Console.bind_logic.binds.erase("_bind_" + arg_command)
+		"remove":
 			Console.bind_logic.reload_binds()
 			Console.bind_logic.save_binds()
 			return Command.ExecuteResult.new("Bind removed successfully")
@@ -97,3 +107,21 @@ func _get_bind_list() -> String:
 	
 	return "
 ".join(binds)
+
+
+func _get_bind_raw_list() -> Dictionary:
+	var list: Dictionary = Console.bind_logic.binds
+	var binds: Dictionary = {}
+	var index: int = 0
+	var i: int = 0
+	for arrays in list.values():
+		for key_combo in arrays:
+			index += 1
+			var command: String = list.keys()[i].split("_bind_")[1]
+			binds[index] = {
+				"key_combo" = key_combo,
+				"command" = command,
+			}
+		i += 1
+	
+	return binds

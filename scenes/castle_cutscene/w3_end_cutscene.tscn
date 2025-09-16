@@ -1,0 +1,303 @@
+[gd_scene load_steps=33 format=4 uid="uid://qoofkxivblql"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_bvadk"]
+[ext_resource type="Script" uid="uid://dhugvylyq27q0" path="res://engine/scenes/castle_cutscene/scripts/w3_end_cutscene.gd" id="2_ql08f"]
+[ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="3_8l4i3"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_8nmlo"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="5_ql08f"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_en0a8"]
+[ext_resource type="TileSet" uid="uid://cwm6qusol36ed" path="res://engine/tilesets/starland/starland.tres" id="7_ke5jt"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="8_q87xp"]
+[ext_resource type="Texture2D" uid="uid://dcc24xfje7sld" path="res://engine/tilesets/starland/gfx/starland_hill.png" id="9_0bw3p"]
+[ext_resource type="Texture2D" uid="uid://5p36u73djuoh" path="res://engine/tilesets/starland/gfx/starland.png" id="10_35gk1"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="11_yx6rr"]
+[ext_resource type="Texture2D" uid="uid://cacq4bhiloiho" path="res://engine/tilesets/starland/gfx/starland_tree_minimum_light.png" id="12_x1epw"]
+[ext_resource type="Texture2D" uid="uid://twuqlr7c1w6e" path="res://engine/tilesets/starland/gfx/starland_tree_minimum_ground_light.png" id="13_1p6hd"]
+[ext_resource type="Script" uid="uid://b6reo6h4cdgok" path="res://engine/tilesets/starland/starland_light.gd" id="14_qsyqg"]
+
+[sub_resource type="Gradient" id="Gradient_hwlet"]
+offsets = PackedFloat32Array(0.536585, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdu4q"]
+gradient = SubResource("Gradient_hwlet")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.857143, 0.142857)
+metadata/_snap_enabled = true
+metadata/_snap_count = 7
+
+[sub_resource type="Gradient" id="Gradient_pw38v"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5sgnw"]
+gradient = SubResource("Gradient_pw38v")
+width = 480
+
+[sub_resource type="Gradient" id="Gradient_ig6vp"]
+colors = PackedColorArray(0.116, 0, 0.24, 1, 0, 0.184314, 0.458824, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kqyyq"]
+gradient = SubResource("Gradient_ig6vp")
+width = 640
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jgqj"]
+atlas = ExtResource("12_x1epw")
+region = Rect2(0, 0, 124, 121)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3iis"]
+atlas = ExtResource("12_x1epw")
+region = Rect2(0, 121, 124, 121)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nh4ip"]
+atlas = ExtResource("12_x1epw")
+region = Rect2(0, 242, 124, 121)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i1qe5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jgqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3iis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nh4ip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sfvq"]
+atlas = ExtResource("13_1p6hd")
+region = Rect2(0, 0, 140, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p342"]
+atlas = ExtResource("13_1p6hd")
+region = Rect2(0, 36, 140, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qe85"]
+atlas = ExtResource("13_1p6hd")
+region = Rect2(0, 72, 140, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0gx35"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sfvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8p342")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qe85")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_evv3b"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.768627, 0.741176, 0.788235, 1, 0.768627, 0.768627, 0.768627, 0.737255, 0.984314, 0.596078, 1, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_40fem"]
+gradient = SubResource("Gradient_evv3b")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="Gradient" id="Gradient_1sfvq"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(0.496537, 0.496537, 0.496537, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnsyr"]
+gradient = SubResource("Gradient_1sfvq")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.875, 0.25)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[node name="CastleCutscene" type="Node2D"]
+script = ExtResource("1_bvadk")
+fade_out_time = 0.02
+lighting_force_hide_on_start = false
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_ql08f")
+
+[node name="Castle" type="Node2D" parent="."]
+
+[node name="CastleNotBroken" type="Sprite2D" parent="Castle"]
+position = Vector2(16, 64)
+texture = ExtResource("3_8l4i3")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="Castle"]
+position = Vector2(176, 416)
+
+[node name="Mario" parent="." instance=ExtResource("4_8nmlo")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(173, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("5_ql08f")
+
+[node name="CamArea" parent="." instance=ExtResource("6_en0a8")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+z_index = 4
+tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAIAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAIAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAIAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAIAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAIAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAIAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAIAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAIAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAIAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAIAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAIAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAIAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAIAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAIAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAIAAAAEAA8AAAABAAEAAAAEAA4AAAABAAIAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAIAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAIAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAIAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAIAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAIAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAIAAAAUAA8AAAABAAEAAAAFAA0AAAABAAAAAAAVAA8AAAACAAEAAAAVAA4AAAACAAIAAAAVAA0AAAACAAAAAAAWAAYAAQAAAAAAAAAWAAcAAQAAAAAAAAAWAAgAAQAAAAAAAAAWAAkAAQAAAAAAAAAWAAoAAQAAAAAAAAAWAAsAAQAAAAAAAAAWAAwAAQAAAAAAAAASAAsAAwADAAEAAQA=")
+tile_set = ExtResource("7_ke5jt")
+navigation_enabled = false
+
+[node name="Layer1" type="TileMapLayer" parent="."]
+z_index = 4
+tile_map_data = PackedByteArray("AAABAA4AAwAAAAAAAAAJAA4AAwABAAAAAAAQAA4AAwACAAAAAAALAA0AAwADAAAAAAALAAwAAwAAAAEAAAAKAAsAAwADAAEAAAAAAAsAAwAEAAAAAAA=")
+tile_set = ExtResource("7_ke5jt")
+occlusion_enabled = false
+collision_enabled = false
+navigation_enabled = false
+
+[node name="Node2D" type="Node2D" parent="Layer1"]
+script = ExtResource("8_q87xp")
+medium = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="Layer1/Node2D"]
+position = Vector2(49, 466)
+scale = Vector2(0.175781, 0.175781)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
+
+[node name="PointLight2D3" type="PointLight2D" parent="Layer1/Node2D"]
+position = Vector2(301, 459)
+scale = Vector2(0.34375, 0.34375)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
+
+[node name="PointLight2D4" type="PointLight2D" parent="Layer1/Node2D"]
+position = Vector2(529, 460)
+scale = Vector2(0.34375, 0.34375)
+color = Color(1, 1, 0.443137, 1)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_pdu4q")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_5sgnw")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="StarlandHill6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(336, 224)
+texture = ExtResource("9_0bw3p")
+centered = false
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.682353)
+scale = Vector2(1, 480)
+texture = SubResource("GradientTexture1D_kqyyq")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Starland" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture_repeat = 2
+position = Vector2(0, 298)
+texture = ExtResource("10_35gk1")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 200)
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("11_yx6rr")]
+visible = false
+
+[node name="CastleEndMarker" type="Marker2D" parent="."]
+position = Vector2(173, 416)
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = 4
+script = ExtResource("8_q87xp")
+maximum = false
+minimum = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.529412)
+position = Vector2(600, 368)
+sprite_frames = SubResource("SpriteFrames_i1qe5")
+autoplay = "default"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0.752941)
+position = Vector2(600, 434)
+sprite_frames = SubResource("SpriteFrames_0gx35")
+autoplay = "default"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.587751, 0.587751, 0.58775, 1)
+script = ExtResource("8_q87xp")
+medium = true
+
+[node name="Node2D2" type="Node2D" parent="."]
+z_index = 4
+script = ExtResource("8_q87xp")
+medium = true
+
+[node name="AnimatedSprite2D8" type="PointLight2D" parent="Node2D2"]
+position = Vector2(600, 368)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_40fem")
+script = ExtResource("14_qsyqg")
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D8"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tnsyr")
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2"]
+position = Vector2(366, 411)
+range_layer_min = -512
+texture = SubResource("GradientTexture2D_40fem")
+script = ExtResource("14_qsyqg")
+
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D9"]
+color = Color(0.980392, 0.545098, 0.980392, 1)
+energy = 0.5
+range_layer_min = -512
+range_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_tnsyr")
+metadata/_edit_lock_ = true

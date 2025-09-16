@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://btd4qa0fl8542"]
 
-[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_jlfnt"]
-[ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_hjp83"]
-[ext_resource type="Texture2D" uid="uid://d0f7mtcah843n" path="res://engine/objects/platform/cloud_platform.png" id="3_852bd"]
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_jlfnt"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_hjp83"]
+[ext_resource type="Texture2D" uid="uid://b6dexuoepy6jl" path="res://engine/objects/platform/cloud_platform.png" id="3_852bd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ijoc"]
 atlas = ExtResource("3_852bd")
@@ -42,31 +42,36 @@ animations = [{
 
 [node name="PlatformPathCloud" type="PathFollow2D"]
 rotates = false
+cubic_interp = false
 loop = false
 script = ExtResource("1_jlfnt")
 sprite = NodePath("Block/Sprite2D")
 
 [node name="Block" type="AnimatableBody2D" parent="."]
-collision_layer = 112
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("2_hjp83")
 metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
 visible = false
-polygon = PackedVector2Array(-64, 0, 63, 0, 63, 5, -64, 5)
+polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
 one_way_collision = true
 
-[node name="Surface" type="Area2D" parent="Block"]
-collision_layer = 0
-collision_mask = 7
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
-visible = false
-modulate = Color(0.921569, 0, 0.647059, 1)
-polygon = PackedVector2Array(-64, -1, 63, -1, 63, 0, -64, 0)
-
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Block"]
-position = Vector2(0, 16)
+position = Vector2(-1, 16)
 sprite_frames = SubResource("SpriteFrames_gc88a")
 autoplay = "default"
+
+[node name="Block2" type="AnimatableBody2D" parent="."]
+visible = false
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_hjp83")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2"]
+visible = false
+polygon = PackedVector2Array(-64, 0, 63, 0, 63, 32, -64, 32)
+one_way_collision = true

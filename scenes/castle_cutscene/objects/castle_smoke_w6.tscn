@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvlf4yvn124n"]
+
+[ext_resource type="Script" uid="uid://y8nisi8dtbbu" path="res://engine/scenes/castle_cutscene/objects/castle_smoke_w6.gd" id="1_c2tvt"]
+[ext_resource type="Texture2D" uid="uid://be1deqnym07i8" path="res://engine/scenes/castle_cutscene/textures/smoke.png" id="2_ck3y6"]
+
+[node name="Smoke" type="Node2D"]
+script = ExtResource("1_c2tvt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_ck3y6")

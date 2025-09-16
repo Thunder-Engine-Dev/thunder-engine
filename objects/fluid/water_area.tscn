@@ -1,34 +1,18 @@
-[gd_scene load_steps=13 format=3 uid="uid://hkhy751lpyx5"]
+[gd_scene load_steps=7 format=3 uid="uid://hkhy751lpyx5"]
 
-[ext_resource type="Script" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
-[ext_resource type="Texture2D" uid="uid://dsijqvsl47riy" path="res://engine/objects/fluid/textures/water_smooth_0.png" id="1_owblh"]
-[ext_resource type="Texture2D" uid="uid://cbmba5ty0qvf7" path="res://engine/objects/fluid/textures/water_smooth_1.png" id="2_s1pft"]
-[ext_resource type="Texture2D" uid="uid://tv235awsv41g" path="res://engine/objects/fluid/textures/water_smooth_2.png" id="3_hp3it"]
-[ext_resource type="Texture2D" uid="uid://dp3ivcsnm7xb0" path="res://engine/objects/fluid/textures/water_smooth_3.png" id="4_3xhro"]
-[ext_resource type="Texture2D" uid="uid://bj4qoeup4awcq" path="res://engine/objects/fluid/textures/water_smooth_4.png" id="5_yfkti"]
-[ext_resource type="Texture2D" uid="uid://bhlgs2eebvaxr" path="res://engine/objects/fluid/textures/water_smooth_5.png" id="6_xmv3a"]
-[ext_resource type="Texture2D" uid="uid://baa2ywxd73mvl" path="res://engine/objects/fluid/textures/water_smooth_6.png" id="7_612hx"]
-[ext_resource type="Texture2D" uid="uid://ctwrhebqj6fd6" path="res://engine/objects/fluid/textures/water_smooth_7.png" id="8_yg6dj"]
-[ext_resource type="Script" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="10_veqxg"]
+[ext_resource type="Script" uid="uid://bewdn1cfwoqbp" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
+[ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="2_g1dno"]
+[ext_resource type="Script" uid="uid://di182hyy2cddt" path="res://engine/objects/fluid/swimming/control_resize_logic.gd" id="10_veqxg"]
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_cct87"]
-frames = 8
-frame_0/texture = ExtResource("1_owblh")
-frame_0/duration = 0.15
-frame_1/texture = ExtResource("2_s1pft")
-frame_1/duration = 0.15
-frame_2/texture = ExtResource("3_hp3it")
-frame_2/duration = 0.15
-frame_3/texture = ExtResource("4_3xhro")
-frame_3/duration = 0.15
-frame_4/texture = ExtResource("5_yfkti")
-frame_4/duration = 0.15
-frame_5/texture = ExtResource("6_xmv3a")
-frame_5/duration = 0.15
-frame_6/texture = ExtResource("7_612hx")
-frame_6/duration = 0.15
-frame_7/texture = ExtResource("8_yg6dj")
-frame_7/duration = 0.15
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6qe0v"]
+noise_type = 5
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3cbwp"]
+width = 64
+height = 16
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_6qe0v")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
@@ -42,9 +26,11 @@ script = ExtResource("10_veqxg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 31
+texture_repeat = 2
+material = ExtResource("2_g1dno")
 layout_mode = 2
 size_flags_vertical = 0
-texture = SubResource("AnimatedTexture_cct87")
+texture = SubResource("NoiseTexture2D_3cbwp")
 stretch_mode = 1
 
 [node name="Area2D" type="Area2D" parent="." groups=["#water"]]

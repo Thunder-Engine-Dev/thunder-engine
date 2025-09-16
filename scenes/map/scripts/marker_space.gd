@@ -8,6 +8,11 @@ class_name MarkerSpace extends Node2D
 @export var next_space: MarkerSpace : set = set_next_space, get = get_next_space 
 @export var draw_dots: bool = false : set = set_dot_draw, get = get_dot_draw
 @export var allow_saving: bool = true
+@export_category("Progress Suspension")
+@export var progress_continue_enabled: bool = true
+@export var progress_title_prefix: String = "world\\n"
+@export var progress_title_level: String = "{0} - {1}"
+@export var progress_title_level_fallback: String = "x"
 
 var _dot_draw: bool = false
 var _dots_drawn: bool = false
@@ -18,15 +23,36 @@ var dots: Array
 var dots_mapping = []
 var total_levels: Array = []
 var uncompleted_levels: Array[String] = []
+var _stored_selected_marker: String
 
 var map: Node2D
 
-
 signal changed
+
+func _init() -> void:
+	if Engine.is_editor_hint(): return
+	if allow_saving:
+		if (
+			Data.values.get("map_force_selected_marker") &&
+			!Data.values.get("map_force_go_next") &&
+			Data.values.get("map_force_old_marker")
+		):
+			_stored_selected_marker = Data.values.map_force_selected_marker
+			Data.values.map_force_selected_marker = Data.values.map_force_old_marker
+			print("[Map] Forced To Old Marker ", Data.values.map_force_selected_marker)
+
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		map = Scenes.current_scene
+		
+		if Data.values.get("skip_progress_continue") == true:
+			(func():
+				Data.values.skip_progress_continue = false
+			).call_deferred()
+		elif SettingsManager.get_tweak("progress_continue", true) && progress_continue_enabled:
+			_save_suspended_progress.call_deferred()
+		
 	
 	# Connect the signals to redraw connecting
 	child_entered_tree.connect(_child_enter)
@@ -46,11 +72,13 @@ func _ready() -> void:
 		if !_next_space.changed.is_connected(queue_redraw):
 			_next_space.changed.connect(queue_redraw)
 	
-	if draw_dots:
-		build_dots()
+	#if draw_dots:
+	#	build_dots()
 	
 	if !Engine.is_editor_hint():
-		await get_tree().process_frame
+		if allow_saving && _stored_selected_marker:
+			Data.values.map_force_selected_marker = _stored_selected_marker
+		await get_tree().physics_frame
 		if allow_saving && !uncompleted_levels.is_empty():
 			_save_progress()
 
@@ -59,8 +87,11 @@ func _save_progress() -> void:
 	var prof: ProfileManager.Profile = ProfileManager.current_profile as ProfileManager.Profile
 	var next_level_name: String = uncompleted_levels[0].get_file().get_slice(".", 0)
 	
-	if Data.values.get('map_force_selected_marker'):
+	if Data.values.get("map_force_selected_marker") && Data.values.get("map_force_go_next"):
+		Data.values.map_force_old_marker = Data.values.map_force_selected_marker
 		Data.values.map_force_selected_marker = uncompleted_levels[0]
+		print("[Map] Forced To ", Data.values.map_force_selected_marker)
+		Data.values.map_force_go_next = false
 	
 	prof.set_next_level_name(next_level_name)
 	var _no_save: bool = false
@@ -80,13 +111,44 @@ func _save_progress() -> void:
 			new_level = next_marker_id
 		else:
 			_no_save = true
-			print("No save is needed")
+			print("[Map] No save is needed")
 	if !_no_save:
 		prof.set_world_numbers(
 			new_world,
 			new_level
 		)
 		ProfileManager.save_current_profile()
+
+
+func _save_suspended_progress() -> void:
+	if ProfileManager.current_profile.data.get("executed") && !Console.cv.can_save_suspended_with_console:
+		print("[Map] Suspended Save rejected due to enabled Console!")
+		return
+	var profile = ProfileManager.Profile.new()
+	profile.name = "suspended"
+	var pl_state: PlayerSuit = Thunder._current_player_state
+	
+	profile.data.saved_values = Data.values.duplicate(true)
+	if pl_state:
+		profile.data.saved_player_state = Thunder._current_player_state.name
+	profile.data.remaining_continues = Data.technical_values.remaining_continues
+	profile.data.custom_technical_values = Data.technical_values.custom_saved_values
+	
+	profile.data.saved_profile = ProfileManager.current_profile.name
+	profile.data.saved_profile_data = ProfileManager.current_profile.data
+	profile.data.title_prefix = progress_title_prefix
+	
+	var _saved_level: String = str(get_next_marker_id(false) + 1)
+	if profile.data.saved_profile_data.get("star_world"):
+		_saved_level = uncompleted_levels[0].get_file().get_slice(".", 0).right(1)
+		if !_saved_level.is_valid_int():
+			_saved_level = progress_title_level_fallback
+	profile.data.title_level = progress_title_level.format([str(space_name), _saved_level])
+	profile.data.scene = Scenes.current_scene.scene_file_path
+	
+	ProfileManager.profiles.suspended = profile
+	ProfileManager.save_profile_data("suspended", profile.data)
+
 
 # Recive events
 func _notification(what: int) -> void:
@@ -175,6 +237,7 @@ func if_level_make_x(mark: MapPlayerMarker) -> void:
 		var m = map.get_node(map.player).x.instantiate()
 		m.global_position = mark.global_position
 		m.visible = mark.is_level_completed()
+		mark.x_ref = m
 		map.add_child.call_deferred(m)
 
 func make_dot(pos: Vector2) -> void:
@@ -196,42 +259,49 @@ func make_dot(pos: Vector2) -> void:
 
 func make_dots_visible_before(current_marker: MapPlayerMarker) -> void:
 	var found: int = -1
-	var pos: Vector2 = current_marker.global_position
+	var pos: Vector2 = Vector2(current_marker.global_position / 32).round()
 	
 	for i in len(dots_mapping):
-		var dot_pos = dots_mapping[i][0]
-		#print(round(dot_pos.x / 32), " ", round(pos.x / 32), " : ", round(dot_pos.y / 32), " ", round(pos.y / 32))
+		var dot_pos: Vector2 = Vector2(dots_mapping[i][0] / 32).round()
+		#print(dot_pos.x, " ", pos.x, " : ", dot_pos.y, " ", pos.y)
 		
-		if (
-			round(dot_pos.x / 32) == round(pos.x / 32) &&
-			round(dot_pos.y / 32) == round(pos.y / 32) &&
-			dots_mapping[i][1] is AnimatedSprite2D
-		):
+		if dot_pos.x == pos.x && dot_pos.y == pos.y:
 			found = i
 			break
 	
 	while found >= 0:
-		dots_mapping[found][1].visible = true
+		var dot_node = dots_mapping[found][1]
+		if dot_node is AnimatedSprite2D:
+			dot_node.visible = true
+			found -= 1
+			continue
+		if "forced_completed" in dot_node && dot_node.get("x_ref") && Data.values.get("map_force_selected_marker"):
+			dot_node.x_ref.visible = true
+			dot_node.forced_completed = true
 		found -= 1
+	
+	if Data.values.get("map_force_selected_marker") && current_marker.get(&"x_ref"):
+		current_marker.x_ref.visible = true
+		current_marker.forced_completed = true
 
 
 func add_uncompleted_levels_after(marker: String) -> void:
 	uncompleted_levels.clear()
 	var switched_to_uncompleted: bool = false
 	for i in total_levels:
-		if i.level == marker:
+		if Scenes.get_scene_path(i._level_save) == marker:
 			switched_to_uncompleted = true
 			continue
 		if switched_to_uncompleted:
-			uncompleted_levels.append(i.level)
+			uncompleted_levels.append(Scenes.get_scene_path(i._level_save))
 	
 	#print("Uncompleted levels:", uncompleted_levels)
 
 func add_all_uncompleted_levels() -> void:
 	if !uncompleted_levels.is_empty(): return
 	for i in total_levels:
-		if !i.get("level"): continue
-		uncompleted_levels.append(i.level)
+		if !i.get("_level_save"): continue
+		uncompleted_levels.append(Scenes.get_scene_path(i._level_save))
 	
 	#print("Added all levels:", uncompleted_levels)
 
@@ -296,12 +366,14 @@ func dot_building_logic(child: MapPlayerMarker, next_child: Node2D) -> void:
 	var computed_interval = length / amount
 	
 	for dot in range(amount):
+		var f_pos = child.global_position + direction * (dot * computed_interval)
+		if !Engine.is_editor_hint():
+			dots_mapping.append([f_pos, child])
 		if dot == 0:
 			if child.is_level():
+				#print(child)
 				continue
-		var f_pos = child.global_position + direction * (dot * computed_interval)
 		dots.push_back(f_pos)
-		dots_mapping.append([f_pos, child])
 
 
 # Updates lines

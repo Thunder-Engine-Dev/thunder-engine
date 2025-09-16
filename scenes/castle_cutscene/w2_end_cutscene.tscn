@@ -1,0 +1,134 @@
+[gd_scene load_steps=19 format=4 uid="uid://r3ei2spdrljy"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_0gnup"]
+[ext_resource type="Script" uid="uid://cp0iv8ga8udba" path="res://engine/scenes/castle_cutscene/scripts/w2_end_cutscene.gd" id="2_0gnup"]
+[ext_resource type="Texture2D" uid="uid://bklyfgnvm6k15" path="res://engine/scenes/castle_cutscene/textures/castle_broken_3.png" id="3_k474m"]
+[ext_resource type="Texture2D" uid="uid://1q2glmjubivb" path="res://engine/scenes/castle_cutscene/textures/castle_broken_2.png" id="4_7iu7b"]
+[ext_resource type="Texture2D" uid="uid://rh2x0l8i6i6g" path="res://engine/scenes/castle_cutscene/textures/castle_broken_1.png" id="5_sq5hq"]
+[ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="6_je5vt"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="7_jojxi"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="8_3x4tq"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="9_qew0g"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="10_k474m"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="11_ufuay"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="12_jlp57"]
+
+[sub_resource type="Gradient" id="Gradient_pw38v"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5sgnw"]
+gradient = SubResource("Gradient_pw38v")
+width = 480
+
+[sub_resource type="Gradient" id="Gradient_ixike"]
+colors = PackedColorArray(0.0470588, 0, 0.0313726, 1, 0.227451, 0, 0.243137, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e4d3s"]
+gradient = SubResource("Gradient_ixike")
+width = 640
+
+[sub_resource type="Gradient" id="Gradient_4wf3l"]
+colors = PackedColorArray(0.11, 0, 0.0733333, 0.494118, 0.31968, 0.1184, 0.37, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0oq5t"]
+gradient = SubResource("Gradient_4wf3l")
+width = 640
+
+[node name="CastleCutscene" type="Node2D"]
+script = ExtResource("1_0gnup")
+fade_out_time = 0.02
+lighting_force_hide_on_start = false
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_0gnup")
+
+[node name="Castle" type="Node2D" parent="."]
+
+[node name="CastleFullBrokenDeluxe" type="Sprite2D" parent="Castle"]
+visible = false
+position = Vector2(0, 64)
+texture = ExtResource("3_k474m")
+centered = false
+
+[node name="CastleFullBroken" type="Sprite2D" parent="Castle"]
+visible = false
+position = Vector2(16, 64)
+texture = ExtResource("4_7iu7b")
+centered = false
+
+[node name="CastleSlightlyBroken" type="Sprite2D" parent="Castle"]
+visible = false
+position = Vector2(16, 64)
+texture = ExtResource("5_sq5hq")
+centered = false
+
+[node name="CastleNotBroken" type="Sprite2D" parent="Castle"]
+position = Vector2(16, 64)
+texture = ExtResource("6_je5vt")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="Castle"]
+position = Vector2(176, 224)
+
+[node name="Mario" parent="." instance=ExtResource("7_jojxi")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(173, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("8_3x4tq")
+
+[node name="CamArea" parent="." instance=ExtResource("9_qew0g")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+z_index = 4
+tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAEAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAEAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAEAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAEAAAAEAA8AAAABAAEAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAEAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAEAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAEAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAEAAAAUAA8AAAABAAEAAAD//xAAAAAAAAIAAAAAABAAAAABAAIAAAABABAAAAABAAIAAAACABAAAAABAAIAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAABAAIAAAAGABAAAAABAAIAAAAHABAAAAABAAIAAAAIABAAAAABAAIAAAAJABAAAAABAAIAAAAKABAAAAABAAIAAAALABAAAAABAAIAAAAMABAAAAABAAIAAAANABAAAAABAAIAAAAOABAAAAABAAIAAAAPABAAAAABAAIAAAAQABAAAAABAAIAAAARABAAAAABAAIAAAASABAAAAABAAIAAAATABAAAAABAAIAAAAUABAAAAABAAIAAAAFAA0AAAABAAAAAAATAAwADQAAAAAAAAASAAwADQAAAAAAAAARAAwADQAAAAAAAAANAAwABQAAAAAAAAAEAAUABgAAAAAAAAAVABAAAAACAAIAAAAVAA8AAAACAAEAAAAVAA4AAAACAAEAAAAVAA0AAAACAAAAAAACAAEABgAAAAAAAAALAAQABgAAAAAAAAAOAAEABgAAAAAAAAASAAIABgAAAAAAAAAWAA0AAgAAAAAAAAAXAA0AAgAAAAAAAAAXAAwAAgAAAAAAAAAXAAsAAgAAAAAAAAAXAAoAAgAAAAAAAAAXAAkAAgAAAAAAAAAXAAgAAgAAAAAAAAAXAAcAAgAAAAAAAAAXAAYAAgAAAAAAAAAXAAUAAgAAAAAAAAAXAAQAAgAAAAAAAAAXAAMAAgAAAAAAAAAXAAIAAgAAAAAAAAALAAsACwAAAAAAAAAPAAoADAAAAAAAAAAQAAwADQAAAAAAAAA=")
+tile_set = ExtResource("10_k474m")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_5sgnw")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+modulate = Color(1, 1, 1, 0.682353)
+scale = Vector2(1, 480)
+texture = SubResource("GradientTexture1D_e4d3s")
+centered = false
+script = ExtResource("11_ufuay")
+medium = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground"]
+visible = false
+modulate = Color(1, 1, 1, 0.682353)
+scale = Vector2(1, 480)
+texture = SubResource("GradientTexture1D_0oq5t")
+centered = false
+script = ExtResource("11_ufuay")
+maximum = false
+minimum = true
+
+[node name="HUD" parent="." instance=ExtResource("12_jlp57")]
+visible = false
+
+[node name="CastleEndMarker" type="Marker2D" parent="."]
+position = Vector2(173, 416)
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = -20
+script = ExtResource("11_ufuay")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.587751, 0.587751, 0.58775, 1)
+script = ExtResource("11_ufuay")
+medium = true

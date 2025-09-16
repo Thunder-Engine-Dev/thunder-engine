@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://gxtkxfcpygcy"]
+
+[ext_resource type="Texture2D" uid="uid://dwsu0jg44f40b" path="res://engine/objects/effects/brick_debris/grabbable_brick_debris.png" id="1_ccg2k"]
+[ext_resource type="Script" uid="uid://41ncuvtaeig5" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_rjlxt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7nxk"]
+atlas = ExtResource("1_ccg2k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6cnq"]
+atlas = ExtResource("1_ccg2k")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a6fr"]
+atlas = ExtResource("1_ccg2k")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3e1kn"]
+atlas = ExtResource("1_ccg2k")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g75uk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7nxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6cnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7nxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a6fr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7nxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3e1kn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="GrabbableBrickDebris" type="AnimatedSprite2D"]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_g75uk")
+autoplay = "default"
+script = ExtResource("2_rjlxt")

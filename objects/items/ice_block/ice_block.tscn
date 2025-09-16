@@ -1,0 +1,120 @@
+[gd_scene load_steps=12 format=3 uid="uid://dofejp2f025qw"]
+
+[ext_resource type="Script" uid="uid://c4fgg2rbu56x" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
+[ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_2ogy0"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="3_egg7o"]
+[ext_resource type="Material" uid="uid://gil546lvmhxo" path="res://engine/objects/items/ice_block/ice_block.tres" id="4_ab1eo"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="6_2o27h"]
+[ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="6_ch7y1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ena34"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q60fw"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjc0d"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ouc48"]
+size = Vector2(24, 24)
+
+[node name="IceBlock" type="CharacterBody2D" groups=["slippery"]]
+collision_layer = 112
+collision_mask = 65
+script = ExtResource("1_s4yfw")
+gravity_dir_rotation = false
+gravity_scale = 0.5
+auto_update_up_direction = false
+metadata/_edit_pinned_properties_ = [&"gravity_dir_rotation", &"gravity_scale", &"auto_update_up_direction"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ena34")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_q60fw")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("6_2o27h")
+stomping_enabled = false
+stomping_hurtable = false
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": false,
+"boomerang": true,
+"fireball": false,
+"hammer": true,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": true,
+"starman": true
+}
+turn_into_coin_on_level_end = false
+frozen_enabled = false
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_fjc0d")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+script = ExtResource("3_2ogy0")
+killer_type = &"iceblock"
+is_reflectable = true
+
+[node name="SpriteNP" type="NinePatchRect" parent="."]
+material = ExtResource("4_ab1eo")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(16, 16)
+texture = ExtResource("2_e4ory")
+region_rect = Rect2(0, 0, 40, 40)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 1.43051e-06)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("3_egg7o")
+metadata/_edit_lock_ = true
+
+[node name="TimerDestroy" type="Timer" parent="."]
+process_mode = 1
+one_shot = true
+
+[node name="GrabbableModifier" parent="." instance=ExtResource("6_ch7y1")]
+
+[node name="SolidChecker" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 96
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+shape = SubResource("RectangleShape2D_ouc48")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="break_ice" binds= [true, true]]
+[connection signal="killed_notify" from="Attack" to="." method="break_ice" binds= [true, false]]
+[connection signal="grab_initiated" from="GrabbableModifier" to="." method="pause_timedown" binds= [true]]
+[connection signal="ungrabbed" from="GrabbableModifier" to="." method="_on_ungrabbed"]
+[connection signal="ungrabbed" from="GrabbableModifier" to="." method="start_timedown" binds= [true]]

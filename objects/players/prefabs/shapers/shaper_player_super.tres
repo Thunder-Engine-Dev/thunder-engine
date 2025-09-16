@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Shaper2D" load_steps=3 format=3 uid="uid://dkb80m2mcmogy"]
+
+[ext_resource type="Script" uid="uid://bpmdgdlimero3" path="res://engine/scripts/resources/shaper/shaper_2d.gd" id="1_m5qpk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqycm"]
+size = Vector2(20, 58)
+
+[resource]
+script = ExtResource("1_m5qpk")
+shape = SubResource("RectangleShape2D_lqycm")
+shape_pos = Vector2(0, -13)

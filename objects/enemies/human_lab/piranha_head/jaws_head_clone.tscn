@@ -4,42 +4,43 @@
 [ext_resource type="Texture2D" uid="uid://byu1t7txu5lgj" path="res://engine/objects/enemies/human_lab/piranha_head/textures/clone_head.png" id="2_ve488"]
 [ext_resource type="AudioStream" uid="uid://dgtypbpo8samu" path="res://engine/objects/enemies/human_lab/goomba/sfx/kick2.wav" id="3_pbree"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pclhs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_a24f0"]
 atlas = ExtResource("2_ve488")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5t825"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_skdk3"]
 atlas = ExtResource("2_ve488")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t7oi4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rflg"]
 atlas = ExtResource("2_ve488")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_svbmt"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_1t8pg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pclhs")
+"texture": SubResource("AtlasTexture_a24f0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5t825")
+"texture": SubResource("AtlasTexture_skdk3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t7oi4")
+"texture": SubResource("AtlasTexture_6rflg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5t825")
+"texture": SubResource("AtlasTexture_skdk3")
 }],
 "loop": true,
 "name": &"default",
-"speed": 14.0
+"speed": 10.0
 }]
 
 [node name="JawsHeadClone" instance=ExtResource("1_aumlb")]
 
-[node name="AnimatedSprite2D" parent="." index="0"]
-sprite_frames = SubResource("SpriteFrames_svbmt")
-
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_sound_succeeded = ExtResource("3_pbree")
+sound_ignore_pitch_modification = true
+
+[node name="Sprite" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_1t8pg")

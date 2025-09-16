@@ -19,7 +19,7 @@ func collect() -> void:
 	
 	if score > 0:
 		ScoreText.new(str(score), self)
-		Data.values.score += score
+		Data.add_score(score)
 	
 	queue_free()
 	
@@ -34,5 +34,7 @@ func collect() -> void:
 	if Audio._music_channels.has(98) && is_instance_valid(Audio._music_channels[98]):
 		Audio._music_channels[98].volume_db = 0
 	else:
-		Audio.play_music(starman_music, 98, { volume = 0 })
+		var _sfx = CharacterManager.get_sound_replace(starman_music, starman_music, "starman", false)
+		if "loop" in _sfx: _sfx.loop = true
+		Audio.play_music(_sfx, 98, { volume = 0 })
 	player._starman_faded = false

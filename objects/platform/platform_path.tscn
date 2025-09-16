@@ -1,35 +1,42 @@
 [gd_scene load_steps=4 format=3 uid="uid://rhrex2vth7at"]
 
-[ext_resource type="Script" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
 [ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="2_cmtwa"]
-[ext_resource type="Script" path="res://engine/objects/platform/platform_block.gd" id="2_co62k"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_co62k"]
 
 [node name="PlatformPath" type="PathFollow2D"]
 rotates = false
+cubic_interp = false
 loop = false
 script = ExtResource("1_p2p8j")
 sprite = NodePath("Block/Sprite2D")
 
 [node name="Block" type="AnimatableBody2D" parent="."]
-collision_layer = 112
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("2_co62k")
 metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
 visible = false
-polygon = PackedVector2Array(-48, 0, 48, 0, 48, 5, -48, 5)
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
 one_way_collision = true
 
-[node name="Surface" type="Area2D" parent="Block"]
-collision_layer = 0
-collision_mask = 7
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block/Surface"]
-visible = false
-modulate = Color(0.921569, 0, 0.647059, 1)
-polygon = PackedVector2Array(-48, -1, 48, -1, 48, 0, -48, 0)
-
 [node name="Sprite2D" type="Sprite2D" parent="Block"]
+physics_interpolation_mode = 2
+show_behind_parent = true
 position = Vector2(0, 8)
 texture = ExtResource("2_cmtwa")
+
+[node name="Block2" type="AnimatableBody2D" parent="."]
+visible = false
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_co62k")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2"]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
+one_way_collision = true

@@ -10,4 +10,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 	
 	player.global_position = Vector2(float(args[0]), float(args[1]))
 	return Command.ExecuteResult.new("Success")
-

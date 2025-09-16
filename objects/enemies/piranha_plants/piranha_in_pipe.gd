@@ -6,10 +6,11 @@ extends Node2D
 @export var stay_out_interval: float = 0.9
 @export var stretching_speed: float = 50.0
 @export var stretching_length: float = 60.0
-@export var custom_vars:Dictionary
-@export var custom_script:Script
+@export var custom_vars: Dictionary
+@export var custom_script: Script
 
 var step: int
+var first_visible: bool = false
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var timer_step: Timer = $Step
@@ -23,7 +24,9 @@ signal stretched_out
 
 
 func _ready() -> void:
-	if stay_in_pipe_at_first: position = stretching_start
+	if stay_in_pipe_at_first:
+		position = stretching_start
+		reset_physics_interpolation()
 	else: step = 3
 	
 	timer_step.timeout.connect(
@@ -38,6 +41,10 @@ func _physics_process(delta: float) -> void:
 	var ppos: Vector2 = global_transform.affine_inverse().basis_xform(player.global_position if player else Vector2.ZERO)
 	var spos: Vector2 = global_transform.affine_inverse().basis_xform(global_position)
 	var can_stretch_out: bool = vision.is_on_screen() && player && abs(spos.x - ppos.x) > range_in_pipe
+	if !first_visible:
+		first_visible = vision.is_on_screen()
+	if !first_visible:
+		return
 	
 	match step:
 		0:

@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk7vdi07qwtyc"]
+
+[ext_resource type="Script" uid="uid://dn8v8xe2q2h7c" path="res://engine/objects/enemies/cannon/cannon_cross.gd" id="1_bvwdm"]
+[ext_resource type="Texture2D" uid="uid://d32qlaqtlmjco" path="res://engine/objects/enemies/cannon/textures/cannon_double_head.png" id="2_8ecvj"]
+[ext_resource type="Texture2D" uid="uid://cy1ilh0qxu3f4" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler.png" id="3_5wvbq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5wiq"]
+size = Vector2(56, 60)
+
+[node name="CannonCross" type="AnimatableBody2D" node_paths=PackedStringArray("sprite_head", "sprite_handler", "sprite_pos_markers", "collision_shape")]
+collision_layer = 112
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_bvwdm")
+sprite_head = NodePath("SpriteHeads")
+sprite_handler = NodePath("SpriteHandler")
+sprite_pos_markers = [NodePath("SpriteHeads/PosCannonBall1"), NodePath("SpriteHeads/PosCannonBall2"), NodePath("SpriteHeads/PosCannonBall3"), NodePath("SpriteHeads/PosCannonBall4")]
+collision_shape = NodePath("CollisionShape2D")
+metadata/_edit_pinned_properties_ = [&"sprite_head", &"sprite_handler", &"sprite_pos_markers", &"collision_shape"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_h5wiq")
+
+[node name="SpriteHeads" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="SpriteHeadH" type="Sprite2D" parent="SpriteHeads"]
+texture = ExtResource("2_8ecvj")
+
+[node name="SpriteHeadV" type="Sprite2D" parent="SpriteHeads"]
+rotation = -1.57079
+texture = ExtResource("2_8ecvj")
+
+[node name="PosCannonBall1" type="Marker2D" parent="SpriteHeads"]
+visible = false
+position = Vector2(28, 0)
+gizmo_extents = 5.0
+
+[node name="PosCannonBall2" type="Marker2D" parent="SpriteHeads"]
+visible = false
+position = Vector2(0, -28)
+gizmo_extents = 5.0
+
+[node name="PosCannonBall3" type="Marker2D" parent="SpriteHeads"]
+visible = false
+position = Vector2(-28, 0)
+gizmo_extents = 5.0
+
+[node name="PosCannonBall4" type="Marker2D" parent="SpriteHeads"]
+visible = false
+position = Vector2(0, 28)
+gizmo_extents = 5.0
+
+[node name="SpriteHandler" type="Sprite2D" parent="."]
+texture = ExtResource("3_5wvbq")
+offset = Vector2(0, 8)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 48)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0392157)
+rect = Rect2(-32, -32, 64, 64)
+enable_node_path = NodePath("../Interval")
+metadata/_edit_lock_ = true
+
+[node name="Interval" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]

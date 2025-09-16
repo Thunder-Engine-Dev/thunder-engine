@@ -10,4 +10,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 	
 	player.die()
 	return Command.ExecuteResult.new("Success")
-

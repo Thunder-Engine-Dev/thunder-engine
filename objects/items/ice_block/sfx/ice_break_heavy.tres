@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://dnff60s4cgkcf"]
+
+[ext_resource type="AudioStream" uid="uid://dho1phsr6rci6" path="res://engine/objects/items/ice_block/sfx/ice_break_heavy_1.mp3" id="1_34txu"]
+[ext_resource type="AudioStream" uid="uid://cp1ntioep0rdr" path="res://engine/objects/items/ice_block/sfx/ice_break_heavy_2.mp3" id="2_4hvcs"]
+[ext_resource type="AudioStream" uid="uid://cperlc5w0pcxb" path="res://engine/objects/items/ice_block/sfx/ice_break_heavy_3.mp3" id="3_y1nq6"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_34txu")
+stream_1/stream = ExtResource("2_4hvcs")
+stream_2/stream = ExtResource("3_y1nq6")

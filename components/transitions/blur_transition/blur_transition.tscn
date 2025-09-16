@@ -1,11 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqwjr21jmsmi6"]
+[gd_scene load_steps=7 format=3 uid="uid://bqwjr21jmsmi6"]
 
-[ext_resource type="Script" path="res://engine/components/transitions/blur_transition/blur_transition.gd" id="1"]
-[ext_resource type="Shader" path="res://engine/components/transitions/blur_transition/blur_transition.gdshader" id="2_bmeim"]
-
-[sub_resource type="ShaderMaterial" id="2"]
-shader = ExtResource("2_bmeim")
-shader_parameter/size = 0.001
+[ext_resource type="Script" uid="uid://dit55ogfpcnt0" path="res://engine/components/transitions/blur_transition/blur_transition.gd" id="1"]
+[ext_resource type="Material" uid="uid://cjvud11pq1efj" path="res://engine/components/transitions/blur_transition/blur_transition.tres" id="2_cntis"]
 
 [sub_resource type="Animation" id="5"]
 resource_name = "Fade"
@@ -25,7 +21,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="3"]
 resource_name = "FadePixelate"
-length = 1.05
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,7 +29,7 @@ tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.85),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.001, 0.075]
@@ -45,7 +41,7 @@ tracks/1/path = NodePath("ColorRect2:color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.85),
 "transitions": PackedFloat32Array(1, 2),
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
@@ -65,10 +61,11 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="4"]
 resource_name = "RESET"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:material:shader_param/pixelFactor")
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -104,9 +101,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lctbs"]
 _data = {
-"Fade": SubResource("5"),
-"FadePixelate": SubResource("3"),
-"RESET": SubResource("4")
+&"Fade": SubResource("5"),
+&"FadePixelate": SubResource("3"),
+&"RESET": SubResource("4")
 }
 
 [node name="Transition" type="Control"]
@@ -120,7 +117,7 @@ script = ExtResource("1")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
-material = SubResource("2")
+material = ExtResource("2_cntis")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -140,5 +137,5 @@ color = Color(0, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_lctbs")
+&"": SubResource("AnimationLibrary_lctbs")
 }

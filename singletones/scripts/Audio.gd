@@ -48,6 +48,9 @@ var _duplicated_sounds: Array[AudioStream]
 var _calculate_player_position = _lcpp.bind()
 
 signal any_music_finished
+signal music_started(channel_id: int)
+signal music_stopped(channel_id: int, fading: bool)
+signal all_musics_stopped()
 
 
 func _init() -> void:
@@ -83,14 +86,6 @@ func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStre
 	return player
 
 
-func _create_openmpt_player(is_global: bool) -> OpenMPT:
-	var openmpt = OpenMPT.new()
-	if !is_global: Scenes.pre_scene_changed.connect(openmpt.queue_free)
-	add_child(openmpt)
-	openmpt.stop()
-	return openmpt
-
-
 ## Play a sound with given [AudioStream] resource and bind the sound player to a [Node2D][br]
 ## [b]Note:[/b] This method creates [AudioStreamPlayer2D] which plays sound with pan changed according to its position to the center of screen, rather than [AudioStreamPlayer].[br]
 ## [param resource] is the sound stream you are going to install[br]
@@ -108,9 +103,9 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	player.stream = resource
 	player.play.call_deferred()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		player.volume_db = other_keys.volume
 	
 	# Make the volume be on the same level as 1d sounds
@@ -137,9 +132,9 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.stream = resource
 	player.play.call_deferred()
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		player.volume_db = other_keys.volume
 	player.process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
@@ -163,7 +158,7 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 ## [/codeblock][br]
 ## So if you want to play musics in the same time without interferences, please make sure they are playing in different channels!
 func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}, is_global: bool = false, is_permanent: bool = true) -> AudioStreamPlayer:
-	await get_tree().process_frame
+	await get_tree().physics_frame
 	if !resource: return null
 	
 	if !_music_channels.has(channel_id) || !is_instance_valid(_music_channels[channel_id]):
@@ -172,60 +167,33 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	
 	music_player.finished.connect(func(): any_music_finished.emit(), CONNECT_ONE_SHOT)
 	
-	var openmpt: OpenMPT = null
-	
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
 		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 		music_player.play.call_deferred()
-	elif &"data" in resource:
-		openmpt = _create_openmpt_player(is_global)
-		if !openmpt:
-			return null
-		
-		openmpt.load_module_data(resource.data)
-		if !openmpt.is_module_loaded():
-			printerr("[Audio] Failed to load file using tracker loader")
-			openmpt.queue_free()
-			music_player.queue_free()
-			return null
-		music_player.set_meta(&"openmpt", openmpt)
-		
-		var generator = AudioStreamGenerator.new()
-		generator.buffer_length = 0.04
-		generator.mix_rate = 44100
-		
-		music_player.stream = generator
-		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
-		(func() -> void:
-			music_player.play()
-			#music_player.seek(0.0)
-			openmpt.set_audio_generator_playback(music_player)
-			openmpt.set_render_interpolation(resource.interpolation)
-			openmpt.set_repeat_count(0 if !resource.loop else -1)
-			#_music_channels[channel_id].volume_db = resource.volume_offset
-			openmpt.start(true)
-			#openmpt.set_position_seconds(0.0)
-		).call_deferred()
 	else:
-		printerr("Invalid data provided in method Audio.play_music")
+		print("ERROR: Invalid data provided in method Audio.play_music")
 		return null
 	
-	if &"pitch" in other_keys && other_keys.pitch is float:
+	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		_music_channels[channel_id].pitch_scale = other_keys.pitch
-	if &"volume" in other_keys && other_keys.volume is float:
+	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
 		_music_channels[channel_id].volume_db = other_keys.volume
-	if &"fade_duration" in other_keys && other_keys.fade_duration is float:
-		if &"fade_to" in other_keys && other_keys.fade_to is float:
-			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration)
+	if &"fade_duration" in other_keys && (other_keys.fade_duration is float || other_keys.fade_duration is int):
+		if &"fade_to" in other_keys && (other_keys.fade_to is float || other_keys.fade_to is int):
+			var _fade_mtd = Tween.TransitionType.TRANS_LINEAR
+			var _fade_ease = Tween.EaseType.EASE_IN
+			if &"fade_method" in other_keys && other_keys.fade_method is Tween.TransitionType:
+				_fade_mtd = other_keys.fade_method
+			if &"fade_ease" in other_keys && other_keys.fade_ease is Tween.EaseType:
+				_fade_ease = other_keys.fade_ease
+			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration, _fade_mtd, false, _fade_ease)
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
-	if &"start_from_sec" in other_keys && other_keys.start_from_sec is float && other_keys.start_from_sec > 0.0:
-		if openmpt:
-			openmpt.set_position_seconds.call_deferred(other_keys.start_from_sec)
-		else:
-			_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
+	if &"start_from_sec" in other_keys && (other_keys.start_from_sec is float || other_keys.start_from_sec is int) && other_keys.start_from_sec > 0.0:
+		_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
+	music_started.emit(channel_id)
 	
 	return music_player if is_instance_valid(music_player) else null
 
@@ -245,10 +213,6 @@ func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float,
 		func() -> void:
 			if stop_after_fading && is_instance_valid(player):
 				player.stop()
-				if player.has_meta("openmpt"):
-					var openmpt = player.get_meta("openmpt")
-					if is_instance_valid(openmpt):
-						openmpt.queue_free()
 				player.free()
 			tween.kill()
 			if tween in _music_tweens:
@@ -263,12 +227,9 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 	if !_music_channels[channel_id]: return
 	if !fade:
 		_music_channels[channel_id].stop()
-		if _music_channels[channel_id].has_meta("openmpt"):
-			var openmpt = _music_channels[channel_id].get_meta("openmpt")
-			if is_instance_valid(openmpt):
-				openmpt.queue_free()
 	else:
 		fade_music_1d_player(_music_channels[channel_id], -40, 2, Tween.TRANS_SINE, true)
+	music_stopped.emit(channel_id, fade)
 
 
 ## Stop all musics from playing
@@ -277,26 +238,26 @@ func stop_all_musics(fade: bool = false) -> void:
 		if !is_instance_valid(_music_channels[i]):
 			continue
 		if !fade:
-			if _music_channels[i].has_meta("openmpt"):
-				var openmpt = _music_channels[i].get_meta("openmpt")
-				if is_instance_valid(openmpt):
-					openmpt.queue_free()
-			
 			_music_channels[i].queue_free()
 			_music_channels.erase(i)
 		else:
 			fade_music_1d_player(_music_channels[i], -40, 1.5, Tween.TRANS_LINEAR, true)
+		music_stopped.emit(i, fade)
+	all_musics_stopped.emit()
 
 func _stop_all_musics_scene_changed() -> void:
 	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"play_when_scene_changed", true):
 			continue
-		if _music_channels[i].has_meta("openmpt"):
-			var openmpt = _music_channels[i].get_meta("openmpt")
-			if is_instance_valid(openmpt):
-				openmpt.queue_free()
-		if &"OpenMPT" in _music_channels[i].name:
-			i.queue_free()
 		
 		_music_channels[i].queue_free()
 		_music_channels.erase(i)
+		music_stopped.emit(i, false)
+	all_musics_stopped.emit()
+
+
+func stop_all_sounds() -> void:
+	for i in GlobalViewport.get_children():
+		if i is AudioStreamPlayer2D || i is AudioStreamPlayer:
+			i.stop()
+			i.queue_free()

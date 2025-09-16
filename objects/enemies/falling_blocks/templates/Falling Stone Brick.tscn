@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4h7mvbgsj5si"]
 
 [ext_resource type="PackedScene" uid="uid://b4m71alwd1txo" path="res://engine/objects/enemies/falling_blocks/falling_tile.tscn" id="1_36y77"]
-[ext_resource type="Texture2D" uid="uid://cnf74tn5otsdm" path="res://engine/tilesets/castle/castle_tileset.png" id="2_jjyfb"]
+[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="2_jjyfb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gpdj6"]
 atlas = ExtResource("2_jjyfb")
 region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pkefl"]
-size = Vector2(64, 32)
+size = Vector2(62, 30)
 
 [node name="FallingStone" instance=ExtResource("1_36y77")]
 trigger_area = Rect2(-128, -32, 256, 496)

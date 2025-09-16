@@ -2,6 +2,7 @@ extends Area2D
 
 @export_category("Audio Area")
 @export var audio_effects: Array[AudioEffect]
+@export var keep_without_player: bool = true
 @export_category("Keep only on these Quality Settings")
 @export var maximum: bool = true
 @export var medium: bool = true
@@ -30,6 +31,8 @@ func _update_visibility() -> void:
 
 
 func is_shown() -> bool:
+	if SettingsManager.get_tweak("no_audio_effects", false):
+		return false
 	quality = SettingsManager.settings.quality
 	var res: bool = (
 		(maximum && quality == QUALITY.MAX) ||
@@ -45,6 +48,7 @@ func _exit_tree() -> void:
 
 func _add_effect(player: Node2D) -> void:
 	if !is_shown(): return
+	if has_filter: return
 	var p := Thunder._current_player
 	if !p:
 		print_debug("failed!")
@@ -62,6 +66,10 @@ func _add_effect(player: Node2D) -> void:
 	has_filter = true
 
 func _remove_effects(_p: Node2D = null) -> void:
+	if keep_without_player && _p != null && Thunder._current_player && Thunder._current_player.is_dying:
+		return
+	if _p != null && !_p is Player:
+		return
 	var sound_channel := audio.get_bus_index(&"Sound")
 	for i in audio.get_bus_effect_count(sound_channel):
 		audio.remove_bus_effect(sound_channel, i)

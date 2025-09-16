@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcfuvl6xnny7k"]
+
+[ext_resource type="Script" uid="uid://q2oipbbu2tmx" path="res://engine/objects/items/stopwatch/clock.gd" id="1_jmtqx"]
+[ext_resource type="Texture2D" uid="uid://ej6mw7bwl4ve" path="res://engine/objects/items/stopwatch/clock.png" id="2_ol6ti"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_e1wy2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
+size = Vector2(30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_raepy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ol6ti")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_jy2tl"]
+colors = PackedColorArray(1, 1, 1, 0.313726, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cmgen"]
+gradient = SubResource("Gradient_jy2tl")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
+[node name="Clock" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 64
+floor_constant_speed = true
+floor_snap_length = 20.0
+script = ExtResource("1_jmtqx")
+to_suit = "super"
+gravity_scale = 0.5
+metadata/_edit_pinned_properties_ = [&"to_suit"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_w2yun")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_raepy")
+autoplay = "default"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_cmgen")
+script = ExtResource("3_e1wy2")
+duration = 0.3

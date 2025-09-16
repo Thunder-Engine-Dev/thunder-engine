@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://jq24esq236hk"]
+
+[ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_fwlh1"]
+[ext_resource type="SpriteFrames" uid="uid://boq3ykcdoxnb5" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_iceball.tres" id="2_pylld"]
+[ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="3_ctols"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_0yi74"]
+[ext_resource type="Script" uid="uid://cpqrrwnrww8n4" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_ne2ne"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_bisy4"]
+[ext_resource type="Script" uid="uid://dnhrbcixsf6bc" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_cx1gk"]
+[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="8_h145u"]
+[ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="9_81nqu"]
+[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_x68dy"]
+[ext_resource type="Resource" uid="uid://rhicphrr05ws" path="res://engine/objects/players/prefabs/configs/config_mario_default.tres" id="10_g0erl"]
+[ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="11_cr6rj"]
+[ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="12_vdl0u"]
+[ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="13_ctnqf"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="14_4q04l"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="15_njonu"]
+
+[sub_resource type="Resource" id="Resource_yudqa"]
+script = ExtResource("4_0yi74")
+creation_nodepack = ExtResource("3_ctols")
+creation_force_sibling = false
+trans_offset = Vector2(0, -20)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
+
+[sub_resource type="Resource" id="Resource_w5vmj"]
+script = ExtResource("5_ne2ne")
+projectile = SubResource("Resource_yudqa")
+speed = Vector2(406.25, 0)
+amount = 2
+amount_extra = -1
+sound_attack = ExtResource("6_bisy4")
+
+[resource]
+script = ExtResource("13_ctnqf")
+name = &"iceball"
+type = 2
+gets_hurt_to = ExtResource("8_h145u")
+appearing_time_sec = 1.0
+physics_config = ExtResource("10_g0erl")
+physics_behavior = ExtResource("9_81nqu")
+physics_crouchable = true
+physics_shaper = ExtResource("11_cr6rj")
+physics_shaper_crouch = ExtResource("12_vdl0u")
+animation_sprites = ExtResource("2_pylld")
+animation_behavior = ExtResource("1_fwlh1")
+animation_underwater_bubble_offset = Vector2(0, -20)
+behavior_resource = SubResource("Resource_w5vmj")
+behavior_script = ExtResource("7_cx1gk")
+behavior_crouch_reflect_fireballs = false
+grab_behavior = ExtResource("9_x68dy")
+extra_vars = {}
+sound_hurt = ExtResource("15_njonu")
+sound_death = ExtResource("14_4q04l")
+sound_pitch = 1.0

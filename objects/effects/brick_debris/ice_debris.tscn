@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b244ngdvjg4xa"]
+
+[ext_resource type="PackedScene" uid="uid://dmiopxb2ews2o" path="res://engine/objects/effects/brick_debris/brick_debris.tscn" id="1_orosc"]
+[ext_resource type="Texture2D" uid="uid://cml5g2oursu2q" path="res://engine/objects/effects/brick_debris/ice_debris.png" id="2_ai7se"]
+
+[node name="IceDebris" instance=ExtResource("1_orosc")]
+texture = ExtResource("2_ai7se")

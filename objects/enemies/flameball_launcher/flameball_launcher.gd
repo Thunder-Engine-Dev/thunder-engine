@@ -1,5 +1,7 @@
 extends HBoxContainer
 
+signal flame_launched
+
 @export var interval: float = 3
 @export var initial_interval: float = 1
 @export_group("Flameball")
@@ -11,9 +13,9 @@ extends HBoxContainer
 @export var sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
 
 var _amount: int
+var _counter: float
 
 @onready var timer_interval: Timer = $Interval
-@onready var timer_interval_flame: Timer = $IntervalFlame
 @onready var timer_interval_sound: Timer = $IntervalSound
 @onready var pos_flameball: Marker2D = $PosFlameball
 
@@ -24,8 +26,13 @@ func _ready() -> void:
 
 func _on_interval_timeout() -> void:
 	_amount = amount
-	timer_interval_flame.start(flame_interval)
+	Thunder._connect(flame_launched, _on_interval_flame_timeout)
 
+func _physics_process(delta: float) -> void:
+	_counter += delta
+	if _counter >= flame_interval:
+		_counter -= flame_interval
+		flame_launched.emit()
 
 func _on_interval_flame_timeout() -> void:
 	_amount -= 1
@@ -40,7 +47,7 @@ func _on_interval_flame_timeout() -> void:
 	)
 	if _amount <= 0:
 		timer_interval.start(interval)
-		timer_interval_flame.stop()
+		Thunder._disconnect(flame_launched, _on_interval_flame_timeout)
 		timer_interval_sound.stop()
 		return
 	if timer_interval_sound.is_stopped():

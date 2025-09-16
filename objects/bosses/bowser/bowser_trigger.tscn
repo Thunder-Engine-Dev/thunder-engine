@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://diivlwjl0y1i7"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_trigger.gd" id="1_qucnd"]
+[ext_resource type="Script" uid="uid://n6utvnospy3g" path="res://engine/objects/bosses/bowser/bowser_trigger.gd" id="1_qucnd"]
 
 [node name="BowserTrigger" type="Path2D"]
 editor_description = "This should be placed ONLY as DIRECT CHILD of the level, and just under the camera"

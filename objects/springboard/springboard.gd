@@ -1,114 +1,75 @@
 extends GeneralMovementBody2D
 
+const LENIENCY_AFTER_BOUNCE_SEC: float = 0.14
+
 @export var spring_jump_height: float = 975
 
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 
 @onready var animation_node: Node2D = $Node2D
-@onready var marker: Node2D = $Node2D/Marker2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var timer: Timer = $Node2D/Timer
+@onready var can_coyote = SettingsManager.get_tweak("coyote_time", true)
 
 var is_better: bool
-var is_triggered: bool
 var is_playing_backwards: bool
-var is_higher: bool
-
-var old_config: PlayerConfig
-var player: Player
+var leniency_timer: float
 
 func _ready() -> void:
-	if SettingsManager.get_tweak("better_springboards"):
-		is_better = true
-		var spr = get_node(sprite) as AnimatedSprite2D
-		spr.visible = false
-		animation_node.visible = true
-		animation_player.animation_finished.connect(_animation_finished)
-		enemy_attacked.stomping_enabled = false
-		#timer.timeout.connect(func():
-		#	enemy_attacked.stomping_enabled = true
-		#)
+	animation_player.animation_finished.connect(_animation_finished)
+	is_better = SettingsManager.get_tweak("better_springboards", false)
+	var _custom_sound = CharacterManager.get_sound_replace(enemy_attacked.stomping_sound, enemy_attacked.stomping_sound, "spring_bounce", false)
+	if _custom_sound:
+		enemy_attacked.stomping_sound = _custom_sound
+
+
+func trigger(pl = null) -> void:
+	var current_player: Player = Thunder._current_player
+	if !is_instance_valid(current_player):
 		return
-	
-	animation_node.queue_free()
+	#if current_player.is_on_floor():
+	#	return
+	sprite_node.play(&"default")
+	sprite_node.frame = 0
+	current_player._has_jumped = true
+	if can_coyote && enemy_attacked.stomping_player_jumping_max == enemy_attacked.stomping_player_jumping_min:
+		leniency_timer = LENIENCY_AFTER_BOUNCE_SEC
 
-
-func _physics_process(delta: float) -> void:
-	super(delta)
-	if !is_triggered: return
-	if is_instance_valid(player):
-		#player.no_movement = true
-		player.global_position.y = marker.global_position.y - 16
-		player.speed.y = 0
-
-
-func trigger(pl: Player = null) -> void:
-	if !is_better:
-		var spr = get_node(sprite) as AnimatedSprite2D
-		spr.play(&"default")
-		spr.frame = 0
-		return
-	
-	if !is_instance_valid(pl): return
-	if !timer.is_stopped(): return
-	if is_triggered: return
-	timer.start()
-	
-	animation_player.play(&"jump")
-	player = pl
-	_add_config(pl)
+	if animation_node.visible:
+		is_playing_backwards = false
+		animation_player.stop()
+		animation_player.play(&"jump")
 
 
 func _animation_finished(anim: String) -> void:
-	if !is_triggered: return
 	if !is_playing_backwards:
 		animation_player.play(&"jump", -1, -2.0, true)
-		enemy_attacked._lss()
 		is_playing_backwards = true
 	else:
 		is_playing_backwards = false
-		is_triggered = false
-		if is_instance_valid(player):
-			_reset_config(player)
-			#player.no_movement = false
-			player.speed.y = -spring_jump_height if is_higher else -enemy_attacked.stomping_player_jumping_min
-			player = null
-		is_higher = false
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("m_jump"):
-		if is_better && player == Thunder._current_player:
-			if is_triggered:
-				is_higher = true
-				player._has_jumped = true
-				player.speed.y = 0
-			return
+func _physics_process(delta: float) -> void:
+	if leniency_timer:
+		leniency_timer = maxf(leniency_timer - delta, 0.0)
+	if Input.is_action_just_pressed("m_jump"):
 		enemy_attacked.stomping_player_jumping_max = spring_jump_height
-		await get_tree().create_timer(0.1).timeout
+		var player: Player = Thunder._current_player
+		if player && leniency_timer && player.speed.y < -1:
+			player.speed.y = -spring_jump_height
+		leniency_timer = 0
+		if !is_better:
+			get_tree().create_timer(0.14, false).timeout.connect(func():
+				enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
+			)
+		
+	if is_better && !Input.is_action_pressed("m_jump"):
 		enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 
 
-func _add_config(_player) -> void:
-	if !is_instance_valid(_player): return
-	old_config = _player.suit.physics_config
-	_player.suit.physics_config = old_config.duplicate(false)
-	
-	_player._has_jumped = true
-	_player.speed.x /= 2
-	#_player.suit.physics_config.walk_acceleration = 0
-	_player.suit.physics_config.walk_max_walking_speed /= 2
-	_player.suit.physics_config.walk_max_running_speed /= 2
-	is_triggered = true
+func _on_screen_entered() -> void:
+	if is_better && Input.is_action_pressed("m_jump"):
+		enemy_attacked.stomping_player_jumping_max = spring_jump_height
 
 
-func _reset_config(_player) -> void:
-	if !_player: _player = Thunder._current_player
-	if !is_instance_valid(_player): return
-	if !old_config: return
-	
-	_player.speed.x *= 2
-	_player.suit.physics_config = old_config
-	#_player.suit.physics_config.walk_acceleration = old_config.walk_acceleration
-	_player.suit.physics_config.walk_max_walking_speed = old_config.walk_max_walking_speed
-	_player.suit.physics_config.walk_max_running_speed = old_config.walk_max_running_speed
+func _on_screen_exited() -> void:
+	enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min

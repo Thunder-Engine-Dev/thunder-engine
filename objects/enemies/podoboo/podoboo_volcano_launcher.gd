@@ -10,17 +10,25 @@ const PODOBOO = preload("res://engine/objects/enemies/podoboo/podoboo.tscn")
 @export var launch_amount: int = 8
 
 @export var podoboo_jumping_height: int = 256
-@export var podoboo_min_speed: int = -250
-@export var podoboo_max_speed: int = 250
+@export var podoboo_min_speed: int = -5
+@export var podoboo_max_speed: int = 5
+@export var podoboo_speed_multiplicator: float = 50.0
+
+@export var no_rng_enabled: bool = false
+@export var no_rng_starting_pos: int = 1
+@export var no_rng_step: int = 1
 
 @onready var timer: Timer = $Timer
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var podoboo_icon = $Podoboo
 
 var _remaining_amount: int
+var _fair_index: int
 
 
 func _ready() -> void:
+	if no_rng_enabled:
+		_fair_index = no_rng_starting_pos
 	_interval(true)
 	podoboo_icon.queue_free()
 
@@ -44,7 +52,11 @@ func _shoot() -> void:
 	
 	Audio.play_sound(SHOOT_SOUND, self)
 	
-	var computed_x_speed = randi_range(podoboo_min_speed, podoboo_max_speed)
+	var computed_x_speed: int
+	if no_rng_enabled:
+		computed_x_speed = _fair_index * podoboo_speed_multiplicator
+	else:
+		computed_x_speed = Thunder.rng.get_randi_range(podoboo_min_speed, podoboo_max_speed) * podoboo_speed_multiplicator
 	
 	var projectile = PODOBOO.instantiate()
 	projectile.global_position = global_position
@@ -58,3 +70,11 @@ func _shoot() -> void:
 	Scenes.current_scene.add_child(projectile)
 	
 	_remaining_amount -= 1
+	if no_rng_enabled:
+		# Pattern like this: 0 => -1 => 1 => -2 => 2 etc.
+		if _fair_index == 0: _fair_index = -no_rng_step
+		elif _fair_index < 0: _fair_index = -_fair_index
+		else: _fair_index = -_fair_index - no_rng_step
+		
+		if _fair_index < podoboo_min_speed || _fair_index > podoboo_max_speed:
+			_fair_index = 0

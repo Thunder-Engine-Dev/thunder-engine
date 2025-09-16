@@ -31,11 +31,13 @@ enum Type {
 			collision_shape.set_deferred(&"disabled", true)
 		if type != Type.LEAP:
 			gravity_scale = 0
-			enemy_attacked.stomping_standard = Vector2.ZERO
+			if !always_stompable:
+				enemy_attacked.stomping_standard = Vector2.ZERO
 		if always_unstompable:
 			enemy_attacked.stomping_standard = Vector2.ZERO
 @export_group("Cheep General")
 @export var always_unstompable: bool
+@export var always_stompable: bool
 @export var turn_x_enabled: bool = true
 @export var turn_y_enabled: bool = true
 @export_group("Cheep Swimming", "swimming_")
@@ -44,15 +46,13 @@ enum Type {
 @export var swimming_back_to_water: bool = true
 @export_group("Cheep Tracking", "tracking_")
 @export var tracking_interval: float = 1
-@export var tracking_speed: float = 60
+@export var tracking_speed: float = 50
 @export_group("Cheep Leaping", "leaping_")
 @export var leaping_gravity_scale: float = 0.2
 
 var is_spawned: bool:
 	set(to):
 		is_spawned = to
-		if is_spawned:
-			visiblity.scale = 5 * Vector2.ONE
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var swim_x: ShapeCast2D = $SwimX
@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 func _cheep_swimming() -> void:
 	match type:
 		Type.SWIM:
-			vel_set_y(randf_range(-swimming_y_speed, swimming_y_speed))
+			vel_set_y(Thunder.rng.get_randf_range(-swimming_y_speed, swimming_y_speed))
 		Type.TRACK:
 			var player: Player = Thunder._current_player
 			if !player:

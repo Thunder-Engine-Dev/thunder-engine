@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn3sploqs0eg6"]
+
+[ext_resource type="Script" uid="uid://6brhpwmjq4qu" path="res://engine/objects/enemies/podoboo/podoboo_volcano_launcher.gd" id="1_e8hll"]
+[ext_resource type="Texture2D" uid="uid://baq22nmp1wdol" path="res://engine/objects/enemies/podoboo/podoboo.png" id="2_lkv0k"]
+
+[node name="PodobooFairVolcanoLauncher" type="Node2D"]
+script = ExtResource("1_e8hll")
+podoboo_min_speed = -4
+podoboo_max_speed = 4
+no_rng_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="ShootTimer" type="Timer" parent="."]
+process_callback = 0
+
+[node name="Podoboo" type="Sprite2D" parent="."]
+z_index = 50
+texture = ExtResource("2_lkv0k")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-32, -32, 64, 64)

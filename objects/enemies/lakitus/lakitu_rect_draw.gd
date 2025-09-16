@@ -14,4 +14,6 @@ func _draw() -> void:
 
 
 func _process(delta: float) -> void:
+	if !Engine.is_editor_hint():
+		return
 	queue_redraw()

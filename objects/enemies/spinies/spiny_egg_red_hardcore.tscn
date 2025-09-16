@@ -1,15 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://clsajjxpl6kfo"]
+[gd_scene load_steps=11 format=3 uid="uid://clsajjxpl6kfo"]
 
 [ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_t2l00"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_hojby"]
 [ext_resource type="PackedScene" uid="uid://dpv4ov40yd1bb" path="res://engine/objects/enemies/spinies/spiny_red_hardcore.tscn" id="2_y3pkj"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_6kr8r"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_1tqhf"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_6kr8r"]
+[ext_resource type="Script" uid="uid://dixpcuwttxgcb" path="res://engine/objects/enemies/enemy_creation_extension_life_time.gd" id="3_q1oak"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_1tqhf"]
 [ext_resource type="Texture2D" uid="uid://sykgxim8a3xt" path="res://engine/objects/enemies/spinies/textures/spiny_egg_hardcore.png" id="6_8t2bq"]
 
 [sub_resource type="Resource" id="Resource_wwk28"]
 script = ExtResource("4_1tqhf")
 creation_nodepack = ExtResource("2_y3pkj")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -18,12 +20,16 @@ trans_skew = 0.0
 visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
-custom_vars = {}
+custom_vars = {
+"life_time": 4.0
+}
+custom_script = ExtResource("3_q1oak")
 
 [sub_resource type="Resource" id="Resource_edcu0"]
 resource_local_to_scene = true
 script = ExtResource("4_1tqhf")
 creation_nodepack = ExtResource("2_hojby")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -52,7 +58,7 @@ animations = [{
 [node name="SpinyRedEggHardcore" instance=ExtResource("1_t2l00")]
 spiny_creation = SubResource("Resource_wwk28")
 rotation_speed = 11.25
-free_offscreen = true
+life_time = 3.0
 gravity_scale = 0.3
 
 [node name="EnemyAttacked" parent="Body" index="1"]

@@ -45,11 +45,14 @@ var _collision_mask: int
 @onready var posx: float = global_transform.affine_inverse().basis_xform(global_position).x
 @onready var pos_attack: Marker2D = $PosAttack
 @onready var pos_attack_x: float = pos_attack.position.x
+@onready var shape_cast_2d: ShapeCast2D = $ShapeCast2D
 
+func _process(delta: float) -> void:
+	_animation()
 
 func _physics_process(delta: float) -> void:
 	_direction()
-	_animation()
+	_timer_pausing()
 	_bro_movement(delta)
 	motion_process(delta)
 
@@ -59,9 +62,15 @@ func _direction() -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	dir = Thunder.Math.look_at(global_position, player.global_position, global_transform)
-	sprite.flip_h = (dir < 0 && dir != 0)
+	sprite.flip_h = dir < 0
 	sprite_projectile.flip_h = sprite.flip_h
 	pos_attack.position.x = pos_attack_x * dir
+	pos_attack.reset_physics_interpolation()
+
+
+func _timer_pausing() -> void:
+	if _step_attacking <= 0:
+		timer_attack.paused = !Thunder.view.is_getting_closer(self, 32)
 
 
 func _animation() -> void:
@@ -72,6 +81,7 @@ func _animation() -> void:
 		var trans: Transform2D = sprite_projectile_animation_transform[sprite.frame]
 		trans.origin.x *= dir
 		sprite_projectile.transform = pos_attack.transform * trans
+		sprite_projectile.reset_physics_interpolation()
 	else:
 		sprite.play(&"default")
 		sprite_projectile.visible = false
@@ -100,13 +110,15 @@ func _bro_movement(delta: float) -> void:
 func _bro_jump() -> void:
 	# Collision disabling when jumping
 	if _collision_mask > 0 && ((_jump == 1 && speed.y >= 0) || (_jump == 2 && speed.y >= jumping_strength_downward + 90)):
-		collision_mask = _collision_mask
-		_collision_mask = 0
+		_set_collision_logic()
+		if _collision_mask > 0:
+			return
+		
 	# While jumping, stop detection with randomized numbers
 	if _jump in [1, 2]:
 		return
 	
-	_jump_count = randi_range(0, jumping_frequency)
+	_jump_count = Thunder.rng.get_randi_range(0, jumping_frequency)
 	
 	if _jump_count == 1 && _jump_up:
 		_jump = 1
@@ -125,30 +137,45 @@ func _bro_jump() -> void:
 	_jump = 0
 
 
+func _set_collision_logic() -> void:
+	shape_cast_2d.force_shapecast_update()
+	if shape_cast_2d.is_colliding():
+		return
+	collision_mask = _collision_mask
+	_collision_mask = 0
+
 # Turning back
 func _on_walk_timeout() -> void:
 	_dir *= -1
-	_radius = randf_range(moving_radius_min, moving_radius_max)
-	_duration = randf_range(moving_duration_min, moving_duration_max)
+	_radius = Thunder.rng.get_randf_range(moving_radius_min, moving_radius_max)
+	_duration = Thunder.rng.get_randf_range(moving_duration_min, moving_duration_max)
 	_step_moving = 1
 	vel_set_x(_speed * _dir)
 
 
 # Attack
 func _on_attack_timeout() -> void:
+	if is_queued_for_deletion():
+		print("Patching hammer bro projectile creation")
+		return
 	match _step_attacking:
 		# Detection for attack
 		0:
-			var chance: float = randf_range(0, 1)
-			if chance < attacking_chance:
-				_step_attacking = 1
-				timer_attack.start(attacking_delay)
-				timer_attack.one_shot = true
+			if !Thunder.view.is_getting_closer(self, 32):
+				return
+			var chance: float = Thunder.rng.get_randf()
+			var random_delay: int = floori(log(chance) / log(1 - attacking_chance))
+			_step_attacking = -1
+			timer_attack.start(random_delay * attacking_count_unit)
+			timer_attack.one_shot = true
+		# Delaying the attack
+		-1:
+			_step_attacking = 1
+			timer_attack.start(attacking_delay)
 		# Attack
 		1:
 			_step_attacking = 0
 			timer_attack.start(attacking_count_unit)
-			timer_attack.one_shot = false
 			NodeCreator.prepare_ins_2d(projectile, self).call_method(
 				func(proj: Node2D) -> void:
 					proj.set(&"belongs_to", Data.PROJECTILE_BELONGS.ENEMY)
@@ -158,4 +185,3 @@ func _on_attack_timeout() -> void:
 
 func _on_jump() -> void:
 	_bro_jump()
-

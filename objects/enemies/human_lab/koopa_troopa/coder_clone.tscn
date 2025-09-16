@@ -1,23 +1,25 @@
-[gd_scene load_steps=35 format=3 uid="uid://clnvxc3co85ls"]
+[gd_scene load_steps=36 format=3 uid="uid://clnvxc3co85ls"]
 
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_cayg7"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_i0fi6"]
 [ext_resource type="PackedScene" uid="uid://vrjw4l81t48g" path="res://engine/objects/enemies/human_lab/koopa_troopa/coder_clone_running.tscn" id="2_wkjkm"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ntr17"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_jp4b2"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ntr17"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_jp4b2"]
 [ext_resource type="AudioStream" uid="uid://cspu7xsnpx3lw" path="res://engine/objects/enemies/human_lab/koopa_troopa/sfx/stomp.wav" id="4_t72s8"]
-[ext_resource type="Script" path="res://engine/objects/enemies/human_lab/koopa_troopa/scripts/keyboard_effect.gd" id="7_0gc58"]
+[ext_resource type="Script" uid="uid://bcjc58mk35e4o" path="res://engine/objects/enemies/human_lab/koopa_troopa/scripts/keyboard_effect.gd" id="7_0gc58"]
 [ext_resource type="Texture2D" uid="uid://bjoc52wskr2b8" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_body.png" id="7_bqfmj"]
 [ext_resource type="Texture2D" uid="uid://x1b1vqu024vr" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/clone_dead.png" id="9_6expy"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="9_t5eyo"]
-[ext_resource type="Script" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="10_uk66u"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="10_typ8o"]
+[ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="10_uk66u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xa3qa"]
-size = Vector2(32, 64)
+size = Vector2(32, 63)
 
 [sub_resource type="Resource" id="Resource_6rql1"]
 script = ExtResource("4_jp4b2")
 creation_nodepack = ExtResource("2_wkjkm")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -32,6 +34,7 @@ custom_vars = {}
 resource_local_to_scene = true
 script = ExtResource("4_jp4b2")
 creation_nodepack = ExtResource("2_i0fi6")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -195,7 +198,7 @@ animations = [{
 [node name="CoderClone" instance=ExtResource("1_cayg7")]
 
 [node name="Collision" parent="." index="0"]
-position = Vector2(0, -6)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xa3qa")
 
 [node name="Collision" parent="Body" index="0"]
@@ -207,6 +210,7 @@ stomping_creation = SubResource("Resource_6rql1")
 stomping_sound = ExtResource("4_t72s8")
 killing_creation = SubResource("Resource_5x01k")
 killing_sound_succeeded = ExtResource("4_t72s8")
+sound_ignore_pitch_modification = true
 
 [node name="Node" type="Node2D" parent="Body" index="2"]
 script = ExtResource("7_0gc58")
@@ -216,10 +220,11 @@ sprite_frames = SubResource("SpriteFrames_gtw8g")
 
 [node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_d2buv")
+script = ExtResource("10_typ8o")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="1"]
 z_index = -1
-position = Vector2(0, 29)
+position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_12g0q")
 autoplay = "default"
 script = ExtResource("10_uk66u")

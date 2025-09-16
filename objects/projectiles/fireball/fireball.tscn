@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://c4jlbnswk5dlw"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
+[ext_resource type="Script" uid="uid://lyb7iu6i6yul" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ki2u"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_po12v"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_5ki2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bp6og"]
 size = Vector2(14, 14)
@@ -23,7 +23,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="Fireball" type="CharacterBody2D"]
+[node name="Fireball" type="CharacterBody2D" groups=["#lava_body"]]
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hkxrj")
@@ -61,6 +61,7 @@ texture_scale = 0.01
 script = ExtResource("4_5ki2u")
 
 [connection signal="collided_floor" from="." to="." method="jump"]
+[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="collided_wall" from="." to="." method="explode"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
 [connection signal="damaged_player_failed" from="Attack" to="." method="explode"]

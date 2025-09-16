@@ -24,6 +24,7 @@ var transition_camera = preload("res://engine/components/cam_area/transition_cam
 var is_current: bool
 
 var _det_areas: Array[Control] = []
+var _is_initial: bool = true
 
 
 func _ready() -> void:
@@ -38,8 +39,11 @@ func _ready() -> void:
 		return
 	var player: Player = Thunder._current_player
 	if !player: return
-	if get_global_rect().abs().has_point(player.global_position) && len(_det_areas) == 0:
-		_switch_bounds()
+	
+	_physics_process.call_deferred(0)
+	
+	await get_tree().physics_frame
+	_is_initial = false
 
 
 func _draw() -> void:
@@ -89,8 +93,8 @@ func _physics_process(_delta: float) -> void:
 		
 		_int_detections += int(
 			has_cam_area &&
-			camera.position.x > rect.position.x &&
-			camera.position.y > rect.position.y &&
+			camera.position.x >= rect.position.x &&
+			camera.position.y >= rect.position.y &&
 			camera.position.x < rect.end.x &&
 			camera.position.y < rect.end.y
 		)
@@ -101,16 +105,17 @@ func _physics_process(_delta: float) -> void:
 			return
 		
 		get_tree().call_group_flags(SceneTree.GROUP_CALL_DEFERRED, &"#transition_camera", &"_free")
-		
-		if smooth_transition:
+		if smooth_transition && !_is_initial && SettingsManager.get_tweak("enable_smooth_cam_transitions", true):
 			Thunder.view.cam_border()
+			var cams = get_tree().get_nodes_in_group("#transition_camera")
+			for i in cams:
+				i.queue_free()
 			var cam = transition_camera.instantiate() as Camera2D
 			cam.limits.position = Vector2i(Thunder.view.border.position.x, Thunder.view.border.position.y)
 			cam.limits.end = Vector2i(Thunder.view.border.end.x, Thunder.view.border.end.y)
 			cam.function = smooth_function
 			cam.speed = smooth_speed
 			add_child(cam)
-			Scenes.current_scene.falling_below_y_offset *= 10
 		
 		_switch_bounds()
 	
@@ -142,3 +147,8 @@ func _switch_bounds() -> void:
 	is_current = true
 	
 	camera.set_meta(&"cam_area", self)
+	if camera.has_method(&"teleport"):
+		camera.teleport.call_deferred(false, true)
+	
+	if _is_initial:
+		camera.force_update_scroll.call_deferred()

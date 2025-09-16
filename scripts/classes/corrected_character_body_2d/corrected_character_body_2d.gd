@@ -20,9 +20,10 @@ func _ready() -> void:
 func _correct_collision() -> void:
 	if !correct_collision: return
 	
-	var collision = Thunder.get_child_by_class_name(self, 'CollisionShape2D')
-	# DEPRECATED IN GODOT 4.3!
-	if collision: collision.global_position.y -= 1
+	# The logic for correcting the collision position has been removed,
+	# however some other stuff may appear here, so the function remains here
+	# without currently doing any actions.
+	pass
 
 ## Run [method move_and_slide] with corrections
 func move_and_slide_corrected() -> bool:
@@ -61,7 +62,7 @@ func vertical_correction(amount: int) -> void:
 	if velocity.y <= 0 or abs(velocity.x) <= 1: return
 	
 	var delta = get_physics_process_delta_time()
-	var collide = move_and_collide(Vector2(velocity.x * delta, 0).rotated(global_rotation), true)
+	var collide := move_and_collide(Vector2(velocity.x * delta, velocity.y * delta).rotated(global_rotation), true, 0.08, false)
 	
 	if !collide: return
 	if Thunder.get_or_null(collide.get_collider(), "visible") == false: return
@@ -71,12 +72,15 @@ func vertical_correction(amount: int) -> void:
 	if not abs(normal.x) == 1: return
 	if abs(normal.y) >= 0.1: return
 	
-	for i in range(1, amount + 1):
-		for j in [-1.0, 0]:
-			if !test_move(
-				global_transform.translated(Vector2(0, i * j)),
-				Vector2(velocity.x * delta, 0).rotated(global_rotation)
-			):
-				translate(Vector2(0, i * j).rotated(global_rotation))
-				if velocity.y * j < 0: velocity.y = 0
-				return
+	for i in range(1, amount * 2 + 1):
+		@warning_ignore("integer_division")
+		var _translation: int = -i / 2
+		if _translation == 0: continue
+		if !test_move(
+			global_transform.translated(Vector2(0, _translation)),
+			Vector2(velocity.x * delta, velocity.y * delta).rotated(global_rotation),
+		):
+			#prints(_translation, Vector2(velocity.x * delta, 0).rotated(global_rotation))
+			translate(Vector2(0, _translation + velocity.y * delta).rotated(global_rotation))
+			if velocity.y > 0: velocity.y = 0
+			return

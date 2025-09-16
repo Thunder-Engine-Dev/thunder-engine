@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="InstancePowerup" load_steps=3 format=3 uid="uid://d14ntnfciec1v"]
 
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="1_ivdn7"]
-[ext_resource type="Script" path="res://engine/objects/powerups/instance_powerup.gd" id="2_t2yf5"]
+[ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="2_t2yf5"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_t2yf5")
 creation_nodepack = ExtResource("1_ivdn7")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

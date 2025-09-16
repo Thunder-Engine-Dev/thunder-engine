@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ltoqkqmxpt65"]
+[gd_scene load_steps=11 format=3 uid="uid://ltoqkqmxpt65"]
 
-[ext_resource type="Script" path="res://engine/objects/powerups/life_mushroom/life_mushroom.gd" id="1_ac6pg"]
+[ext_resource type="Script" uid="uid://bd58mewto2g80" path="res://engine/objects/powerups/life_mushroom/life_mushroom.gd" id="1_ac6pg"]
 [ext_resource type="Texture2D" uid="uid://dmda3wjtlsj0k" path="res://engine/objects/powerups/life_mushroom/texture.png" id="2_0cie0"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ua8e3"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_oy0sk"]
-[ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="5_awxjw"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ua8e3"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_hecye"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="4_oy0sk"]
+[ext_resource type="Script" uid="uid://dtibkahwuryoh" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="5_awxjw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufuol"]
 size = Vector2(32, 31)
@@ -60,11 +61,13 @@ killing_immune = {
 turn_into_coin_on_level_end = false
 
 [node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
 texture = ExtResource("2_0cie0")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-128, -128, 256, 256)
+script = ExtResource("4_hecye")
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

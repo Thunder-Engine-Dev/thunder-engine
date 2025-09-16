@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://cbeoj4aqamscv"]
+
+[ext_resource type="Script" uid="uid://ckgnfsiavq3jx" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="1_n10yh"]
+[ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="2_7x0e8"]
+[ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="3_yg5oa"]
+[ext_resource type="Texture2D" uid="uid://cqtna1lefejv1" path="res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png" id="4_osvap"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kw8g"]
+atlas = ExtResource("2_7x0e8")
+region = Rect2(0, 15, 141, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vm3n2"]
+atlas = ExtResource("2_7x0e8")
+region = Rect2(0, 15, 141, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edrsy"]
+resource_local_to_scene = true
+atlas = ExtResource("4_osvap")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar7hi"]
+resource_local_to_scene = true
+atlas = ExtResource("4_osvap")
+region = Rect2(0, 0, 32, 32)
+
+[node name="ControlSelection" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+size_flags_vertical = 6
+script = ExtResource("1_n10yh")
+displayed_texture = SubResource("AtlasTexture_3kw8g")
+
+[node name="Text" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_vm3n2")
+stretch_mode = 2
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_yg5oa")
+theme_override_font_sizes/font_size = 28
+text = "value"
+uppercase = true
+
+[node name="Joy" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Icon" type="TextureRect" parent="Joy"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_edrsy")
+stretch_mode = 2
+
+[node name="OR" type="Label" parent="Joy"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_yg5oa")
+theme_override_font_sizes/font_size = 28
+text = "/"
+uppercase = true
+
+[node name="Icon2" type="TextureRect" parent="Joy"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ar7hi")
+stretch_mode = 2

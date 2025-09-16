@@ -2,6 +2,8 @@ extends GeneralMovementBody2D
 
 const Shell: Script = preload("./koopa_shell.gd")
 
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.6
@@ -10,8 +12,8 @@ const Shell: Script = preload("./koopa_shell.gd")
 @export_group("Attack")
 @export_range(0, 256) var sharpness: int
 @export_group("Sound", "sound_")
-@export var kicked_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
-@export var combo_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+@export var kicked_sound: AudioStream = DEFAULT_KICK
+@export var combo_sound: AudioStream = DEFAULT_KICK
 
 var _delayer: SceneTreeTimer
 
@@ -37,6 +39,12 @@ func _ready() -> void:
 	
 	attack.belongs_to = Data.PROJECTILE_BELONGS.PLAYER
 	status_update()
+
+
+func _physics_process(delta: float) -> void:
+	super(delta)
+	if stopping:
+		speed.x = 0
 
 
 func status_update() -> void:
@@ -73,7 +81,8 @@ func status_swap(to: bool) -> void:
 
 
 func sound() -> void:
-	Audio.play_sound(kicked_sound, self)
+	var _custom_sound = CharacterManager.get_sound_replace(kicked_sound, DEFAULT_KICK, "kick", true)
+	Audio.play_sound(_custom_sound, self)
 
 
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
@@ -90,13 +99,18 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			target_enemy_attacked.got_killed(&"shell_forced")
 	# Combo
 	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
-		if !combo.get_combo() <= 0:
-			target_enemy_attacked.sound_pitch = 1 + combo.get_combo() * 0.135
+		var _can_combo: bool = target_enemy_attacked.killing_can_combo
+		if combo.get_combo() > 0 && _can_combo:
+			target_enemy_attacked.sound_pitch = combo.get_pitch()
 		target_enemy_attacked.set_meta(&"attacker_speed", speed)
 		target_enemy_attacked.got_killed(&"shell_forced", [&"no_score"])
-		combo.combo()
+		if _can_combo:
+			combo.combo()
+		else:
+			ScoreText.new(str(target_enemy_attacked.killing_scores), target_enemy_attacked._center)
+			Data.add_score(target_enemy_attacked.killing_scores)
 	# Gets blocked
-	else:
+	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack"):
 		if &"speed" in target_enemy_attacked.owner:
 			enemy_attacked.set_meta(
 				&"attacker_speed", target_enemy_attacked.owner.speed
@@ -109,6 +123,7 @@ func _on_body_entered(player: Node2D) -> void:
 	if player != Thunder._current_player: return
 	if Thunder._current_player.warp > Player.Warp.NONE: return
 	if is_instance_valid(_delayer) || enemy_attacked.get_stomping_delayer(): return
+	player.ground_kicked.emit()
 	status_swap(false)
 	sound()
 
@@ -116,9 +131,11 @@ func _on_body_entered(player: Node2D) -> void:
 var _already_processed: Array[int]
 
 func _on_collided_wall() -> void:
-	var _dir = 1 if speed.x < 0 else -1
+	var _dir = 1 if speed_previous.x > 0 else -1
 	var saved_pos = global_position
+	_already_processed.clear()
 	_process_collision_deferred(_dir, saved_pos)
+	turn_x()
 
 func _process_collision_deferred(_dir: int, saved_pos: Vector2) -> void:
 	global_position = saved_pos
@@ -147,6 +164,6 @@ func _process_collision_deferred(_dir: int, saved_pos: Vector2) -> void:
 					_already_processed.append(id)
 					if l is StaticBumpingBlock:
 						if l.has_method(&"got_bumped"):
-							l.got_bumped.call_deferred(self)
+							l.got_bumped.call_deferred(false)
 						elif l.has_method(&"bricks_break"):
 							l.bricks_break.call_deferred()

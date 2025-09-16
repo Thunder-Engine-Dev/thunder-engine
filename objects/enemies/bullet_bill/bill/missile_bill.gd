@@ -11,4 +11,10 @@ func _physics_process(delta: float) -> void:
 	
 	update_dir()
 	
-	speed.x = move_toward(speed.x, speed_cap * dir, abs(turn_speed * dir))
+	speed.x = move_toward(speed.x, speed_cap * dir, abs(turn_speed * dir) * delta * 50)
+
+
+func set_self_modulate_back() -> void:
+	await get_tree().physics_frame
+	if is_instance_valid(sprite_node):
+		sprite_node.self_modulate.a = 1.0

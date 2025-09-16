@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cg1knormc8y1f"]
+
+[ext_resource type="PackedScene" uid="uid://b0f1uy0wgci6x" path="res://engine/objects/powerups/ice_flower/ice_flower.tscn" id="1_ndwng"]
+
+[node name="IceFlowerForced" instance=ExtResource("1_ndwng")]
+force_powerup_state = true

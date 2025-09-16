@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bu1ie186qs336"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/corpse/bowser_corpse.gd" id="1_a5dlx"]
+[ext_resource type="Script" uid="uid://clr2pf7m56mpo" path="res://engine/objects/bosses/bowser/corpse/bowser_corpse.gd" id="1_a5dlx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nvglj"]
 size = Vector2(32, 64)

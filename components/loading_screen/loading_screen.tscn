@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://eutrrrdpvmbx"]
 
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="1_1kkjg"]
-[ext_resource type="Script" path="res://engine/components/loading_screen/loading_screen.gd" id="1_ok2ax"]
+[ext_resource type="Script" uid="uid://og3p5owckg0k" path="res://engine/components/loading_screen/loading_screen.gd" id="1_ok2ax"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4aqp3"]
 bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)

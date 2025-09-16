@@ -38,12 +38,15 @@ func _ready() -> void:
 	if respawn_delay > 0:
 		get_tree().create_timer(respawn_delay, false).timeout.connect(
 			func() -> void:
-				add_sibling(body)
-				body.global_position = (
-					center + pos_to.rotated(body.global_rotation) - Vector2.RIGHT \
-					* body.leaving_direction * \
-					(get_viewport_rect().size.x / 2 + 64 + respawn_offset)
-				)
+				if Thunder._current_player && !Thunder._current_player.completed:
+					add_sibling(body)
+					body.global_position = (
+						center + pos_to.rotated(body.global_rotation) - Vector2.RIGHT \
+						* body.leaving_direction * \
+						(get_viewport_rect().size.x / 2 + 64 + respawn_offset)
+					)
+					body.reset_physics_interpolation()
+				body = null
 				queue_free()
 		)
 

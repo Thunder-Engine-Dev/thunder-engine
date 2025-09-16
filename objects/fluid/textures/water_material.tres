@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://crtvyydxdkshm"]
+
+[ext_resource type="Shader" uid="uid://dluvop86i8qql" path="res://engine/shaders/animated_texture.gdshader" id="1_5mms5"]
+[ext_resource type="Texture2D" uid="uid://bi5kq6ccklanm" path="res://engine/objects/fluid/textures/water_smooth.png" id="2_qcej6"]
+
+[resource]
+shader = ExtResource("1_5mms5")
+shader_parameter/sprite_sheet = ExtResource("2_qcej6")
+shader_parameter/frame_size = Vector2(1, 8)
+shader_parameter/frame_count = 8
+shader_parameter/frames_per_row = 1
+shader_parameter/time_scale = 6.0
+shader_parameter/frame_offset = 0

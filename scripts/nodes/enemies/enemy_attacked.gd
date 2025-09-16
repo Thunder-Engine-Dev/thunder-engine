@@ -8,6 +8,11 @@ extends Node
 
 const COIN_EFFECT = preload("res://engine/objects/effects/coin_effect/coin_effect.tscn")
 const COIN = preload("res://engine/objects/items/coin/coin.wav")
+const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
+const DEFAULT_STOMP = preload("res://engine/objects/enemies/_sounds/stomp.wav")
+const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+
+const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 
 @export_category("EnemyAttacked")
 @export_group("General")
@@ -39,6 +44,7 @@ const COIN = preload("res://engine/objects/items/coin/coin.wav")
 ## Maximum of player's jumping speed, triggered when player stomps onto
 ## the enemy and you [b]are[/b] holding the jumping key
 @export var stomping_player_jumping_max: float = 700
+@export var stomping_only_from_above: bool = false
 @export var stomping_delay_frames: float = 5
 @export_group("Killing","killing_")
 ## If [code]true[/code], the enemy will be able to be killed by attackers
@@ -57,21 +63,47 @@ const COIN = preload("res://engine/objects/items/coin/coin.wav")
 	Data.ATTACKERS.fireball: false,
 	Data.ATTACKERS.beetroot: false,
 	Data.ATTACKERS.iceball: false,
+	Data.ATTACKERS.iceblock: false,
 	Data.ATTACKERS.hammer: false,
 	Data.ATTACKERS.boomerang: false,
+	Data.ATTACKERS.lava: false,
+	
 }
 ## Corpse of the enemy killed by the attacker
 @export var killing_creation: InstanceNode2D
-## Scores give by the enemy when the enemy gets killed
+## Scores given by the enemy when the enemy gets killed
 @export var killing_scores: int
+## Special attackers, such as starman and koopa shells, can progress combo and earn extra lives
+@export var killing_can_combo: bool = true
+## If [code]true[/code], only player-related attackers can kill the enemy.
+## Disable to allow attackers of other enemies to kill the enemy too.
+@export var killing_only_by_player: bool = true
 ## Sound triggered when the enemy gets killed successfully
 @export var killing_sound_succeeded: AudioStream
 ## Sound triggered when the enemy blocks the attacker
 @export var killing_sound_failed: AudioStream
 ## Will turn the enemy on screen into a coin upon touching the goal gate
 @export var turn_into_coin_on_level_end: bool = true
+@export_group("Frozen")
+## If [code]true[/code], the enemy will be able to be frozen into ice block by special attackers
+@export var frozen_enabled: bool = true
+## Path to the sprite that used for the item contained in the ice block created on being frozen.
+@export_node_path("CanvasItem") var ice_sprite: NodePath
+## Take the ice sprite from the root node's sprite variable.[br][br]
+## [b]Note:[/b] The root node should have a property named [code]sprite[/code] so that this property may work as expected.
+## In case this occurs, please set [member ice_sprite] manually.
+@export var ice_sprite_autoset: bool = true
+## Offset of what [member ice_sprite] refers to in the ice block.
+@export var ice_sprite_offset: Vector2
+## If [code]true[/code], the enemy will be killed even if the ice is not get heavily broken.
+@export var ice_fragile: bool
+## If [code]true[/code], the ice is fallable (with gravity) till it is grabbed.
+@export var ice_fallable: bool = true
+## Sound triggered when the enemy becomes frozen.
+@export var frozen_sound: AudioStream = preload("res://engine/objects/items/ice_block/sfx/ice_break.mp3")
 @export_group("Sound", "sound_")
 @export var sound_pitch: float = 1.0
+@export var sound_ignore_pitch_modification: bool = false
 @export_group("Extra")
 ## Custom vars for [member custom_scipt][br]
 @export var custom_vars: Dictionary
@@ -84,6 +116,7 @@ var _stomping_delayer: SceneTreeTimer:
 @warning_ignore("unused_private_class_variable")
 @onready var _extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var _center: Node2D = get_node_or_null(center_node)
+@onready var _ice_sprite: Node2D = get_node_or_null(ice_sprite)
 
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 
@@ -101,24 +134,48 @@ signal killed_succeeded
 signal killed_failed
 ## Emitted when the type of enemy attack is marked as "signal"
 signal attack_custom_signal
+## Emitted when the enemy gets frozen
+signal killed_frozen
+## Emitted when the enemy gets killed successfully, with attacker name
+signal killed_succeeded_by(attacker: StringName)
+## Emitted when the enemy blocks the attacker, with attacker name
+signal killed_failed_by(attacker: StringName)
 
 var _on_killed: bool # To prevent multiple creation by multiple attackers
 
 
 func _ready() -> void:
-	stomped_succeeded.connect(_lss)
-	killed_succeeded.connect(_lks)
-	killed_failed.connect(_lkf)
+	stomped_succeeded.connect(_lss, CONNECT_DEFERRED)
+	killed_succeeded.connect(_lks, CONNECT_DEFERRED)
+	killed_failed.connect(_lkf, CONNECT_DEFERRED)
+	killed_frozen.connect(_lkfz, CONNECT_DEFERRED)
+	stomping_delay()
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")
+	if (
+		!is_instance_valid(_ice_sprite) &&
+		ice_sprite_autoset &&
+		is_instance_valid(_center) &&
+		"sprite" in _center &&
+		_center.sprite
+	):
+		_ice_sprite = _center.get_node_or_null(_center.sprite)
 
 
 func _lss():
-	Audio.play_sound(stomping_sound, _center, false, {pitch = sound_pitch})
+	var _custom_sound = CharacterManager.get_sound_replace(stomping_sound, DEFAULT_STOMP, "enemy_stomp", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
 func _lks():
-	Audio.play_sound(killing_sound_succeeded, _center, false, {pitch = sound_pitch})
+	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_succeeded, DEFAULT_KICK, "enemy_kick", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
 func _lkf():
-	Audio.play_sound(killing_sound_failed, _center, false, {pitch = sound_pitch})
+	var _custom_sound = CharacterManager.get_sound_replace(killing_sound_failed, DEFAULT_BUMP, "enemy_bump", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+
+func _lkfz():
+	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 
 
 ## Makes the enemy stomped by the player, usually triggered
@@ -140,13 +197,13 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 	var dotdown: float = vel.dot(stomping_standard.rotated(_center.global_rotation))
 	
 	stomped.emit()
-	if dot > 0 && dotdown >= 0:
+	if dot > 0 && !(stomping_only_from_above && dotdown < 0):
 		stomping_delay()
 		stomped_succeeded.emit()
 		if stomping_scores > 0:
 			if !_stomping_combo_enabled:
 				ScoreText.new(str(stomping_scores), _center)
-				Data.values.score += stomping_scores
+				Data.add_score(stomping_scores)
 			elif is_instance_valid(by):
 				var _do_combo: bool = true
 				if by.stomping_combo.get_combo() == 0:
@@ -160,7 +217,7 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 								by.stomping_combo._combo = max(0, i)
 								_do_combo = false
 								ScoreText.new(str(stomping_scores), by)
-								Data.values.score += stomping_scores
+								Data.add_score(stomping_scores)
 								break
 				if _do_combo:
 					by.stomping_combo.combo()
@@ -186,37 +243,78 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed: bool = true) -> Dictionary:
 	var result: Dictionary
 	
-	if !killing_enabled || !by in killing_immune || _on_killed: 
+	if !killing_enabled || (by != &"self" && !by in killing_immune) || _on_killed: 
 		return result
 	
 	_on_killed = true
 	var shell_attack := false
 	
-	if killing_immune[by]:
+	# Immune
+	if by != &"self" && killing_immune[by]:
 		if trigger_killed_failed:
 			killed_failed.emit()
+			killed_failed_by.emit(by)
 		
 		result = {
 			result = false,
 			attackee = self
 		}
+	# Frozen
+	elif &"freezible" in special_tags && frozen_enabled:
+		var _add_pos = Vector2.ZERO
+		if is_instance_valid(_ice_sprite):
+			_add_pos = _ice_sprite.position
+		
+		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center) \
+			.bind_global_transform(_add_pos) \
+			.create_2d() \
+			.get_node() as PhysicsBody2D
+		ice.ready.connect(ice.move_and_collide.bind(Vector2.DOWN.rotated(ice.global_rotation)))
+		
+		(func() -> void:
+			#ice.global_transform = _center.global_transform.translated_local(_add_pos)
+			ice.unfreeze_offset = -_add_pos
+			ice.destroy_enabled = true
+			ice.contained_item = _center
+			ice.contained_item_enemy_killed = self
+			ice.forced_heavy_break = ice_fragile
+			ice.ice_fallable = ice_fallable
+			
+			var in_ice_spr: Node2D = null
+			if is_instance_valid(_ice_sprite):
+				in_ice_spr = _ice_sprite.duplicate()
+			ice.draw_sprite(in_ice_spr, ice_sprite_offset)
+			
+			_center.get_parent().remove_child(_center)
+		).call_deferred()
+		
+		result = {
+			result = true,
+			attackee = self
+		}
+		
+		killed_frozen.emit()
+	# Killed
 	else:
+		# By shell
 		if &"shell_attack" in special_tags:
 			shell_attack = true
 		
 		killed_succeeded.emit()
+		killed_succeeded_by.emit(by)
 		
 		_creation(killing_creation)
 		
 		var no_score: bool = &"no_score" in special_tags
 		if killing_scores > 0 && !no_score:
 			ScoreText.new(str(killing_scores), _center)
-			Data.values.score += killing_scores
+			Data.add_score(killing_scores)
 		
 		result = {
 			result = true,
 			attackee = self
 		}
+		
 		if shell_attack:
 			result.type = &"shell"
 	
@@ -238,6 +336,7 @@ func _creation(creation: InstanceNode2D) -> void:
 
 
 func stomping_delay() -> void:
+	if !is_inside_tree(): return
 	_stomping_delayer = get_tree().create_timer(get_physics_process_delta_time() * stomping_delay_frames)
 	_stomping_delayer.timeout.connect(
 		func() -> void:
@@ -252,12 +351,15 @@ func get_stomping_delayer() -> SceneTreeTimer:
 func _on_level_end() -> void:
 	if !killing_enabled: return
 	if !Thunder.view.is_getting_closer(_center, 32):
-		if Thunder.view.is_getting_closer(_center, 320):
+		if Thunder.view.is_getting_closer(_center, 2048):
 			_center.queue_free.call_deferred()
 		return
-	Audio.play_1d_sound(COIN)
+	
+	var _custom_sound = CharacterManager.get_sound_replace(COIN, COIN, "coin", false)
+	Audio.play_1d_sound(_custom_sound)
 	NodeCreator.prepare_2d(COIN_EFFECT, _center).bind_global_transform().create_2d().call_method(func(node):
 		node.score_given = 1000
+		node.global_rotation = 0
 	)
 	Data.add_coin()
 	_center.queue_free.call_deferred()

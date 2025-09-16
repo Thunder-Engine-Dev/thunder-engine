@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="InstanceNode2D" load_steps=3 format=3 uid="uid://bhj2oucfcluw6"]
+
+[ext_resource type="PackedScene" uid="uid://yreeufpqjft1" path="res://engine/objects/bosses/bowser/projectile/flame.tscn" id="1_qqi6n"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="2_1psv4"]
+
+[resource]
+script = ExtResource("2_1psv4")
+creation_nodepack = ExtResource("1_qqi6n")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}

@@ -1,15 +1,16 @@
-[gd_scene load_steps=39 format=3 uid="uid://cforx4e0v73a7"]
+[gd_scene load_steps=40 format=3 uid="uid://cforx4e0v73a7"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/rotos/roto_red.gd" id="1_gq7m4"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3420r"]
+[ext_resource type="Script" uid="uid://cpw8a2kugg30l" path="res://engine/objects/enemies/rotos/roto_red.gd" id="1_gq7m4"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3420r"]
 [ext_resource type="Texture2D" uid="uid://d1rtgrsfyf0pj" path="res://engine/objects/enemies/rotos/roto_red.png" id="2_ib7bh"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_cjxur"]
 [ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="4_rm4x7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_g8kvb"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="5_rhdfg"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_g8kvb"]
+[ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="5_rhdfg"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_ile01"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pi0fq"]
-radius = 16.0
+radius = 14.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhx86"]
 atlas = ExtResource("2_ib7bh")
@@ -216,6 +217,7 @@ metadata/_snap_enabled = true
 [sub_resource type="Resource" id="Resource_caaoh"]
 script = ExtResource("5_g8kvb")
 creation_nodepack = ExtResource("4_rm4x7")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 2
 trans_rotation = 0.0
@@ -230,26 +232,31 @@ custom_vars = {
 custom_script = ExtResource("5_rhdfg")
 
 [node name="RotoRed" type="Area2D" groups=["#roto"]]
+disable_mode = 1
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_gq7m4")
 amplitude_changing_speed = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_pi0fq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_rg5pr")
 autoplay = "default"
 
-[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+[node name="PointLight2D" type="PointLight2D" parent="Sprite" groups=["stage2d_ctrl_light"]]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_25p2b")
+texture_scale = 0.01
+script = ExtResource("3_cjxur")
+duration = 0.1
 
 [node name="EnemyAttacked" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("2_3420r")
 center_node = NodePath("..")
 stomping_standard = Vector2(0, 0)

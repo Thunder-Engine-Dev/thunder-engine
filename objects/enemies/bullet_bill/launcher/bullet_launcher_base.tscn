@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bkaivnr6tufb"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.gd" id="1_aekfs"]
+[ext_resource type="Script" uid="uid://c6hsac643e28b" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher_base.gd" id="1_aekfs"]
 [ext_resource type="Texture2D" uid="uid://cy1ilh0qxu3f4" path="res://engine/objects/enemies/bullet_bill/launcher/texture/handler.png" id="1_clkxi"]
 [ext_resource type="Texture2D" uid="uid://cy4krigq0scxj" path="res://engine/objects/enemies/bullet_bill/launcher/texture/middle.png" id="2_2wcs3"]
 [ext_resource type="Texture2D" uid="uid://c6rtd10yuhxrn" path="res://engine/objects/enemies/bullet_bill/launcher/texture/base.png" id="2_x5a0p"]

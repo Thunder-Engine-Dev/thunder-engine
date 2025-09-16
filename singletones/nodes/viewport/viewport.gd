@@ -1,9 +1,10 @@
 extends Control
 
-@onready var container = $ViewportContainer
-@onready var vp = $ViewportContainer/SubViewport
+@onready var container: SubViewportContainer = $ViewportContainer
+@onready var vp: SubViewport = $ViewportContainer/SubViewport
+@onready var center_container: AspectRatioContainer = $AspectRatioContainer
 
-@onready var keep_aspect = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
+@onready var keep_aspect: bool = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
 
 func _ready() -> void:
 	resized.connect(_on_window_resized)

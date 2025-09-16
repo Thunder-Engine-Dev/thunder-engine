@@ -1,29 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b88ks57c23lyq"]
+[gd_scene load_steps=4 format=3 uid="uid://b88ks57c23lyq"]
 
-[ext_resource type="Texture2D" uid="uid://b6tudn6gbn2ib" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_yfmkj"]
-
-[sub_resource type="Curve" id="Curve_wq43i"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_hkt5c"]
-curve = SubResource("Curve_wq43i")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4jdto"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(20, 0, 0)
-direction = Vector3(0, -1, 0)
-initial_velocity_min = 150.0
-initial_velocity_max = 200.0
-gravity = Vector3(0, 150, 0)
-scale_curve = SubResource("CurveTexture_hkt5c")
+[ext_resource type="Material" uid="uid://lt5lxng3cdo2" path="res://engine/objects/effects/bubble/lava_bubbles.tres" id="1_4o25r"]
+[ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_yfmkj"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="2_1p3d7"]
 
 [node name="LavaBubbles" type="GPUParticles2D"]
 amount = 25
-process_material = SubResource("ParticleProcessMaterial_4jdto")
+process_material = ExtResource("1_4o25r")
 texture = ExtResource("1_yfmkj")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
+script = ExtResource("2_1p3d7")
 
 [connection signal="finished" from="." to="." method="queue_free"]

@@ -7,9 +7,12 @@ enum CREDITS_OPTION {
 @export var credits_behavior: CREDITS_OPTION = CREDITS_OPTION.JumpToScene
 var was_paused: bool
 
-func _handle_select() -> void:
-	super()
+func _handle_select(mouse_input: bool = false) -> void:
+	if Data.technical_values.get("credits_cooldown", 0.0) > Time.get_ticks_msec():
+		return
+	super(mouse_input)
 	var cred_path = ProjectSettings.get_setting("application/thunder_settings/credits_path")
+	Data.technical_values.credits_cooldown = Time.get_ticks_msec() + 500
 	match credits_behavior:
 		CREDITS_OPTION.JumpToScene:
 			SettingsManager.save_settings()
@@ -39,6 +42,7 @@ func add_scene_to_child(cred_path) -> void:
 
 func _add_scene_tree_entered(credits: Node) -> void:
 	credits.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_parent().focused = false
 
 func _add_scene_tree_exited(canvas_layer: CanvasLayer) -> void:
 	if !is_inside_tree(): return
@@ -46,6 +50,7 @@ func _add_scene_tree_exited(canvas_layer: CanvasLayer) -> void:
 	if !is_instance_valid(Scenes.current_scene): return
 	if !was_paused:
 		get_tree().paused = was_paused
+	get_parent().focused = true
 	for i in Audio._music_channels:
 		if !is_instance_valid(Audio._music_channels[i]): continue
 		if Audio._music_channels[i].process_mode == Node.PROCESS_MODE_DISABLED:

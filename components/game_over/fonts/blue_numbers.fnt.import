@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://b0ammhokl853d"
+path="res://.godot/imported/blue_numbers.fnt-64b518aaae7928e96fd77c776f05caf2.fontdata"
+
+[deps]
+
+source_file="res://engine/components/game_over/fonts/blue_numbers.fnt"
+dest_files=["res://.godot/imported/blue_numbers.fnt-64b518aaae7928e96fd77c776f05caf2.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

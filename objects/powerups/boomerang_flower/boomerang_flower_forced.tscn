@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3wd3j0m0dek8"]
+
+[ext_resource type="PackedScene" uid="uid://puywhag5cs1a" path="res://engine/objects/powerups/boomerang_flower/boomerang_flower.tscn" id="1_eya6g"]
+
+[node name="BoomerangFlowerForced" instance=ExtResource("1_eya6g")]
+force_powerup_state = true

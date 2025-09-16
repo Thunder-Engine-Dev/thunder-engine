@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bxaj6iub5wrps"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.gd" id="1_qxjgx"]
+[ext_resource type="Script" uid="uid://05iwjefi5f3o" path="res://engine/objects/enemies/cheeps/jumping_cheeps_generator.gd" id="1_qxjgx"]
 
 [node name="JumpingCheepsGenerator" type="Node"]
 script = ExtResource("1_qxjgx")

@@ -35,3 +35,6 @@ func set_on(player: Player) -> void:
 
 func set_off(player: Player) -> void:
 	player.timer_invincible.stop()
+	if is_instance_valid(player.flasher):
+		player.flasher.stop()
+		player.sprite.modulate.a = 1.0

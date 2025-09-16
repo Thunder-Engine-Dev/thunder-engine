@@ -1,8 +1,12 @@
 extends Node2D
 
+signal ended_pitching
+signal started_pitching
+
 @export_category("Lakitu")
 @export var movement_area: Rect2
 @export var draw_area_rect: bool
+@export var does_respawn: bool = true
 @export var respawn_delay: float = 6
 @export var respawn_offset: float = 0
 @export_group("Physics")
@@ -35,7 +39,7 @@ var _movement: bool:
 			return
 		_movement = to
 		if _movement && timer_pitching.is_stopped():
-			timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+			timer_pitching.start(Thunder.rng.get_randf_range(pitching_interval_min, pitching_interval_max))
 		elif !timer_pitching.is_stopped():
 			timer_pitching.stop()
 
@@ -58,7 +62,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		_leaving_process(delta)
 	
-	timer_pitching.paused = !visible_on_screen_2d.is_on_screen() || !_movement
+	timer_pitching.paused = (
+		!visible_on_screen_2d.is_on_screen() || !_movement || \
+		player.warp != Player.Warp.NONE
+	)
 	
 	global_position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
 
@@ -91,7 +98,8 @@ func _pitch() -> void:
 	if pitched:
 		NodeCreator.prepare_ins_2d(pitched, self).create_2d().execute_instance_script()
 	Audio.play_sound(sounds.pick_random(), self)
-	timer_pitching.start(randf_range(pitching_interval_min, pitching_interval_max))
+	timer_pitching.start(Thunder.rng.get_randf_range(pitching_interval_min, pitching_interval_max))
+	ended_pitching.emit()
 
 
 func _on_animation_timeout() -> void:
@@ -110,6 +118,7 @@ func _on_animation_finished() -> void:
 
 
 func _on_pitching() -> void:
+	started_pitching.emit()
 	sprite.play(&"pitch")
 	if !skip_pitch_animation_delay:
 		await sprite.animation_finished
@@ -124,4 +133,3 @@ func _on_pitching() -> void:
 		if !skip_pitch_animation_delay:
 			_pitch()
 		
-

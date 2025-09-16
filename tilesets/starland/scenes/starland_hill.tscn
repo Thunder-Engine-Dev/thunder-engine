@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cex5bahi2ueay"]
+
+[ext_resource type="Texture2D" uid="uid://dcc24xfje7sld" path="res://engine/tilesets/starland/gfx/starland_hill.png" id="1_3yhy6"]
+
+[node name="StarlandHill" type="Sprite2D"]
+z_index = -11
+position = Vector2(-12, -12)
+texture = ExtResource("1_3yhy6")

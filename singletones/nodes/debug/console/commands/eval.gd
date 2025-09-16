@@ -1,7 +1,7 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("eval").add_param("code", TYPE_STRING).set_description("Evaluates a gdscript snippet.")
+	return new().set_name("eval").add_param("code", TYPE_STRING).set_description("Evaluates a gdscript snippet").set_debug()
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var msg: String = ""

@@ -15,11 +15,6 @@ float calculate_diff(float uv, float amp, float freq, float spd){
 	return diff_x;
 }
 
-vec2 calculate_move(vec2 dir, float spd){
-	vec2 move = dir * TIME;
-	return move;
-}
-
 void fragment(){
 	float uv_mod;
 	if (y_axis) {
@@ -28,12 +23,12 @@ void fragment(){
 		uv_mod = UV.y;
 	}
 	float wav_x = calculate_diff(uv_mod, wave_amplitude, wave_frequency, wave_speed);
-	
+
 	if ( int( uv_mod * 1.0 ) % 2 == 0)
 	{
 		wav_x = -wav_x;
 	}
-	
+
 	vec4 textube;
 	if (y_axis) {
 		textube = texture(TEXTURE, vec2(uv_mod, UV.y + wav_x));

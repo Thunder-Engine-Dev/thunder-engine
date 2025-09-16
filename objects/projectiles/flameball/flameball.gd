@@ -1,6 +1,14 @@
 extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
+@export var remove_offscreen_after: float = 0.8
+@export var remove_top_offscreen: bool = false
+
+func _ready() -> void:
+	if !remove_top_offscreen:
+		vision_node.rect.size.y = 512
+	offscreen_handler(remove_offscreen_after)
+
 
 func _physics_process(delta: float) -> void:
 	super(delta)

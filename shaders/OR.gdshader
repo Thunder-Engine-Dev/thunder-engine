@@ -16,4 +16,3 @@ void fragment() {
 	self_color.b = float(int(self_color.b) | int(back_color.b)) / 255.0;
 	COLOR = v_vertex_color * self_color;
 }
-

@@ -2,19 +2,19 @@ extends Projectile
 
 const explosion_effect = preload("res://engine/objects/effects/smoke/smoke.tscn")
 
-@onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var jumping_speed: float = -350.0
+@export var remove_offscreen_after: float = 3.0
+@export var remove_top_offscreen: bool = false
 var bounces_left: int = 2
 
 
 func _ready() -> void:
-	add_to_group(&"end_level_sequence")
-	await get_tree().physics_frame
-	if (
-		belongs_to == Data.PROJECTILE_BELONGS.ENEMY &&
-		!vision.is_on_screen()
-	):
-		queue_free()
+	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
+		remove_offscreen_after = 2.0
+	if !remove_top_offscreen:
+		vision_node.rect.size.y = 512
+	offscreen_handler(remove_offscreen_after)
+	super()
 
 
 func _physics_process(delta: float) -> void:
@@ -41,14 +41,14 @@ func explode():
 
 func expand_vision(_scale: Vector2) -> void:
 	await ready
-	if vision: vision.scale = _scale
+	if vision_node: vision_node.scale = _scale
 
 
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 32):
-		if Thunder.view.is_getting_closer(self, 320):
+		if Thunder.view.is_getting_closer(self, 2048):
 			queue_free()
 		return
-	Data.values.score += 100
+	Data.add_score(100)
 	ScoreText.new(str(100), self)
 	queue_free()

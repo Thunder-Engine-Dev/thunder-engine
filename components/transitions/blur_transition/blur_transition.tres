@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cjvud11pq1efj"]
+
+[ext_resource type="Shader" uid="uid://cooltbn06pd2t" path="res://engine/components/transitions/blur_transition/blur_transition.gdshader" id="1_hyfsh"]
+
+[resource]
+shader = ExtResource("1_hyfsh")
+shader_parameter/size = 0.001

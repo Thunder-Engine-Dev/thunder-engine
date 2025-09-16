@@ -1,16 +1,16 @@
 [gd_scene load_steps=20 format=3 uid="uid://ctpsv143q5pjv"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tulax"]
+[ext_resource type="Script" uid="uid://c08gsw7pt6yrv" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_tulax"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="3_lyc5n"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_v7we4"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pugg3"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hgfia"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pugg3"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_hgfia"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_uy00l"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="8_yvu7y"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="8_yvu7y"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="10_bsier"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
 size = Vector2(32, 28)
@@ -19,6 +19,7 @@ size = Vector2(32, 28)
 resource_local_to_scene = true
 script = ExtResource("6_hgfia")
 creation_nodepack = ExtResource("4_v7we4")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -78,6 +79,7 @@ collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 8.0
+platform_on_leave = 2
 script = ExtResource("1_4u51b")
 look_at_player = true
 slide = true
@@ -117,13 +119,13 @@ metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"ki
 visible = false
 shape = SubResource("CircleShape2D_alv11")
 target_position = Vector2(0, 0)
-max_results = 8
+max_results = 24
 collision_mask = 3
 collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("8_yvu7y")
 killer_type = &"shell"
-killing_detection_scale = 8.0
+killing_detection_scale = 2.0
 special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
@@ -138,7 +140,6 @@ rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("11_vu45w")
 metadata/_edit_lock_ = true
 
-[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]

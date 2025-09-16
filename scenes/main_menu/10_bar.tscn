@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cmi1is5qvulsf"]
 
-[ext_resource type="Texture2D" uid="uid://ds4rw4yor8ock" path="res://engine/scenes/main_menu/textures/progress.png" id="1_i1olx"]
+[ext_resource type="Texture2D" uid="uid://cp768nmym70ww" path="res://engine/scenes/main_menu/textures/progress.png" id="1_i1olx"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wy3lq"]
 texture = ExtResource("1_i1olx")

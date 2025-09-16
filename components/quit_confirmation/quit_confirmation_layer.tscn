@@ -1,0 +1,165 @@
+[gd_scene load_steps=18 format=3 uid="uid://d2vt6a6bgmkt5"]
+
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_2nnmo"]
+[ext_resource type="Script" uid="uid://bkvf21o2y82sa" path="res://engine/components/quit_confirmation/quit_confirmation_layer.gd" id="1_buk7e"]
+[ext_resource type="Texture2D" uid="uid://dsgn8mjkxbovv" path="res://engine/components/progress_continue/textures/no.png" id="2_buk7e"]
+[ext_resource type="Script" uid="uid://diifr6gffti2w" path="res://engine/components/quit_confirmation/no_selection.gd" id="4_irvhc"]
+[ext_resource type="Texture2D" uid="uid://b6se5c7m5jif0" path="res://engine/components/progress_continue/textures/yes.png" id="4_nwqg5"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="5_mv2jh"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="6_3hoq8"]
+[ext_resource type="Script" uid="uid://b77fw1jqmb40o" path="res://engine/components/quit_confirmation/yes_selection.gd" id="6_irvhc"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="7_68xhy"]
+[ext_resource type="Texture2D" uid="uid://bmewgt6oncnrh" path="res://engine/components/quit_confirmation/quit_confirm_title.png" id="7_nwqg5"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="8_d0n4h"]
+
+[sub_resource type="Gradient" id="Gradient_akj06"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_af70a"]
+gradient = SubResource("Gradient_akj06")
+
+[sub_resource type="Animation" id="Animation_buk7e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2nnmo"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_irvhc"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nwqg5"]
+_data = {
+&"RESET": SubResource("Animation_buk7e"),
+&"init": SubResource("Animation_2nnmo"),
+&"open": SubResource("Animation_irvhc")
+}
+
+[node name="QuitConfirmLayer" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_buk7e")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_af70a")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 0.7
+offset_top = -17.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 96
+alignment = 1
+script = ExtResource("1_2nnmo")
+focused = false
+control_forward = &"ui_right"
+control_backward = &"ui_left"
+prev_screen_node_path = NodePath("No")
+
+[node name="No" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_buk7e")
+stretch_mode = 3
+script = ExtResource("4_irvhc")
+
+[node name="Yes" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_nwqg5")
+stretch_mode = 3
+script = ExtResource("6_irvhc")
+
+[node name="Title2" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.333
+anchor_right = 1.0
+anchor_bottom = 0.333
+offset_top = -42.84
+offset_bottom = 43.16
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_nwqg5")
+stretch_mode = 3
+
+[node name="Selector" type="Node2D" parent="Control"]
+physics_interpolation_mode = 1
+position = Vector2(192, 336)
+script = ExtResource("5_mv2jh")
+smooth_speed = 0.4
+position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Selector"]
+sprite_frames = ExtResource("6_3hoq8")
+script = ExtResource("7_68xhy")
+
+[node name="SelectorBlinking" type="Node" parent="Control"]
+script = ExtResource("8_d0n4h")
+menu_items_controller_path = NodePath("../HBoxContainer")
+speed = 8.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nwqg5")
+}
+autoplay = "init"
+
+[connection signal="selected" from="Control/HBoxContainer" to="Control/Selector" method="handle_selection"]
+[connection signal="selected" from="Control/HBoxContainer" to="Control/SelectorBlinking" method="handle_selection"]

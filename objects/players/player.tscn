@@ -1,0 +1,278 @@
+[gd_scene load_steps=29 format=3 uid="uid://1do11cr84k7y"]
+
+[ext_resource type="Script" uid="uid://bhycqbfutplh0" path="res://engine/objects/players/player.gd" id="1_ojh72"]
+[ext_resource type="Material" uid="uid://dvi7i7b5bslko" path="res://engine/objects/players/prefabs/materials/starman.tres" id="2_2saki"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="3_uy3nm"]
+[ext_resource type="Script" uid="uid://dwvmw4hh4t2v6" path="res://engine/objects/players/player_sprite.gd" id="4_ng5qt"]
+[ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
+[ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
+[ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
+[ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
+[ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
+[ext_resource type="Script" uid="uid://dga27kf23i4a8" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
+[ext_resource type="Script" uid="uid://cp2mj8ibe2l2m" path="res://engine/node_modifiers/player_physics_modifier/slippery_physics_modifier.gd" id="13_217v7"]
+[ext_resource type="Script" uid="uid://bh0t8gurod3pp" path="res://engine/objects/players/player_config.gd" id="14_217v7"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="15_fng60"]
+[ext_resource type="AudioStream" uid="uid://rv6ojidxbd3v" path="res://engine/objects/players/prefabs/sounds/skid.wav" id="16_i8gk3"]
+[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="17_dv1c8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
+size = Vector2(20, 28)
+
+[sub_resource type="Curve" id="Curve_61d7b"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qbg1c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8608, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_btes4"]
+curve = SubResource("Curve_qbg1c")
+
+[sub_resource type="Curve" id="Curve_l3s3a"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ro0d7"]
+curve = SubResource("Curve_l3s3a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s67vk"]
+lifetime_randomness = 0.3
+emission_shape = 1
+emission_sphere_radius = 24.0
+angle_min = -180.0
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_ro0d7")
+alpha_curve = SubResource("CurveTexture_btes4")
+
+[sub_resource type="Curve" id="Curve_217v7"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2r881"]
+size = Vector2(16, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xql3q"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2d70d"]
+size = Vector2(1, 1)
+
+[sub_resource type="Resource" id="Resource_217v7"]
+script = ExtResource("14_217v7")
+walk_initial_speed = 25.0
+walk_acceleration = 125.0
+walk_deceleration = 62.5
+walk_crouch_deceleration = 468.75
+walk_turning_acce = 160.0
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+underwater_walk_max_walking_speed = 175.0
+underwater_walk_max_running_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1200.0
+jump_buff_dynamic = 1500.0
+jump_stomp_multiplicator = 1.0
+jump_coyote_time_sec = 0.067
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+swim_max_falling_speed = 150.0
+swim_gravity_scale = 0.1
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 500.0
+slide_deceleration = 500.0
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
+animation_max_walking_speed = 5.0
+animation_min_walking_speed = 5.0
+sound_jump = [ExtResource("15_fng60")]
+sound_swim = [ExtResource("17_dv1c8")]
+sound_skid = [ExtResource("16_i8gk3")]
+
+[sub_resource type="Resource" id="Resource_hly0o"]
+script = ExtResource("14_217v7")
+walk_initial_speed = 25.0
+walk_acceleration = 156.25
+walk_deceleration = 78.125
+walk_crouch_deceleration = 468.75
+walk_turning_acce = 208.333
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+underwater_walk_max_walking_speed = 175.0
+underwater_walk_max_running_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1000.0
+jump_buff_dynamic = 1250.0
+jump_stomp_multiplicator = 1.0
+jump_coyote_time_sec = 0.05
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+swim_max_falling_speed = 150.0
+swim_gravity_scale = 0.1
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 500.0
+slide_deceleration = 500.0
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
+animation_max_walking_speed = 5.0
+animation_min_walking_speed = 5.0
+sound_jump = [ExtResource("15_fng60")]
+sound_swim = [ExtResource("17_dv1c8")]
+sound_skid = [ExtResource("16_i8gk3")]
+metadata/_custom_type_script = "uid://bh0t8gurod3pp"
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 16
+slide_on_ceiling = false
+floor_max_angle = 0.837758
+floor_snap_length = 12.0
+platform_on_leave = 2
+script = ExtResource("1_ojh72")
+gravity_scale = 1.0
+max_falling_speed = 500.0
+metadata/_edit_pinned_properties_ = [&"max_falling_speed", &"gravity_scale"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_dmcrg")
+debug_color = Color(0, 0.643137, 0.305882, 0.419608)
+
+[node name="CollisionRecovery" type="RayCast2D" parent="."]
+z_index = 6
+target_position = Vector2(0, 0)
+collision_mask = 16
+hit_from_inside = true
+
+[node name="SpriteContainer" type="Node2D" parent="."]
+script = ExtResource("4_ng5qt")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="SpriteContainer"]
+z_index = 5
+material = ExtResource("2_2saki")
+sprite_frames = ExtResource("3_uy3nm")
+offset = Vector2(0, -16)
+
+[node name="Stars" type="CPUParticles2D" parent="SpriteContainer/Sprite"]
+show_behind_parent = true
+emitting = false
+amount = 24
+texture = ExtResource("6_skpgp")
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_61d7b")
+
+[node name="SkinParticles" type="GPUParticles2D" parent="SpriteContainer/Sprite"]
+show_behind_parent = true
+emitting = false
+amount = 48
+amount_ratio = 0.5
+texture = ExtResource("6_skpgp")
+lifetime = 0.5
+visibility_rect = Rect2(-128, -128, 256, 256)
+process_material = SubResource("ParticleProcessMaterial_s67vk")
+script = ExtResource("7_wegjq")
+
+[node name="Skid" type="CPUParticles2D" parent="SpriteContainer/Sprite"]
+show_behind_parent = true
+position = Vector2(0, 15)
+emitting = false
+amount = 12
+texture = ExtResource("7_nplxc")
+lifetime = 0.5
+fract_delta = false
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_217v7")
+
+[node name="SpriteDeath" type="Sprite2D" parent="."]
+visible = false
+z_index = 15
+position = Vector2(1, 1)
+texture = ExtResource("8_vc1bf")
+
+[node name="Head" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_2r881")
+target_position = Vector2(0, -2)
+max_results = 16
+collision_mask = 144
+collide_with_areas = true
+
+[node name="Body" type="ShapeCast2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_xql3q")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 6
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Underwater" type="Node" parent="."]
+script = ExtResource("9_05rqn")
+gravity_scale_override = 0.1
+max_falling_speed_override = 150.0
+spray_offset = Vector2(0, 8)
+metadata/_edit_pinned_properties_ = [&"max_falling_speed_override", &"gravity_scale_override"]
+
+[node name="Bubbler" type="Timer" parent="Underwater"]
+process_callback = 0
+wait_time = 0.1
+
+[node name="Invincible" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[node name="Starman" type="Timer" parent="."]
+process_callback = 0
+wait_time = 10.0
+one_shot = true
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+enabled = false
+shape = SubResource("RectangleShape2D_2d70d")
+target_position = Vector2(0, 0)
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("10_ph62t")
+killer_type = &"starman"
+killing_detection_scale = 2.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
+
+[node name="SlipperyPhysicsModifier" type="Node" parent="."]
+script = ExtResource("13_217v7")
+scene_group_name = "slippery"
+apply_config = Dictionary[String, ExtResource("14_217v7")]({
+"Luigi": SubResource("Resource_217v7"),
+"Mario": SubResource("Resource_hly0o")
+})
+apply_properties = PackedStringArray("walk_initial_speed", "walk_acceleration", "walk_deceleration", "walk_crouch_deceleration", "walk_turning_acce", "animation_min_walking_speed", "animation_max_walking_speed")
+metadata/_custom_type_script = "uid://fulkctmku6s1"
+
+[connection signal="timeout" from="Starman" to="." method="_on_starman_timeout"]
+[connection signal="killed" from="Attack" to="." method="_on_starman_killed"]

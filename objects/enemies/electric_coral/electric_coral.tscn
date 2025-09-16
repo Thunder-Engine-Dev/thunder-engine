@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdfqlkg8w5yc8"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
-[ext_resource type="Texture2D" uid="uid://cy3ci8bt5m1o6" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
-[ext_resource type="Texture2D" uid="uid://cww8wcusbrxnk" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
+[ext_resource type="Script" uid="uid://cf4cbmxqe4wdr" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
+[ext_resource type="Texture2D" uid="uid://x1h126m735je" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
+[ext_resource type="Texture2D" uid="uid://c8cqh10bsbdud" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdrb"]
-size = Vector2(30, 32)
+size = Vector2(28, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83umb"]
-size = Vector2(32, 34)
+size = Vector2(30, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4jpx2"]
 atlas = ExtResource("1_ef6v0")

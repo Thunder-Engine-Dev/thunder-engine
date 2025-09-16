@@ -10,3 +10,8 @@ func _ready() -> void:
 		node.look_at_player = false
 		node.dir = (vars.enemy_attacked.owner.get(&"dir"))
 		node.speed_to_dir()
+	var vision = Thunder.get_child_by_class_name(node, "VisibleOnScreenEnabler2D")
+	if vision:
+		if Data.values.stopwatch > 0:
+			node.stopwatch_pause()
+		vision.scale = Vector2.ONE * 8

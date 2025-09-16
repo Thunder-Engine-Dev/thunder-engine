@@ -1,9 +1,8 @@
 @icon("res://engine/objects/bumping_blocks/question_block/textures/icon.png")
-extends StaticBumpingBlock
+@tool
+extends "res://engine/objects/bumping_blocks/question_block/question_block.gd"
 
-const NULL_TEXTURE = preload("res://engine/scripts/classes/bumping_block/texture_null.png")
-@export var DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
-
+@export var debris_effect = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
 ## For coin bricks. Set to 1 for one-time output
 @export var result_counter_value: float = 300
 ## Limit for items
@@ -15,6 +14,7 @@ var counter_enabled: bool = false
 
 func _physics_process(_delta):
 	super(_delta)
+	if Engine.is_editor_hint(): return
 	
 	var delta = Thunder.get_delta(_delta)
 	
@@ -26,19 +26,20 @@ func bricks_break() -> void:
 	Audio.play_sound(break_sound, self)
 	var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
 	for i in speeds:
-		NodeCreator.prepare_2d(DEBRIS_EFFECT, self).create_2d(true).call_method(func(eff: Node2D):
+		NodeCreator.prepare_2d(debris_effect, self).create_2d(true).call_method(func(eff: Node2D):
 			eff.global_transform = global_transform
 			eff.velocity = i
 		)
-			
-	Data.values.score += 10
+		
+	Data.add_score(10)
 	queue_free()
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered && lock_while_triggered: return
-	if by is Player:
-		if (by.is_on_floor() && !by.is_crouching) || by.warp != Player.Warp.NONE:
+	var pl := Thunder._current_player
+	if by_player:
+		if !pl || (pl.is_on_floor() && !pl.is_crouching) || pl.warp != Player.Warp.NONE:
 			return
 			
 	# Brick with some result
@@ -47,7 +48,7 @@ func got_bumped(by: Node2D) -> void:
 		return
 	
 	# Standard brick
-	if by is Player && by.suit.type == Data.PLAYER_POWER.SMALL:
+	if by_player && pl.suit.type == Data.PLAYER_POWER.SMALL:
 		bump(false)
 	else:
 		hit_attack()

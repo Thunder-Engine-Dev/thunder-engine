@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcm2a10a5vcug"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.gd" id="1_tkugq"]
+[ext_resource type="Script" uid="uid://cnce1poewe88y" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.gd" id="1_tkugq"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="2_t1ltt"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_naewv"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_naewv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pgqm4"]
 size = Vector2(30, 30)
@@ -42,11 +42,12 @@ killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-16, -16, 32, 32)
+rect = Rect2(-16, -16, 32, 512)
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]
 [connection signal="collided_wall" from="." to="." method="bounce"]
+[connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="run_out" from="." to="Attack" method="queue_free"]
 [connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

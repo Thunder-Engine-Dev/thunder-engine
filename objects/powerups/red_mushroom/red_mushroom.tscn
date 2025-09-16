@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://b71msw28e37a"]
 
-[ext_resource type="Script" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
-[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="2_1tqft"]
+[ext_resource type="Script" uid="uid://bxq57dbowstxt" path="res://engine/objects/powerups/powerup.gd" id="1_s8ya2"]
 [ext_resource type="Texture2D" uid="uid://81bpmrtqxli8" path="res://engine/objects/powerups/red_mushroom/texture.png" id="2_crlg7"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
-[ext_resource type="Script" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
-[ext_resource type="Script" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o1sg4"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="4_qo0md"]
+[ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="5_s7dmu"]
+[ext_resource type="Script" uid="uid://dtibkahwuryoh" path="res://engine/objects/powerups/powerup_bump_logic.gd" id="6_6ddmp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
 size = Vector2(32, 31)
@@ -29,9 +29,7 @@ floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 20.0
 script = ExtResource("1_s8ya2")
-to_suit = {
-"Mario": ExtResource("2_1tqft")
-}
+to_suit = "super"
 speed = Vector2(100, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"to_suit"]
@@ -59,11 +57,13 @@ killing_immune = {
 turn_into_coin_on_level_end = false
 
 [node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
 texture = ExtResource("2_crlg7")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-128, -128, 256, 256)
+script = ExtResource("4_qo0md")
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

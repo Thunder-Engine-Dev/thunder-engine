@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bk83eoy4du76n"]
 
-[ext_resource type="Texture2D" uid="uid://budsd4n6wwj73" path="res://engine/objects/effects/starfall/textures/star_effect.png" id="1_rhxfm"]
-[ext_resource type="Script" path="res://engine/objects/effects/starfall/starfall_effect.gd" id="2_v8geb"]
+[ext_resource type="Texture2D" uid="uid://ch8ssg3dwn01u" path="res://engine/objects/effects/starfall/textures/star_effect.png" id="1_rhxfm"]
+[ext_resource type="Script" uid="uid://dc2fv1ox42d8i" path="res://engine/objects/effects/starfall/starfall_effect.gd" id="2_v8geb"]
 
 [node name="Sprite2D" type="Sprite2D"]
 texture = ExtResource("1_rhxfm")

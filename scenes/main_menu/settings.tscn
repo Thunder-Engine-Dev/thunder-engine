@@ -1,30 +1,38 @@
-[gd_scene load_steps=58 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene load_steps=64 format=3 uid="uid://1jfyfq3ty6g1"]
 
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
+[ext_resource type="Script" uid="uid://bqibbs5p33x31" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
 [ext_resource type="Texture2D" uid="uid://ciqt7od7lmtkc" path="res://engine/scenes/main_menu/textures/option_icon.png" id="2_lauxo"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0fdie"]
+[ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
+[ext_resource type="Script" uid="uid://cl1jbbibwvavs" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
 [ext_resource type="Texture2D" uid="uid://cr0xmvg0ljpxj" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
 [ext_resource type="Texture2D" uid="uid://ckrd0kfu2ue28" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
 [ext_resource type="Texture2D" uid="uid://dqvmle8qmxx2g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
+[ext_resource type="Script" uid="uid://cpfsdh7klyuxa" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
+[ext_resource type="Script" uid="uid://bub3yp4s5l32s" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
 [ext_resource type="Texture2D" uid="uid://dek2begmgx1bo" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="10_x0efh"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
+[ext_resource type="Script" uid="uid://dbcubuc6noqka" path="res://engine/scenes/main_menu/scripts/opt_controls_selection.gd" id="9_xcp42"]
+[ext_resource type="Texture2D" uid="uid://b0gg3838odwlc" path="res://engine/scenes/main_menu/textures/press_enter.png" id="10_lb8xl"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="11_jh3ap"]
+[ext_resource type="Script" uid="uid://cq0nqmidrewly" path="res://engine/scenes/main_menu/scripts/opt_gamespeed_selection.gd" id="12_mwq53"]
+[ext_resource type="Script" uid="uid://dmu03pyw1altm" path="res://engine/scenes/main_menu/scripts/opt_credits_selection.gd" id="16_8lg85"]
+[ext_resource type="Script" uid="uid://0twwcdhce53w" path="res://engine/scenes/main_menu/scripts/opt_scale_selection.gd" id="16_hdnp7"]
+[ext_resource type="Script" uid="uid://c5j356cdctwsy" path="res://engine/scenes/main_menu/scripts/opt_exit_selection.gd" id="17_67g7y"]
 [ext_resource type="Texture2D" uid="uid://c5kcdnxqujsym" path="res://engine/scenes/main_menu/textures/scale_choose.png" id="17_xqi2q"]
 [ext_resource type="Texture2D" uid="uid://baxufpcf22d7l" path="res://engine/scenes/main_menu/textures/fullscreen.png" id="18_pr3rd"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/opt_physics_tps_selection.gd" id="19_2v0m3"]
-[ext_resource type="Texture2D" uid="uid://bk5eg5ovkdm4x" path="res://engine/scenes/main_menu/textures/physics_tps.png" id="19_obf1r"]
-[ext_resource type="Texture2D" uid="uid://b70in7e84b0po" path="res://engine/scenes/main_menu/textures/physics_tps_option.png" id="20_au2x6"]
+[ext_resource type="Script" uid="uid://ehrcylpvvsmp" path="res://engine/scenes/main_menu/scripts/opt_vsync_selection.gd" id="19_fkcly"]
+[ext_resource type="Texture2D" uid="uid://xoa25by4iqkt" path="res://engine/scenes/main_menu/textures/buffer.png" id="20_b2kcq"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="24_0jxgt"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="24_fqkuj"]
+[ext_resource type="Texture2D" uid="uid://cb24ytv72ue4t" path="res://engine/scenes/main_menu/textures/restart_cancel.png" id="25_5v41g"]
+[ext_resource type="Script" uid="uid://b1einw57f1r02" path="res://engine/scenes/main_menu/scripts/restart_popup.gd" id="25_n2q6e"]
+[ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="25_stro5"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="25_v32i0"]
+[ext_resource type="Texture2D" uid="uid://ky1pe6qafydf" path="res://engine/scenes/main_menu/textures/restart_now.png" id="27_0x2m0"]
+[ext_resource type="Script" uid="uid://c1indt3rqvneg" path="res://engine/scenes/main_menu/scripts/restart_now_selection.gd" id="28_i1fom"]
+[ext_resource type="Texture2D" uid="uid://b3emt71nccgh2" path="res://engine/scenes/main_menu/textures/restart_title.png" id="29_2bk6m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h3ry"]
 atlas = ExtResource("4_wobiu")
@@ -37,6 +45,14 @@ region = Rect2(96, 0, 93, 29)
 [sub_resource type="AtlasTexture" id="AtlasTexture_iu4wi"]
 atlas = ExtResource("4_wobiu")
 region = Rect2(0, 29, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl4xt"]
+atlas = ExtResource("10_lb8xl")
+region = Rect2(0, 0, 96, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qd4g"]
+atlas = ExtResource("10_lb8xl")
+region = Rect2(102, 0, 94, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odr5u"]
 atlas = ExtResource("4_wobiu")
@@ -62,11 +78,11 @@ region = Rect2(0, 115, 168, 28)
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ys5h5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhmnl"]
 atlas = ExtResource("4_wobiu")
-region = Rect2(0, 142, 95, 30)
+region = Rect2(0, 172, 122, 30)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6e80b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dbt7"]
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
@@ -82,9 +98,21 @@ region = Rect2(0, 0, 140, 38)
 atlas = ExtResource("9_0v236")
 region = Rect2(0, 0, 64, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ync32"]
-atlas = ExtResource("20_au2x6")
-region = Rect2(0, 0, 97, 38)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys5h5"]
+atlas = ExtResource("4_wobiu")
+region = Rect2(0, 142, 95, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vog4w"]
+atlas = ExtResource("17_xqi2q")
+region = Rect2(0, 114, 140, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilj0e"]
+atlas = ExtResource("20_b2kcq")
+region = Rect2(0, 0, 118, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ltrg"]
+atlas = ExtResource("9_0v236")
+region = Rect2(0, 0, 64, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_df7ul"]
 atlas = ExtResource("4_wobiu")
@@ -102,100 +130,173 @@ region = Rect2(120, 58, 112, 27)
 atlas = ExtResource("4_wobiu")
 region = Rect2(188, 0, 61, 29)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="Gradient" id="Gradient_hacvj"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e6t31"]
+gradient = SubResource("Gradient_hacvj")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="Animation" id="Animation_8nk1g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GamePaused:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.529412)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Selector:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="Animation" id="Animation_x2cu4"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GamePaused:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Selector:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(128, 0, 32, 32)
+[sub_resource type="Animation" id="Animation_hvhdc"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GamePaused:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.529412)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Selector:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("10_x0efh")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t63jw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
+_data = {
+&"RESET": SubResource("Animation_8nk1g"),
+&"init": SubResource("Animation_x2cu4"),
+&"open": SubResource("Animation_hvhdc")
+}
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -206,6 +307,7 @@ offset_top = 480.0
 offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_n4qx7")
 metadata/_edit_lock_ = true
 
@@ -222,6 +324,7 @@ texture = ExtResource("1_wqbo8")
 metadata/_edit_lock_ = true
 
 [node name="Node2D" type="Node2D" parent="."]
+physics_interpolation_mode = 1
 script = ExtResource("4_2sncp")
 amplitude = Vector2(0, 10)
 frequency = 10.0
@@ -240,9 +343,12 @@ offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 snap_2d_transforms_to_pixel = true
+physics_object_picking = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
@@ -251,10 +357,10 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -448.0
-offset_top = 16.0
-offset_right = -63.0
-offset_bottom = 54.0
+offset_left = -456.0
+offset_top = 15.0
+offset_right = -64.0
+offset_bottom = 55.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("3_0fdie")
@@ -279,6 +385,7 @@ stretch_mode = 2
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 1
+mouse_filter = 1
 
 [node name="Music" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -298,6 +405,7 @@ stretch_mode = 2
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 1
+mouse_filter = 1
 
 [node name="Controls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
@@ -310,6 +418,32 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_iu4wi")
+stretch_mode = 2
+
+[node name="Value" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/Controls"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+
+[node name="Press" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_pl4xt")
+stretch_mode = 2
+
+[node name="Enter" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8qd4g")
+stretch_mode = 2
+
+[node name="JoyIcon" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
 stretch_mode = 2
 
 [node name="Quality" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
@@ -374,25 +508,25 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_843vv")
 stretch_mode = 2
 
-[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="XScroll" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
-setting_name = "vsync"
+setting_name = "xscroll"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ys5h5")
+texture = SubResource("AtlasTexture_fhmnl")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_6e80b")
+texture = SubResource("AtlasTexture_0dbt7")
 stretch_mode = 2
 
 [node name="Scale" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
@@ -436,24 +570,44 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6u8uf")
 stretch_mode = 2
 
-[node name="PhysicsTPS" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
-custom_minimum_size = Vector2(0, 36)
+[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 size_flags_vertical = 4
-script = ExtResource("19_2v0m3")
+script = ExtResource("19_fkcly")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/PhysicsTPS"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("19_obf1r")
+texture = SubResource("AtlasTexture_ys5h5")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/PhysicsTPS"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/VSync"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ync32")
+texture = SubResource("AtlasTexture_vog4w")
+stretch_mode = 2
+
+[node name="Buffer" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_ilj0e")
+stretch_mode = 2
+
+[node name="OFF" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8ltrg")
 stretch_mode = 2
 
 [node name="Filter" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
@@ -504,16 +658,125 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_uxvvb")
 stretch_mode = 2
 
-[node name="Selector" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport"]
-sprite_frames = SubResource("SpriteFrames_t63jw")
+[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
 script = ExtResource("11_jh3ap")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector"]
+sprite_frames = ExtResource("24_0jxgt")
+script = ExtResource("25_v32i0")
+
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("24_fqkuj")
+menu_items_controller_path = NodePath("../Options")
+modulate_division = 4.5
+modulate_offset = 0.82
+modulate_first_child = true
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 640
 limit_bottom = 552
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+editor_draw_screen = false
+script = ExtResource("25_stro5")
+
+[node name="RestartPopup" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Control" type="Control" parent="RestartPopup"]
+physics_interpolation_mode = 1
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("25_n2q6e")
+
+[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control"]
+modulate = Color(1, 1, 1, 0.529412)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_e6t31")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RestartPopup/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = 78.0
+offset_right = 128.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+script = ExtResource("3_0fdie")
+focused = false
+prev_screen_node_path = NodePath("TextureRect2")
+
+[node name="TextureRect2" type="TextureRect" parent="RestartPopup/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("25_5v41g")
+stretch_mode = 3
+script = ExtResource("28_i1fom")
+
+[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("27_0x2m0")
+stretch_mode = 3
+script = ExtResource("28_i1fom")
+cancel = false
+
+[node name="Selector" type="Node2D" parent="RestartPopup/Control"]
+script = ExtResource("11_jh3ap")
+smooth_speed = 0.4
+position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RestartPopup/Control/Selector"]
+sprite_frames = ExtResource("24_0jxgt")
+script = ExtResource("25_v32i0")
+
+[node name="GamePaused" type="TextureRect" parent="RestartPopup/Control"]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 128.0
+offset_right = 391.0
+offset_bottom = 198.0
+grow_horizontal = 2
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("29_2bk6m")
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RestartPopup/Control"]
+libraries = {
+&"": SubResource("AnimationLibrary_5i4gi")
+}
+autoplay = "RESET"
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]
+[connection signal="selected" from="RestartPopup/Control/VBoxContainer" to="RestartPopup/Control/Selector" method="handle_selection"]

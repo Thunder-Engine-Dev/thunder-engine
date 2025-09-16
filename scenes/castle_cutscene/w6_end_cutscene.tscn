@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=4 uid="uid://d1avmgaoa4d"]
+
+[ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_owoew"]
+[ext_resource type="Script" uid="uid://bshsr16m24qhi" path="res://engine/scenes/castle_cutscene/scripts/w6_end_cutscene.gd" id="2_tbkcf"]
+[ext_resource type="Texture2D" uid="uid://cfl32xhp20q7x" path="res://engine/scenes/castle_cutscene/textures/castle_big.png" id="3_hgv32"]
+[ext_resource type="PackedScene" uid="uid://1do11cr84k7y" path="res://engine/objects/players/player.tscn" id="4_fjv8g"]
+[ext_resource type="Script" uid="uid://cugmax5psc2oo" path="res://engine/objects/players/player_camera_2d.gd" id="5_bxgmw"]
+[ext_resource type="PackedScene" uid="uid://yqftjpfskche" path="res://engine/components/cam_area/cam_area.tscn" id="6_lxwmo"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="7_5n5py"]
+[ext_resource type="PackedScene" uid="uid://ugxjxrdao5el" path="res://engine/components/hud/hud.tscn" id="8_v2ma4"]
+[ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="9_dmrdq"]
+
+[sub_resource type="Gradient" id="Gradient_slprf"]
+colors = PackedColorArray(0.231373, 0.482353, 0.639216, 1, 0.94902, 0.992157, 0.988235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0e3oq"]
+gradient = SubResource("Gradient_slprf")
+width = 480
+
+[node name="CastleCutscene" type="Node2D"]
+script = ExtResource("1_owoew")
+fade_out_time = 0.02
+
+[node name="CutsceneLogic" type="Node" parent="."]
+script = ExtResource("2_tbkcf")
+
+[node name="Castle" type="Sprite2D" parent="."]
+position = Vector2(176, 243)
+texture = ExtResource("3_hgv32")
+
+[node name="Mario" parent="." instance=ExtResource("4_fjv8g")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(175, 400)
+
+[node name="PlayerCamera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 480
+script = ExtResource("5_bxgmw")
+
+[node name="CamArea" parent="." instance=ExtResource("6_lxwmo")]
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="Layer0" type="TileMapLayer" parent="."]
+z_index = 4
+tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAEAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAEAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAEAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAEAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAEAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAEAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAEAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAEAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAEAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAEAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAEAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAEAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAEAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAEAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAEAAAAEAA8AAAABAAEAAAAEAA4AAAABAAEAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAEAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAEAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAEAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAEAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAEAAAAUAA8AAAABAAEAAAD//xAAAAAAAAIAAAAAABAAAAABAAIAAAABABAAAAABAAIAAAACABAAAAABAAIAAAADABAAAAABAAIAAAAEABAAAAABAAIAAAAFABAAAAABAAIAAAAGABAAAAABAAIAAAAHABAAAAABAAIAAAAIABAAAAABAAIAAAAJABAAAAABAAIAAAAKABAAAAABAAIAAAALABAAAAABAAIAAAAMABAAAAABAAIAAAANABAAAAABAAIAAAAOABAAAAABAAIAAAAPABAAAAABAAIAAAAQABAAAAABAAIAAAARABAAAAABAAIAAAASABAAAAABAAIAAAATABAAAAABAAIAAAAUABAAAAABAAIAAAAFAA0AAAABAAAAAAATAAwADQAAAAAAAAASAAwADQAAAAAAAAARAAwADQAAAAAAAAALAAIABgAAAAAAAAANAAwABQAAAAAAAAAAAAEABgAAAAAAAAARAAcABgAAAAAAAAASAAEABgAAAAAAAAAEAAUABgAAAAAAAAAVABAAAAACAAIAAAAVAA8AAAACAAEAAAAVAA4AAAACAAEAAAAVAA0AAAACAAAAAAAWAAwAAAADAAIAAAAWAAsAAAADAAEAAAAWAAoAAAADAAEAAAAWAAkAAAADAAEAAAAWAAgAAAADAAAAAAAPAAsACwAAAAAAAAALAAoADAAAAAAAAAAQAAwADQAAAAAAAAA=")
+tile_set = ExtResource("7_5n5py")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 0)
+rotation = 1.5708
+scale = Vector2(1, 640)
+texture = SubResource("GradientTexture1D_0e3oq")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="HUD" parent="." instance=ExtResource("8_v2ma4")]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 4
+position = Vector2(176, 448)
+texture = ExtResource("9_dmrdq")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="CastleEndMarker" type="Marker2D" parent="."]
+position = Vector2(173, 416)

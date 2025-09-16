@@ -1,4 +1,6 @@
 extends StaticBody2D
+## DEPRECATED: use the ice physics node modifier instead.
+
 ## Make a new StaticBody2D, attach this script, and add collision shapes to have the player
 ## slide on it, like on ice. Put in place of the ground.
 

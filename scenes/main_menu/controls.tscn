@@ -1,32 +1,47 @@
-[gd_scene load_steps=37 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene load_steps=40 format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
+[ext_resource type="Script" uid="uid://dwy0ri4q1seia" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
 [ext_resource type="Texture2D" uid="uid://ibc6xo4a3k4v" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
 [ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_selection.gd" id="5_8vmlu"]
 [ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
-[ext_resource type="FontVariation" uid="uid://ck8wxartix8w1" path="res://engine/fonts/font_variations/smb_variation.tres" id="7_rg6dg"]
-[ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/selector.png" id="8_ruh0b"]
-[ext_resource type="Script" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
-[ext_resource type="Script" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
+[ext_resource type="Script" uid="uid://y7hc1q4jsyki" path="res://engine/scenes/main_menu/scripts/controls_device_selection.gd" id="6_eh53w"]
+[ext_resource type="Texture2D" uid="uid://mf8lpy2j8u6k" path="res://engine/scenes/main_menu/textures/device_selector.png" id="7_3opa8"]
+[ext_resource type="PackedScene" uid="uid://cbeoj4aqamscv" path="res://engine/scenes/main_menu/prefabs/control_selection.tscn" id="8_lqhon"]
+[ext_resource type="Script" uid="uid://cu66l6h2ygq6b" path="res://engine/scenes/main_menu/scripts/controls_back_selection.gd" id="9_k7p48"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="9_vidpf"]
+[ext_resource type="Script" uid="uid://cka8107qxtwxm" path="res://engine/scenes/main_menu/scripts/controls_reset_selection.gd" id="11_atcop"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="13_pkdou"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="14_sobst"]
+[ext_resource type="Script" uid="uid://b818goauw303j" path="res://engine/scenes/main_menu/scripts/opt_camera_2d.gd" id="15_k5vhu"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="16_jvgix"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kw8g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5kct"]
+atlas = ExtResource("7_3opa8")
+region = Rect2(0, 0, 90, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rvpt"]
+atlas = ExtResource("7_3opa8")
+region = Rect2(0, 60, 141, 30)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_un3r3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0sbi"]
 atlas = ExtResource("6_3wm1w")
-region = Rect2(0, 15, 141, 30)
+region = Rect2(2, 16, 140, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgyhc"]
 atlas = ExtResource("6_3wm1w")
-region = Rect2(0, 63.73, 188.925, 30)
+region = Rect2(2, 64, 188, 28)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2fp7r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6n7w"]
 atlas = ExtResource("6_3wm1w")
-region = Rect2(0, 111.395, 165.02, 30)
+region = Rect2(2, 112, 164, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7oykq"]
 atlas = ExtResource("6_3wm1w")
-region = Rect2(2, 161, 174.935, 25)
+region = Rect2(2, 160, 174, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fn4x"]
 atlas = ExtResource("6_3wm1w")
@@ -38,23 +53,51 @@ region = Rect2(1, 256, 52, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhbv2"]
 atlas = ExtResource("6_3wm1w")
-region = Rect2(125, 256, 56.715, 26)
+region = Rect2(125, 255, 56, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g7i5"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(298, 168, 82, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_shng1"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 305, 81, 25)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_un3r3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r57ce"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 0, 112, 28)
 
-[sub_resource type="GDScript" id="GDScript_ilvph"]
-script/source = "extends MenuSelection
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgl6w"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 28, 160, 28)
 
-func _handle_select() -> void:
-	super()
-	
-	SettingsManager.settings.controls = SettingsManager.default_settings.controls.duplicate(true)
-	SettingsManager._load_keys()
-"
+[sub_resource type="AtlasTexture" id="AtlasTexture_vatc2"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 56, 136, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqit6"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 84, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xxk6"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 112, 180, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fghq0"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 140, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2yo6"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 168, 160, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ek72"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 224, 160, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8dsj"]
+atlas = ExtResource("6_3wm1w")
+region = Rect2(220, 196, 152, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rt438"]
 atlas = ExtResource("6_3wm1w")
@@ -63,101 +106,6 @@ region = Rect2(1, 368, 217.245, 26)
 [sub_resource type="AtlasTexture" id="AtlasTexture_p4gfi"]
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 417, 67, 25)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lsnuv"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vq72u"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ceg4y"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3l365"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vjno"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p4p38"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vmyvm"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(192, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cmhu3"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kcft"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(256, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5s4l"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(288, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2lhkc"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(320, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1wal"]
-atlas = ExtResource("8_ruh0b")
-region = Rect2(352, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t63jw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vq72u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ceg4y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3l365")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6vjno")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p4p38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vmyvm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cmhu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kcft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5s4l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2lhkc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1wal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lsnuv")
-}],
-"loop": false,
-"name": &"default",
-"speed": 20.0
-}]
 
 [node name="Controls" type="Control"]
 layout_mode = 3
@@ -171,6 +119,7 @@ offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i03yo")
+metadata/_edit_lock_ = true
 
 [node name="Bg" type="TextureRect" parent="."]
 z_index = -5
@@ -183,6 +132,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_8e324")
 flip_h = true
+metadata/_edit_lock_ = true
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 1
@@ -192,251 +142,226 @@ offset_right = 129.0
 offset_bottom = 142.0
 texture = ExtResource("2_je4c7")
 
-[node name="Options" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 11
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 480.0
+metadata/_edit_lock_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -444.0
-offset_top = 14.0
-offset_right = -59.0
-offset_bottom = -30.0
+offset_left = -456.0
+offset_top = 16.0
+offset_right = -64.0
+offset_bottom = 880.0
 grow_horizontal = 0
-grow_vertical = 2
 script = ExtResource("3_0brmq")
 focused = false
 control_sound = ExtResource("4_t3dkp")
 prev_screen_node_path = NodePath("Back")
 
-[node name="MovingUp" type="HBoxContainer" parent="Options"]
+[node name="Device" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_up"
+script = ExtResource("6_eh53w")
 
-[node name="Text" type="TextureRect" parent="Options/MovingUp"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_3kw8g")
+texture = SubResource("AtlasTexture_q5kct")
 stretch_mode = 2
 
-[node name="Value" type="Label" parent="Options/MovingUp"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device"]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="MovingDown" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_down"
-
-[node name="Text" type="TextureRect" parent="Options/MovingDown"]
-layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_kgyhc")
+texture = SubResource("AtlasTexture_6rvpt")
 stretch_mode = 2
 
-[node name="Value" type="Label" parent="Options/MovingDown"]
+[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
 layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="MovingLeft" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_left"
-
-[node name="Text" type="TextureRect" parent="Options/MovingLeft"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_2fp7r")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingLeft"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="MovingRight" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_right"
-
-[node name="Text" type="TextureRect" parent="Options/MovingRight"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_7oykq")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/MovingRight"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Jump" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_jump"
-
-[node name="Text" type="TextureRect" parent="Options/Jump"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_0fn4x")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Jump"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Fire" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_attack"
-
-[node name="Text" type="TextureRect" parent="Options/Fire"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ne13l")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Fire"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Run" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "m_run"
-
-[node name="Text" type="TextureRect" parent="Options/Run"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_bhbv2")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Run"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="Pause" type="HBoxContainer" parent="Options"]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-size_flags_vertical = 6
-script = ExtResource("5_8vmlu")
-action_name = "pause_toggle"
-enable_cancel = false
-
-[node name="Text" type="TextureRect" parent="Options/Pause"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_shng1")
-stretch_mode = 2
-
-[node name="Value" type="Label" parent="Options/Pause"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 0.784314)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("7_rg6dg")
-theme_override_font_sizes/font_size = 28
-text = "value"
-uppercase = true
-
-[node name="HSeparator" type="HSeparator" parent="Options"]
-layout_mode = 2
-theme_override_constants/separation = 36
+theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
-[node name="ResetControls" type="HBoxContainer" parent="Options"]
+[node name="MovingUp" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_up"
+displayed_texture = SubResource("AtlasTexture_g0sbi")
+
+[node name="MovingDown" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_down"
+displayed_texture = SubResource("AtlasTexture_kgyhc")
+
+[node name="MovingLeft" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_left"
+displayed_texture = SubResource("AtlasTexture_i6n7w")
+
+[node name="MovingRight" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_right"
+displayed_texture = SubResource("AtlasTexture_7oykq")
+
+[node name="Jump" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_jump"
+displayed_texture = SubResource("AtlasTexture_0fn4x")
+
+[node name="Fire" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_attack"
+displayed_texture = SubResource("AtlasTexture_ne13l")
+
+[node name="Run" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_run"
+displayed_texture = SubResource("AtlasTexture_bhbv2")
+
+[node name="Extra" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "m_extra"
+displayed_texture = SubResource("AtlasTexture_0g7i5")
+
+[node name="Pause" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "pause_toggle"
+enable_cancel = false
+displayed_texture = SubResource("AtlasTexture_shng1")
+conflict_list = Array[NodePath]([NodePath("../UiAccept")])
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
+
+[node name="UiUp" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_up"
+displayed_texture = SubResource("AtlasTexture_r57ce")
+conflict_list = Array[NodePath]([NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
+
+[node name="UiDown" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_down"
+displayed_texture = SubResource("AtlasTexture_dgl6w")
+conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiLeft"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
+
+[node name="UiLeft" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_left"
+displayed_texture = SubResource("AtlasTexture_vatc2")
+conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
+
+[node name="UiRight" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_right"
+displayed_texture = SubResource("AtlasTexture_xqit6")
+conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiLeft"), NodePath("../UiDown"), NodePath("../UiAccept"), NodePath("../UiSelect")])
+
+[node name="UiAccept" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_accept"
+displayed_texture = SubResource("AtlasTexture_7xxk6")
+conflict_list = Array[NodePath]([NodePath("../UiCancel"), NodePath("../UiSelect"), NodePath("../Pause"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
+
+[node name="UiCancel" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_cancel"
+enable_cancel = false
+displayed_texture = SubResource("AtlasTexture_fghq0")
+conflict_list = Array[NodePath]([NodePath("../UiAccept"), NodePath("../UiSelect"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
+
+[node name="UiSelect" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "ui_select"
+displayed_texture = SubResource("AtlasTexture_y2yo6")
+conflict_list = Array[NodePath]([NodePath("../UiAccept"), NodePath("../UiCancel"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
+
+[node name="ATab" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "a_tab"
+displayed_texture = SubResource("AtlasTexture_8ek72")
+
+[node name="ADelete" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+layout_mode = 2
+action_name = "a_delete"
+displayed_texture = SubResource("AtlasTexture_y8dsj")
+
+[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
+
+[node name="ResetControls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
-script = SubResource("GDScript_ilvph")
+script = ExtResource("11_atcop")
 
-[node name="Text" type="TextureRect" parent="Options/ResetControls"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/ResetControls"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_rt438")
 stretch_mode = 2
 
-[node name="Back" type="HBoxContainer" parent="Options"]
+[node name="Back" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("9_k7p48")
 
-[node name="Text" type="TextureRect" parent="Options/Back"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Back"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_p4gfi")
 stretch_mode = 2
 
-[node name="Selector" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_t63jw")
+[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
 script = ExtResource("9_vidpf")
 smooth_speed = 0.4
 position_padding = 16
 
-[connection signal="selected" from="Options" to="Selector" method="handle_selection"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector"]
+sprite_frames = ExtResource("13_pkdou")
+script = ExtResource("14_sobst")
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+physics_interpolation_mode = 1
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 896
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+editor_draw_screen = false
+script = ExtResource("15_k5vhu")
+
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("16_jvgix")
+menu_items_controller_path = NodePath("../Options")
+modulate_division = 4.5
+modulate_offset = 0.82
+modulate_first_child = true
+
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]

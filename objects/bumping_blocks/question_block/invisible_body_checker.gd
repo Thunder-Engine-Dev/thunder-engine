@@ -17,10 +17,10 @@ func _ready() -> void:
 	)
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if !_active: return
 	if parent._triggered: return
-	if by is Player: return
+	if by_player: return
 	
 	parent.call_bump()
 	

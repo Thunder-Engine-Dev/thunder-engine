@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://2yepdgrhpmj3"]
+[gd_scene load_steps=5 format=3 uid="uid://2yepdgrhpmj3"]
 
-[ext_resource type="Script" path="res://engine/objects/bumping_blocks/brick/brick.gd" id="1_5y3xv"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="2_dbavp"]
+[ext_resource type="Script" uid="uid://l2v7fiuurrhn" path="res://engine/objects/bumping_blocks/brick/brick.gd" id="1_5y3xv"]
 [ext_resource type="SpriteFrames" uid="uid://bkrdwg2xxodgg" path="res://engine/objects/bumping_blocks/brick/brick.tres" id="2_p1ujx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x2nd"]
@@ -12,6 +11,7 @@ cull_mode = 1
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [node name="Brick" type="AnimatableBody2D" groups=["brick"]]
+disable_mode = 1
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_5y3xv")
@@ -19,12 +19,6 @@ script = ExtResource("1_5y3xv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("RectangleShape2D_2x2nd")
-
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-rect = Rect2(-128, -64, 256, 128)
-script = ExtResource("2_dbavp")
-metadata/_edit_lock_ = true
 
 [node name="Sprites" type="Node2D" parent="."]
 process_mode = 1
@@ -34,3 +28,14 @@ occluder = SubResource("OccluderPolygon2D_xwmjy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
 sprite_frames = ExtResource("2_p1ujx")
+
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
+position = Vector2(8, 8)
+scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-16, -16, 32, 32)
+metadata/_edit_lock_ = true

@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Node2D
 
 @export var velocity: Vector2
 @export var fall_speed: float = 0.4
@@ -18,4 +18,6 @@ func _physics_process(_delta: float) -> void:
 	global_position += velocity * delta
 	velocity.y += fall_speed * delta
 	rotation_degrees += rotation_speed * delta * (1 if velocity.x > 0 else -1)
-	flip_h = velocity.x < 0
+	
+	if get(&"flip_h") is bool:
+		set(&"flip_h", velocity.x < 0)

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dpef5gdwicyhf"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/hammer/hammer.gd" id="1_iv3kc"]
+[ext_resource type="Script" uid="uid://c0bfh8mobga1r" path="res://engine/objects/projectiles/hammer/hammer.gd" id="1_iv3kc"]
 [ext_resource type="Texture2D" uid="uid://due4j0nsyud25" path="res://engine/objects/projectiles/hammer/texture.png" id="2_gucbo"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_05jam"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_05jam"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0

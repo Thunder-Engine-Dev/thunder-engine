@@ -1,0 +1,161 @@
+[gd_scene load_steps=22 format=3 uid="uid://b4bjvmqtj8nv0"]
+
+[ext_resource type="Script" uid="uid://e6tybhk6h4lg" path="res://engine/objects/enemies/dry_bones/dry_bones.gd" id="1_gjuwm"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_sb3ce"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_m14to"]
+[ext_resource type="AudioStream" uid="uid://ctfpepe74akjs" path="res://engine/objects/bumping_blocks/_sounds/break.wav" id="4_45lk6"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_tdmyt"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_hsdxt"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_keh7h"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_6dd26"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_vk5nm"]
+[ext_resource type="Texture2D" uid="uid://b2rda0o76djx7" path="res://engine/objects/enemies/dry_bones/textures/dry_bones_crash.png" id="10_yrk1c"]
+[ext_resource type="Texture2D" uid="uid://df7awin576fr5" path="res://engine/objects/enemies/dry_bones/textures/dry_bones.png" id="11_mnn21"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="12_mxggl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhh31"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_soxuf"]
+resource_local_to_scene = true
+script = ExtResource("5_tdmyt")
+creation_nodepack = ExtResource("7_hsdxt")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite/Dead"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("8_keh7h")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0myh"]
+atlas = ExtResource("10_yrk1c")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyiu5"]
+atlas = ExtResource("10_yrk1c")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6figs"]
+atlas = ExtResource("11_mnn21")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fgt3"]
+atlas = ExtResource("11_mnn21")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o8kx3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0myh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyiu5")
+}],
+"loop": false,
+"name": &"crash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6figs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fgt3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0tgr"]
+atlas = ExtResource("10_yrk1c")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ohwj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0tgr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="DryBones" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_gjuwm")
+look_at_player = true
+sprite = NodePath("Sprite")
+speed = Vector2(50, 0)
+gravity_scale = 0.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_lhh31")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_sb3ce")
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("RectangleShape2D_lhh31")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_m14to")
+stomping_creation = null
+stomping_scores = 0
+stomping_sound = ExtResource("4_45lk6")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": true,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_soxuf")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("9_vk5nm")
+killing_sound_failed = ExtResource("9_6dd26")
+metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_o8kx3")
+autoplay = "default"
+
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+visible = false
+position = Vector2(0, 8)
+sprite_frames = SubResource("SpriteFrames_ohwj0")
+offset = Vector2(0, 16)
+flip_v = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("12_mxggl")
+metadata/_edit_lock_ = true
+
+[connection signal="collided_wall" from="." to="." method="turn_x"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="stomp"]

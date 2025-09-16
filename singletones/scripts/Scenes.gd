@@ -17,6 +17,9 @@ signal pre_scene_changed
 ## Emitted when the current scene is ready
 signal scene_ready
 
+## Emitted when loading the scene failed
+signal scene_change_failed
+
 const LOADING_SCREEN = preload("res://engine/components/loading_screen/loading_screen.tscn")
 
 # Loaded scene buffer for optimization purpose
@@ -47,6 +50,10 @@ func load_scene_deferred(scene: Node) -> void:
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.unpause_igt()
+	Thunder.autosplitter.il_internal = 0
+	Thunder.autosplitter.update_il_counter()
 	scene_ready.emit()
 
 
@@ -54,19 +61,30 @@ func load_scene_deferred(scene: Node) -> void:
 ## Use with call_deferred
 func load_scene_from_packed(pck: PackedScene) -> void:
 	if !pck: return
+	if !pck.can_instantiate():
+		scene_change_failed.emit()
+		return
 	previous_scene_name = current_scene.name
 	previous_scene_path = current_scene.scene_file_path
 	current_scene.free()
 	var scene: Node = pck.instantiate()
+	
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
 	scene_changed.emit(current_scene)
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.unpause_igt()
+	Thunder.autosplitter.il_internal = 0
+	Thunder.autosplitter.update_il_counter()
 	scene_ready.emit()
+	get_tree().paused = false
 
 
 ## Loads the scene from the given path and instantiates it
 func goto_scene(path: String) -> void:
 	pre_scene_changed.emit()
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.pause_igt()
 	if !_current_scene_buffer || _current_scene_buffer.resource_path != path:
 		_current_scene_buffer = load(path)
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
@@ -77,6 +95,8 @@ func goto_scene_with_loading(path: String) -> void:
 		reload_current_scene()
 		return
 	pre_scene_changed.emit()
+	if Thunder.autosplitter.get_conf("pause_on_loading"):
+		Thunder.autosplitter.pause_igt()
 	var loading: Control = LOADING_SCREEN.instantiate()
 	loading.scene = path
 	load_scene_deferred.call_deferred(loading)
@@ -87,3 +107,9 @@ func reload_current_scene() -> void:
 	scene_reloaded.emit()
 	pre_scene_changed.emit()
 	goto_scene(current_scene.scene_file_path)
+
+
+func get_scene_path(scene_path_or_uid: String) -> String:
+	if ResourceUID.has_id(ResourceUID.text_to_id(scene_path_or_uid)):
+		return ResourceUID.get_id_path(ResourceUID.text_to_id(scene_path_or_uid))
+	return scene_path_or_uid

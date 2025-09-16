@@ -77,8 +77,8 @@ func reload_binds() -> void:
 
 func _physics_process(delta):
 	if !Input.is_anything_pressed(): return
-	if Console.visible: return
-	if OS.has_feature("template") && !SettingsManager.get_tweak("console_enabled", false): return
+	if Console.has_focus(): return
+	if !Console.debug_mode && !SettingsManager.get_tweak("console_enabled", false): return
 	
 	var actions: Array[StringName] = InputMap.get_actions()
 	for k in actions:

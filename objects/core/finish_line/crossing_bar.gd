@@ -12,7 +12,7 @@ func _physics_process(delta) -> void:
 	var player: Player = Thunder._current_player
 	if !player: return
 	if overlaps_body(player) && animation_player.is_playing():
-		Scenes.current_scene.finish(true)
+		Scenes.current_scene.finish(true, finish_line.direction_to_complete)
 		finish_line.triggered = true
 		_add_score()
 		_create_checker_bar()
@@ -36,10 +36,10 @@ func _add_score() -> void:
 		else:
 			given_score = 200
 		
-		Data.values.score += given_score
+		Data.add_score(given_score)
 		ScoreText.new(str(given_score), score_text_marker)
 	else:
-		Data.values.score += finish_line.override_score_value
+		Data.add_score(finish_line.override_score_value)
 		ScoreText.new(str(finish_line.override_score_value), score_text_marker)
 
 func _create_checker_bar() -> void:

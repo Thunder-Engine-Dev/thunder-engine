@@ -69,4 +69,4 @@ func _explosion() -> void:
 	Scenes.current_scene.add_child(expl)
 	expl.global_transform = global_transform
 	expl.position.y += 16
-		
+	expl.reset_physics_interpolation()

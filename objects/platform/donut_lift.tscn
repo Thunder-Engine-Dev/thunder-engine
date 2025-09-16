@@ -1,25 +1,25 @@
 [gd_scene load_steps=8 format=3 uid="uid://h3wdek115xb4"]
 
-[ext_resource type="Script" path="res://engine/objects/platform/donut_lift.gd" id="1_1ug7h"]
-[ext_resource type="Texture2D" uid="uid://yvn3a727bofo" path="res://engine/objects/platform/donut_lift.png" id="1_bisko"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="3_qomtk"]
+[ext_resource type="Script" uid="uid://g4e5yxw7px7v" path="res://engine/objects/platform/donut_lift.gd" id="1_1ug7h"]
+[ext_resource type="Texture2D" uid="uid://cn666uavphid1" path="res://engine/objects/platform/donut_lift.png" id="1_bisko"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="3_qomtk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkmyh"]
-size = Vector2(32, 4)
+size = Vector2(32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p634n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5r23l"]
 atlas = ExtResource("1_bisko")
-region = Rect2(0, 0, 32, 31)
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hxcay"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5ccm"]
 atlas = ExtResource("1_bisko")
-region = Rect2(32, 0, 32, 31)
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0r811"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p634n")
+"texture": SubResource("AtlasTexture_5r23l")
 }],
 "loop": true,
 "name": &"default",
@@ -27,7 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hxcay")
+"texture": SubResource("AtlasTexture_p5ccm")
 }],
 "loop": true,
 "name": &"trigger",
@@ -40,10 +40,8 @@ script = ExtResource("1_1ug7h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_bkmyh")
 one_way_collision = true
-one_way_collision_margin = 4.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0r811")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://bbtuamjgwibn4"]
 
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="1_85vcf"]
-[ext_resource type="Script" path="res://engine/objects/effects/bubble/bubble.gd" id="1_olsh5"]
+[ext_resource type="Script" uid="uid://ubhclqs05h0n" path="res://engine/objects/effects/bubble/bubble.gd" id="1_olsh5"]
 [ext_resource type="Texture2D" uid="uid://b6gn7x4nw086c" path="res://engine/objects/effects/bubble/bubble_cracked.png" id="2_oobr2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w42c2"]

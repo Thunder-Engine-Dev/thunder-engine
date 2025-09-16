@@ -32,4 +32,3 @@ func install_shape_for_caster(caster: ShapeCast2D) -> void:
 
 func is_shape_equal(collision_shape: CollisionShape2D) -> bool:
 	return shape && collision_shape.shape == shape
-

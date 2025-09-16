@@ -3,6 +3,10 @@
 extends AnimatableBody2D
 class_name StaticBumpingBlock
 
+const DEFAULT_APPEAR = preload("res://engine/objects/bumping_blocks/_sounds/appear.wav")
+const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+const DEFAULT_BREAK = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
+
 ## Base class for blocks that can be bumped by players and enemies[br]
 ## Generally, bricks, question blocks, message blocks, etc. all belong to the class
 
@@ -21,16 +25,17 @@ var _triggered: bool = false
 ## The sound when the block spawns an item
 @export var appear_sound: AudioStream = null
 ## The sound when the block gets bumped
-@export var bump_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
+@export var bump_sound: AudioStream = DEFAULT_BUMP
 ## The sound when the block breaks (if possible)
-@export var break_sound: AudioStream = preload("res://engine/objects/bumping_blocks/_sounds/break.wav")
+@export var break_sound: AudioStream = DEFAULT_BREAK
 
 @export_group("Block Visibility")
 ## Is initially visible and solid
 @export var initially_visible_and_solid: bool = true:
 	set(to):
 		initially_visible_and_solid = to
-		if !Engine.is_editor_hint(): return
+		if !Engine.is_editor_hint() && !Console.cv.item_display_shown:
+			return
 		if !initially_visible_and_solid:
 			$Sprites.modulate.a = 0.25
 		else:
@@ -52,6 +57,8 @@ var _ignore_colliding_body_correction: bool = false
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var _sprites: Node2D = $Sprites
 @onready var _animated_sprite_2d: AnimatedSprite2D = $Sprites/AnimatedSprite2D
+
+@onready var _old_bump_sfx = bump_sound
 
 ## Emitted when getting bumped
 signal bumped
@@ -76,6 +83,13 @@ func _ready() -> void:
 			_collision_shape_2d.set_deferred(&"disabled", true)
 		_ignore_colliding_body_correction = !initially_visible_and_solid
 		_sprites.visible = initially_visible_and_solid
+		if Console.cv.item_display_shown:
+			_sprites.visible = true
+		
+		if appear_sound && appear_sound == DEFAULT_APPEAR:
+			appear_sound = CharacterManager.get_sound_replace(appear_sound, DEFAULT_APPEAR, "block_appear", false)
+		bump_sound = CharacterManager.get_sound_replace(bump_sound, DEFAULT_BUMP, "block_bump", false)
+		break_sound = CharacterManager.get_sound_replace(break_sound, DEFAULT_BREAK, "block_break", false)
 
 
 func _physics_process(delta) -> void:
@@ -96,6 +110,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if !active: return
 	
 	_sprites.visible = true
+	if Console.cv.item_display_shown:
+		_sprites.modulate.a = 1
 	_ignore_colliding_body_correction = false
 	if !initially_visible_and_solid:
 		collision_layer = collision_layer_ori
@@ -108,7 +124,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 	if is_instance_valid(current_tw):
 		current_tw.kill()
 	
-	current_tw = get_tree().create_tween()#.set_trans(Tween.TRANS_SINE)
+	current_tw = get_tree().create_tween().set_trans(Tween.TRANS_SINE)
 	current_tw.tween_property(_animated_sprite_2d, "position", Vector2(0, -8).rotated(deg_to_rad(bump_rotation)), 0.12).set_ease(Tween.EASE_OUT)
 	current_tw.tween_property(_animated_sprite_2d, "position", Vector2.ZERO, 0.12).set_ease(Tween.EASE_IN)
 	current_tw.tween_callback(_lt.bind(disable))
@@ -117,6 +133,7 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		call_deferred(&"_creation", result.prepare())
 		result_appeared.emit()
 	else:
+		#if !(CharacterManager.get_suit_tweak("head_bump_sound")):
 		Audio.play_sound(bump_sound, self)
 	
 	bumped.emit()
@@ -132,9 +149,10 @@ func _creation(creation: InstanceNode2D) -> void:
 	var created: Node2D = NodeCreator.prepare_ins_2d(creation, self) \
 		.execute_instance_script({}, &"_pre_ready").create_2d() \
 		.execute_instance_script({}, &"_after_ready").get_node()
-	if created && created.has_method(&"_from_bumping_block"): created._from_bumping_block()
-	
-	Thunder.reorder_on_top_of(created, self)
+	if created:
+		if created.has_method(&"_from_bumping_block"): created._from_bumping_block()
+		
+		Thunder.reorder_on_top_of(created, self)
 	
 	creation.set_meta(&"no_appearing", _no_result_appearing_animation)
 	

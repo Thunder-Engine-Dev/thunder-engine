@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://byfm436d1p7j8"]
+
+[ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_upfgi"]
+[ext_resource type="Texture2D" uid="uid://nwyeqno7oote" path="res://engine/tilesets/castle/gray_platform_tile.png" id="2_17ukk"]
+
+[node name="PlatformPathGray" instance=ExtResource("1_upfgi")]
+
+[node name="Sprite2D" parent="Block" index="1"]
+texture_repeat = 2
+texture = ExtResource("2_17ukk")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 16)

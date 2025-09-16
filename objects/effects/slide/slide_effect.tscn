@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bps24wsi31ird"]
 
-[ext_resource type="Texture2D" uid="uid://bmbmmatiqsyn8" path="res://gfx/deco/star.png" id="1_crevu"]
+[ext_resource type="Texture2D" uid="uid://bgiylpnmohi3f" path="res://engine/objects/effects/slide/texture/star.png" id="1_crevu"]
 [ext_resource type="Material" uid="uid://b0yh6ossriqe7" path="res://engine/objects/effects/slide/slide_effect.tres" id="1_u8j1r"]
 
 [node name="SlideEffect" type="GPUParticles2D"]
 amount = 16
-process_material = ExtResource("1_u8j1r")
 texture = ExtResource("1_crevu")
 lifetime = 0.25
+process_material = ExtResource("1_u8j1r")

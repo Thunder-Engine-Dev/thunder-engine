@@ -15,8 +15,9 @@ func _ready() -> void:
 	make_current()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	var camera = Thunder._current_camera
+	
 	Thunder.view.cam_border()
 	camera.make_current()
 	global_position = camera.get_screen_center_position()
@@ -48,6 +49,8 @@ func _physics_process(delta: float) -> void:
 	rect.size = Vector2i(camera.get_viewport_rect().size)
 	rect.position = Vector2i(camera.get_screen_center_position() - rect.size/2.0)
 	
+	Thunder.view._target_pos = rect.position
+	
 	limit_top = lerp(limits.position.y, rect.position.y, eased_counter)
 	limit_left = lerp(limits.position.x, rect.position.x, eased_counter)
 	limit_bottom = lerp(limits.end.y, rect.end.y, eased_counter)
@@ -58,5 +61,5 @@ func _physics_process(delta: float) -> void:
 	if counter == 1:
 		camera.make_current()
 		await get_tree().physics_frame
-		Scenes.current_scene.falling_below_y_offset /= 10
+		#Scenes.current_scene.falling_below_y_offset /= 10
 		queue_free()

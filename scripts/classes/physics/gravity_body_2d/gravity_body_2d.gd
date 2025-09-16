@@ -2,14 +2,20 @@
 extends CorrectedCharacterBody2D
 class_name GravityBody2D
 
-## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion[br]
+## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion.
+##
+##
 
 ## Default gravity acceleration
 const GRAVITY: float = 2500.0
 
 @export_group("Speed")
 ## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
-@export var speed: Vector2 # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
+@export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
+	set(value):
+		velocity = value.rotated(gravity_dir.angle() - PI/2)
+	get:
+		return velocity.rotated(-gravity_dir.angle() + PI/2)
 @export_group("Gravity")
 ## The gravity_direction of the body, with length always [code]1.0[/code][br]
 ## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
@@ -24,6 +30,9 @@ const GRAVITY: float = 2500.0
 ## Defines if the body enables collision. For those who don't need any collision, it's recommended to set this value to [code]false[/code]
 ## to acquire more performance
 @export var collision: bool = true
+@export_group("Up Direction")
+## If [code]true[/code], calling [method motion_process] will update [member CharacterBody2D.up_direction].
+@export var auto_update_up_direction: bool = true
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
@@ -56,12 +65,11 @@ func motion_process(delta: float, slide: bool = false) -> void:
 		speed.y = max_falling_speed
 		is_speed_capped = true
 	
-	update_up_direction()
+	if auto_update_up_direction:
+		update_up_direction()
 	
-	var rot: = get_global_gravity_dir().angle()
-	velocity = speed.rotated(rot - PI/2)
 	do_movement(delta, slide, false)
-	speed = velocity.rotated(-rot + PI/2)
+	
 	if !is_speed_capped:
 		speed += gravity * gravity_dir * delta * 0.5
 	
@@ -75,7 +83,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 ## [param delta] should be the one from [method Node._phyiscs_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
 ## [param emit_detection_signal] makes the body emit [b]collision*[b] signals if collision happens[br]
-func do_movement(delta: float, slide:bool = false, emit_detection_signal: bool = true) -> void:
+func do_movement(delta: float, slide: bool = false, emit_detection_signal: bool = true) -> void:
 	if velocity.is_equal_approx(Vector2.ZERO): return
 	
 	if !collision:
@@ -127,20 +135,24 @@ func accelerate_y(to: float, a: float) -> void:
 
 ## Reverse [member speed].x
 func turn_x() -> void:
-	if speed_previous.x == 0:
+	if is_zero_approx(speed_previous.x):
 		speed.x *= -1
 		return
 	speed_previous.x *= -1
 	speed.x = speed_previous.x
+	#if impulse_move_on_turn_x && !is_zero_approx(speed.x):
+	#	do_movement(get_physics_process_delta_time(), false, true)
 
 
 ## Reverse [member speed].y
 func turn_y() -> void:
-	if speed_previous.y == 0:
+	if is_zero_approx(speed_previous.y):
 		speed.y *= -1
 		return
 	speed_previous.y *= -1
 	speed.y = speed_previous.y
+	#if impulse_move_on_turn_y && !is_zero_approx(speed.y):
+	#	do_movement(get_physics_process_delta_time(), false, true)
 
 
 ## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always negative(upwards)
@@ -174,6 +186,14 @@ func stop_notify(wall_notify:bool = true, ceiling_notify:bool = true, floor_noti
 ## Get globalized [member gravity_dir], if [member gravity_dir_rotation] is [code]false[/code], the globalized one equals [member gravity_dir]
 func get_global_gravity_dir() -> Vector2:
 	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
+
+
+## -1 is Left, 1 is Right, 0 is None
+func get_which_wall_collided() -> int:
+	if !is_on_wall():
+		return 0
+	var _c: Vector2 = get_wall_normal()
+	return -sign(_c.x)
 
 
 # Updaters

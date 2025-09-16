@@ -6,3 +6,4 @@ func create() -> void:
 	var keyboard = KEYBOARD_EFFECT.instantiate()
 	Scenes.current_scene.add_child(keyboard)
 	keyboard.position = global_position
+	keyboard.reset_physics_interpolation()

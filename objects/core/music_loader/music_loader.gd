@@ -23,6 +23,7 @@ enum GLOBAL_TYPE {
 @export var play_immediately: bool = true
 @export var stop_all_music_on_start: bool = true
 @export var play_globally: GLOBAL_TYPE = GLOBAL_TYPE.NO
+@export var can_pause: bool = false
 @export var volume_db: Array[float]
 @export var start_from_sec: Array[float]
 @export_group(&"Custom Script")
@@ -71,7 +72,7 @@ func _change_music(ind: int, ch_id: int) -> void:
 		music[ind], 
 		ch_id, 
 		{
-			"ignore_pause": true, 
+			"ignore_pause": !can_pause, 
 			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
 			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
 		}
@@ -96,9 +97,9 @@ func pause_music(ind: int = index, ch_id: int = channel_id) -> void:
 	if !Audio._music_channels.has(ch_id) || !is_instance_valid(Audio._music_channels[ch_id]):
 		return
 	var music_player = Audio._music_channels[ch_id]
-	music_player.playing = false
-	if music_player.has_meta(&"openmpt"):
-		Audio._music_channels[ch_id].get_meta(&"openmpt").stop()
+	if music_player.process_mode != Node.ProcessMode.PROCESS_MODE_DISABLED:
+		music_player.set_meta("old_process_mode", music_player.process_mode)
+	music_player.process_mode = Node.ProcessMode.PROCESS_MODE_DISABLED
 	is_paused = true
 	music_paused.emit()
 
@@ -108,14 +109,7 @@ func unpause_music(ind: int = index, ch_id: int = channel_id) -> void:
 		return
 	var music_player = Audio._music_channels[ch_id]
 	index = ind
-	music_player.play()
-	if music_player.has_meta(&"openmpt"):
-		var openmpt: OpenMPT = Audio._music_channels[ch_id].get_meta(&"openmpt")
-		(func() -> void:
-			music_player.play()
-			openmpt.set_audio_generator_playback(music_player)
-			openmpt.start(true)
-		).call_deferred()
+	music_player.process_mode = music_player.get_meta("old_process_mode", 3)
 	is_paused = false
 	music_unpaused.emit()
 

@@ -2,12 +2,14 @@
 @tool
 extends Area2D
 
+const DEFAULT_WARP_SOUND = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+
 signal warp_ended
 
 @export_category("PipeOut")
 @export var warp_direction: Player.WarpDir = Player.WarpDir.UP
 @export var warping_speed: float = 50
-@export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/pipe.wav")
+@export var warping_sound: AudioStream = DEFAULT_WARP_SOUND
 @export var trigger_immediately: bool = false
 
 var player: Player
@@ -26,24 +28,27 @@ func _ready() -> void:
 	
 	if trigger_immediately && Data.values.checkpoint == -1:
 		player = Thunder._current_player
-		player_z_index = player.z_index
+		player_z_index = player.sprite_container.z_index
 		player.speed = Vector2.ZERO
-		pass_player(player)
+		player.warp = Player.Warp.OUT
+		pass_player.call_deferred(player)
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_label()
 		return
+	
 	if !is_instance_valid(player): return
 	
 	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
+	player.sync_position()
 	_tweak_process()
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
 		player.warp = Player.Warp.NONE
-		player.z_index = player_z_index
+		player.sprite_container.z_index = player_z_index
 		player = null
 		Thunder._current_hud.timer.paused = false
 		
@@ -53,11 +58,12 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _tweak_process() -> void:
 	if !warp_invisible_left_right: return
+	if !is_instance_valid(player.get("sprite")): return
 	
-	if warp_direction == Player.WarpDir.RIGHT && player.global_position.x > pos_player_invisible.global_position.x:
-		player.sprite.visible = true
-	elif warp_direction == Player.WarpDir.LEFT && player.global_position.x < pos_player_invisible.global_position.x:
-		player.sprite.visible = true
+	if warp_direction == Player.WarpDir.RIGHT:
+		player.sprite.visible = player.global_position.x > pos_player_invisible.global_position.x
+	elif warp_direction == Player.WarpDir.LEFT:
+		player.sprite.visible = player.global_position.x < pos_player_invisible.global_position.x
 	elif warp_direction == Player.WarpDir.UP || warp_direction == Player.WarpDir.DOWN:
 		player.sprite.visible = true
 
@@ -68,7 +74,7 @@ func pass_player(new_player: Player) -> void:
 	player = new_player
 	
 	# Recover z_index if called directly
-	player_z_index = player.z_index
+	player_z_index = player.sprite_container.z_index
 	
 	var player_warp_dir: Player.WarpDir
 	
@@ -80,20 +86,27 @@ func pass_player(new_player: Player) -> void:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.x)
 			player_warp_dir = Player.WarpDir.LEFT
 		Player.WarpDir.DOWN:
-			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y - (player.collision_shape.shape as RectangleShape2D).size.y + 20)
+			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y) #- (player.collision_shape.shape as RectangleShape2D).size.y + 20)
 			player_warp_dir = Player.WarpDir.UP
 		Player.WarpDir.UP:
 			pos_player.position = Vector2(0, (shape.shape as RectangleShape2D).size.y + 8)
 			player_warp_dir = Player.WarpDir.DOWN
 	
 	player.global_position = pos_player.global_position
+	player.reset_physics_interpolation()
+	var cam: PlayerCamera2D = Thunder._current_camera
+	if cam:
+		cam.teleport(true, true)
+		
+	
 	player.warp_dir = player_warp_dir
-	player.z_index = -5
+	player.sprite_container.z_index = -5
 	player.warp = Player.Warp.OUT
 	
-	await get_tree().process_frame
-	await get_tree().process_frame
-	Audio.play_sound(warping_sound, self, false)
+	await get_tree().physics_frame
+	var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_out", true)
+	Audio.play_sound(_custom_sound, self, false)
+	#await get_tree().physics_frame
 
 
 func _label() -> void:

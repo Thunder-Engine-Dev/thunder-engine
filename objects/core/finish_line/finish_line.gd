@@ -5,7 +5,6 @@ extends Node2D
 @export_enum("Left: -1", "Right: 1") var direction_to_complete: int = 1
 @export var use_strict_detection_area: bool
 @export var strict_completion_area_path: NodePath = ^"CompletionArea"
-@export var player_walking_speed: float = 125
 @export var override_score: bool = false
 @export var override_score_value: int = 0
 
@@ -17,6 +16,7 @@ var triggered: bool = false
 
 func _physics_process(_delta: float) -> void:
 	if triggered: return
+	if !detect_by_position: return
 	
 	var player = Thunder._current_player
 	if !player: return
@@ -33,8 +33,8 @@ func _physics_process(_delta: float) -> void:
 		triggered = true
 		animation_player.stop(true)
 		if !override_score:
-			Data.values.score += 100
+			Data.add_score(100)
 			ScoreText.new("100", score_text_marker)
 		else:
-			Data.values.score += override_score_value
+			Data.add_score(override_score_value)
 			ScoreText.new(str(override_score_value), score_text_marker)

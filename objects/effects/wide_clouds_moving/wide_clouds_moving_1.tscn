@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://tvpkp8wgnf5t"]
+
+[ext_resource type="Texture2D" uid="uid://b5qvo4xgdxnrv" path="res://engine/objects/effects/wide_clouds_moving/texture.png" id="1_hm7rt"]
+[ext_resource type="Script" uid="uid://cg3pyfbjfcydc" path="res://engine/objects/effects/wide_clouds_moving/wide_clouds_moving.gd" id="2_xlkdm"]
+[ext_resource type="Texture2D" uid="uid://dboyy56p5qal4" path="res://engine/objects/effects/wide_clouds_moving/texture_alpha.png" id="3_00eol"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="4_lig0l"]
+
+[node name="WideCloudsMoving1" type="Sprite2D"]
+texture_repeat = 2
+texture = ExtResource("1_hm7rt")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 64)
+script = ExtResource("2_xlkdm")
+
+[node name="TextureAlpha" type="Sprite2D" parent="."]
+position = Vector2(0, 32)
+texture = ExtResource("3_00eol")
+region_enabled = true
+region_rect = Rect2(0, 0, 784, 32)
+script = ExtResource("4_lig0l")

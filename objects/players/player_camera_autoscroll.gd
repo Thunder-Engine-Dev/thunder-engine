@@ -4,10 +4,11 @@ extends PathFollow2D
 @export var tank_autoscroll: bool = false
 @export var stop_on_death: bool = false
 @export var stop_speed: float = 4
+@export var extra_player_air_motion: Vector2
 
 var _stopped: bool
 
-@onready var player = Thunder._current_player
+@onready var player := Thunder._current_player
 
 signal scroll_stopped
 
@@ -18,13 +19,14 @@ func _physics_process(delta: float) -> void:
 	var delta_pos = next_pos - prev_pos
 	
 	if tank_autoscroll && is_instance_valid(player) && !player.is_on_floor():
-		player.global_position += delta_pos
+		player.global_position += delta_pos + (extra_player_air_motion * delta)
 	
 	if stop_on_death && !is_instance_valid(player):
 		speed = lerpf(speed, 0, stop_speed * delta)
 	
 	if progress_ratio == 1.0 && !_stopped:
 		_stopped = true
+		extra_player_air_motion = Vector2.ZERO
 		scroll_stopped.emit()
 
 

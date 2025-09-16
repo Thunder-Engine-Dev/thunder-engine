@@ -2,7 +2,7 @@ extends Node
 
 const BUBBLES = preload("res://engine/objects/enemies/human_lab/container/sfx/bubbles.ogg")
 @onready var area: Area2D = $".."
-var delay: float = 2
+var delay: float = 1.9
 
 func _physics_process(delta: float) -> void:
 	delay += delta / max(0.01, Engine.time_scale)

@@ -3,6 +3,7 @@ extends Area2D
 @export_category("Enemy's Body Collision")
 @export var solid: bool = true
 @export var turn_back: bool = true
+@export var enable_offscreen: bool = true
 
 var _prev_collided_areas = {}
 
@@ -16,6 +17,9 @@ func _ready() -> void:
 			
 			_prev_collided_areas[area.get_instance_id()] = 0
 	)
+	
+	if enable_offscreen:
+		process_mode = PROCESS_MODE_ALWAYS
 
 
 func _physics_process(delta: float) -> void:

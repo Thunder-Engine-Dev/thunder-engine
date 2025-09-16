@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co8hjvqkkj57x"]
+
+[ext_resource type="PackedScene" uid="uid://o3k018cbex8g" path="res://engine/objects/powerups/green_lui/green_lui.tscn" id="1_as57m"]
+
+[node name="GreenLuiForced" instance=ExtResource("1_as57m")]
+force_powerup_state = true

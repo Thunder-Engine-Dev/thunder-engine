@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ddl8refhx7slj"]
 
-[ext_resource type="Script" path="res://engine/objects/projectiles/flameball/flameball.gd" id="1_llrrp"]
+[ext_resource type="Script" uid="uid://bu5bva32jwqcb" path="res://engine/objects/projectiles/flameball/flameball.gd" id="1_llrrp"]
 [ext_resource type="Texture2D" uid="uid://c5psoqn3vq5sr" path="res://engine/objects/projectiles/flameball/flameball.png" id="2_kcu3t"]
-[ext_resource type="Script" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_vvj6o"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_vvj6o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 12.0
@@ -35,6 +35,7 @@ is_reflectable = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-12, -12, 24, 24)
 metadata/_edit_lock_ = true
 
 [connection signal="damaged_player" from="Attack" to="." method="explode"]

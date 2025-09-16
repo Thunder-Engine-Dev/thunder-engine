@@ -11,11 +11,19 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if !player || !resource || player.is_crouching || \
-	player.warp > Player.Warp.NONE || player.is_climbing || \
+	player.warp > Player.Warp.NONE || \
 	player.completed: return
-	var bulls: StringName = StringName("bul" + resource.resource_name)
-	var bull_count: int = player.get_tree().get_nodes_in_group(bulls).size()
-	if player.attacked && bull_count < resource.amount:
-		Audio.play_sound(resource.sound_attack, player, false)
+	if !player.attacked: return
+	if player.is_holding: return
+	var bulls: StringName = StringName("bul" + resource.resource_path)
+	var bull_count: int = player.get_tree().get_node_count_in_group(bulls)
+	if resource.amount_extra >= 0 && !Console.cv.unlimited_player_projectiles:
+		var extras := StringName("bul_extra" + resource.resource_path)
+		var extra_count: int = player.get_tree().get_node_count_in_group(extras)
+		if extra_count >= resource.amount_extra:
+			return
+	if bull_count < resource.amount || Console.cv.unlimited_player_projectiles:
+		var _custom_sfx = CharacterManager.get_sound_replace(resource.sound_attack, resource.sound_attack, "attack", true)
+		Audio.play_sound(_custom_sfx, player, false)
 		player.shot.emit()
 		resource.create_projectile(player).add_to_group(bulls)

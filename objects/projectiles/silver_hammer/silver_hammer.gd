@@ -3,12 +3,20 @@ extends Projectile
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 #@export var jumping_speed: float = -450.0
 @export var bounces_left: int = 2
+@export var remove_offscreen_after: float = 2.0
+@export var remove_top_offscreen: bool = false
 
 var drown: bool = false
 
 @onready var detector: ShapeCast2D = $Attack
 
 signal run_out
+
+func _ready() -> void:
+	if !remove_top_offscreen:
+		vision_node.rect.size.y = 512
+	super()
+	offscreen_handler(remove_offscreen_after)
 
 
 func _physics_process(delta: float) -> void:
@@ -25,18 +33,12 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 	
 	turn_x()
 	turn_y()
-	speed.x *= randf_range(1.1, 1.3)
-	speed.y *= randf_range(0.7, 0.9)
+	speed.x *= Thunder.rng.get_randf_range(1.1, 1.3)
+	speed.y *= Thunder.rng.get_randf_range(0.7, 0.9)
 	
 	bounces_left -= 1
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
-	
-	if bounces_left == 0:
-		run_out.emit()
-		collision_layer = 0
-		collision_mask = 0
-		return
 	
 	for i in get_slide_collision_count():
 		var _collision: KinematicCollision2D = get_slide_collision(i)
@@ -45,13 +47,19 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		var collider: Node2D = _collision.get_collider() as Node2D
 		if collider is StaticBumpingBlock && collider.has_method(&"bricks_break"):
 			collider.bricks_break()
+	
+	if bounces_left == 0:
+		run_out.emit()
+		collision_layer = 0
+		collision_mask = 0
+		return
 
 
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 32):
-		if Thunder.view.is_getting_closer(self, 320):
+		if Thunder.view.is_getting_closer(self, 2048):
 			queue_free()
 		return
-	Data.values.score += 200
+	Data.add_score(200)
 	ScoreText.new(str(200), self)
 	queue_free()

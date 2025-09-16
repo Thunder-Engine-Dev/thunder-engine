@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+const DEFAULT_HURRY = preload("res://engine/components/hud/sounds/timeout.wav")
+const DEFAULT_SCORING = preload("res://engine/components/hud/sounds/scoring.wav")
+
 @onready var timer = $Timer
 @onready var time_text = $Control/Time
 @onready var time_counter: Label = $Control/TimeCounter
@@ -7,11 +10,13 @@ extends CanvasLayer
 @onready var gameover = $Control/GameOver
 @onready var mario_score: Label = $Control/MarioScore
 @onready var coins: Label = $Control/Control/Coins
+@onready var game_over_music: AudioStream = load(ProjectSettings.get_setting("application/thunder_settings/player/gameover_music"))
 
-@onready var _suit_pause_tweak: bool = SettingsManager.get_tweak("pause_on_suit_change", false)
+var game_over_timer: SceneTreeTimer
 
-@export var scoring_sound = preload("res://engine/components/hud/sounds/scoring.wav")
-@export var timer_hurry_sound = preload("res://engine/components/hud/sounds/timeout.wav")
+@export var scoring_sound = DEFAULT_SCORING
+@export var timer_hurry_sound = DEFAULT_HURRY
+@export var pause_timer_countdown: bool = false
 
 signal time_countdown_finished
 signal game_over_finished
@@ -20,32 +25,64 @@ signal game_over_finished
 func _ready() -> void:
 	Thunder._current_hud = self
 	
-	timer.timeout.connect(func() -> void:
-		if !Thunder._current_player: return
-		if Data.values.time < 0: return
-		
-		Data.values.time -= 1
-		
-		if Data.values.time == 100:
-			timer_hurry()
-		elif Data.values.time == 0:
-			Thunder._current_player.die()
-	)
+	timer.timeout.connect(_on_timer_timeout)
+	Console.executed.connect(_on_console_executed)
 	
-	await get_tree().physics_frame
-	if Data.values.time < 0:
-		time_text.visible = false
-		time_counter.visible = false
+	(func():
+		if Data.values.time < 0:
+			time_text.visible = false
+			time_counter.visible = false
+	).call_deferred()
+
+
+func pause_timer() -> void:
+	pause_timer_countdown = true
+
+func unpause_timer() -> void:
+	pause_timer_countdown = false
 
 
 func game_over() -> void:
 	gameover.show()
 	
-	get_tree().create_timer(6, _suit_pause_tweak).timeout.connect(emit_signal.bind("game_over_finished"))
+	var _sfx = CharacterManager.get_sound_replace(game_over_music, game_over_music, "game_over", false)
+	Audio.play_music(_sfx, 1, { "ignore_pause": true }, false, false)
+	
+	game_over_timer = get_tree().create_timer(6, false)
+	Thunder._connect(game_over_timer.timeout, emit_signal.bind("game_over_finished"), CONNECT_ONE_SHOT)
+	
+	if Data.technical_values.remaining_continues == 0 && "suspended" in ProfileManager.profiles:
+		if ProfileManager.profiles.suspended.data.get("saved_profile") == ProfileManager.current_profile.name:
+			ProfileManager.delete_profile("suspended")
+
+
+func _input(event: InputEvent) -> void:
+	if !game_over_timer: return
+	if game_over_timer.time_left == 0:
+		game_over_timer = null
+		return
+	if event.is_action_pressed(&"ui_accept") || event.is_action_pressed(&"m_jump") || event.is_action_pressed(&"m_attack"):
+		game_over_timer = null
+		game_over_finished.emit()
+
+
+func _on_timer_timeout() -> void:
+	if pause_timer_countdown: return
+	if !Thunder._current_player: return
+	if Data.values.time < 0: return
+	
+	Data.values.time -= 1
+	
+	if Data.values.time == 100:
+		timer_hurry()
+	elif Data.values.time == 0:
+		time_counter.text = "0"
+		Thunder._current_player.die()
 
 
 func timer_hurry() -> void:
-	Audio.play_1d_sound(timer_hurry_sound, false, { "bus": "1D Sound" })
+	var _sfx = CharacterManager.get_sound_replace(timer_hurry_sound, DEFAULT_HURRY, "hud_time_hurry", false)
+	Audio.play_1d_sound(_sfx, false, { "bus": "1D Sound" })
 	var tw = get_tree().create_tween().set_loops(8)
 	tw.tween_property(time_text, "scale:y", 0.5, 0.125)
 	tw.tween_property(time_text, "scale:y", 1, 0.125)
@@ -56,11 +93,11 @@ func time_countdown(_first_time: bool = true) -> void:
 	
 	if Data.values.time > 6:
 		Data.values.time -= 3
-		Data.values.score += 30
+		Data.add_score(30)
 	
 	if Data.values.time > 0:
 		Data.values.time -= 1
-		Data.values.score += 10
+		Data.add_score(10)
 		await get_tree().create_timer(0.01, false, true).timeout
 		time_countdown(false)
 	else:
@@ -68,7 +105,8 @@ func time_countdown(_first_time: bool = true) -> void:
 
 func _time_countdown_sound_loop() -> void:
 	if Data.values.time > 0:
-		Audio.play_1d_sound(scoring_sound, false, { "bus": "1D Sound" })
+		var _sfx = CharacterManager.get_sound_replace(scoring_sound, DEFAULT_SCORING, "hud_time_score", false)
+		Audio.play_1d_sound(_sfx, false, { "bus": "1D Sound" })
 		await get_tree().create_timer(0.09, false, false, true).timeout
 		_time_countdown_sound_loop()
 
@@ -79,3 +117,8 @@ func pulse_label(node: CanvasItem) -> void:
 	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
 	tw.tween_property(node, "modulate:b", 0.2, 0.2).set_ease(Tween.EASE_OUT)
 	tw.tween_property(node, "modulate:b", 1.0, 0.2).set_ease(Tween.EASE_IN)
+
+
+func _on_console_executed(cmd: String, args) -> void:
+	if cmd.to_lower() == "hud":
+		visible = !visible

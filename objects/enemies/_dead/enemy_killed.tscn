@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://oe7i3cief0g"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="1_w0y84"]
+[ext_resource type="Script" uid="uid://ctggojyi618up" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="1_w0y84"]
 
 [node name="EnemyKilled" type="CharacterBody2D"]
 collision_layer = 0

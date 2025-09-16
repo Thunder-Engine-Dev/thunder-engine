@@ -13,9 +13,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if !Thunder.view.is_getting_closer(self, 32):
+		queue_free()
+		return
+	
 	if !_cracked:
-		global_position += Vector2.UP.rotated(global_rotation) * 25 * delta
-		sprite.position = Vector2(randf_range(-2,2), randf_range(0, -2))
+		global_position += Vector2.UP.rotated(global_rotation) * randi_range(0, 100) * delta
+		position.x += randf_range(-100,100) * delta
+	else:
+		return
 	
 	if !_start:
 		return

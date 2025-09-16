@@ -8,7 +8,7 @@ point_count = 4
 curve = SubResource("Curve_c1qa1")
 
 [sub_resource type="Curve" id="Curve_8w82e"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24, 1), 0.0, 0.0, 0, 0, Vector2(0.497143, -1), 0.0, 0.0, 0, 0, Vector2(0.76, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 5
 

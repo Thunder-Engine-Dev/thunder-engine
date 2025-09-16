@@ -1,0 +1,302 @@
+[gd_scene load_steps=25 format=3 uid="uid://cl58fmmyu8xha"]
+
+[ext_resource type="Script" uid="uid://c2n6ynkin3jw4" path="res://engine/components/progress_continue/scripts/progress_continue_screen.gd" id="1_ck85d"]
+[ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_wya03"]
+[ext_resource type="Texture2D" uid="uid://b6se5c7m5jif0" path="res://engine/components/progress_continue/textures/yes.png" id="2_1ly8w"]
+[ext_resource type="Texture2D" uid="uid://dsgn8mjkxbovv" path="res://engine/components/progress_continue/textures/no.png" id="4_a3l1u"]
+[ext_resource type="Script" uid="uid://bmlu2snqvlr0o" path="res://engine/components/progress_continue/scripts/continue_sel.gd" id="4_m2bkh"]
+[ext_resource type="Texture2D" uid="uid://cf0nkhetwx0vo" path="res://engine/components/progress_continue/textures/erase.png" id="5_bogmr"]
+[ext_resource type="Script" uid="uid://buwjup73b832r" path="res://engine/components/progress_continue/scripts/no_sel.gd" id="6_k11o0"]
+[ext_resource type="Script" uid="uid://cl31gyhukew6s" path="res://engine/components/ui/generic/menu_selector.gd" id="6_pq48x"]
+[ext_resource type="Script" uid="uid://cnhidsgtspngq" path="res://engine/components/progress_continue/scripts/erase_sel.gd" id="7_fpdiu"]
+[ext_resource type="Texture2D" uid="uid://dyvymtdao3hwr" path="res://engine/components/progress_continue/textures/progress_title.png" id="7_hedy6"]
+[ext_resource type="Texture2D" uid="uid://7trjlutett6b" path="res://engine/components/game_over/textures/would_you_like.png" id="8_n72oc"]
+[ext_resource type="SpriteFrames" uid="uid://br3qktscdu8fx" path="res://engine/objects/players/prefabs/animations/mario/selector.tres" id="10_p7lkf"]
+[ext_resource type="Script" uid="uid://bkeybtjyi0dba" path="res://engine/scenes/main_menu/scripts/selector_blinking.gd" id="10_s8rqy"]
+[ext_resource type="Script" uid="uid://b1fji5ve3eoe0" path="res://engine/components/ui/generic/selector_player_animation.gd" id="11_qfik6"]
+[ext_resource type="Texture2D" uid="uid://dia0f8bnn6ned" path="res://engine/components/progress_continue/textures/progress_clearing.png" id="12_6nsta"]
+[ext_resource type="FontFile" uid="uid://dacnp4qwdpr2r" path="res://engine/fonts/mister_earl.otf" id="15_rqwc0"]
+[ext_resource type="SpriteFrames" uid="uid://cp03ve7ed68js" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_small.tres" id="16_ccim0"]
+
+[sub_resource type="Gradient" id="Gradient_akj06"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vhp0j"]
+gradient = SubResource("Gradient_akj06")
+
+[sub_resource type="Animation" id="Animation_8nk1g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_x2cu4"]
+resource_name = "init"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hvhdc"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.02),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5i4gi"]
+_data = {
+&"RESET": SubResource("Animation_8nk1g"),
+&"init": SubResource("Animation_x2cu4"),
+&"open": SubResource("Animation_hvhdc")
+}
+
+[sub_resource type="FontVariation" id="FontVariation_k4vin"]
+base_font = ExtResource("15_rqwc0")
+variation_embolden = 0.3
+variation_transform = Transform2D(1.1, 0, 0, 0.6, 0, 0)
+spacing_glyph = 1
+spacing_top = -11
+spacing_bottom = -5
+
+[node name="ProgressContinue" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ck85d")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.780392)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_vhp0j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -140.0
+offset_right = 64.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 4
+script = ExtResource("1_wya03")
+focused = false
+prev_screen_node_path = NodePath("TextureRect2")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_1ly8w")
+stretch_mode = 3
+script = ExtResource("4_m2bkh")
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_a3l1u")
+stretch_mode = 3
+script = ExtResource("6_k11o0")
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_bogmr")
+stretch_mode = 3
+script = ExtResource("7_fpdiu")
+
+[node name="Selector" type="Node2D" parent="."]
+physics_interpolation_mode = 1
+script = ExtResource("6_pq48x")
+smooth_speed = 0.4
+position_padding = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+sprite_frames = ExtResource("10_p7lkf")
+script = ExtResource("11_qfik6")
+
+[node name="GamePaused" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 32.0
+offset_right = 320.0
+offset_bottom = 64.0
+grow_horizontal = 2
+texture = ExtResource("7_hedy6")
+stretch_mode = 3
+
+[node name="GamePaused2" type="TextureRect" parent="GamePaused"]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 48.0
+offset_right = 391.0
+offset_bottom = 134.0
+grow_horizontal = 2
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("8_n72oc")
+stretch_mode = 3
+
+[node name="ProgressClearing" type="TextureRect" parent="GamePaused"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 54.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_6nsta")
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5i4gi")
+}
+autoplay = "RESET"
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("10_s8rqy")
+menu_items_controller_path = NodePath("../VBoxContainer")
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -64.0
+offset_right = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_k4vin")
+theme_override_font_sizes/font_size = 23
+text = "world
+1 - 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="StatePreview" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 284)
+sprite_frames = ExtResource("16_ccim0")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 4
+script = ExtResource("1_wya03")
+focused = false
+trigger_selection_immediately = false
+prev_screen_node_path = NodePath("TextureRect2")
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("4_a3l1u")
+stretch_mode = 3
+script = ExtResource("6_k11o0")
+cancel_erase = true
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("5_bogmr")
+stretch_mode = 3
+script = ExtResource("7_fpdiu")
+really_erase = true
+
+[connection signal="selected" from="VBoxContainer" to="Selector" method="handle_selection"]
+[connection signal="selected" from="VBoxContainer" to="Node" method="handle_selection"]
+[connection signal="selected" from="VBoxContainer2" to="Selector" method="handle_selection"]
+[connection signal="selected" from="VBoxContainer2" to="Node" method="handle_selection"]

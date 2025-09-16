@@ -3,12 +3,17 @@ extends Projectile
 const explosion_effect: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
+@export var remove_offscreen_after: float = 2.0
 
 var drown: bool = false
 
 @onready var detector: ShapeCast2D = $Attack
 
 signal run_out
+
+func _ready() -> void:
+	offscreen_handler(remove_offscreen_after)
+	super()
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -31,6 +36,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		node.position.y += 12
 	)
 	
+	var _has_brick: bool
 	for i in get_slide_collision_count():
 		var _collision: KinematicCollision2D = get_slide_collision(i)
 		if !_collision: continue
@@ -40,7 +46,10 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 			collider is StaticBumpingBlock &&
 			collider.has_method(&"got_bumped")
 		):
-			collider.got_bumped(self)
+			collider.got_bumped(false)
+			_has_brick = true
+	if _has_brick:
+		_fix_velocity.call_deferred(speed.x)
 
 	if bounces_left == 0:
 		run_out.emit()
@@ -49,11 +58,17 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		return
 
 
+func _fix_velocity(old_speed: float) -> void:
+	await get_tree().physics_frame
+	if is_inside_tree():
+		speed.x = old_speed
+
+
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 32):
-		if Thunder.view.is_getting_closer(self, 320):
+		if Thunder.view.is_getting_closer(self, 2048):
 			queue_free()
 		return
-	Data.values.score += 200
+	Data.add_score(200)
 	ScoreText.new(str(200), self)
 	queue_free()

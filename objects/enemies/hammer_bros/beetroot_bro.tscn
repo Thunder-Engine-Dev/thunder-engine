@@ -1,17 +1,18 @@
 [gd_scene load_steps=16 format=3 uid="uid://df06nfgxm0bjd"]
 
-[ext_resource type="PackedScene" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
+[ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="2_yc7oa"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yrrx0"]
-[ext_resource type="Script" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0uieq"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gee0h"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_2wgy6"]
+[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="3_0uieq"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_gee0h"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_2wgy6"]
 [ext_resource type="Texture2D" uid="uid://c8dx5qt71uglv" path="res://engine/objects/enemies/hammer_bros/textures/pink_bro.png" id="5_gfyf8"]
 [ext_resource type="Texture2D" uid="uid://cd4tiiirqgtvi" path="res://engine/objects/projectiles/beetroot/texture.png" id="6_w2hoc"]
 
 [sub_resource type="Resource" id="Resource_0uga6"]
 script = ExtResource("4_2wgy6")
 creation_nodepack = ExtResource("2_yc7oa")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 6
 trans_rotation = 0.0
@@ -30,6 +31,7 @@ custom_script = ExtResource("3_0uieq")
 resource_local_to_scene = true
 script = ExtResource("4_2wgy6")
 creation_nodepack = ExtResource("2_yrrx0")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -40,7 +42,8 @@ visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
-"death_speed": Vector2(0, 0)
+"death_speed": Vector2(0, 0),
+"min_quality_offset": Vector2(0, -16)
 }
 custom_script = ExtResource("3_gee0h")
 

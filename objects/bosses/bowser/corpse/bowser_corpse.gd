@@ -14,10 +14,14 @@ var move: bool
 var in_lava: bool
 var velocity: Vector2
 
+var finish_on_free: bool = true
 var direction_to_complete: int
 
 func _ready() -> void:
-	await get_tree().create_timer(duration, false).timeout
+	add_to_group(&"#bowser_corpse")
+	if duration > 0:
+		await get_tree().create_timer(duration, false).timeout
+	elif duration < 0: return
 	Audio.play_sound(falling_sound, self)
 	move = true
 
@@ -25,14 +29,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !move: return
 	if in_lava && velocity.y > 50:
-		velocity += Vector2.UP.rotated(global_rotation) * 2000 * delta
+		velocity += Vector2.UP.rotated(global_rotation) * 1625 * delta
 	else:
 		velocity += Vector2.DOWN.rotated(global_rotation) * GRAVITY * falling_acceleration * delta
 	global_position += velocity * delta
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	Scenes.current_scene.finish(true, direction_to_complete)
+	if finish_on_free:
+		Scenes.current_scene.finish(true, direction_to_complete)
 	queue_free()
 
 
@@ -40,9 +45,11 @@ func got_in_lava() -> void:
 	if in_lava: return
 	Audio.play_sound(into_lava_sound, self)
 	in_lava = true
+	move = true
 	var bubbles = LAVA_BUBBLES.instantiate()
 	Scenes.current_scene.add_child(bubbles)
 	bubbles.position = global_position + Vector2(0, 32)
+	bubbles.reset_physics_interpolation()
 	var tw = bubbles.create_tween()
 	tw.tween_interval(1.0)
 	tw.tween_callback(bubbles.set_emitting.bind(false))

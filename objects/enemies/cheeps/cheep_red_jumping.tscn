@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpr3k5jjwy2fc"]
+[gd_scene load_steps=14 format=3 uid="uid://bpr3k5jjwy2fc"]
 
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_fjorm"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_btk2t"]
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_fjorm"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_btk2t"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_jpcj4"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_wa0ot"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_ddktf"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_wa0ot"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_ddktf"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_6va8j"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_g3ol3"]
 [ext_resource type="Texture2D" uid="uid://c8au1fjmwjesr" path="res://engine/objects/enemies/cheeps/textures/cheep_red.png" id="8_46bru"]
@@ -16,6 +16,7 @@ size = Vector2(32, 32)
 resource_local_to_scene = true
 script = ExtResource("5_ddktf")
 creation_nodepack = ExtResource("3_jpcj4")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -29,9 +30,6 @@ custom_vars = {
 "death_speed": Vector2(0, 0)
 }
 custom_script = ExtResource("4_wa0ot")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oamh3"]
-size = Vector2(2, 2)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kpu1"]
 atlas = ExtResource("8_46bru")
@@ -52,7 +50,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="CheepRedJumping" type="CharacterBody2D"]
@@ -100,24 +98,6 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("7_g3ol3")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="SwimX" type="ShapeCast2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_oamh3")
-target_position = Vector2(0, 0)
-max_results = 1
-collision_mask = 128
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="SwimY" type="ShapeCast2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_oamh3")
-target_position = Vector2(0, 0)
-max_results = 1
-collision_mask = 128
-collide_with_areas = true
-collide_with_bodies = false
-
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7tauq")
 autoplay = "default"
@@ -128,10 +108,6 @@ position = Vector2(3.8147e-06, 3.8147e-06)
 scale = Vector2(4.8, 4.8)
 metadata/_edit_lock_ = true
 
-[node name="Interval" type="Timer" parent="."]
-process_callback = 0
-autostart = true
-
 [connection signal="collided_ceiling" from="." to="." method="turn_y"]
 [connection signal="collided_floor" from="." to="." method="turn_y"]
 [connection signal="collided_wall" from="." to="." method="turn_x"]
@@ -139,5 +115,4 @@ autostart = true
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_exited"]
-[connection signal="timeout" from="Interval" to="." method="_cheep_swimming"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

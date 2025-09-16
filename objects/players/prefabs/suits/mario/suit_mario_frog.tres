@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://ci7784xp0vaiy"]
+
+[ext_resource type="Script" uid="uid://51f62nkmu0tl" path="res://engine/objects/players/behaviors/player_animation_frog_behavior.gd" id="1_f57v3"]
+[ext_resource type="SpriteFrames" uid="uid://3njuthtkj3yb" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_frog.tres" id="2_f57v3"]
+[ext_resource type="Resource" uid="uid://cmhi4m24voa1d" path="res://engine/objects/players/prefabs/suits/mario/suit_mario_super.tres" id="3_a0j84"]
+[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="3_f57v3"]
+[ext_resource type="Script" uid="uid://c6fawv31jghls" path="res://engine/objects/players/behaviors/player_physics_frog_behavior.gd" id="7_f57v3"]
+[ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="8_e38e4"]
+[ext_resource type="Resource" uid="uid://c02kxvhu0n328" path="res://engine/objects/players/prefabs/configs/config_mario_frog.tres" id="8_f57v3"]
+[ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="9_gst4f"]
+[ext_resource type="Resource" uid="uid://bgweroycf2u6t" path="res://engine/objects/players/prefabs/shapers/shaper_player_frog.tres" id="9_ougxi"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="10_4i3n6"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="11_tqber"]
+
+[resource]
+script = ExtResource("9_gst4f")
+name = &"frog"
+type = 2
+gets_hurt_to = ExtResource("3_a0j84")
+appearing_time_sec = 0.3
+physics_config = ExtResource("8_f57v3")
+physics_behavior = ExtResource("7_f57v3")
+physics_crouchable = false
+physics_shaper = ExtResource("9_ougxi")
+physics_shaper_crouch = ExtResource("8_e38e4")
+animation_sprites = ExtResource("2_f57v3")
+animation_behavior = ExtResource("1_f57v3")
+animation_underwater_bubble_offset = Vector2(0, -20)
+behavior_crouch_reflect_fireballs = false
+grab_behavior = ExtResource("3_f57v3")
+extra_vars = {}
+sound_hurt = ExtResource("11_tqber")
+sound_death = ExtResource("10_4i3n6")
+sound_pitch = 1.0
+metadata/_custom_type_script = "uid://d3uhri8wh0kgs"

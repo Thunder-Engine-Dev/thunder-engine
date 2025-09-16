@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://feaxlbx5empd"]
+
+[ext_resource type="PackedScene" uid="uid://bsdcxwngf5hru" path="res://engine/objects/powerups/fire_flower/fire_flower.tscn" id="1_v6ixe"]
+
+[node name="FireFlowerForced" instance=ExtResource("1_v6ixe")]
+force_powerup_state = true

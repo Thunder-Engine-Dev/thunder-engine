@@ -1,17 +1,21 @@
-[gd_scene load_steps=16 format=3 uid="uid://r3wtvvkcepce"]
+[gd_scene load_steps=17 format=3 uid="uid://r3wtvvkcepce"]
 
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_ddg2h"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_jcr27"]
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="2_t0byn"]
-[ext_resource type="Script" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_qq62u"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_vffgk"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_qby8s"]
+[ext_resource type="Script" uid="uid://jk1chlh3hlmf" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_qq62u"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_vffgk"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_qby8s"]
 [ext_resource type="Texture2D" uid="uid://bd6t46hxy4085" path="res://engine/objects/enemies/koopas/textures/koopa_red.png" id="5_q8vae"]
 [ext_resource type="Texture2D" uid="uid://dwgb38fjcwjhp" path="res://engine/objects/enemies/koopas/textures/shell_red.png" id="6_brjlx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
+size = Vector2(32, 36)
 
 [sub_resource type="Resource" id="Resource_u6rt5"]
 script = ExtResource("4_qby8s")
 creation_nodepack = ExtResource("2_t0byn")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -27,6 +31,7 @@ custom_script = ExtResource("3_qq62u")
 resource_local_to_scene = true
 script = ExtResource("4_qby8s")
 creation_nodepack = ExtResource("2_jcr27")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -41,22 +46,22 @@ custom_vars = {
 }
 custom_script = ExtResource("3_vffgk")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ae7p0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_irof6"]
 atlas = ExtResource("5_q8vae")
-region = Rect2(0, 0, 31, 48)
+region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dc6fw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uumhy"]
 atlas = ExtResource("5_q8vae")
-region = Rect2(31, 0, 31, 48)
+region = Rect2(32, 0, 32, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xquq7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_82uh0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ae7p0")
+"texture": SubResource("AtlasTexture_irof6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dc6fw")
+"texture": SubResource("AtlasTexture_uumhy")
 }],
 "loop": true,
 "name": &"default",
@@ -83,13 +88,20 @@ amplitude = Vector2(50, 0)
 facing_method = 1
 metadata/_edit_pinned_properties_ = [&"amplitude", &"facing_method"]
 
+[node name="Collision" parent="Body" index="0"]
+shape = SubResource("RectangleShape2D_bxfep")
+
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_u6rt5")
 killing_creation = SubResource("Resource_nghi6")
 metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
 [node name="Sprite" parent="." index="1"]
-sprite_frames = SubResource("SpriteFrames_xquq7")
+show_behind_parent = true
+sprite_frames = SubResource("SpriteFrames_82uh0")
 
-[node name="Dead" parent="Sprite" index="1"]
+[node name="Dead" parent="Sprite" index="0"]
 sprite_frames = SubResource("SpriteFrames_x6d0m")
+
+[node name="Wings" parent="." index="2"]
+show_behind_parent = true

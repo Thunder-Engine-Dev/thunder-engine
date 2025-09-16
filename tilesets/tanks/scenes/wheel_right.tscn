@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cb2ddplynnfx4"]
+
+[ext_resource type="Script" uid="uid://sxuko23f1b0o" path="res://engine/tilesets/tanks/scenes/wheel_stop_on_death.gd" id="1_nrphu"]
+[ext_resource type="Texture2D" uid="uid://b616dp1eqbyiq" path="res://engine/tilesets/tanks/gfx/wheel_right.png" id="2_nrphu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omv5u"]
+atlas = ExtResource("2_nrphu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_158hx"]
+atlas = ExtResource("2_nrphu")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6li0w"]
+atlas = ExtResource("2_nrphu")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b7rqv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omv5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_158hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6li0w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei7fp"]
+size = Vector2(32, 32)
+
+[node name="WheelCenter" type="StaticBody2D"]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_nrphu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_b7rqv")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ei7fp")

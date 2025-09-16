@@ -1,16 +1,17 @@
 [gd_scene load_steps=10 format=3 uid="uid://s1e7n1cfnhy8"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher.gd" id="1_de4dl"]
+[ext_resource type="Script" uid="uid://cup1dl4nc3gp3" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher.gd" id="1_de4dl"]
 [ext_resource type="PackedScene" uid="uid://ddl8refhx7slj" path="res://engine/objects/projectiles/flameball/flameball.tscn" id="2_poow3"]
 [ext_resource type="Texture2D" uid="uid://m7o2o516igqo" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_head.png" id="2_srod3"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_ccoqt"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_ccoqt"]
 [ext_resource type="Texture2D" uid="uid://rv1bs4wcepxs" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_body.png" id="3_i5wos"]
 [ext_resource type="Texture2D" uid="uid://c71b0gndx1o47" path="res://engine/objects/enemies/flameball_launcher/textures/flameball_launcher_tail.png" id="4_da7u6"]
-[ext_resource type="Script" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher_obstacle.gd" id="5_y1sec"]
+[ext_resource type="Script" uid="uid://n0sw4dpf8xcd" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher_obstacle.gd" id="5_y1sec"]
 
 [sub_resource type="Resource" id="Resource_rtj67"]
 script = ExtResource("3_ccoqt")
 creation_nodepack = ExtResource("2_poow3")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 4
 trans_rotation = 0.0
@@ -69,9 +70,6 @@ position = Vector2(16, 16)
 wait_time = 3.0
 one_shot = true
 
-[node name="IntervalFlame" type="Timer" parent="."]
-wait_time = 3.0
-
 [node name="IntervalSound" type="Timer" parent="."]
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
@@ -81,5 +79,4 @@ rect = Rect2(0, 0, 64, 32)
 metadata/_edit_lock_ = true
 
 [connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]
-[connection signal="timeout" from="IntervalFlame" to="." method="_on_interval_flame_timeout"]
 [connection signal="timeout" from="IntervalSound" to="." method="_on_interval_sound_timeout"]

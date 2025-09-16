@@ -12,8 +12,16 @@ const CentipedePathpoint := preload("centipede_pathpoint.gd")
 @export_group("Convey-belt Like")
 @export var convey_belt_speed: Vector2
 @export_group("Trigger", "trigger_")
-@export var trigger_area_enabled: bool = true
-@export var trigger_area: Rect2 = Rect2(0, 0, 32, 480)
+@export var trigger_area_enabled: bool = true:
+	set(to):
+		trigger_area_enabled = to
+		if Engine.is_editor_hint() && has_node("DrawArea"):
+			$DrawArea.queue_redraw()
+@export var trigger_area: Rect2 = Rect2(0, 0, 32, 480):
+	set(to):
+		trigger_area = to
+		if Engine.is_editor_hint() && has_node("DrawArea"):
+			$DrawArea.queue_redraw()
 
 @onready var audio_player = $AudioStreamPlayer2D
 @onready var spikeball = $Spikeball
@@ -82,6 +90,7 @@ func _detect_area() -> void:
 	var actual_area: Rect2 = Rect2(global_position + trigger_area.position - trigger_area.size / 2, trigger_area.size)
 	if actual_area.has_point(player.global_position) && !is_moving:
 		_player_landed()
+
 
 func _player_landed(p = null) -> void:
 	is_moving = true

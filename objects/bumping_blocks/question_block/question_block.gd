@@ -12,18 +12,19 @@ var current_displaying_item: String = ""
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
-	item_displayer.queue_free()
+	if !Console.cv.item_display_shown:
+		item_displayer.queue_free()
 	super()
 
 
 func _physics_process(delta):
 	super(delta)
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() || (Console.cv.item_display_shown && is_instance_valid(item_displayer)):
 		_item_display()
 		return
 
 
-func got_bumped(by: Node2D) -> void:
+func got_bumped(by_player: bool = false) -> void:
 	if _triggered: return
 	call_bump()
 
@@ -34,6 +35,7 @@ func call_bump() -> void:
 
 
 func _item_display() -> void:
+	if not item_displayer: return
 	if !result || !result.creation_nodepack: return _item_display_reset()
 	if result.creation_nodepack.resource_path == current_displaying_item: return
 	
@@ -60,4 +62,3 @@ func _item_display_reset() -> void:
 	
 	item_displayer.texture = NULL_TEXTURE
 	current_displaying_item = ""
-

@@ -1,14 +1,35 @@
 [gd_scene load_steps=17 format=3 uid="uid://dt52xvrtre8h3"]
 
-[ext_resource type="Script" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
+[ext_resource type="Script" uid="uid://dmwyp48em601h" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="3_6cy8f"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="3_6cy8f"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kfaj4"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_pqqwo"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_pl4g3"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_vl2am"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_kcsna"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_yihn6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w104"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_l87kq"]
+script = ExtResource("5_vl2am")
+creation_nodepack = ExtResource("4_pqqwo")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_pl4g3")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fenoi"]
 atlas = ExtResource("2_3vf3t")
@@ -46,32 +67,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w104"]
-size = Vector2(30, 30)
-
-[sub_resource type="Resource" id="Resource_l87kq"]
-script = ExtResource("5_vl2am")
-creation_nodepack = ExtResource("4_pqqwo")
-trans_offset = Vector2(0, 0)
-trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {
-"death": NodePath("../../AnimatedSprite2D"),
-"death_speed": Vector2(0, -250)
-}
-custom_script = ExtResource("5_pl4g3")
-
 [node name="PiranhaHead" type="Node2D"]
 script = ExtResource("1_x0p8k")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_tjbik")
-autoplay = "default"
 
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 2
@@ -101,7 +98,12 @@ killing_creation = SubResource("Resource_l87kq")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("6_kcsna")
 killing_sound_failed = ExtResource("9_yihn6")
+ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tjbik")
+autoplay = "default"
 
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
@@ -110,4 +112,4 @@ scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="AnimatedSprite2D" method="stop"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

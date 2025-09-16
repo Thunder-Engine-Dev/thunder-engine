@@ -1,7 +1,7 @@
 [remap]
 
-importer="libopenmpt.modimporter"
-type="Resource"
+importer="dudejoe870.openmptimporter"
+type="AudioStreamMPT"
 uid="uid://c1va567cln81n"
 path="res://.godot/imported/save_game_room.it-c2fe329e8f875f027dfe26219b765566.res"
 
@@ -12,5 +12,9 @@ dest_files=["res://.godot/imported/save_game_room.it-c2fe329e8f875f027dfe26219b7
 
 [params]
 
-interpolation=2
-loop=true
+force/mono=false
+playback/loop_mode=1
+playback/interpolation=2
+playback/emulate_amiga_filter=0
+load/skip_plugins=false
+load/skip_subsongs_init=false

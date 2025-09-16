@@ -2,12 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://j4f2gd3x20bj" path="res://engine/objects/enemies/lakitus/lakitu.tscn" id="1_6t1oy"]
 [ext_resource type="PackedScene" uid="uid://clsajjxpl6kfo" path="res://engine/objects/enemies/spinies/spiny_egg_red_hardcore.tscn" id="2_vawyj"]
-[ext_resource type="Script" path="res://engine/objects/enemies/lakitus/lakitu_pitching.gd" id="3_wr6fs"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_ustyy"]
+[ext_resource type="Script" uid="uid://5x84eyswuttw" path="res://engine/objects/enemies/lakitus/lakitu_pitching.gd" id="3_wr6fs"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_ustyy"]
 
 [sub_resource type="Resource" id="Resource_oefje"]
 script = ExtResource("4_ustyy")
 creation_nodepack = ExtResource("2_vawyj")
+creation_force_sibling = false
 trans_offset = Vector2(0, -8)
 trans_inheritances = 6
 trans_rotation = 0.0

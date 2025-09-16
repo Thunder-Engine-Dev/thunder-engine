@@ -1,10 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8kgbn8f7lvf0"]
+[gd_scene load_steps=15 format=3 uid="uid://b8kgbn8f7lvf0"]
 
-[ext_resource type="Script" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
+[ext_resource type="Script" uid="uid://b5os186kechtf" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o0ga7"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_o0ga7"]
 [ext_resource type="PackedScene" uid="uid://ch646rieriyyu" path="res://engine/objects/effects/coin_effect/coin_effect.tscn" id="4_8py2g"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mg6wf"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mg6wf"]
 [ext_resource type="AudioStream" uid="uid://poiur2eg7mre" path="res://engine/objects/items/coin/coin.wav" id="6_v73xb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcllp"]
@@ -42,7 +42,10 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="GDScript" id="GDScript_twjsq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6em3"]
+size = Vector2(20, 30)
+
+[sub_resource type="GDScript" id="GDScript_p7plw"]
 script/source = "extends ByNodeScript
 
 func _ready():
@@ -52,6 +55,7 @@ func _ready():
 [sub_resource type="Resource" id="Resource_223t5"]
 script = ExtResource("5_mg6wf")
 creation_nodepack = ExtResource("4_8py2g")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 0
 trans_rotation = 0.0
@@ -61,7 +65,7 @@ visi_z_index = 0
 visi_z_as_relative = true
 visi_y_sort_enabled = false
 custom_vars = {}
-custom_script = SubResource("GDScript_twjsq")
+custom_script = SubResource("GDScript_p7plw")
 
 [node name="Coin" type="Area2D" groups=["coin"]]
 collision_layer = 4
@@ -88,7 +92,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 visible = false
-shape = SubResource("RectangleShape2D_xcllp")
+shape = SubResource("RectangleShape2D_l6em3")
 
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("3_o0ga7")
@@ -96,6 +100,7 @@ stomping_enabled = false
 killing_immune = {
 "boomerang": false,
 "head": false,
+"iceball": false,
 "shell": false,
 "shell_defence": 0,
 "shell_forced": false
@@ -103,5 +108,8 @@ killing_immune = {
 killing_creation = SubResource("Resource_223t5")
 killing_sound_succeeded = ExtResource("6_v73xb")
 turn_into_coin_on_level_end = false
+ice_sprite = NodePath("../../Sprite")
+ice_fallable = false
+metadata/_edit_pinned_properties_ = [&"ice_sprite", &"ice_fallable"]
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

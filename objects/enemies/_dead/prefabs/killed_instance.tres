@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="InstanceNode2D" load_steps=4 format=3 uid="uid://b65xxwxj0x4p5"]
 
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="1_tm5t4"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="2_osi7h"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_cy6v2"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="2_osi7h"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_cy6v2"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("3_cy6v2")
 creation_nodepack = ExtResource("1_tm5t4")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0

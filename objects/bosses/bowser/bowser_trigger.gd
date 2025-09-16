@@ -1,6 +1,8 @@
 @tool
 extends Path2D
 
+signal bowser_triggered
+
 @export_category("Bowser's Trigger")
 @export_group("Trigger", "trigger_")
 @export var trigger_area: Rect2 = Rect2(0, 0, 32, 480)
@@ -50,6 +52,7 @@ func _physics_process(delta: float) -> void:
 				cam.reparent(route_follower)
 				cam.par = cam.get_parent()
 				cam.force_update_transform()
+				cam.reset_physics_interpolation()
 				cam.force_update_scroll()
 			if boss_music:
 				Audio.stop_all_musics(boss_music_fading)
@@ -58,13 +61,16 @@ func _physics_process(delta: float) -> void:
 					volume = boss_music_volume,
 					ignore_pause = true,
 				} if !boss_music_fading else {
-					volume = -40,
+					volume = -20,
 					start_from_sec = boss_music_start_from_sec,
-					fade_duration = 1.5,
+					fade_duration = 1.0,
 					fade_to = boss_music_volume,
+					fade_method = Tween.TransitionType.TRANS_EXPO,
+					fade_ease = Tween.EaseType.EASE_OUT,
 					ignore_pause = true,
 				})
 			triggered = true
+			bowser_triggered.emit()
 	else:
 		if route_follower.progress_ratio < 1.0: 
 			route_follower.progress += camera_speed * delta

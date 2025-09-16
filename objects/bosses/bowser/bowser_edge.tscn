@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bq45lxt7bqoma"]
 
-[ext_resource type="Script" path="res://engine/objects/bosses/bowser/bowser_edge.gd" id="1_d22gc"]
+[ext_resource type="Script" uid="uid://yxptty0nkrij" path="res://engine/objects/bosses/bowser/bowser_edge.gd" id="1_d22gc"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_2pano"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gs4j8"]

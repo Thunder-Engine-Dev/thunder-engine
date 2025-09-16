@@ -8,7 +8,7 @@ signal transition_middle
 signal transition_end
 
 func accept_transition(trans: Transition) -> void:
-	GlobalViewport.container.add_child(trans)
+	GlobalViewport.center_container.add_child(trans)
 	current_transition = trans
 	
 	trans.start.connect(func():

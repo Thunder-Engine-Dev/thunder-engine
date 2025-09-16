@@ -1,0 +1,128 @@
+[gd_scene load_steps=16 format=3 uid="uid://c5ckuqfrnnltw"]
+
+[ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_24gpt"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_uclkn"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_2u8s6"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_uv17w"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_mdlil"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_lwvyh"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="7_l7q4y"]
+[ext_resource type="Texture2D" uid="uid://ehrk7tmgv47w" path="res://engine/objects/enemies/piranha_plants/textures/piranha_green.png" id="8_y2nhm"]
+[ext_resource type="Texture2D" uid="uid://bc63sqiltulom" path="res://engine/objects/enemies/piranha_plants/textures/stem_orange.png" id="9_w6v2y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4g34j"]
+size = Vector2(30, 144)
+
+[sub_resource type="Resource" id="Resource_fvcap"]
+script = ExtResource("5_mdlil")
+creation_nodepack = ExtResource("3_2u8s6")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250),
+"fast_death_effect": true
+}
+custom_script = ExtResource("4_uv17w")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0lff"]
+atlas = ExtResource("8_y2nhm")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k477"]
+atlas = ExtResource("8_y2nhm")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_680xi"]
+atlas = ExtResource("8_y2nhm")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ym01l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0lff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k477")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_680xi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k477")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaGreen" type="Node2D"]
+self_modulate = Color(1, 1, 1, 0.121569)
+script = ExtResource("1_24gpt")
+stay_in_pipe_at_first = false
+stretching_speed = 60.0
+stretching_length = 172.0
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_4g34j")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_uclkn")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_fvcap")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_lwvyh")
+killing_sound_failed = ExtResource("7_l7q4y")
+ice_sprite = NodePath("../../Sprite")
+ice_fragile = true
+metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_ym01l")
+autoplay = "default"
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite"]
+texture_repeat = 2
+position = Vector2(0, 80)
+texture = ExtResource("9_w6v2y")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 112)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -64, 32, 192)
+metadata/_edit_lock_ = true
+
+[node name="Step" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

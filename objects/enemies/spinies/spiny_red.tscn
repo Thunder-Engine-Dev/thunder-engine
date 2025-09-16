@@ -1,23 +1,27 @@
-[gd_scene load_steps=22 format=3 uid="uid://c58i0gaq0il4o"]
+[gd_scene load_steps=23 format=3 uid="uid://c58i0gaq0il4o"]
 
-[ext_resource type="Script" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
-[ext_resource type="Script" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_ne3q7"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_wxq5y"]
+[ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_ne3q7"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_wxq5y"]
 [ext_resource type="Texture2D" uid="uid://dr0tm03ifrn1s" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="8_b2lnc"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_vul36"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
-[ext_resource type="Script" path="res://engine/scripts/nodes/vision/vision.gd" id="10_bx7fb"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_hcfit"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="10_bx7fb"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_oumu7"]
 [ext_resource type="Texture2D" uid="uid://du5b4o1tollys" path="res://engine/objects/enemies/spinies/textures/spiny_red.png" id="11_achxa"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t445g"]
+size = Vector2(30, 28)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 28)
+size = Vector2(28, 24)
 
 [sub_resource type="Resource" id="Resource_ba3fn"]
 resource_local_to_scene = true
 script = ExtResource("6_wxq5y")
 creation_nodepack = ExtResource("8_vul36")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -56,13 +60,13 @@ region = Rect2(0, 124, 31, 31)
 atlas = ExtResource("8_b2lnc")
 region = Rect2(0, 155, 31, 31)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nbqoh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_638id"]
 atlas = ExtResource("11_achxa")
-region = Rect2(0, 0, 31, 32)
+region = Rect2(0, 1, 32, 31)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kebai"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tc6g"]
 atlas = ExtResource("11_achxa")
-region = Rect2(0, 32, 31, 32)
+region = Rect2(0, 33, 32, 31)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gedlg"]
 animations = [{
@@ -87,14 +91,14 @@ animations = [{
 }],
 "loop": false,
 "name": &"appear",
-"speed": 25.0
+"speed": 50.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nbqoh")
+"texture": SubResource("AtlasTexture_638id")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kebai")
+"texture": SubResource("AtlasTexture_3tc6g")
 }],
 "loop": true,
 "name": &"default",
@@ -109,6 +113,7 @@ floor_snap_length = 20.0
 script = ExtResource("1_vksuw")
 look_at_player = true
 sprite = NodePath("Sprite")
+visible_on_screen_notifier = NodePath("Vision")
 speed = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"look_at_player", &"speed", &"gravity_scale"]
@@ -116,17 +121,17 @@ metadata/_edit_pinned_properties_ = [&"look_at_player", &"speed", &"gravity_scal
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_w2yun")
+shape = SubResource("RectangleShape2D_t445g")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
-visible = false
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_8bbjj")
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
-position = Vector2(0, 2)
+visible = false
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 

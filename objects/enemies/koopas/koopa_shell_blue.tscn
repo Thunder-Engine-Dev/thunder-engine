@@ -2,14 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://ctpsv143q5pjv" path="res://engine/objects/enemies/koopas/koopa_shell_green.tscn" id="1_6gqyp"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_ltnvf"]
-[ext_resource type="Script" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_0sefh"]
-[ext_resource type="Script" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_i4t37"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_0sefh"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_i4t37"]
 [ext_resource type="Texture2D" uid="uid://b5ru4nrm6iejt" path="res://engine/objects/enemies/koopas/textures/shell_blue.png" id="5_ch48h"]
 
 [sub_resource type="Resource" id="Resource_68h8b"]
 resource_local_to_scene = true
 script = ExtResource("4_i4t37")
 creation_nodepack = ExtResource("2_ltnvf")
+creation_force_sibling = false
 trans_offset = Vector2(0, 0)
 trans_inheritances = 7
 trans_rotation = 0.0
@@ -61,7 +62,7 @@ animations = [{
 }]
 
 [node name="KoopaShellBlue" instance=ExtResource("1_6gqyp")]
-speed = Vector2(300, 0)
+speed = Vector2(350, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
