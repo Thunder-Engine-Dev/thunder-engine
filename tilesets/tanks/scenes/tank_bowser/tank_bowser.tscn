@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://0ucny0lo0mvv"]
+
+[ext_resource type="Texture2D" uid="uid://05jtprl6myrf" path="res://engine/tilesets/tanks/scenes/tank_bowser/tank_bowser.png" id="1_x4g43"]
+
+[node name="TankBowser" type="StaticBody2D"]
+collision_layer = 112
+collision_mask = 0
+
+[node name="TankBowser" type="Sprite2D" parent="."]
+position = Vector2(0, -35)
+texture = ExtResource("1_x4g43")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-11, -70, -33, -51, -33, 0, 23, 0, 23, -7, 23, -44, 14, -44, 14, -58, 1, -70)

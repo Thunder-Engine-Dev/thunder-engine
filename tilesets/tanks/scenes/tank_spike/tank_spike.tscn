@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://4qxipf3cl4td"]
+
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="1_02kux"]
+[ext_resource type="Texture2D" uid="uid://bnyptkv7u5uwg" path="res://engine/tilesets/tanks/scenes/tank_spike/tank_spike.png" id="2_q7nv2"]
+
+[node name="TankSpike" type="Area2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_02kux")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, 16)
+polygon = PackedVector2Array(-16, -16, 16, -32, 16, 0)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_q7nv2")
