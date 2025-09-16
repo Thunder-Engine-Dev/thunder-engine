@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgyfu1v14ewiu"]
+
+[ext_resource type="Script" uid="uid://pwsin1gyji6g" path="res://engine/scenes/map/scripts/quality_map.gd" id="1_7q62m"]
+[ext_resource type="SpriteFrames" uid="uid://c3nrl7lybmfqu" path="res://engine/scenes/map/prefabs/fancy_dot_style.tres" id="2_xhjje"]
+
+[node name="QualityDots" type="Node2D"]
+script = ExtResource("1_7q62m")
+dot_style = ExtResource("2_xhjje")
+dot_offset = Vector2(4, 4)

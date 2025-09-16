@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://2nd282g7cu0i"]
+
+[ext_resource type="Texture2D" uid="uid://dpvggkvs8pffa" path="res://engine/objects/bumping_blocks/brick/textures/brick_grey.png" id="1_hfg1j"]
+[ext_resource type="Texture2D" uid="uid://dfbk3lh686xsc" path="res://engine/objects/bumping_blocks/question_block/textures/emptygray.png" id="2_0mvb3"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hfg1j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0mvb3")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]

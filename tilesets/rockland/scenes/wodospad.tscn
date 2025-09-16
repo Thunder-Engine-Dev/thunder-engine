@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://btywx4pma4xw0"]
+
+[ext_resource type="Texture2D" uid="uid://b1nphmcme722o" path="res://engine/tilesets/rockland/gfx/1-3wodospad.png" id="1_ip1i2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfaut"]
+atlas = ExtResource("1_ip1i2")
+region = Rect2(0, 0, 95, 91)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xil7j"]
+atlas = ExtResource("1_ip1i2")
+region = Rect2(95, 0, 95, 91)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kewx1"]
+atlas = ExtResource("1_ip1i2")
+region = Rect2(190, 0, 95, 91)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui25r"]
+atlas = ExtResource("1_ip1i2")
+region = Rect2(285, 0, 95, 91)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5lwqt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfaut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xil7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kewx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui25r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Wodospad" type="AnimatedSprite2D"]
+position = Vector2(0, 3)
+sprite_frames = SubResource("SpriteFrames_5lwqt")
+autoplay = "default"

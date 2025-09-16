@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://cxkqbg3giyxeq"]
+
+[ext_resource type="Script" uid="uid://sxuko23f1b0o" path="res://engine/tilesets/tanks/scenes/wheel_stop_on_death.gd" id="1_v26vw"]
+[ext_resource type="Texture2D" uid="uid://445hln8l3x6k" path="res://engine/tilesets/tanks/gfx/wheel_left.png" id="2_v26vw"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="3_ndewj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_652d0"]
+atlas = ExtResource("2_v26vw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndewj"]
+atlas = ExtResource("2_v26vw")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es1i5"]
+atlas = ExtResource("2_v26vw")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1w7bo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_652d0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndewj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es1i5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei7fp"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2q74"]
+size = Vector2(2, 8)
+
+[node name="WheelLeft" type="StaticBody2D"]
+disable_mode = 1
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_v26vw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1w7bo")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ei7fp")
+
+[node name="Attack" type="ShapeCast2D" parent="."]
+position = Vector2(-16, 12)
+shape = SubResource("RectangleShape2D_p2q74")
+target_position = Vector2(0, 0)
+margin = 1.0
+max_results = 8
+collision_mask = 3
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("3_ndewj")
+killer_type = &"starman"
+killing_detection_scale = 1.0
+trigger_enemy_failed_signal = false
+special_tags = Array[StringName]([&"no_score"])
+metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
