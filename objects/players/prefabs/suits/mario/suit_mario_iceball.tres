@@ -20,44 +20,20 @@
 [sub_resource type="Resource" id="Resource_yudqa"]
 script = ExtResource("4_0yi74")
 creation_nodepack = ExtResource("3_ctols")
-creation_force_sibling = false
 trans_offset = Vector2(0, -20)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_w5vmj"]
 script = ExtResource("5_ne2ne")
 projectile = SubResource("Resource_yudqa")
 speed = Vector2(406.25, 0)
-amount = 2
-amount_extra = -1
-sound_attack = ExtResource("6_bisy4")
 
 [resource]
 script = ExtResource("13_ctnqf")
 name = &"iceball"
 type = 2
 gets_hurt_to = ExtResource("8_h145u")
-appearing_time_sec = 1.0
-physics_config = ExtResource("10_g0erl")
-physics_behavior = ExtResource("9_81nqu")
-physics_crouchable = true
 physics_shaper = ExtResource("11_cr6rj")
-physics_shaper_crouch = ExtResource("12_vdl0u")
 animation_sprites = ExtResource("2_pylld")
-animation_behavior = ExtResource("1_fwlh1")
-animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_cx1gk")
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("9_x68dy")
-extra_vars = {}
-sound_hurt = ExtResource("15_njonu")
-sound_death = ExtResource("14_4q04l")
-sound_pitch = 1.0

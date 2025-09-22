@@ -52,7 +52,7 @@ func _deinitialise() -> void:
 	pass
 
 func _add_config() -> void:
-	if !player: return
+	if !player || !player.get(&"suit"): return
 	if !is_applied:
 		var character_config = apply_config.get(CharacterManager.get_character_name(), "Mario")
 		for prop in apply_properties:
