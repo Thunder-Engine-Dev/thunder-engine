@@ -9,7 +9,7 @@ var deletion_progress: float
 var is_empty: bool
 var _tweak: bool
 
-@onready var faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
+var faster_deletion_tw: bool
 
 signal save_deleted
 
@@ -17,6 +17,7 @@ func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
 	_tweak = SettingsManager.get_tweak("load_save_from_world_start", false)
+	faster_deletion_tw = SettingsManager.get_tweak("faster_save_deletion", false)
 	player_exit.connect(func(): deletion_progress = 0)
 
 
