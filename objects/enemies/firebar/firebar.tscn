@@ -6,6 +6,5 @@
 script = ExtResource("1_qr400")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-visible = false
 position = Vector2(4.17233e-07, 4.17233e-07)
 scale = Vector2(0.8, 0.8)
