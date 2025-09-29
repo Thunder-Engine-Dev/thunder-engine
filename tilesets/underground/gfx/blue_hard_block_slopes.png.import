@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn666uavphid1"
-path="res://.godot/imported/donut_lift.png-571a4adec4e5dc144ddd9f1e4f66529a.ctex"
+uid="uid://c4g1kpmtdvkcc"
+path="res://.godot/imported/blue_hard_block_slopes.png-e3b84281ac63169c6b76e2b4e0371e06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/platform/donut_lift.png"
-dest_files=["res://.godot/imported/donut_lift.png-571a4adec4e5dc144ddd9f1e4f66529a.ctex"]
+source_file="res://engine/tilesets/underground/gfx/blue_hard_block_slopes.png"
+dest_files=["res://.godot/imported/blue_hard_block_slopes.png-e3b84281ac63169c6b76e2b4e0371e06.ctex"]
 
 [params]
 
