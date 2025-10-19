@@ -70,11 +70,13 @@ signal stopwatch_activated
 signal stopwatch_cancelled
 signal values_reset
 
+var life_on_hundred_coins: bool = true
 
 func add_coin(amount: int = 1) -> void:
 	coin_added.emit()
 	values.coins += 1
 	if values.coins > 99:
+		if !life_on_hundred_coins: return
 		values.coins = 0
 		Thunder.add_lives(1)
 		var _sfx = CharacterManager.get_sound_replace(LIFE_SOUND, LIFE_SOUND, "1up", false)
