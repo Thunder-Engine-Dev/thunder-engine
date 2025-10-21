@@ -21,6 +21,7 @@ const WARP_CUTSCENE = preload("res://engine/objects/players/prefabs/sounds/pipe_
 @export_file("*.tscn", "*.scn") var warp_to_scene: String
 @export var trigger_finish: bool = false
 @export var warping_speed: float = 60
+@export var transition_wait_time: float = 1.2
 @export var warping_sound: AudioStream = DEFAULT_WARP_SOUND
 @export_group("Tweaks")
 @export var warp_invisible_left_right: bool = true
@@ -60,6 +61,9 @@ var _gotoscene_patch: bool
 @onready var pos_player_invisible = $PosPlayerInvisible
 
 
+
+var locked: bool = false
+
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 
@@ -90,6 +94,9 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 		_label()
 		return
+	
+	_target = transition_wait_time
+	
 	if !player: return
 	_warp_initiator()
 
@@ -98,7 +105,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _warp_initiator() -> void:
-	if _on_warp || player.warp != Player.Warp.NONE:
+	if _on_warp || player.warp != Player.Warp.NONE || locked:
 		return
 	
 	var input_x: float = player.left_right
@@ -152,8 +159,9 @@ func _warp_initiator() -> void:
 
 func _warping_process(delta: float) -> void:
 	if _duration < _target:
-		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
-		player.sync_position()
+		if _duration <= _target - 1.2:
+			player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
+			player.sync_position()
 		_duration += delta
 		_tweak_process()
 
