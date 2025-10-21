@@ -15,12 +15,9 @@ var _on_player_after_middle: bool = false
 func _ready() -> void:
 	name = "circle_transition"
 	color_rect.material.set_shader_parameter(&"center", Vector2(0.5, 0.5))
-	#resized.connect(func():
-		#if !color_rect: return
-		#var rect = get_rect()
-		#color_rect.material.set_shader_parameter("screen_width", rect.size.x)
-		#color_rect.material.set_shader_parameter("screen_height", rect.size.y)
-	#)
+	var rect = get_rect()
+	color_rect.material.set_shader_parameter("screen_width", rect.size.x)
+	color_rect.material.set_shader_parameter("screen_height", rect.size.y)
 	
 	start.emit()
 

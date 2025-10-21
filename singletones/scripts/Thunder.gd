@@ -206,7 +206,7 @@ class View:
 			push_warning("[Thunder Engine] Failed to retrieve current camera, is the current viewport correct?")
 			return
 		trans = cam.get_viewport_transform()
-		border.size = Vector2i(cam.get_viewport_rect().size)
+		border.size = Vector2i(cam.get_viewport_rect().size * cam.get_window().content_scale_factor)
 		border.position = Vector2i(cam.get_screen_center_position() - border.size/2.0)
 		target_trans = trans
 		if _target_pos != Vector2.INF:
