@@ -11,6 +11,9 @@ var _on_player_after_middle: bool = false
 
 @onready var color_rect: ColorRect = $ColorRect
 
+func _init() -> void:
+	correct_aspect_ratio = false
+
 
 func _ready() -> void:
 	name = "circle_transition"
@@ -20,6 +23,7 @@ func _ready() -> void:
 	color_rect.material.set_shader_parameter("screen_height", rect.size.y)
 	
 	start.emit()
+
 
 ## Sets the center of transition on some node
 func on(ref: Variant, direct = false) -> Transition:

@@ -27,7 +27,7 @@ func _on_window_resized():
 func _update_view() -> void:
 	if !vp: return
 	
-	var window_size = DisplayServer.window_get_size()
+	var window_size := DisplayServer.window_get_size()
 	var con_scale = Vector2(
 		float(window_size.x) / float(vp.size.x),
 		float(window_size.y) / float(vp.size.y),
@@ -40,10 +40,11 @@ func _update_view() -> void:
 	)
 	container.texture_filter = TEXTURE_FILTER_NEAREST if ((container.scale.y == 1 || (int(ceil(container.scale.y)) % 2 == 0 && container.scale.y >= 2)) && !SettingsManager.settings.filter) else TEXTURE_FILTER_LINEAR
 	if !keep_aspect:
+		@warning_ignore("narrowing_conversion")
 		vp.size.x = 480 * (float(window_size.x) / float(window_size.y))
 	else:
-		container.position.x = (window_size.x / 2) - (vp.size.x * container.scale.x / 2)
-		container.position.y = (window_size.y / 2) - (vp.size.y * container.scale.y / 2)
+		container.position.x = (window_size.x / 2.0) - (vp.size.x * container.scale.x / 2)
+		container.position.y = (window_size.y / 2.0) - (vp.size.y * container.scale.y / 2)
 	
 	_update_sound_function()
 

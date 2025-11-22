@@ -6,10 +6,10 @@
 [ext_resource type="Script" uid="uid://dwvmw4hh4t2v6" path="res://engine/objects/players/player_sprite.gd" id="4_ng5qt"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
-[ext_resource type="Script" uid="uid://cvwfgpax38kc4" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
+[ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
 [ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
-[ext_resource type="Script" uid="uid://bkq5fmkvxvno0" path="res://engine/objects/powerups/super_star/mario_attack.gd" id="10_ph62t"]
+[ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="10_ng5qt"]
 [ext_resource type="Script" uid="uid://cp2mj8ibe2l2m" path="res://engine/node_modifiers/player_physics_modifier/slippery_physics_modifier.gd" id="13_217v7"]
 [ext_resource type="Script" uid="uid://bh0t8gurod3pp" path="res://engine/objects/players/player_config.gd" id="14_217v7"]
 [ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="15_fng60"]
@@ -212,7 +212,7 @@ max_results = 8
 collision_mask = 3
 collide_with_areas = true
 collide_with_bodies = false
-script = ExtResource("10_ph62t")
+script = ExtResource("10_ng5qt")
 killer_type = &"starman"
 killing_detection_scale = 2.0
 trigger_enemy_failed_signal = false
