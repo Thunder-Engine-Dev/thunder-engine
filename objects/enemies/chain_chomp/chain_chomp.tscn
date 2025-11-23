@@ -16,15 +16,7 @@ size = Vector2(32, 24)
 resource_local_to_scene = true
 script = ExtResource("5_e2s24")
 creation_nodepack = ExtResource("3_dm4jp")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -106,5 +98,5 @@ position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="_on_killed_succeeded"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="_on_killed_succeeded"]
