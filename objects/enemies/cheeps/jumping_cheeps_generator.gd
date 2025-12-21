@@ -34,6 +34,7 @@ func _time() -> void:
 		fish.reset_physics_interpolation()
 		fish.speed.x = Thunder.rng.get_randi_range(speed_min.x, speed_max.x)
 		fish.speed.y = Thunder.rng.get_randi_range(speed_min.y, speed_max.y)
+		fish.life_time = 2.0
 		fish.add_to_group("obj_by_" + str(get_instance_id()))
 		Scenes.current_scene.add_child(fish)
 

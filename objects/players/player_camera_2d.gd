@@ -63,26 +63,30 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 
 
 func _screen_border_logic() -> void:
-	if player && !stop_blocking_edges && ("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
-		var rot: float = get_viewport_transform().affine_inverse().get_rotation()
-		var kc: KinematicCollision2D = null
-		var left_col: bool
-		var right_col: bool
-		while !kc && player.get_global_transform_with_canvas().get_origin().x < border_push_offset:
-			kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
-			left_col = enable_left_border_death
-			if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
-				player.vel_set_x.call_deferred(0)
-			#player.sync_position.call_deferred(false)
-		while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - border_push_offset:
-			kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
-			left_col = false
-			right_col = enable_right_border_death
-			if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
-				player.vel_set_x.call_deferred(0)
-			#player.sync_position.call_deferred(false)
-		if kc && kc.get_collider() && (left_col || right_col):
-			player.die()
+	if !player || stop_blocking_edges: return
+	if !("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
+		return
+	if player.warp != Player.Warp.NONE: return
+	
+	var rot: float = get_viewport_transform().affine_inverse().get_rotation()
+	var kc: KinematicCollision2D = null
+	var left_col: bool
+	var right_col: bool
+	while !kc && player.get_global_transform_with_canvas().get_origin().x < border_push_offset:
+		kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
+		left_col = enable_left_border_death
+		if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
+			player.vel_set_x.call_deferred(0)
+		#player.sync_position.call_deferred(false)
+	while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - border_push_offset:
+		kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
+		left_col = false
+		right_col = enable_right_border_death
+		if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
+			player.vel_set_x.call_deferred(0)
+		#player.sync_position.call_deferred(false)
+	if kc && kc.get_collider() && (left_col || right_col):
+		player.die()
 
 
 func _xscroll_logic() -> void:
