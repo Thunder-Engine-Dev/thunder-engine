@@ -152,7 +152,7 @@ func move_suggestion(amount: int) -> void:
 			found = cmd
 			break
 		if uncompl_text == cmd:
-			found = cmd_keys[wrapi(i + amount, 0, commands.size() - 1)]
+			found = cmd_keys[wrapi(i + amount, 0, commands.size())]
 			break
 	if found:
 		var old_text: String = input.text.get_slice(" ", 1)
