@@ -11,7 +11,7 @@ class_name PlayerSuitProjectile
 func create_projectile(player: Player) -> Node2D:
 	if !player: return
 	
-	return NodeCreator.prepare_ins_2d(projectile, player).create_2d().call_method(
+	return NodeCreator.prepare_ins_2d(projectile, player).bind_global_transform().create_2d().call_method(
 		func(bull: Node2D) -> void:
 			bull.global_scale = player.global_scale
 			bull.global_rotation = player.global_rotation
