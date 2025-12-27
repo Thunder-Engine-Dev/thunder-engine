@@ -331,6 +331,7 @@ func control_process() -> void:
 
 func _set_ignore_input() -> void:
 	left_right = 0.0
+	slow_walking = false
 	up_down = 0.0
 	jumping = 0
 	jumped = false
