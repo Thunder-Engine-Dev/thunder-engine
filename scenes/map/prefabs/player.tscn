@@ -44,8 +44,8 @@ shape = SubResource("RectangleShape2D_wmk0a")
 z_index = -1
 position = Vector2(0, -32)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_gfq2v")
 texture = ExtResource("3_5re0p")
 lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_gfq2v")
 
 [connection signal="area_entered" from="Player/hitbox" to="." method="_on_hitbox_area_entered"]

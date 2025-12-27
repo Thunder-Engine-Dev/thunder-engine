@@ -1,5 +1,7 @@
 extends Node2D
 
+const LoopOffsetBehaviorScript = preload("uid://cdwp13k80fepv")
+
 @export var speed: float = 40
 @export var faster_ex: int = 15
 @export var dots: PackedScene
@@ -14,6 +16,8 @@ var ex: int = 1
 var is_faster: bool = false
 var fast_forwarding: bool = false
 
+var loop_offset_behavior_script: GDScript
+
 @onready var map = Scenes.current_scene
 @onready var player: AnimatedSprite2D = $Player
 @onready var camera: Camera2D = $Camera2D
@@ -21,11 +25,14 @@ var fast_forwarding: bool = false
 
 func _ready() -> void:
 	# Sets powerup state to sprite
+	var _suit: PlayerSuit
 	if Thunder._current_player_state != null:
-		player.sprite_frames = SkinsManager.apply_player_skin(Thunder._current_player_state)
+		_suit = Thunder._current_player_state
 	else:
-		player.sprite_frames = SkinsManager.apply_player_skin(CharacterManager.get_suit("small"))
+		_suit = CharacterManager.get_suit("small")
+	player.sprite_frames = SkinsManager.apply_player_skin(_suit)
 	
+	loop_offset_behavior_script = ByNodeScript.activate_script(LoopOffsetBehaviorScript, player, {suit = _suit.name})
 	player.play(&"walk")
 	
 	await get_tree().physics_frame
