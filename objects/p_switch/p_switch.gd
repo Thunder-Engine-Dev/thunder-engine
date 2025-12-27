@@ -38,7 +38,8 @@ func _physics_process(delta: float) -> void:
 		duration.time_left < 2 && \
 		_music_faded == 0:
 			_music_faded = 1
-			Audio.play_1d_sound(P_SWITCH_RUNOUT, false)
+			var _snd = CharacterManager.get_sound_replace(P_SWITCH_RUNOUT, P_SWITCH_RUNOUT, "bonus_run_out", false)
+			Audio.play_1d_sound(_snd, false)
 	
 	if !duration.is_stopped() && \
 		duration.time_left > 0.0 && \
@@ -92,7 +93,8 @@ func _on_activation(player: Player) -> void:
 		player.died.connect(_stop_music, CONNECT_ONE_SHOT)
 	activated.emit()
 	active()
-	Audio.play_music(p_switch_music, 98, { volume = 0 }, false, false)
+	var _snd = CharacterManager.get_sound_replace(p_switch_music, p_switch_music, "p_switch", false)
+	Audio.play_music(_snd, 98, { volume = 0 }, false, false)
 
 
 func _on_duration_timeout() -> void:

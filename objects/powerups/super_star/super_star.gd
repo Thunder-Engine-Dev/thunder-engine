@@ -37,4 +37,5 @@ func collect() -> void:
 		var _sfx = CharacterManager.get_sound_replace(starman_music, starman_music, "starman", false)
 		if "loop" in _sfx: _sfx.loop = true
 		Audio.play_music(_sfx, 98, { volume = 0 })
+	player._starman_runout_played = false
 	player._starman_faded = false

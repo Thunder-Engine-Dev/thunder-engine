@@ -31,6 +31,7 @@ enum WarpDir {
 }
 
 const HEAD_SIGNAL_COOLDOWN: int = 1
+const RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
 
 @export_group("General")
 @export var suit: PlayerSuit
@@ -208,10 +209,18 @@ func _ready() -> void:
 
 
 var _starman_faded: bool
+var _starman_runout_played: bool
 
 func _physics_process(delta: float) -> void:
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = suit
+	if is_starman() && CharacterManager.get_global_tweak("enable_starman_run_out_sound") && \
+		timer_starman.time_left > 0.0 && \
+		timer_starman.time_left < 2.0 && \
+		!_starman_runout_played:
+			_starman_runout_played = true
+			var _snd = CharacterManager.get_sound_replace(RUNOUT, RUNOUT, "bonus_run_out", false)
+			Audio.play_1d_sound(_snd, false)
 	if is_starman() && \
 		timer_starman.time_left > 0.0 && \
 		timer_starman.time_left < 1.5 && \
@@ -462,6 +471,7 @@ func _on_starman_timeout() -> void:
 	stars.emitting = false
 	attack.enabled = is_sliding
 	_starman_faded = false
+	_starman_runout_played = false
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if mus_loader:
 		if mus_loader.is_paused:

@@ -24,5 +24,6 @@ func execute(args:Array) -> Command.ExecuteResult:
 		#Audio._music_channels[98].volume_db = 0
 	#else:
 		#Audio.play_music(starman_music, 98, { volume = 0 })
+	player._starman_runout_played = false
 	player._starman_faded = false
 	return Command.ExecuteResult.new("Success")

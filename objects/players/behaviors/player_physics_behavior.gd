@@ -12,8 +12,8 @@ func _ready() -> void:
 	player = node as Player
 	can_coyote = SettingsManager.get_tweak("coyote_time", true)
 	
-	player.underwater.got_into_water.connect(player.set.bind(&"is_underwater", true), CONNECT_REFERENCE_COUNTED)
-	player.underwater.got_out_of_water.connect(player.set.bind(&"is_underwater", false), CONNECT_REFERENCE_COUNTED)
+	player.underwater.got_into_water.connect(_set_underwater_to.bind(true), CONNECT_REFERENCE_COUNTED)
+	player.underwater.got_out_of_water.connect(_set_underwater_to.bind(false), CONNECT_REFERENCE_COUNTED)
 
 
 func _physics_process(delta: float) -> void:
@@ -584,6 +584,13 @@ func _floor_process() -> void:
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)
 		
+
+func _set_underwater_to(to: bool) -> void:
+	player.is_underwater = to
+	var snd_name = "water_splash" + ("_in" if to else "_out")
+	var _snd: AudioStream = CharacterManager.get_sound_replace(null, null, snd_name, false)
+	Audio.play_sound(_snd, player, false)
+
 
 #func _process_custom_tile_data(tile: TileMapLayer, kc: KinematicCollision2D) -> void:
 	#var custom_data_arr: PackedStringArray = [
