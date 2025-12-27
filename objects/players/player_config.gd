@@ -10,6 +10,7 @@ class_name PlayerConfig
 @export var walk_max_walking_speed: float = 175
 @export var walk_max_running_speed: float = 350
 @export var walk_running_grace_time: float = 0.05
+@export var walk_slow_walk_speed: float = 68.75
 @export_group("Underwater Walk", "underwater_walk_")
 @export var underwater_walk_max_walking_speed: float = 175
 @export var underwater_walk_max_running_speed: float = 175

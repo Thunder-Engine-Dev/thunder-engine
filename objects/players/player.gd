@@ -69,6 +69,7 @@ var running: bool
 var attacked: bool
 var attacking: bool
 var slided: bool
+var slow_walking: bool
 
 @warning_ignore("unused_private_class_variable")
 var _has_jumped: bool
@@ -306,6 +307,9 @@ func control_process() -> void:
 	left_right = clamp(Input.get_axis(control.left, control.right) * 1.25, -1, 1)
 	if stuck_block_left && left_right < 0: left_right = 0
 	if stuck_block_right && left_right > 0: left_right = 0
+	slow_walking = left_right == 0 && \
+		Input.is_action_pressed(control.left) && \
+		Input.is_action_pressed(control.right)
 	up_down = Input.get_axis(control.up, control.down)
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))

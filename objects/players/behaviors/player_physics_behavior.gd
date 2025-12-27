@@ -107,13 +107,22 @@ func _movement_x(delta: float) -> void:
 	# Crouching / Completed Level motion speed
 	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0 || player.completed:
 		player.is_skidding = false
-		if !player.crouch_forced || player.is_on_floor():
+		if (
+			(!player.crouch_forced || player.is_on_floor()) &&
+			!(player.slow_walking && abs(player.speed.x) < config.walk_slow_walk_speed && !player.is_crouching)
+		):
 			var deceleration: float = (
 				config.walk_crouch_deceleration if (
 					(player.is_crouching && player.is_on_floor()) && player.left_right != player.direction
 				) else config.walk_deceleration
 			)
 			_decelerate(deceleration, delta)
+		if player.slow_walking && !player.is_crouching:
+			if abs(player.speed.x) < config.walk_initial_speed:
+				if player.is_on_wall():
+					player.direction *= -1
+				player.speed.x = player.direction * config.walk_initial_speed
+			_accelerate(config.walk_slow_walk_speed, config.walk_acceleration, delta)
 		return
 	
 	_movement_x_acceleration(delta)
