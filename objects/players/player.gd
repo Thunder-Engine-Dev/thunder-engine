@@ -317,7 +317,7 @@ func control_process() -> void:
 	if stuck_block_left && left_right < 0: left_right = 0
 	if stuck_block_right && left_right > 0: left_right = 0
 	slow_walking = \
-		left_right == 0 && !has_stuck && \
+		left_right == 0 && !has_stuck && !completed && \
 		Input.is_action_pressed(control.left) && \
 		Input.is_action_pressed(control.right)
 	up_down = Input.get_axis(control.up, control.down)
