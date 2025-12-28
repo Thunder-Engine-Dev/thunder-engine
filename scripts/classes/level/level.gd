@@ -195,7 +195,12 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_player.completed = true
 	Audio.stop_all_musics()
 	if completion_music:
-		var _custom_music = CharacterManager.get_sound_replace(completion_music, DEFAULT_COMPLETION, "level_complete", false)
+		var replace_all_tweak = CharacterManager.get_global_tweak("force_override_level_complete_music")
+		var _custom_music = CharacterManager.get_sound_replace(
+			completion_music,
+			DEFAULT_COMPLETION if !replace_all_tweak else completion_music,
+			"level_complete", false
+		)
 		Audio.play_music(_custom_music, -1)
 
 	if walking:

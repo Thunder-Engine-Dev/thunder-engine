@@ -210,6 +210,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 	"load_sounds_from_siblings_on_fallback": true, # to decrease unnecessary duplication of sounds, if the sound has a sibling and only one of them is provided in a skin, the sibling will use it too (pipe_in - pipe_out, enemy_bump - block_bump, etc)
 	"checkpoint_sound_delay_sec": 0.5,
 	"force_override_menu_select_sound": true,
+	"force_override_level_complete_music": false,
 	"boomerang_spin_sound_delay_sec": 0.5,
 	"enable_starman_run_out_sound": false,
 }
