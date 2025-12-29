@@ -17,7 +17,7 @@ const PILE: PackedScene = preload("./chain_chomp_pile.tscn")
 @export var attacking_preparation_duration: float = 1.0
 @export var attacking_rest_duration: float = 0.9
 @export var attacking_sound: AudioStream = preload("./sfx/chain_chomp_barking.wav")
-@export var attacking_barking_times: int = 6
+@export var attacking_barking_times: int = 5
 
 var dir: int
 var step: int
@@ -128,6 +128,8 @@ func _attacking_process() -> void:
 	tween.tween_property(self, ^"global_position", to, to.distance_to(pos_when_attack) / attacking_speed)
 	for i in attacking_barking_times:
 		tween.tween_callback(func() -> void:
+			if i % 3 > 1:
+				return
 			Audio.play_sound(attacking_sound, self, false)
 		)
 		tween.tween_interval(attacking_rest_duration / attacking_barking_times)
