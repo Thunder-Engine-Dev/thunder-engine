@@ -20,6 +20,7 @@ extends PathFollow2D
 @export var falling_enabled: bool = false
 @export var falling_direction: Vector2 = Vector2.DOWN
 @export var falling_acceleration: float = 10.0
+@export var falling_delay: float = 0.0
 @export_group("Extension")
 @export var custom_vars: Dictionary
 @export var custom_script: GDScript
@@ -41,6 +42,7 @@ var non_players_have_stood: bool
 
 var linear_velocity: Vector2
 var _path_falling_speed: float
+var _falling_time: float
 #var _block_ready: bool = false
 
 @onready var custom_script_instance: ByNodeScript = ByNodeScript.activate_script(custom_script,self,custom_vars)
@@ -112,11 +114,13 @@ func _on_path_movement_process(delta: float) -> void:
 	#var pos: Vector2 = global_position
 	# Moving
 	if players_have_stood && falling_acceleration != 0 && falling_enabled:
-		linear_velocity += falling_direction.normalized() * _path_falling_speed * delta
-		if curve:
-			_path_falling_speed += falling_acceleration
-		else:
-			_path_falling_speed = falling_acceleration
+		_falling_time += delta
+		if _falling_time > falling_delay:
+			linear_velocity += falling_direction.normalized() * _path_falling_speed * delta
+			if curve:
+				_path_falling_speed += falling_acceleration
+			else:
+				_path_falling_speed = falling_acceleration
 	
 	if curve:
 		progress += speed * delta
@@ -154,7 +158,9 @@ func _non_path_movement_process(delta: float) -> void:
 	
 	# Falling
 	if players_have_stood && falling_acceleration != 0 && falling_enabled:
-		linear_velocity += falling_direction.normalized() * falling_acceleration * delta
+		_falling_time += delta
+		if _falling_time > falling_delay:
+			linear_velocity += falling_direction.normalized() * falling_acceleration * delta
 	
 	global_position += linear_velocity * Thunder.get_delta(delta)
 
