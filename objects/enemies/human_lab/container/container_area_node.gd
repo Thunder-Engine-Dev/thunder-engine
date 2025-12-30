@@ -8,6 +8,6 @@ func _physics_process(delta: float) -> void:
 	delay += delta / max(0.01, Engine.time_scale)
 	
 	if area.player != null && delay > 2.0:
-		Audio.play_1d_sound(BUBBLES)
+		Audio.play_1d_sound(BUBBLES, false)
 		delay = 0
 	
