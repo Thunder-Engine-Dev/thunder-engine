@@ -118,23 +118,20 @@ func _prepare_template() -> void:
 	# Adding TileMap with tileset we defined above
 	var tilemap = TileMapLayer.new()
 	tilemap.tile_set = tileset
+	tilemap.physics_quadrant_size = 1
+	tilemap.navigation_enabled = false
 	add_child(tilemap, true)
 	tilemap.set_cell(Vector2i(2, 13), 0, Vector2i.ZERO)
 	tilemap.set_owner(self)
-	tilemap.set_meta(&"_edit_lock_", true)
 
 	var hud = load("res://engine/components/hud/hud.tscn").instantiate()
 	add_child(hud)
 	hud.set_owner(self)
 
-	var parallax_bg = ParallaxBackground.new()
+	var parallax_bg = Parallax2D.new()
 	add_child(parallax_bg, true)
 	parallax_bg.set_owner(self)
-
-	var folder = Node2D.new()
-	add_child(folder)
-	folder.set_name('Objects')
-	folder.set_owner(self)
+	parallax_bg.set_meta(&"_edit_lock_", true)
 
 
 func _physics_process(delta: float) -> void:
