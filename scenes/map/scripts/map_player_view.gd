@@ -78,6 +78,7 @@ func move(delta: float) -> void:
 		
 		if current_marker.is_level() && reached:
 			map.to_level = Scenes.get_scene_path(current_marker.level)
+			current_marker.level_reached.emit()
 			
 		
 		if !current_marker.is_level() && reached:
