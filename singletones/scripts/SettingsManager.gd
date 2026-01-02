@@ -19,7 +19,7 @@ var default_settings: Dictionary = {
 	"xscroll": false,
 	"vsync": 1,
 	"scale": 1,
-	"physics_tps": 0,
+	"physics_tps": 0, # DEPRECATED
 	"filter": false,
 	"fullscreen": false,
 	"controls": {
@@ -72,12 +72,16 @@ var no_saved_settings: bool = false
 var request_restart: bool = false
 
 var tweaks: Dictionary = {}
+
 var device_keyboard: bool = true
 var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 var game_focused: bool = true
 
 var enable_shortcut_scene_change_keys: bool = true
+
+## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows
+var ui_scale: float = 0.0
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
@@ -302,6 +306,33 @@ func _window_scale_logic(force_update: bool = false) -> void:
 		GlobalViewport._update_view()
 
 	old_scale = settings.scale
+
+
+## Defines UI scale, mainly for HiDPI displays. Use for external windows, e.g. the console.
+func get_ui_scale(window: Window = get_window()) -> float:
+	if ui_scale >= 0.5:
+		return ui_scale
+	var current_screen := DisplayServer.window_get_current_screen(window.get_window_id())
+	var non_windows_scale := DisplayServer.screen_get_scale(current_screen)
+	if OS.get_name() != "Windows":
+		return non_windows_scale
+	elif DisplayServer.screen_get_dpi(current_screen) > 120:
+		return 2.0
+	return 1.0
+
+
+func scale_window(window: Window, scale: float = 1.0) -> void:
+	if window.content_scale_factor == scale: return
+	window.content_scale_factor = scale
+	window.size *= scale
+	window.min_size *= scale
+	var usable_size = DisplayServer.screen_get_usable_rect(
+		DisplayServer.window_get_current_screen(window.get_window_id())
+	).size
+	if window.size.y > usable_size.y:
+		window.size.y = usable_size.y
+	if window.size.x > usable_size.x:
+		window.size.x = usable_size.x
 
 
 ## Saves the settings variable to file

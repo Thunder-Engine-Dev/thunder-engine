@@ -169,5 +169,12 @@ func col_print(msg: String, col:Color) -> void:
 	output.text += "[color=%s]%s[/color]\n" % [col.to_html(), msg]
 	print_rich(msg)
 
+
+var init_pos := position
 func _on_visibility_changed():
 	input.grab_focus()
+	if !visible: return
+	var scale = SettingsManager.get_ui_scale(self)
+	SettingsManager.scale_window(self, scale)
+	if position == init_pos:
+		position *= scale

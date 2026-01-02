@@ -10,7 +10,9 @@ extends Node
 var view: View = View.new() # View subsingleton
 ## Used to get access to [Thunder.RNG] subsingleton
 var rng: RNG = RNG.new()
+## Used to get access to [Thunder.AutoSplitter] class
 var autosplitter: AutoSplitter
+
 ## Default gravity speed
 var gravity_speed: float = 50
 var _target_speed: int = 50
@@ -39,11 +41,12 @@ var _current_hud: CanvasLayer:
 		if !(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer)): return null
 		return _current_hud
 
-# TO GET CURRENT CAMERA, USE GlobalViewport.vp.get_camera_2d()
+## TO GET CURRENT CAMERA, USE GlobalViewport.vp.get_camera_2d()
 @warning_ignore("unused_private_class_variable")
 var _current_camera: Camera2D
 
 
+#region Helper Functions
 ## Gets an [param key] from [param obj], and this won't send any errors if there is no such key in the object
 func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
@@ -77,6 +80,7 @@ func _disconnect(sig: Signal, callable: Callable) -> bool:
 ## Gets relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
+#endregion
 
 
 func _init() -> void:
@@ -158,6 +162,7 @@ func set_pause_game(pause: bool) -> void:
 
 ## == NODE UTILS ==
 
+#region Node Utils
 ## Move node on top of subtree (behind all nodes on the same z-index)
 func reorder_top(node: Node) -> void:
 	var parent = node.get_parent()
@@ -181,6 +186,7 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 		return
 
 	node_parent.move_child(node, target.get_index())
+#endregion
 
 
 ## == SUBSINGLETONS ==
