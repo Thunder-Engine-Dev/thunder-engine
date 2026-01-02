@@ -81,7 +81,7 @@ var game_focused: bool = true
 var enable_shortcut_scene_change_keys: bool = true
 
 ## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows
-var ui_scale: float = 0.0
+var ui_scale: float
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
@@ -321,9 +321,11 @@ func get_ui_scale(window: Window = get_window()) -> float:
 	return 1.0
 
 
-func scale_window(window: Window, scale: float = 1.0) -> void:
+func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -> void:
 	if window.content_scale_factor == scale: return
 	window.content_scale_factor = scale
+	if no_resize:
+		return
 	window.size *= scale
 	window.min_size *= scale
 	var usable_size = DisplayServer.screen_get_usable_rect(
@@ -452,6 +454,23 @@ func get_mouse_position() -> Vector2:
 func get_quality() -> QUALITY:
 	@warning_ignore("int_as_enum_without_cast")
 	return roundi(settings.quality)
+
+
+func get_key_label(action: String) -> String:
+	var _events: Array[InputEvent] = InputMap.action_get_events(action)
+	var _event: String = "<NOT SET>"
+	var _temp: String
+	for i in _events:
+		if i is InputEventKey:
+			_temp = i.as_text().get_slice(' (', 0) + ' button'
+			#if SettingsManager.device_keyboard:
+			_event = _temp
+			break
+		#elif i is InputEventJoypadButton:
+		#	_temp = "Joy " + str(i.button_index)
+		if _temp: _event = _temp
+	
+	return _event
 
 
 func _input(event: InputEvent) -> void:

@@ -65,5 +65,5 @@ uppercase = true
 offset_top = 2.0
 offset_bottom = 43.0
 theme_override_font_sizes/font_size = 16
-text = "PRESS ENTER TO ACCEPT
-PRESS ESC TO CANCEL"
+text = "PRESS %s TO ACCEPT
+PRESS %s TO CANCEL"
