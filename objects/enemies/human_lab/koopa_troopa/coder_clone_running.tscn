@@ -23,15 +23,8 @@ size = Vector2(48, 63)
 resource_local_to_scene = true
 script = ExtResource("4_mmpkq")
 creation_nodepack = ExtResource("2_ia4sv")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, 0)
@@ -42,15 +35,8 @@ custom_script = ExtResource("3_3whwn")
 resource_local_to_scene = true
 script = ExtResource("4_mmpkq")
 creation_nodepack = ExtResource("2_ia4sv")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -107,6 +93,7 @@ collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 20.0
+platform_on_leave = 2
 script = ExtResource("1_qmatq")
 stopping = false
 restoring_damage_delay = 0.1
