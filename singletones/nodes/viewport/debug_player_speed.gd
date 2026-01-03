@@ -1,6 +1,6 @@
 extends Label
 
-@onready var template := "%.2f\n%.2f\n%d\n%.2f\n%.2f\n%.1f"
+@onready var template := "%.2f\n%.2f\n%d\n%.2f\n%.2f\n%.2f\n%.2f\n%.1f"
 
 func _ready() -> void:
 	hide()
@@ -17,6 +17,8 @@ func _physics_process(delta: float) -> void:
 	var real_vel = pl.get_real_velocity()
 	text = template % [
 		pl.speed.x, pl.speed.y, Thunder.autosplitter.il_frame,
-		real_vel.x, real_vel.y, pl.get("ghost_speed_y")
+		real_vel.x, real_vel.y,
+		pl.global_position.x, pl.global_position.y,
+		pl.get("ghost_speed_y")
 	]
 	
