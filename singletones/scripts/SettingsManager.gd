@@ -321,13 +321,13 @@ func get_ui_scale(window: Window = get_window()) -> float:
 	return 1.0
 
 
-func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -> void:
-	if window.content_scale_factor == scale: return
-	window.content_scale_factor = scale
-	if no_resize:
-		return
-	window.size *= scale
-	window.min_size *= scale
+func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false, resize_forced: bool = false) -> void:
+	if (!no_resize && window.content_scale_factor != scale) || resize_forced:
+		window.size *= scale
+		window.min_size *= scale
+	if window.content_scale_factor != scale:
+		window.content_scale_factor = scale
+		
 	var usable_size = DisplayServer.screen_get_usable_rect(
 		DisplayServer.window_get_current_screen(window.get_window_id())
 	).size
@@ -335,6 +335,10 @@ func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -
 		window.size.y = usable_size.y
 	if window.size.x > usable_size.x:
 		window.size.x = usable_size.x
+	if window.position.x + window.size.x > usable_size.x:
+		window.position.x = usable_size.x - window.size.x
+	if window.position.y + window.size.y > usable_size.y:
+		window.position.y = usable_size.y - window.size.y
 
 
 ## Saves the settings variable to file
