@@ -15,6 +15,7 @@ walk_turning_acce = 834.0
 walk_max_walking_speed = 175.0
 walk_max_running_speed = 400.0
 walk_running_grace_time = 0.05
+walk_slow_walk_speed = 68.75
 underwater_walk_max_walking_speed = 175.0
 underwater_walk_max_running_speed = 250.0
 jump_speed = 700.0
