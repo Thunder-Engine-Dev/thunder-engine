@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://h3wdek115xb4"]
+[gd_scene load_steps=10 format=3 uid="uid://h3wdek115xb4"]
 
 [ext_resource type="Script" uid="uid://g4e5yxw7px7v" path="res://engine/objects/platform/donut_lift.gd" id="1_1ug7h"]
 [ext_resource type="Texture2D" uid="uid://cn666uavphid1" path="res://engine/objects/platform/donut_lift.png" id="1_bisko"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="3_qomtk"]
+[ext_resource type="Script" uid="uid://cn0a7wob2414p" path="res://engine/objects/detectors/player_detection.gd" id="4_p5ccm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkmyh"]
 size = Vector2(32, 32)
@@ -34,6 +35,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ob2ak"]
+size = Vector2(32, 2)
+
 [node name="DonutLift" type="AnimatableBody2D"]
 collision_layer = 112
 script = ExtResource("1_1ug7h")
@@ -49,6 +53,20 @@ autoplay = "default"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("3_qomtk")
 new_rect = Rect2(-128, -512, 256, 768)
 metadata/_edit_lock_ = true
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+script = ExtResource("4_p5ccm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+visible = false
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_ob2ak")
+
+[connection signal="player_enter" from="PlayerDetection" to="." method="_on_player_enter"]
+[connection signal="player_exit" from="PlayerDetection" to="." method="_on_player_exit"]
