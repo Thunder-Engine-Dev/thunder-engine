@@ -309,9 +309,9 @@ func _fullscreen_logic() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		await SettingsManager._window_scale_logic(true)
 		if "Linux" in OS.get_name():
-			await get_tree().process_frame
-			get_window().move_to_center()
-			get_window().grab_focus()
+			await get_tree().physics_frame
+			get_window().move_to_center.call_deferred()
+			get_window().grab_focus.call_deferred()
 	elif settings.fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
