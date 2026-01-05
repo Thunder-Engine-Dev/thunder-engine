@@ -300,9 +300,13 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	) * settings.scale)
 	await get_tree().physics_frame
 	if old_scale != 0 || settings.scale > 1:
-		DisplayServer.window_set_position(
-			screen_center - (DisplayServer.window_get_size() / 2)
-		)
+		if "Linux" in OS.get_name():
+			get_window().move_to_center()
+			get_window().grab_focus()
+		else:
+			DisplayServer.window_set_position(
+				screen_center - (DisplayServer.window_get_size() / 2)
+			)
 		GlobalViewport._update_view()
 
 	old_scale = settings.scale
