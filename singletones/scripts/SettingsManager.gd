@@ -180,14 +180,7 @@ func _process_settings() -> void:
 	_window_scale_logic()
 
 	# Fullscreen
-	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-		# This is needed to avoid borders being outside the monitor boundaries when you exit fullscreen
-		if OS.get_name() == "Windows":
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		SettingsManager._window_scale_logic(true)
-	elif settings.fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	_fullscreen_logic()
 
 	# Filter
 	GlobalViewport._update_view()
@@ -300,16 +293,27 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	) * settings.scale)
 	await get_tree().physics_frame
 	if old_scale != 0 || settings.scale > 1:
-		if "Linux" in OS.get_name():
-			get_window().move_to_center()
-			get_window().grab_focus()
-		else:
-			DisplayServer.window_set_position(
-				screen_center - (DisplayServer.window_get_size() / 2)
-			)
+		DisplayServer.window_set_position(
+			screen_center - (DisplayServer.window_get_size() / 2)
+		)
 		GlobalViewport._update_view()
 
 	old_scale = settings.scale
+
+
+func _fullscreen_logic() -> void:
+	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		# This is needed to avoid borders being outside the monitor boundaries when you exit fullscreen
+		if OS.get_name() == "Windows":
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		await SettingsManager._window_scale_logic(true)
+		if "Linux" in OS.get_name():
+			await get_tree().process_frame
+			get_window().move_to_center()
+			get_window().grab_focus()
+	elif settings.fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
 
 ## Defines UI scale, mainly for HiDPI displays. Use for external windows, e.g. the console.
