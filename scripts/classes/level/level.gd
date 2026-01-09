@@ -118,7 +118,6 @@ func _prepare_template() -> void:
 	# Adding TileMap with tileset we defined above
 	var tilemap = TileMapLayer.new()
 	tilemap.tile_set = tileset
-	tilemap.physics_quadrant_size = 1
 	tilemap.navigation_enabled = false
 	add_child(tilemap, true)
 	tilemap.set_cell(Vector2i(2, 13), 0, Vector2i.ZERO)
