@@ -36,6 +36,8 @@ func _on_body_entered(body: Node2D) -> void:
 			underwater.in_water()
 			Thunder._connect(body.timer_starman.timeout, _player_death_after_starman, CONNECT_ONE_SHOT)
 	if body.is_in_group(&"#lava_body"):
+		if body is Player && body.warp != Player.Warp.NONE:
+			return
 		self._spray.call_deferred(body, Vector2.ZERO)
 		if body.has_method(&"got_in_lava"):
 			body.got_in_lava()
@@ -50,6 +52,8 @@ func _on_body_exited(body: Node2D) -> void:
 		underwater.out_of_water()
 		Thunder._disconnect(body.timer_starman.timeout, _player_death_after_starman)
 	if body.is_in_group(&"#lava_body"):
+		if body is Player && body.warp != Player.Warp.NONE:
+			return
 		self._spray.call_deferred(body, Vector2.ZERO)
 
 
