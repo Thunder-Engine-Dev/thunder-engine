@@ -70,6 +70,7 @@ func _physics_process(_delta: float) -> void:
 			return
 		if _path_follow.progress < _edge || _path_follow.progress + _edge > _path_follow.max_progress:
 			reset_physics_interpolation()
+			_path_follow.reset_physics_interpolation()
 
 func _set_position() -> void:
 	if !is_instance_valid(_path_follow):
