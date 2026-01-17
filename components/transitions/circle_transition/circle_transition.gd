@@ -21,8 +21,8 @@ func _ready() -> void:
 	#var rect = get_rect()
 	#color_rect.material.set_shader_parameter("screen_width", rect.size.x)
 	#color_rect.material.set_shader_parameter("screen_height", rect.size.y)
-	position -= Vector2.ONE
-	size += Vector2.ONE * 2
+	set_deferred(&"position", position - Vector2.ONE)
+	set_deferred(&"size", size + Vector2.ONE * 2)
 	var vp_size = GlobalViewport.vp.size
 	color_rect.material.set_shader_parameter("screen_width", vp_size.x)
 	color_rect.material.set_shader_parameter("screen_height", vp_size.y)
@@ -32,11 +32,18 @@ func _ready() -> void:
 
 ## Sets the center of transition on some node
 func on(ref: Variant, direct = false) -> Transition:
-	if ref is Node2D: 
-		color_rect.material.set_shader_parameter(&"center", Thunder.view.get_pos_ratio_in_screen(ref))
+	if ref is Node2D:
+		await get_tree().physics_frame
+		color_rect.material.set_shader_parameter(&"center",
+			Thunder.view.get_pos_ratio_in_screen(ref)
+		)
 	elif ref is Vector2:
 		if !direct:
-			color_rect.material.set_shader_parameter(&"center", Thunder.view.get_pos_ratio_in_screen_by_pos(get_viewport_transform(), get_viewport_rect().size, ref))
+			color_rect.material.set_shader_parameter(&"center",
+				Thunder.view.get_pos_ratio_in_screen_by_pos(
+					get_viewport_transform(), get_viewport_rect().size, ref
+				)
+			)
 		else:
 			color_rect.material.set_shader_parameter(&"center", ref)
 	

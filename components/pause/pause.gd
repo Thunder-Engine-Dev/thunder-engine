@@ -120,6 +120,9 @@ func _can_autopause() -> bool:
 	if !&"game_over" in Scenes.custom_scenes: return false
 	if opened || Scenes.custom_scenes.game_over.opened: return false
 	if get_tree().paused: return false
+	var pl = Thunder._current_player
+	if pl && pl.completed:
+		return false
 	return true
 
 
