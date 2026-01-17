@@ -12,15 +12,20 @@ var _on_player_after_middle: bool = false
 @onready var color_rect: ColorRect = $ColorRect
 
 func _init() -> void:
-	correct_aspect_ratio = false
+	correct_aspect_ratio = true
 
 
 func _ready() -> void:
 	name = "circle_transition"
 	color_rect.material.set_shader_parameter(&"center", Vector2(0.5, 0.5))
-	var rect = get_rect()
-	color_rect.material.set_shader_parameter("screen_width", rect.size.x)
-	color_rect.material.set_shader_parameter("screen_height", rect.size.y)
+	#var rect = get_rect()
+	#color_rect.material.set_shader_parameter("screen_width", rect.size.x)
+	#color_rect.material.set_shader_parameter("screen_height", rect.size.y)
+	position -= Vector2.ONE
+	size += Vector2.ONE * 2
+	var vp_size = GlobalViewport.vp.size
+	color_rect.material.set_shader_parameter("screen_width", vp_size.x)
+	color_rect.material.set_shader_parameter("screen_height", vp_size.y)
 	
 	start.emit()
 
