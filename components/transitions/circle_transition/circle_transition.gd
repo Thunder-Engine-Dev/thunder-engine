@@ -73,8 +73,8 @@ func with_pause() -> Transition:
 	_is_with_pause = true
 	return self
 
-
 func _process(delta: float) -> void:
+	if _calculate_delta_lag(delta): return
 	if paused: return
 	
 	if circle >= 0:
