@@ -164,15 +164,13 @@ func _ready() -> void:
 			#while !Scenes.current_scene._is_stage_ready:
 			var trans := TransitionManager.current_transition
 			if is_instance_valid(trans) && trans.has_method("on") && trans.paused:
-				trans.on(self)
-				trans.paused = false
+				trans.on(self, false, true)
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	elif is_instance_valid(TransitionManager.current_transition):
 		Scenes.scene_ready.connect(func():
 			var trans := TransitionManager.current_transition
 			if is_instance_valid(trans) && trans.has_method("on"):
-				trans.on(Vector2(0.5, 0.5), true)
-				trans.paused = false
+				trans.on(Vector2(0.5, 0.5), true, true)
 		)
 
 	if !Thunder._current_player_state_path.is_empty():

@@ -209,7 +209,8 @@ func _circle_transition() -> void:
 			.with_speeds(circle_closing_speed, -circle_opening_speed)
 			.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 	)
-	if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+	if circle_focus_on_player:
+		TransitionManager.current_transition.on(Thunder._current_player, false, true)
 	await TransitionManager.transition_middle
 
 	TransitionManager.current_transition.paused = true
@@ -221,8 +222,9 @@ func _circle_transition() -> void:
 		, CONNECT_ONE_SHOT)
 	else:
 		if circle_center_after_middle:
-			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
-		TransitionManager.current_transition.paused = false
+			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
+		else:
+			TransitionManager.current_transition.paused = false
 
 	pass_warp.call_deferred()
 
@@ -264,7 +266,7 @@ func _transition_update() -> void:
 	if use_circle_transition && circle_focus_on_player:
 		await get_tree().physics_frame
 		await get_tree().physics_frame
-		TransitionManager.current_transition.on(Thunder._current_player)
+		TransitionManager.current_transition.on(Thunder._current_player, false, true)
 
 
 func _label() -> void:

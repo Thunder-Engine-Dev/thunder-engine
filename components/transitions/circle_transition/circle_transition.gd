@@ -31,21 +31,26 @@ func _ready() -> void:
 
 
 ## Sets the center of transition on some node
-func on(ref: Variant, direct = false) -> Transition:
+func on(ref: Variant, direct = false, unpause = false) -> Transition:
 	if ref is Node2D:
+		color_rect.material.set_shader_parameter(&"center",
+			Thunder.view.get_pos_ratio_in_screen(ref)
+		)
 		await get_tree().physics_frame
 		color_rect.material.set_shader_parameter(&"center",
 			Thunder.view.get_pos_ratio_in_screen(ref)
 		)
+	elif ref is Vector2 && direct:
+		color_rect.material.set_shader_parameter(&"center", ref)
 	elif ref is Vector2:
-		if !direct:
-			color_rect.material.set_shader_parameter(&"center",
-				Thunder.view.get_pos_ratio_in_screen_by_pos(
-					get_viewport_transform(), get_viewport_rect().size, ref
-				)
+		color_rect.material.set_shader_parameter(&"center",
+			Thunder.view.get_pos_ratio_in_screen_by_pos(
+				get_viewport_transform(), get_viewport_rect().size, ref
 			)
-		else:
-			color_rect.material.set_shader_parameter(&"center", ref)
+		)
+
+	if unpause:
+		paused = false
 	
 	return self
 
