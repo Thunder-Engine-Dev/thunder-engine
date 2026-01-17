@@ -4,6 +4,7 @@ var paused: bool = false
 var speed_closing: float = 0.05
 var speed_opening: float = -0.05
 var circle: float = 1.0
+var circle_multiplier: float = 1.0
 var middle_switch: bool = false
 
 var _is_with_pause: bool = false
@@ -30,24 +31,32 @@ func _ready() -> void:
 	start.emit()
 
 
+func _set_calculated_multiplier(ratio: Vector2) -> void:
+	var center = Vector2(0.5, 0.5)
+	var addition = center - ratio
+	var maximum = max(abs(addition.x), abs(addition.y))
+	circle_multiplier = 1 + maximum
+
 ## Sets the center of transition on some node
 func on(ref: Variant, direct = false, unpause = false) -> Transition:
+	var value: Vector2
 	if ref is Node2D:
-		color_rect.material.set_shader_parameter(&"center",
-			Thunder.view.get_pos_ratio_in_screen(ref)
-		)
+		value = Thunder.view.get_pos_ratio_in_screen(ref)
+		color_rect.material.set_shader_parameter(&"center", value)
+		_set_calculated_multiplier(value)
 		await get_tree().physics_frame
-		color_rect.material.set_shader_parameter(&"center",
-			Thunder.view.get_pos_ratio_in_screen(ref)
-		)
+		value = Thunder.view.get_pos_ratio_in_screen(ref)
+		color_rect.material.set_shader_parameter(&"center", value)
+		_set_calculated_multiplier(value)
 	elif ref is Vector2 && direct:
 		color_rect.material.set_shader_parameter(&"center", ref)
+		_set_calculated_multiplier(ref)
 	elif ref is Vector2:
-		color_rect.material.set_shader_parameter(&"center",
-			Thunder.view.get_pos_ratio_in_screen_by_pos(
-				get_viewport_transform(), get_viewport_rect().size, ref
-			)
+		value = Thunder.view.get_pos_ratio_in_screen_by_pos(
+			get_viewport_transform(), get_viewport_rect().size, ref
 		)
+		color_rect.material.set_shader_parameter(&"center", value)
+		_set_calculated_multiplier(value)
 
 	if unpause:
 		paused = false
@@ -80,7 +89,7 @@ func _process(delta: float) -> void:
 	if circle >= 0:
 		circle = max(circle - speed_closing * Thunder.get_delta(delta), 0)
 	
-	color_rect.material.set_shader_parameter("circle_size", circle)
+	color_rect.material.set_shader_parameter("circle_size", circle * circle_multiplier)
 
 
 func _physics_process(delta: float) -> void:
