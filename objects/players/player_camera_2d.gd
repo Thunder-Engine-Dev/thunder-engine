@@ -39,8 +39,7 @@ func _physics_process(delta: float) -> void:
 		if abs(player.speed.x) > 200 && player.running && !par is PathFollow2D:
 			var _dir: int = sign(player.left_right) if !player.is_sliding_accelerating else sign(player.speed.x)
 			_xscroll += (2 - dont_move) * _dir * delta
-		_xscroll = move_toward(_xscroll, 0, delta)
-		_xscroll = clampf(_xscroll, -1.25, 1.25)
+		_xscroll = clampf(move_toward(_xscroll, 0, delta), -1.25, 1.25)
 	
 	if stop_blocking_on_complete && player.completed:
 		stop_blocking_edges = true
@@ -102,10 +101,7 @@ func _xscroll_logic() -> void:
 		#drag_horizontal_enabled = true # Fixes the bug caused by 4.5
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
-		print("xscroll: %s" % _xscroll)
-		print("xscroll / 1.25: %s" % str(_xscroll / 1.25))
 		drag_horizontal_offset = _xscroll / 1.25
-		#drag_horizontal_offset = 1.0 * player.direction
 		print("center_position: %s" % get_screen_center_position())
 
 
