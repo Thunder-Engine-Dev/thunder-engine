@@ -81,15 +81,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	#_fix_position()
-	
 	if !on_moving: return
 	if get_child_count() == 0 && !is_instance_valid(block): return
 	#if !_block_ready: return
 	
 	_on_path_movement_process(delta)
 	_non_path_movement_process(delta)
-	
-	#if block is AnimatableBody2D && block.sync_to_physics: block.global_position = block.global_position
 
 
 func _body_check(body: CharacterBody2D) -> void:
@@ -228,10 +225,13 @@ func _sign_up_points() -> void:
 		#block.modulate = modulate
 	#_block_ready = true
 
-func _fix_position() -> void:
-	if block.includes_path_follow: return
-	var _set_pos: Vector2 = global_position.round()
-	block.global_position = _set_pos
+#func _fix_position() -> void:
+	#if block.includes_path_follow: return
+	#var _set_pos: Vector2 = global_position.round()
+	#block.global_position = _set_pos
+
+func _is_sprite(node: Node) -> bool:
+	return node is Sprite2D || node is AnimatedSprite2D
 
 #func _exit_tree() -> void:
 	#if !_block_ready: return

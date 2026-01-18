@@ -4,7 +4,7 @@ class_name PlayerCamera2D
 var stop_blocking_edges: bool
 
 @export var force_xscroll_off: bool = false
-@export_subgroup("Autoscroll")
+@export_group("Autoscroll")
 @export var stop_blocking_on_complete: bool = true
 @export var enable_left_border_death: bool = true
 @export var enable_right_border_death: bool = true
@@ -23,7 +23,10 @@ func _ready() -> void:
 	process_callback = CAMERA2D_PROCESS_PHYSICS
 	make_current()
 	teleport()
-	reset_physics_interpolation()
+	reset_physics_interpolation() 
+	# Acording to https://github.com/godotengine/godot/pull/114815/files,
+	# and to avoid *_smoothing enabled not working as expected at the beginning of the game.
+	reset_smoothing()
 
 
 func _physics_process(delta: float) -> void:
@@ -50,6 +53,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 		global_position = player.global_position#.round()
 		if reset_interpolation:
 			reset_physics_interpolation()
+			reset_smoothing()
 			_xscroll = 0
 	
 	if sync_position_only: return
@@ -90,7 +94,7 @@ func _screen_border_logic() -> void:
 
 
 func _xscroll_logic() -> void:
-	if !SettingsManager.settings.xscroll:
+	if !SettingsManager.settings.xscroll || par is PathFollow2D: # It makes no sense to allow xscroll to work in an autscrolling level, so disable it in such levels.
 		_xscroll = 0.0
 		drag_horizontal_enabled = false
 		drag_horizontal_offset = 0

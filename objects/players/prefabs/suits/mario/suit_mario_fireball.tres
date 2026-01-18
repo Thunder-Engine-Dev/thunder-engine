@@ -20,44 +20,20 @@
 [sub_resource type="Resource" id="Resource_yudqa"]
 script = ExtResource("4_0se1k")
 creation_nodepack = ExtResource("3_h6jvg")
-creation_force_sibling = false
 trans_offset = Vector2(0, -20)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_w5vmj"]
 script = ExtResource("5_eqpyc")
 projectile = SubResource("Resource_yudqa")
 speed = Vector2(406.25, 0)
-amount = 2
-amount_extra = -1
-sound_attack = ExtResource("6_8dlkt")
 
 [resource]
 script = ExtResource("8_ib3k0")
 name = &"fireball"
 type = 2
 gets_hurt_to = ExtResource("3_0xukd")
-appearing_time_sec = 1.0
-physics_config = ExtResource("11_8a7y1")
-physics_behavior = ExtResource("10_uu4d2")
-physics_crouchable = true
 physics_shaper = ExtResource("14_0hp2k")
-physics_shaper_crouch = ExtResource("13_58t28")
 animation_sprites = ExtResource("2_0gbpq")
-animation_behavior = ExtResource("1_k44gw")
-animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_w5vmj")
 behavior_script = ExtResource("7_fo208")
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("9_trvb8")
-extra_vars = {}
-sound_hurt = ExtResource("16_rfdsd")
-sound_death = ExtResource("15_6ls2v")
-sound_pitch = 1.0
