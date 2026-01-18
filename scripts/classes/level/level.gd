@@ -129,6 +129,7 @@ func _prepare_template() -> void:
 
 	var parallax_bg = Parallax2D.new()
 	add_child(parallax_bg, true)
+	parallax_bg.z_index = -100
 	parallax_bg.set_owner(self)
 	parallax_bg.set_meta(&"_edit_lock_", true)
 
@@ -204,6 +205,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	Thunder._current_player.left_right = 0
+	Thunder._current_player.slow_walking = false
 
 	get_tree().call_group_flags(
 		get_tree().GROUP_CALL_DEFERRED,
