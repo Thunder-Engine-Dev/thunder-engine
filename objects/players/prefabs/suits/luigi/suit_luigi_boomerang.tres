@@ -20,23 +20,14 @@
 [sub_resource type="Resource" id="Resource_npf7v"]
 script = ExtResource("4_jp2q6")
 creation_nodepack = ExtResource("3_34x5w")
-creation_force_sibling = false
 trans_offset = Vector2(0, -16)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Resource" id="Resource_6ny41"]
 script = ExtResource("5_s65ld")
 projectile = SubResource("Resource_npf7v")
 speed = Vector2(500, -300)
-amount = 2
-amount_extra = -1
 sound_attack = ExtResource("6_tc87t")
 
 [resource]
@@ -44,20 +35,9 @@ script = ExtResource("16_ahsdd")
 name = &"boomerang"
 type = 2
 gets_hurt_to = ExtResource("8_rswpy")
-appearing_time_sec = 1.0
 physics_config = ExtResource("13_b4jyl")
-physics_behavior = ExtResource("10_0csox")
-physics_crouchable = true
 physics_shaper = ExtResource("14_t8j14")
-physics_shaper_crouch = ExtResource("13_qfp3l")
 animation_sprites = ExtResource("2_b3msi")
-animation_behavior = ExtResource("1_nf8yu")
-animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_6ny41")
 behavior_script = ExtResource("7_jdwu0")
 behavior_crouch_reflect_fireballs = true
-grab_behavior = ExtResource("9_7mk3x")
-extra_vars = {}
-sound_hurt = ExtResource("16_auyxr")
-sound_death = ExtResource("15_4g380")
-sound_pitch = 1.0
