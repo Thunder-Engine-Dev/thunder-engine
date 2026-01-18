@@ -81,7 +81,7 @@ shape = SubResource("RectangleShape2D_wg2sy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_3bes0")
+&"": SubResource("AnimationLibrary_3bes0")
 }
 autoplay = "bar"
 

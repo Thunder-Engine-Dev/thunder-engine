@@ -112,7 +112,7 @@ func _circle_transition() -> void:
 	var _crossfades: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 	if warp_to_scene && !force_circle_instead_of_crossfade && _crossfades:
 		_gotoscene_patch = true
-		if player && player.sprite:
+		if is_instance_valid(player):
 			player.sprite.visible = false
 		pass_warp()
 		TransitionManager.accept_transition(
@@ -129,13 +129,14 @@ func _circle_transition() -> void:
 			.with_speeds(circle_closing_speed, -circle_opening_speed)
 			.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 	)
-	if circle_focus_on_player: TransitionManager.current_transition.on(Thunder._current_player)
+	if circle_focus_on_player:
+		TransitionManager.current_transition.on(Thunder._current_player, false, true)
 	await TransitionManager.transition_middle
 
 	TransitionManager.current_transition.paused = true
 
 	if warp_to_scene && circle_wait_till_scene_changed:
-		if player && "sprite" in player && player.sprite:
+		if is_instance_valid(player):
 			player.sprite.visible = false
 		Scenes.scene_ready.connect(func():
 			if !Thunder._current_player:

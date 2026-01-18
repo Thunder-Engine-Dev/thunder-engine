@@ -42,7 +42,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 		TransitionManager.current_transition.paused = true
 		Scenes.goto_scene(sgr_path)
 		Scenes.scene_changed.connect(func(_current_scene):
-			TransitionManager.current_transition.on(Thunder._current_player)
+			TransitionManager.current_transition.on(Thunder._current_player, false, true)
 			if !Thunder._current_player:
 				TransitionManager.current_transition.paused = false
 		, CONNECT_ONE_SHOT)

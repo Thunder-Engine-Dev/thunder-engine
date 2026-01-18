@@ -82,6 +82,7 @@ killing_immune = {
 }
 killing_can_combo = false
 killing_sound_failed = null
+frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

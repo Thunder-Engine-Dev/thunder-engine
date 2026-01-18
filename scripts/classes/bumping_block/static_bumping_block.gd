@@ -58,8 +58,6 @@ var _ignore_colliding_body_correction: bool = false
 @onready var _sprites: Node2D = $Sprites
 @onready var _animated_sprite_2d: AnimatedSprite2D = $Sprites/AnimatedSprite2D
 
-@onready var _old_bump_sfx = bump_sound
-
 ## Emitted when getting bumped
 signal bumped
 ## Emitted when the item gets spawned

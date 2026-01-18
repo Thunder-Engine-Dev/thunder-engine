@@ -16,15 +16,7 @@
 [sub_resource type="Resource" id="Resource_7hetq"]
 script = ExtResource("4_rcun4")
 creation_nodepack = ExtResource("2_gqerd")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(250, -500),
 "speed_min": Vector2(50, -300)
@@ -38,15 +30,8 @@ size = Vector2(28, 40)
 resource_local_to_scene = true
 script = ExtResource("4_rcun4")
 creation_nodepack = ExtResource("6_qx6t7")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -105,6 +90,7 @@ size = Vector2(32, 32)
 [node name="KoopaBro" type="CharacterBody2D" groups=["koopa_bro"]]
 collision_layer = 2
 collision_mask = 32
+platform_on_leave = 2
 script = ExtResource("1_yqkay")
 projectile = SubResource("Resource_7hetq")
 speed = Vector2(100, 0)

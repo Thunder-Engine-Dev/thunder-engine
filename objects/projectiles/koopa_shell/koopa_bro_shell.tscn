@@ -13,6 +13,7 @@ size = Vector2(20, 32)
 [node name="KoopaShell" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 64
+platform_on_leave = 2
 script = ExtResource("1_tkugq")
 bounces_left = 1
 sprite = NodePath("Texture")

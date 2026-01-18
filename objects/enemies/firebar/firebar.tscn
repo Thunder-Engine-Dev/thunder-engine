@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d3fy0hf8mvrps"]
 
-[ext_resource type="Script" uid="uid://ba264qqcrsvfh" path="res://engine/objects/enemies/firebar/firebar.gd" id="1_qr400"]
+[ext_resource type="Script" uid="uid://dfcaryljk7f7o" path="res://engine/objects/enemies/firebar/firebar.gd" id="1_qr400"]
 
 [node name="Firebar" type="Node2D"]
 script = ExtResource("1_qr400")

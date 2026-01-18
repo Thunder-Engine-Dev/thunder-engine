@@ -118,23 +118,20 @@ func _prepare_template() -> void:
 	# Adding TileMap with tileset we defined above
 	var tilemap = TileMapLayer.new()
 	tilemap.tile_set = tileset
+	tilemap.navigation_enabled = false
 	add_child(tilemap, true)
 	tilemap.set_cell(Vector2i(2, 13), 0, Vector2i.ZERO)
 	tilemap.set_owner(self)
-	tilemap.set_meta(&"_edit_lock_", true)
 
 	var hud = load("res://engine/components/hud/hud.tscn").instantiate()
 	add_child(hud)
 	hud.set_owner(self)
 
-	var parallax_bg = ParallaxBackground.new()
+	var parallax_bg = Parallax2D.new()
 	add_child(parallax_bg, true)
+	parallax_bg.z_index = -100
 	parallax_bg.set_owner(self)
-
-	var folder = Node2D.new()
-	add_child(folder)
-	folder.set_name('Objects')
-	folder.set_owner(self)
+	parallax_bg.set_meta(&"_edit_lock_", true)
 
 
 func _physics_process(delta: float) -> void:
@@ -195,7 +192,12 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 	Thunder._current_player.completed = true
 	Audio.stop_all_musics()
 	if completion_music:
-		var _custom_music = CharacterManager.get_sound_replace(completion_music, DEFAULT_COMPLETION, "level_complete", false)
+		var replace_all_tweak = CharacterManager.get_global_tweak("force_override_level_complete_music")
+		var _custom_music = CharacterManager.get_sound_replace(
+			completion_music,
+			DEFAULT_COMPLETION if !replace_all_tweak else completion_music,
+			"level_complete", false
+		)
 		Audio.play_music(_custom_music, -1)
 
 	if walking:
@@ -203,6 +205,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 		_force_player_walking_dir = walking_dir
 	Data.values.onetime_blocks = true
 	Thunder._current_player.left_right = 0
+	Thunder._current_player.slow_walking = false
 
 	get_tree().call_group_flags(
 		get_tree().GROUP_CALL_DEFERRED,

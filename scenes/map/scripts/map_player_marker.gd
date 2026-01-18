@@ -22,6 +22,7 @@ var x_ref
 
 signal changed
 signal current_active
+signal level_reached ## Emitted when the current point is level and gets reached.
 
 func _enter_tree() -> void:
 	if !is_in_group("map_marker"):

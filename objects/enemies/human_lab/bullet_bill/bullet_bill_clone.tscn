@@ -8,6 +8,7 @@
 size = Vector2(44, 20)
 
 [node name="BulletBill" instance=ExtResource("1_dksb3")]
+platform_on_leave = 2
 
 [node name="CollisionShape2D" parent="Body" index="0"]
 visible = false

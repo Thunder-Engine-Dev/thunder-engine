@@ -1,21 +1,21 @@
 [gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://dwjyg73br3od0"]
 
-[ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_oc01y"]
+[ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_rli4i"]
 [ext_resource type="SpriteFrames" uid="uid://cqs4lmmejojw5" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_beetroot.tres" id="2_fypkw"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="3_yxmfi"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_3yk1c"]
 [ext_resource type="Script" uid="uid://cpqrrwnrww8n4" path="res://engine/objects/players/behaviors/player_projectile_resource.gd" id="5_h5xrk"]
-[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_mkwrr"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="6_os4pp"]
 [ext_resource type="Script" uid="uid://dnhrbcixsf6bc" path="res://engine/objects/players/behaviors/player_projectile.gd" id="7_2l4wi"]
 [ext_resource type="Resource" uid="uid://6w8kwrifbv6m" path="res://engine/objects/players/prefabs/suits/luigi/suit_luigi_super.tres" id="8_nkjrt"]
-[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_ybumx"]
-[ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="12_bnoth"]
+[ext_resource type="Script" uid="uid://b27ihs2cq4rsa" path="res://engine/objects/players/behaviors/player_grab_behavior.gd" id="9_kd3oc"]
+[ext_resource type="Script" uid="uid://bf5i2lnei50jg" path="res://engine/objects/players/behaviors/player_physics_behavior.gd" id="10_0ahbe"]
+[ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="13_0l0bn"]
 [ext_resource type="Resource" uid="uid://cwfwids6c36ou" path="res://engine/objects/players/prefabs/configs/config_luigi_default.tres" id="13_lnrib"]
 [ext_resource type="Resource" uid="uid://dkb80m2mcmogy" path="res://engine/objects/players/prefabs/shapers/shaper_player_super.tres" id="14_jdccd"]
-[ext_resource type="Resource" uid="uid://2etad878gceh" path="res://engine/objects/players/prefabs/shapers/shaper_player_small.tres" id="15_3km1d"]
+[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="15_j1olm"]
+[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="16_i2m6a"]
 [ext_resource type="Script" uid="uid://d3uhri8wh0kgs" path="res://engine/objects/players/player_suit.gd" id="16_yspbf"]
-[ext_resource type="AudioStream" uid="uid://cpy66lof7ycli" path="res://engine/objects/players/prefabs/sounds/music-die.ogg" id="17_3nrh8"]
-[ext_resource type="AudioStream" uid="uid://bhi5ssf0q30df" path="res://engine/objects/players/prefabs/sounds/pipe.wav" id="18_0seoj"]
 
 [sub_resource type="Resource" id="Resource_xpeqw"]
 script = ExtResource("4_3yk1c")
@@ -37,7 +37,7 @@ projectile = SubResource("Resource_xpeqw")
 speed = Vector2(100, -250)
 amount = 2
 amount_extra = 6
-sound_attack = ExtResource("6_mkwrr")
+sound_attack = ExtResource("6_os4pp")
 
 [resource]
 script = ExtResource("16_yspbf")
@@ -46,18 +46,18 @@ type = 2
 gets_hurt_to = ExtResource("8_nkjrt")
 appearing_time_sec = 1.0
 physics_config = ExtResource("13_lnrib")
-physics_behavior = ExtResource("12_bnoth")
+physics_behavior = ExtResource("10_0ahbe")
 physics_crouchable = true
 physics_shaper = ExtResource("14_jdccd")
-physics_shaper_crouch = ExtResource("15_3km1d")
+physics_shaper_crouch = ExtResource("13_0l0bn")
 animation_sprites = ExtResource("2_fypkw")
-animation_behavior = ExtResource("1_oc01y")
+animation_behavior = ExtResource("1_rli4i")
 animation_underwater_bubble_offset = Vector2(0, -20)
 behavior_resource = SubResource("Resource_af60k")
 behavior_script = ExtResource("7_2l4wi")
 behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("9_ybumx")
+grab_behavior = ExtResource("9_kd3oc")
 extra_vars = {}
-sound_hurt = ExtResource("18_0seoj")
-sound_death = ExtResource("17_3nrh8")
+sound_hurt = ExtResource("16_i2m6a")
+sound_death = ExtResource("15_j1olm")
 sound_pitch = 1.0

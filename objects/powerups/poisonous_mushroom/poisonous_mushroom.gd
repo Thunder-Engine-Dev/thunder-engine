@@ -6,7 +6,7 @@ func collect() -> void:
 	if appear_distance: return
 	var player = Thunder._current_player
 	
-	if player.is_invincible(): return
+	if player.is_starman(): return
 	player.die()
 	
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()

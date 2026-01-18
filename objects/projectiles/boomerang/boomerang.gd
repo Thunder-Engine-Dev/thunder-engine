@@ -9,10 +9,16 @@ var flag: bool = false
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var area_2d: Area2D = $Area2D
+@onready var sound_flying: AudioStreamPlayer2D = $SoundFlying
+@onready var sound_interval: Timer = $SoundInterval
 
 
 func _ready() -> void:
 	super()
+	sound_flying.stream = CharacterManager.get_sound_replace(sound_flying.stream, sound_flying.stream, "boomerang_spin", false)
+	var spin_delay = CharacterManager.get_global_tweak("boomerang_spin_sound_delay_sec")
+	if spin_delay:
+		sound_interval.start(spin_delay)
 	await get_tree().physics_frame
 	dir = sign(speed.x)
 	

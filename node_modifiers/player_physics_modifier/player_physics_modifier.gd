@@ -8,16 +8,11 @@ class_name PlayerPhysicsModifier
 ## Which config properties should be applied. Everything not listed here is ignored.
 @export var apply_properties: PackedStringArray
 
-var _cached_config: PlayerConfig
-
 var is_applied: bool
 @onready var player: Player = $".."
 
 func _ready():
-	player.suit_changed.connect((func(a = null):
-		_cached_config = null
-		_remove_config()
-	), CONNECT_DEFERRED + CONNECT_REFERENCE_COUNTED + CONNECT_ONE_SHOT)
+	player.suit_changed.connect(_remove_config.unbind(1), CONNECT_DEFERRED)
 
 func _physics_process(delta):
 	var _player = null
@@ -52,7 +47,7 @@ func _deinitialise() -> void:
 	pass
 
 func _add_config() -> void:
-	if !player: return
+	if !player || !player.get(&"suit"): return
 	if !is_applied:
 		var character_config = apply_config.get(CharacterManager.get_character_name(), "Mario")
 		for prop in apply_properties:

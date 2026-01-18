@@ -19,7 +19,7 @@ var default_settings: Dictionary = {
 	"xscroll": false,
 	"vsync": 1,
 	"scale": 1,
-	"physics_tps": 0,
+	"physics_tps": 0, # DEPRECATED
 	"filter": false,
 	"fullscreen": false,
 	"controls": {
@@ -72,12 +72,16 @@ var no_saved_settings: bool = false
 var request_restart: bool = false
 
 var tweaks: Dictionary = {}
+
 var device_keyboard: bool = true
 var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 var game_focused: bool = true
 
 var enable_shortcut_scene_change_keys: bool = true
+
+## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows
+var ui_scale: float
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
@@ -176,14 +180,7 @@ func _process_settings() -> void:
 	_window_scale_logic()
 
 	# Fullscreen
-	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-		# This is needed to avoid borders being outside the monitor boundaries when you exit fullscreen
-		if OS.get_name() == "Windows":
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		SettingsManager._window_scale_logic(true)
-	elif settings.fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	_fullscreen_logic()
 
 	# Filter
 	GlobalViewport._update_view()
@@ -304,6 +301,54 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	old_scale = settings.scale
 
 
+func _fullscreen_logic() -> void:
+	if !settings.fullscreen && DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+		# This is needed to avoid borders being outside the monitor boundaries when you exit fullscreen
+		if OS.get_name() == "Windows":
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		await SettingsManager._window_scale_logic(true)
+		if "Linux" in OS.get_name():
+			await get_tree().physics_frame
+			get_window().move_to_center.call_deferred()
+			get_window().grab_focus.call_deferred()
+	elif settings.fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+
+
+## Defines UI scale, mainly for HiDPI displays. Use for external windows, e.g. the console.
+func get_ui_scale(window: Window = get_window()) -> float:
+	if ui_scale >= 0.5:
+		return ui_scale
+	var current_screen := DisplayServer.window_get_current_screen(window.get_window_id())
+	var non_windows_scale := DisplayServer.screen_get_scale(current_screen)
+	if OS.get_name() != "Windows":
+		return non_windows_scale
+	elif DisplayServer.screen_get_dpi(current_screen) > 120:
+		return 2.0
+	return 1.0
+
+
+func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false, resize_forced: bool = false) -> void:
+	if (!no_resize && window.content_scale_factor != scale) || resize_forced:
+		window.size *= scale
+		window.min_size *= scale
+	if window.content_scale_factor != scale:
+		window.content_scale_factor = scale
+		
+	var usable_size = DisplayServer.screen_get_usable_rect(
+		DisplayServer.window_get_current_screen(window.get_window_id())
+	).size
+	if window.size.y > usable_size.y:
+		window.size.y = usable_size.y
+	if window.size.x > usable_size.x:
+		window.size.x = usable_size.x
+	if window.position.x + window.size.x > usable_size.x:
+		window.position.x = usable_size.x - window.size.x
+	if window.position.y + window.size.y > usable_size.y:
+		window.position.y = usable_size.y - window.size.y
+
+
 ## Saves the settings variable to file
 func save_settings() -> void:
 	save_data(settings, settings_path, "Settings")
@@ -421,6 +466,23 @@ func get_mouse_position() -> Vector2:
 func get_quality() -> QUALITY:
 	@warning_ignore("int_as_enum_without_cast")
 	return roundi(settings.quality)
+
+
+func get_key_label(action: String) -> String:
+	var _events: Array[InputEvent] = InputMap.action_get_events(action)
+	var _event: String = "<NOT SET>"
+	var _temp: String
+	for i in _events:
+		if i is InputEventKey:
+			_temp = i.as_text().get_slice(' (', 0) + ' button'
+			#if SettingsManager.device_keyboard:
+			_event = _temp
+			break
+		#elif i is InputEventJoypadButton:
+		#	_temp = "Joy " + str(i.button_index)
+		if _temp: _event = _temp
+	
+	return _event
 
 
 func _input(event: InputEvent) -> void:

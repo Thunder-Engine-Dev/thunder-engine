@@ -217,15 +217,8 @@ metadata/_snap_enabled = true
 [sub_resource type="Resource" id="Resource_caaoh"]
 script = ExtResource("5_g8kvb")
 creation_nodepack = ExtResource("4_rm4x7")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 2
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "amount": 15
 }
@@ -270,6 +263,7 @@ killing_immune = {
 killing_creation = SubResource("Resource_caaoh")
 killing_scores = 400
 killing_sound_succeeded = ExtResource("6_ile01")
+frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"killing_enabled", &"stomping_standard", &"center_node"]
 
 [connection signal="killed_succeeded" from="EnemyAttacked" to="." method="queue_free"]

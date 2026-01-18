@@ -13,16 +13,16 @@ const PILE: PackedScene = preload("./chain_chomp_pile.tscn")
 @export var walking_jump_speed: float = 150
 @export_group("Attacking", "attacking_")
 @export var attacking_range: float = 128
-@export var attacking_speed: float = 650
+@export var attacking_speed: float = 600
 @export var attacking_preparation_duration: float = 1.0
 @export var attacking_rest_duration: float = 0.9
 @export var attacking_sound: AudioStream = preload("./sfx/chain_chomp_barking.wav")
-@export var attacking_barking_times: int = 6
+@export var attacking_barking_times: int = 5
 
 var dir: int
 var step: int
 
-var pile_pos_x: float
+var pile_pos: Vector2
 var pos_to_attack: Vector2
 var pos_when_attack: Vector2
 
@@ -42,21 +42,23 @@ func _ready() -> void:
 	await get_tree().physics_frame
 	_is_ready = true
 	
-	var pile: Node2D = NodeCreator.prepare_2d(PILE, self).bind_global_transform().create_2d().get_node()
-	pile.z_index = -2
-	pile_pos_x = global_transform.affine_inverse().basis_xform(pile.global_position).x
+	var pile: Node2D = NodeCreator.prepare_2d(PILE, self).bind_global_transform().create_2d(true).get_node()
+	pile_pos = global_transform.affine_inverse().basis_xform(pile.global_position)
 	add_collision_exception_with(pile)
 	
+	var first_chain: Node2D
 	for i: int in chain_amount:
-		var chain: RigidBody2D = NodeCreator.prepare_2d(CHAIN, self).bind_global_transform().create_2d().get_node()
+		var chain: RigidBody2D = NodeCreator.prepare_2d(CHAIN, self).bind_global_transform().create_2d(true).get_node()
 		chain.chomp = self
 		chain.pile = pile
 		chain.add_collision_exception_with(pile)
 		chain.id = i
-		chain.z_index = -1
 		chain.amount = chain_amount
+		if i == 0: first_chain = chain
 		chain_disconnected.connect(chain.disconnect_chomp)
 	
+	Thunder.reorder_on_top_of(pile, self)
+	Thunder.reorder_on_top_of(self, first_chain)
 	_dir()
 	vel_set_x(dir * spd)
 
@@ -92,7 +94,7 @@ func _walk() -> void:
 		dir = int(signf(speed.x))
 	
 	var posx: float = global_transform.affine_inverse().basis_xform(global_position).x
-	if is_on_wall() || (!_rest && ((dir < 0 && posx < pile_pos_x - walking_range) || (dir > 0 && posx > pile_pos_x + walking_range))):
+	if is_on_wall() || (!_rest && ((dir < 0 && posx < pile_pos.x - walking_range) || (dir > 0 && posx > pile_pos.x + walking_range))):
 		var speed_x: float = speed.x
 		
 		vel_set_x(0)
@@ -118,18 +120,20 @@ func _attacking_pre(player: Player) -> void:
 func _attacking_process() -> void:
 	if step != 2: return
 	if tween: return
-	var to: Vector2 = pos_when_attack + (pos_to_attack - pos_when_attack).limit_length(attacking_range)
+	var to: Vector2 = pile_pos + (pos_to_attack - pile_pos).limit_length(attacking_range)
 	tween = create_tween()
 	tween.tween_callback(func() -> void:
 		sprite.speed_scale = 3
 	)
-	tween.tween_property(self, ^"global_position", to, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
+	tween.tween_property(self, ^"global_position", to, to.distance_to(pos_when_attack) / attacking_speed)
 	for i in attacking_barking_times:
 		tween.tween_callback(func() -> void:
+			if i % 3 > 1:
+				return
 			Audio.play_sound(attacking_sound, self, false)
 		)
 		tween.tween_interval(attacking_rest_duration / attacking_barking_times)
-	tween.tween_property(self, ^"global_position", pos_when_attack, pos_to_attack.distance_to(pos_when_attack) / attacking_speed)
+	tween.tween_property(self, ^"global_position", pos_when_attack, to.distance_to(pos_when_attack) / attacking_speed)
 	tween.tween_callback(func() -> void:
 		sprite.speed_scale = 1
 		step = 0

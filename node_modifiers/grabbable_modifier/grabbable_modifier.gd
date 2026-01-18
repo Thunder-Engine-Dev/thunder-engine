@@ -137,6 +137,7 @@ func _check_for_player_collision(pl: Player) -> bool:
 
 
 func _top_grabbed() -> void:
+	if is_queued_for_deletion(): return
 	var _sfx = CharacterManager.get_sound_replace(sound_grab_top, DEFAULT_GRAB_SOUND, "grab", true)
 	Audio.play_sound(_sfx, player, false)
 	player.is_holding = true
@@ -146,6 +147,7 @@ func _top_grabbed() -> void:
 
 
 func _side_grabbed() -> void:
+	if is_queued_for_deletion(): return
 	var _sfx = CharacterManager.get_sound_replace(sound_grab_side, DEFAULT_GRAB_SOUND, "grab", true)
 	Audio.play_sound(_sfx, player, false)
 	grab_initiated.emit()

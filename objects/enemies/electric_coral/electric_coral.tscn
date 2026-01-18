@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdfqlkg8w5yc8"]
 
-[ext_resource type="Script" uid="uid://cf4cbmxqe4wdr" path="res://engine/objects/enemies/electric_coral/electric_coral.gd" id="1_55khj"]
 [ext_resource type="Texture2D" uid="uid://x1h126m735je" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
+[ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="1_rvphe"]
 [ext_resource type="Texture2D" uid="uid://c8cqh10bsbdud" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdrb"]
@@ -70,7 +70,6 @@ animations = [{
 [node name="ElectricCoral" type="AnimatableBody2D"]
 collision_layer = 112
 collision_mask = 0
-script = ExtResource("1_55khj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -78,8 +77,9 @@ shape = SubResource("RectangleShape2D_rmdrb")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
-collision_layer = 112
-collision_mask = 7
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_rvphe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_83umb")

@@ -248,6 +248,12 @@ func _animation_non_warping_process(delta: float) -> void:
 
 func _animation_floor_process(delta: float) -> void:
 	_stomp_enabled = false
+	if player.is_crouching || player.crouch_forced:
+		_p_run_enabled = false
+		_play_anim(_get_animation_prefixed(&"crouch"))
+		player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
+		return
+	
 	if !(is_zero_approx(player.speed.x)) && !player.has_stuck && !(player.has_stuck_animation && player.left_right == 0):
 		if _separate_run_tweak && abs(player.speed.x) + 25 >= config.walk_max_running_speed && !player.is_holding:
 			_play_anim(&"p_run" if !player.is_skidding else &"skid")
@@ -275,10 +281,6 @@ func _animation_floor_process(delta: float) -> void:
 				_play_anim(&"idle")
 			else:
 				_play_anim(_get_animation_prefixed(&"default"))
-	if player.is_crouching || player.crouch_forced:
-		_p_run_enabled = false
-		_play_anim(_get_animation_prefixed(&"crouch"))
-		player.skid.emitting = player._skid_tweak && !(is_zero_approx(player.speed.x))
 
 
 func _animation_jumping_process(delta: float) -> void:

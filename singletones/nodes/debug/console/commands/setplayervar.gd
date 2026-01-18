@@ -28,6 +28,7 @@ func execute(args:Array) -> Command.ExecuteResult:
 		return Command.ExecuteResult.new("Error: Property not found.")
 	if args[0] == "script": return Command.ExecuteResult.new(Error.Wrong)
 	pl.suit.physics_config.set(args[0], args[1])
+	pl.config_buffer.set(args[0], args[1])
 	if len(args) >= 3 && !args[2].is_empty():
 		if ["no", "false", "0", "off", "disable", "remove"].has(args[2].to_lower()):
 			persist_vars.erase(args[0])
@@ -49,3 +50,4 @@ func patch_level() -> void:
 		return
 	for i in persist_vars.keys():
 		pl.suit.physics_config.set(i, persist_vars[i])
+		pl.config_buffer.set(i, persist_vars[i])

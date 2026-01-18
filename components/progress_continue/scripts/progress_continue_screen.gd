@@ -1,11 +1,14 @@
 extends Control
 
+const LoopOffsetBehaviorScript = preload("uid://cdwp13k80fepv")
+
 @export_node_path("Area2D") var pipe_out: NodePath
 
 var opened: bool
 
 var profile: Dictionary
 var scene: String
+var loop_offset_behavior_script: GDScript
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
@@ -47,7 +50,11 @@ func suspended_game_logic() -> void:
 	level_label.text = label_text
 	if profile.get(&"saved_player_state"):
 		state_preview.position.x = get_viewport_rect().size.x / 2
-		state_preview.sprite_frames = SkinsManager.apply_player_skin(CharacterManager.get_suit(profile.saved_player_state))
+		var _suit: PlayerSuit = CharacterManager.get_suit(profile.saved_player_state)
+		loop_offset_behavior_script = ByNodeScript.activate_script(
+			LoopOffsetBehaviorScript, state_preview, {suit = _suit.name}
+		)
+		state_preview.sprite_frames = SkinsManager.apply_player_skin(_suit)
 		state_preview.play(&"walk")
 	Scenes.custom_scenes.pause.open_blocked = true
 	

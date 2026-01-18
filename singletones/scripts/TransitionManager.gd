@@ -8,7 +8,10 @@ signal transition_middle
 signal transition_end
 
 func accept_transition(trans: Transition) -> void:
-	GlobalViewport.center_container.add_child(trans)
+	if trans.correct_aspect_ratio:
+		GlobalViewport.center_container.add_child(trans)
+	else:
+		GlobalViewport.add_child(trans)
 	current_transition = trans
 	
 	trans.start.connect(func():

@@ -21,31 +21,15 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_y4dty"]
 script = ExtResource("6_c3xf2")
 creation_nodepack = ExtResource("4_5hn3v")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("5_m5jh2")
 
 [sub_resource type="Resource" id="Resource_llg06"]
 resource_local_to_scene = true
 script = ExtResource("6_c3xf2")
 creation_nodepack = ExtResource("8_s0el6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -94,6 +78,7 @@ collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
 floor_snap_length = 20.0
+platform_on_leave = 2
 script = ExtResource("1_yx1xc")
 look_at_player = true
 sprite = NodePath("Sprite")

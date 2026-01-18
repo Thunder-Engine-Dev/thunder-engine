@@ -31,6 +31,7 @@ enum WarpDir {
 }
 
 const HEAD_SIGNAL_COOLDOWN: int = 1
+const RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
 
 @export_group("General")
 @export var suit: PlayerSuit
@@ -69,6 +70,7 @@ var running: bool
 var attacked: bool
 var attacking: bool
 var slided: bool
+var slow_walking: bool
 
 @warning_ignore("unused_private_class_variable")
 var _has_jumped: bool
@@ -162,15 +164,13 @@ func _ready() -> void:
 			#while !Scenes.current_scene._is_stage_ready:
 			var trans := TransitionManager.current_transition
 			if is_instance_valid(trans) && trans.has_method("on") && trans.paused:
-				trans.on(self)
-				trans.paused = false
+				trans.on(self, false, true)
 		, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 	elif is_instance_valid(TransitionManager.current_transition):
 		Scenes.scene_ready.connect(func():
 			var trans := TransitionManager.current_transition
 			if is_instance_valid(trans) && trans.has_method("on"):
-				trans.on(Vector2(0.5, 0.5), true)
-				trans.paused = false
+				trans.on(Vector2(0.5, 0.5), true, true)
 		)
 
 	if !Thunder._current_player_state_path.is_empty():
@@ -207,10 +207,18 @@ func _ready() -> void:
 
 
 var _starman_faded: bool
+var _starman_runout_played: bool
 
 func _physics_process(delta: float) -> void:
 	if !Thunder._current_player_state:
 		Thunder._current_player_state = suit
+	if is_starman() && CharacterManager.get_global_tweak("enable_starman_run_out_sound") && \
+		timer_starman.time_left > 0.0 && \
+		timer_starman.time_left < 2.0 && \
+		!_starman_runout_played:
+			_starman_runout_played = true
+			var _snd = CharacterManager.get_sound_replace(RUNOUT, RUNOUT, "bonus_run_out", false)
+			Audio.play_1d_sound(_snd, false)
 	if is_starman() && \
 		timer_starman.time_left > 0.0 && \
 		timer_starman.time_left < 1.5 && \
@@ -306,6 +314,10 @@ func control_process() -> void:
 	left_right = clamp(Input.get_axis(control.left, control.right) * 1.25, -1, 1)
 	if stuck_block_left && left_right < 0: left_right = 0
 	if stuck_block_right && left_right > 0: left_right = 0
+	slow_walking = \
+		left_right == 0 && !has_stuck && !completed && \
+		Input.is_action_pressed(control.left) && \
+		Input.is_action_pressed(control.right)
 	up_down = Input.get_axis(control.up, control.down)
 	jumping = int(Input.is_action_pressed(control.jump)) \
 		+ int(Input.is_action_just_pressed(control.jump))
@@ -327,6 +339,7 @@ func control_process() -> void:
 
 func _set_ignore_input() -> void:
 	left_right = 0.0
+	slow_walking = false
 	up_down = 0.0
 	jumping = 0
 	jumped = false
@@ -456,6 +469,7 @@ func _on_starman_timeout() -> void:
 	stars.emitting = false
 	attack.enabled = is_sliding
 	_starman_faded = false
+	_starman_runout_played = false
 	var mus_loader = Scenes.current_scene.get_node_or_null("MusicLoader")
 	if mus_loader:
 		if mus_loader.is_paused:

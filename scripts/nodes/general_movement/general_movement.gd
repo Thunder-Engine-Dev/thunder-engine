@@ -96,5 +96,5 @@ func _life_time_ended() -> void:
 		queue_free()
 		print_verbose("[GMBody2D] %s: freed by life time" % [name])
 		return
-	vis_notifier_node.screen_exited.connect(queue_free, CONNECT_ONE_SHOT)
+	Thunder._connect(vis_notifier_node.screen_exited, queue_free, CONNECT_ONE_SHOT)
 	print_verbose("[GMBody2D] %s: queued to free on screen exit" % [name])

@@ -64,7 +64,6 @@ sprite_frames = SubResource("SpriteFrames_gc88a")
 autoplay = "default"
 
 [node name="Block2" type="AnimatableBody2D" parent="."]
-visible = false
 collision_layer = 96
 collision_mask = 0
 script = ExtResource("2_hjp83")

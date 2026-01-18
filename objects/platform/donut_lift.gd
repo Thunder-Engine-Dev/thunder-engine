@@ -46,23 +46,6 @@ func _physics_process(delta):
 				tw.tween_property(sprite, ^"scale", Vector2.ONE, 0.4)
 			else:
 				queue_free()
-		return
-	
-	var prev_count: bool = counting
-	if !force_fall:
-		counting = false
-		if !prev_count:
-			counter = 0
-			if sprite.sprite_frames.has_animation(&"default"): sprite.animation = &"default"
-			sprite.position = Vector2.ZERO
-			sprite.reset_physics_interpolation()
-	
-	if speed_y != 0: return
-	if force_fall && counting: return
-
-
-func _player_landed(player: Player) -> void:
-	counting = true
 
 
 func reset_vars() -> void:
@@ -71,4 +54,18 @@ func reset_vars() -> void:
 	counter = 0
 	speed_y = 0
 	position = first_pos
+
+
+func _on_player_enter() -> void:
+	counting = true
+
+
+func _on_player_exit() -> void:
+	if counter > delay: return
+	if !force_fall:
+		counting = false
+		counter = 0
+		if sprite.sprite_frames.has_animation(&"default"): sprite.animation = &"default"
+		sprite.position = Vector2.ZERO
+		sprite.reset_physics_interpolation()
 	
