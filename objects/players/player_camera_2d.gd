@@ -96,13 +96,17 @@ func _screen_border_logic() -> void:
 func _xscroll_logic() -> void:
 	if !SettingsManager.settings.xscroll || par is PathFollow2D: # It makes no sense to allow xscroll to work in an autscrolling level, so disable it in such levels.
 		_xscroll = 0.0
-		drag_horizontal_enabled = false
+		#drag_horizontal_enabled = false # Fixes the bug caused by 4.5
 		drag_horizontal_offset = 0
 	elif !force_xscroll_off && is_instance_valid(player):
-		drag_horizontal_enabled = true
+		#drag_horizontal_enabled = true # Fixes the bug caused by 4.5
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
+		print("xscroll: %s" % _xscroll)
+		print("xscroll / 1.25: %s" % str(_xscroll / 1.25))
 		drag_horizontal_offset = _xscroll / 1.25
+		#drag_horizontal_offset = 1.0 * player.direction
+		print("center_position: %s" % get_screen_center_position())
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
