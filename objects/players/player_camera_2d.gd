@@ -101,10 +101,7 @@ func _xscroll_logic() -> void:
 		#drag_horizontal_enabled = true # Fixes the bug caused by 4.5
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
-		print("xscroll: %s" % _xscroll)
-		print("xscroll / 1.25: %s" % str(_xscroll / 1.25))
 		drag_horizontal_offset = _xscroll / 1.25
-		#drag_horizontal_offset = 1.0 * player.direction
 		print("center_position: %s" % get_screen_center_position())
 
 
