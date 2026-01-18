@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dwvmw4hh4t2v6" path="res://engine/objects/players/player_sprite.gd" id="4_ng5qt"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="6_skpgp"]
 [ext_resource type="Texture2D" uid="uid://cybnoy2e02l0m" path="res://engine/scenes/map/textures/map_bubble.png" id="7_nplxc"]
-[ext_resource type="Script" uid="uid://6rnbdxonkeor" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
+[ext_resource type="Script" uid="uid://bts5bj1ckd4vy" path="res://engine/objects/players/player_skin_particles.gd" id="7_wegjq"]
 [ext_resource type="Texture2D" uid="uid://iungoiwgrqth" path="res://engine/objects/players/prefabs/textures/mario/mario_dead.png" id="8_vc1bf"]
 [ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="10_ng5qt"]

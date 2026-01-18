@@ -429,8 +429,12 @@ func _shape_recovery_process(precise: bool = false) -> bool:
 				raycast.position.x = suit.physics_shaper.shape_pos.x + (suit.physics_shaper.shape.size.x / 2)
 		raycast.force_raycast_update()
 		var collider = raycast.get_collider()
-		if collider is TileMap:
-			var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
+		if collider is TileMap || collider is TileMapLayer:
+			var col_pos: Vector2 = raycast.get_collision_point()
+			var local_vector := player.to_local(col_pos)
+			var extended_vector: Vector2 = player.to_global(local_vector.normalized() * (local_vector.length() + 1.0))
+			var cell: Vector2i = collider.local_to_map(collider.to_local(extended_vector))
+			#var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
 			var layer = collider.get_layer_for_body_rid(raycast.get_collider_rid())
 			var tile_data: TileData = collider.get_cell_tile_data(layer, cell)
 			if tile_data:
@@ -440,16 +444,19 @@ func _shape_recovery_process(precise: bool = false) -> bool:
 						if !tile_data.is_collision_polygon_one_way(i, j):
 							is_colliding[index] = true
 							break
-		elif collider is TileMapLayer:
-			var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
-			var tile_data: TileData = collider.get_cell_tile_data(cell)
-			if tile_data:
-				var phys_layer = collider.tile_set.get_physics_layers_count()
-				for i in phys_layer:
-					for j in tile_data.get_collision_polygons_count(i):
-						if !tile_data.is_collision_polygon_one_way(i, j):
-							is_colliding[index] = true
-							break
+		#elif collider is TileMapLayer:
+			#var col_pos: Vector2 = raycast.get_collision_point()
+			#var local_vector := player.to_local(col_pos)
+			#var extended_vector: Vector2 = player.to_global(local_vector.normalized() * (local_vector.length() + 1.0))
+			#var cell: Vector2i = collider.local_to_map(collider.to_local(extended_vector))
+			#var tile_data: TileData = collider.get_cell_tile_data(cell)
+			#if tile_data:
+				#var phys_layer = collider.tile_set.get_physics_layers_count()
+				#for i in phys_layer:
+					#for j in tile_data.get_collision_polygons_count(i):
+						#if !tile_data.is_collision_polygon_one_way(i, j):
+							#is_colliding[index] = true
+							#break
 		elif collider is CollisionObject2D:
 			var i = raycast.get_collider_shape()
 			if !collider.is_shape_owner_one_way_collision_enabled(i):

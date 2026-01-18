@@ -102,7 +102,6 @@ func _xscroll_logic() -> void:
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
 		drag_horizontal_offset = _xscroll / 1.25
-		print("center_position: %s" % get_screen_center_position())
 
 
 func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
