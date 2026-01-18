@@ -59,6 +59,7 @@ func horizontal_correction(amount: int) -> void:
 # Tile gap runover
 func vertical_correction(amount: int) -> void:
 	if is_on_floor(): return
+	if is_on_wall(): return # Fixes bodys get stuck at the corner if the bodys is moving up along the wall and reaches the ceiling.
 	if velocity.y <= 0 or abs(velocity.x) <= 1: return
 	
 	var delta = get_physics_process_delta_time()
