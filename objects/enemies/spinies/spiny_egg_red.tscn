@@ -15,7 +15,16 @@
 [sub_resource type="Resource" id="Resource_ihim1"]
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("2_cfngx")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gnevv"]
 radius = 15.0
@@ -27,8 +36,15 @@ radius = 16.0
 resource_local_to_scene = true
 script = ExtResource("3_6nh2h")
 creation_nodepack = ExtResource("6_84axb")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
 visi_z_index = 2
+visi_z_as_relative = true
+visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Killed"),
 "death_speed": Vector2(0, -250)

@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_q87iy"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_qf6ls"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_wl2ds"]
-[ext_resource type="Texture2D" uid="uid://brb4hqhlc1jad" path="res://engine/objects/enemies/spinies/spiny_green_appear.png" id="6_betql"]
+[ext_resource type="Texture2D" uid="uid://brb4hqhlc1jad" path="res://engine/objects/enemies/spinies/textures/spiny_green_appear.png" id="6_betql"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_f5xwv"]
-[ext_resource type="Texture2D" uid="uid://cc4c41qmqm1t" path="res://engine/objects/enemies/spinies/spiny_green.png" id="7_betql"]
+[ext_resource type="Texture2D" uid="uid://cc4c41qmqm1t" path="res://engine/objects/enemies/spinies/textures/spiny_green.png" id="7_betql"]
 [ext_resource type="Script" uid="uid://dndad55mbpai0" path="res://engine/objects/enemies/enemy_edge_turner.gd" id="8_jbq50"]
 
 [sub_resource type="Resource" id="Resource_7o3ro"]

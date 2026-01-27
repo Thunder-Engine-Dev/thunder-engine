@@ -16,7 +16,15 @@ size = Vector2(47, 62)
 [sub_resource type="Resource" id="Resource_j7a5f"]
 script = ExtResource("4_iejvm")
 creation_nodepack = ExtResource("3_cpvp7")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -150)

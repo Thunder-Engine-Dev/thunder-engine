@@ -11,10 +11,10 @@
 [ext_resource type="Script" uid="uid://c7h6wio1d47vl" path="res://engine/scripts/nodes/underwater/underwater.gd" id="9_05rqn"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="10_ng5qt"]
 [ext_resource type="Script" uid="uid://cp2mj8ibe2l2m" path="res://engine/node_modifiers/player_physics_modifier/slippery_physics_modifier.gd" id="13_217v7"]
+[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="13_ng5qt"]
 [ext_resource type="Script" uid="uid://bh0t8gurod3pp" path="res://engine/objects/players/player_config.gd" id="14_217v7"]
-[ext_resource type="AudioStream" uid="uid://c8ye805mxulip" path="res://engine/objects/players/prefabs/sounds/jump.wav" id="15_fng60"]
-[ext_resource type="AudioStream" uid="uid://rv6ojidxbd3v" path="res://engine/objects/players/prefabs/sounds/skid.wav" id="16_i8gk3"]
-[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="17_dv1c8"]
+[ext_resource type="AudioStream" uid="uid://rv6ojidxbd3v" path="res://engine/objects/players/prefabs/sounds/skid.wav" id="14_l3s3a"]
+[ext_resource type="AudioStream" uid="uid://dh6ia12avp8w5" path="res://engine/objects/players/prefabs/sounds/swim.wav" id="15_217v7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmcrg"]
 size = Vector2(20, 28)
@@ -70,21 +70,70 @@ script = ExtResource("14_217v7")
 walk_initial_speed = 25.0
 walk_acceleration = 125.0
 walk_deceleration = 62.5
+walk_crouch_deceleration = 468.75
 walk_turning_acce = 160.0
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+walk_running_grace_time = 0.05
+walk_slow_walk_speed = 68.75
+underwater_walk_max_walking_speed = 175.0
+underwater_walk_max_running_speed = 175.0
+jump_speed = 700.0
 jump_buff_static = 1200.0
 jump_buff_dynamic = 1500.0
+jump_stomp_multiplicator = 1.0
 jump_coyote_time_sec = 0.067
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+swim_max_falling_speed = 150.0
+swim_gravity_scale = 0.1
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 500.0
+slide_deceleration = 500.0
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
 animation_max_walking_speed = 5.0
 animation_min_walking_speed = 5.0
+sound_jump = [ExtResource("13_ng5qt")]
+sound_swim = [ExtResource("15_217v7")]
+sound_skid = [ExtResource("14_l3s3a")]
 
 [sub_resource type="Resource" id="Resource_hly0o"]
 script = ExtResource("14_217v7")
 walk_initial_speed = 25.0
 walk_acceleration = 156.25
 walk_deceleration = 78.125
+walk_crouch_deceleration = 468.75
 walk_turning_acce = 208.333
+walk_max_walking_speed = 175.0
+walk_max_running_speed = 350.0
+walk_running_grace_time = 0.05
+walk_slow_walk_speed = 68.75
+underwater_walk_max_walking_speed = 175.0
+underwater_walk_max_running_speed = 175.0
+jump_speed = 700.0
+jump_buff_static = 1000.0
+jump_buff_dynamic = 1250.0
+jump_stomp_multiplicator = 1.0
+jump_coyote_time_sec = 0.05
+swim_speed = 150.0
+swim_out_speed = 450.0
+swim_max_speed = 150.0
+swim_max_falling_speed = 150.0
+swim_gravity_scale = 0.1
+climb_speed = 150.0
+slide_max_speed = 450.0
+slide_acceleration = 500.0
+slide_deceleration = 500.0
+stuck_recovery_speed = 60.0
+animation_walking_speed = 1.5
 animation_max_walking_speed = 5.0
 animation_min_walking_speed = 5.0
+sound_jump = [ExtResource("13_ng5qt")]
+sound_swim = [ExtResource("15_217v7")]
+sound_skid = [ExtResource("14_l3s3a")]
 metadata/_custom_type_script = "uid://bh0t8gurod3pp"
 
 [node name="Player" type="CharacterBody2D"]
