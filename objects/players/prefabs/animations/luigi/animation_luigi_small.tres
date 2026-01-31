@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=35 format=3 uid="uid://bna35rwesy4fq"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bna35rwesy4fq"]
 
 [ext_resource type="Texture2D" uid="uid://uv86d81lljqe" path="res://engine/objects/players/prefabs/textures/luigi/luigi_small.png" id="1_dv5o3"]
 

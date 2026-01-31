@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://ciq78opwuq6ft"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ciq78opwuq6ft"]
 
 [ext_resource type="Texture2D" uid="uid://deisknysdnd03" path="res://engine/objects/players/prefabs/textures/mario/mario_beetroot.png" id="1_ri41b"]
 

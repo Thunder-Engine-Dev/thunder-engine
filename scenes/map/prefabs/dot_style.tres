@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://cswh7qii8qpjn"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cswh7qii8qpjn"]
 
 [ext_resource type="Texture2D" uid="uid://y2mmhapuliqx" path="res://engine/scenes/map/textures/dot.png" id="1_06dgr"]
 

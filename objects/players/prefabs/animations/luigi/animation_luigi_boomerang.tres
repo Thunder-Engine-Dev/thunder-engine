@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://bmherqvbmxpdy"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bmherqvbmxpdy"]
 
 [ext_resource type="Texture2D" uid="uid://ciitds8tyr58q" path="res://engine/objects/players/prefabs/textures/luigi/luigi_boomerang.png" id="1_0fkyd"]
 

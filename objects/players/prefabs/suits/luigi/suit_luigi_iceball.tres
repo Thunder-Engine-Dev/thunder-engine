@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://daebho1nypc6v"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://daebho1nypc6v"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_0ertt"]
 [ext_resource type="SpriteFrames" uid="uid://co67sm7im1ylg" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_iceball.tres" id="2_aul86"]

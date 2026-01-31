@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://b1mklmn2aqcx8"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://b1mklmn2aqcx8"]
 
 [ext_resource type="Texture2D" uid="uid://wgy3e7a8hx8" path="res://engine/objects/players/prefabs/textures/mario/mario_super.png" id="2_etu0p"]
 

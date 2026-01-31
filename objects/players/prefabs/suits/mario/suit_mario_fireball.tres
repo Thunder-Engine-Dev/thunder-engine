@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://bs6nsxnb62dn4"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://bs6nsxnb62dn4"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_k44gw"]
 [ext_resource type="SpriteFrames" uid="uid://ccq78jb2slkov" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_fireball.tres" id="2_0gbpq"]

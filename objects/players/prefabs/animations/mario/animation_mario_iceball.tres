@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://boq3ykcdoxnb5"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://boq3ykcdoxnb5"]
 
 [ext_resource type="Texture2D" uid="uid://kmfa1hdjbsch" path="res://engine/objects/players/prefabs/textures/mario/mario_iceball.png" id="1_ddvwu"]
 

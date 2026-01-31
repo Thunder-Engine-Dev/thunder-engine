@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://b0rssfuuqiai6"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://b0rssfuuqiai6"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_6b6ct"]
 [ext_resource type="SpriteFrames" uid="uid://ciq78opwuq6ft" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_beetroot.tres" id="2_33nsf"]

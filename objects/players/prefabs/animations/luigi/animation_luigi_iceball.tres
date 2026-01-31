@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://co67sm7im1ylg"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://co67sm7im1ylg"]
 
 [ext_resource type="Texture2D" uid="uid://cfi5kks71u6sb" path="res://engine/objects/players/prefabs/textures/luigi/luigi_iceball.png" id="1_105fb"]
 

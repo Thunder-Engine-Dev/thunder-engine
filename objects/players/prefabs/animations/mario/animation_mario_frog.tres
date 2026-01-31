@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=45 format=3 uid="uid://3njuthtkj3yb"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://3njuthtkj3yb"]
 
 [ext_resource type="Texture2D" uid="uid://lv41sbcx166t" path="res://engine/objects/players/prefabs/textures/mario/mario_green_lui.png" id="1_ljtj5"]
 [ext_resource type="Texture2D" uid="uid://d0cnvf3fx46l6" path="res://engine/objects/players/prefabs/textures/mario/mario_frog.png" id="1_qoe2n"]

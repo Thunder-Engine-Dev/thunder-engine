@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=19 format=3 uid="uid://dwjyg73br3od0"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://dwjyg73br3od0"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_rli4i"]
 [ext_resource type="SpriteFrames" uid="uid://cqs4lmmejojw5" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_beetroot.tres" id="2_fypkw"]

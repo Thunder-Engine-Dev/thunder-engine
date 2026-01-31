@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://dowq1cl27iub7"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dowq1cl27iub7"]
 
 [ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="1_7mofp"]
 
