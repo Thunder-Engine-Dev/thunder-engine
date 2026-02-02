@@ -113,7 +113,6 @@ func _sign_up_step_points() -> void:
 
 func _reset_step_points() -> void:
 	step_next_points = initial_step_next_points
-	print(step_next_points)
 	_beginning = step_next_points[0]
 	step_next_points.remove_at(0)
 
