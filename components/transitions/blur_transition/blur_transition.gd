@@ -18,7 +18,7 @@ func _ready() -> void:
 	)
 
 ## Sets the center of transition on some node
-func on(ref: Variant) -> Transition:
+func on(ref: Variant, direct = false, unpause = false) -> Transition:
 	return self
 
 #func start_transition(speed: float = 1.0) -> void:

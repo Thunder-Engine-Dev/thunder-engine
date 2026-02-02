@@ -25,7 +25,15 @@ size = Vector2(30, 54)
 resource_local_to_scene = true
 script = ExtResource("6_guai4")
 creation_nodepack = ExtResource("4_msv8e")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead")
 }
@@ -35,8 +43,15 @@ custom_script = ExtResource("5_jo8b4")
 resource_local_to_scene = true
 script = ExtResource("6_guai4")
 creation_nodepack = ExtResource("8_afrjp")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
 trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
 visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/DeadRotating"),
 "death_speed": Vector2(0, -250)
