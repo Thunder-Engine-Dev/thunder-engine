@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 	
 	if !has_jumped && player.global_position.x > jump_marker.global_position.x:
 		player.jump(-500)
+		player.coyote_time = 0.0
 		var _sndfx: AudioStream = player.suit.physics_config.sound_jump[randi_range(0, len(player.suit.physics_config.sound_jump) - 1)]
 		Audio.play_sound(_sndfx, player, false)
 		has_jumped = true
