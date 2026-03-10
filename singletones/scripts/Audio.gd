@@ -44,6 +44,7 @@ var _target_music_bus_volume_db: float = 0:
 var _music_channels: Dictionary = {}
 var _music_tweens: Array[Tween]
 var _duplicated_sounds: Array[AudioStream]
+var _audio_channels: Dictionary = {}
 
 var _calculate_player_position = _lcpp.bind()
 
@@ -59,9 +60,10 @@ func _init() -> void:
 
 func _ready() -> void:
 	Scenes.pre_scene_changed.connect(_stop_all_musics_scene_changed)
+	_apply_default_effects()
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if !_duplicated_sounds.is_empty():
 		_duplicated_sounds.clear()
 
@@ -70,11 +72,21 @@ func _lcpp(ref: Node2D) -> Vector2:
 	return ref.global_position
 
 
+func _apply_default_effects() -> void:
+	var sound_channel := AudioServer.get_bus_index(&"Master")
+	
+	var hard_limiter_effect = AudioEffectHardLimiter.new()
+	hard_limiter_effect.pre_gain_db = 0
+	hard_limiter_effect.ceiling_db = -0.3
+	hard_limiter_effect.release = 0.1
+	AudioServer.add_bus_effect(sound_channel, hard_limiter_effect)
+
+
 func _create_2d_player(pos: Vector2, is_global: bool, is_permanent: bool = false) -> AudioStreamPlayer2D:
 	var player = AudioStreamPlayer2D.new()
 	if !is_permanent: player.finished.connect(player.queue_free)
 	player.global_position = pos
-	GlobalViewport.add_child.call_deferred(player)
+	GlobalViewport.add_child(player)
 	return player
 
 
@@ -82,7 +94,7 @@ func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStre
 	var player = AudioStreamPlayer.new()
 	if !is_permanent: player.finished.connect(player.queue_free)
 	if !is_global: Scenes.pre_scene_changed.connect(player.queue_free)
-	add_child.call_deferred(player)
+	add_child(player)
 	return player
 
 
@@ -92,16 +104,16 @@ func _create_1d_player(is_global: bool, is_permanent: bool = false) -> AudioStre
 ## [param ref] is the node to be bound[br]
 ## [param is_global] determines whether the sound can be played only in certain scene or global, the ones playing in the scene will be cut when calling [method Scenes.switch_to_scene][br]
 ## [param other_keys] is a [Dictionary] to extend the playing method, please see the [i][u]spell_keys[/u][/i] above
-func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, other_keys: Dictionary = {}) -> void:
+func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, other_keys: Dictionary = {}) -> AudioStreamPlayer2D:
 	# Stop on empty sound to avoid crashes
-	if resource == null: return
+	if resource == null: return null
 	
-	if _duplicated_sounds.has(resource): return
+	if _duplicated_sounds.has(resource): return null
 	_duplicated_sounds.append(resource)
+	
 	var player = _create_2d_player(_calculate_player_position.call(ref), is_global)
 	player.bus = "Sound" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 	player.stream = resource
-	player.play.call_deferred()
 	
 	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
@@ -113,6 +125,14 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 	player.process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
+	
+	if &"channel" in other_keys:
+		if is_instance_valid(_audio_channels.get(other_keys.channel)):
+			_audio_channels[other_keys.channel].queue_free()
+		_audio_channels[other_keys.channel] = player
+	
+	player.play()
+	return player
 
 
 ## Play a sound with given [AudioStream] resource[br]
@@ -121,16 +141,15 @@ func play_sound(resource: AudioStream, ref: Node2D, is_global: bool = true, othe
 ## [param ref] is the node to be bound[br]
 ## [param is_global] determines whether the sound can be played only in certain scene or global, the ones playing in the scene will be cut when calling [method Scenes.switch_to_scene][br]
 ## [param other_keys] is a [Dictionary] to extend the playing method, please see the [i][u]spell_keys[/u][i] above
-func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Dictionary = {}) -> void:
+func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Dictionary = {}) -> AudioStreamPlayer:
 	# Stop on empty sound to avoid crashes
-	if resource == null: return
+	if resource == null: return null
 	
-	if _duplicated_sounds.has(resource): return
+	if _duplicated_sounds.has(resource): return null
 	_duplicated_sounds.append(resource)
 	var player = _create_1d_player(is_global)
 	player.bus = "Sound" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
 	player.stream = resource
-	player.play.call_deferred()
 	
 	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
 		player.pitch_scale = other_keys.pitch
@@ -139,6 +158,13 @@ func play_1d_sound(resource: AudioStream, is_global: bool = true, other_keys: Di
 	player.process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
+	if &"channel" in other_keys:
+		if is_instance_valid(_audio_channels.get(other_keys.channel)):
+			_audio_channels[other_keys.channel].queue_free()
+		_audio_channels[other_keys.channel] = player
+	
+	player.play()
+	return player
 
 
 ## Play a [b]music[/b] with given [AudioStream] resource and bind the sound player to a [Node2D].[br]
@@ -170,7 +196,6 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	if ClassDB.get_parent_class(resource.get_class()) == &"AudioStream":
 		music_player.stream = resource
 		music_player.bus = &"Music" if !(&"bus" in other_keys && other_keys.bus) else other_keys.bus
-		music_player.play.call_deferred()
 	else:
 		print("ERROR: Invalid data provided in method Audio.play_music")
 		return null
@@ -191,8 +216,9 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
+	music_player.play()
 	if &"start_from_sec" in other_keys && (other_keys.start_from_sec is float || other_keys.start_from_sec is int) && other_keys.start_from_sec > 0.0:
-		_music_channels[channel_id].seek.call_deferred(other_keys.start_from_sec)
+		_music_channels[channel_id].seek(other_keys.start_from_sec)
 	music_started.emit(channel_id)
 	
 	return music_player if is_instance_valid(music_player) else null
