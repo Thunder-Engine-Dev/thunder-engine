@@ -1,0 +1,22 @@
+[gd_resource type="FontVariation" load_steps=4 format=3 uid="uid://c5ust2bgtp407"]
+
+[ext_resource type="FontFile" uid="uid://cdqqkkwas717i" path="res://engine/fonts/ddorktrial.ttf" id="1_an0os"]
+[ext_resource type="FontFile" uid="uid://bep77h6cscd7j" path="res://engine/fonts/VAG-Rounded.otf" id="2_dlwgd"]
+
+[sub_resource type="FontVariation" id="FontVariation_2d3i5"]
+base_font = ExtResource("2_dlwgd")
+variation_embolden = -0.2
+variation_transform = Transform2D(0.85, 0, 0, 0.85, 0, 0)
+spacing_glyph = -2
+spacing_space = -1
+spacing_top = -10
+spacing_bottom = -5
+
+[resource]
+fallbacks = Array[Font]([SubResource("FontVariation_2d3i5")])
+base_font = ExtResource("1_an0os")
+variation_embolden = 0.1
+variation_transform = Transform2D(1, 0, 0, 0.9, 0, 0)
+spacing_space = -1
+spacing_top = -4
+spacing_bottom = -11
