@@ -1,0 +1,30 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://cifu08uo84per"]
+
+[ext_resource type="Texture2D" uid="uid://dbq5fsw34jl0u" path="res://engine/objects/bumping_blocks/switch_block/textures/switch_dotted.png" id="1_vrx3k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gcu8"]
+atlas = ExtResource("1_vrx3k")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qi17"]
+atlas = ExtResource("1_vrx3k")
+region = Rect2(128, 64, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gcu8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qi17")
+}],
+"loop": true,
+"name": &"disabled",
+"speed": 5.0
+}]

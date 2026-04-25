@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://bl6y0yhdvjrab"]
+
+[ext_resource type="Script" uid="uid://df1rjsaa4yfdb" path="res://engine/objects/bumping_blocks/switch_block/switch_block.gd" id="1_jveyv"]
+[ext_resource type="Texture2D" uid="uid://1o1fh4ejfw6o" path="res://engine/objects/bumping_blocks/switch_block/textures/Switch.png" id="1_ukd83"]
+[ext_resource type="Shader" uid="uid://erh4rhsoly5d" path="res://engine/objects/bumping_blocks/switch_block/shaders/hsv.gdshader" id="2_ditt8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_imy6f"]
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjhwg"]
+resource_local_to_scene = true
+shader = ExtResource("2_ditt8")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tow7s"]
+atlas = ExtResource("1_ukd83")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qqiy"]
+atlas = ExtResource("1_ukd83")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vth6b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tow7s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qqiy")
+}],
+"loop": true,
+"name": &"disabled",
+"speed": 5.0
+}]
+
+[node name="SwitchBlock" type="AnimatableBody2D"]
+disable_mode = 1
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_jveyv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_imy6f")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+material = SubResource("ShaderMaterial_cjhwg")
+sprite_frames = SubResource("SpriteFrames_vth6b")
+autoplay = "default"
+frame_progress = 0.0291923
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 1.43051e-06)
+scale = Vector2(1.6, 1.6)
+metadata/_edit_lock_ = true

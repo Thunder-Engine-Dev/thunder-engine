@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://bqgumcf8nm07n"]
+
+[ext_resource type="Script" uid="uid://cxx3wgp7deg2n" path="res://engine/objects/bumping_blocks/switch_block/switch_block_switcher.gd" id="1_hwcis"]
+[ext_resource type="Shader" uid="uid://erh4rhsoly5d" path="res://engine/objects/bumping_blocks/switch_block/shaders/hsv.gdshader" id="2_4q53y"]
+[ext_resource type="AudioStream" uid="uid://cd1vjqtasjknr" path="res://engine/objects/bumping_blocks/switch_block/sounds/switch.wav" id="2_e1rd8"]
+[ext_resource type="Texture2D" uid="uid://1o1fh4ejfw6o" path="res://engine/objects/bumping_blocks/switch_block/textures/Switch.png" id="3_qjxvt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a6cq5"]
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uugjb"]
+resource_local_to_scene = true
+shader = ExtResource("2_4q53y")
+shader_parameter/hue = 0.0
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dysal"]
+atlas = ExtResource("3_qjxvt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2udak"]
+atlas = ExtResource("3_qjxvt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mknl"]
+atlas = ExtResource("3_qjxvt")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k5o07"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dysal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2udak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mknl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bv14a"]
+size = Vector2(32, 1)
+
+[node name="SwitchBlockSwitcher" type="AnimatableBody2D"]
+disable_mode = 1
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("1_hwcis")
+bump_sound = ExtResource("2_e1rd8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_a6cq5")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+material = SubResource("ShaderMaterial_uugjb")
+sprite_frames = SubResource("SpriteFrames_k5o07")
+autoplay = "default"
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_bv14a")
+target_position = Vector2(0, 2)
+max_results = 8
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(1.43051e-06, 2.08616e-07)
+scale = Vector2(1.6, 1.6)
+metadata/_edit_lock_ = true
