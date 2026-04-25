@@ -308,6 +308,7 @@ func _fullscreen_logic() -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		await SettingsManager._window_scale_logic(true)
+		# Patch for Wayland, not perfect though
 		if "Linux" in OS.get_name():
 			await get_tree().physics_frame
 			get_window().move_to_center.call_deferred()
