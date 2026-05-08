@@ -148,10 +148,10 @@ func _swap_coins_and_bricks() -> void:
 		if !i is Node2D:
 			continue
 		
-		if use_control_children_as_working_area && !rects.all(
+		if use_control_children_as_working_area && (rects && !rects.any(
 			func(rect):
 				return rect.has_point(i.global_position)
-		):
+		)):
 			continue
 		
 		var brick: PackedScene = null
@@ -174,10 +174,10 @@ func _swap_coins_and_bricks() -> void:
 		if !k is Node2D:
 			continue
 		
-		if use_control_children_as_working_area && !rects.all(
+		if use_control_children_as_working_area && (rects && !rects.any(
 			func(rect):
 				return rect.has_point(k.global_position)
-		):
+		)):
 			continue
 		
 		var coin: PackedScene = null
