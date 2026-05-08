@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://brghrrue331yb"]
+
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="1_0vjgo"]
+[ext_resource type="Script" uid="uid://bfpmgk21lwuep" path="res://engine/singletones/nodes/viewport/debug_mouse_label.gd" id="2_ymsxn"]
+
+[node name="DebugMouseLabel" type="RichTextLabel"]
+z_index = 128
+clip_contents = false
+custom_minimum_size = Vector2(480, 0)
+offset_right = 480.0
+offset_bottom = 12.0
+theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_0vjgo")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "null"
+fit_content = true
+scroll_active = false
+tab_size = 6
+shortcut_keys_enabled = false
+drag_and_drop_selection_enabled = false
+script = ExtResource("2_ymsxn")
