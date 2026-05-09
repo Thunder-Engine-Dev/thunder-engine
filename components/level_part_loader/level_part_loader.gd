@@ -19,7 +19,7 @@ func _ready() -> void:
 		checkpoints_part_indexes.resize(level_parts.size())
 	
 	switch_to_part.call_deferred(checkpoints_part_indexes[
-		clampi(Data.values.checkpoint, 0, max(checkpoints_part_indexes.size() - 1, 0))
+		clampi(Data.values.checkpoint, -1, max(checkpoints_part_indexes.size() - 1, 0))
 	])
 
 
