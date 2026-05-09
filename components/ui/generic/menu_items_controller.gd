@@ -33,8 +33,8 @@ var selector_repeat_timer: float
 
 func _ready() -> void:
 	_update_selectors()
-	SettingsManager.mouse_pressed.connect(_on_mouse_pressed)
-	SettingsManager.mouse_moved.connect(_on_mouse_moved)
+	Thunder._connect(SettingsManager.mouse_pressed, _on_mouse_pressed)
+	Thunder._connect(SettingsManager.mouse_moved, _on_mouse_moved)
 	#SettingsManager.mouse_released.connect(_on_mouse_released)
 
 	if trigger_selection_immediately:
@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		get_node(prev_screen_node_path)._handle_select(false)
 	
 	_mouse_can_process = true
+
 
 func _input(event: InputEvent) -> void:
 	if !focused: return
