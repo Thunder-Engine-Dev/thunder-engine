@@ -2,6 +2,10 @@ extends Area2D
 
 const DEFAULT_SWITCH_SOUND := preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
 
+signal activated
+signal deactivated
+signal respawned
+
 ## ID of the checkpoint. If you intend to use multiple checkpoints, you should set different IDs for different checkpoints.
 @export var id: int = 0
 ## If set, this checkpoint can only ever be activated once, if there are multiple checkpoints.
@@ -29,6 +33,7 @@ func _ready() -> void:
 		Thunder._current_player.global_position = global_position + Vector2.UP.rotated(global_rotation) * 16
 		Thunder._current_player.reset_physics_interpolation()
 		Thunder._current_camera.teleport()
+		respawned.emit()
 		text.modulate.a = 1
 		animation_player.play(&"checkpoint")
 
@@ -46,6 +51,7 @@ func _physics_process(delta) -> void:
 		Data.checkpoint_set_arg.emit(id)
 	# Deactivation
 	if Data.values.checkpoint != id && animation_player.current_animation == "checkpoint":
+		deactivated.emit()
 		animation_player.play(&"RESET")
 		var tween = create_tween()
 		tween.tween_property(text, ^"modulate:a", alpha, 0.2)
@@ -59,6 +65,8 @@ func activate() -> void:
 	
 	if permanent_checked && !id in Data.values.checked_cps:
 		Data.values.checked_cps.append(id)
+	
+	activated.emit()
 	
 	var tween = create_tween()
 	tween.tween_property(text, ^"modulate:a", 1.0, 0.2)
