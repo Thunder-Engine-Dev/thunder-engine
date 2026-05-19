@@ -230,6 +230,7 @@ func _movement_y(delta: float) -> void:
 				player.coyote_time = 0.0
 				player.ghost_speed_y = 0.0
 				player.jump(config.jump_speed)
+				player.jumped_signal.emit()
 				Thunder.autosplitter.update_il_counter()
 				if player.is_crouching && player._crouch_jump_tweak:
 					player.crouch_forced = player.up_down > 0
@@ -271,6 +272,7 @@ func _movement_climbing(delta: float) -> void:
 		if sign(player.left_right) != 0:
 			player.direction = sign(player.left_right)
 		player.jump(config.jump_speed)
+		player.jumped_signal.emit()
 		Thunder.autosplitter.update_il_counter()
 		var _sndfx: AudioStream = config.sound_jump[randi_range(0, len(config.sound_jump) - 1)]
 		Audio.play_sound(_sndfx, player, false, {pitch = suit.sound_pitch})
@@ -552,6 +554,7 @@ func _body_process() -> void:
 			else:
 				_final_speed_y = -result.jumping_min * config.jump_stomp_multiplicator
 			
+			player.stomp_bounced.emit(_final_speed_y)
 			if player._super_jump_tweak && player.is_on_floor():
 				if player.ghost_speed_y < 0.0:
 					return

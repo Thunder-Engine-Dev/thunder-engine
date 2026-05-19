@@ -8,6 +8,8 @@ signal shot
 signal threw
 signal ground_kicked
 signal head_bumped
+signal jumped_signal
+signal stomp_bounced(speed: float)
 signal grab_init(node: Node2D)
 signal grabbed(side_grabbed: bool)
 signal invinciblized(dur: float)
