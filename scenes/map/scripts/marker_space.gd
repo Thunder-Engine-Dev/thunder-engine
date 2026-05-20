@@ -118,6 +118,7 @@ func _save_progress() -> void:
 			new_level
 		)
 		ProfileManager.save_current_profile()
+		ProfileManager.profile_data_saved_user_display.emit(ProfileManager.current_profile.name)
 
 
 func _save_suspended_progress() -> void:
@@ -148,6 +149,7 @@ func _save_suspended_progress() -> void:
 	
 	ProfileManager.profiles.suspended = profile
 	ProfileManager.save_profile_data("suspended", profile.data)
+	ProfileManager.profile_data_saved_user_display.emit("suspended")
 
 
 # Recive events

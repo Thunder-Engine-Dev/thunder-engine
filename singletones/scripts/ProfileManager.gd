@@ -4,6 +4,7 @@ extends Node
 signal all_profiles_loaded
 signal profile_created(name: String)
 signal profile_data_saved(name: String)
+signal profile_data_saved_user_display(name: String)
 signal profile_deleted(name: String)
 signal current_profile_set(name: String)
 signal current_profile_saved
