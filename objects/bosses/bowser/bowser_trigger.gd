@@ -14,6 +14,7 @@ signal bowser_triggered
 @export var boss_music_fading: bool = true
 @export var boss_music_start_from_sec: float = 0
 @export var boss_music_volume: float = 0
+@export var boss_music_subsong: int = -1
 
 var _cam_parent: Node
 
@@ -60,9 +61,11 @@ func _physics_process(delta: float) -> void:
 					start_from_sec = boss_music_start_from_sec,
 					volume = boss_music_volume,
 					ignore_pause = true,
+					subsong = boss_music_subsong,
 				} if !boss_music_fading else {
 					volume = -20,
 					start_from_sec = boss_music_start_from_sec,
+					subsong = boss_music_subsong,
 					fade_duration = 1.0,
 					fade_to = boss_music_volume,
 					fade_method = Tween.TransitionType.TRANS_EXPO,
