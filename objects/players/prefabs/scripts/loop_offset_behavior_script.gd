@@ -15,6 +15,8 @@ func _ready() -> void:
 
 func _sprite_loop() -> void:
 	if !is_instance_valid(node): return
+	if vars.suit == "frog" && node.animation == &"walk":
+		_loop_offsets.walk = 0
 	for anim in _loop_offsets.keys():
 		if _loop_offsets[anim] < 0: continue
 		if node.animation == anim:
