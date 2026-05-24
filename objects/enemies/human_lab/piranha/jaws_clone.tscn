@@ -77,6 +77,7 @@ killing_immune = {
 }
 killing_creation = SubResource("Resource_qwqpt")
 killing_sound_succeeded = ExtResource("2_f1d84")
+sound_ignore_pitch_modification = true
 
 [node name="Head#Dead" type="AnimatedSprite2D" parent="." index="1"]
 visible = false
