@@ -36,10 +36,10 @@ static func trail(
 			tra.add_to_group(&"Trail")
 			
 			if interpolation_support:
-				tra.visible = false
+				tra.self_modulate.a = 0
 				await Thunder.get_tree().physics_frame
 				if is_instance_valid(tra) && tra.is_inside_tree():
-					tra.visible = true
+					tra.self_modulate.a = 1
 	).create_2d().get_node() as Sprite2D
 	
 	return effect_node
