@@ -10,6 +10,7 @@ func _ready() -> void:
 	resized.connect(_on_window_resized)
 	#_update_sound_function()
 	_update_view()
+	
 
 
 ## Fullscreen toggle
@@ -52,6 +53,13 @@ func _update_view() -> void:
 func _update_sound_function() -> void:
 	var window_size = DisplayServer.window_get_size()
 	Audio._calculate_player_position = func(ref: Node2D) -> Vector2:
+		var audio_listener: AudioListener2D = vp.get_audio_listener_2d()
+		if audio_listener:
+			return (
+				ref.global_position -
+				audio_listener.global_position +
+				Vector2(window_size / 2)
+			)
 		return (
 			ref.global_position -
 			Thunder._current_camera.global_position +
