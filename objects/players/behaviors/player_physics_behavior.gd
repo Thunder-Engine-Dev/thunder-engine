@@ -564,7 +564,10 @@ func _body_process() -> void:
 				player.speed.y = _final_speed_y
 
 		else:
-			player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
+			if result.get("instakill", false):
+				player.die(enemy_attacked.get_meta(&"stomp_tags", {}))
+			else:
+				player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
 
 #= Floor
 func _floor_process() -> void:

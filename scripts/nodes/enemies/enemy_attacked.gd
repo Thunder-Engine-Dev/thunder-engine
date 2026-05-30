@@ -24,6 +24,10 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 ## If [code]true[/code], the enemy will hurt player if the player fails
 ## stomping or directly touches it
 @export var stomping_hurtable: bool = true
+## If [code]true[/code], the enemy will instakill player if the player fails
+## stomping or directly touches it. Only effective if [member stomping_hurtable]
+## is [code]true[/code].
+@export var stomping_instakillable: bool = false
 ## The normal that defines the success and failure of player's stomping[br]
 ## For example, if you set this to Vector2(0,-1) and the player stomps onto it, the
 ## player will fail stomping and get hurt[br]
@@ -233,6 +237,8 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 		if by is Player && by.is_invincible(): return result
 		stomped_failed.emit()
 		result = {result = false}
+		if stomping_instakillable:
+			result.instakill = true
 	
 	return result
 

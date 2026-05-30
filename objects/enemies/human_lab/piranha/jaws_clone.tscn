@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://drurta6gsm0p" path="res://engine/objects/enemies/human_lab/piranha/texture.png" id="3_65rfn"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_qk4ci"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_fx6p3"]
-[ext_resource type="Texture2D" uid="uid://df0q636r4vatc" path="res://engine/objects/enemies/human_lab/container/textures/clones/clone_jaws.png" id="7_gvyc6"]
+[ext_resource type="Texture2D" uid="uid://drmifmvm46c2k" path="res://engine/objects/enemies/human_lab/piranha/texture_dead.png" id="6_ni8cr"]
 
 [sub_resource type="Resource" id="Resource_qwqpt"]
 script = ExtResource("4_fx6p3")
@@ -31,7 +31,7 @@ custom_script = ExtResource("3_qk4ci")
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_gvyc6")
+"texture": ExtResource("6_ni8cr")
 }],
 "loop": true,
 "name": &"default",
