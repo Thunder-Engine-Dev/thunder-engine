@@ -55,6 +55,7 @@ func bounce(with_sound: bool = true, ceiling: bool = false) -> void:
 		run_out.emit()
 		collision_layer = 0
 		collision_mask = 0
+		$Attack.set_collision_mask_value(7, false)
 		return
 
 
