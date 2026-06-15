@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dau38jljgre62"]
+
+[ext_resource type="Script" uid="uid://douyi1br0p360" path="res://engine/components/shader_optimizer/shader_optimizer.gd" id="1_cixhq"]
+
+[node name="ShaderCacher" type="CanvasLayer"]
+layer = -128
+script = ExtResource("1_cixhq")
+
+[node name="Node2D" type="Node2D" parent="."]
