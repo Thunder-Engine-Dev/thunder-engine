@@ -186,7 +186,7 @@ func _lkfz():
 ## by the player[br]
 ## If [param offset] set, the actual offset will be [member stomping_offset]
 ## + [param offset]
-func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
+func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -16)) -> Dictionary:
 	var result: Dictionary
 	
 	if !stomping_enabled || _stomping_delayer: return result
