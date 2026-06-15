@@ -13,11 +13,6 @@ func _ready() -> void:
 			MOUSE_BUTTON_WHEEL_UP:
 				_target_pos += 40
 	)
-	# HACK: credits interpolating all over the screen for the first few moments for some reason
-	visible = false
-	for i in range(3):
-		await get_tree().physics_frame
-	visible = true
 
 func _physics_process(delta: float) -> void:
 	_scroll_force = Input.get_axis(&"ui_down", &"ui_up") * 300
