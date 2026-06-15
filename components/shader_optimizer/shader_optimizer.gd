@@ -37,11 +37,12 @@ func _scan_dir(dir_path: String) -> void:
 		return
 
 	for file_name in dir.get_files():
-		var full_path := dir_path.path_join(file_name)
-		if file_name.ends_with(".tres"):
+		var real_file_name := file_name.replace(".remap", "")
+		var full_path := dir_path.path_join(real_file_name)
+		if real_file_name.ends_with(".tres"):
 			_register_tres(full_path)
-		elif file_name.ends_with(".tscn"):
-			_register_tscn(full_path)
+		elif real_file_name.ends_with(".gdshader"):
+			_register_gdshader(full_path)
 
 	for sub_dir in dir.get_directories():
 		if sub_dir.begins_with("."):
@@ -57,84 +58,13 @@ func _register_tres(path: String) -> void:
 		_register_particle_material(resource)
 
 
-func _register_tscn(path: String) -> void:
-	if not FileAccess.file_exists(path):
+func _register_gdshader(path: String) -> void:
+	var shader := load(path) as Shader
+	if shader == null:
 		return
-
-	var text := FileAccess.get_file_as_string(path)
-	_collect_tscn_shader_ext_resources(text)
-
-	if "GPUParticles2D" in text:
-		_collect_tscn_gpu_particles(path)
-
-
-func _collect_tscn_shader_ext_resources(text: String) -> void:
-	var ext_shader_regex := RegEx.new()
-	ext_shader_regex.compile(
-		'\\[ext_resource type="Shader"[^\\n]*path="([^"]+)"'
-	)
-	for result in ext_shader_regex.search_all(text):
-		_register_shader_from_path(result.get_string(1))
-
-	var ext_map := _parse_ext_resource_map(text)
-	var sub_shader_regex := RegEx.new()
-	sub_shader_regex.compile(
-		'\\[sub_resource type="ShaderMaterial"[^\\]]*\\]\\nshader = ExtResource\\("([^"]+)"\\)'
-	)
-	for result in sub_shader_regex.search_all(text):
-		var ext_id: String = result.get_string(1)
-		if ext_map.has(ext_id):
-			_register_shader_from_path(ext_map[ext_id])
-
-
-func _parse_ext_resource_map(text: String) -> Dictionary:
-	var map: Dictionary = {}
-
-	var path_first_regex := RegEx.new()
-	path_first_regex.compile(
-		'\\[ext_resource[^\\n]*path="([^"]+)"[^\\n]*id="([^"]+)"'
-	)
-	for result in path_first_regex.search_all(text):
-		map[result.get_string(2)] = result.get_string(1)
-
-	var id_first_regex := RegEx.new()
-	id_first_regex.compile(
-		'\\[ext_resource[^\\n]*id="([^"]+)"[^\\n]*path="([^"]+)"'
-	)
-	for result in id_first_regex.search_all(text):
-		map[result.get_string(1)] = result.get_string(2)
-
-	return map
-
-
-func _register_shader_from_path(resource_path: String) -> void:
-	if resource_path.ends_with(".gdshader"):
-		var shader := load(resource_path) as Shader
-		if shader == null:
-			return
-		var material := ShaderMaterial.new()
-		material.shader = shader
-		_register_shader_material(material)
-	elif resource_path.ends_with(".tres"):
-		var resource := load(resource_path)
-		if resource is ShaderMaterial:
-			_register_shader_material(resource)
-
-
-func _collect_tscn_gpu_particles(path: String) -> void:
-	var scene := load(path) as PackedScene
-	if scene == null:
-		return
-
-	var instance := scene.instantiate()
-	for particle in instance.find_children("*", "GPUParticles2D", true, false):
-		var particles := particle as GPUParticles2D
-		if particles.process_material != null:
-			_register_particle_material(
-				particles.process_material.duplicate(),
-				"%s -> %s" % [path, particle.name]
-			)
-	instance.free()
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	_register_shader_material(material)
 
 
 func _register_shader_material(material: ShaderMaterial) -> void:
