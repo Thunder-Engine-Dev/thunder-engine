@@ -48,17 +48,27 @@ func _physics_process(delta: float) -> void:
 				return
 			else:
 				var col: bool = false
+				var bricks: bool = true
 				if left_explosion.is_colliding():
 					var collider = left_explosion.get_collider()
 					if is_instance_valid(collider) && collider.has_method(&"got_bumped"):
 						collider.got_bumped(false)
+						if !collider.has_method(&"bricks_break"):
+							bricks = false
 						col = true
 				if right_explosion.is_colliding():
 					var collider2 = right_explosion.get_collider()
 					if is_instance_valid(collider2) && collider2.has_method(&"got_bumped"):
 						collider2.got_bumped(false)
+						if !collider2.has_method(&"bricks_break"):
+							bricks = false
 						col = true
 				if col:
+					if bricks:
+						motion_process(1)
+						_explosion()
+						timer_destroy.start()
+						return
 					_step = 2
 					_stun.call_deferred()
 		# Rising
