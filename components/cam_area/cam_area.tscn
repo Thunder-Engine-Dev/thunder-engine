@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://yqftjpfskche"]
+[gd_scene format=3 uid="uid://yqftjpfskche"]
 
 [ext_resource type="Script" uid="uid://dlpraskuccn72" path="res://engine/components/cam_area/cam_area.gd" id="1_5gh2o"]
 
-[node name="CamArea" type="Control"]
+[node name="CamArea" type="Control" unique_id=1790766850]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 64.0

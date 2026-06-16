@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b24l0bhd2wshk"]
+[gd_scene format=3 uid="uid://b24l0bhd2wshk"]
 
 [ext_resource type="Script" uid="uid://cypriiqv57ul7" path="res://engine/objects/bosses/bowser/projectile/burst_flameball.gd" id="1_2icyp"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_el7gp"]
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6bivw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
@@ -52,7 +52,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="BurstFlameball" type="CharacterBody2D"]
+[node name="BurstFlameball" type="CharacterBody2D" unique_id=291781224]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2icyp")
@@ -63,17 +63,17 @@ gravity_scale = 0.25
 collision = false
 metadata/_edit_pinned_properties_ = [&"collision", &"belongs_to", &"turn_sprite", &"gravity_scale"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=345322848]
 visible = false
 position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 5
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=853424706]
 shape = SubResource("RectangleShape2D_3yefo")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=141837472]
 script = ExtResource("2_el7gp")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -85,17 +85,17 @@ killing_sound_failed = null
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1184958696]
 sprite_frames = SubResource("SpriteFrames_qfn7i")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=898510490]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(4.76837e-06, 9.53674e-07)
 scale = Vector2(4.8, 3.2)
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1251373765]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_hujyx")

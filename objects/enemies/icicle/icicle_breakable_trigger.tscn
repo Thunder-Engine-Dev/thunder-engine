@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bj2kw46xuqkdj"]
+[gd_scene format=3 uid="uid://bj2kw46xuqkdj"]
 
 [ext_resource type="Script" uid="uid://bcmjfhqvual3r" path="res://engine/objects/enemies/icicle/icicle_breakable_trigger.gd" id="1_sd8ap"]
 
-[node name="IcicleBreakableTrigger" type="Area2D"]
+[node name="IcicleBreakableTrigger" type="Area2D" unique_id=309904412]
 collision_layer = 288
 script = ExtResource("1_sd8ap")
 ray_cast_collision_mask = 256

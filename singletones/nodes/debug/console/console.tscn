@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://clxyt1pmcd0ij"]
+[gd_scene format=3 uid="uid://clxyt1pmcd0ij"]
 
 [ext_resource type="Script" uid="uid://c1kple77827pu" path="res://engine/singletones/nodes/debug/console/console.gd" id="1_3pnkp"]
 [ext_resource type="PackedScene" uid="uid://bquqhbqux15rr" path="res://engine/singletones/nodes/debug/console/console_ui.tscn" id="2_g800c"]
 [ext_resource type="Script" uid="uid://qxj3pgbkver0" path="res://engine/singletones/nodes/debug/console/bind_logic.gd" id="3_57hln"]
 
-[node name="Console" type="Window"]
+[node name="Console" type="Window" unique_id=1522742140]
 process_mode = 3
 disable_3d = true
 title = "Console"
@@ -14,9 +14,9 @@ visible = false
 min_size = Vector2i(250, 175)
 script = ExtResource("1_3pnkp")
 
-[node name="UI" parent="." instance=ExtResource("2_g800c")]
+[node name="UI" parent="." unique_id=464452445 instance=ExtResource("2_g800c")]
 
-[node name="BindLogic" type="Node" parent="."]
+[node name="BindLogic" type="Node" parent="." unique_id=447416723]
 process_mode = 3
 script = ExtResource("3_57hln")
 

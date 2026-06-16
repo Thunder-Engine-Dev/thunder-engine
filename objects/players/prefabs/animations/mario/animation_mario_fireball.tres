@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=33 format=3 uid="uid://ccq78jb2slkov"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ccq78jb2slkov"]
 
 [ext_resource type="Texture2D" uid="uid://bkfw1m7cfp576" path="res://engine/objects/players/prefabs/textures/mario/mario_fireball.png" id="2_b55ej"]
 
@@ -135,7 +135,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i8jcc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"appear",
 "speed": 30.0
 }, {
@@ -143,7 +143,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ct17r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -157,7 +157,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fdgup")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack_air",
 "speed": 15.0
 }, {
@@ -165,7 +165,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3ihh8")
 }],
-"loop": false,
+"loop": 0,
 "name": &"back",
 "speed": 0.0
 }, {
@@ -176,7 +176,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ggl7l")
 }],
-"loop": true,
+"loop": 1,
 "name": &"climb",
 "speed": 5.0
 }, {
@@ -184,7 +184,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b2tyw")
 }],
-"loop": false,
+"loop": 0,
 "name": &"crouch",
 "speed": 0.0
 }, {
@@ -192,7 +192,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iphgg")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -200,7 +200,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ktxex")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall",
 "speed": 0.0
 }, {
@@ -211,7 +211,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ix868")
 }],
-"loop": false,
+"loop": 0,
 "name": &"grab",
 "speed": 5.0
 }, {
@@ -219,7 +219,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nx7k6")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hold_crouch",
 "speed": 0.0
 }, {
@@ -227,7 +227,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h54av")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hold_default",
 "speed": 0.0
 }, {
@@ -235,7 +235,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aeoh4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hold_fall",
 "speed": 0.0
 }, {
@@ -243,7 +243,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aeoh4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hold_jump",
 "speed": 0.0
 }, {
@@ -254,7 +254,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xlim5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hold_swim",
 "speed": 8.0
 }, {
@@ -268,7 +268,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h54av")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hold_walk",
 "speed": 6.0
 }, {
@@ -276,7 +276,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ktxex")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump",
 "speed": 0.0
 }, {
@@ -284,7 +284,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_np3n4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"kick",
 "speed": 4.0
 }, {
@@ -292,7 +292,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ee7gc")
 }],
-"loop": false,
+"loop": 0,
 "name": &"skid",
 "speed": 0.0
 }, {
@@ -300,7 +300,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jb2gb")
 }],
-"loop": false,
+"loop": 0,
 "name": &"slide",
 "speed": 0.0
 }, {
@@ -329,7 +329,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xlim5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"swim",
 "speed": 8.0
 }, {
@@ -343,7 +343,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l5dgp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 6.0
 }, {
@@ -351,7 +351,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g371k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"warp",
 "speed": 0.0
 }, {
@@ -359,7 +359,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_haxs8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"win",
 "speed": 5.0
 }]

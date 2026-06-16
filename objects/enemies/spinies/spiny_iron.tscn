@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://crb8jkwa0r1dl"]
+[gd_scene format=3 uid="uid://crb8jkwa0r1dl"]
 
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_b77y2"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_yr4ok"]
@@ -8,19 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://6jvnknfhxi0m" path="res://engine/objects/enemies/spinies/textures/spiny_iron.png" id="5_wysra"]
 [ext_resource type="Texture2D" uid="uid://vh6h4tv3n8d6" path="res://engine/objects/enemies/spinies/textures/spiny_iron_appear.png" id="6_384uv"]
 
-[sub_resource type="Resource" id="Resource_0woj2"]
+[sub_resource type="Resource" id="Resource_df5fm"]
 resource_local_to_scene = true
 script = ExtResource("4_f1y31")
 creation_nodepack = ExtResource("2_yr4ok")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -80,7 +73,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d6m1v")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 50.0
 }, {
@@ -91,12 +84,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_blibx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SpinyIron" instance=ExtResource("1_b77y2")]
+[node name="SpinyIron" unique_id=1611579278 instance=ExtResource("1_b77y2")]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_immune = {
@@ -111,7 +104,7 @@ killing_immune = {
 "shell_forced": true,
 "starman": false
 }
-killing_creation = SubResource("Resource_0woj2")
+killing_creation = SubResource("Resource_df5fm")
 killing_sound_failed = ExtResource("5_jqwbq")
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 

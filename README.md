@@ -15,7 +15,8 @@ It allows you to create games with previously unseen level of flexibility and st
 <h3 align="center">
 Current state: PRODUCTION READY<br/>
 Required game engine:<br/>
-Godot 4.4.1<br/>
+Godot 4.4.1 on STABLE branch<br/>
+Godot 4.7 on UNSTABLE branch<br/>
 </h3>
 
 ------------

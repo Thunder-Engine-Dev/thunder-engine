@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b24hnsctae1a0"]
+[gd_scene format=3 uid="uid://b24hnsctae1a0"]
 
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_tovt6"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_2j537"]
@@ -12,30 +12,13 @@
 [sub_resource type="Resource" id="Resource_qcd8b"]
 script = ExtResource("4_e4y4b")
 creation_nodepack = ExtResource("2_4lt84")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_u0sf6"]
+[sub_resource type="Resource" id="Resource_irof6"]
 resource_local_to_scene = true
 script = ExtResource("4_e4y4b")
 creation_nodepack = ExtResource("2_2j537")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -59,7 +42,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uumhy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -74,20 +57,20 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4v6os")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaRed" instance=ExtResource("1_tovt6")]
+[node name="KoopaRed" unique_id=1990356411 instance=ExtResource("1_tovt6")]
 speed = Vector2(100, 0)
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(624006947) index="1" unique_id=107757371]
 stomping_creation = SubResource("Resource_qcd8b")
-killing_creation = SubResource("Resource_u0sf6")
+killing_creation = SubResource("Resource_irof6")
 metadata/_edit_pinned_properties_ = [&"stomping_creation", &"killing_creation"]
 
-[node name="Turner" type="RayCast2D" parent="." index="2"]
+[node name="Turner" type="RayCast2D" parent="." index="2" unique_id=1183789552]
 visible = false
 position = Vector2(16, 17)
 target_position = Vector2(0, 8)
@@ -95,13 +78,13 @@ collision_mask = 32
 hit_from_inside = true
 script = ExtResource("5_d1njq")
 
-[node name="Sprite" parent="." index="3"]
+[node name="Sprite" parent="." index="3" unique_id=611997468]
 sprite_frames = SubResource("SpriteFrames_82uh0")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="Dead" parent="Sprite" index="0"]
+[node name="Dead" parent="Sprite" index="0" unique_id=49069282]
 sprite_frames = SubResource("SpriteFrames_gjwt8")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="VisibleOnScreenEnabler2D" parent="." index="4"]
+[node name="VisibleOnScreenEnabler2D" parent="." index="4" unique_id=1584166778]
 rect = Rect2(-16, -32, 32, 48)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dym6dmtca3rhi"]
+[gd_scene format=3 uid="uid://dym6dmtca3rhi"]
 
 [ext_resource type="PackedScene" uid="uid://u6gxj4cj5m4f" path="res://engine/objects/bumping_blocks/message_block/message_block.tscn" id="1_a321h"]
 [ext_resource type="Script" uid="uid://b8bgcxgd7yfvr" path="res://engine/objects/bumping_blocks/message_block/message_block_choicer.gd" id="2_gsgqq"]
@@ -13,28 +13,28 @@ outline_size = 8
 outline_color = Color(0, 0, 0.341176, 1)
 shadow_size = 0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsgqq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxib6"]
 resource_local_to_scene = true
 shader = ExtResource("2_h62d5")
 shader_parameter/hue = 0.12
 shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
 
-[node name="MessageBlockChoicer" instance=ExtResource("1_a321h")]
+[node name="MessageBlockChoicer" unique_id=1802786549 instance=ExtResource("1_a321h")]
 script = ExtResource("2_gsgqq")
 font_size = 24
 message_label_settings = SubResource("LabelSettings_ouvlt")
 
-[node name="AnimatedSprite2D" parent="Sprites" index="1"]
-material = SubResource("ShaderMaterial_gsgqq")
+[node name="AnimatedSprite2D" parent="Sprites" parent_id_path=PackedInt32Array(294550689) index="1" unique_id=1604913855]
+material = SubResource("ShaderMaterial_xxib6")
 
-[node name="Texture" parent="CanvasLayer/Box" index="0"]
+[node name="Texture" parent="CanvasLayer/Box" parent_id_path=PackedInt32Array(1618357154) index="0" unique_id=1552683647]
 offset_left = -160.0
 offset_top = -48.0
 offset_right = 160.0
 offset_bottom = 48.0
 
-[node name="Text3" type="Label" parent="CanvasLayer/Box/Texture" index="0"]
+[node name="Text3" type="Label" parent="CanvasLayer/Box/Texture" index="0" unique_id=2090913394]
 physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = 10
@@ -57,11 +57,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Text" parent="CanvasLayer/Box/Texture" index="1"]
+[node name="Text" parent="CanvasLayer/Box/Texture" index="1" unique_id=619646087]
 theme_override_constants/outline_size = 8
 uppercase = true
 
-[node name="Text2" parent="CanvasLayer/Box/Texture" index="2"]
+[node name="Text2" parent="CanvasLayer/Box/Texture" index="2" unique_id=1544713833]
 offset_top = 2.0
 offset_bottom = 43.0
 theme_override_font_sizes/font_size = 16

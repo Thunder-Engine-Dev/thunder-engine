@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bquqhbqux15rr"]
+[gd_scene format=3 uid="uid://bquqhbqux15rr"]
 
 [ext_resource type="Script" uid="uid://bqkr8canlrhtq" path="res://engine/singletones/nodes/debug/console/debug_player_stats.gd" id="1_4vh8i"]
 [ext_resource type="Script" uid="uid://b3yyjtr21es3b" path="res://engine/singletones/nodes/debug/console/debug_update_fps.gd" id="1_xl6s5"]
@@ -27,7 +27,7 @@ font_weight = 700
 subpixel_positioning = 0
 keep_rounding_remainders = false
 
-[node name="UI" type="Control"]
+[node name="UI" type="Control" unique_id=83023676]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1166227619]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.25098, 0.25098, 0.25098, 1)
 
-[node name="CmdInput" type="LineEdit" parent="."]
+[node name="CmdInput" type="LineEdit" parent="." unique_id=278655697]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -63,7 +63,7 @@ clear_button_enabled = true
 drag_and_drop_selection_enabled = false
 caret_blink = true
 
-[node name="Enter" type="Button" parent="."]
+[node name="Enter" type="Button" parent="." unique_id=2042830266]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -80,7 +80,7 @@ focus_mode = 1
 shortcut = SubResource("Shortcut_8ddje")
 text = "Send"
 
-[node name="OutputContainer" type="Panel" parent="."]
+[node name="OutputContainer" type="Panel" parent="." unique_id=1976756274]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +92,7 @@ offset_bottom = -39.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Output" type="RichTextLabel" parent="OutputContainer"]
+[node name="Output" type="RichTextLabel" parent="OutputContainer" unique_id=1709304749]
 modulate = Color(1, 1, 1, 0.862745)
 layout_mode = 1
 anchors_preset = 15
@@ -111,7 +111,7 @@ threaded = true
 selection_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="Paused" type="CheckBox" parent="."]
+[node name="Paused" type="CheckBox" parent="." unique_id=946020030]
 layout_mode = 0
 offset_right = 85.0
 offset_bottom = 31.0
@@ -121,7 +121,7 @@ button_pressed = true
 shortcut = SubResource("Shortcut_evygy")
 text = "Paused"
 
-[node name="FPS" type="Label" parent="."]
+[node name="FPS" type="Label" parent="." unique_id=838852829]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -133,7 +133,7 @@ text = "FPS"
 horizontal_alignment = 2
 script = ExtResource("1_xl6s5")
 
-[node name="PlayerStats" type="Label" parent="."]
+[node name="PlayerStats" type="Label" parent="." unique_id=1375610566]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -151,7 +151,7 @@ theme_override_font_sizes/font_size = 17
 text = "Debug Stats"
 script = ExtResource("1_4vh8i")
 
-[node name="GeneralDebugStats" type="Label" parent="."]
+[node name="GeneralDebugStats" type="Label" parent="." unique_id=1254930047]
 layout_mode = 1
 offset_left = 27.0
 offset_top = 39.0

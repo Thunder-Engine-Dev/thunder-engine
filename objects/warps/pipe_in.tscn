@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh4kf1w7jyseo"]
+[gd_scene format=3 uid="uid://dh4kf1w7jyseo"]
 
 [ext_resource type="Script" uid="uid://vjv74impe62u" path="res://engine/objects/warps/pipe_in.gd" id="1_17oxu"]
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="2_78r3h"]
@@ -6,24 +6,24 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqxto"]
 size = Vector2(32, 16)
 
-[node name="PipeIn" type="Area2D" groups=["pipe_in"]]
+[node name="PipeIn" type="Area2D" unique_id=1607065405 groups=["pipe_in"]]
 collision_layer = 0
 monitorable = false
 script = ExtResource("1_17oxu")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=307974966]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_rqxto")
 debug_color = Color(0, 0.352941, 0.180392, 0.419608)
 
-[node name="Arrow" type="Polygon2D" parent="."]
+[node name="Arrow" type="Polygon2D" parent="." unique_id=777805769]
 color = Color(0.337255, 0.847059, 0, 1)
 polygon = PackedVector2Array(-3, 0, 3, 0, 3, 16, 9, 16, 0, 30, -9, 16, -3, 16)
 
-[node name="PosPlayer" type="Marker2D" parent="."]
+[node name="PosPlayer" type="Marker2D" parent="." unique_id=778727007]
 visible = false
 
-[node name="TextDir" type="Label" parent="."]
+[node name="TextDir" type="Label" parent="." unique_id=2131846291]
 offset_left = -32.0
 offset_top = -16.0
 offset_right = 32.0
@@ -36,7 +36,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="PosPlayerInvisible" type="Marker2D" parent="."]
+[node name="PosPlayerInvisible" type="Marker2D" parent="." unique_id=1993060505]
 visible = false
 position = Vector2(0, 32)
 

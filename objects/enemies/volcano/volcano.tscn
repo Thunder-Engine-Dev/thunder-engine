@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://df5i2eol1nrof"]
+[gd_scene format=3 uid="uid://df5i2eol1nrof"]
 
 [ext_resource type="Texture2D" uid="uid://b4grcqwkhdc12" path="res://engine/objects/enemies/volcano/volcano.png" id="1_5qyqc"]
 [ext_resource type="Script" uid="uid://dt3t4jlblbs4c" path="res://engine/objects/enemies/volcano/volcano.gd" id="1_eni5l"]
@@ -42,32 +42,30 @@ _data = {
 &"volcano-heading": SubResource("Animation_hiemt")
 }
 
-[node name="Volcano" type="Node2D"]
+[node name="Volcano" type="Node2D" unique_id=451649659]
 script = ExtResource("1_eni5l")
 
-[node name="Volcano" type="Sprite2D" parent="."]
+[node name="Volcano" type="Sprite2D" parent="." unique_id=1791272425]
 z_index = -1
 texture = ExtResource("1_5qyqc")
 
-[node name="Volcano-heading" type="Sprite2D" parent="."]
+[node name="Volcano-heading" type="Sprite2D" parent="." unique_id=263024754]
 modulate = Color(0.76, 0.76, 0.76, 1)
 z_index = -1
 position = Vector2(-1, -82)
 texture = ExtResource("2_p2qnt")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_4xvf6")
-}
-autoplay = "volcano-heading"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=246289245]
+libraries/ = SubResource("AnimationLibrary_4xvf6")
+autoplay = &"volcano-heading"
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1462314242]
 position = Vector2(0, -96)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1619708089]
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(0, -40)
 scale = Vector2(3.2, 5.6)
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=997736046]
 one_shot = true

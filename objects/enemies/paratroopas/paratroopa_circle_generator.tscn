@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cawvmevhto1k3"]
+[gd_scene format=3 uid="uid://cawvmevhto1k3"]
 
 [ext_resource type="Script" uid="uid://cl0770gxboo8q" path="res://engine/objects/enemies/paratroopas/paratroopa_circle_generator.gd" id="1_at8jy"]
 [ext_resource type="PackedScene" uid="uid://bhv4emxagkyao" path="res://engine/objects/enemies/paratroopas/paratroopa_yellow.tscn" id="2_x21hy"]
 
-[node name="KoopaParatroopaCircleGenerator" type="Node2D"]
+[node name="KoopaParatroopaCircleGenerator" type="Node2D" unique_id=194076013]
 script = ExtResource("1_at8jy")
 troopa = ExtResource("2_x21hy")
 metadata/_edit_pinned_properties_ = [&"troopa"]

@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://cgtuwhr04lmbn"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cgtuwhr04lmbn"]
 
 [ext_resource type="Texture2D" uid="uid://ctfjvvm01kq08" path="res://engine/objects/enemies/boo/textures/boo.png" id="1_rnghj"]
 
@@ -16,7 +16,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sw7wt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"chase",
 "speed": 0.0
 }, {
@@ -24,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sah8c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 0.0
 }]

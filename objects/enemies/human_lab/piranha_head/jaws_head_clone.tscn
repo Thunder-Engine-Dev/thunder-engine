@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5i7dre6a0q0u"]
+[gd_scene format=3 uid="uid://5i7dre6a0q0u"]
 
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_aumlb"]
 [ext_resource type="Texture2D" uid="uid://byu1t7txu5lgj" path="res://engine/objects/enemies/human_lab/piranha_head/textures/clone_head.png" id="2_ve488"]
@@ -31,12 +31,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_skdk3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="JawsHeadClone" instance=ExtResource("1_aumlb")]
+[node name="JawsHeadClone" unique_id=338891655 instance=ExtResource("1_aumlb")]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
 killing_sound_succeeded = ExtResource("3_pbree")

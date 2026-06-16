@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6sg0pyw1t8cn"]
+[gd_scene format=3 uid="uid://b6sg0pyw1t8cn"]
 
 [ext_resource type="Texture2D" uid="uid://g7q88nba7x64" path="res://engine/objects/enemies/human_lab/koopa_troopa/textures/keyboard.png" id="1_c4kto"]
 [ext_resource type="Script" uid="uid://ctggojyi618up" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="2_lge04"]
 
-[node name="KeyboardEffect" type="CharacterBody2D"]
+[node name="KeyboardEffect" type="CharacterBody2D" unique_id=212685711]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("2_lge04")
@@ -15,5 +15,5 @@ gravity_scale = 0.5
 max_falling_speed = 1000.0
 collision = false
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=96335402]
 texture = ExtResource("1_c4kto")

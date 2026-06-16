@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpf0e00tynf01"]
+[gd_scene format=3 uid="uid://cpf0e00tynf01"]
 
 [ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_fag7l"]
 [ext_resource type="Texture2D" uid="uid://cgay0oqcx75my" path="res://engine/objects/enemies/piranha_plants/textures/head_gray.png" id="2_h33fj"]
@@ -34,14 +34,14 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bxk3p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaHeadGray" instance=ExtResource("1_fag7l")]
+[node name="PiranhaHeadGray" unique_id=1576778006 instance=ExtResource("1_fag7l")]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1817882490) index="1" unique_id=1400885768]
 killing_immune = {
 "beetroot": true,
 "boomerang": true,
@@ -55,6 +55,6 @@ killing_immune = {
 "starman": true
 }
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1634074432]
 sprite_frames = SubResource("SpriteFrames_bl55j")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

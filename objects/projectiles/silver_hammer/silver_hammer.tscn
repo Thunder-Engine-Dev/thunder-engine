@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://e0knwhbbb2ok"]
+[gd_scene format=3 uid="uid://e0knwhbbb2ok"]
 
 [ext_resource type="Script" uid="uid://h7j8uqk7r1h4" path="res://engine/objects/projectiles/silver_hammer/silver_hammer.gd" id="1_kg4ub"]
 [ext_resource type="Texture2D" uid="uid://dyx62ddt87cgg" path="res://engine/objects/projectiles/silver_hammer/texture.png" id="2_5fl35"]
@@ -9,23 +9,22 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_eyugj"]
 radius = 8.0
 
-[node name="SilverHammer" type="CharacterBody2D"]
+[node name="SilverHammer" type="CharacterBody2D" unique_id=2059325332]
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_kg4ub")
 sprite = NodePath("Texture")
 speed = Vector2(120, -300)
 gravity_scale = 0.3
-impulse_move_on_turn_x = false
 
-[node name="Texture" type="Sprite2D" parent="."]
+[node name="Texture" type="Sprite2D" parent="." unique_id=684506466]
 texture = ExtResource("2_5fl35")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1453500953]
 visible = false
 shape = SubResource("RectangleShape2D_84swo")
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=335259912]
 visible = false
 shape = SubResource("CircleShape2D_eyugj")
 target_position = Vector2(0, 0)
@@ -36,7 +35,7 @@ script = ExtResource("3_7xrok")
 killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1825048107]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-64, -16, 128, 96)
 metadata/_edit_lock_ = true

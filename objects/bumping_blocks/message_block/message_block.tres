@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ruf2y5h6b0fa"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ruf2y5h6b0fa"]
 
 [ext_resource type="Shader" uid="uid://cnljy5svxs637" path="res://engine/objects/bumping_blocks/message_block/hsv.gdshader" id="1_itabv"]
 

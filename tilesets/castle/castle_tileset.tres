@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://bgdkv8m3grmin"]
+[gd_resource type="TileSet" format=3 uid="uid://bgdkv8m3grmin"]
 
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="1_wq0b6"]
 [ext_resource type="Texture2D" uid="uid://bviqja31upt4m" path="res://engine/tilesets/overworld/green_pipe.png" id="2_wq0b6"]

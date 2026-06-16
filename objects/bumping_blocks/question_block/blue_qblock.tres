@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://buo2w0jqubcm3"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://buo2w0jqubcm3"]
 
 [ext_resource type="Texture2D" uid="uid://4xc1fldnsncv" path="res://engine/objects/bumping_blocks/question_block/textures/question.png" id="1_qtok2"]
 [ext_resource type="Texture2D" uid="uid://niflk6587w6s" path="res://engine/objects/bumping_blocks/question_block/textures/emptyblue.png" id="2_gx8j4"]
@@ -27,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hqj3q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_gx8j4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"empty",
 "speed": 5.0
 }]

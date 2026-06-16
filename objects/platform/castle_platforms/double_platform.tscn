@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3cggc3th4xua"]
+[gd_scene format=3 uid="uid://b3cggc3th4xua"]
 
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_2ntqh"]
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="2_8fx74"]
@@ -7,21 +7,21 @@
 atlas = ExtResource("2_8fx74")
 region = Rect2(64, 0, 32, 32)
 
-[node name="PlatformPath" instance=ExtResource("1_2ntqh")]
+[node name="PlatformPath" unique_id=1204951763 instance=ExtResource("1_2ntqh")]
 
-[node name="CollisionPolygon2D" parent="Block" index="0"]
+[node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="0" unique_id=478764510]
 polygon = PackedVector2Array(-16, 0, 16, 0, 16, 64, -16, 64)
 
-[node name="Sprite2D" parent="Block" index="1"]
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="1" unique_id=166578107]
 position = Vector2(0, 16)
 texture = SubResource("AtlasTexture_gylo8")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Block/Sprite2D" index="0"]
+[node name="Sprite2D2" type="Sprite2D" parent="Block/Sprite2D" index="0" unique_id=2048473473]
 position = Vector2(0, 32)
 texture = SubResource("AtlasTexture_gylo8")
 
-[node name="Block2" parent="." index="1"]
+[node name="Block2" parent="." index="1" unique_id=2083995296]
 visible = true
 
-[node name="CollisionPolygon2D" parent="Block2" index="0"]
+[node name="CollisionPolygon2D" parent="Block2" index="0" unique_id=707615798]
 polygon = PackedVector2Array(-16, 0, 16, 0, 16, 32, -16, 32)

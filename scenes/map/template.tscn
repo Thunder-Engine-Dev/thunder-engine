@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cqed2mxnku1t3"]
+[gd_scene format=3 uid="uid://cqed2mxnku1t3"]
 
 [ext_resource type="Texture2D" uid="uid://usm6n80msr7n" path="res://engine/scenes/map/textures/bg.png" id="1_jlx25"]
 [ext_resource type="Script" uid="uid://b2miajjwaop0p" path="res://engine/scenes/map/scripts/map.gd" id="1_qgvjo"]
@@ -18,14 +18,14 @@
 [ext_resource type="Texture2D" uid="uid://co2aqkfsljcf1" path="res://engine/scenes/map/textures/x.png" id="9_xmlgv"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="11_wipe6"]
 
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" unique_id=1391195466]
 script = ExtResource("1_qgvjo")
 player = NodePath("Player")
 
-[node name="MusicLoader" parent="." instance=ExtResource("2_oisb7")]
+[node name="MusicLoader" parent="." unique_id=1740790912 instance=ExtResource("2_oisb7")]
 music = Array[Resource]([ExtResource("3_7rkcv")])
 
-[node name="Bg" type="Sprite2D" parent="."]
+[node name="Bg" type="Sprite2D" parent="." unique_id=647199636]
 texture = ExtResource("1_jlx25")
 centered = false
 region_enabled = true
@@ -33,7 +33,7 @@ region_rect = Rect2(0, 0, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="Bg2" type="Sprite2D" parent="."]
+[node name="Bg2" type="Sprite2D" parent="." unique_id=548036607]
 position = Vector2(3333, 0)
 texture = ExtResource("1_jlx25")
 centered = false
@@ -42,7 +42,7 @@ region_rect = Rect2(0, 480, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="Bg3" type="Sprite2D" parent="."]
+[node name="Bg3" type="Sprite2D" parent="." unique_id=642824830]
 position = Vector2(6666, 0)
 texture = ExtResource("1_jlx25")
 centered = false
@@ -51,13 +51,13 @@ region_rect = Rect2(0, 960, 3333, 480)
 region_filter_clip_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." instance=ExtResource("2_b6p1j")]
+[node name="Player" parent="." unique_id=1252810848 instance=ExtResource("2_b6p1j")]
 z_index = 5
 z_as_relative = false
 position = Vector2(-16, 192)
 dots = ExtResource("5_rcbgg")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1909496653]
 limit_left = 0
 limit_top = 0
 limit_right = 1790
@@ -67,87 +67,87 @@ position_smoothing_speed = 10.0
 editor_draw_limits = true
 script = ExtResource("5_2kij8")
 
-[node name="GUI" type="CanvasLayer" parent="."]
+[node name="GUI" type="CanvasLayer" parent="." unique_id=1434822761]
 
-[node name="WorldText" type="Sprite2D" parent="GUI"]
+[node name="WorldText" type="Sprite2D" parent="GUI" unique_id=1472168676]
 position = Vector2(320, -64)
 texture = ExtResource("6_dfac6")
 script = ExtResource("7_qu4jb")
 
-[node name="BounceMarker" type="Marker2D" parent="GUI/WorldText"]
+[node name="BounceMarker" type="Marker2D" parent="GUI/WorldText" unique_id=1289893157]
 position = Vector2(0, 146)
 
-[node name="MarioIcon" type="Sprite2D" parent="GUI"]
+[node name="MarioIcon" type="Sprite2D" parent="GUI" unique_id=222505627]
 position = Vector2(581, 436)
 texture = ExtResource("2_eo2rt")
 script = ExtResource("11_wipe6")
 metadata/_edit_lock_ = true
 
-[node name="PressStart" type="Sprite2D" parent="GUI"]
+[node name="PressStart" type="Sprite2D" parent="GUI" unique_id=502529903]
 position = Vector2(320, 443)
 texture = ExtResource("3_jqf35")
 script = ExtResource("7_qvjo1")
 
-[node name="MarkerSpace" type="Node2D" parent="."]
+[node name="MarkerSpace" type="Node2D" parent="." unique_id=1066738355]
 editor_description = "Use this as World"
 script = ExtResource("7_5g461")
 dot_texture = ExtResource("8_p16np")
 x_texture = ExtResource("9_xmlgv")
 draw_dots = true
 
-[node name="MapPlayerMarker9" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker9" type="Marker2D" parent="MarkerSpace" unique_id=1975877519]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(0, 192)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker" type="Marker2D" parent="MarkerSpace" unique_id=1199933411]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(168, 192)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker2" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker2" type="Marker2D" parent="MarkerSpace" unique_id=1209424441]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(168, 296)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker3" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker3" type="Marker2D" parent="MarkerSpace" unique_id=1052466221]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(328, 296)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker4" type="Marker2D" parent="MarkerSpace" unique_id=753556273]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(328, 176)
 script = ExtResource("8_ej4v3")
 level = "res://engine/scenes/level.tscn"
 
-[node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker5" type="Marker2D" parent="MarkerSpace" unique_id=629286425]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(464, 176)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker6" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker6" type="Marker2D" parent="MarkerSpace" unique_id=799591487]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(464, 104)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker7" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker7" type="Marker2D" parent="MarkerSpace" unique_id=1382612253]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(576, 104)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker8" type="Marker2D" parent="MarkerSpace" unique_id=197312460]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(576, 320)
@@ -155,39 +155,39 @@ rotation = -1.57068
 script = ExtResource("8_ej4v3")
 level = "res://engine/scenes/level.tscn"
 
-[node name="MapPlayerMarker10" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker10" type="Marker2D" parent="MarkerSpace" unique_id=2066003236]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(704, 320)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker12" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker12" type="Marker2D" parent="MarkerSpace" unique_id=1739282430]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(880, 143)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker13" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker13" type="Marker2D" parent="MarkerSpace" unique_id=2042274423]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(960, 328)
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker14" type="Marker2D" parent="MarkerSpace" unique_id=555007135]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(1056, 351)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker15" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker15" type="Marker2D" parent="MarkerSpace" unique_id=1358857578]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(1088, 248)
 rotation = -1.57068
 script = ExtResource("8_ej4v3")
 
-[node name="MapPlayerMarker16" type="Marker2D" parent="MarkerSpace"]
+[node name="MapPlayerMarker16" type="Marker2D" parent="MarkerSpace" unique_id=249881915]
 show_behind_parent = true
 z_as_relative = false
 position = Vector2(1216, 248)

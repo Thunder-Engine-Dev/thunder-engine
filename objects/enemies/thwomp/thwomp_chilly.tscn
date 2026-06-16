@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dkh7mvjujqr3x"]
+[gd_scene format=3 uid="uid://dkh7mvjujqr3x"]
 
 [ext_resource type="PackedScene" uid="uid://bcgt87mbq40gx" path="res://engine/objects/enemies/thwomp/thwomp.tscn" id="1_tu3pw"]
 [ext_resource type="Texture2D" uid="uid://cfuvrxvwyq7ri" path="res://engine/objects/enemies/thwomp/textures/thwomp_chilly_3-.png" id="2_2rus1"]
@@ -74,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cyd3u")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink",
 "speed": 20.0
 }, {
@@ -82,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j7nb4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -96,7 +96,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8volm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"smile",
 "speed": 10.0
 }]
@@ -165,7 +165,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_emjjq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink",
 "speed": 20.0
 }, {
@@ -173,7 +173,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vn8en")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -187,16 +187,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6nd4n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"smile",
 "speed": 10.0
 }]
 
-[node name="ThwompChilly" instance=ExtResource("1_tu3pw")]
+[node name="ThwompChilly" unique_id=352570667 instance=ExtResource("1_tu3pw")]
 script = ExtResource("2_fpapu")
 max_falling_speed = 2400.0
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(2139936472) index="1" unique_id=1700449587]
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -208,30 +208,30 @@ killing_immune = {
 }
 frozen_enabled = false
 
-[node name="LeftExplosion" parent="." index="2"]
+[node name="LeftExplosion" parent="." index="2" unique_id=1932374409]
 collide_with_areas = true
 
-[node name="RightExplosion" parent="." index="3"]
+[node name="RightExplosion" parent="." index="3" unique_id=1955647733]
 collide_with_areas = true
 
-[node name="Sprite" parent="." index="4"]
+[node name="Sprite" parent="." index="4" unique_id=1692084714]
 clip_children = 2
 sprite_frames = SubResource("SpriteFrames_xvyrn")
 
-[node name="Sprite2" type="Sprite2D" parent="Sprite" index="0"]
+[node name="Sprite2" type="Sprite2D" parent="Sprite" index="0" unique_id=1544496149]
 texture = ExtResource("4_7obg7")
 script = ExtResource("5_m8w4s")
 
-[node name="Sprite3" type="AnimatedSprite2D" parent="Sprite" index="1"]
+[node name="Sprite3" type="AnimatedSprite2D" parent="Sprite" index="1" unique_id=1363304932]
 modulate = Color(1, 1, 1, 0.196078)
 sprite_frames = SubResource("SpriteFrames_euflt")
 script = ExtResource("8_5cqj4")
 
-[node name="LeftIcicle" type="Marker2D" parent="." index="8"]
+[node name="LeftIcicle" type="Marker2D" parent="." index="8" unique_id=1156232951]
 visible = false
 position = Vector2(-48, 32)
 
-[node name="RightIcicle" type="Marker2D" parent="." index="9"]
+[node name="RightIcicle" type="Marker2D" parent="." index="9" unique_id=1415793304]
 visible = false
 position = Vector2(48, 32)
 

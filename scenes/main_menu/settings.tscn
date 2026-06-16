@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://1jfyfq3ty6g1"]
+[gd_scene format=3 uid="uid://1jfyfq3ty6g1"]
 
 [ext_resource type="Script" uid="uid://bqibbs5p33x31" path="res://engine/scenes/main_menu/scripts/options_screen.gd" id="1_n4qx7"]
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_wqbo8"]
@@ -298,7 +298,7 @@ _data = {
 &"open": SubResource("Animation_hvhdc")
 }
 
-[node name="Settings" type="Control"]
+[node name="Settings" type="Control" unique_id=2145260449]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -311,7 +311,7 @@ mouse_filter = 1
 script = ExtResource("1_n4qx7")
 metadata/_edit_lock_ = true
 
-[node name="Bg" type="TextureRect" parent="."]
+[node name="Bg" type="TextureRect" parent="." unique_id=1186051172]
 z_index = -5
 z_as_relative = false
 layout_mode = 1
@@ -323,26 +323,26 @@ grow_vertical = 2
 texture = ExtResource("1_wqbo8")
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=1150949253]
 physics_interpolation_mode = 1
 script = ExtResource("4_2sncp")
 amplitude = Vector2(0, 10)
 frequency = 10.0
 
-[node name="Icon" type="TextureRect" parent="Node2D"]
+[node name="Icon" type="TextureRect" parent="Node2D" unique_id=1936220103]
 offset_left = 8.0
 offset_top = 21.0
 offset_right = 129.0
 offset_bottom = 142.0
 texture = ExtResource("2_lauxo")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=163709632]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=140746364]
 disable_3d = true
 own_world_3d = true
 transparent_bg = true
@@ -352,7 +352,7 @@ physics_object_picking = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+[node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=117537532]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -367,242 +367,242 @@ script = ExtResource("3_0fdie")
 focused = false
 prev_screen_node_path = NodePath("Exit")
 
-[node name="Sound" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Sound" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=731136513]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "sound"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Sound"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Sound" unique_id=1976230058]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_8h3ry")
 stretch_mode = 2
 
-[node name="Value" parent="SubViewportContainer/SubViewport/Options/Sound" instance=ExtResource("5_rjuej")]
+[node name="Value" parent="SubViewportContainer/SubViewport/Options/Sound" unique_id=299277531 instance=ExtResource("5_rjuej")]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 1
 mouse_filter = 1
 
-[node name="Music" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Music" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=926895318]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("4_n618i")
 type = "music"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Music"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Music" unique_id=1093637020]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_e5ton")
 stretch_mode = 2
 
-[node name="Value" parent="SubViewportContainer/SubViewport/Options/Music" instance=ExtResource("5_rjuej")]
+[node name="Value" parent="SubViewportContainer/SubViewport/Options/Music" unique_id=1951327019 instance=ExtResource("5_rjuej")]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 1
 mouse_filter = 1
 
-[node name="Controls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Controls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=176011520]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("9_xcp42")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls" unique_id=1787394754]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_iu4wi")
 stretch_mode = 2
 
-[node name="Value" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/Controls"]
+[node name="Value" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/Controls" unique_id=11808766]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 
-[node name="Press" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+[node name="Press" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value" unique_id=772083222]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_pl4xt")
 stretch_mode = 2
 
-[node name="Enter" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+[node name="Enter" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value" unique_id=1545817937]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_8qd4g")
 stretch_mode = 2
 
-[node name="JoyIcon" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value"]
+[node name="JoyIcon" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Controls/Value" unique_id=1891893359]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 stretch_mode = 2
 
-[node name="Quality" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Quality" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1393535928]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("7_str7j")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Quality"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Quality" unique_id=1120144996]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_odr5u")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Quality"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Quality" unique_id=459046454]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_ydqdk")
 stretch_mode = 2
 
-[node name="GameSpeed" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
-clip_contents = true
+[node name="GameSpeed" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1880406923]
 custom_minimum_size = Vector2(0, 36)
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("12_mwq53")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/GameSpeed"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/GameSpeed" unique_id=590568914]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_tl721")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/GameSpeed"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/GameSpeed" unique_id=746253246]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_o5j4x")
 stretch_mode = 2
 
-[node name="AutoPause" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="AutoPause" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1697170790]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "autopause"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/AutoPause"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/AutoPause" unique_id=519311014]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_i0qbk")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/AutoPause"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/AutoPause" unique_id=1561210830]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_843vv")
 stretch_mode = 2
 
-[node name="XScroll" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="XScroll" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=255660281]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "xscroll"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll" unique_id=526349637]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_fhmnl")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/XScroll" unique_id=433182715]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_0dbt7")
 stretch_mode = 2
 
-[node name="Scale" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Scale" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=393826731]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("16_hdnp7")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Scale"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Scale" unique_id=1183803826]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_85kfo")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Scale"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Scale" unique_id=1168258840]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_lqgwl")
 stretch_mode = 2
 
-[node name="Fullscreen" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Fullscreen" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1618019913]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "fullscreen"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Fullscreen"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Fullscreen" unique_id=578844747]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("18_pr3rd")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Fullscreen"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Fullscreen" unique_id=1597879477]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6u8uf")
 stretch_mode = 2
 
-[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="VSync" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1390400564]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("19_fkcly")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync" unique_id=270955681]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_ys5h5")
 stretch_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/VSync"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options/VSync" unique_id=1396499089]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer" unique_id=1460142427]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_vog4w")
 stretch_mode = 2
 
-[node name="Buffer" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+[node name="Buffer" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer" unique_id=2028151872]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 texture = SubResource("AtlasTexture_ilj0e")
 stretch_mode = 2
 
-[node name="OFF" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer"]
+[node name="OFF" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/VSync/HBoxContainer" unique_id=2122621585]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 10
@@ -610,72 +610,72 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_8ltrg")
 stretch_mode = 2
 
-[node name="Filter" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Filter" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=981528437]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("8_8cp54")
 setting_name = "filter"
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Filter"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Filter" unique_id=688976416]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_df7ul")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Filter"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Filter" unique_id=2042210347]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_prb1w")
 stretch_mode = 2
 
-[node name="Credits" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Credits" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=33689942]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("16_8lg85")
 credits_behavior = 1
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Credits"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Credits" unique_id=690314986]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_5licj")
 stretch_mode = 2
 
-[node name="Exit" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Exit" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=374875197]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("17_67g7y")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Exit"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Exit" unique_id=831725934]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_uxvvb")
 stretch_mode = 2
 
-[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport"]
+[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=1447776291]
 physics_interpolation_mode = 1
 script = ExtResource("11_jh3ap")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector" unique_id=719237171]
 sprite_frames = ExtResource("24_0jxgt")
 script = ExtResource("25_v32i0")
 
-[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=179610386]
 script = ExtResource("24_fqkuj")
 menu_items_controller_path = NodePath("../Options")
 modulate_division = 4.5
 modulate_offset = 0.82
 modulate_first_child = true
 
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" unique_id=1099331689]
 physics_interpolation_mode = 1
 process_callback = 0
 limit_left = 0
@@ -688,10 +688,10 @@ position_smoothing_speed = 25.0
 editor_draw_screen = false
 script = ExtResource("25_stro5")
 
-[node name="RestartPopup" type="CanvasLayer" parent="."]
+[node name="RestartPopup" type="CanvasLayer" parent="." unique_id=2087479453]
 layer = 128
 
-[node name="Control" type="Control" parent="RestartPopup"]
+[node name="Control" type="Control" parent="RestartPopup" unique_id=1415250358]
 physics_interpolation_mode = 1
 visible = false
 layout_mode = 3
@@ -703,7 +703,7 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("25_n2q6e")
 
-[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control"]
+[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control" unique_id=1721597634]
 modulate = Color(1, 1, 1, 0.529412)
 layout_mode = 1
 anchors_preset = 15
@@ -713,7 +713,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_e6t31")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RestartPopup/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="RestartPopup/Control" unique_id=647134847]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -731,14 +731,14 @@ script = ExtResource("3_0fdie")
 focused = false
 prev_screen_node_path = NodePath("TextureRect2")
 
-[node name="TextureRect2" type="TextureRect" parent="RestartPopup/Control/VBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="RestartPopup/Control/VBoxContainer" unique_id=111918563]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("25_5v41g")
 stretch_mode = 3
 script = ExtResource("28_i1fom")
 
-[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="RestartPopup/Control/VBoxContainer" unique_id=1191134661]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("27_0x2m0")
@@ -746,16 +746,16 @@ stretch_mode = 3
 script = ExtResource("28_i1fom")
 cancel = false
 
-[node name="Selector" type="Node2D" parent="RestartPopup/Control"]
+[node name="Selector" type="Node2D" parent="RestartPopup/Control" unique_id=1190277696]
 script = ExtResource("11_jh3ap")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RestartPopup/Control/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RestartPopup/Control/Selector" unique_id=583524304]
 sprite_frames = ExtResource("24_0jxgt")
 script = ExtResource("25_v32i0")
 
-[node name="GamePaused" type="TextureRect" parent="RestartPopup/Control"]
+[node name="GamePaused" type="TextureRect" parent="RestartPopup/Control" unique_id=1976783217]
 texture_filter = 2
 layout_mode = 1
 anchors_preset = 5
@@ -770,13 +770,11 @@ scale = Vector2(0.9, 0.9)
 texture = ExtResource("29_2bk6m")
 stretch_mode = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RestartPopup/Control"]
-libraries = {
-&"": SubResource("AnimationLibrary_5i4gi")
-}
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RestartPopup/Control" unique_id=462780881]
+libraries/ = SubResource("AnimationLibrary_5i4gi")
+autoplay = &"RESET"
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
-[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]
+[connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Camera2D" method="handle_selection"]
 [connection signal="selected" from="RestartPopup/Control/VBoxContainer" to="RestartPopup/Control/Selector" method="handle_selection"]

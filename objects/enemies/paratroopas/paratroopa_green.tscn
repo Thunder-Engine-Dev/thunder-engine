@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dp2mvur34jdbv"]
+[gd_scene format=3 uid="uid://dp2mvur34jdbv"]
 
 [ext_resource type="Script" uid="uid://c7rfddc57l6oj" path="res://engine/objects/enemies/paratroopas/paratroopa_green.gd" id="1_nfn03"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_qci5y"]
@@ -19,31 +19,15 @@ size = Vector2(32, 36)
 [sub_resource type="Resource" id="Resource_iogvd"]
 script = ExtResource("5_765j4")
 creation_nodepack = ExtResource("3_j2mvx")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("4_c143b")
 
 [sub_resource type="Resource" id="Resource_llg06"]
 resource_local_to_scene = true
 script = ExtResource("5_765j4")
 creation_nodepack = ExtResource("7_6gke4")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -67,7 +51,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vamrm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -82,30 +66,31 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4pnlq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaParatroopaGreen" type="Node2D" groups=["#circle"]]
+[node name="KoopaParatroopaGreen" type="Node2D" unique_id=1133360352 groups=["#circle"]]
 script = ExtResource("1_nfn03")
 amplitude = Vector2(0, 50)
+phase = 155.92731445893563
 frequency = 2.0
 random_phase = true
 sprite_path = NodePath("Sprite")
 metadata/_edit_pinned_properties_ = [&"amplitude", &"random_phase", &"frequency"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=470454337]
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1520526626]
 visible = false
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bxfep")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=267483662]
 script = ExtResource("2_qci5y")
 stomping_creation = SubResource("Resource_iogvd")
 stomping_scores = 100
@@ -119,18 +104,18 @@ custom_vars = {
 }
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1866130847]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_oof6l")
 autoplay = "default"
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=722413921]
 visible = false
 position = Vector2(0, 4)
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_lgtb0")
 
-[node name="Wings" parent="." instance=ExtResource("11_iya8u")]
+[node name="Wings" parent="." unique_id=1608826126 instance=ExtResource("11_iya8u")]
 position = Vector2(-8, -16)
 root_path = NodePath("..")
 parent_path = NodePath("../Sprite")
@@ -138,7 +123,7 @@ metadata/_edit_pinned_properties_ = [&"root_path", &"parent_path"]
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/Dead" method="set_scale" binds= [Vector2(1, -1)]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Wings" method="fall"]

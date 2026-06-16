@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://wqjbkgomnnv0"]
+[gd_scene format=3 uid="uid://wqjbkgomnnv0"]
 
 [ext_resource type="Script" uid="uid://diycrep6iadt3" path="res://engine/objects/enemies/icicle/icicle.gd" id="1_cx3ph"]
 [ext_resource type="AudioStream" uid="uid://dsp80syt1bq8m" path="res://engine/objects/enemies/icicle/sounds/icicle.wav" id="2_jkm6i"]
@@ -19,15 +19,7 @@ size = Vector2(24, 64)
 [sub_resource type="Resource" id="Resource_6dehk"]
 script = ExtResource("7_t8ssd")
 creation_nodepack = ExtResource("5_3mhxw")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite2D"),
 "death_speed": Vector2(0, -150)
@@ -72,7 +64,7 @@ _data = {
 &"swinging": SubResource("Animation_7g4j5")
 }
 
-[node name="Icicle" type="CharacterBody2D"]
+[node name="Icicle" type="CharacterBody2D" unique_id=994579020]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_cx3ph")
@@ -82,24 +74,24 @@ explosion_effect = ExtResource("3_iqku8")
 sprite = NodePath("Sprite2D")
 gravity_scale = 0.4
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1133501467]
 material = ExtResource("4_so1a0")
 texture = ExtResource("5_wgao0")
 offset = Vector2(0, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1821768200]
 visible = false
 shape = SubResource("RectangleShape2D_3q3cl")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1914983203]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Body" unique_id=1208116520]
 polygon = PackedVector2Array(-15, -32, 0, 32, 15, -32)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=969782718]
 script = ExtResource("4_vmncy")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -117,26 +109,24 @@ killing_sound_succeeded = ExtResource("8_3o5cs")
 killing_sound_failed = ExtResource("9_enrfu")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
 
-[node name="LeftExplosion" type="Marker2D" parent="."]
+[node name="LeftExplosion" type="Marker2D" parent="." unique_id=2003422555]
 visible = false
 position = Vector2(0, -16)
 
-[node name="RightExplosion" type="Marker2D" parent="."]
+[node name="RightExplosion" type="Marker2D" parent="." unique_id=968594933]
 visible = false
 position = Vector2(0, 16)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1504144858]
 modulate = Color(1, 1, 1, 0.0196078)
 scale = Vector2(2.4, 3.2)
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3u2s4")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1555550336]
+libraries/ = SubResource("AnimationLibrary_3u2s4")
 script = ExtResource("12_igigw")
 
-[node name="TimerRand" type="Timer" parent="AnimationPlayer"]
+[node name="TimerRand" type="Timer" parent="AnimationPlayer" unique_id=1275299387]
 one_shot = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

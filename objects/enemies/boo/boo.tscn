@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmt22ua3i8s4c"]
+[gd_scene format=3 uid="uid://cmt22ua3i8s4c"]
 
 [ext_resource type="Script" uid="uid://in0l518lblva" path="res://engine/objects/enemies/boo/boo.gd" id="1_27mjo"]
 [ext_resource type="SpriteFrames" uid="uid://cgtuwhr04lmbn" path="res://engine/objects/enemies/boo/prefabs/boo3.tres" id="2_4a7fg"]
@@ -21,15 +21,7 @@ radius = 15.0
 resource_local_to_scene = true
 script = ExtResource("5_njnmv")
 creation_nodepack = ExtResource("3_lpp7a")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
@@ -39,22 +31,14 @@ custom_script = ExtResource("4_pifxh")
 [sub_resource type="Resource" id="Resource_s6bvr"]
 script = ExtResource("5_njnmv")
 creation_nodepack = ExtResource("3_lpp7a")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("4_pifxh")
 
-[node name="Boo" type="Node2D" groups=["#circle"]]
+[node name="Boo" type="Node2D" unique_id=128036927 groups=["#circle"]]
 z_index = 5
 script = ExtResource("1_27mjo")
 speed = 40.0
@@ -63,20 +47,20 @@ amplitude = Vector2(0, 50)
 frequency = 2.0
 sprite_path = NodePath("AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=87242802]
 material = ExtResource("5_7yq7l")
 sprite_frames = ExtResource("2_8ib4a")
 animation = &"chase"
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=7969710]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1796950976]
 visible = false
 shape = SubResource("CircleShape2D_pe1ap")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1274760934]
 script = ExtResource("2_hbmmi")
 stomping_standard = Vector2(0, 0)
 stomping_creation = SubResource("Resource_p2m44")
@@ -96,7 +80,7 @@ killing_sound_succeeded = ExtResource("8_v0c25")
 killing_sound_failed = ExtResource("9_qtr4h")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
 
-[node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="Vision" type="VisibleOnScreenEnabler2D" parent="." unique_id=298060287]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(4.76837e-07, -2.38419e-06)
 rect = Rect2(-32, -32, 64, 64)

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpox2wwjnys00"]
+[gd_scene format=3 uid="uid://cpox2wwjnys00"]
 
 [ext_resource type="Script" uid="uid://56o2figm1skb" path="res://engine/components/transitions/crossfade_transition/crossfade_transition.gd" id="1_16b1m"]
 
-[node name="CrossfadeTransition" type="Control"]
+[node name="CrossfadeTransition" type="Control" unique_id=1561975113]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_16b1m")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=433679527]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

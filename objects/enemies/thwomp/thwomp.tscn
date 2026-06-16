@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bcgt87mbq40gx"]
+[gd_scene format=3 uid="uid://bcgt87mbq40gx"]
 
 [ext_resource type="Script" uid="uid://df7hukm1uq7kb" path="res://engine/objects/enemies/thwomp/scripts/thwomp.gd" id="1_2gn4n"]
 [ext_resource type="Texture2D" uid="uid://chcnsi17bk4x2" path="res://engine/objects/enemies/thwomp/textures/thwomp.png" id="2_3s0r0"]
@@ -16,15 +16,7 @@ size = Vector2(47, 62)
 [sub_resource type="Resource" id="Resource_j7a5f"]
 script = ExtResource("4_iejvm")
 creation_nodepack = ExtResource("3_cpvp7")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -150)
@@ -92,7 +84,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_womy0")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink",
 "speed": 20.0
 }, {
@@ -100,7 +92,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ar6tw")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -114,33 +106,33 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_boaq6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"smile",
 "speed": 6.0
 }]
 
-[node name="Thwomp" type="CharacterBody2D"]
+[node name="Thwomp" type="CharacterBody2D" unique_id=154382084]
 collision_layer = 0
 collision_mask = 32
 platform_on_leave = 2
 script = ExtResource("1_2gn4n")
 gravity_scale = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1895098196]
 visible = false
 position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_wdt3b")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=2139936472]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1328925941]
 position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_wdt3b")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1700449587]
 script = ExtResource("2_phoms")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -159,33 +151,33 @@ killing_sound_failed = ExtResource("7_58bjx")
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
 
-[node name="LeftExplosion" type="RayCast2D" parent="."]
+[node name="LeftExplosion" type="RayCast2D" parent="." unique_id=1932374409]
 visible = false
 position = Vector2(-12, 28)
 target_position = Vector2(0, 8)
 collision_mask = 32
 
-[node name="RightExplosion" type="RayCast2D" parent="."]
+[node name="RightExplosion" type="RayCast2D" parent="." unique_id=1955647733]
 visible = false
 position = Vector2(12, 28)
 target_position = Vector2(0, 8)
 collision_mask = 32
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1692084714]
 sprite_frames = SubResource("SpriteFrames_amu35")
 
-[node name="Blink" type="Timer" parent="."]
+[node name="Blink" type="Timer" parent="." unique_id=445851292]
 wait_time = 3.0
 autostart = true
 
-[node name="Smile" type="Timer" parent="."]
+[node name="Smile" type="Timer" parent="." unique_id=1484042207]
 wait_time = 2.5
 one_shot = true
 
-[node name="Waiting" type="Timer" parent="."]
+[node name="Waiting" type="Timer" parent="." unique_id=1463861446]
 one_shot = true
 
-[node name="Destroy" type="Timer" parent="."]
+[node name="Destroy" type="Timer" parent="." unique_id=1498409434]
 process_callback = 0
 wait_time = 7.0
 one_shot = true

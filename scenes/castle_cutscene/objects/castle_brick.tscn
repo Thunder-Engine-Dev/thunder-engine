@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfwy34pwpjesv"]
+[gd_scene format=3 uid="uid://bfwy34pwpjesv"]
 
 [ext_resource type="Script" uid="uid://pevkmh2e64al" path="res://engine/scenes/castle_cutscene/objects/end_cutscene_brick.gd" id="1_ax1x3"]
 [ext_resource type="Texture2D" uid="uid://dwc72webki6q2" path="res://engine/scenes/castle_cutscene/textures/castle_brick.png" id="2_ppfmq"]
 
-[node name="Castle Brick" type="Node2D"]
+[node name="Castle Brick" type="Node2D" unique_id=1609378433]
 script = ExtResource("1_ax1x3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2023063681]
 texture = ExtResource("2_ppfmq")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1843977484]
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

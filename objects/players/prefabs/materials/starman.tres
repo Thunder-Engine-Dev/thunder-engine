@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dvi7i7b5bslko"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dvi7i7b5bslko"]
 
 [ext_resource type="Shader" uid="uid://babntv3xugmby" path="res://engine/objects/powerups/super_star/starman_hsv.gdshader" id="1_pfo04"]
 

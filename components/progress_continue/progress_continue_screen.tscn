@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cl58fmmyu8xha"]
+[gd_scene format=3 uid="uid://cl58fmmyu8xha"]
 
 [ext_resource type="Script" uid="uid://c2n6ynkin3jw4" path="res://engine/components/progress_continue/scripts/progress_continue_screen.gd" id="1_ck85d"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_wya03"]
@@ -110,7 +110,7 @@ spacing_glyph = 1
 spacing_top = -11
 spacing_bottom = -5
 
-[node name="ProgressContinue" type="Control"]
+[node name="ProgressContinue" type="Control" unique_id=904931332]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -120,7 +120,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ck85d")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1444646098]
 modulate = Color(1, 1, 1, 0.780392)
 layout_mode = 1
 anchors_preset = 15
@@ -130,7 +130,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_vhp0j")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=511931758]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -148,38 +148,38 @@ script = ExtResource("1_wya03")
 focused = false
 prev_screen_node_path = NodePath("TextureRect2")
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=1747937531]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("2_1ly8w")
 stretch_mode = 3
 script = ExtResource("4_m2bkh")
 
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer" unique_id=306417240]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("4_a3l1u")
 stretch_mode = 3
 script = ExtResource("6_k11o0")
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer" unique_id=1451627831]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("5_bogmr")
 stretch_mode = 3
 script = ExtResource("7_fpdiu")
 
-[node name="Selector" type="Node2D" parent="."]
+[node name="Selector" type="Node2D" parent="." unique_id=312240941]
 physics_interpolation_mode = 1
 script = ExtResource("6_pq48x")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Selector" unique_id=1984845725]
 sprite_frames = ExtResource("10_p7lkf")
 script = ExtResource("11_qfik6")
 
-[node name="GamePaused" type="TextureRect" parent="."]
+[node name="GamePaused" type="TextureRect" parent="." unique_id=1625285750]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -192,7 +192,7 @@ grow_horizontal = 2
 texture = ExtResource("7_hedy6")
 stretch_mode = 3
 
-[node name="GamePaused2" type="TextureRect" parent="GamePaused"]
+[node name="GamePaused2" type="TextureRect" parent="GamePaused" unique_id=1637441092]
 texture_filter = 2
 layout_mode = 1
 anchors_preset = 5
@@ -207,7 +207,7 @@ scale = Vector2(0.9, 0.9)
 texture = ExtResource("8_n72oc")
 stretch_mode = 3
 
-[node name="ProgressClearing" type="TextureRect" parent="GamePaused"]
+[node name="ProgressClearing" type="TextureRect" parent="GamePaused" unique_id=985598014]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -220,17 +220,15 @@ grow_vertical = 2
 texture = ExtResource("12_6nsta")
 stretch_mode = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_5i4gi")
-}
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1397177692]
+libraries/ = SubResource("AnimationLibrary_5i4gi")
+autoplay = &"RESET"
 
-[node name="Node" type="Node" parent="."]
+[node name="Node" type="Node" parent="." unique_id=927923226]
 script = ExtResource("10_s8rqy")
 menu_items_controller_path = NodePath("../VBoxContainer")
 
-[node name="LevelLabel" type="Label" parent="."]
+[node name="LevelLabel" type="Label" parent="." unique_id=1035685326]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -252,13 +250,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="StatePreview" type="AnimatedSprite2D" parent="."]
+[node name="StatePreview" type="AnimatedSprite2D" parent="." unique_id=403338856]
 position = Vector2(320, 284)
 sprite_frames = ExtResource("16_ccim0")
 animation = &"walk"
 autoplay = "walk"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1829219612]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -278,7 +276,7 @@ focused = false
 trigger_selection_immediately = false
 prev_screen_node_path = NodePath("TextureRect2")
 
-[node name="TextureRect2" type="TextureRect" parent="VBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer2" unique_id=392194239]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -287,7 +285,7 @@ stretch_mode = 3
 script = ExtResource("6_k11o0")
 cancel_erase = true
 
-[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2" unique_id=416823511]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://8a7nemgi0b6q"]
+[gd_scene format=3 uid="uid://8a7nemgi0b6q"]
 
 [ext_resource type="Script" uid="uid://bxq57dbowstxt" path="res://engine/objects/powerups/powerup.gd" id="1_elpo1"]
 [ext_resource type="Texture2D" uid="uid://3y6dl3ecp4ph" path="res://engine/objects/powerups/beetroot/texture.png" id="3_scld5"]
@@ -39,7 +39,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_glwkm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -56,7 +56,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="Beetroot" type="CharacterBody2D"]
+[node name="Beetroot" type="CharacterBody2D" unique_id=2088528278]
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
@@ -66,31 +66,31 @@ to_suit = "beetroot"
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"to_suit"]
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1897135169]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1099436764]
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=2135782438]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1848297957]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_wkrha")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1648875265]
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("4_tk2ye")
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2037787111]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_cmgen")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7mhi4q06ncu6"]
+[gd_scene format=3 uid="uid://c7mhi4q06ncu6"]
 
 [ext_resource type="Script" uid="uid://dg05p0l8jte8n" path="res://engine/objects/projectiles/volcano_ball/volcano_ball.gd" id="1_ao45s"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_jkgpw"]
@@ -19,7 +19,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.9, 0.2)
 metadata/_snap_enabled = true
 
-[node name="VolcanoBall" type="CharacterBody2D"]
+[node name="VolcanoBall" type="CharacterBody2D" unique_id=962468971]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_ao45s")
@@ -28,7 +28,7 @@ gravity_scale = 0.2
 collision = false
 metadata/_edit_pinned_properties_ = [&"sprite", &"collision"]
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=1212111533]
 visible = false
 shape = SubResource("CircleShape2D_5oa0m")
 target_position = Vector2(0, 0)
@@ -39,19 +39,19 @@ script = ExtResource("2_jkgpw")
 killer_type = &"hammer"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=249226641]
 scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("3_dfohs")
 script = ExtResource("4_trtc6")
 rotation_speed = 1200.0
 metadata/_edit_pinned_properties_ = [&"rotation_speed"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=293323231]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
 rect = Rect2(-32, -32, 64, 2048)
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=262478891]
 color = Color(1, 0.644167, 0.39, 1)
 energy = 1.25
 range_layer_min = -512

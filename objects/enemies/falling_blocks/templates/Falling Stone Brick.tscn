@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4h7mvbgsj5si"]
+[gd_scene format=3 uid="uid://c4h7mvbgsj5si"]
 
 [ext_resource type="PackedScene" uid="uid://b4m71alwd1txo" path="res://engine/objects/enemies/falling_blocks/falling_tile.tscn" id="1_36y77"]
 [ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="2_jjyfb"]
@@ -10,14 +10,14 @@ region = Rect2(0, 0, 64, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pkefl"]
 size = Vector2(62, 30)
 
-[node name="FallingStone" instance=ExtResource("1_36y77")]
+[node name="FallingStone" unique_id=1343429143 instance=ExtResource("1_36y77")]
 trigger_area = Rect2(-128, -32, 256, 496)
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0" unique_id=1718102920]
 texture = SubResource("AtlasTexture_gpdj6")
 
-[node name="CollisionShape2D" parent="Body" index="0"]
+[node name="CollisionShape2D" parent="Body" parent_id_path=PackedInt32Array(127957837) index="0" unique_id=830885664]
 shape = SubResource("RectangleShape2D_pkefl")
 
-[node name="VisibleOnScreenEnabler2D" parent="." index="3"]
+[node name="VisibleOnScreenEnabler2D" parent="." index="3" unique_id=772979264]
 rect = Rect2(-48, -48, 96, 96)

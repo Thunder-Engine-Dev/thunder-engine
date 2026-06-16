@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dfm7d4qtja67b"]
+[gd_scene format=3 uid="uid://dfm7d4qtja67b"]
 
 [ext_resource type="Texture2D" uid="uid://cube175uuy8i6" path="res://engine/objects/core/finish_line/textures/finishline.png" id="1_8jdlp"]
 [ext_resource type="Script" uid="uid://co8hpqpiopbda" path="res://engine/objects/core/finish_line/finish_line.gd" id="1_h4anr"]
@@ -50,41 +50,39 @@ _data = {
 &"bar": SubResource("Animation_xxwwv")
 }
 
-[node name="FinishLine" type="Node2D"]
+[node name="FinishLine" type="Node2D" unique_id=633176209]
 z_index = -1
 script = ExtResource("1_h4anr")
 
-[node name="Finishline" type="Sprite2D" parent="."]
+[node name="Finishline" type="Sprite2D" parent="." unique_id=1059799333]
 position = Vector2(128, -144)
 texture = ExtResource("1_8jdlp")
 
-[node name="CompletionArea" type="Area2D" parent="."]
+[node name="CompletionArea" type="Area2D" parent="." unique_id=1555531841]
 visible = false
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CompletionArea" unique_id=1857897832]
 position = Vector2(240, -144)
 shape = SubResource("RectangleShape2D_b44pc")
 debug_color = Color(0.541176, 0.0823529, 0.560784, 0.419608)
 
-[node name="CrossingBarArea" type="Area2D" parent="."]
+[node name="CrossingBarArea" type="Area2D" parent="." unique_id=127894044]
 position = Vector2(203, -256)
 collision_layer = 0
 script = ExtResource("2_4ss8s")
 
-[node name="Crossingbar" type="Sprite2D" parent="CrossingBarArea"]
+[node name="Crossingbar" type="Sprite2D" parent="CrossingBarArea" unique_id=1463940467]
 texture = ExtResource("2_35wvr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CrossingBarArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrossingBarArea" unique_id=1197465443]
 visible = false
 shape = SubResource("RectangleShape2D_wg2sy")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3bes0")
-}
-autoplay = "bar"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=888416431]
+libraries/ = SubResource("AnimationLibrary_3bes0")
+autoplay = &"bar"
 
-[node name="ScoreTextMarker" type="Marker2D" parent="."]
+[node name="ScoreTextMarker" type="Marker2D" parent="." unique_id=2080512633]
 visible = false
 position = Vector2(207, -259)

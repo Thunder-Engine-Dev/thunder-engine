@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bep7acx32gamy"]
+[gd_scene format=3 uid="uid://bep7acx32gamy"]
 
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_ev4s0"]
 [ext_resource type="Script" uid="uid://do1ibkypgxib7" path="res://engine/objects/enemies/thwomp/scripts/icicle_animation.gd" id="1_hu5vm"]
@@ -13,17 +13,17 @@ size = Vector2(24, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erq84"]
 size = Vector2(8, 8)
 
-[node name="Area2D" type="Area2D"]
+[node name="Area2D" type="Area2D" unique_id=805638269]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_hu5vm")
 explosion_effect = ExtResource("2_ai73p")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1611787526]
 collision_layer = 2
 collision_mask = 3
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1039894420]
 script = ExtResource("1_ev4s0")
 stomping_enabled = false
 stomping_standard = Vector2(0, 0)
@@ -37,24 +37,24 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("2_i7y2v")
 killing_sound_failed = ExtResource("3_mdyt1")
 
-[node name="Collision" type="CollisionPolygon2D" parent="Body"]
+[node name="Collision" type="CollisionPolygon2D" parent="Body" unique_id=138991247]
 position = Vector2(0, -32)
 scale = Vector2(1, -1)
 polygon = PackedVector2Array(-16, -32, 0, 32, 16, -32)
 
-[node name="Obstacle" type="Area2D" parent="."]
+[node name="Obstacle" type="Area2D" parent="." unique_id=562941390]
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle" unique_id=1798995320]
 position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_po65i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2062380060]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_erq84")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1835486341]
 position = Vector2(15, 0)
 rotation = 3.14159
 texture = ExtResource("6_q66sa")
@@ -62,15 +62,15 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 60, 30, 64)
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1631933258]
 wait_time = 0.2
 one_shot = true
 autostart = true
 
-[node name="LeftExplosion" type="Marker2D" parent="."]
+[node name="LeftExplosion" type="Marker2D" parent="." unique_id=1121396512]
 position = Vector2(0, -48)
 
-[node name="RightExplosion" type="Marker2D" parent="."]
+[node name="RightExplosion" type="Marker2D" parent="." unique_id=542432312]
 position = Vector2(0, -16)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

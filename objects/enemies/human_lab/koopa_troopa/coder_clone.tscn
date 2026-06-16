@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://clnvxc3co85ls"]
+[gd_scene format=3 uid="uid://clnvxc3co85ls"]
 
 [ext_resource type="PackedScene" uid="uid://cno8qn60lpnvv" path="res://engine/objects/enemies/koopas/koopa_green.tscn" id="1_cayg7"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_i0fi6"]
@@ -19,30 +19,13 @@ size = Vector2(32, 63)
 [sub_resource type="Resource" id="Resource_6rql1"]
 script = ExtResource("4_jp4b2")
 creation_nodepack = ExtResource("2_wkjkm")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_5x01k"]
+[sub_resource type="Resource" id="Resource_jyirc"]
 resource_local_to_scene = true
 script = ExtResource("4_jp4b2")
 creation_nodepack = ExtResource("2_i0fi6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -66,7 +49,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mmdw7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 4.0
 }]
@@ -77,7 +60,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_6expy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -190,12 +173,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gxb57")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
 
-[node name="CoderClone" instance=ExtResource("1_cayg7")]
+[node name="CoderClone" unique_id=1251967220 instance=ExtResource("1_cayg7")]
 
 [node name="Collision" parent="." index="0"]
 position = Vector2(0, -5)
@@ -208,11 +191,11 @@ shape = SubResource("RectangleShape2D_xa3qa")
 [node name="EnemyAttacked" parent="Body" index="1"]
 stomping_creation = SubResource("Resource_6rql1")
 stomping_sound = ExtResource("4_t72s8")
-killing_creation = SubResource("Resource_5x01k")
+killing_creation = SubResource("Resource_jyirc")
 killing_sound_succeeded = ExtResource("4_t72s8")
 sound_ignore_pitch_modification = true
 
-[node name="Node" type="Node2D" parent="Body" index="2"]
+[node name="Node" type="Node2D" parent="Body" index="2" unique_id=1480840543]
 script = ExtResource("7_0gc58")
 
 [node name="Sprite" parent="." index="2"]
@@ -222,7 +205,7 @@ sprite_frames = SubResource("SpriteFrames_gtw8g")
 sprite_frames = SubResource("SpriteFrames_d2buv")
 script = ExtResource("10_typ8o")
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="1"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="1" unique_id=609001916]
 show_behind_parent = true
 position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_12g0q")

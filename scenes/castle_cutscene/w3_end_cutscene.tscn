@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://qoofkxivblql"]
+[gd_scene format=4 uid="uid://qoofkxivblql"]
 
 [ext_resource type="Script" uid="uid://bwpe24nufpj37" path="res://engine/scripts/classes/level_cutscene/level_cutscene.gd" id="1_bvadk"]
 [ext_resource type="Script" uid="uid://dhugvylyq27q0" path="res://engine/scenes/castle_cutscene/scripts/w3_end_cutscene.gd" id="2_ql08f"]
@@ -67,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nh4ip")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
@@ -96,7 +96,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5qe85")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
@@ -132,46 +132,46 @@ fill_to = Vector2(0.875, 0.25)
 metadata/_snap_enabled = true
 metadata/_snap_count = 8
 
-[node name="CastleCutscene" type="Node2D"]
+[node name="CastleCutscene" type="Node2D" unique_id=183993777]
 script = ExtResource("1_bvadk")
 fade_out_time = 0.02
 lighting_force_hide_on_start = false
 
-[node name="CutsceneLogic" type="Node" parent="."]
+[node name="CutsceneLogic" type="Node" parent="." unique_id=1557872439]
 script = ExtResource("2_ql08f")
 
-[node name="Castle" type="Node2D" parent="."]
+[node name="Castle" type="Node2D" parent="." unique_id=2032206321]
 
-[node name="CastleNotBroken" type="Sprite2D" parent="Castle"]
+[node name="CastleNotBroken" type="Sprite2D" parent="Castle" unique_id=1609348060]
 position = Vector2(16, 64)
 texture = ExtResource("3_8l4i3")
 centered = false
 
-[node name="Marker2D" type="Marker2D" parent="Castle"]
+[node name="Marker2D" type="Marker2D" parent="Castle" unique_id=1452102565]
 position = Vector2(176, 416)
 
-[node name="Mario" parent="." instance=ExtResource("4_8nmlo")]
+[node name="Mario" parent="." unique_id=368062966 instance=ExtResource("4_8nmlo")]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(173, 400)
 
-[node name="PlayerCamera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera2D" type="Camera2D" parent="." unique_id=276062504]
 limit_left = 0
 limit_top = 0
 limit_bottom = 480
 script = ExtResource("5_ql08f")
 
-[node name="CamArea" parent="." instance=ExtResource("6_en0a8")]
+[node name="CamArea" parent="." unique_id=4055793 instance=ExtResource("6_en0a8")]
 offset_right = 640.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
-[node name="Layer0" type="TileMapLayer" parent="."]
+[node name="Layer0" type="TileMapLayer" parent="." unique_id=2104902882]
 z_index = 4
 tile_map_data = PackedByteArray("AAATAA8AAAABAAEAAAATAA4AAAABAAIAAAATAA0AAAABAAAAAAASAA8AAAABAAEAAAASAA4AAAABAAIAAAASAA0AAAABAAAAAAARAA8AAAABAAEAAAARAA4AAAABAAIAAAARAA0AAAABAAAAAAAQAA8AAAABAAEAAAAQAA4AAAABAAIAAAAQAA0AAAABAAAAAAAPAA8AAAABAAEAAAAPAA4AAAABAAIAAAAPAA0AAAABAAAAAAAOAA8AAAABAAEAAAAOAA4AAAABAAIAAAAOAA0AAAABAAAAAAANAA8AAAABAAEAAAANAA4AAAABAAIAAAANAA0AAAABAAAAAAAMAA8AAAABAAEAAAAMAA4AAAABAAIAAAAMAA0AAAABAAAAAAALAA8AAAABAAEAAAALAA4AAAABAAIAAAALAA0AAAABAAAAAAAKAA8AAAABAAEAAAAKAA4AAAABAAIAAAAKAA0AAAABAAAAAAAJAA8AAAABAAEAAAAJAA4AAAABAAIAAAAJAA0AAAABAAAAAAAIAA8AAAABAAEAAAAIAA4AAAABAAIAAAAIAA0AAAABAAAAAAAHAA8AAAABAAEAAAAHAA4AAAABAAIAAAAHAA0AAAABAAAAAAAGAA8AAAABAAEAAAAGAA4AAAABAAIAAAAGAA0AAAABAAAAAAAFAA8AAAABAAEAAAAFAA4AAAABAAIAAAAEAA8AAAABAAEAAAAEAA4AAAABAAIAAAAEAA0AAAABAAAAAAADAA8AAAABAAEAAAADAA4AAAABAAIAAAADAA0AAAABAAAAAAACAA8AAAABAAEAAAACAA4AAAABAAIAAAACAA0AAAABAAAAAAABAA8AAAABAAEAAAABAA4AAAABAAIAAAABAA0AAAABAAAAAAAAAA8AAAABAAEAAAAAAA4AAAABAAIAAAAAAA0AAAABAAAAAAD//w8AAAAAAAEAAAD//w4AAAAAAAIAAAD//w0AAAAAAAAAAAAUAA0AAAABAAAAAAAUAA4AAAABAAIAAAAUAA8AAAABAAEAAAAFAA0AAAABAAAAAAAVAA8AAAACAAEAAAAVAA4AAAACAAIAAAAVAA0AAAACAAAAAAAWAAYAAQAAAAAAAAAWAAcAAQAAAAAAAAAWAAgAAQAAAAAAAAAWAAkAAQAAAAAAAAAWAAoAAQAAAAAAAAAWAAsAAQAAAAAAAAAWAAwAAQAAAAAAAAASAAsAAwADAAEAAQA=")
 tile_set = ExtResource("7_ke5jt")
 navigation_enabled = false
 
-[node name="Layer1" type="TileMapLayer" parent="."]
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=871408684]
 z_index = 4
 tile_map_data = PackedByteArray("AAABAA4AAwAAAAAAAAAJAA4AAwABAAAAAAAQAA4AAwACAAAAAAALAA0AAwADAAAAAAALAAwAAwAAAAEAAAAKAAsAAwADAAEAAAAAAAsAAwAEAAAAAAA=")
 tile_set = ExtResource("7_ke5jt")
@@ -179,34 +179,34 @@ occlusion_enabled = false
 collision_enabled = false
 navigation_enabled = false
 
-[node name="Node2D" type="Node2D" parent="Layer1"]
+[node name="Node2D" type="Node2D" parent="Layer1" unique_id=404968606]
 script = ExtResource("8_q87xp")
 medium = true
 
-[node name="PointLight2D2" type="PointLight2D" parent="Layer1/Node2D"]
+[node name="PointLight2D2" type="PointLight2D" parent="Layer1/Node2D" unique_id=740265973]
 position = Vector2(49, 466)
 scale = Vector2(0.175781, 0.175781)
 color = Color(1, 1, 0.443137, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_pdu4q")
 
-[node name="PointLight2D3" type="PointLight2D" parent="Layer1/Node2D"]
+[node name="PointLight2D3" type="PointLight2D" parent="Layer1/Node2D" unique_id=144455307]
 position = Vector2(301, 459)
 scale = Vector2(0.34375, 0.34375)
 color = Color(1, 1, 0.443137, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_pdu4q")
 
-[node name="PointLight2D4" type="PointLight2D" parent="Layer1/Node2D"]
+[node name="PointLight2D4" type="PointLight2D" parent="Layer1/Node2D" unique_id=2021196404]
 position = Vector2(529, 460)
 scale = Vector2(0.34375, 0.34375)
 color = Color(1, 1, 0.443137, 1)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_pdu4q")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1187118973]
 
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground"]
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground" unique_id=483279398]
 position = Vector2(640, 0)
 rotation = 1.5708
 scale = Vector2(1, 640)
@@ -214,24 +214,24 @@ texture = SubResource("GradientTexture1D_5sgnw")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1976380220]
 
-[node name="StarlandHill6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="StarlandHill6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=289581944]
 position = Vector2(336, 224)
 texture = ExtResource("9_0bw3p")
 centered = false
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground" unique_id=592686979]
 modulate = Color(1, 1, 1, 0.682353)
 scale = Vector2(1, 480)
 texture = SubResource("GradientTexture1D_kqyyq")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2111276841]
 motion_mirroring = Vector2(1024, 0)
 
-[node name="Starland" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+[node name="Starland" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1229653982]
 texture_repeat = 2
 position = Vector2(0, 298)
 texture = ExtResource("10_35gk1")
@@ -240,47 +240,47 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 200)
 metadata/_edit_lock_ = true
 
-[node name="HUD" parent="." instance=ExtResource("11_yx6rr")]
+[node name="HUD" parent="." unique_id=598807993 instance=ExtResource("11_yx6rr")]
 visible = false
 
-[node name="CastleEndMarker" type="Marker2D" parent="."]
+[node name="CastleEndMarker" type="Marker2D" parent="." unique_id=668762965]
 position = Vector2(173, 416)
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=549578283]
 z_index = 4
 script = ExtResource("8_q87xp")
 maximum = false
 minimum = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D" unique_id=914972816]
 modulate = Color(1, 1, 1, 0.529412)
 position = Vector2(600, 368)
 sprite_frames = SubResource("SpriteFrames_i1qe5")
 autoplay = "default"
 
-[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D" unique_id=62484093]
 modulate = Color(1, 1, 1, 0.752941)
 position = Vector2(600, 434)
 sprite_frames = SubResource("SpriteFrames_0gx35")
 autoplay = "default"
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=603550366]
 color = Color(0.587751, 0.587751, 0.58775, 1)
 script = ExtResource("8_q87xp")
 medium = true
 
-[node name="Node2D2" type="Node2D" parent="."]
+[node name="Node2D2" type="Node2D" parent="." unique_id=807874300]
 z_index = 4
 script = ExtResource("8_q87xp")
 medium = true
 
-[node name="AnimatedSprite2D8" type="PointLight2D" parent="Node2D2"]
+[node name="AnimatedSprite2D8" type="PointLight2D" parent="Node2D2" unique_id=2100657862]
 position = Vector2(600, 368)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_40fem")
 script = ExtResource("14_qsyqg")
 
-[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D8"]
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D8" unique_id=563570283]
 color = Color(0.980392, 0.545098, 0.980392, 1)
 energy = 0.5
 range_layer_min = -512
@@ -288,13 +288,13 @@ range_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_tnsyr")
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2"]
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2" unique_id=223887005]
 position = Vector2(366, 411)
 range_layer_min = -512
 texture = SubResource("GradientTexture2D_40fem")
 script = ExtResource("14_qsyqg")
 
-[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D9"]
+[node name="AnimatedSprite2D9" type="PointLight2D" parent="Node2D2/AnimatedSprite2D9" unique_id=2042454806]
 color = Color(0.980392, 0.545098, 0.980392, 1)
 energy = 0.5
 range_layer_min = -512

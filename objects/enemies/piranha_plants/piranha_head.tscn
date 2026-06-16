@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dt52xvrtre8h3"]
+[gd_scene format=3 uid="uid://dt52xvrtre8h3"]
 
 [ext_resource type="Script" uid="uid://dmwyp48em601h" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_x0p8k"]
 [ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="2_3vf3t"]
@@ -16,15 +16,8 @@ size = Vector2(30, 30)
 [sub_resource type="Resource" id="Resource_l87kq"]
 script = ExtResource("5_vl2am")
 creation_nodepack = ExtResource("4_pqqwo")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -62,24 +55,24 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2het")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaHead" type="Node2D"]
+[node name="PiranhaHead" type="Node2D" unique_id=1907126208]
 script = ExtResource("1_x0p8k")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1817882490]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("3_6cy8f")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body" unique_id=1589031990]
 visible = false
 shape = SubResource("RectangleShape2D_3w104")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1400885768]
 script = ExtResource("3_kfaj4")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -101,11 +94,11 @@ killing_sound_failed = ExtResource("9_yihn6")
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1634074432]
 sprite_frames = SubResource("SpriteFrames_tjbik")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=1845691615]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)

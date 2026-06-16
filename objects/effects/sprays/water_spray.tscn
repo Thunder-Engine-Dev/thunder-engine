@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cyq3inahdndhc"]
+[gd_scene format=3 uid="uid://cyq3inahdndhc"]
 
 [ext_resource type="Texture2D" uid="uid://cruurrcu717mm" path="res://engine/objects/effects/sprays/textures/spray_water.png" id="1_p81xn"]
 
@@ -110,12 +110,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e61md")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 40.0
 }]
 
-[node name="WaterSpray" type="AnimatedSprite2D"]
+[node name="WaterSpray" type="AnimatedSprite2D" unique_id=269343468]
 z_index = 10
 sprite_frames = SubResource("SpriteFrames_b44a0")
 autoplay = "default"

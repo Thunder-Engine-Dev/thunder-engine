@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://eutrrrdpvmbx"]
+[gd_scene format=3 uid="uid://eutrrrdpvmbx"]
 
 [ext_resource type="FontFile" uid="uid://b1pi0t5byork2" path="res://engine/components/hud/hud_font.fnt" id="1_1kkjg"]
 [ext_resource type="Script" uid="uid://og3p5owckg0k" path="res://engine/components/loading_screen/loading_screen.gd" id="1_ok2ax"]
@@ -25,7 +25,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 5
 
-[node name="LoadingScreen" type="Control"]
+[node name="LoadingScreen" type="Control" unique_id=1245658634]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +36,7 @@ script = ExtResource("1_ok2ax")
 scene = "res://stages/world_1/levelaryx.tscn"
 metadata/_edit_use_anchors_ = true
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1186679452]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25

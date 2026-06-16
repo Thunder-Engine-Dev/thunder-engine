@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3fy0hf8mvrps"]
+[gd_scene format=3 uid="uid://d3fy0hf8mvrps"]
 
 [ext_resource type="Script" uid="uid://ba264qqcrsvfh" path="res://engine/objects/enemies/firebar/firebar.gd" id="1_qr400"]
 
-[node name="Firebar" type="Node2D"]
+[node name="Firebar" type="Node2D" unique_id=1729564910]
 script = ExtResource("1_qr400")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=835250156]
 position = Vector2(4.17233e-07, 4.17233e-07)
 scale = Vector2(0.8, 0.8)

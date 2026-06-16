@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://6w8kwrifbv6m"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://6w8kwrifbv6m"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_55ho3"]
 [ext_resource type="SpriteFrames" uid="uid://b36it0nioiiri" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_super.tres" id="2_0dg5g"]
@@ -17,18 +17,6 @@ script = ExtResource("11_klr50")
 name = &"super"
 type = 1
 gets_hurt_to = ExtResource("3_yhqau")
-appearing_time_sec = 1.0
 physics_config = ExtResource("8_k84qo")
-physics_behavior = ExtResource("7_02udf")
-physics_crouchable = true
 physics_shaper = ExtResource("9_xqarx")
-physics_shaper_crouch = ExtResource("10_y5bfb")
 animation_sprites = ExtResource("2_0dg5g")
-animation_behavior = ExtResource("1_55ho3")
-animation_underwater_bubble_offset = Vector2(0, -20)
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("4_0u5pp")
-extra_vars = {}
-sound_hurt = ExtResource("13_i3ss2")
-sound_death = ExtResource("12_1mcds")
-sound_pitch = 1.0

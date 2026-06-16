@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cco8a5x387r15"]
+[gd_resource type="TileSet" format=3 uid="uid://cco8a5x387r15"]
 
 [ext_resource type="Texture2D" uid="uid://bj33k7j0mswhb" path="res://engine/tilesets/rockland/gfx/rockland.png" id="1_0btid"]
 [ext_resource type="Texture2D" uid="uid://tki7rbs8vxw6" path="res://engine/tilesets/rockland/gfx/rock_platform.png" id="2_w0bys"]

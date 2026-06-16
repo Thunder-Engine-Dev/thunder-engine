@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://ntqkvbfma3iv"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ntqkvbfma3iv"]
 
 [ext_resource type="Texture2D" uid="uid://c1kbxkxmde4hy" path="res://engine/objects/effects/smoke/texture.png" id="1_tjatl"]
 
@@ -40,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rgas3")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 15.0
 }]

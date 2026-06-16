@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://brghrrue331yb"]
+[gd_scene format=3 uid="uid://brghrrue331yb"]
 
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="1_0vjgo"]
 [ext_resource type="Script" uid="uid://bfpmgk21lwuep" path="res://engine/singletones/nodes/viewport/debug_mouse_label.gd" id="2_ymsxn"]
 
-[node name="DebugMouseLabel" type="RichTextLabel"]
+[node name="DebugMouseLabel" type="RichTextLabel" unique_id=319526012]
 z_index = 128
-clip_contents = false
 custom_minimum_size = Vector2(480, 0)
+clip_contents = false
 offset_right = 480.0
 offset_bottom = 12.0
 theme_override_colors/font_outline_color = Color(0, 0, 0.360784, 1)

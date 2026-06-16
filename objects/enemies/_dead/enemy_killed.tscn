@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://oe7i3cief0g"]
+[gd_scene format=3 uid="uid://oe7i3cief0g"]
 
 [ext_resource type="Script" uid="uid://ctggojyi618up" path="res://engine/objects/enemies/_dead/enemy_killed.gd" id="1_w0y84"]
 
-[node name="EnemyKilled" type="CharacterBody2D"]
+[node name="EnemyKilled" type="CharacterBody2D" unique_id=1865485205]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_w0y84")

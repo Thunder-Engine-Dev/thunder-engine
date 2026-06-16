@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcm2a10a5vcug"]
+[gd_scene format=3 uid="uid://bcm2a10a5vcug"]
 
 [ext_resource type="Script" uid="uid://cnce1poewe88y" path="res://engine/objects/projectiles/koopa_shell/koopa_bro_shell.gd" id="1_tkugq"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="2_t1ltt"]
@@ -10,7 +10,7 @@ size = Vector2(30, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t82ul"]
 size = Vector2(20, 32)
 
-[node name="KoopaShell" type="CharacterBody2D"]
+[node name="KoopaShell" type="CharacterBody2D" unique_id=1004467093]
 collision_layer = 4
 collision_mask = 64
 platform_on_leave = 2
@@ -21,17 +21,17 @@ speed = Vector2(387.5, -300)
 gravity_scale = 0.3
 correct_collision = false
 
-[node name="Texture" type="Sprite2D" parent="."]
+[node name="Texture" type="Sprite2D" parent="." unique_id=1858454575]
 texture = ExtResource("2_t1ltt")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(96, 0, 32, 28)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2118618999]
 visible = false
 shape = SubResource("RectangleShape2D_pgqm4")
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=565473471]
 visible = false
 shape = SubResource("RectangleShape2D_t82ul")
 target_position = Vector2(0, 0)
@@ -42,7 +42,7 @@ script = ExtResource("3_naewv")
 killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1985346664]
 rect = Rect2(-16, -16, 32, 512)
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]

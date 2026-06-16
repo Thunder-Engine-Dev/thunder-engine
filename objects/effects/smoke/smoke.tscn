@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbmf88bb8sjw"]
+[gd_scene format=3 uid="uid://bbmf88bb8sjw"]
 
 [ext_resource type="Texture2D" uid="uid://c1kbxkxmde4hy" path="res://engine/objects/effects/smoke/texture.png" id="1_vgy7o"]
 
@@ -40,12 +40,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rgas3")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 15.0
 }]
 
-[node name="Smoke" type="AnimatedSprite2D"]
+[node name="Smoke" type="AnimatedSprite2D" unique_id=194755493]
 z_index = 15
 sprite_frames = SubResource("SpriteFrames_3x67h")
 autoplay = "default"

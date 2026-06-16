@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7n6rgscihi7p"]
+[gd_scene format=3 uid="uid://c7n6rgscihi7p"]
 
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_7w67m"]
 [ext_resource type="Script" uid="uid://b1ewwo32cyixe" path="res://engine/objects/items/ice_block/ice_block_static.gd" id="1_8haom"]
@@ -15,29 +15,29 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hrbb"]
 size = Vector2(32, 32)
 
-[node name="IceBlockStatic" type="StaticBody2D" groups=["slippery"]]
+[node name="IceBlockStatic" type="StaticBody2D" unique_id=277536602 groups=["slippery"]]
 disable_mode = 1
 collision_layer = 112
 script = ExtResource("1_8haom")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=879161444]
 occluder = SubResource("OccluderPolygon2D_8haom")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=539744698]
 visible = false
 shape = SubResource("RectangleShape2D_c3kee")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1394296376]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1815026605]
 visible = false
 shape = SubResource("RectangleShape2D_0hrbb")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1304069165]
 script = ExtResource("1_7w67m")
 stomping_enabled = false
 stomping_hurtable = false
@@ -58,7 +58,7 @@ killing_only_by_player = false
 turn_into_coin_on_level_end = false
 frozen_enabled = false
 
-[node name="SpriteNP" type="NinePatchRect" parent="."]
+[node name="SpriteNP" type="NinePatchRect" parent="." unique_id=1520266795]
 material = ExtResource("2_8haom")
 offset_left = -16.0
 offset_top = -16.0
@@ -75,7 +75,7 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 metadata/_edit_lock_ = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1091006949]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-17, -17, 34, 34)
 

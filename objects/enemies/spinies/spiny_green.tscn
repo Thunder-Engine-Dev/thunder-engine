@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bir2rn1mkn6h6"]
+[gd_scene format=3 uid="uid://bir2rn1mkn6h6"]
 
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_q87iy"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_qf6ls"]
@@ -8,19 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://cc4c41qmqm1t" path="res://engine/objects/enemies/spinies/textures/spiny_green.png" id="7_betql"]
 [ext_resource type="Script" uid="uid://dndad55mbpai0" path="res://engine/objects/enemies/enemy_edge_turner.gd" id="8_jbq50"]
 
-[sub_resource type="Resource" id="Resource_7o3ro"]
+[sub_resource type="Resource" id="Resource_betql"]
 resource_local_to_scene = true
 script = ExtResource("6_f5xwv")
 creation_nodepack = ExtResource("4_qf6ls")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -80,7 +73,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f5xwv")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 25.0
 }, {
@@ -91,19 +84,19 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ge1ae")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SpinyGreen" instance=ExtResource("1_q87iy")]
+[node name="SpinyGreen" unique_id=1320344589 instance=ExtResource("1_q87iy")]
 speed = Vector2(75, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
-killing_creation = SubResource("Resource_7o3ro")
+killing_creation = SubResource("Resource_betql")
 
-[node name="Turner" type="RayCast2D" parent="." index="2"]
+[node name="Turner" type="RayCast2D" parent="." index="2" unique_id=63895209]
 visible = false
 position = Vector2(16, 16)
 target_position = Vector2(0, 8)

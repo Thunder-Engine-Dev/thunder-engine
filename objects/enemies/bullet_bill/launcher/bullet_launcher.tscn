@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvolo50530iv7"]
+[gd_scene format=3 uid="uid://bvolo50530iv7"]
 
 [ext_resource type="Script" uid="uid://bmwg4l8ojm6fy" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.gd" id="1_3oj3x"]
 [ext_resource type="Texture2D" uid="uid://b25ptq2d2d6g1" path="res://engine/objects/enemies/bullet_bill/launcher/texture/launcher.png" id="1_ud8qb"]
@@ -8,21 +8,12 @@
 [sub_resource type="Resource" id="Resource_b3ipg"]
 script = ExtResource("3_axxmi")
 creation_nodepack = ExtResource("2_74smt")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abljg"]
 size = Vector2(32, 32)
 
-[node name="BulletLauncher" type="AnimatableBody2D"]
+[node name="BulletLauncher" type="AnimatableBody2D" unique_id=1903534907]
 collision_layer = 112
 collision_mask = 0
 sync_to_physics = false
@@ -30,22 +21,22 @@ script = ExtResource("1_3oj3x")
 bullet_bill = SubResource("Resource_b3ipg")
 metadata/_edit_pinned_properties_ = [&"bullet_bill"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1978039566]
 visible = false
 shape = SubResource("RectangleShape2D_abljg")
 
-[node name="Launcher" type="Sprite2D" parent="."]
+[node name="Launcher" type="Sprite2D" parent="." unique_id=1600364721]
 texture = ExtResource("1_ud8qb")
 metadata/_edit_lock_ = true
 
-[node name="PosBullet" type="Marker2D" parent="Launcher"]
+[node name="PosBullet" type="Marker2D" parent="Launcher" unique_id=36911534]
 visible = false
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=492008759]
 modulate = Color(1, 1, 1, 0.0196078)
 enable_node_path = NodePath("../Interval")
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=523807342]
 wait_time = 0.25
 one_shot = true
 

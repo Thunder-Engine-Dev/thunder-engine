@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtoxnauwt3bnt"]
+[gd_scene format=3 uid="uid://dtoxnauwt3bnt"]
 
 [ext_resource type="Script" uid="uid://dv8k8n7tpbvty" path="res://engine/components/enemy_rng_set_seed/enemy_rng_set_seed.gd" id="1_cy8dj"]
 
-[node name="EnemyRngSetSeed" type="Node"]
+[node name="EnemyRngSetSeed" type="Node" unique_id=51277136]
 script = ExtResource("1_cy8dj")

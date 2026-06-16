@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cgd12vgjptxo6"]
+[gd_scene format=3 uid="uid://cgd12vgjptxo6"]
 
 [ext_resource type="Script" uid="uid://b810gjh2uw6q2" path="res://engine/objects/enemies/goombas/goomba_jumping.gd" id="1_i1phx"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_etvh8"]
@@ -21,15 +21,7 @@ size = Vector2(30, 30)
 resource_local_to_scene = true
 script = ExtResource("6_v46w6")
 creation_nodepack = ExtResource("4_b2vwo")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead")
 }
@@ -39,15 +31,7 @@ custom_script = ExtResource("5_j02eu")
 resource_local_to_scene = true
 script = ExtResource("6_v46w6")
 creation_nodepack = ExtResource("8_62vgs")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -71,12 +55,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0is34")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
 
-[node name="JumpingGoomba" type="CharacterBody2D"]
+[node name="JumpingGoomba" type="CharacterBody2D" unique_id=1079906552]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -88,22 +72,22 @@ sprite = NodePath("Sprite")
 speed = Vector2(75, 0)
 gravity_scale = 0.5
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=292996560]
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_w2yun")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=315618148]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_etvh8")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=571582399]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1813908808]
 script = ExtResource("3_527ix")
 stomping_creation = SubResource("Resource_n7w23")
 stomping_scores = 100
@@ -113,15 +97,15 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("10_71c61")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1544015164]
 sprite_frames = SubResource("SpriteFrames_1e01p")
 autoplay = "default"
 
-[node name="Dead" type="Sprite2D" parent="Sprite"]
+[node name="Dead" type="Sprite2D" parent="Sprite" unique_id=1913752305]
 visible = false
 texture = ExtResource("12_y85eh")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1284555106]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("13_2nmmp")

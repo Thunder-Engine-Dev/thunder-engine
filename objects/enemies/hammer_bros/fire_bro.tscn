@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://diu2ipea3k8qy"]
+[gd_scene format=3 uid="uid://diu2ipea3k8qy"]
 
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_qcr0g"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_gx87h"]
@@ -14,34 +14,18 @@
 [sub_resource type="Resource" id="Resource_6oa5f"]
 script = ExtResource("4_xsrff")
 creation_nodepack = ExtResource("2_rfsl6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(387.5, 0),
 "speed_min": Vector2(387.5, 0)
 }
 custom_script = ExtResource("3_76cf1")
 
-[sub_resource type="Resource" id="Resource_e3k1m"]
+[sub_resource type="Resource" id="Resource_m1cnm"]
 resource_local_to_scene = true
 script = ExtResource("4_xsrff")
 creation_nodepack = ExtResource("2_gx87h")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -74,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_st5bc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -85,7 +69,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_63cqv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -102,15 +86,15 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="FireBro" instance=ExtResource("1_qcr0g")]
+[node name="FireBro" unique_id=1354742805 instance=ExtResource("1_qcr0g")]
 projectile = SubResource("Resource_6oa5f")
 sound = ExtResource("5_0h1a3")
 sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
 metadata/_edit_pinned_properties_ = [&"projectile", &"sound", &"sprite_projectile_animation_transform"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_e3k1m")
-killing_creation = SubResource("Resource_e3k1m")
+stomping_creation = SubResource("Resource_m1cnm")
+killing_creation = SubResource("Resource_m1cnm")
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_sth2a")
@@ -122,7 +106,7 @@ position = Vector2(14, -4)
 texture = ExtResource("9_7dooi")
 metadata/_edit_pinned_properties_ = [&"texture"]
 
-[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0"]
+[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0" unique_id=389086301]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_nrsay")

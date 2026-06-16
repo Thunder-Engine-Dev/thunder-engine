@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dj6qo023h0cmx"]
+[gd_scene format=3 uid="uid://dj6qo023h0cmx"]
 
 [ext_resource type="Script" uid="uid://ddyud7bsdbmtq" path="res://engine/objects/items/grabbable_brick/grabbable_brick.gd" id="1_jh337"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_0ai4v"]
@@ -41,12 +41,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_drj8t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }]
 
-[node name="GrabbableBrick" type="CharacterBody2D"]
+[node name="GrabbableBrick" type="CharacterBody2D" unique_id=1455510709]
 disable_mode = 1
 collision_layer = 112
 collision_mask = 64
@@ -59,21 +59,21 @@ gravity_scale = 0.5
 auto_update_up_direction = false
 metadata/_custom_type_script = "uid://co5dvlw7m0osv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=613384540]
 visible = false
 shape = SubResource("RectangleShape2D_8h8fu")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1468705804]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1750282297]
 visible = false
 shape = SubResource("RectangleShape2D_t5d3q")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1802680254]
 script = ExtResource("2_0ai4v")
 stomping_enabled = false
 stomping_standard = Vector2(0, 0)
@@ -86,7 +86,7 @@ killing_immune = {
 turn_into_coin_on_level_end = false
 frozen_enabled = false
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=1576106363]
 enabled = false
 shape = SubResource("RectangleShape2D_pvtu7")
 target_position = Vector2(0, 0)
@@ -101,27 +101,27 @@ trigger_enemy_failed_signal = false
 special_tags = Array[StringName]([])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=167912805]
 process_mode = 3
 sprite_frames = SubResource("SpriteFrames_4o7vj")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=895153482]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("5_afnii")
 metadata/_edit_lock_ = true
 
-[node name="TimerDestroy" type="Timer" parent="."]
+[node name="TimerDestroy" type="Timer" parent="." unique_id=912458379]
 process_mode = 1
 process_callback = 0
 one_shot = true
 
-[node name="TimerDestroyFlash" type="Timer" parent="."]
+[node name="TimerDestroyFlash" type="Timer" parent="." unique_id=1197700017]
 process_mode = 1
 process_callback = 0
 one_shot = true
 
-[node name="GrabbableModifier" parent="." instance=ExtResource("6_djh65")]
+[node name="GrabbableModifier" parent="." unique_id=1663018232 instance=ExtResource("6_djh65")]
 grabbing_ungrab_collision_with_player = false
 grabbing_ungrab_throw_power_min = Vector2(400, 0)
 

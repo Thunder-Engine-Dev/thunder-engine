@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xugemt6nrnq"]
+[gd_scene format=3 uid="uid://xugemt6nrnq"]
 
 [ext_resource type="PackedScene" uid="uid://hqhtm2y4woh0" path="res://engine/objects/enemies/spinies/spiny_egg_red.tscn" id="1_27dq1"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_atwwu"]
@@ -12,33 +12,16 @@
 [sub_resource type="Resource" id="Resource_fa5h4"]
 script = ExtResource("4_jp7c6")
 creation_nodepack = ExtResource("2_xm4u3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 0
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4sn2"]
 radius = 15.0
 
-[sub_resource type="Resource" id="Resource_c3pw0"]
+[sub_resource type="Resource" id="Resource_tpacl"]
 resource_local_to_scene = true
 script = ExtResource("4_jp7c6")
 creation_nodepack = ExtResource("2_atwwu")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -51,13 +34,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_f80mt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SpinyIronEgg" instance=ExtResource("1_27dq1")]
-platform_on_leave = 2
+[node name="SpinyIronEgg" unique_id=97775858 instance=ExtResource("1_27dq1")]
 spiny_creation = SubResource("Resource_fa5h4")
 
 [node name="Collision" parent="." index="0"]
@@ -77,7 +59,7 @@ killing_immune = {
 "shell_forced": false,
 "starman": false
 }
-killing_creation = SubResource("Resource_c3pw0")
+killing_creation = SubResource("Resource_tpacl")
 killing_sound_failed = ExtResource("6_80ejn")
 
 [node name="Sprite" parent="." index="2"]

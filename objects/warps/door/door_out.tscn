@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckw8xkx6hmy4d"]
+[gd_scene format=3 uid="uid://ckw8xkx6hmy4d"]
 
 [ext_resource type="SpriteFrames" uid="uid://chb2xwhkx80un" path="res://engine/objects/warps/door/door_animation.tres" id="1_4uypt"]
 [ext_resource type="Script" uid="uid://bcyj6pt3qga7m" path="res://engine/objects/warps/door/door_out.gd" id="1_d7ioi"]
@@ -6,26 +6,26 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6erbu"]
 
-[node name="DoorOut" type="Area2D" groups=["door_out"]]
+[node name="DoorOut" type="Area2D" unique_id=1727365734 groups=["door_out"]]
 collision_layer = 0
 monitorable = false
 script = ExtResource("1_d7ioi")
 
-[node name="SpriteBG" type="Sprite2D" parent="."]
+[node name="SpriteBG" type="Sprite2D" parent="." unique_id=289898189]
 visible = false
 position = Vector2(0, -32)
 texture = ExtResource("2_7n52u")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=411092884]
 position = Vector2(0, -32)
 sprite_frames = ExtResource("1_4uypt")
 autoplay = "default"
 
-[node name="PosPlayer" type="Marker2D" parent="."]
+[node name="PosPlayer" type="Marker2D" parent="." unique_id=772417086]
 visible = false
 position = Vector2(0, -16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=911883224]
 visible = false
 shape = SubResource("RectangleShape2D_6erbu")
 disabled = true

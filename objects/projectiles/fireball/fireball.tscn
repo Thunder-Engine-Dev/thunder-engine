@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4jlbnswk5dlw"]
+[gd_scene format=3 uid="uid://c4jlbnswk5dlw"]
 
 [ext_resource type="Script" uid="uid://lyb7iu6i6yul" path="res://engine/objects/projectiles/fireball/fireball.gd" id="1_hkxrj"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_thdmy"]
@@ -23,7 +23,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="Fireball" type="CharacterBody2D" groups=["#lava_body"]]
+[node name="Fireball" type="CharacterBody2D" unique_id=1974804568 groups=["#lava_body"]]
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_hkxrj")
@@ -32,14 +32,14 @@ speed = Vector2(387.5, 0)
 gravity_scale = 0.4
 metadata/_edit_pinned_properties_ = [&"sprite"]
 
-[node name="Texture" type="Sprite2D" parent="."]
+[node name="Texture" type="Sprite2D" parent="." unique_id=411107496]
 texture = ExtResource("2_thdmy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1768245381]
 visible = false
 shape = SubResource("RectangleShape2D_bp6og")
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=586123192]
 visible = false
 shape = SubResource("CircleShape2D_eyugj")
 target_position = Vector2(0, 0)
@@ -49,11 +49,11 @@ collide_with_areas = true
 script = ExtResource("3_po12v")
 is_reflectable = true
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1130026784]
 modulate = Color(1, 1, 1, 0.0196078)
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1334006462]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_xbek7")
@@ -61,8 +61,8 @@ texture_scale = 0.01
 script = ExtResource("4_5ki2u")
 
 [connection signal="collided_floor" from="." to="." method="jump"]
-[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="collided_wall" from="." to="." method="explode"]
+[connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="damaged_player" from="Attack" to="." method="explode"]
 [connection signal="damaged_player_failed" from="Attack" to="." method="explode"]
 [connection signal="killed_notify" from="Attack" to="." method="explode"]

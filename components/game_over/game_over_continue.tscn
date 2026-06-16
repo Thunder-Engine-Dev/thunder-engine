@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c8ql6hro5f6gv"]
+[gd_scene format=3 uid="uid://c8ql6hro5f6gv"]
 
 [ext_resource type="Script" uid="uid://c0lvhjcec75dw" path="res://engine/components/pause/pause_layer.gd" id="1_3cank"]
 [ext_resource type="Script" uid="uid://b82vaonfklay3" path="res://engine/components/game_over/game_over_continue.gd" id="2_dcx8n"]
@@ -261,11 +261,11 @@ _data = {
 &"open": SubResource("Animation_hvhdc")
 }
 
-[node name="GameOverLayer" type="CanvasLayer"]
+[node name="GameOverLayer" type="CanvasLayer" unique_id=1080260237]
 layer = 127
 script = ExtResource("1_3cank")
 
-[node name="GameOver" type="Control" parent="."]
+[node name="GameOver" type="Control" parent="." unique_id=714827156]
 process_mode = 3
 process_priority = 1
 layout_mode = 3
@@ -277,7 +277,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_dcx8n")
 
-[node name="TextureRect" type="TextureRect" parent="GameOver"]
+[node name="TextureRect" type="TextureRect" parent="GameOver" unique_id=1616488230]
 modulate = Color(1, 1, 1, 0.529412)
 layout_mode = 1
 anchors_preset = 15
@@ -287,7 +287,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_af70a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver" unique_id=1835982304]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -305,7 +305,7 @@ alignment = 1
 script = ExtResource("3_plhsm")
 focused = false
 
-[node name="TextureRect" type="TextureRect" parent="GameOver/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="GameOver/VBoxContainer" unique_id=399289213]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("5_d5pn5")
@@ -313,38 +313,38 @@ stretch_mode = 3
 script = ExtResource("5_q1vrx")
 block_if_no_continues = true
 
-[node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer"]
+[node name="TextureRect4" type="TextureRect" parent="GameOver/VBoxContainer" unique_id=2143261538]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("11_dfbjn")
 stretch_mode = 3
 script = ExtResource("12_uwbd2")
 
-[node name="TextureRect5" type="TextureRect" parent="GameOver/VBoxContainer"]
+[node name="TextureRect5" type="TextureRect" parent="GameOver/VBoxContainer" unique_id=2116590220]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("13_7iopd")
 stretch_mode = 3
 script = ExtResource("14_vbxud")
 
-[node name="TextureRect6" type="TextureRect" parent="GameOver/VBoxContainer"]
+[node name="TextureRect6" type="TextureRect" parent="GameOver/VBoxContainer" unique_id=2035534172]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("15_o8bh8")
 stretch_mode = 3
 script = ExtResource("16_5gtqw")
 
-[node name="Selector" type="Node2D" parent="GameOver"]
+[node name="Selector" type="Node2D" parent="GameOver" unique_id=766495926]
 physics_interpolation_mode = 1
 script = ExtResource("18_7lia2")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameOver/Selector" unique_id=351342686]
 sprite_frames = ExtResource("13_jqjx8")
 script = ExtResource("14_xubmy")
 
-[node name="Title1" type="TextureRect" parent="GameOver"]
+[node name="Title1" type="TextureRect" parent="GameOver" unique_id=544793512]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -359,7 +359,7 @@ grow_horizontal = 2
 pivot_offset = Vector2(83, 0)
 texture = ExtResource("15_e2iqk")
 
-[node name="Continue1" type="TextureRect" parent="GameOver/Title1"]
+[node name="Continue1" type="TextureRect" parent="GameOver/Title1" unique_id=936222047]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -374,7 +374,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("16_xfa08")
 
-[node name="Title2" type="TextureRect" parent="GameOver"]
+[node name="Title2" type="TextureRect" parent="GameOver" unique_id=607194349]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -390,7 +390,7 @@ scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(285.6, 0)
 texture = ExtResource("15_pv04y")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameOver"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver" unique_id=245100533]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -405,24 +405,22 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="GameOver/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="GameOver/HBoxContainer" unique_id=411348688]
 layout_mode = 2
 texture = ExtResource("18_0ol8l")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="GameOver/HBoxContainer"]
+[node name="Label" type="Label" parent="GameOver/HBoxContainer" unique_id=1710400565]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("19_2idh1")
 theme_override_font_sizes/font_size = 36
 text = "3"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
-libraries = {
-&"": SubResource("AnimationLibrary_5i4gi")
-}
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver" unique_id=301551176]
+libraries/ = SubResource("AnimationLibrary_5i4gi")
+autoplay = &"RESET"
 
-[node name="SelectorBlinking" type="Node" parent="GameOver"]
+[node name="SelectorBlinking" type="Node" parent="GameOver" unique_id=1595156293]
 script = ExtResource("20_6653k")
 menu_items_controller_path = NodePath("../VBoxContainer")
 speed = 8.0

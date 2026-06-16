@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://s1e7n1cfnhy8"]
+[gd_scene format=3 uid="uid://s1e7n1cfnhy8"]
 
 [ext_resource type="Script" uid="uid://cup1dl4nc3gp3" path="res://engine/objects/enemies/flameball_launcher/flameball_launcher.gd" id="1_de4dl"]
 [ext_resource type="PackedScene" uid="uid://ddl8refhx7slj" path="res://engine/objects/projectiles/flameball/flameball.tscn" id="2_poow3"]
@@ -11,21 +11,12 @@
 [sub_resource type="Resource" id="Resource_rtj67"]
 script = ExtResource("3_ccoqt")
 creation_nodepack = ExtResource("2_poow3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 4
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sx3tf"]
 size = Vector2(1, 1)
 
-[node name="FlameballLauncher" type="HBoxContainer"]
+[node name="FlameballLauncher" type="HBoxContainer" unique_id=698528653]
 clip_contents = true
 offset_right = 64.0
 offset_bottom = 32.0
@@ -38,41 +29,41 @@ speed = 350.0
 amount = 20.0
 metadata/_edit_pinned_properties_ = [&"flameball"]
 
-[node name="Obstacle" type="AnimatableBody2D" parent="."]
+[node name="Obstacle" type="AnimatableBody2D" parent="." unique_id=968884223]
 disable_mode = 1
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("5_y1sec")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle" unique_id=1738010469]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_sx3tf")
 
-[node name="Head" type="TextureRect" parent="."]
+[node name="Head" type="TextureRect" parent="." unique_id=1336988497]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("2_srod3")
 
-[node name="Body" type="TextureRect" parent="."]
+[node name="Body" type="TextureRect" parent="." unique_id=164190774]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("3_i5wos")
 
-[node name="Tail" type="TextureRect" parent="."]
+[node name="Tail" type="TextureRect" parent="." unique_id=547405254]
 layout_mode = 2
 size_flags_horizontal = 8
 texture = ExtResource("4_da7u6")
 
-[node name="PosFlameball" type="Marker2D" parent="."]
+[node name="PosFlameball" type="Marker2D" parent="." unique_id=1666972499]
 position = Vector2(16, 16)
 
-[node name="Interval" type="Timer" parent="."]
+[node name="Interval" type="Timer" parent="." unique_id=1762096052]
 wait_time = 3.0
 one_shot = true
 
-[node name="IntervalSound" type="Timer" parent="."]
+[node name="IntervalSound" type="Timer" parent="." unique_id=484379071]
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1826251469]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(9.53674e-07, 9.53674e-07)
 rect = Rect2(0, 0, 64, 32)

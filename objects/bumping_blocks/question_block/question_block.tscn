@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnr3rfhkdf6j2"]
+[gd_scene format=3 uid="uid://bnr3rfhkdf6j2"]
 
 [ext_resource type="Script" uid="uid://7ebgkfvqihwp" path="res://engine/objects/bumping_blocks/question_block/question_block.gd" id="1_cty0g"]
 [ext_resource type="Resource" uid="uid://d14ntnfciec1v" path="res://engine/objects/bumping_blocks/question_block/item_resources/question_default_item.tres" id="2_3xrsj"]
@@ -17,7 +17,7 @@ polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 atlas = ExtResource("5_21kjl")
 region = Rect2(0, 0, 32, 32)
 
-[node name="QuestionBlock" type="AnimatableBody2D"]
+[node name="QuestionBlock" type="AnimatableBody2D" unique_id=1319373763]
 disable_mode = 1
 collision_layer = 112
 sync_to_physics = false
@@ -25,43 +25,43 @@ script = ExtResource("1_cty0g")
 result = ExtResource("2_3xrsj")
 metadata/_edit_pinned_properties_ = [&"result"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=798555382]
 visible = false
 shape = SubResource("RectangleShape2D_2x2nd")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1000568689]
 visible = false
 rotation = 3.14159
 shape = SubResource("RectangleShape2D_2x2nd")
 one_way_collision = true
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprites" type="Node2D" parent="." unique_id=1632475222]
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites" unique_id=1429426565]
 occluder = SubResource("OccluderPolygon2D_fygbc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites" unique_id=173702970]
 process_mode = 3
 sprite_frames = ExtResource("2_t2orr")
 autoplay = "default"
 
-[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites" unique_id=755681795]
 position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_t3wug")
 metadata/_edit_lock_ = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites" unique_id=766284360]
 visible = false
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)
 metadata/_edit_lock_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1633561615]
 collision_layer = 96
 collision_mask = 96
 script = ExtResource("6_i7yge")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=110284295]
 visible = false
 shape = SubResource("RectangleShape2D_2x2nd")

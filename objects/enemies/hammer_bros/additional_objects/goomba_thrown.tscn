@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cb5bu6hsd4l5n"]
+[gd_scene format=3 uid="uid://cb5bu6hsd4l5n"]
 
 [ext_resource type="Script" uid="uid://beeff187redtp" path="res://engine/objects/enemies/hammer_bros/additional_objects/goomba_thrown.gd" id="1_43ao1"]
 [ext_resource type="PackedScene" uid="uid://vqn6y17pt5mx" path="res://engine/objects/enemies/goombas/goomba.tscn" id="2_pdg6i"]
@@ -13,16 +13,7 @@
 [sub_resource type="Resource" id="Resource_e7iss"]
 script = ExtResource("6_hkee8")
 creation_nodepack = ExtResource("2_pdg6i")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7ap2"]
 size = Vector2(32, 30)
@@ -34,15 +25,8 @@ radius = 16.0
 resource_local_to_scene = true
 script = ExtResource("6_hkee8")
 creation_nodepack = ExtResource("4_8kunc")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -53,15 +37,8 @@ custom_script = ExtResource("5_k73fq")
 resource_local_to_scene = true
 script = ExtResource("6_hkee8")
 creation_nodepack = ExtResource("4_8kunc")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -85,7 +62,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t43rb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -93,7 +70,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0uvpi"]
 size = Vector2(32, 31)
 
-[node name="GoombaThrown" type="CharacterBody2D"]
+[node name="GoombaThrown" type="CharacterBody2D" unique_id=62516220]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_43ao1")
@@ -103,22 +80,22 @@ sprite = NodePath("Sprite")
 speed = Vector2(325, 0)
 gravity_scale = 0.3
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=230279581]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_w7ap2")
 disabled = true
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=595854636]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1892334496]
 shape = SubResource("CircleShape2D_pbxco")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1956236866]
 script = ExtResource("3_ic5jd")
 stomping_standard = Vector2(0, 1)
 stomping_creation = SubResource("Resource_gojhl")
@@ -130,27 +107,27 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("8_mkvj8")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1895090604]
 sprite_frames = SubResource("SpriteFrames_w2qf1")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1393208371]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-192, -128, 384, 256)
 metadata/_edit_lock_ = true
 
-[node name="SolidChecker" type="Area2D" parent="."]
+[node name="SolidChecker" type="Area2D" parent="." unique_id=1648364454]
 visible = false
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker" unique_id=1040536126]
 shape = SubResource("RectangleShape2D_0uvpi")
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_rotation" binds= [0.0]]

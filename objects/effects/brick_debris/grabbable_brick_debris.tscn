@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://gxtkxfcpygcy"]
+[gd_scene format=3 uid="uid://gxtkxfcpygcy"]
 
 [ext_resource type="Texture2D" uid="uid://dwsu0jg44f40b" path="res://engine/objects/effects/brick_debris/grabbable_brick_debris.png" id="1_ccg2k"]
 [ext_resource type="Script" uid="uid://41ncuvtaeig5" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_rjlxt"]
@@ -40,12 +40,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3e1kn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }]
 
-[node name="GrabbableBrickDebris" type="AnimatedSprite2D"]
+[node name="GrabbableBrickDebris" type="AnimatedSprite2D" unique_id=943215137]
 z_index = 5
 sprite_frames = SubResource("SpriteFrames_g75uk")
 autoplay = "default"

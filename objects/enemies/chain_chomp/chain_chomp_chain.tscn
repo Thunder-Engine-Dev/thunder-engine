@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkhurh163kiyh"]
+[gd_scene format=3 uid="uid://bkhurh163kiyh"]
 
 [ext_resource type="Texture2D" uid="uid://dui2sty7nfqqb" path="res://engine/objects/enemies/chain_chomp/texture/chain_chomp_chain.png" id="1_gdmmc"]
 [ext_resource type="Script" uid="uid://xamv3fv74onc" path="res://engine/objects/enemies/chain_chomp/chain_chomp_chain.gd" id="1_ihaul"]
@@ -6,20 +6,20 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ij18m"]
 radius = 8.0
 
-[node name="ChainChompChain" type="RigidBody2D"]
+[node name="ChainChompChain" type="RigidBody2D" unique_id=1081551920]
 collision_layer = 0
 collision_mask = 32
 lock_rotation = true
 script = ExtResource("1_ihaul")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=876616154]
 visible = false
 shape = SubResource("CircleShape2D_ij18m")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=338729444]
 texture = ExtResource("1_gdmmc")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=759330797]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(4.17233e-07, 4.17233e-07)
 rect = Rect2(-8, -8, 16, 16)

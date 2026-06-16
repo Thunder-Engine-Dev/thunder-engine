@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d2vt6a6bgmkt5"]
+[gd_scene format=3 uid="uid://d2vt6a6bgmkt5"]
 
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_2nnmo"]
 [ext_resource type="Script" uid="uid://bkvf21o2y82sa" path="res://engine/components/quit_confirmation/quit_confirmation_layer.gd" id="1_buk7e"]
@@ -72,11 +72,11 @@ _data = {
 &"open": SubResource("Animation_irvhc")
 }
 
-[node name="QuitConfirmLayer" type="CanvasLayer"]
+[node name="QuitConfirmLayer" type="CanvasLayer" unique_id=766169110]
 layer = 128
 script = ExtResource("1_buk7e")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1151068325]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,7 +84,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=179452324]
 modulate = Color(1, 1, 1, 0.784314)
 layout_mode = 1
 anchors_preset = 15
@@ -94,7 +94,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_af70a")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1358672160]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.7
@@ -112,21 +112,21 @@ control_forward = &"ui_right"
 control_backward = &"ui_left"
 prev_screen_node_path = NodePath("No")
 
-[node name="No" type="TextureRect" parent="Control/HBoxContainer"]
+[node name="No" type="TextureRect" parent="Control/HBoxContainer" unique_id=852254598]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("2_buk7e")
 stretch_mode = 3
 script = ExtResource("4_irvhc")
 
-[node name="Yes" type="TextureRect" parent="Control/HBoxContainer"]
+[node name="Yes" type="TextureRect" parent="Control/HBoxContainer" unique_id=768828933]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("4_nwqg5")
 stretch_mode = 3
 script = ExtResource("6_irvhc")
 
-[node name="Title2" type="TextureRect" parent="Control"]
+[node name="Title2" type="TextureRect" parent="Control" unique_id=1369105402]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.333
@@ -139,27 +139,25 @@ grow_vertical = 2
 texture = ExtResource("7_nwqg5")
 stretch_mode = 3
 
-[node name="Selector" type="Node2D" parent="Control"]
+[node name="Selector" type="Node2D" parent="Control" unique_id=1295969240]
 physics_interpolation_mode = 1
 position = Vector2(192, 336)
 script = ExtResource("5_mv2jh")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/Selector" unique_id=1703689459]
 sprite_frames = ExtResource("6_3hoq8")
 script = ExtResource("7_68xhy")
 
-[node name="SelectorBlinking" type="Node" parent="Control"]
+[node name="SelectorBlinking" type="Node" parent="Control" unique_id=1761377764]
 script = ExtResource("8_d0n4h")
 menu_items_controller_path = NodePath("../HBoxContainer")
 speed = 8.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_nwqg5")
-}
-autoplay = "init"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1207595887]
+libraries/ = SubResource("AnimationLibrary_nwqg5")
+autoplay = &"init"
 
 [connection signal="selected" from="Control/HBoxContainer" to="Control/Selector" method="handle_selection"]
 [connection signal="selected" from="Control/HBoxContainer" to="Control/SelectorBlinking" method="handle_selection"]

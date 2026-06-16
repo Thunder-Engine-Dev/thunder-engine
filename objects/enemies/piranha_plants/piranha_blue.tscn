@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://chl763u8ojfs2"]
+[gd_scene format=3 uid="uid://chl763u8ojfs2"]
 
 [ext_resource type="PackedScene" uid="uid://da16joa30w76a" path="res://engine/objects/enemies/piranha_plants/piranha_green.tscn" id="1_vwvis"]
 [ext_resource type="Texture2D" uid="uid://b0l4uqehtliv3" path="res://engine/objects/enemies/piranha_plants/textures/piranha_blue.png" id="2_nqcnj"]
@@ -30,12 +30,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mp4ky")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaBlue" instance=ExtResource("1_vwvis")]
+[node name="PiranhaBlue" unique_id=977086491 instance=ExtResource("1_vwvis")]
 range_in_pipe = 0.0
 
 [node name="EnemyAttacked" parent="Body" index="1"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ltoqkqmxpt65"]
+[gd_scene format=3 uid="uid://ltoqkqmxpt65"]
 
 [ext_resource type="Script" uid="uid://bd58mewto2g80" path="res://engine/objects/powerups/life_mushroom/life_mushroom.gd" id="1_ac6pg"]
 [ext_resource type="Texture2D" uid="uid://dmda3wjtlsj0k" path="res://engine/objects/powerups/life_mushroom/texture.png" id="2_0cie0"]
@@ -25,7 +25,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="LifeMushroom" type="CharacterBody2D"]
+[node name="LifeMushroom" type="CharacterBody2D" unique_id=170500916]
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
@@ -38,21 +38,21 @@ speed = Vector2(100, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"appear_speed"]
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=794145148]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_ufuol")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=408217261]
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=306575212]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1680079131]
 script = ExtResource("2_ua8e3")
 stomping_enabled = false
 killing_immune = {
@@ -60,23 +60,23 @@ killing_immune = {
 }
 turn_into_coin_on_level_end = false
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=469876539]
 position = Vector2(-1, 0)
 texture = ExtResource("2_0cie0")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=110689985]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-128, -128, 256, 256)
 script = ExtResource("4_hecye")
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2017643678]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_cmgen")
 script = ExtResource("4_oy0sk")
 
-[node name="BumpLogic" type="Node" parent="."]
+[node name="BumpLogic" type="Node" parent="." unique_id=1492389879]
 script = ExtResource("5_awxjw")
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]

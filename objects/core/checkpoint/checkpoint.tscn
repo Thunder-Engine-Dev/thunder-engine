@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ddwxc43m3q1c6"]
+[gd_scene format=3 uid="uid://ddwxc43m3q1c6"]
 
 [ext_resource type="Script" uid="uid://cgxssnp32gwrc" path="res://engine/objects/core/checkpoint/checkpoint.gd" id="1_ssh5j"]
 [ext_resource type="Texture2D" uid="uid://bppw8gp6m4wl0" path="res://engine/objects/core/checkpoint/textures/sign.png" id="1_uqans"]
@@ -181,27 +181,27 @@ _data = {
 &"checkpoint": SubResource("Animation_xksp8")
 }
 
-[node name="Checkpoint" type="Area2D"]
+[node name="Checkpoint" type="Area2D" unique_id=1170161289]
 z_index = -1
 script = ExtResource("1_ssh5j")
 
-[node name="Sign" type="Sprite2D" parent="."]
+[node name="Sign" type="Sprite2D" parent="." unique_id=60373911]
 position = Vector2(9, -55)
 texture = ExtResource("1_uqans")
 
-[node name="Text" type="Sprite2D" parent="."]
+[node name="Text" type="Sprite2D" parent="." unique_id=1362698634]
 modulate = Color(1, 1, 1, 0.188235)
 position = Vector2(0, -85)
 texture = ExtResource("2_13hdd")
 
-[node name="TextFlying" type="Sprite2D" parent="."]
+[node name="TextFlying" type="Sprite2D" parent="." unique_id=865319115]
 visible = false
 z_index = 2
 material = SubResource("ShaderMaterial_bp6fk")
 position = Vector2(0, -86)
 texture = ExtResource("2_13hdd")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="TextFlying"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="TextFlying" unique_id=453771716]
 show_behind_parent = true
 emitting = false
 amount = 24
@@ -209,18 +209,14 @@ texture = ExtResource("4_wmifw")
 lifetime = 0.5
 process_material = ExtResource("4_ae8fc")
 
-[node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying"]
-libraries = {
-&"": SubResource("AnimationLibrary_dmaa8")
-}
-autoplay = "RESET"
+[node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying" unique_id=215224057]
+libraries/ = SubResource("AnimationLibrary_dmaa8")
+autoplay = &"RESET"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1653193885]
 visible = false
 position = Vector2(0, -55.5)
 shape = SubResource("RectangleShape2D_ta5g1")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_h2w1e")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1998085193]
+libraries/ = SubResource("AnimationLibrary_h2w1e")

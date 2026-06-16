@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c02uktgryh3ku"]
+[gd_scene format=3 uid="uid://c02uktgryh3ku"]
 
 [ext_resource type="Script" uid="uid://cnqd1qh1nwbtt" path="res://engine/objects/enemies/paratroopas/paratroopa_jump.gd" id="1_yx1xc"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_vtx1g"]
@@ -21,31 +21,15 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_y4dty"]
 script = ExtResource("6_c3xf2")
 creation_nodepack = ExtResource("4_5hn3v")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("5_m5jh2")
 
 [sub_resource type="Resource" id="Resource_llg06"]
 resource_local_to_scene = true
 script = ExtResource("6_c3xf2")
 creation_nodepack = ExtResource("8_s0el6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -69,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w7n2v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -84,12 +68,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4g8wi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaParatroopaBlue" type="CharacterBody2D"]
+[node name="KoopaParatroopaBlue" type="CharacterBody2D" unique_id=2054751307]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -101,22 +85,22 @@ sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 gravity_scale = 0.3
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1108126705]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1014819599]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_vtx1g")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=581671270]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1705138891]
 script = ExtResource("3_252y6")
 stomping_creation = SubResource("Resource_y4dty")
 stomping_scores = 100
@@ -129,20 +113,20 @@ custom_vars = {
 }
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_scores"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=741281317]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_b04x4")
 autoplay = "default"
 
-[node name="Wings" parent="Sprite" instance=ExtResource("12_q8dyn")]
+[node name="Wings" parent="Sprite" unique_id=571494959 instance=ExtResource("12_q8dyn")]
 position = Vector2(-8, -7)
 
-[node name="Dead" type="AnimatedSprite2D" parent="Sprite"]
+[node name="Dead" type="AnimatedSprite2D" parent="Sprite" unique_id=664380230]
 visible = false
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_8u4jf")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1700640275]
 self_modulate = Color(1, 1, 1, 0.0196078)
 script = ExtResource("14_02l8i")
 metadata/_edit_lock_ = true

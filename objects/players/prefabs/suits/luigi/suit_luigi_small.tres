@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=10 format=3 uid="uid://cirtkvdvviy47"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://cirtkvdvviy47"]
 
 [ext_resource type="Script" uid="uid://0xjiyl4hu4nw" path="res://engine/objects/players/behaviors/player_animation_behavior.gd" id="1_bhtbx"]
 [ext_resource type="SpriteFrames" uid="uid://bna35rwesy4fq" path="res://engine/objects/players/prefabs/animations/luigi/animation_luigi_small.tres" id="2_r7q3r"]
@@ -12,20 +12,7 @@
 
 [resource]
 script = ExtResource("9_384dj")
-name = &"small"
-type = 0
-appearing_time_sec = 1.0
 physics_config = ExtResource("7_ku1ya")
-physics_behavior = ExtResource("6_ga7d1")
 physics_crouchable = false
-physics_shaper = ExtResource("8_e6bee")
-physics_shaper_crouch = ExtResource("8_e6bee")
 animation_sprites = ExtResource("2_r7q3r")
-animation_behavior = ExtResource("1_bhtbx")
 animation_underwater_bubble_offset = Vector2(0, 0)
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("3_2we5g")
-extra_vars = {}
-sound_hurt = ExtResource("11_tr74d")
-sound_death = ExtResource("10_4n8wv")
-sound_pitch = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://chn8d8bjrm7eu"]
+[gd_scene format=3 uid="uid://chn8d8bjrm7eu"]
 
 [ext_resource type="Script" uid="uid://crrjumj6kfpan" path="res://engine/objects/fluid/whirlpool.gd" id="1_dmb2x"]
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="3_vn1cs"]
@@ -31,7 +31,7 @@ radial_accel_min = -10.0
 radial_accel_max = -5.0
 color_ramp = SubResource("GradientTexture1D_o4i74")
 
-[node name="Whirlpool" type="Control"]
+[node name="Whirlpool" type="Control" unique_id=963907933]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 192.0
@@ -39,23 +39,23 @@ offset_bottom = 352.0
 script = ExtResource("1_dmb2x")
 border_color = Color(0.346792, 0.596975, 1, 1)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=580274407]
 collision_layer = 128
 collision_mask = 7
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=4260165]
 shape = SubResource("RectangleShape2D_15ybc")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1287056265]
 wait_time = 0.3
 
-[node name="Bubbles" type="GPUParticles2D" parent="."]
+[node name="Bubbles" type="GPUParticles2D" parent="." unique_id=130825828]
 position = Vector2(96, 384)
 amount = 30
-process_material = SubResource("ParticleProcessMaterial_njndi")
 texture = ExtResource("3_vn1cs")
 lifetime = 4.0
 preprocess = 1.0
 fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_njndi")

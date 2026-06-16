@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://xupxs1ig4f5p"]
+[gd_scene format=3 uid="uid://xupxs1ig4f5p"]
 
 [ext_resource type="Script" uid="uid://c3ro3mmgstjuw" path="res://engine/objects/enemies/chain_chomp/chain_chomp.gd" id="1_u8ai7"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g86p0"]
@@ -16,15 +16,7 @@ size = Vector2(32, 24)
 resource_local_to_scene = true
 script = ExtResource("5_e2s24")
 creation_nodepack = ExtResource("3_dm4jp")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -48,12 +40,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dhq6u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="ChainChomp" type="CharacterBody2D"]
+[node name="ChainChomp" type="CharacterBody2D" unique_id=1099600299]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_u8ai7")
@@ -61,21 +53,21 @@ speed = Vector2(75, 0)
 gravity_scale = 0.4
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1910678008]
 visible = false
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_kbu0w")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1478164221]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=830600791]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_kbu0w")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1338405490]
 script = ExtResource("2_g86p0")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -96,11 +88,11 @@ killing_sound_succeeded = ExtResource("6_f4pwu")
 killing_sound_failed = ExtResource("7_cc0hu")
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_creation", &"killing_scores", &"killing_sound_succeeded", &"killing_sound_failed", &"killing_immune"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2026957380]
 sprite_frames = SubResource("SpriteFrames_jfi4b")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=363245875]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)

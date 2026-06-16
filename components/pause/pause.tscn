@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c7uf7msxw3lc5"]
+[gd_scene format=3 uid="uid://c7uf7msxw3lc5"]
 
 [ext_resource type="Script" uid="uid://7ppo57fup20y" path="res://engine/components/pause/pause.gd" id="1_8mdi1"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="1_f461o"]
@@ -195,11 +195,11 @@ _data = {
 &"open": SubResource("Animation_hvhdc")
 }
 
-[node name="PauseLayer" type="CanvasLayer"]
+[node name="PauseLayer" type="CanvasLayer" unique_id=230879825]
 layer = 127
 script = ExtResource("1_mxgx1")
 
-[node name="Pause" type="Control" parent="."]
+[node name="Pause" type="Control" parent="." unique_id=7947873]
 process_mode = 3
 physics_interpolation_mode = 1
 layout_mode = 3
@@ -211,7 +211,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_8mdi1")
 
-[node name="TextureRect" type="TextureRect" parent="Pause"]
+[node name="TextureRect" type="TextureRect" parent="Pause" unique_id=1298802186]
 modulate = Color(1, 1, 1, 0.529412)
 layout_mode = 1
 anchors_preset = 15
@@ -223,7 +223,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_af70a")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Pause"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause" unique_id=1882667458]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -241,7 +241,7 @@ script = ExtResource("1_f461o")
 focused = false
 prev_screen_node_path = NodePath("ResumeGame")
 
-[node name="ResumeGame" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="ResumeGame" type="TextureRect" parent="Pause/VBoxContainer" unique_id=930421658]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("2_yh8vt")
@@ -249,56 +249,56 @@ stretch_mode = 3
 script = ExtResource("5_0q8y4")
 use_skinned_hud_pause_close_sfx = true
 
-[node name="RestartLevel" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="RestartLevel" type="TextureRect" parent="Pause/VBoxContainer" unique_id=560474951]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("4_o7liu")
 stretch_mode = 3
 script = ExtResource("8_os0ko")
 
-[node name="Options" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="Options" type="TextureRect" parent="Pause/VBoxContainer" unique_id=1619207105]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("5_qqso8")
 stretch_mode = 3
 script = ExtResource("10_ce2br")
 
-[node name="GoToSaveRoom" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="GoToSaveRoom" type="TextureRect" parent="Pause/VBoxContainer" unique_id=735177246]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("6_0jdfj")
 stretch_mode = 3
 script = ExtResource("12_ul4c7")
 
-[node name="GoToMainMenu" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="GoToMainMenu" type="TextureRect" parent="Pause/VBoxContainer" unique_id=1332200707]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("7_idns1")
 stretch_mode = 3
 script = ExtResource("14_guhqa")
 
-[node name="QuitGame" type="TextureRect" parent="Pause/VBoxContainer"]
+[node name="QuitGame" type="TextureRect" parent="Pause/VBoxContainer" unique_id=188441991]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("8_o0n1s")
 stretch_mode = 3
 script = ExtResource("16_75h8i")
 
-[node name="Selector" type="Node2D" parent="Pause"]
+[node name="Selector" type="Node2D" parent="Pause" unique_id=857506294]
 script = ExtResource("10_5i5rp")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pause/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pause/Selector" unique_id=1641321871]
 sprite_frames = ExtResource("17_pod7t")
 script = ExtResource("18_ek8ml")
 
-[node name="SelectorBlinking" type="Node" parent="Pause"]
+[node name="SelectorBlinking" type="Node" parent="Pause" unique_id=761396825]
 script = ExtResource("19_fk228")
 menu_items_controller_path = NodePath("../VBoxContainer")
 speed = 8.0
 
-[node name="GamePaused" type="TextureRect" parent="Pause"]
+[node name="GamePaused" type="TextureRect" parent="Pause" unique_id=1687426741]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -311,13 +311,11 @@ grow_horizontal = 2
 pivot_offset = Vector2(160, 0)
 texture = ExtResource("14_j3ggr")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Pause"]
-libraries = {
-&"": SubResource("AnimationLibrary_5i4gi")
-}
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pause" unique_id=75472084]
+libraries/ = SubResource("AnimationLibrary_5i4gi")
+autoplay = &"RESET"
 
-[node name="Settings" parent="." instance=ExtResource("20_6rkco")]
+[node name="Settings" parent="." unique_id=963243133 instance=ExtResource("20_6rkco")]
 process_mode = 3
 mouse_filter = 2
 hide_bg = true
@@ -333,7 +331,10 @@ metadata/_edit_pinned_properties_ = [&"script"]
 [node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" index="12"]
 script = ExtResource("20_r3d2l")
 
-[node name="Controls" parent="." instance=ExtResource("21_hgbbf")]
+[node name="AnimationPlayer" parent="Settings/RestartPopup/Control" index="4"]
+autoplay = &"RESET"
+
+[node name="Controls" parent="." unique_id=458045212 instance=ExtResource("21_hgbbf")]
 process_mode = 3
 hide_bg = true
 

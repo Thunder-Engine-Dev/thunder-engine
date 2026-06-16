@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dibtnd21x8ljv"]
+[gd_scene format=3 uid="uid://dibtnd21x8ljv"]
 
 [ext_resource type="Texture2D" uid="uid://cyetrjnc0k5oh" path="res://engine/tilesets/castle/gfx/bowser_portrait.png" id="1_ixd1m"]
 [ext_resource type="Texture2D" uid="uid://62xmn8w0h3ko" path="res://engine/tilesets/castle/gfx/bowser_portrait_anim.png" id="2_f1owl"]
@@ -83,16 +83,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ruiwa")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 33.0
 }]
 
-[node name="BowserPortraitAnimated" type="Sprite2D"]
+[node name="BowserPortraitAnimated" type="Sprite2D" unique_id=270004397]
 position = Vector2(48, 64)
 texture = ExtResource("1_ixd1m")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=662164818]
 position = Vector2(-67, -83)
 sprite_frames = SubResource("SpriteFrames_byweo")
 autoplay = "default"

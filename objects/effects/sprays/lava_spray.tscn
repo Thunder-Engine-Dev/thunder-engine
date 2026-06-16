@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpn0cbef28lyp"]
+[gd_scene format=3 uid="uid://cpn0cbef28lyp"]
 
 [ext_resource type="PackedScene" uid="uid://cyq3inahdndhc" path="res://engine/objects/effects/sprays/water_spray.tscn" id="1_q3hua"]
 [ext_resource type="Texture2D" uid="uid://w7nppn1ds057" path="res://engine/objects/effects/sprays/textures/spray_lava.png" id="2_3cmt8"]
@@ -48,11 +48,11 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nspkx")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 25.0
 }]
 
-[node name="LavaSpray" instance=ExtResource("1_q3hua")]
+[node name="LavaSpray" unique_id=776031596 instance=ExtResource("1_q3hua")]
 sprite_frames = SubResource("SpriteFrames_5f68s")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

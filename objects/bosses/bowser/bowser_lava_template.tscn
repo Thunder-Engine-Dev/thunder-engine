@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx0wdn3m2f25y"]
+[gd_scene format=3 uid="uid://cx0wdn3m2f25y"]
 
 [ext_resource type="Script" uid="uid://cm118c41ab2p2" path="res://engine/objects/bosses/bowser/bowser_lava.gd" id="1_316uv"]
 [ext_resource type="Material" uid="uid://sbymk46jn3sg" path="res://engine/objects/fluid/textures/lava_material.tres" id="1_w43ky"]
@@ -17,17 +17,17 @@ noise = SubResource("FastNoiseLite_mubo6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ip4k"]
 size = Vector2(480, 32)
 
-[node name="LavaBowser" type="Node2D"]
+[node name="LavaBowser" type="Node2D" unique_id=725840439]
 z_index = 14
 material = ExtResource("1_w43ky")
 script = ExtResource("1_316uv")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=50646793]
 process_mode = 1
 use_parent_material = true
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D" unique_id=1945464988]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -36,13 +36,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=339533091]
 process_mode = 1
 use_parent_material = true
 position = Vector2(32, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D2"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D2" unique_id=876154270]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -51,13 +51,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D3" type="Sprite2D" parent="."]
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1850239594]
 process_mode = 1
 use_parent_material = true
 position = Vector2(64, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D3"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D3" unique_id=1552010635]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -66,13 +66,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D4" type="Sprite2D" parent="."]
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1513873719]
 process_mode = 1
 use_parent_material = true
 position = Vector2(96, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D4"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D4" unique_id=2057454614]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -81,13 +81,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D5" type="Sprite2D" parent="."]
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=230749406]
 process_mode = 1
 use_parent_material = true
 position = Vector2(128, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D5"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D5" unique_id=666001540]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -96,13 +96,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D6" type="Sprite2D" parent="."]
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=1889053188]
 process_mode = 1
 use_parent_material = true
 position = Vector2(160, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D6"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D6" unique_id=1252002824]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -111,13 +111,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D7" type="Sprite2D" parent="."]
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=1722465794]
 process_mode = 1
 use_parent_material = true
 position = Vector2(192, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D7"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D7" unique_id=1084159115]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -126,13 +126,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D8" type="Sprite2D" parent="."]
+[node name="Sprite2D8" type="Sprite2D" parent="." unique_id=586333659]
 process_mode = 1
 use_parent_material = true
 position = Vector2(224, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D8"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D8" unique_id=696534903]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -141,13 +141,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D9" type="Sprite2D" parent="."]
+[node name="Sprite2D9" type="Sprite2D" parent="." unique_id=1044644418]
 process_mode = 1
 use_parent_material = true
 position = Vector2(256, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D9"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D9" unique_id=1002538901]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -156,13 +156,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D10" type="Sprite2D" parent="."]
+[node name="Sprite2D10" type="Sprite2D" parent="." unique_id=561689382]
 process_mode = 1
 use_parent_material = true
 position = Vector2(288, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D10"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D10" unique_id=911873718]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -171,13 +171,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D11" type="Sprite2D" parent="."]
+[node name="Sprite2D11" type="Sprite2D" parent="." unique_id=1790248116]
 process_mode = 1
 use_parent_material = true
 position = Vector2(320, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D11"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D11" unique_id=1541909758]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -186,13 +186,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D12" type="Sprite2D" parent="."]
+[node name="Sprite2D12" type="Sprite2D" parent="." unique_id=1720686487]
 process_mode = 1
 use_parent_material = true
 position = Vector2(352, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D12"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D12" unique_id=237750689]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -201,13 +201,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D13" type="Sprite2D" parent="."]
+[node name="Sprite2D13" type="Sprite2D" parent="." unique_id=254445679]
 process_mode = 1
 use_parent_material = true
 position = Vector2(384, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D13"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D13" unique_id=1057560459]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -216,13 +216,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D14" type="Sprite2D" parent="."]
+[node name="Sprite2D14" type="Sprite2D" parent="." unique_id=868273437]
 process_mode = 1
 use_parent_material = true
 position = Vector2(416, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D14"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D14" unique_id=1879402619]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -231,13 +231,13 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Sprite2D15" type="Sprite2D" parent="."]
+[node name="Sprite2D15" type="Sprite2D" parent="." unique_id=967856254]
 process_mode = 1
 use_parent_material = true
 position = Vector2(448, 0)
 texture = SubResource("NoiseTexture2D_sjij6")
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D15"]
+[node name="ColorRect" type="ColorRect" parent="Sprite2D15" unique_id=86173897]
 z_index = -1
 offset_left = -16.0
 offset_top = 6.0
@@ -246,11 +246,11 @@ offset_bottom = 86.0
 size_flags_vertical = 3
 color = Color(0.482353, 0, 0, 1)
 
-[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=1809391066 groups=["#water"]]
 collision_layer = 128
 collision_mask = 7
 script = ExtResource("9_4rh78")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=585387423]
 position = Vector2(224, 6)
 shape = SubResource("RectangleShape2D_0ip4k")

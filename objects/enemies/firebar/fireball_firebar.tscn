@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpljjya321uq3"]
+[gd_scene format=3 uid="uid://cpljjya321uq3"]
 
 [ext_resource type="Script" uid="uid://iaehijx84l15" path="res://engine/objects/enemies/firebar/fireball_firebar.gd" id="1_8r468"]
 [ext_resource type="Texture2D" uid="uid://5t1vlbr6vbue" path="res://engine/objects/projectiles/fireball/texture.png" id="2_eeikg"]
@@ -20,15 +20,15 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="FireballFirebar" type="Node2D"]
+[node name="FireballFirebar" type="Node2D" unique_id=1802456843]
 script = ExtResource("1_8r468")
 sprite_rotation_speed = 300.0
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1244814570]
 z_index = 1
 texture = ExtResource("2_eeikg")
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=1963060887]
 visible = false
 shape = SubResource("CircleShape2D_eyugj")
 target_position = Vector2(0, 0)
@@ -37,7 +37,7 @@ collision_mask = 3
 collide_with_areas = true
 script = ExtResource("3_lndeq")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1565146401]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_82s8p")

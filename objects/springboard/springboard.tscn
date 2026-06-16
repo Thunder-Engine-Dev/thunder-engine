@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dgcgfl28trox0"]
+[gd_scene format=3 uid="uid://dgcgfl28trox0"]
 
 [ext_resource type="Script" uid="uid://bti20ywn6vrwr" path="res://engine/objects/springboard/springboard.gd" id="1_qhuqa"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_ed1um"]
@@ -52,7 +52,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tcpq2")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 15.0
 }]
@@ -337,7 +337,7 @@ _data = {
 &"jump": SubResource("Animation_6hv1e")
 }
 
-[node name="Springboard" type="CharacterBody2D"]
+[node name="Springboard" type="CharacterBody2D" unique_id=2017934026]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -347,26 +347,26 @@ turn_sprite = false
 sprite = NodePath("Sprite")
 gravity_scale = 1.0
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=797636457]
 visible = false
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1443756182]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_ed1um")
 solid = false
 turn_back = false
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1399540186]
 visible = false
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1291814128]
 script = ExtResource("3_vp0le")
 stomping_hurtable = false
 stomping_offset = Vector2(0, -6)
@@ -381,7 +381,7 @@ killing_creation = null
 turn_into_coin_on_level_end = false
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"stomping_offset"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=643745534]
 visible = false
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_1e01p")
@@ -389,62 +389,60 @@ script = ExtResource("6_g7kku")
 maximum = false
 minimum = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=64369387]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.90735e-06, -8)
 rect = Rect2(-32, -48, 64, 96)
 script = ExtResource("13_0airn")
 new_rect = Rect2(-256, -256, 512, 512)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2082846144]
 root_node = NodePath("../Node2D")
-libraries = {
-&"": SubResource("AnimationLibrary_dqr8a")
-}
+libraries/ = SubResource("AnimationLibrary_dqr8a")
 speed_scale = 2.5
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=504721446]
 script = ExtResource("6_g7kku")
 medium = true
 
-[node name="Bone1" type="Sprite2D" parent="Node2D"]
+[node name="Bone1" type="Sprite2D" parent="Node2D" unique_id=758863176]
 position = Vector2(-6, -17)
 rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 
-[node name="Bone2" type="Sprite2D" parent="Node2D"]
+[node name="Bone2" type="Sprite2D" parent="Node2D" unique_id=1456708896]
 position = Vector2(7, -17)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
 
-[node name="Bone3" type="Sprite2D" parent="Node2D"]
+[node name="Bone3" type="Sprite2D" parent="Node2D" unique_id=975856936]
 position = Vector2(-6, 1)
 rotation = -0.401426
 texture = ExtResource("7_7rmsc")
 flip_v = true
 
-[node name="Bone4" type="Sprite2D" parent="Node2D"]
+[node name="Bone4" type="Sprite2D" parent="Node2D" unique_id=1093171665]
 position = Vector2(7, 1)
 rotation = 0.401426
 texture = ExtResource("7_7rmsc")
 flip_h = true
 flip_v = true
 
-[node name="BallL" type="Sprite2D" parent="Node2D"]
+[node name="BallL" type="Sprite2D" parent="Node2D" unique_id=1660639954]
 position = Vector2(-10, -8)
 texture = ExtResource("8_myiky")
 
-[node name="BallR" type="Sprite2D" parent="Node2D"]
+[node name="BallR" type="Sprite2D" parent="Node2D" unique_id=1445928586]
 position = Vector2(10, -8)
 texture = ExtResource("8_myiky")
 flip_h = true
 
-[node name="SpringBoard1" type="Sprite2D" parent="Node2D"]
+[node name="SpringBoard1" type="Sprite2D" parent="Node2D" unique_id=1880420294]
 position = Vector2(0, -28)
 texture = ExtResource("9_hsop8")
 
-[node name="SpringBoard2" type="Sprite2D" parent="Node2D"]
+[node name="SpringBoard2" type="Sprite2D" parent="Node2D" unique_id=224488274]
 position = Vector2(0, 12)
 texture = ExtResource("9_hsop8")
 

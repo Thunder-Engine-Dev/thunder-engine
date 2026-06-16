@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cr4ubl3c0rfax"]
+[gd_scene format=3 uid="uid://cr4ubl3c0rfax"]
 
 [ext_resource type="Script" uid="uid://b4s5yj8ju7tcd" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.gd" id="1_wpw0v"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_6og6y"]
@@ -18,15 +18,7 @@
 [sub_resource type="Resource" id="Resource_iubp8"]
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("2_nvwv3")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(250, -500),
 "speed_min": Vector2(50, -300)
@@ -40,31 +32,14 @@ size = Vector2(32, 40)
 resource_local_to_scene = true
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("6_cgqsc")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("7_4w4ym")
 
 [sub_resource type="Resource" id="Resource_yp7dl"]
 resource_local_to_scene = true
 script = ExtResource("5_8odi0")
 creation_nodepack = ExtResource("3_24k5o")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -97,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h0pkg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -108,26 +83,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22pec")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="ParaHammerBros" type="Node2D"]
+[node name="ParaHammerBros" type="Node2D" unique_id=2143630505]
 script = ExtResource("1_wpw0v")
 projectile = SubResource("Resource_iubp8")
 metadata/_edit_pinned_properties_ = [&"projectile"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=378527620]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=70050663]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_1dwmi")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=2114230843]
 script = ExtResource("2_6og6y")
 stomping_creation = SubResource("Resource_avc6j")
 stomping_scores = 200
@@ -138,33 +113,33 @@ killing_sound_succeeded = ExtResource("7_a1xfa")
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=367743783]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_hw4r5")
 autoplay = "default"
 
-[node name="Wings" parent="." instance=ExtResource("9_hui0y")]
+[node name="Wings" parent="." unique_id=450759673 instance=ExtResource("9_hui0y")]
 position = Vector2(-14, -18)
 root_path = NodePath("..")
 parent_path = NodePath("../Sprite")
 metadata/_edit_pinned_properties_ = [&"parent_path", &"root_path"]
 
-[node name="SpriteProjectile" type="Sprite2D" parent="."]
+[node name="SpriteProjectile" type="Sprite2D" parent="." unique_id=1057952491]
 visible = false
 position = Vector2(6, -16)
 texture = ExtResource("9_j3og5")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=825824699]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(7.15256e-07, -8)
 scale = Vector2(1.6, 2.4)
 metadata/_edit_lock_ = true
 
-[node name="PosAttack" type="Marker2D" parent="."]
+[node name="PosAttack" type="Marker2D" parent="." unique_id=1680229935]
 visible = false
 position = Vector2(6, -17)
 
-[node name="Attack" type="Timer" parent="."]
+[node name="Attack" type="Timer" parent="." unique_id=194122568]
 wait_time = 0.06
 autostart = true
 

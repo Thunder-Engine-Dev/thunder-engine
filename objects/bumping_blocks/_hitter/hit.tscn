@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvfwgs0v63euo"]
+[gd_scene format=3 uid="uid://dvfwgs0v63euo"]
 
 [ext_resource type="Script" uid="uid://cbioghy474o0x" path="res://engine/objects/bumping_blocks/_hitter/hit.gd" id="1_b1pgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca6l3"]
 size = Vector2(32, 2)
 
-[node name="Hit" type="ShapeCast2D"]
+[node name="Hit" type="ShapeCast2D" unique_id=934139076]
 shape = SubResource("RectangleShape2D_ca6l3")
 target_position = Vector2(0, -1)
 collision_mask = 6
@@ -15,7 +15,7 @@ script = ExtResource("1_b1pgb")
 killer_type = &"head"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
-[node name="Destroy" type="Timer" parent="."]
+[node name="Destroy" type="Timer" parent="." unique_id=362210359]
 wait_time = 0.2
 one_shot = true
 autostart = true

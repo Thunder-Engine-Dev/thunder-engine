@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ciwuu3ndisvdb"]
+[gd_scene format=3 uid="uid://ciwuu3ndisvdb"]
 
 [ext_resource type="Script" uid="uid://dml7qhkbkocrq" path="res://engine/components/transitions/circle_transition/circle_transition.gd" id="1_tg3ld"]
 [ext_resource type="Material" uid="uid://c65x6dl8i6pdh" path="res://engine/components/transitions/circle_transition/circle_transition.tres" id="2_sacq7"]
 
-[node name="Transition" type="Control"]
+[node name="Transition" type="Control" unique_id=1688948086]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tg3ld")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1512837303]
 material = ExtResource("2_sacq7")
 layout_mode = 1
 anchors_preset = 15

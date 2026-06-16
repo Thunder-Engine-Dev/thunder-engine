@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bpdl22ol10045"]
+[gd_scene format=3 uid="uid://bpdl22ol10045"]
 
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_5iym8"]
 [ext_resource type="AudioStream" uid="uid://c0niykpi0ounv" path="res://engine/objects/enemies/human_lab/koopa_bro/sfx/throw.wav" id="2_85p4r"]
@@ -14,19 +14,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gepp8"]
 size = Vector2(32, 56)
 
-[sub_resource type="Resource" id="Resource_gxwoo"]
+[sub_resource type="Resource" id="Resource_pn87v"]
 resource_local_to_scene = true
 script = ExtResource("4_m5s06")
 creation_nodepack = ExtResource("2_m7lpj")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -39,7 +32,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_6kn0b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -47,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_6kn0b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -160,7 +153,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gxb57")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -168,39 +161,39 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_gsi7q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[node name="BigHumanCloneB" instance=ExtResource("1_5iym8")]
+[node name="BigHumanCloneB" unique_id=105640848 instance=ExtResource("1_5iym8")]
 platform_on_leave = 2
 sound = ExtResource("2_85p4r")
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="CollisionShape2D" parent="." index="0" unique_id=1436643882]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_gepp8")
 
-[node name="Body" parent="." index="1"]
+[node name="Body" parent="." index="1" unique_id=177313346]
 visible = true
 
-[node name="CollisionShape2D" parent="Body" index="0"]
+[node name="CollisionShape2D" parent="Body" index="0" unique_id=1107433309]
 visible = false
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_gepp8")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_gxwoo")
+[node name="EnemyAttacked" parent="Body" index="1" unique_id=1833375533]
+stomping_creation = SubResource("Resource_pn87v")
 stomping_sound = ExtResource("5_13l8y")
-killing_creation = SubResource("Resource_gxwoo")
+killing_creation = SubResource("Resource_pn87v")
 killing_sound_succeeded = ExtResource("5_13l8y")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1016435817]
 sprite_frames = SubResource("SpriteFrames_jwl4n")
 animation = &"attack"
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0" unique_id=1352428202]
 position = Vector2(0, 28)
 sprite_frames = SubResource("SpriteFrames_bhxi4")
 animation = &"idle"
@@ -211,11 +204,11 @@ can_idle = true
 can_move_both_ways = true
 idle_offset = Vector2(1, 0)
 
-[node name="SpriteProjectile" parent="." index="3"]
+[node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
 position = Vector2(-12, -2)
 scale = Vector2(-1, 1)
 
-[node name="PosAttack" parent="." index="4"]
+[node name="PosAttack" parent="." index="4" unique_id=233206360]
 position = Vector2(-14, -1)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/ActiveNOGI" method="set_animation" binds= ["idle"]]

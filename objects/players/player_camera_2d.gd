@@ -92,10 +92,10 @@ func _screen_border_logic() -> void:
 func _xscroll_logic() -> void:
 	if !SettingsManager.settings.xscroll:
 		_xscroll = 0.0
-		drag_horizontal_enabled = false
+		#drag_horizontal_enabled = false // incompatible with 4.5
 		drag_horizontal_offset = 0
 	elif !force_xscroll_off && is_instance_valid(player):
-		drag_horizontal_enabled = true
+		#drag_horizontal_enabled = true // incompatible with 4.5
 		drag_left_margin = 0.5
 		drag_right_margin = 0.5
 		drag_horizontal_offset = _xscroll / 1.25

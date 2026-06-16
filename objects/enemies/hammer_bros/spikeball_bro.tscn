@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqss7uv208mep"]
+[gd_scene format=3 uid="uid://cqss7uv208mep"]
 
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_r3rlh"]
 [ext_resource type="PackedScene" uid="uid://wgf8bo5dyeik" path="res://engine/objects/projectiles/spikeball/spikeball.tscn" id="2_apjcd"]
@@ -23,34 +23,19 @@ func _ready() -> void:
 [sub_resource type="Resource" id="Resource_28r82"]
 script = ExtResource("4_vkt3x")
 creation_nodepack = ExtResource("2_apjcd")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(250, -500),
 "speed_min": Vector2(50, -300)
 }
 custom_script = SubResource("GDScript_ji76f")
 
-[sub_resource type="Resource" id="Resource_dfga2"]
+[sub_resource type="Resource" id="Resource_y7ha2"]
 resource_local_to_scene = true
 script = ExtResource("4_vkt3x")
 creation_nodepack = ExtResource("2_g80xd")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -83,7 +68,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mg5aq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -94,25 +79,25 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_30gei")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SpikeballBro" instance=ExtResource("1_r3rlh")]
+[node name="SpikeballBro" unique_id=684655063 instance=ExtResource("1_r3rlh")]
 projectile = SubResource("Resource_28r82")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_dfga2")
-killing_creation = SubResource("Resource_dfga2")
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(177313346) index="1" unique_id=1833375533]
+stomping_creation = SubResource("Resource_y7ha2")
+killing_creation = SubResource("Resource_y7ha2")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1016435817]
 sprite_frames = SubResource("SpriteFrames_4t8q7")
 
-[node name="SpriteProjectile" parent="." index="3"]
+[node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
 position = Vector2(13, -16)
 rotation = -0.261799
 texture = ExtResource("6_kyteb")
 
-[node name="PosAttack" parent="." index="4"]
+[node name="PosAttack" parent="." index="4" unique_id=233206360]
 position = Vector2(13, -16)

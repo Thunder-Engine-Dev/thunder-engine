@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cyjlylh7q8atw"]
+[gd_scene format=3 uid="uid://cyjlylh7q8atw"]
 
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_8wu3f"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_a4aet"]
@@ -12,34 +12,18 @@
 [sub_resource type="Resource" id="Resource_i08cg"]
 script = ExtResource("4_3a8oo")
 creation_nodepack = ExtResource("2_rsdim")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(550, -250),
 "speed_min": Vector2(200, -450)
 }
 custom_script = ExtResource("3_0vxgn")
 
-[sub_resource type="Resource" id="Resource_5jbwk"]
+[sub_resource type="Resource" id="Resource_phmm3"]
 resource_local_to_scene = true
 script = ExtResource("4_3a8oo")
 creation_nodepack = ExtResource("2_a4aet")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -72,7 +56,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wxkve")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -83,24 +67,24 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mhgic")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SilverHammerBro" instance=ExtResource("1_8wu3f")]
+[node name="SilverHammerBro" unique_id=347908100 instance=ExtResource("1_8wu3f")]
 attacking_delay = 0.9
 projectile = SubResource("Resource_i08cg")
 metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_5jbwk")
-killing_creation = SubResource("Resource_5jbwk")
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(177313346) index="1" unique_id=1833375533]
+stomping_creation = SubResource("Resource_phmm3")
+killing_creation = SubResource("Resource_phmm3")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1016435817]
 sprite_frames = SubResource("SpriteFrames_iq2ae")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="SpriteProjectile" parent="." index="3"]
+[node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
 texture = ExtResource("6_fbea0")
 metadata/_edit_pinned_properties_ = [&"texture"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://oja3uy1y4hpl"]
+[gd_scene format=3 uid="uid://oja3uy1y4hpl"]
 
 [ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_2qrva"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_3i2bd"]
@@ -15,16 +15,8 @@
 [sub_resource type="Resource" id="Resource_i5haj"]
 script = ExtResource("2_m1eaf")
 creation_nodepack = ExtResource("2_3i2bd")
-creation_force_sibling = false
 trans_offset = Vector2(0, -28)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
 size = Vector2(30, 32)
@@ -32,15 +24,8 @@ size = Vector2(30, 32)
 [sub_resource type="Resource" id="Resource_hukh6"]
 script = ExtResource("2_m1eaf")
 creation_nodepack = ExtResource("7_t6vqd")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250),
@@ -75,7 +60,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xhtye")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
@@ -90,7 +75,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="PiranhaPink" type="Node2D"]
+[node name="PiranhaPink" type="Node2D" unique_id=1342841014]
 script = ExtResource("1_2qrva")
 custom_vars = {
 "attack_amount": 1,
@@ -109,17 +94,17 @@ custom_vars = {
 }
 custom_script = ExtResource("3_l5y0h")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1261853971]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1141328949]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1880168084]
 script = ExtResource("7_pt4ko")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -141,26 +126,26 @@ ice_sprite_autoset = false
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=439088943]
 z_index = -2
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_6buyf")
 autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=933789772]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(2.38419e-07, -32)
 scale = Vector2(1.6, 3.2)
 metadata/_edit_lock_ = true
 
-[node name="Step" type="Timer" parent="."]
+[node name="Step" type="Timer" parent="." unique_id=739378013]
 one_shot = true
 
-[node name="Fire" type="Timer" parent="."]
+[node name="Fire" type="Timer" parent="." unique_id=1021339784]
 one_shot = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1730089786]
 position = Vector2(0, -32)
 blend_mode = 2
 range_layer_min = -100

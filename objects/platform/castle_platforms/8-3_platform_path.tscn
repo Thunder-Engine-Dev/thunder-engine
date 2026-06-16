@@ -1,19 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4enqp3bwybyh"]
+[gd_scene format=3 uid="uid://c4enqp3bwybyh"]
 
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_utmyp"]
 [ext_resource type="Texture2D" uid="uid://sf7hne6bmwr5" path="res://engine/objects/platform/castle_platforms/texture.png" id="2_s8un2"]
 
-[node name="PlatformPath" instance=ExtResource("1_utmyp")]
+[node name="PlatformPath" unique_id=1988878801 instance=ExtResource("1_utmyp")]
 
-[node name="CollisionPolygon2D" parent="Block" index="0"]
+[node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="0" unique_id=478764510]
 polygon = PackedVector2Array(-38, 0, 38, 0, 38, 36, -38, 36)
 
-[node name="Sprite2D" parent="Block" index="1"]
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="1" unique_id=166578107]
 position = Vector2(0, 16)
 texture = ExtResource("2_s8un2")
 
-[node name="Block2" parent="." index="1"]
+[node name="Block2" parent="." index="1" unique_id=2083995296]
 visible = true
 
-[node name="CollisionPolygon2D" parent="Block2" index="0"]
+[node name="CollisionPolygon2D" parent="Block2" index="0" unique_id=707615798]
 polygon = PackedVector2Array(-38, 0, 38, 0, 38, 32, -38, 32)

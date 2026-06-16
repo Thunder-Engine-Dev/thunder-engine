@@ -1,38 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://c02e27qkcrmvw"]
+[gd_scene format=3 uid="uid://c02e27qkcrmvw"]
 
 [ext_resource type="Script" uid="uid://5ykrxcryikj0" path="res://engine/objects/centipede/centipede.gd" id="1_44y8h"]
 [ext_resource type="Texture2D" uid="uid://cv6u8e4c5pt07" path="res://engine/objects/centipede/gfx/centipede_block.png" id="3_dwtbs"]
 [ext_resource type="Texture2D" uid="uid://b04hhpa4nt46" path="res://engine/objects/projectiles/spikeball/spikeball.png" id="3_etl1t"]
 [ext_resource type="Script" uid="uid://dh3ngdb7vv6ln" path="res://engine/objects/centipede/centipede_draw_area.gd" id="4_7hyx0"]
 
-[node name="Centipede" type="StaticBody2D"]
+[node name="Centipede" type="StaticBody2D" unique_id=1688669479]
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("1_44y8h")
 metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1110287832]
 polygon = PackedVector2Array(-16, 0, 16, 0, 16, 32, -16, 32)
 
-[node name="Spikeball" type="Sprite2D" parent="."]
+[node name="Spikeball" type="Sprite2D" parent="." unique_id=562455977]
 z_index = -1
 position = Vector2(0, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_etl1t")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=398984377]
 position = Vector2(0, 16)
 texture = ExtResource("3_dwtbs")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1651802900]
 bus = &"Sound"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1277776112]
 process_callback = 0
 wait_time = 0.25
 one_shot = true
 
-[node name="DrawArea" type="Node2D" parent="."]
+[node name="DrawArea" type="Node2D" parent="." unique_id=493737173]
 script = ExtResource("4_7hyx0")

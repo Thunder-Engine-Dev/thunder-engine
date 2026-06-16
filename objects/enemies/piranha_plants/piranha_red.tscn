@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://jh88p5626p10"]
+[gd_scene format=3 uid="uid://jh88p5626p10"]
 
 [ext_resource type="Script" uid="uid://di30vfoyjf6i7" path="res://engine/objects/enemies/piranha_plants/piranha_in_pipe.gd" id="1_5tc3o"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_n5vi0"]
@@ -15,15 +15,8 @@ size = Vector2(30, 32)
 [sub_resource type="Resource" id="Resource_fvcap"]
 script = ExtResource("5_qgjvw")
 creation_nodepack = ExtResource("3_8sldl")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250),
@@ -58,12 +51,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8sldl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaRed" type="Node2D"]
+[node name="PiranhaRed" type="Node2D" unique_id=2118316905]
 self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_5tc3o")
 range_in_pipe = 32.0
@@ -71,17 +64,17 @@ stay_in_interval = 0.8
 stay_out_interval = 0.8
 stretching_speed = 150.0
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=864719704]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=128111615]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1125624186]
 script = ExtResource("2_n5vi0")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -103,18 +96,18 @@ ice_sprite = NodePath("../../Sprite")
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1504708848]
 z_index = -2
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_qgjvw")
 autoplay = "default"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=884211194]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -48, 32, 96)
 metadata/_edit_lock_ = true
 
-[node name="Step" type="Timer" parent="."]
+[node name="Step" type="Timer" parent="." unique_id=291977301]
 one_shot = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

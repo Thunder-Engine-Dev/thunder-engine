@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dofejp2f025qw"]
+[gd_scene format=3 uid="uid://dofejp2f025qw"]
 
 [ext_resource type="Script" uid="uid://c4fgg2rbu56x" path="res://engine/objects/items/ice_block/ice_block.gd" id="1_s4yfw"]
 [ext_resource type="Texture2D" uid="uid://8jqfncop8x26" path="res://engine/objects/items/ice_block/ice_block.png" id="2_e4ory"]
@@ -20,7 +20,7 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ouc48"]
 size = Vector2(24, 24)
 
-[node name="IceBlock" type="CharacterBody2D" groups=["slippery"]]
+[node name="IceBlock" type="CharacterBody2D" unique_id=1940788540 groups=["slippery"]]
 collision_layer = 112
 collision_mask = 65
 script = ExtResource("1_s4yfw")
@@ -29,21 +29,21 @@ gravity_scale = 0.5
 auto_update_up_direction = false
 metadata/_edit_pinned_properties_ = [&"gravity_dir_rotation", &"gravity_scale", &"auto_update_up_direction"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1424599820]
 visible = false
 shape = SubResource("RectangleShape2D_ena34")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=769200017]
 visible = false
 collision_layer = 2
 collision_mask = 7
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=2054467584]
 visible = false
 shape = SubResource("RectangleShape2D_q60fw")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=264895780]
 script = ExtResource("6_2o27h")
 stomping_enabled = false
 stomping_hurtable = false
@@ -63,7 +63,7 @@ killing_immune = {
 turn_into_coin_on_level_end = false
 frozen_enabled = false
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=64675571]
 visible = false
 shape = SubResource("RectangleShape2D_fjc0d")
 target_position = Vector2(0, 0)
@@ -74,7 +74,7 @@ script = ExtResource("3_2ogy0")
 killer_type = &"iceblock"
 is_reflectable = true
 
-[node name="SpriteNP" type="NinePatchRect" parent="."]
+[node name="SpriteNP" type="NinePatchRect" parent="." unique_id=358421985]
 material = ExtResource("4_ab1eo")
 offset_left = -16.0
 offset_top = -16.0
@@ -91,26 +91,26 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 metadata/_edit_lock_ = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1021197878]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("3_egg7o")
 metadata/_edit_lock_ = true
 
-[node name="TimerDestroy" type="Timer" parent="."]
+[node name="TimerDestroy" type="Timer" parent="." unique_id=1662152396]
 process_mode = 1
 one_shot = true
 
-[node name="GrabbableModifier" parent="." instance=ExtResource("6_ch7y1")]
+[node name="GrabbableModifier" parent="." unique_id=1600528818 instance=ExtResource("6_ch7y1")]
 
-[node name="SolidChecker" type="Area2D" parent="."]
+[node name="SolidChecker" type="Area2D" parent="." unique_id=1981154647]
 visible = false
 collision_layer = 0
 collision_mask = 96
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker" unique_id=1332096884]
 shape = SubResource("RectangleShape2D_ouc48")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="break_ice" binds= [true, true]]

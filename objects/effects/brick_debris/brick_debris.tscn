@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmiopxb2ews2o"]
+[gd_scene format=3 uid="uid://dmiopxb2ews2o"]
 
 [ext_resource type="Texture2D" uid="uid://cp8u5w2nt1hwh" path="res://engine/objects/effects/brick_debris/brick_debris.png" id="1_arhg4"]
 [ext_resource type="Script" uid="uid://41ncuvtaeig5" path="res://engine/objects/effects/brick_debris/brick_debris.gd" id="2_onta8"]
 
-[node name="BrickDebris" type="Sprite2D"]
+[node name="BrickDebris" type="Sprite2D" unique_id=144315147]
 z_index = 5
 texture = ExtResource("1_arhg4")
 script = ExtResource("2_onta8")

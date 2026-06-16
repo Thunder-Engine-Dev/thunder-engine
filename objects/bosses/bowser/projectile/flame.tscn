@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://yreeufpqjft1"]
+[gd_scene format=3 uid="uid://yreeufpqjft1"]
 
 [ext_resource type="Script" uid="uid://cr6yuoiat01q3" path="res://engine/objects/bosses/bowser/projectile/flame.gd" id="1_vrg5a"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_g8g0o"]
@@ -16,15 +16,8 @@ size = Vector2(40, 20)
 [sub_resource type="Resource" id="Resource_nu7ap"]
 script = ExtResource("5_cwhce")
 creation_nodepack = ExtResource("3_8nc5l")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 2
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "amount": 15
 }
@@ -54,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_js2pf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }]
@@ -71,7 +64,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="Flame" type="CharacterBody2D"]
+[node name="Flame" type="CharacterBody2D" unique_id=1546232828]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_vrg5a")
@@ -81,17 +74,17 @@ speed = Vector2(200, 0)
 collision = false
 metadata/_edit_pinned_properties_ = [&"collision", &"belongs_to"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=317167317]
 visible = false
 position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 5
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=136696198]
 shape = SubResource("RectangleShape2D_3yefo")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=647025118]
 script = ExtResource("2_g8g0o")
 stomping_standard = Vector2(0, 0)
 killing_immune = {
@@ -111,17 +104,17 @@ killing_sound_failed = ExtResource("4_jce6f")
 frozen_enabled = false
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_failed"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=621809373]
 sprite_frames = SubResource("SpriteFrames_qfn7i")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1405509159]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(4.76837e-06, 9.53674e-07)
 scale = Vector2(4.8, 3.2)
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1826133535]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_nu7ap")

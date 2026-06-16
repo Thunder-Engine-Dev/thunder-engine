@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=14 format=3 uid="uid://br3qktscdu8fx"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://br3qktscdu8fx"]
 
 [ext_resource type="Texture2D" uid="uid://ccnkeccrybwn7" path="res://engine/scenes/main_menu/textures/mario_selector.png" id="1_sx3mk"]
 
@@ -92,7 +92,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a3oic")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 30.0
 }]

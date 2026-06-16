@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://u6gxj4cj5m4f"]
+[gd_scene format=3 uid="uid://u6gxj4cj5m4f"]
 
 [ext_resource type="Script" uid="uid://bvdodyia5xjt" path="res://engine/objects/bumping_blocks/message_block/message_block.gd" id="1_uafpb"]
 [ext_resource type="Material" uid="uid://ruf2y5h6b0fa" path="res://engine/objects/bumping_blocks/message_block/message_block.tres" id="2_huypv"]
@@ -38,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_da7mb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -46,7 +46,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_qouyg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"empty",
 "speed": 5.0
 }]
@@ -59,35 +59,35 @@ colors = PackedColorArray(0, 0.14902, 0.513726, 0.505882)
 gradient = SubResource("Gradient_h2vw0")
 width = 284
 
-[node name="MessageBlock" type="AnimatableBody2D"]
+[node name="MessageBlock" type="AnimatableBody2D" unique_id=1139954452]
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_uafpb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1100504333]
 visible = false
 shape = SubResource("RectangleShape2D_denue")
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprites" type="Node2D" parent="." unique_id=294550689]
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites" unique_id=184477058]
 occluder = SubResource("OccluderPolygon2D_h6cop")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites" unique_id=1604913855]
 process_mode = 3
 material = ExtResource("2_huypv")
 sprite_frames = SubResource("SpriteFrames_bi0c8")
 autoplay = "default"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2116976402]
 process_mode = 2
 layer = 4
 
-[node name="Box" type="Node2D" parent="CanvasLayer"]
+[node name="Box" type="Node2D" parent="CanvasLayer" unique_id=1618357154]
 process_mode = 3
 scale = Vector2(1e-05, 1e-05)
 
-[node name="Texture" type="TextureRect" parent="CanvasLayer/Box"]
+[node name="Texture" type="TextureRect" parent="CanvasLayer/Box" unique_id=1552683647]
 physics_interpolation_mode = 0
 anchors_preset = 8
 anchor_left = 0.5
@@ -102,7 +102,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_xj0fk")
 
-[node name="Text" type="Label" parent="CanvasLayer/Box/Texture"]
+[node name="Text" type="Label" parent="CanvasLayer/Box/Texture" unique_id=619646087]
 physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = 15
@@ -124,7 +124,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Text2" type="Label" parent="CanvasLayer/Box/Texture"]
+[node name="Text2" type="Label" parent="CanvasLayer/Box/Texture" unique_id=1544713833]
 process_mode = 2
 physics_interpolation_mode = 0
 layout_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dxqjmbtsadabq"]
+[gd_scene format=3 uid="uid://dxqjmbtsadabq"]
 
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_xs17w"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_ai65h"]
@@ -15,19 +15,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d26ok"]
 size = Vector2(32, 36)
 
-[sub_resource type="Resource" id="Resource_rn71a"]
+[sub_resource type="Resource" id="Resource_xsn81"]
 resource_local_to_scene = true
 script = ExtResource("4_4st6u")
 creation_nodepack = ExtResource("2_ai65h")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -52,7 +45,7 @@ animations = [{
 "duration": 2.0,
 "texture": ExtResource("6_xsn81")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 25.0
 }, {
@@ -69,7 +62,7 @@ animations = [{
 "duration": 4.0,
 "texture": SubResource("AtlasTexture_ribn0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -182,7 +175,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gxb57")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }, {
@@ -190,12 +183,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_ugsva")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[node name="CloneSpiny" instance=ExtResource("1_xs17w")]
+[node name="CloneSpiny" unique_id=1183033703 instance=ExtResource("1_xs17w")]
 
 [node name="Collision" parent="." index="0"]
 position = Vector2(0, 6)
@@ -206,14 +199,14 @@ position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_d26ok")
 
 [node name="EnemyAttacked" parent="Body" index="1"]
-killing_creation = SubResource("Resource_rn71a")
+killing_creation = SubResource("Resource_xsn81")
 killing_sound_succeeded = ExtResource("5_12kt0")
 sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_kdbtc")
 
-[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0"]
+[node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0" unique_id=374105197]
 position = Vector2(0, 19)
 sprite_frames = SubResource("SpriteFrames_8gg20")
 autoplay = "default"
@@ -221,7 +214,7 @@ script = ExtResource("8_mvgoi")
 enemy_center_node = NodePath("../..")
 walk_offset = Vector2(-1, 0)
 
-[node name="Dead" type="Sprite2D" parent="Sprite" index="1"]
+[node name="Dead" type="Sprite2D" parent="Sprite" index="1" unique_id=895077066]
 visible = false
 texture = ExtResource("11_y61eb")
 

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://d3m3fp7ol75yn"]
+[gd_resource type="TileSet" format=3 uid="uid://d3m3fp7ol75yn"]
 
 [ext_resource type="Texture2D" uid="uid://f334i2uuua3u" path="res://engine/tilesets/tanks/gfx/original_tank_tileset.png" id="1_ihbqp"]
 [ext_resource type="PackedScene" uid="uid://d11md1qupl6lp" path="res://engine/tilesets/tanks/scenes/wheel_center.tscn" id="2_ihbqp"]

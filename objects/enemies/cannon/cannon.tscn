@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnes1ayl6d6ee"]
+[gd_scene format=3 uid="uid://dnes1ayl6d6ee"]
 
 [ext_resource type="Script" uid="uid://2jpdo6ethxfo" path="res://engine/objects/enemies/cannon/cannon.gd" id="1_5uqfp"]
 [ext_resource type="Texture2D" uid="uid://dox7a67hmnob0" path="res://engine/objects/enemies/cannon/textures/cannon_head.png" id="2_kfrww"]
@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5wiq"]
 size = Vector2(32, 32)
 
-[node name="Cannon" type="AnimatableBody2D" node_paths=PackedStringArray("sprite_head", "sprite_handler")]
+[node name="Cannon" type="AnimatableBody2D" unique_id=1971229500 node_paths=PackedStringArray("sprite_head", "sprite_handler")]
 collision_layer = 112
 collision_mask = 0
 sync_to_physics = false
@@ -16,28 +16,28 @@ sprite_head = NodePath("SpriteHead")
 sprite_handler = NodePath("SpriteHandler")
 metadata/_edit_pinned_properties_ = [&"sprite_head", &"sprite_handler"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=614970257]
 visible = false
 shape = SubResource("RectangleShape2D_h5wiq")
 
-[node name="SpriteHead" type="Sprite2D" parent="."]
+[node name="SpriteHead" type="Sprite2D" parent="." unique_id=775260991]
 texture = ExtResource("2_kfrww")
 
-[node name="PosCannonBall" type="Marker2D" parent="SpriteHead"]
+[node name="PosCannonBall" type="Marker2D" parent="SpriteHead" unique_id=1318871813]
 visible = false
 position = Vector2(16, 0)
 gizmo_extents = 5.0
 
-[node name="SpriteHandler" type="Sprite2D" parent="."]
+[node name="SpriteHandler" type="Sprite2D" parent="." unique_id=1614078200]
 texture = ExtResource("3_rc1ms")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=152567176]
 modulate = Color(1, 1, 1, 0.0392157)
 rect = Rect2(-16, -16, 32, 32)
 enable_node_path = NodePath("../CannonInterval")
 metadata/_edit_lock_ = true
 
-[node name="CannonInterval" type="Timer" parent="."]
+[node name="CannonInterval" type="Timer" parent="." unique_id=1665050160]
 one_shot = true
 
 [connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_entered"]

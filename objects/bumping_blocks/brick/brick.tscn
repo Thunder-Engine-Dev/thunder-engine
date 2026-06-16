@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://2yepdgrhpmj3"]
+[gd_scene format=3 uid="uid://2yepdgrhpmj3"]
 
 [ext_resource type="Script" uid="uid://l2v7fiuurrhn" path="res://engine/objects/bumping_blocks/brick/brick.gd" id="1_5y3xv"]
 [ext_resource type="SpriteFrames" uid="uid://bkrdwg2xxodgg" path="res://engine/objects/bumping_blocks/brick/brick.tres" id="2_p1ujx"]
@@ -10,31 +10,31 @@ size = Vector2(32, 32)
 cull_mode = 1
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
-[node name="Brick" type="AnimatableBody2D" groups=["brick"]]
+[node name="Brick" type="AnimatableBody2D" unique_id=425678846 groups=["brick"]]
 disable_mode = 1
 collision_layer = 112
 sync_to_physics = false
 script = ExtResource("1_5y3xv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1361635571]
 visible = false
 shape = SubResource("RectangleShape2D_2x2nd")
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprites" type="Node2D" parent="." unique_id=71549024]
 process_mode = 1
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites" unique_id=331921017]
 occluder = SubResource("OccluderPolygon2D_xwmjy")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites" unique_id=1077893406]
 sprite_frames = ExtResource("2_p1ujx")
 
-[node name="ItemDisplayer" type="Sprite2D" parent="Sprites"]
+[node name="ItemDisplayer" type="Sprite2D" parent="Sprites" unique_id=387821114]
 position = Vector2(8, 8)
 scale = Vector2(0.5, 0.5)
 metadata/_edit_lock_ = true
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites"]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprites" unique_id=644888426]
 visible = false
 self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-16, -16, 32, 32)

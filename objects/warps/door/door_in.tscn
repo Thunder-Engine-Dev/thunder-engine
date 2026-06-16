@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b15mtpvvr38vx"]
+[gd_scene format=3 uid="uid://b15mtpvvr38vx"]
 
 [ext_resource type="Script" uid="uid://cuxwwcxf7tm13" path="res://engine/objects/warps/door/door_in.gd" id="1_bjwu6"]
 [ext_resource type="Texture2D" uid="uid://c32gr3g5syhnt" path="res://engine/objects/warps/door/door_background.png" id="2_g7vay"]
@@ -7,27 +7,27 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qgisv"]
 size = Vector2(16, 16)
 
-[node name="DoorIn" type="Area2D" groups=["door_in"]]
+[node name="DoorIn" type="Area2D" unique_id=625661437 groups=["door_in"]]
 collision_layer = 0
 monitorable = false
 script = ExtResource("1_bjwu6")
 
-[node name="SpriteBG" type="Sprite2D" parent="."]
+[node name="SpriteBG" type="Sprite2D" parent="." unique_id=1710566795]
 visible = false
 position = Vector2(0, -32)
 texture = ExtResource("2_g7vay")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=527929244]
 position = Vector2(0, -32)
 sprite_frames = ExtResource("3_4oodk")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=765240519]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_qgisv")
 debug_color = Color(0, 0.352941, 0.180392, 0.419608)
 
-[node name="PosPlayer" type="Marker2D" parent="."]
+[node name="PosPlayer" type="Marker2D" parent="." unique_id=833608916]
 visible = false
 position = Vector2(0, -16)
 

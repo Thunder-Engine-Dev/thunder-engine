@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cukm2rkdye2sc"]
+[gd_scene format=3 uid="uid://cukm2rkdye2sc"]
 
 [ext_resource type="PackedScene" uid="uid://bvolo50530iv7" path="res://engine/objects/enemies/bullet_bill/launcher/bullet_launcher.tscn" id="1_tpiht"]
 [ext_resource type="PackedScene" uid="uid://dcjv66rihg28l" path="res://engine/objects/enemies/bullet_bill/bill/missile_bill.tscn" id="2_dbcfg"]
@@ -8,16 +8,7 @@
 [sub_resource type="Resource" id="Resource_qbi1h"]
 script = ExtResource("3_h43mo")
 creation_nodepack = ExtResource("2_dbcfg")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
 [sub_resource type="Animation" id="Animation_c4s0n"]
 length = 0.001
@@ -57,7 +48,7 @@ _data = {
 &"default": SubResource("Animation_xejw3")
 }
 
-[node name="MissileBulletLauncher" instance=ExtResource("1_tpiht")]
+[node name="MissileBulletLauncher" unique_id=203378618 instance=ExtResource("1_tpiht")]
 bullet_bill = SubResource("Resource_qbi1h")
 bullet_speed = 200.0
 first_shooting_delay = 2.5
@@ -66,8 +57,6 @@ shooting_delay_max = 6.5
 shooting_sound = ExtResource("4_ge0di")
 sound_pitch_max = 1.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
-autoplay = "default"
-libraries = {
-"": SubResource("AnimationLibrary_k3typ")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4" unique_id=1566463532]
+libraries/ = SubResource("AnimationLibrary_k3typ")
+autoplay = &"default"

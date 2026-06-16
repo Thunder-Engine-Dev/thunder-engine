@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://r3wtvvkcepce"]
+[gd_scene format=3 uid="uid://r3wtvvkcepce"]
 
 [ext_resource type="PackedScene" uid="uid://dp2mvur34jdbv" path="res://engine/objects/enemies/paratroopas/paratroopa_green.tscn" id="1_ddg2h"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_jcr27"]
@@ -15,31 +15,15 @@ size = Vector2(32, 36)
 [sub_resource type="Resource" id="Resource_u6rt5"]
 script = ExtResource("4_qby8s")
 creation_nodepack = ExtResource("2_t0byn")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("3_qq62u")
 
-[sub_resource type="Resource" id="Resource_nghi6"]
+[sub_resource type="Resource" id="Resource_b233l"]
 resource_local_to_scene = true
 script = ExtResource("4_qby8s")
 creation_nodepack = ExtResource("2_jcr27")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -63,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uumhy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -78,30 +62,30 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gljwr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaParatroopaRed" instance=ExtResource("1_ddg2h")]
+[node name="KoopaParatroopaRed" unique_id=714905688 instance=ExtResource("1_ddg2h")]
 amplitude = Vector2(50, 0)
 facing_method = 1
 metadata/_edit_pinned_properties_ = [&"amplitude", &"facing_method"]
 
-[node name="Collision" parent="Body" index="0"]
+[node name="Collision" parent="Body" parent_id_path=PackedInt32Array(470454337) index="0" unique_id=1520526626]
 shape = SubResource("RectangleShape2D_bxfep")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(470454337) index="1" unique_id=267483662]
 stomping_creation = SubResource("Resource_u6rt5")
-killing_creation = SubResource("Resource_nghi6")
+killing_creation = SubResource("Resource_b233l")
 metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1866130847]
 show_behind_parent = true
 sprite_frames = SubResource("SpriteFrames_82uh0")
 
-[node name="Dead" parent="Sprite" index="0"]
+[node name="Dead" parent="Sprite" index="0" unique_id=722413921]
 sprite_frames = SubResource("SpriteFrames_x6d0m")
 
-[node name="Wings" parent="." index="2"]
+[node name="Wings" parent="." index="2" unique_id=1608826126]
 show_behind_parent = true

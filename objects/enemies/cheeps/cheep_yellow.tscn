@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvfwhq3j5n5k5"]
+[gd_scene format=3 uid="uid://cvfwhq3j5n5k5"]
 
 [ext_resource type="PackedScene" uid="uid://c8mms5q7m2lk7" path="res://engine/objects/enemies/cheeps/cheep_red.tscn" id="1_c2vrp"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_s3d20"]
@@ -7,19 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://cydl63kqnyc5t" path="res://engine/objects/enemies/cheeps/textures/cheep_yellow.png" id="5_hjecj"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="5_ylvhf"]
 
-[sub_resource type="Resource" id="Resource_tm8dl"]
+[sub_resource type="Resource" id="Resource_w0t0k"]
 resource_local_to_scene = true
 script = ExtResource("4_xhp64")
 creation_nodepack = ExtResource("2_s3d20")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -45,18 +37,18 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fk2ec")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="CheepYellow" instance=ExtResource("1_c2vrp")]
+[node name="CheepYellow" unique_id=1461601069 instance=ExtResource("1_c2vrp")]
 type = 3
 always_unstompable = true
 metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_tm8dl")
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1945428) index="1" unique_id=1316147869]
+stomping_creation = SubResource("Resource_w0t0k")
 stomping_scores = 200
 killing_immune = {
 "beetroot": true,
@@ -69,12 +61,12 @@ killing_immune = {
 "shell_forced": false,
 "starman": false
 }
-killing_creation = SubResource("Resource_tm8dl")
+killing_creation = SubResource("Resource_w0t0k")
 killing_scores = 200
 killing_sound_failed = ExtResource("5_ylvhf")
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
-[node name="Sprite" parent="." index="4"]
+[node name="Sprite" parent="." index="4" unique_id=1602335937]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_g42wx")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

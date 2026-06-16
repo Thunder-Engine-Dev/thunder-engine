@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://cwm6qusol36ed"]
+[gd_resource type="TileSet" format=3 uid="uid://cwm6qusol36ed"]
 
 [ext_resource type="Texture2D" uid="uid://jyw17rjqnji" path="res://engine/tilesets/starland/gfx/starland_ground.png" id="1_mapqu"]
 [ext_resource type="Texture2D" uid="uid://uejrjui7n1cg" path="res://engine/tilesets/underground/gfx/blue_hard_block.png" id="2_bnpmn"]

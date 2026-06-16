@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0f1uy0wgci6x"]
+[gd_scene format=3 uid="uid://b0f1uy0wgci6x"]
 
 [ext_resource type="Script" uid="uid://bxq57dbowstxt" path="res://engine/objects/powerups/powerup.gd" id="1_qfrll"]
 [ext_resource type="Texture2D" uid="uid://cy6delerkofbo" path="res://engine/objects/powerups/ice_flower/texture.png" id="3_0ewov"]
@@ -42,7 +42,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nmqdq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }]
@@ -59,7 +59,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="IceFlower" type="CharacterBody2D"]
+[node name="IceFlower" type="CharacterBody2D" unique_id=909352615]
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
@@ -68,30 +68,30 @@ script = ExtResource("1_qfrll")
 to_suit = "iceball"
 gravity_scale = 0.5
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1277269900]
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=617845852]
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1972785359]
 visible = false
 shape = SubResource("RectangleShape2D_1t3xg")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=113040433]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_4qtav")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=1860082936]
 visible = false
 script = ExtResource("4_n1n7i")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1110066781]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_t2i4u")

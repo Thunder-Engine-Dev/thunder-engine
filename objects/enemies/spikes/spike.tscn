@@ -1,17 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://5pmwnbbklcjj"]
+[gd_scene format=3 uid="uid://5pmwnbbklcjj"]
 
 [ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="1_kfc1l"]
 [ext_resource type="Texture2D" uid="uid://c7nrslfgsidtm" path="res://engine/objects/enemies/spikes/textures/spike_castle.png" id="1_x317o"]
 
-[node name="Spike" type="Area2D"]
+[node name="Spike" type="Area2D" unique_id=247076585]
 collision_layer = 0
 monitorable = false
 script = ExtResource("1_kfc1l")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1223536454]
 visible = false
 polygon = PackedVector2Array(0, -32, 16, 0, -16, 0)
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=841909151]
 position = Vector2(0, -16)
 texture = ExtResource("1_x317o")

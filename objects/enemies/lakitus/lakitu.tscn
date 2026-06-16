@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://j4f2gd3x20bj"]
+[gd_scene format=3 uid="uid://j4f2gd3x20bj"]
 
 [ext_resource type="Script" uid="uid://f02wcyi08ks1" path="res://engine/objects/enemies/lakitus/lakitu.gd" id="1_rfja5"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_wpj0n"]
@@ -15,16 +15,8 @@
 [sub_resource type="Resource" id="Resource_etq5v"]
 script = ExtResource("3_rbrl7")
 creation_nodepack = ExtResource("2_y3wvn")
-creation_force_sibling = false
 trans_offset = Vector2(0, -8)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("2_aveqo")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aq6tk"]
@@ -33,15 +25,8 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_h3r88"]
 script = ExtResource("3_rbrl7")
 creation_nodepack = ExtResource("6_qkxjd")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 2
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0)
@@ -220,7 +205,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7qfdv")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink1",
 "speed": 50.0
 }, {
@@ -258,7 +243,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rqaw5")
 }],
-"loop": false,
+"loop": 0,
 "name": &"blink2",
 "speed": 50.0
 }, {
@@ -266,7 +251,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a4q3w")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }, {
@@ -304,25 +289,25 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nskim")
 }],
-"loop": false,
+"loop": 0,
 "name": &"pitch",
 "speed": 50.0
 }]
 
-[node name="Lakitu" type="Node2D"]
+[node name="Lakitu" type="Node2D" unique_id=1650820479]
 script = ExtResource("1_rfja5")
 pitched = SubResource("Resource_etq5v")
 metadata/_edit_pinned_properties_ = [&"pitched"]
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=2018649753]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=137635040]
 shape = SubResource("RectangleShape2D_aq6tk")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=2025961743]
 script = ExtResource("1_wpj0n")
 stomping_hurtable = false
 stomping_creation = SubResource("Resource_h3r88")
@@ -347,23 +332,23 @@ ice_sprite = NodePath("../../Sprite")
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"stomping_hurtable", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_sound", &"killing_sound_succeeded", &"killing_immune", &"ice_sprite", &"ice_fragile"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1028051774]
 sprite_frames = SubResource("SpriteFrames_kg3wr")
 animation = &"pitch"
 autoplay = "default"
 
-[node name="RectDraw" type="Node2D" parent="."]
+[node name="RectDraw" type="Node2D" parent="." unique_id=66809612]
 script = ExtResource("11_wdi2v")
 
-[node name="Animation" type="Timer" parent="."]
+[node name="Animation" type="Timer" parent="." unique_id=1670857935]
 wait_time = 0.5
 autostart = true
 
-[node name="Pitching" type="Timer" parent="."]
+[node name="Pitching" type="Timer" parent="." unique_id=1379572670]
 wait_time = 4.0
 one_shot = true
 
-[node name="VisibleOnScreen2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreen2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1944136905]
 modulate = Color(1, 1, 1, 0.0392157)
 position = Vector2(3.57627e-08, 4.76837e-07)
 scale = Vector2(1.6, 2.4)

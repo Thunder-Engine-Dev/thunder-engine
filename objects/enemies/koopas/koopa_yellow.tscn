@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cit8vdoqn0xoo"]
+[gd_scene format=3 uid="uid://cit8vdoqn0xoo"]
 
 [ext_resource type="PackedScene" uid="uid://b24hnsctae1a0" path="res://engine/objects/enemies/koopas/koopa_red.tscn" id="1_yssub"]
 [ext_resource type="PackedScene" uid="uid://xyhc1e21lihc" path="res://engine/objects/enemies/koopas/koopa_shell_yellow.tscn" id="2_6cgca"]
@@ -11,30 +11,13 @@
 [sub_resource type="Resource" id="Resource_f64nm"]
 script = ExtResource("4_1daw3")
 creation_nodepack = ExtResource("2_6cgca")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 
-[sub_resource type="Resource" id="Resource_gvklt"]
+[sub_resource type="Resource" id="Resource_hj6gp"]
 resource_local_to_scene = true
 script = ExtResource("4_1daw3")
 creation_nodepack = ExtResource("2_mc0ec")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
 "death_speed": Vector2(0, -250)
@@ -58,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wmtgn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -73,27 +56,27 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wutxi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="KoopaYellow" instance=ExtResource("1_yssub")]
+[node name="KoopaYellow" unique_id=1235155466 instance=ExtResource("1_yssub")]
 speed = Vector2(100, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(624006947) index="1" unique_id=107757371]
 stomping_creation = SubResource("Resource_f64nm")
 stomping_scores = 500
-killing_creation = SubResource("Resource_gvklt")
+killing_creation = SubResource("Resource_hj6gp")
 killing_scores = 500
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"killing_scores", &"killing_creation", &"stomping_creation"]
 
-[node name="Turner" parent="." index="2"]
+[node name="Turner" parent="." index="2" unique_id=1183789552]
 script = null
 
-[node name="Sprite" parent="." index="3"]
+[node name="Sprite" parent="." index="3" unique_id=611997468]
 sprite_frames = SubResource("SpriteFrames_eu4gx")
 
-[node name="Dead" parent="Sprite" index="0"]
+[node name="Dead" parent="Sprite" index="0" unique_id=49069282]
 sprite_frames = SubResource("SpriteFrames_k1bej")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://db85vh72kcsmg"]
+[gd_scene format=3 uid="uid://db85vh72kcsmg"]
 
 [ext_resource type="Texture2D" uid="uid://cnvpy7jy5fcf0" path="res://engine/objects/effects/lavafall/lavafall.png" id="1_0b72y"]
 
@@ -75,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4tvh0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 50.0
 }]
@@ -118,94 +118,92 @@ _data = {
 &"new_animation": SubResource("Animation_xnuwt")
 }
 
-[node name="Lavafall" type="Node2D"]
+[node name="Lavafall" type="Node2D" unique_id=1816147122]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="." unique_id=596750107]
 physics_interpolation_mode = 2
 metadata/_edit_lock_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D" unique_id=1214440244]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Node2D" unique_id=1177182535]
 position = Vector2(0, 272)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Node2D" unique_id=52269405]
 position = Vector2(0, 240)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Node2D" unique_id=1540954252]
 position = Vector2(0, 208)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Node2D" unique_id=1597925971]
 position = Vector2(0, 176)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="Node2D" unique_id=279203161]
 position = Vector2(0, 144)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="Node2D" unique_id=82979858]
 position = Vector2(0, 112)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="Node2D" unique_id=335796703]
 position = Vector2(0, 80)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="Node2D" unique_id=1555346712]
 position = Vector2(0, 48)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="Node2D" unique_id=1153946807]
 position = Vector2(0, 16)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D11" type="AnimatedSprite2D" parent="Node2D" unique_id=223455681]
 position = Vector2(0, 304)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="Node2D" unique_id=1775439160]
 position = Vector2(0, 336)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="Node2D" unique_id=1064128638]
 position = Vector2(0, 368)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="Node2D" unique_id=2136748687]
 position = Vector2(0, 400)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="Node2D" unique_id=618162628]
 position = Vector2(0, 432)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="Node2D"]
+[node name="AnimatedSprite2D16" type="AnimatedSprite2D" parent="Node2D" unique_id=1478625966]
 position = Vector2(0, 464)
 sprite_frames = SubResource("SpriteFrames_h3yyw")
 autoplay = "default"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_gxcxq")
-}
-autoplay = "new_animation"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1118732221]
+libraries/ = SubResource("AnimationLibrary_gxcxq")
+autoplay = &"new_animation"

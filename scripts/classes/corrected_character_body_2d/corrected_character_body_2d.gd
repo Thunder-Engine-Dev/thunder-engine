@@ -77,6 +77,13 @@ func horizontal_correction(amount: int) -> void:
 # Tile gap runover
 func vertical_correction(amount: int) -> void:
 	if is_on_floor(): return
+	
+	# 4.5: detailized the condition to prevent the player from being stucked at the corner to avoid potential bugs
+	const TEST_MARGIN := 8.0
+	var n := Vector2.UP.rotated(global_rotation)
+	if is_on_wall() && velocity.normalized().dot(n) < 0.0 && test_move(global_transform, -velocity.project(n) * TEST_MARGIN):
+		return
+	
 	if velocity.y <= 0 or abs(velocity.x) <= 1: return
 	
 	var actual_delta := get_physics_process_delta_time()

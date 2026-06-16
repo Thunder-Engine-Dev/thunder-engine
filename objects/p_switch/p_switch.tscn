@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b61ivtew2u0gb"]
+[gd_scene format=3 uid="uid://b61ivtew2u0gb"]
 
 [ext_resource type="Script" uid="uid://c5nau6q8sdfuy" path="res://engine/objects/p_switch/p_switch.gd" id="1_ko4hk"]
 [ext_resource type="Texture2D" uid="uid://bcn1lxv3vx4rt" path="res://engine/objects/p_switch/texture.png" id="1_u4da8"]
@@ -31,7 +31,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5c86w")
 }],
-"loop": false,
+"loop": 0,
 "name": &"activated",
 "speed": 5.0
 }, {
@@ -42,48 +42,48 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nj3rt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 4.0
 }]
 
-[node name="PSwitch" type="CharacterBody2D"]
+[node name="PSwitch" type="CharacterBody2D" unique_id=836060499]
 collision_layer = 100
 collision_mask = 64
 script = ExtResource("1_ko4hk")
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"gravity_scale"]
 
-[node name="Activator" type="StaticBody2D" parent="."]
+[node name="Activator" type="StaticBody2D" parent="." unique_id=375031804]
 collision_layer = 16
 script = ExtResource("2_4s5dc")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Activator"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Activator" unique_id=853462580]
 visible = false
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_3hn60")
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1923913523]
 visible = false
 position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_abx5o")
 metadata/_edit_lock_ = true
 
-[node name="Collision2" type="CollisionShape2D" parent="."]
+[node name="Collision2" type="CollisionShape2D" parent="." unique_id=1817328817]
 visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_1mer2")
 disabled = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1836038432]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_4ycii")
 autoplay = "default"
 metadata/_edit_lock_ = true
 
-[node name="Duration" type="Timer" parent="."]
+[node name="Duration" type="Timer" parent="." unique_id=1332069101]
 wait_time = 11.5
 one_shot = true
 

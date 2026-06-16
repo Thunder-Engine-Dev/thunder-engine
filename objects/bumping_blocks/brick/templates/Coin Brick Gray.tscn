@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqjnaf8ggec04"]
+[gd_scene format=3 uid="uid://bqjnaf8ggec04"]
 
 [ext_resource type="PackedScene" uid="uid://b6e661f0ry38p" path="res://engine/objects/bumping_blocks/brick/templates/Coin Brick.tscn" id="1_553lj"]
 [ext_resource type="PackedScene" uid="uid://s5m42q4w2hj0" path="res://engine/objects/effects/brick_debris/brick_debris_grey.tscn" id="2_553lj"]
@@ -9,11 +9,11 @@
 atlas = ExtResource("4_k3kp8")
 region = Rect2(0, 0, 32, 32)
 
-[node name="CoinBrick" instance=ExtResource("1_553lj")]
+[node name="CoinBrick" unique_id=1042848803 instance=ExtResource("1_553lj")]
 debris_effect = ExtResource("2_553lj")
 
-[node name="AnimatedSprite2D" parent="Sprites" index="1"]
+[node name="AnimatedSprite2D" parent="Sprites" parent_id_path=PackedInt32Array(71549024) index="1" unique_id=1077893406]
 sprite_frames = ExtResource("2_jh3lq")
 
-[node name="ItemDisplayer" parent="Sprites" index="2"]
+[node name="ItemDisplayer" parent="Sprites" parent_id_path=PackedInt32Array(71549024) index="2" unique_id=387821114]
 texture = SubResource("AtlasTexture_t3wug")

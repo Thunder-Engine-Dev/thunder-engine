@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerSuit" load_steps=12 format=3 uid="uid://ci7784xp0vaiy"]
+[gd_resource type="Resource" script_class="PlayerSuit" format=3 uid="uid://ci7784xp0vaiy"]
 
 [ext_resource type="Script" uid="uid://51f62nkmu0tl" path="res://engine/objects/players/behaviors/player_animation_frog_behavior.gd" id="1_f57v3"]
 [ext_resource type="SpriteFrames" uid="uid://3njuthtkj3yb" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_frog.tres" id="2_f57v3"]
@@ -22,14 +22,6 @@ physics_config = ExtResource("8_f57v3")
 physics_behavior = ExtResource("7_f57v3")
 physics_crouchable = false
 physics_shaper = ExtResource("9_ougxi")
-physics_shaper_crouch = ExtResource("8_e38e4")
 animation_sprites = ExtResource("2_f57v3")
 animation_behavior = ExtResource("1_f57v3")
-animation_underwater_bubble_offset = Vector2(0, -20)
-behavior_crouch_reflect_fireballs = false
-grab_behavior = ExtResource("3_f57v3")
-extra_vars = {}
-sound_hurt = ExtResource("11_tqber")
-sound_death = ExtResource("10_4i3n6")
-sound_pitch = 1.0
 metadata/_custom_type_script = "uid://d3uhri8wh0kgs"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://w4jc7nb1lcsy"]
+[gd_scene format=3 uid="uid://w4jc7nb1lcsy"]
 
 [ext_resource type="SpriteFrames" uid="uid://b1mklmn2aqcx8" path="res://engine/objects/players/prefabs/animations/mario/animation_mario_super.tres" id="1_et5ts"]
 [ext_resource type="Script" uid="uid://dgwvfwp7iymre" path="res://engine/scenes/map/scripts/map_player_view.gd" id="2_2hlka"]
@@ -22,25 +22,25 @@ initial_velocity_max = 150.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_sslyt")
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" unique_id=117489124]
 script = ExtResource("2_2hlka")
 
-[node name="Player" type="AnimatedSprite2D" parent="."]
+[node name="Player" type="AnimatedSprite2D" parent="." unique_id=475913435]
 position = Vector2(0, 8)
 scale = Vector2(0.5, 0.5)
 sprite_frames = ExtResource("1_et5ts")
 animation = &"walk"
 offset = Vector2(0, -32)
 
-[node name="hitbox" type="Area2D" parent="Player"]
+[node name="hitbox" type="Area2D" parent="Player" unique_id=1934030351]
 visible = false
 position = Vector2(0, -16)
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox" unique_id=1882813182]
 shape = SubResource("RectangleShape2D_wmk0a")
 
-[node name="bubbles" type="GPUParticles2D" parent="Player"]
+[node name="bubbles" type="GPUParticles2D" parent="Player" unique_id=1681266291]
 z_index = -1
 position = Vector2(0, -32)
 emitting = false

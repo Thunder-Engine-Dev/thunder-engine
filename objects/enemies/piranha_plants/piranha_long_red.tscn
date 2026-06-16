@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwslkxcjr32h1"]
+[gd_scene format=3 uid="uid://cwslkxcjr32h1"]
 
 [ext_resource type="PackedScene" uid="uid://c5ckuqfrnnltw" path="res://engine/objects/enemies/piranha_plants/piranha_long_green.tscn" id="1_6dncw"]
 [ext_resource type="Texture2D" uid="uid://c3kt61mcfsne6" path="res://engine/objects/enemies/piranha_plants/textures/piranha_red.png" id="2_0ylf4"]
@@ -30,17 +30,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8sldl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
 
-[node name="PiranhaLongRed" instance=ExtResource("1_6dncw")]
+[node name="PiranhaLongRed" unique_id=1695515726 instance=ExtResource("1_6dncw")]
 stay_in_pipe_at_first = true
 range_in_pipe = 32.0
 stay_in_interval = 0.8
 stay_out_interval = 0.3
 stretching_speed = 150.0
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1356633563]
 sprite_frames = SubResource("SpriteFrames_qgjvw")

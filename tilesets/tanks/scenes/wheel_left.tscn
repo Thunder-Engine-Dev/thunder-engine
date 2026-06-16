@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxkqbg3giyxeq"]
+[gd_scene format=3 uid="uid://cxkqbg3giyxeq"]
 
 [ext_resource type="Script" uid="uid://sxuko23f1b0o" path="res://engine/tilesets/tanks/scenes/wheel_stop_on_death.gd" id="1_v26vw"]
 [ext_resource type="Texture2D" uid="uid://445hln8l3x6k" path="res://engine/tilesets/tanks/gfx/wheel_left.png" id="2_v26vw"]
@@ -28,7 +28,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_es1i5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }]
@@ -39,21 +39,21 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2q74"]
 size = Vector2(2, 8)
 
-[node name="WheelLeft" type="StaticBody2D"]
+[node name="WheelLeft" type="StaticBody2D" unique_id=1773997275]
 disable_mode = 1
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("1_v26vw")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1099580946]
 sprite_frames = SubResource("SpriteFrames_1w7bo")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=941508934]
 visible = false
 shape = SubResource("RectangleShape2D_ei7fp")
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=2008013719]
 position = Vector2(-16, 12)
 shape = SubResource("RectangleShape2D_p2q74")
 target_position = Vector2(0, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b8kgbn8f7lvf0"]
+[gd_scene format=3 uid="uid://b8kgbn8f7lvf0"]
 
 [ext_resource type="Script" uid="uid://b5os186kechtf" path="res://engine/objects/items/coin/coin.gd" id="1_exjvk"]
 [ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="1_mcj00"]
@@ -37,7 +37,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d6030")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 15.0
 }]
@@ -55,46 +55,36 @@ func _ready():
 [sub_resource type="Resource" id="Resource_223t5"]
 script = ExtResource("5_mg6wf")
 creation_nodepack = ExtResource("4_8py2g")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
-trans_inheritances = 0
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = SubResource("GDScript_p7plw")
 
-[node name="Coin" type="Area2D" groups=["coin"]]
+[node name="Coin" type="Area2D" unique_id=829951400 groups=["coin"]]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_exjvk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2122456629]
 visible = false
 shape = SubResource("RectangleShape2D_xcllp")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=741934893]
 process_mode = 1
 sprite_frames = SubResource("SpriteFrames_j5osl")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=2005140679]
 self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-20, -20, 40, 40)
 metadata/_edit_lock_ = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1908511733]
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=643976684]
 visible = false
 shape = SubResource("RectangleShape2D_l6em3")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=891160192]
 script = ExtResource("3_o0ga7")
 stomping_enabled = false
 killing_immune = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://hkhy751lpyx5"]
+[gd_scene format=3 uid="uid://hkhy751lpyx5"]
 
 [ext_resource type="Script" uid="uid://bewdn1cfwoqbp" path="res://engine/objects/fluid/swimming/swimming_area.gd" id="1_378qa"]
 [ext_resource type="Material" uid="uid://crtvyydxdkshm" path="res://engine/objects/fluid/textures/water_material.tres" id="2_g1dno"]
@@ -17,14 +17,14 @@ noise = SubResource("FastNoiseLite_6qe0v")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08xmy"]
 size = Vector2(1, 1)
 
-[node name="Water" type="VBoxContainer"]
+[node name="Water" type="VBoxContainer" unique_id=1638783584]
 modulate = Color(1, 1, 1, 0.545098)
 offset_right = 64.0
 offset_bottom = 16.0
 theme_override_constants/separation = 0
 script = ExtResource("10_veqxg")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1340852869]
 z_index = 31
 texture_repeat = 2
 material = ExtResource("2_g1dno")
@@ -33,17 +33,17 @@ size_flags_vertical = 0
 texture = SubResource("NoiseTexture2D_3cbwp")
 stretch_mode = 1
 
-[node name="Area2D" type="Area2D" parent="." groups=["#water"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=289529841 groups=["#water"]]
 visible = false
 z_index = 1
 collision_layer = 128
 collision_mask = 7
 script = ExtResource("1_378qa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1324909603]
 shape = SubResource("RectangleShape2D_08xmy")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1714164599]
 z_index = 31
 layout_mode = 2
 size_flags_vertical = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://btsmfgkalyjsi"]
+[gd_scene format=3 uid="uid://btsmfgkalyjsi"]
 
 [ext_resource type="Script" uid="uid://c08gsw7pt6yrv" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_rhuw5"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_msyao"]
@@ -20,15 +20,8 @@ size = Vector2(30, 30)
 resource_local_to_scene = true
 script = ExtResource("7_lpy2n")
 creation_nodepack = ExtResource("5_dgxdb")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -69,12 +62,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yqpah")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 30.0
 }]
 
-[node name="BuzzleBettleShell" type="CharacterBody2D"]
+[node name="BuzzleBettleShell" type="CharacterBody2D" unique_id=51646883]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -88,24 +81,24 @@ speed = Vector2(350, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"look_at_player", &"sprite", &"slide"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=573716421]
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_dceiv")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=806096724]
 visible = false
 position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_msyao")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=840950363]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_dceiv")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body" groups=["shell"]]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1707585870 groups=["shell"]]
 script = ExtResource("3_8twsx")
 stomping_enabled = false
 stomping_hurtable = false
@@ -130,7 +123,7 @@ killing_sound_succeeded = ExtResource("8_owukt")
 killing_sound_failed = ExtResource("9_ajsvx")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"killing_creation", &"killing_immune"]
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=2116299962]
 visible = false
 shape = SubResource("CircleShape2D_alv11")
 target_position = Vector2(0, 0)
@@ -144,11 +137,11 @@ killing_detection_scale = 4.0
 special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=560746126]
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_j1knp")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1694756605]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0, 2)
 rect = Rect2(-16, -16, 32, 32)
@@ -158,7 +151,7 @@ metadata/_edit_lock_ = true
 [connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="status_swap" binds= [true]]
 [connection signal="killed" from="Attack" to="." method="_on_killing"]

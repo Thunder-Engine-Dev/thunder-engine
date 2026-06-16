@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cbshjgx3hidps"]
+[gd_scene format=3 uid="uid://cbshjgx3hidps"]
 
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_huvds"]
 [ext_resource type="Script" uid="uid://hbtxpsokumsh" path="res://engine/objects/enemies/ptooie/ptooie_stationary.gd" id="1_jknll"]
@@ -14,15 +14,8 @@
 [sub_resource type="Resource" id="Resource_fdbgt"]
 script = ExtResource("4_5do2x")
 creation_nodepack = ExtResource("2_1dbds")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 3
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Head"),
 "death_speed": Vector2(0, -250),
@@ -54,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lduic")
 }],
-"loop": false,
+"loop": 0,
 "name": &"close",
 "speed": 15.0
 }, {
@@ -62,7 +55,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hvro1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }, {
@@ -79,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lduic")
 }],
-"loop": true,
+"loop": 1,
 "name": &"normal",
 "speed": 10.0
 }, {
@@ -90,47 +83,47 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hvro1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"open",
 "speed": 15.0
 }]
 
-[node name="PtooieStationary" type="Node2D"]
+[node name="PtooieStationary" type="Node2D" unique_id=1531823551]
 script = ExtResource("1_jknll")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=171988559]
 collision_layer = 2
 collision_mask = 7
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=282195806]
 script = ExtResource("1_huvds")
 stomping_standard = Vector2(0, 0)
 killing_creation = SubResource("Resource_fdbgt")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("5_3rf25")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=549820402]
 visible = false
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_ubl6y")
 
-[node name="Spikeball" parent="." instance=ExtResource("6_wjge6")]
+[node name="Spikeball" parent="." unique_id=1398643599 instance=ExtResource("6_wjge6")]
 offset = Vector2(0, -80)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1123527735]
 self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-20, -64, 40, 80)
 script = ExtResource("7_2b0iw")
 new_rect = Rect2(-400, -512, 800, 1024)
 
-[node name="Head" type="AnimatedSprite2D" parent="."]
+[node name="Head" type="AnimatedSprite2D" parent="." unique_id=64817041]
 z_index = -2
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_4scb1")
 autoplay = "default"
 metadata/_edit_group_ = true
 
-[node name="Stem" type="Sprite2D" parent="Head"]
+[node name="Stem" type="Sprite2D" parent="Head" unique_id=225717684]
 position = Vector2(0, 24)
 texture = ExtResource("9_nr2v1")
 

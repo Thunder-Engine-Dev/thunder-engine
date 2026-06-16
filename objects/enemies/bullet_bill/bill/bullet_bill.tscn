@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw7f131nc4fhf"]
+[gd_scene format=3 uid="uid://bw7f131nc4fhf"]
 
 [ext_resource type="Script" uid="uid://bqo2maipq81og" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.gd" id="1_rybvi"]
 [ext_resource type="Texture2D" uid="uid://c4ty5fuc65vlg" path="res://engine/objects/enemies/bullet_bill/bill/textures/bullet_bill.png" id="2_2h53c"]
@@ -19,21 +19,13 @@ size = Vector2(28, 20)
 [sub_resource type="Resource" id="Resource_d54bi"]
 script = ExtResource("4_6v8k6")
 creation_nodepack = ExtResource("3_iuxfx")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite")
 }
 custom_script = ExtResource("4_ik838")
 
-[node name="BulletBill" type="CharacterBody2D"]
+[node name="BulletBill" type="CharacterBody2D" unique_id=1514230021]
 script = ExtResource("1_rybvi")
 look_at_player = true
 sprite = NodePath("Sprite")
@@ -41,20 +33,20 @@ speed = Vector2(195, 0)
 collision = false
 metadata/_edit_pinned_properties_ = [&"collision", &"speed"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=588234489]
 visible = false
 shape = SubResource("CircleShape2D_vwemg")
 disabled = true
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=399342097]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=1969885727]
 shape = SubResource("RectangleShape2D_mntb8")
 debug_color = Color(0.905882, 0.431373, 0.0470588, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=603548882]
 script = ExtResource("2_wg1gp")
 stomping_creation = SubResource("Resource_d54bi")
 stomping_scores = 100
@@ -77,10 +69,10 @@ killing_sound_succeeded = ExtResource("6_dxe3u")
 killing_sound_failed = ExtResource("8_fhq1h")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_creation", &"killing_creation", &"killing_scores", &"stomping_scores", &"killing_sound_failed", &"killing_sound_succeeded", &"killing_immune"]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=566248062]
 texture = ExtResource("2_2h53c")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=738151593]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-256, -256, 512, 512)
 

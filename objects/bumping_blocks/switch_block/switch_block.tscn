@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bl6y0yhdvjrab"]
+[gd_scene format=3 uid="uid://bl6y0yhdvjrab"]
 
 [ext_resource type="Script" uid="uid://df1rjsaa4yfdb" path="res://engine/objects/bumping_blocks/switch_block/switch_block.gd" id="1_jveyv"]
 [ext_resource type="Texture2D" uid="uid://1o1fh4ejfw6o" path="res://engine/objects/bumping_blocks/switch_block/textures/Switch.png" id="1_ukd83"]
@@ -28,7 +28,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tow7s")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -36,30 +36,30 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2qqiy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"disabled",
 "speed": 5.0
 }]
 
-[node name="SwitchBlock" type="AnimatableBody2D"]
+[node name="SwitchBlock" type="AnimatableBody2D" unique_id=1851461700]
 disable_mode = 1
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("1_jveyv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=915168780]
 visible = false
 shape = SubResource("RectangleShape2D_imy6f")
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprites" type="Node2D" parent="." unique_id=1730493583]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites" unique_id=2051153876]
 material = SubResource("ShaderMaterial_cjhwg")
 sprite_frames = SubResource("SpriteFrames_vth6b")
 autoplay = "default"
 frame_progress = 0.0291923
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1298068076]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(1.43051e-06, 1.43051e-06)
 scale = Vector2(1.6, 1.6)

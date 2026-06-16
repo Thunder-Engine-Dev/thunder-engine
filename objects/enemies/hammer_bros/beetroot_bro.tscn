@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://df06nfgxm0bjd"]
+[gd_scene format=3 uid="uid://df06nfgxm0bjd"]
 
 [ext_resource type="PackedScene" uid="uid://b1aibpt7836h7" path="res://engine/objects/enemies/hammer_bros/hammer_bro.tscn" id="1_kv3gb"]
 [ext_resource type="PackedScene" uid="uid://bc12btlrtjxyl" path="res://engine/objects/projectiles/beetroot/beetroot.tscn" id="2_yc7oa"]
@@ -12,34 +12,18 @@
 [sub_resource type="Resource" id="Resource_0uga6"]
 script = ExtResource("4_2wgy6")
 creation_nodepack = ExtResource("2_yc7oa")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(100, -250),
 "speed_min": Vector2(100, -250)
 }
 custom_script = ExtResource("3_0uieq")
 
-[sub_resource type="Resource" id="Resource_h7jqn"]
+[sub_resource type="Resource" id="Resource_cb3ea"]
 resource_local_to_scene = true
 script = ExtResource("4_2wgy6")
 creation_nodepack = ExtResource("2_yrrx0")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -72,7 +56,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_auqha")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -83,19 +67,19 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jwd3d")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="BeetrootBro" instance=ExtResource("1_kv3gb")]
+[node name="BeetrootBro" unique_id=1492442544 instance=ExtResource("1_kv3gb")]
 attacking_delay = 0.9
 projectile = SubResource("Resource_0uga6")
 metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]
 
 [node name="EnemyAttacked" parent="Body" index="1"]
-stomping_creation = SubResource("Resource_h7jqn")
-killing_creation = SubResource("Resource_h7jqn")
+stomping_creation = SubResource("Resource_cb3ea")
+killing_creation = SubResource("Resource_cb3ea")
 
 [node name="Sprite" parent="." index="2"]
 sprite_frames = SubResource("SpriteFrames_nnu0i")

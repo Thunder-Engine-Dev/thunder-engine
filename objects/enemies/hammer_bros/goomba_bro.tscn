@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ckks7u5g2r7jo"]
+[gd_scene format=3 uid="uid://ckks7u5g2r7jo"]
 
 [ext_resource type="Script" uid="uid://8x7pkcbnsmca" path="res://engine/objects/enemies/hammer_bros/goomba_bro.gd" id="1_uoodm"]
 [ext_resource type="Resource" uid="uid://cfrf3b68wus5c" path="res://engine/objects/enemies/hammer_bros/textures/goomba_bro_inst.tres" id="2_tlnwd"]
@@ -19,15 +19,8 @@ size = Vector2(28, 40)
 resource_local_to_scene = true
 script = ExtResource("4_v1ict")
 creation_nodepack = ExtResource("6_dhxji")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -56,7 +49,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aj3ee")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -67,7 +60,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3anug")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -89,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t43rb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -97,7 +90,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlnwd"]
 size = Vector2(32, 32)
 
-[node name="GoombaBro" type="CharacterBody2D" groups=["koopa_bro"]]
+[node name="GoombaBro" type="CharacterBody2D" unique_id=504345913 groups=["koopa_bro"]]
 collision_layer = 2
 collision_mask = 32
 script = ExtResource("1_uoodm")
@@ -107,21 +100,21 @@ speed = Vector2(100, 0)
 gravity_scale = 0.2
 metadata/_edit_pinned_properties_ = [&"speed", &"gravity_scale"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1035534951]
 visible = false
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_n0iv4")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=399901050]
 visible = false
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=841278645]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_n0iv4")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=692343606]
 script = ExtResource("5_pirhi")
 stomping_creation = SubResource("Resource_wnhwf")
 stomping_scores = 200
@@ -132,39 +125,39 @@ killing_sound_succeeded = ExtResource("9_j7mxo")
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1169948804]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_xmj7k")
 autoplay = "default"
 
-[node name="SpriteProjectile" type="AnimatedSprite2D" parent="."]
+[node name="SpriteProjectile" type="AnimatedSprite2D" parent="." unique_id=266110601]
 visible = false
 position = Vector2(10, -2)
 sprite_frames = SubResource("SpriteFrames_ntvwa")
 autoplay = "default"
 
-[node name="PosAttack" type="Marker2D" parent="."]
+[node name="PosAttack" type="Marker2D" parent="." unique_id=1068901832]
 visible = false
 position = Vector2(10, -2)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=498406666]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("12_jiv8p")
 metadata/_edit_lock_ = true
 
-[node name="Walk" type="Timer" parent="."]
+[node name="Walk" type="Timer" parent="." unique_id=1946641992]
 one_shot = true
 
-[node name="Attack" type="Timer" parent="."]
+[node name="Attack" type="Timer" parent="." unique_id=2052115795]
 wait_time = 0.06
 autostart = true
 
-[node name="Jump" type="Timer" parent="."]
+[node name="Jump" type="Timer" parent="." unique_id=573177995]
 wait_time = 0.24
 autostart = true
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=2106952346]
 visible = false
 position = Vector2(0, -8)
 enabled = false

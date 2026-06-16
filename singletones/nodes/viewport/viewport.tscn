@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5uo5vjv642ag"]
+[gd_scene format=3 uid="uid://b5uo5vjv642ag"]
 
 [ext_resource type="Shader" uid="uid://bgsmsk3a4qlel" path="res://engine/singletones/nodes/viewport/bilinear_scaling.gdshader" id="1_sowlm"]
 [ext_resource type="Script" uid="uid://cq5ehm8ukqur8" path="res://engine/singletones/nodes/viewport/viewport.gd" id="2_qdvbk"]
@@ -8,7 +8,7 @@
 shader = ExtResource("1_sowlm")
 shader_parameter/enable = true
 
-[node name="ViewportControl" type="Control"]
+[node name="ViewportControl" type="Control" unique_id=208274139]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -18,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_qdvbk")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=21822603]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0, 0, 0, 1)
 
-[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+[node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=1158211800]
 material = SubResource("ShaderMaterial_aijpq")
 layout_mode = 1
 anchors_preset = 15
@@ -37,7 +37,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="ViewportContainer" unique_id=1187227070]
 process_mode = 1
 disable_3d = true
 own_world_3d = true
@@ -48,7 +48,7 @@ physics_object_picking = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1556999408]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,7 +58,7 @@ grow_vertical = 2
 mouse_filter = 2
 ratio = 1.3333
 
-[node name="PlayerSpeed" type="Label" parent="."]
+[node name="PlayerSpeed" type="Label" parent="." unique_id=215454885]
 visible = false
 layout_mode = 1
 anchors_preset = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d3bbjxn7sj0jo"]
+[gd_scene format=3 uid="uid://d3bbjxn7sj0jo"]
 
 [ext_resource type="Script" uid="uid://xjbihtvw87b3" path="res://engine/objects/enemies/boo/boo_circle.gd" id="2_ecyob"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_cv8yb"]
@@ -39,7 +39,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_85gta")
 }],
-"loop": true,
+"loop": 1,
 "name": &"0",
 "speed": 0.0
 }, {
@@ -50,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sxc8n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"1",
 "speed": 6.0
 }, {
@@ -61,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u35xw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"2",
 "speed": 6.0
 }]
@@ -73,15 +73,7 @@ radius = 15.0
 resource_local_to_scene = true
 script = ExtResource("5_aq56d")
 creation_nodepack = ExtResource("3_uvah1")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
@@ -91,41 +83,33 @@ custom_script = ExtResource("4_g6fvm")
 [sub_resource type="Resource" id="Resource_s6bvr"]
 script = ExtResource("5_aq56d")
 creation_nodepack = ExtResource("3_uvah1")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../AnimatedSprite2D"),
 "death_speed": Vector2(0, -250)
 }
 custom_script = ExtResource("4_g6fvm")
 
-[node name="Boo" type="Node2D" groups=["#circle"]]
+[node name="Boo" type="Node2D" unique_id=1652706877 groups=["#circle"]]
 z_index = 5
 script = ExtResource("2_ecyob")
 amplitude = Vector2(150, 150)
 sprite_path = NodePath("AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=97159457]
 material = SubResource("CanvasItemMaterial_cyrfk")
 sprite_frames = SubResource("SpriteFrames_ql3d7")
 animation = &"0"
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=569878997]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=2098778348]
 visible = false
 shape = SubResource("CircleShape2D_leq7m")
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1876398201]
 script = ExtResource("3_cv8yb")
 stomping_standard = Vector2(0, 0)
 stomping_creation = SubResource("Resource_ov2nj")

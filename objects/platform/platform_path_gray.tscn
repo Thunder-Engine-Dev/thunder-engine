@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://byfm436d1p7j8"]
+[gd_scene format=3 uid="uid://byfm436d1p7j8"]
 
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_upfgi"]
 [ext_resource type="Texture2D" uid="uid://nwyeqno7oote" path="res://engine/tilesets/castle/gray_platform_tile.png" id="2_17ukk"]
 
-[node name="PlatformPathGray" instance=ExtResource("1_upfgi")]
+[node name="PlatformPathGray" unique_id=1324334616 instance=ExtResource("1_upfgi")]
 
-[node name="Sprite2D" parent="Block" index="1"]
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="1" unique_id=166578107]
 texture_repeat = 2
 texture = ExtResource("2_17ukk")
 region_enabled = true

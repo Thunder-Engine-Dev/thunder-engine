@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ds028y8syp6dx"]
+[gd_scene format=3 uid="uid://ds028y8syp6dx"]
 
 [ext_resource type="Script" uid="uid://btu34ant7aiwt" path="res://engine/objects/effects/bubble/bubble_bg.gd" id="1_h8w7g"]
 [ext_resource type="Texture2D" uid="uid://16sy2afdkb3l" path="res://engine/objects/effects/bubble/bubble.png" id="2_7gx1h"]
@@ -81,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t2vq4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 24.0
 }, {
@@ -107,21 +107,21 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_78y14")
 }],
-"loop": false,
+"loop": 0,
 "name": &"destroy",
 "speed": 40.0
 }]
 
-[node name="BubbleBG" type="Area2D"]
+[node name="BubbleBG" type="Area2D" unique_id=229451738]
 collision_layer = 0
 collision_mask = 4096
 monitorable = false
 script = ExtResource("1_h8w7g")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1500673569]
 visible = false
 shape = SubResource("CircleShape2D_w42c2")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1562768740]
 sprite_frames = SubResource("SpriteFrames_72xwv")
 autoplay = "default"

@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://byuuhqffg5rnd"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://byuuhqffg5rnd"]
 
 [ext_resource type="Texture2D" uid="uid://gx34tn0trf0w" path="res://engine/objects/effects/coin_effect/texture_blockhit.png" id="1_8ljdk"]
 
@@ -55,7 +55,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4s6m5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 30.0
 }, {
@@ -72,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hcq8g")
 }],
-"loop": false,
+"loop": 0,
 "name": &"explosion",
 "speed": 10.0
 }]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b12148ytuf8yf"]
+[gd_scene format=3 uid="uid://b12148ytuf8yf"]
 
 [ext_resource type="Script" uid="uid://bxbd47d67vhn3" path="res://engine/components/transitions/fade_transition/fade_transition.gd" id="1_oiirv"]
 
@@ -56,7 +56,7 @@ _data = {
 &"to_white": SubResource("Animation_n7fdo")
 }
 
-[node name="FadeTransition" type="Control"]
+[node name="FadeTransition" type="Control" unique_id=1748489768]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oiirv")
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=891683781]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,7 +75,5 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_4gqb7")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1842629753]
+libraries/ = SubResource("AnimationLibrary_4gqb7")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ctpsv143q5pjv"]
+[gd_scene format=3 uid="uid://ctpsv143q5pjv"]
 
 [ext_resource type="Script" uid="uid://c08gsw7pt6yrv" path="res://engine/objects/enemies/koopas/koopa_shell.gd" id="1_4u51b"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_f14e0"]
@@ -19,15 +19,8 @@ size = Vector2(32, 28)
 resource_local_to_scene = true
 script = ExtResource("6_hgfia")
 creation_nodepack = ExtResource("4_v7we4")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -68,12 +61,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6ilor")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 30.0
 }]
 
-[node name="KoopaShellGreen" type="CharacterBody2D"]
+[node name="KoopaShellGreen" type="CharacterBody2D" unique_id=613446606]
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
@@ -88,23 +81,23 @@ speed = Vector2(350, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"gravity_scale", &"speed", &"look_at_player", &"sprite", &"slide"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1121656603]
 visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_dceiv")
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1454290914]
 position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_tulax")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=767452993]
 visible = false
 shape = SubResource("RectangleShape2D_dceiv")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body" groups=["shell"]]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=2105623282 groups=["shell"]]
 script = ExtResource("2_f14e0")
 stomping_enabled = false
 stomping_hurtable = false
@@ -115,7 +108,7 @@ killing_scores = 100
 killing_sound_succeeded = ExtResource("7_uy00l")
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"killing_creation"]
 
-[node name="Attack" type="ShapeCast2D" parent="."]
+[node name="Attack" type="ShapeCast2D" parent="." unique_id=649245899]
 visible = false
 shape = SubResource("CircleShape2D_alv11")
 target_position = Vector2(0, 0)
@@ -129,11 +122,11 @@ killing_detection_scale = 2.0
 special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1580094596]
 position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_2216j")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=494648805]
 self_modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(0, 2)
 rect = Rect2(-16, -16, 32, 32)

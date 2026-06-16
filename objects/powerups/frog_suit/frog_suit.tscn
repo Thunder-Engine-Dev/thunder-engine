@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvyleahhjj28k"]
+[gd_scene format=3 uid="uid://bvyleahhjj28k"]
 
 [ext_resource type="Script" uid="uid://clqmapaayiiyc" path="res://engine/objects/powerups/frog_suit/frog_suit.gd" id="1_rxwev"]
 [ext_resource type="AudioStream" uid="uid://cea8c8rbn2ls0" path="res://engine/objects/powerups/frog_suit/appear.wav" id="2_o1q7c"]
@@ -21,7 +21,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="FrogSuit" type="CharacterBody2D"]
+[node name="FrogSuit" type="CharacterBody2D" unique_id=502538712]
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
@@ -35,41 +35,41 @@ gravity_scale = 0.3
 max_falling_speed = 750.0
 metadata/_edit_pinned_properties_ = [&"to_suit"]
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=813707739]
 visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="." unique_id=1434242711]
 visible = false
 collision_layer = 4
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=856478163]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=2017261143]
 texture = ExtResource("3_rxwev")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=59847540]
 self_modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-32, -32, 64, 64)
 script = ExtResource("4_6ilvh")
 metadata/_edit_lock_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=48410172]
 collision_layer = 0
 collision_mask = 128
 monitorable = false
 
-[node name="Collision" type="CollisionShape2D" parent="Area2D"]
+[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1181753614]
 visible = false
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1265302205]
 blend_mode = 2
 range_layer_min = -100
 texture = SubResource("GradientTexture2D_711s5")

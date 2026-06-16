@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxlk30t7xjimp"]
+[gd_scene format=3 uid="uid://dxlk30t7xjimp"]
 
 [ext_resource type="Script" uid="uid://pallhmdr11jo" path="res://engine/objects/bosses/bowser/bowser_hud.gd" id="1_egrif"]
 [ext_resource type="Texture2D" uid="uid://85psk3wrpgix" path="res://engine/objects/bosses/bowser/hud_texture/bowser_lives.png" id="1_syryh"]
 [ext_resource type="Texture2D" uid="uid://e2a4pqvfjo0f" path="res://engine/objects/bosses/bowser/hud_texture/bowser_life_unit.png" id="2_5srpf"]
 
-[node name="BowserHUD" type="CanvasLayer"]
+[node name="BowserHUD" type="CanvasLayer" unique_id=1140653145]
 script = ExtResource("1_egrif")
 
-[node name="Head" type="TextureRect" parent="."]
+[node name="Head" type="TextureRect" parent="." unique_id=284962149]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -18,7 +18,7 @@ offset_bottom = 106.0
 pivot_offset = Vector2(32, 21)
 texture = ExtResource("1_syryh")
 
-[node name="Life" type="TextureRect" parent="Head"]
+[node name="Life" type="TextureRect" parent="Head" unique_id=1885041374]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

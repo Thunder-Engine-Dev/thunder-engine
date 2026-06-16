@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cxpw0m5lgwly2"]
+[gd_scene format=3 uid="uid://cxpw0m5lgwly2"]
 
 [ext_resource type="PackedScene" uid="uid://cr4ubl3c0rfax" path="res://engine/objects/enemies/hammer_paratros/para_hammer_bros.tscn" id="1_e41j4"]
 [ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="2_q4vp6"]
@@ -16,15 +16,7 @@
 [sub_resource type="Resource" id="Resource_6oa5f"]
 script = ExtResource("4_hqgy1")
 creation_nodepack = ExtResource("2_q4vp6")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 6
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "speed_max": Vector2(387.5, 0),
 "speed_min": Vector2(387.5, 0)
@@ -35,31 +27,14 @@ custom_script = ExtResource("3_4ym0i")
 resource_local_to_scene = true
 script = ExtResource("4_hqgy1")
 creation_nodepack = ExtResource("6_4ym0i")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
-custom_vars = {}
 custom_script = ExtResource("3_htqvh")
 
 [sub_resource type="Resource" id="Resource_errlo"]
 resource_local_to_scene = true
 script = ExtResource("4_hqgy1")
 creation_nodepack = ExtResource("5_ljj2u")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
-visi_z_index = 0
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, 0),
@@ -92,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ym0i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack",
 "speed": 6.0
 }, {
@@ -103,7 +78,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ljj2u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
@@ -120,7 +95,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="ParaFireBros" instance=ExtResource("1_e41j4")]
+[node name="ParaFireBros" unique_id=1496919998 instance=ExtResource("1_e41j4")]
 amplitude = Vector2(50, 0)
 projectile = SubResource("Resource_6oa5f")
 sound = ExtResource("5_4ym0i")
@@ -142,7 +117,7 @@ position = Vector2(14, -4)
 texture = ExtResource("9_hqgy1")
 metadata/_edit_pinned_properties_ = [&"position", &"texture"]
 
-[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0"]
+[node name="PointLight2D" type="PointLight2D" parent="SpriteProjectile" index="0" unique_id=921341718]
 visible = false
 blend_mode = 2
 range_layer_min = -100

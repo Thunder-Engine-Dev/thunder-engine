@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cpme7ixwwuc2p"]
+[gd_scene format=3 uid="uid://cpme7ixwwuc2p"]
 
 [ext_resource type="Texture2D" uid="uid://62vdwemya3gw" path="res://engine/scenes/main_menu/textures/option_bg.png" id="1_8e324"]
 [ext_resource type="Script" uid="uid://dwy0ri4q1seia" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
@@ -107,7 +107,7 @@ region = Rect2(1, 368, 217.245, 26)
 atlas = ExtResource("6_3wm1w")
 region = Rect2(1, 417, 67, 25)
 
-[node name="Controls" type="Control"]
+[node name="Controls" type="Control" unique_id=2081269736]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,7 +121,7 @@ grow_vertical = 2
 script = ExtResource("1_i03yo")
 metadata/_edit_lock_ = true
 
-[node name="Bg" type="TextureRect" parent="."]
+[node name="Bg" type="TextureRect" parent="." unique_id=539342321]
 z_index = -5
 z_as_relative = false
 layout_mode = 1
@@ -134,7 +134,7 @@ texture = ExtResource("1_8e324")
 flip_h = true
 metadata/_edit_lock_ = true
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="TextureRect" parent="." unique_id=266900958]
 layout_mode = 1
 offset_left = 8.0
 offset_top = 21.0
@@ -142,13 +142,13 @@ offset_right = 129.0
 offset_bottom = 142.0
 texture = ExtResource("2_je4c7")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=414168759]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 metadata/_edit_lock_ = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=432135103]
 disable_3d = true
 own_world_3d = true
 transparent_bg = true
@@ -157,7 +157,7 @@ snap_2d_transforms_to_pixel = true
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+[node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=1780989432]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -171,178 +171,178 @@ focused = false
 control_sound = ExtResource("4_t3dkp")
 prev_screen_node_path = NodePath("Back")
 
-[node name="Device" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Device" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1408902531]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("6_eh53w")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device" unique_id=1848127519]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_q5kct")
 stretch_mode = 2
 
-[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device"]
+[node name="Value" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Device" unique_id=1092472426]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_6rvpt")
 stretch_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
+[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/SubViewport/Options" unique_id=1300865728]
 layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
-[node name="MovingUp" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="MovingUp" parent="SubViewportContainer/SubViewport/Options" unique_id=43354416 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_up"
 displayed_texture = SubResource("AtlasTexture_g0sbi")
 
-[node name="MovingDown" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="MovingDown" parent="SubViewportContainer/SubViewport/Options" unique_id=1348048413 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_down"
 displayed_texture = SubResource("AtlasTexture_kgyhc")
 
-[node name="MovingLeft" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="MovingLeft" parent="SubViewportContainer/SubViewport/Options" unique_id=1491632281 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_left"
 displayed_texture = SubResource("AtlasTexture_i6n7w")
 
-[node name="MovingRight" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="MovingRight" parent="SubViewportContainer/SubViewport/Options" unique_id=941973113 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_right"
 displayed_texture = SubResource("AtlasTexture_7oykq")
 
-[node name="Jump" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="Jump" parent="SubViewportContainer/SubViewport/Options" unique_id=2081067880 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_jump"
 displayed_texture = SubResource("AtlasTexture_0fn4x")
 
-[node name="Fire" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="Fire" parent="SubViewportContainer/SubViewport/Options" unique_id=1807337467 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_attack"
 displayed_texture = SubResource("AtlasTexture_ne13l")
 
-[node name="Run" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="Run" parent="SubViewportContainer/SubViewport/Options" unique_id=1186223422 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_run"
 displayed_texture = SubResource("AtlasTexture_bhbv2")
 
-[node name="Extra" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="Extra" parent="SubViewportContainer/SubViewport/Options" unique_id=248018629 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "m_extra"
 displayed_texture = SubResource("AtlasTexture_0g7i5")
 
-[node name="Pause" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="Pause" parent="SubViewportContainer/SubViewport/Options" unique_id=1224159499 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "pause_toggle"
 enable_cancel = false
 displayed_texture = SubResource("AtlasTexture_shng1")
 conflict_list = Array[NodePath]([NodePath("../UiAccept")])
 
-[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/SubViewport/Options" unique_id=749033298]
 layout_mode = 2
 theme_override_constants/separation = 6
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
-[node name="UiUp" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiUp" parent="SubViewportContainer/SubViewport/Options" unique_id=35489904 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_up"
 displayed_texture = SubResource("AtlasTexture_r57ce")
 conflict_list = Array[NodePath]([NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
 
-[node name="UiDown" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiDown" parent="SubViewportContainer/SubViewport/Options" unique_id=1480046007 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_down"
 displayed_texture = SubResource("AtlasTexture_dgl6w")
 conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiLeft"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
 
-[node name="UiLeft" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiLeft" parent="SubViewportContainer/SubViewport/Options" unique_id=1901475858 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_left"
 displayed_texture = SubResource("AtlasTexture_vatc2")
 conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiRight"), NodePath("../UiAccept"), NodePath("../UiSelect")])
 
-[node name="UiRight" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiRight" parent="SubViewportContainer/SubViewport/Options" unique_id=1452525627 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_right"
 displayed_texture = SubResource("AtlasTexture_xqit6")
 conflict_list = Array[NodePath]([NodePath("../UiUp"), NodePath("../UiLeft"), NodePath("../UiDown"), NodePath("../UiAccept"), NodePath("../UiSelect")])
 
-[node name="UiAccept" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiAccept" parent="SubViewportContainer/SubViewport/Options" unique_id=407411749 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_accept"
 displayed_texture = SubResource("AtlasTexture_7xxk6")
 conflict_list = Array[NodePath]([NodePath("../UiCancel"), NodePath("../UiSelect"), NodePath("../Pause"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
 
-[node name="UiCancel" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiCancel" parent="SubViewportContainer/SubViewport/Options" unique_id=1451827664 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_cancel"
 enable_cancel = false
 displayed_texture = SubResource("AtlasTexture_fghq0")
 conflict_list = Array[NodePath]([NodePath("../UiAccept"), NodePath("../UiSelect"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
 
-[node name="UiSelect" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="UiSelect" parent="SubViewportContainer/SubViewport/Options" unique_id=902151013 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "ui_select"
 displayed_texture = SubResource("AtlasTexture_y2yo6")
 conflict_list = Array[NodePath]([NodePath("../UiAccept"), NodePath("../UiCancel"), NodePath("../UiUp"), NodePath("../UiDown"), NodePath("../UiLeft"), NodePath("../UiRight")])
 
-[node name="ATab" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="ATab" parent="SubViewportContainer/SubViewport/Options" unique_id=1484117471 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "a_tab"
 displayed_texture = SubResource("AtlasTexture_8ek72")
 
-[node name="ADelete" parent="SubViewportContainer/SubViewport/Options" instance=ExtResource("8_lqhon")]
+[node name="ADelete" parent="SubViewportContainer/SubViewport/Options" unique_id=755620415 instance=ExtResource("8_lqhon")]
 layout_mode = 2
 action_name = "a_delete"
 displayed_texture = SubResource("AtlasTexture_y8dsj")
 
-[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/SubViewport/Options"]
+[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/SubViewport/Options" unique_id=1623814230]
 layout_mode = 2
 theme_override_constants/separation = 6
 theme_override_styles/separator = SubResource("StyleBoxEmpty_un3r3")
 
-[node name="ResetControls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="ResetControls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=126880737]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("11_atcop")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/ResetControls"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/ResetControls" unique_id=769963951]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_rt438")
 stretch_mode = 2
 
-[node name="Back" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options"]
+[node name="Back" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1822349734]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 6
 script = ExtResource("9_k7p48")
 
-[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Back"]
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Back" unique_id=1676133556]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_p4gfi")
 stretch_mode = 2
 
-[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport"]
+[node name="Selector" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=512348274]
 physics_interpolation_mode = 1
 script = ExtResource("9_vidpf")
 smooth_speed = 0.4
 position_padding = 16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Selector" unique_id=880842311]
 sprite_frames = ExtResource("13_pkdou")
 script = ExtResource("14_sobst")
 
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport"]
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" unique_id=1356909435]
 physics_interpolation_mode = 1
 process_callback = 0
 limit_left = 0
@@ -355,7 +355,7 @@ position_smoothing_speed = 25.0
 editor_draw_screen = false
 script = ExtResource("15_k5vhu")
 
-[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=1019228889]
 script = ExtResource("16_jvgix")
 menu_items_controller_path = NodePath("../Options")
 modulate_division = 4.5

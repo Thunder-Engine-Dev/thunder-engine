@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c58i0gaq0il4o"]
+[gd_scene format=3 uid="uid://c58i0gaq0il4o"]
 
 [ext_resource type="Script" uid="uid://co5dvlw7m0osv" path="res://engine/scripts/nodes/general_movement/general_movement.gd" id="1_vksuw"]
 [ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_8bbjj"]
@@ -21,15 +21,8 @@ size = Vector2(28, 24)
 resource_local_to_scene = true
 script = ExtResource("6_wxq5y")
 creation_nodepack = ExtResource("8_vul36")
-creation_force_sibling = false
-trans_offset = Vector2(0, 0)
 trans_inheritances = 7
-trans_rotation = 0.0
-trans_scale = Vector2(1, 1)
-trans_skew = 0.0
 visi_z_index = 1
-visi_z_as_relative = true
-visi_y_sort_enabled = false
 custom_vars = {
 "death": NodePath("../../Sprite"),
 "death_speed": Vector2(0, -250)
@@ -89,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kvse4")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 50.0
 }, {
@@ -100,12 +93,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3tc6g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 6.0
 }]
 
-[node name="SpinyRed" type="CharacterBody2D"]
+[node name="SpinyRed" type="CharacterBody2D" unique_id=2039153347]
 collision_layer = 2
 collision_mask = 32
 floor_max_angle = 0.837758
@@ -119,24 +112,24 @@ speed = Vector2(50, 0)
 gravity_scale = 0.5
 metadata/_edit_pinned_properties_ = [&"look_at_player", &"speed", &"gravity_scale"]
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=484719425]
 visible = false
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_t445g")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Body" type="Area2D" parent="." groups=["#lava_body"]]
+[node name="Body" type="Area2D" parent="." unique_id=677106046 groups=["#lava_body"]]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_8bbjj")
 
-[node name="Collision" type="CollisionShape2D" parent="Body"]
+[node name="Collision" type="CollisionShape2D" parent="Body" unique_id=1660926039]
 visible = false
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_w2yun")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
-[node name="EnemyAttacked" type="Node" parent="Body"]
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=217506266]
 script = ExtResource("3_ne3q7")
 stomping_standard = Vector2(0, 0)
 killing_creation = SubResource("Resource_ba3fn")
@@ -148,11 +141,11 @@ custom_vars = {
 }
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"stomping_standard"]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1150977877]
 sprite_frames = SubResource("SpriteFrames_gedlg")
 autoplay = "default"
 
-[node name="Vision" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="Vision" type="VisibleOnScreenEnabler2D" parent="." unique_id=1951954231]
 modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -16, 32, 32)
 script = ExtResource("10_bx7fb")

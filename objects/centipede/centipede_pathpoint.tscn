@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpli8hxnleju4"]
+[gd_scene format=3 uid="uid://dpli8hxnleju4"]
 
 [ext_resource type="Script" uid="uid://dx1fq802arklo" path="res://engine/objects/centipede/centipede_pathpoint.gd" id="1_3kbpy"]
 
-[node name="CentipedePathpoint" type="Marker2D"]
+[node name="CentipedePathpoint" type="Marker2D" unique_id=1513383856]
 script = ExtResource("1_3kbpy")
