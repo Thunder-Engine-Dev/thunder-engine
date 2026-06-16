@@ -11,7 +11,16 @@ radius = 12.0
 [node name="Spikeball" type="CharacterBody2D" unique_id=382136910]
 collision_layer = 2
 collision_mask = 0
+platform_on_leave = 2
 script = ExtResource("1_o7ocy")
+remove_offscreen_after_sec_creation = Dictionary[String, float]({
+"enemy": 4.0,
+"player": 2.0
+})
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 4.0,
+"player": 0.0
+})
 sprite = NodePath("Sprite")
 gravity_scale = 0.1
 collision = false
@@ -37,12 +46,11 @@ metadata/_edit_pinned_properties_ = [&"rotation_speed"]
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1512703896]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
-rect = Rect2(-32, -32, 64, 512)
+rect = Rect2(-12, -12, 24, 24)
 
 [node name="Trail" type="Timer" parent="." unique_id=2123768744]
 process_callback = 0
 wait_time = 0.06
 autostart = true
 
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
 [connection signal="timeout" from="Trail" to="." method="_on_trail"]

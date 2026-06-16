@@ -69,6 +69,10 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_vrg5a")
 belongs_to = 1
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 0.0,
+"player": 0.0
+})
 sprite = NodePath("Sprite")
 speed = Vector2(200, 0)
 collision = false
@@ -108,10 +112,9 @@ metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_faile
 sprite_frames = SubResource("SpriteFrames_qfn7i")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1405509159]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1405509159]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(4.76837e-06, 9.53674e-07)
-scale = Vector2(4.8, 3.2)
+rect = Rect2(-32, -16, 64, 32)
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1826133535]
@@ -121,4 +124,3 @@ texture = SubResource("GradientTexture2D_nu7ap")
 script = ExtResource("9_q2etw")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

@@ -84,6 +84,10 @@ func _decelerate(dece: float, delta: float) -> void:
 
 var _consistent_crouch_speed: bool
 
+const STOMP_SUBTICK_SPEED_THRESHOLD := 250.0
+const STOMP_SUBTICK_MAX := 4
+
+
 func _movement_x(delta: float) -> void:
 	# Switch to sliding movement if slided on a slope
 	if player.slided:
@@ -546,6 +550,7 @@ func _body_process() -> void:
 	if !player.body.shape: return
 
 	var player_velocity = player.velocity.normalized()
+	var pending_stomps: Array[Dictionary] = []
 
 	for i in player.body.get_collision_count():
 		var collider: Node2D = player.body.get_collider(i) as Node2D
@@ -554,29 +559,108 @@ func _body_process() -> void:
 		if !collider.has_node("EnemyAttacked"): continue
 
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
-		var result: Dictionary = enemy_attacked.got_stomped(player, player_velocity)
-		if result.is_empty(): return
-		if result.result == true:
-			var _final_speed_y: float
-			if player.jumping > 0:
-				_final_speed_y = -result.jumping_max * config.jump_stomp_multiplicator
-			else:
-				_final_speed_y = -result.jumping_min * config.jump_stomp_multiplicator
-			
-			player.stomp_bounced.emit(_final_speed_y)
-			if player._super_jump_tweak && player.is_on_floor():
-				if player.ghost_speed_y < 0.0:
-					return
-				player.ghost_speed_y = _final_speed_y
-			else:
-				player.coyote_time = 0.0
-				player.speed.y = _final_speed_y
+		var result: Dictionary = _try_stomp_on_enemy(enemy_attacked, player_velocity)
+		if result.is_empty():
+			continue
+		
+		pending_stomps.append({"enemy_attacked": enemy_attacked, "result": result})
 
+	for entry in pending_stomps:
+		if entry.result.result == true:
+			_apply_stomp_result(entry.enemy_attacked, entry.result)
+			return
+
+	for entry in pending_stomps:
+		_apply_stomp_result(entry.enemy_attacked, entry.result)
+
+
+func _try_stomp_on_enemy(enemy_attacked: Node, player_velocity: Vector2) -> Dictionary:
+	if !enemy_attacked.stomping_enabled || enemy_attacked._stomping_delayer:
+		return {}
+	
+	var stomp_offset := Vector2(0, -16)
+	var actual_delta := player.get_physics_process_delta_time()
+	var enemy_velocity := _get_enemy_stomp_velocity(enemy_attacked)
+	var loop_amount := _stomp_subtick_check_loop_amount(player.velocity, enemy_velocity)
+	
+	var success_player_pos := Vector2.INF
+	var success_enemy_origin := Vector2.INF
+	
+	for subtick in loop_amount:
+		var subtick_delta := (actual_delta / float(loop_amount)) * float(subtick)
+		var player_pos := player.global_position + player.velocity * subtick_delta
+		var enemy_origin := Vector2.INF
+		
+		if enemy_attacked._center:
+			var enemy_origin_now = enemy_attacked._center.global_transform.translated(
+				enemy_attacked.stomping_offset + stomp_offset
+			).get_origin()
+			enemy_origin = enemy_origin_now + enemy_velocity * (subtick_delta - actual_delta)
+		
+		if !enemy_attacked.can_stomp_succeed(player_pos, player_velocity, stomp_offset, enemy_origin):
+			continue
+		
+		success_player_pos = player_pos
+		success_enemy_origin = enemy_origin
+		break
+	
+	if success_player_pos != Vector2.INF:
+		return enemy_attacked.got_stomped(
+			player,
+			player_velocity,
+			stomp_offset,
+			success_player_pos,
+			success_enemy_origin,
+		)
+	
+	return enemy_attacked.got_stomped(player, player_velocity, stomp_offset)
+
+
+func _get_enemy_stomp_velocity(enemy_attacked: Node) -> Vector2:
+	var center: Node2D = enemy_attacked._center as Node2D
+	if !center:
+		return Vector2.ZERO
+	if center is CharacterBody2D:
+		return (center as CharacterBody2D).velocity
+	if center is AnimatableBody2D:
+		return (center as AnimatableBody2D).velocity
+	if center is RigidBody2D:
+		return (center as RigidBody2D).linear_velocity
+	return Vector2.ZERO
+
+
+func _stomp_subtick_check_loop_amount(player_velocity: Vector2, enemy_velocity: Vector2) -> int:
+	var relative_y_speed: float = abs(player_velocity.y) + abs(enemy_velocity.y)
+	if relative_y_speed < STOMP_SUBTICK_SPEED_THRESHOLD:
+		return 1
+	return 1 + mini(
+		floori(relative_y_speed / STOMP_SUBTICK_SPEED_THRESHOLD) - 1,
+		STOMP_SUBTICK_MAX - 1
+	)
+
+
+func _apply_stomp_result(enemy_attacked: Node, result: Dictionary) -> void:
+	if result.result == true:
+		var _final_speed_y: float
+		if player.jumping > 0:
+			_final_speed_y = -result.jumping_max * config.jump_stomp_multiplicator
 		else:
-			if result.get("instakill", false):
-				player.die(enemy_attacked.get_meta(&"stomp_tags", {}))
-			else:
-				player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
+			_final_speed_y = -result.jumping_min * config.jump_stomp_multiplicator
+		
+		player.stomp_bounced.emit(_final_speed_y)
+		if player._super_jump_tweak && player.is_on_floor():
+			if player.ghost_speed_y < 0.0:
+				return
+			player.ghost_speed_y = _final_speed_y
+		else:
+			player.coyote_time = 0.0
+			player.speed.y = _final_speed_y
+
+	else:
+		if result.get("instakill", false):
+			player.die(enemy_attacked.get_meta(&"stomp_tags", {}))
+		else:
+			player.hurt(enemy_attacked.get_meta(&"stomp_tags", {}))
 
 #= Floor
 func _floor_process() -> void:

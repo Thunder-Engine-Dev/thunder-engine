@@ -24,6 +24,7 @@ metadata/_snap_enabled = true
 [node name="Boomerang" type="CharacterBody2D" unique_id=1587070699]
 collision_layer = 0
 collision_mask = 0
+platform_on_leave = 2
 script = ExtResource("1_biice")
 turn_sprite = false
 sprite = NodePath("Sprite")

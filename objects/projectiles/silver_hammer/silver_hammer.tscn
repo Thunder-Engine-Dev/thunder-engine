@@ -12,6 +12,7 @@ radius = 8.0
 [node name="SilverHammer" type="CharacterBody2D" unique_id=2059325332]
 collision_layer = 4
 collision_mask = 64
+platform_on_leave = 2
 script = ExtResource("1_kg4ub")
 sprite = NodePath("Texture")
 speed = Vector2(120, -300)
@@ -37,11 +38,10 @@ metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1825048107]
 modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-64, -16, 128, 96)
+rect = Rect2(-12, -12, 24, 24)
 metadata/_edit_lock_ = true
 
 [connection signal="collided_ceiling" from="." to="." method="bounce" binds= [true, true]]
 [connection signal="collided_floor" from="." to="." method="bounce"]
 [connection signal="collided_wall" from="." to="." method="bounce"]
 [connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

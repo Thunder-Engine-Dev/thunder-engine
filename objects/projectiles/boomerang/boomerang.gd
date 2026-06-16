@@ -7,7 +7,6 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 
 var flag: bool = false
 
-@onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var area_2d: Area2D = $Area2D
 @onready var sound_flying: AudioStreamPlayer2D = $SoundFlying
 @onready var sound_interval: Timer = $SoundInterval
@@ -21,15 +20,10 @@ func _ready() -> void:
 		sound_interval.start(spin_delay)
 	await get_tree().physics_frame
 	dir = sign(speed.x)
-	
-	if belongs_to == Data.PROJECTILE_BELONGS.ENEMY:
-		if !vision.is_on_screen():
-			queue_free()
-			return
-		vision.screen_exited.connect(queue_free)
 		
 	if sprite_node is Sprite2D:
 		sprite_node.texture = sprite_node.texture if belongs_to == Data.PROJECTILE_BELONGS.PLAYER else enemy_mode_texture
+
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -40,12 +34,10 @@ func _physics_process(delta: float) -> void:
 	if !flag:
 		if speed.y < 200:
 			speed.y += 15 * delta
+			remove_offscreen_tracking_enabled = false
 		else:
 			flag = true
-			if !vision.is_on_screen():
-				queue_free()
-				return
-			vision.screen_exited.connect(queue_free)
+			remove_offscreen_tracking_enabled = true
 	else:
 		if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
 			for i in area_2d.get_overlapping_bodies():
@@ -62,10 +54,6 @@ func _physics_process(delta: float) -> void:
 func explode():
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 
-func expand_vision(_scale: Vector2) -> void:
-	await ready
-	if vision: vision.scale = _scale
-
 
 func _on_trail() -> void:
 	if !sprite_node:
@@ -75,6 +63,7 @@ func _on_trail() -> void:
 	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h)
 	trail.rotation = sprite_node.rotation
 	Thunder.reorder_on_top_of(trail, self)
+
 
 func _on_level_end() -> void:
 	if !Thunder.view.is_getting_closer(self, 96):

@@ -3,17 +3,6 @@ extends Projectile
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
 @export var jumping_speed: float = -250.0
-@export var remove_offscreen_after: float = 3.0
-@export var remove_top_offscreen: bool = false
-
-
-func _ready() -> void:
-	if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
-		remove_offscreen_after = 2.0
-	if !remove_top_offscreen:
-		vision_node.rect.size.y = 512
-	offscreen_handler(remove_offscreen_after)
-	super()
 
 
 func _physics_process(delta: float) -> void:
@@ -32,11 +21,6 @@ func jump(jspeed:float = jumping_speed) -> void:
 func explode():
 	NodeCreator.prepare_2d(explosion_effect, self).create_2d().bind_global_transform()
 	queue_free()
-
-
-func expand_vision(_scale: Vector2) -> void:
-	await ready
-	if vision_node: vision_node.scale = _scale
 
 
 func _on_level_end() -> void:

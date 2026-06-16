@@ -22,7 +22,16 @@ metadata/_snap_enabled = true
 [node name="VolcanoBall" type="CharacterBody2D" unique_id=962468971]
 collision_layer = 2
 collision_mask = 0
+platform_on_leave = 2
 script = ExtResource("1_ao45s")
+remove_offscreen_after_sec_creation = Dictionary[String, float]({
+"enemy": 4.0,
+"player": 2.0
+})
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 4.0,
+"player": 0.0
+})
 sprite = NodePath("Sprite")
 gravity_scale = 0.2
 collision = false
@@ -49,7 +58,7 @@ metadata/_edit_pinned_properties_ = [&"rotation_speed"]
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=293323231]
 modulate = Color(1, 1, 1, 0.0196078)
 position = Vector2(-5.72205e-06, -5.72205e-06)
-rect = Rect2(-32, -32, 64, 2048)
+rect = Rect2(-12, -12, 24, 24)
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=262478891]
 color = Color(1, 0.644167, 0.39, 1)
