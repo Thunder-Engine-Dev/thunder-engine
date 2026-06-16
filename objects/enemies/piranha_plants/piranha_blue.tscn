@@ -38,7 +38,7 @@ animations = [{
 [node name="PiranhaBlue" unique_id=977086491 instance=ExtResource("1_vwvis")]
 range_in_pipe = 0.0
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1175440472) index="1" unique_id=995913721]
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -51,5 +51,5 @@ killing_immune = {
 "starman": false
 }
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1626429171]
 sprite_frames = SubResource("SpriteFrames_kgok8")

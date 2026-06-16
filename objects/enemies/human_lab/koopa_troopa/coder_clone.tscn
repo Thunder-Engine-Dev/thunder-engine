@@ -180,28 +180,28 @@ animations = [{
 
 [node name="CoderClone" unique_id=1251967220 instance=ExtResource("1_cayg7")]
 
-[node name="Collision" parent="." index="0"]
+[node name="Collision" parent="." index="0" unique_id=2094193784]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xa3qa")
 
-[node name="Collision" parent="Body" index="0"]
+[node name="Collision" parent="Body" parent_id_path=PackedInt32Array(624006947) index="0" unique_id=1954738934]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_xa3qa")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(624006947) index="1" unique_id=107757371]
 stomping_creation = SubResource("Resource_6rql1")
 stomping_sound = ExtResource("4_t72s8")
 killing_creation = SubResource("Resource_jyirc")
 killing_sound_succeeded = ExtResource("4_t72s8")
 sound_ignore_pitch_modification = true
 
-[node name="Node" type="Node2D" parent="Body" index="2" unique_id=1480840543]
+[node name="Node" type="Node2D" parent="Body" parent_id_path=PackedInt32Array(624006947) index="2" unique_id=1480840543]
 script = ExtResource("7_0gc58")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=611997468]
 sprite_frames = SubResource("SpriteFrames_gtw8g")
 
-[node name="Dead" parent="Sprite" index="0"]
+[node name="Dead" parent="Sprite" index="0" unique_id=49069282]
 sprite_frames = SubResource("SpriteFrames_d2buv")
 script = ExtResource("10_typ8o")
 

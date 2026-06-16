@@ -77,20 +77,20 @@ attacking_delay = 0.9
 projectile = SubResource("Resource_0uga6")
 metadata/_edit_pinned_properties_ = [&"projectile", &"attacking_delay"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(177313346) index="1" unique_id=1833375533]
 stomping_creation = SubResource("Resource_cb3ea")
 killing_creation = SubResource("Resource_cb3ea")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1016435817]
 sprite_frames = SubResource("SpriteFrames_nnu0i")
 animation = &"attack"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="SpriteProjectile" parent="." index="3"]
+[node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
 position = Vector2(9, -5)
 texture = ExtResource("6_w2hoc")
 metadata/_edit_pinned_properties_ = [&"texture", &"position"]
 
-[node name="PosAttack" parent="." index="4"]
+[node name="PosAttack" parent="." index="4" unique_id=233206360]
 position = Vector2(9, -5)
 metadata/_edit_pinned_properties_ = [&"position"]

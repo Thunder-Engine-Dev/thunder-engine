@@ -92,16 +92,16 @@ sound = ExtResource("5_0h1a3")
 sprite_projectile_animation_transform = Array[Transform2D]([Transform2D(1, 0, 0, 1, 0, 0), Transform2D(0, 1, 1, 0, -30, 4)])
 metadata/_edit_pinned_properties_ = [&"projectile", &"sound", &"sprite_projectile_animation_transform"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(177313346) index="1" unique_id=1833375533]
 stomping_creation = SubResource("Resource_m1cnm")
 killing_creation = SubResource("Resource_m1cnm")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1016435817]
 sprite_frames = SubResource("SpriteFrames_sth2a")
 animation = &"attack"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="SpriteProjectile" parent="." index="3"]
+[node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
 position = Vector2(14, -4)
 texture = ExtResource("9_7dooi")
 metadata/_edit_pinned_properties_ = [&"texture"]
@@ -112,6 +112,6 @@ range_layer_min = -100
 texture = SubResource("GradientTexture2D_nrsay")
 script = ExtResource("10_m1cnm")
 
-[node name="PosAttack" parent="." index="4"]
+[node name="PosAttack" parent="." index="4" unique_id=233206360]
 position = Vector2(14, -4)
 metadata/_edit_pinned_properties_ = [&"position"]

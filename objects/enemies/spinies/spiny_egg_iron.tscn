@@ -42,10 +42,10 @@ animations = [{
 [node name="SpinyIronEgg" unique_id=97775858 instance=ExtResource("1_27dq1")]
 spiny_creation = SubResource("Resource_fa5h4")
 
-[node name="Collision" parent="." index="0"]
+[node name="Collision" parent="." index="0" unique_id=1322165410]
 shape = SubResource("CircleShape2D_q4sn2")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(23298221) index="1" unique_id=757096047]
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -62,10 +62,10 @@ killing_immune = {
 killing_creation = SubResource("Resource_tpacl")
 killing_sound_failed = ExtResource("6_80ejn")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1527756843]
 sprite_frames = SubResource("SpriteFrames_ru4ok")
 
-[node name="Killed" parent="Sprite" index="0"]
+[node name="Killed" parent="Sprite" index="0" unique_id=1920509977]
 texture = ExtResource("7_3aaug")
 region_enabled = true
 region_rect = Rect2(0, 33, 31, 31)

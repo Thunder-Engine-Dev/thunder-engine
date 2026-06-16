@@ -38,9 +38,9 @@ animations = [{
 
 [node name="JawsHeadClone" unique_id=338891655 instance=ExtResource("1_aumlb")]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1817882490) index="1" unique_id=1400885768]
 killing_sound_succeeded = ExtResource("3_pbree")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1634074432]
 sprite_frames = SubResource("SpriteFrames_1t8pg")

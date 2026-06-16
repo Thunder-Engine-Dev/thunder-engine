@@ -58,9 +58,9 @@ animations = [{
 speed = Vector2(350, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1454290914) index="1" unique_id=2105623282]
 killing_creation = SubResource("Resource_gd6kj")
 
-[node name="Sprite" parent="." index="3"]
+[node name="Sprite" parent="." index="3" unique_id=1580094596]
 sprite_frames = SubResource("SpriteFrames_03bk1")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

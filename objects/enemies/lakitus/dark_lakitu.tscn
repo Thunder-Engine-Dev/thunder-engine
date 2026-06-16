@@ -319,6 +319,6 @@ animations = [{
 [node name="DarkLakitu" unique_id=680462776 instance=ExtResource("1_ga040")]
 pitched = SubResource("Resource_tnyc6")
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="1" unique_id=1028051774]
 sprite_frames = SubResource("SpriteFrames_86656")
 animation = &"default"

@@ -190,20 +190,20 @@ animations = [{
 
 [node name="CloneSpiny" unique_id=1183033703 instance=ExtResource("1_xs17w")]
 
-[node name="Collision" parent="." index="0"]
+[node name="Collision" parent="." index="0" unique_id=484719425]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_d26ok")
 
-[node name="Collision" parent="Body" index="0"]
+[node name="Collision" parent="Body" parent_id_path=PackedInt32Array(677106046) index="0" unique_id=1660926039]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_d26ok")
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(677106046) index="1" unique_id=217506266]
 killing_creation = SubResource("Resource_xsn81")
 killing_sound_succeeded = ExtResource("5_12kt0")
 sound_ignore_pitch_modification = true
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1150977877]
 sprite_frames = SubResource("SpriteFrames_kdbtc")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="0" unique_id=374105197]
@@ -218,5 +218,5 @@ walk_offset = Vector2(-1, 0)
 visible = false
 texture = ExtResource("11_y61eb")
 
-[node name="Vision" parent="." index="3"]
+[node name="Vision" parent="." index="3" unique_id=1951954231]
 rect = Rect2(-24, -24, 48, 48)

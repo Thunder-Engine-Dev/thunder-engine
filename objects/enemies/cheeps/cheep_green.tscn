@@ -45,10 +45,10 @@ animations = [{
 speed = Vector2(100, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1945428) index="1" unique_id=1316147869]
 stomping_creation = SubResource("Resource_7u5ke")
 killing_creation = SubResource("Resource_7u5ke")
 
-[node name="Sprite" parent="." index="4"]
+[node name="Sprite" parent="." index="4" unique_id=1602335937]
 sprite_frames = SubResource("SpriteFrames_uqvfw")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

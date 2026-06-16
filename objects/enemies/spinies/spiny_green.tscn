@@ -93,7 +93,7 @@ animations = [{
 speed = Vector2(75, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(677106046) index="1" unique_id=217506266]
 killing_creation = SubResource("Resource_betql")
 
 [node name="Turner" type="RayCast2D" parent="." index="2" unique_id=63895209]
@@ -105,6 +105,6 @@ hit_from_inside = true
 script = ExtResource("8_jbq50")
 metadata/_edit_lock_ = true
 
-[node name="Sprite" parent="." index="3"]
+[node name="Sprite" parent="." index="3" unique_id=1150977877]
 sprite_frames = SubResource("SpriteFrames_4nea6")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

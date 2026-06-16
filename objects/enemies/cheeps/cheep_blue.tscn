@@ -57,7 +57,7 @@ animations = [{
 type = 1
 metadata/_edit_pinned_properties_ = [&"type"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1945428) index="1" unique_id=1316147869]
 stomping_creation = SubResource("Resource_7wrk1")
 stomping_scores = 100
 killing_immune = {
@@ -76,6 +76,6 @@ killing_scores = 100
 killing_sound_failed = ExtResource("5_hbob0")
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_scores", &"stomping_scores"]
 
-[node name="Sprite" parent="." index="4"]
+[node name="Sprite" parent="." index="4" unique_id=1602335937]
 sprite_frames = SubResource("SpriteFrames_3hs2g")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

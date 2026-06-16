@@ -66,15 +66,15 @@ position = Vector2(0, -1)
 speed = Vector2(50, 0)
 metadata/_edit_pinned_properties_ = [&"speed"]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(624006947) index="1" unique_id=107757371]
 stomping_creation = SubResource("Resource_u1k6s")
 killing_creation = SubResource("Resource_4mjor")
 metadata/_edit_pinned_properties_ = [&"stomping_creation"]
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=611997468]
 sprite_frames = SubResource("SpriteFrames_mgnl0")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
-[node name="Dead" parent="Sprite" index="0"]
+[node name="Dead" parent="Sprite" index="0" unique_id=49069282]
 sprite_frames = SubResource("SpriteFrames_5g8be")
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]

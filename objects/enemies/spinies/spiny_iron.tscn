@@ -91,7 +91,7 @@ animations = [{
 
 [node name="SpinyIron" unique_id=1611579278 instance=ExtResource("1_b77y2")]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(677106046) index="1" unique_id=217506266]
 killing_immune = {
 "beetroot": true,
 "boomerang": false,
@@ -108,8 +108,8 @@ killing_creation = SubResource("Resource_df5fm")
 killing_sound_failed = ExtResource("5_jqwbq")
 metadata/_edit_pinned_properties_ = [&"killing_immune"]
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1150977877]
 sprite_frames = SubResource("SpriteFrames_l71n6")
 
-[node name="Vision" parent="." index="3"]
+[node name="Vision" parent="." index="3" unique_id=1951954231]
 position = Vector2(1.43051e-06, 1.43051e-06)

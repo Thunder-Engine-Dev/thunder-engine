@@ -4,23 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://b8kgbn8f7lvf0" path="res://engine/objects/items/coin/coin.tscn" id="2_3b0s0"]
 [ext_resource type="Script" uid="uid://chvjy6okoognf" path="res://engine/objects/powerups/instance_powerup.gd" id="3_15lhs"]
 [ext_resource type="SpriteFrames" uid="uid://rk3g48ajkgtk" path="res://engine/objects/bumping_blocks/question_block/gray_qblock.tres" id="4_2gejl"]
-[ext_resource type="Texture2D" uid="uid://cv4ajosu5y5xl" path="res://engine/objects/items/coin/texture.png" id="4_pca5q"]
 
-[sub_resource type="Resource" id="Resource_j7fex"]
+[sub_resource type="Resource" id="Resource_veqgr"]
 resource_local_to_scene = true
 script = ExtResource("3_15lhs")
 creation_nodepack = ExtResource("2_3b0s0")
 trans_inheritances = 7
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3wug"]
-atlas = ExtResource("4_pca5q")
-region = Rect2(0, 0, 32, 32)
-
 [node name="QuestionBlock" unique_id=1851736272 instance=ExtResource("1_mttnv")]
-result = SubResource("Resource_j7fex")
+result = SubResource("Resource_veqgr")
 
 [node name="AnimatedSprite2D" parent="Sprites" parent_id_path=PackedInt32Array(1632475222) index="1" unique_id=173702970]
 sprite_frames = ExtResource("4_2gejl")
-
-[node name="ItemDisplayer" parent="Sprites" parent_id_path=PackedInt32Array(1632475222) index="2" unique_id=755681795]
-texture = SubResource("AtlasTexture_t3wug")

@@ -55,7 +55,7 @@ animations = [{
 
 [node name="JawsClone" unique_id=1711507359 instance=ExtResource("1_4vc4f")]
 
-[node name="EnemyAttacked" parent="Body" index="1"]
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1175440472) index="1" unique_id=995913721]
 killing_immune = {
 "beetroot": false,
 "boomerang": false,
@@ -77,5 +77,5 @@ visible = false
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_3uap4")
 
-[node name="Sprite" parent="." index="2"]
+[node name="Sprite" parent="." index="2" unique_id=1626429171]
 sprite_frames = SubResource("SpriteFrames_if5di")
