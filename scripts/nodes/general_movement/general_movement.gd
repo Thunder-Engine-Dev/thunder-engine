@@ -32,7 +32,7 @@ func _ready() -> void:
 	floor_max_angle += PI/180
 	
 	if life_time > 0:
-		assert(is_instance_valid(vis_notifier_node), "Visible On Screen Notifier/Enabler node is invalid.")
+		assert(is_instance_valid(vis_enabler_node), "Visible On Screen Notifier/Enabler node is invalid.")
 		print_verbose("[GMBody2D] Life time %s: %s" % [name, str(life_time)])
 		get_tree().create_timer(life_time, false, true, false).timeout.connect(_life_time_ended)
 	
