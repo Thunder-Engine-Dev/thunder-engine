@@ -82,6 +82,15 @@ func get_delta(delta: float) -> float:
 	return _target_speed * delta
 #endregion
 
+var _has_minimized: bool
+var fps_reducer: Callable = func():
+	var mode: Window.Mode = get_tree().root.mode
+	if mode == Window.Mode.MODE_MINIMIZED:
+		Engine.max_fps = 10
+		_has_minimized = true
+	elif _has_minimized:
+		_has_minimized = false
+		Engine.max_fps = ceili(DisplayServer.screen_get_refresh_rate())
 
 func _init() -> void:
 	#var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
@@ -103,6 +112,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	autosplitter = AutoSplitter.new()
+	get_tree().process_frame.connect(fps_reducer)
 	
 	#for i in 3:
 	#	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
