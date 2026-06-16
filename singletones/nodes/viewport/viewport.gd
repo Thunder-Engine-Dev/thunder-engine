@@ -58,10 +58,10 @@ func _update_sound_function() -> void:
 			return (
 				ref.global_position -
 				audio_listener.global_position +
-				Vector2(window_size / 2)
+				Vector2(window_size / 2.0)
 			)
 		return (
 			ref.global_position -
 			Thunder._current_camera.global_position +
-			Vector2(window_size / 2)
+			Vector2(window_size / 2.0)
 		)
