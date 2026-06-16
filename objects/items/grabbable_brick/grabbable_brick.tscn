@@ -76,15 +76,12 @@ debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 [node name="EnemyAttacked" type="Node" parent="Body"]
 script = ExtResource("2_0ai4v")
 stomping_enabled = false
-stomping_hurtable = false
 stomping_standard = Vector2(0, 0)
 killing_immune = {
-"fireball": true,
 "head": false,
-"iceball": true,
 "shell": true,
 "shell_defence": 0,
-"shell_forced": true
+"shell_forced": false
 }
 turn_into_coin_on_level_end = false
 frozen_enabled = false
@@ -126,11 +123,15 @@ one_shot = true
 
 [node name="GrabbableModifier" parent="." instance=ExtResource("6_djh65")]
 grabbing_ungrab_collision_with_player = false
-grabbing_ungrab_throw_power_min = Vector2(300, 0)
+grabbing_ungrab_throw_power_min = Vector2(400, 0)
 
 [connection signal="killed_failed" from="Attack" to="." method="break_object"]
 [connection signal="timeout" from="TimerDestroy" to="." method="_on_timer_destroy_timeout"]
 [connection signal="timeout" from="TimerDestroyFlash" to="." method="_on_timer_destroy_flash_timeout"]
+[connection signal="enemy_grab_initiated" from="GrabbableModifier" to="." method="_on_grab_initiated"]
+[connection signal="enemy_grabbed" from="GrabbableModifier" to="." method="_on_enemy_grabbed"]
+[connection signal="enemy_owner_died" from="GrabbableModifier" to="." method="_on_enemy_owner_died"]
+[connection signal="enemy_ungrabbed" from="GrabbableModifier" to="." method="_on_enemy_ungrabbed"]
 [connection signal="grab_initiated" from="GrabbableModifier" to="." method="_on_grab_initiated"]
 [connection signal="grabbed" from="GrabbableModifier" to="." method="_on_grabbed"]
 [connection signal="ungrabbed" from="GrabbableModifier" to="." method="_on_ungrabbed"]

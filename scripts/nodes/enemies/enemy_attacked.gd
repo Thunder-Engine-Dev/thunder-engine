@@ -24,6 +24,10 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 ## If [code]true[/code], the enemy will hurt player if the player fails
 ## stomping or directly touches it
 @export var stomping_hurtable: bool = true
+## If [code]true[/code], the enemy will instakill player if the player fails
+## stomping or directly touches it. Only effective if [member stomping_hurtable]
+## is [code]true[/code].
+@export var stomping_instakillable: bool = false
 ## The normal that defines the success and failure of player's stomping[br]
 ## For example, if you set this to Vector2(0,-1) and the player stomps onto it, the
 ## player will fail stomping and get hurt[br]
@@ -182,7 +186,13 @@ func _lkfz():
 ## by the player[br]
 ## If [param offset] set, the actual offset will be [member stomping_offset]
 ## + [param offset]
-func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> Dictionary:
+func got_stomped(
+	by: Node2D,
+	vel: Vector2,
+	offset: Vector2 = Vector2(0, -16),
+	from_global_position: Vector2 = Vector2.INF,
+	enemy_global_origin: Vector2 = Vector2.INF,
+) -> Dictionary:
 	var result: Dictionary
 	
 	if !stomping_enabled || _stomping_delayer: return result
@@ -191,13 +201,11 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 		push_error("[No Center Node Error] No _center node set. Please check if you have set the _center node of EnemyAttacked. At " + str(get_path()))
 		return result
 	
-	var dot: float = by.global_position.direction_to(
-		_center.global_transform.translated(stomping_offset + offset).get_origin()
-	).dot(stomping_standard.rotated(_center.global_rotation))
-	var dotdown: float = vel.dot(stomping_standard.rotated(_center.global_rotation))
+	var from_pos: Vector2 = from_global_position if from_global_position != Vector2.INF else by.global_position
+	var stomp_dots: Vector2 = _get_stomp_dots(from_pos, vel, offset, enemy_global_origin)
 	
 	stomped.emit()
-	if dot > 0 && !(stomping_only_from_above && dotdown < 0):
+	if stomp_dots.x > 0 && !(stomping_only_from_above && stomp_dots.y < 0):
 		stomping_delay()
 		stomped_succeeded.emit()
 		if stomping_scores > 0:
@@ -230,11 +238,44 @@ func got_stomped(by: Node2D, vel: Vector2, offset: Vector2 = Vector2(0, -2)) -> 
 			jumping_max = stomping_player_jumping_max
 		}
 	elif stomping_hurtable:
-		if by is Player && by.is_invincible(): return result
+		if by is Player:
+			if by.is_invincible() && !stomping_instakillable: return result
 		stomped_failed.emit()
 		result = {result = false}
+		if stomping_instakillable:
+			result.instakill = true
 	
 	return result
+
+
+func can_stomp_succeed(
+	from_global_position: Vector2,
+	vel: Vector2,
+	offset: Vector2 = Vector2(0, -16),
+	enemy_global_origin: Vector2 = Vector2.INF,
+) -> bool:
+	if !stomping_enabled || _stomping_delayer || !_center:
+		return false
+	
+	var stomp_dots: Vector2 = _get_stomp_dots(from_global_position, vel, offset, enemy_global_origin)
+	return stomp_dots.x > 0 && !(stomping_only_from_above && stomp_dots.y < 0)
+
+
+func _get_stomp_dots(
+	from_global_position: Vector2,
+	vel: Vector2,
+	offset: Vector2,
+	enemy_global_origin: Vector2,
+) -> Vector2:
+	var origin: Vector2 = (
+		enemy_global_origin if enemy_global_origin != Vector2.INF else
+		_center.global_transform.translated(stomping_offset + offset).get_origin()
+	)
+	var standard: Vector2 = stomping_standard.rotated(_center.global_rotation)
+	return Vector2(
+		from_global_position.direction_to(origin).dot(standard),
+		vel.dot(standard)
+	)
 
 
 ## Makes the enemy killed by a certain attacker[br]

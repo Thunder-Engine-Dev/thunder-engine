@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk5eg5ovkdm4x"
-path="res://.godot/imported/physics_tps.png-3a20b03eeea1f0cddfe793062ef623c6.ctex"
+uid="uid://cfuvrxvwyq7ri"
+path="res://.godot/imported/thwomp_chilly_3-.png-c0d01bc19c30540f0452f6ea2adb8208.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/scenes/main_menu/textures/physics_tps.png"
-dest_files=["res://.godot/imported/physics_tps.png-3a20b03eeea1f0cddfe793062ef623c6.ctex"]
+source_file="res://engine/objects/enemies/thwomp/textures/thwomp_chilly_3-.png"
+dest_files=["res://.godot/imported/thwomp_chilly_3-.png-c0d01bc19c30540f0452f6ea2adb8208.ctex"]
 
 [params]
 

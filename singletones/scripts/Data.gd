@@ -25,7 +25,7 @@ enum PLAYER_POWER {
 	FULL   ## e.g. fire Mario
 }
 
-## Defines which type a projectile belongs.[br]
+## Defines which type a projectile belongs to.[br]
 ## Projectiles can be items thrown, or items with damage
 enum PROJECTILE_BELONGS {
 	PLAYER, ## Player thrown and attacks enemies

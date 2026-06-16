@@ -3,12 +3,10 @@ extends Projectile
 const explosion_effect = preload("res://engine/objects/effects/explosion/explosion.tscn")
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-@export var remove_offscreen_after: float = 4.0
 @onready var point_light_2d: PointLight2D = $PointLight2D
 @onready var attack: ShapeCast2D = $Attack
 
 func _ready() -> void:
-	offscreen_handler(remove_offscreen_after)
 	super()
 	if speed.x < 0 && sprite_node:
 		sprite_node.rotation_speed = -sprite_node.rotation_speed

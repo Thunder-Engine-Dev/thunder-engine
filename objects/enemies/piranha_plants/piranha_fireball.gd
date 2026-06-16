@@ -1,15 +1,16 @@
 extends ByNodeScript
 
 # You need these vars in custom_var of piranha:
-#	attack_interval: float,
-#	attack_thrower: InstanceNode2D,
 #	attack_amount: int,
-#	attack_times: int,
+#	attack_interval: float,
 #	attack_sound: AudioStream,
+#	attack_thrower: InstanceNode2D,
+#	attack_times: int,
 #	projectile_collision: bool
+#	projectile_gravity_scale: float
+#	projectile_speed_correction: bool
 #	projectile_speed_min: Vector2
 #	projectile_speed_max: Vector2
-#	projectile_gravity_scale: float
 
 var attacked_times:int
 
@@ -75,12 +76,8 @@ func _shoot() -> void:
 			if !vars.projectile_collision && ball is CollisionObject2D:
 				ball.set_collision_mask_value(7, false)
 			
-			if &"vision" in ball:
-				ball.expand_vision(Vector2(8, 8))
 			if "projectile_offscreen_time" in vars && "remove_offscreen_after" in ball:
-				ball.remove_offscreen_after = vars.projectile_offscreen_time
-			if "projectile_remove_from_top" in vars && "remove_top_offscreen" in ball:
-				ball.remove_top_offscreen = vars.projectile_remove_from_top
+				ball.remove_offscreen_after_sec_tracking["enemy"] = vars.projectile_offscreen_time
 		).create_2d()
 	
 	Audio.play_sound(vars.attack_sound, node, false)

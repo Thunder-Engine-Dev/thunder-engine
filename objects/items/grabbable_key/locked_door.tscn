@@ -18,7 +18,7 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_n1wse")
 
 [node name="Body" type="StaticBody2D" parent="."]
-collision_layer = 48
+collision_layer = 112
 collision_mask = 0
 
 [node name="Keyhole" type="Sprite2D" parent="Body"]

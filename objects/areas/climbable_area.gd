@@ -19,8 +19,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if player && !player.is_holding && (
-		Input.is_action_pressed(player.control.up) ||
-		(Input.is_action_pressed(player.control.down) && !player.is_on_floor())
+		player.up_down < -0.3 ||
+		(player.up_down > 0.3 && !player.is_on_floor())
 	):
 		player.is_climbing = true
 		player._has_jumped = false

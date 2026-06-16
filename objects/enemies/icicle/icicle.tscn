@@ -1,0 +1,142 @@
+[gd_scene load_steps=18 format=3 uid="uid://wqjbkgomnnv0"]
+
+[ext_resource type="Script" uid="uid://diycrep6iadt3" path="res://engine/objects/enemies/icicle/icicle.gd" id="1_cx3ph"]
+[ext_resource type="AudioStream" uid="uid://dsp80syt1bq8m" path="res://engine/objects/enemies/icicle/sounds/icicle.wav" id="2_jkm6i"]
+[ext_resource type="PackedScene" uid="uid://bbmf88bb8sjw" path="res://engine/objects/effects/smoke/smoke.tscn" id="3_iqku8"]
+[ext_resource type="Material" uid="uid://kgww5qkhdrrc" path="res://engine/objects/enemies/icicle/textures/icicle.tres" id="4_so1a0"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_vmncy"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_3mhxw"]
+[ext_resource type="Texture2D" uid="uid://cd0nqnrqegyai" path="res://engine/objects/enemies/icicle/textures/icicle.png" id="5_wgao0"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_d7n7i"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="7_t8ssd"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_3o5cs"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_enrfu"]
+[ext_resource type="Script" uid="uid://c100no83qhov7" path="res://engine/objects/enemies/icicle/icicle_animation.gd" id="12_igigw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3q3cl"]
+size = Vector2(24, 64)
+
+[sub_resource type="Resource" id="Resource_6dehk"]
+script = ExtResource("7_t8ssd")
+creation_nodepack = ExtResource("5_3mhxw")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite2D"),
+"death_speed": Vector2(0, -150)
+}
+custom_script = ExtResource("6_d7n7i")
+
+[sub_resource type="Animation" id="Animation_4hhhs"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7g4j5"]
+resource_name = "swinging"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, -0.174533, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3u2s4"]
+_data = {
+&"RESET": SubResource("Animation_4hhhs"),
+&"swinging": SubResource("Animation_7g4j5")
+}
+
+[node name="Icicle" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_cx3ph")
+trigger_area = Rect2(-64, -32, 128, 480)
+stunning_sound = ExtResource("2_jkm6i")
+explosion_effect = ExtResource("3_iqku8")
+sprite = NodePath("Sprite2D")
+gravity_scale = 0.4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("4_so1a0")
+texture = ExtResource("5_wgao0")
+offset = Vector2(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_3q3cl")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Body"]
+polygon = PackedVector2Array(-15, -32, 0, 32, 15, -32)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("4_vmncy")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": false,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99
+}
+killing_creation = SubResource("Resource_6dehk")
+killing_scores = 200
+killing_sound_succeeded = ExtResource("8_3o5cs")
+killing_sound_failed = ExtResource("9_enrfu")
+metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
+
+[node name="LeftExplosion" type="Marker2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+
+[node name="RightExplosion" type="Marker2D" parent="."]
+visible = false
+position = Vector2(0, 16)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+scale = Vector2(2.4, 3.2)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3u2s4")
+}
+script = ExtResource("12_igigw")
+
+[node name="TimerRand" type="Timer" parent="AnimationPlayer"]
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

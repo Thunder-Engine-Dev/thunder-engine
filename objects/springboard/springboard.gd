@@ -3,6 +3,7 @@ extends GeneralMovementBody2D
 const LENIENCY_AFTER_BOUNCE_SEC: float = 0.14
 
 @export var spring_jump_height: float = 975
+@export var enable_physics: bool = false
 
 @onready var enemy_attacked: Node = $Body/EnemyAttacked
 
@@ -20,6 +21,13 @@ func _ready() -> void:
 	var _custom_sound = CharacterManager.get_sound_replace(enemy_attacked.stomping_sound, enemy_attacked.stomping_sound, "spring_bounce", false)
 	if _custom_sound:
 		enemy_attacked.stomping_sound = _custom_sound
+
+
+func _physics_process(delta: float) -> void:
+	if enable_physics:
+		motion_process(delta, slide)
+	
+	_process_springboard(delta)
 
 
 func trigger(pl = null) -> void:
@@ -48,7 +56,7 @@ func _animation_finished(anim: String) -> void:
 		is_playing_backwards = false
 
 
-func _physics_process(delta: float) -> void:
+func _process_springboard(delta: float) -> void:
 	if leniency_timer:
 		leniency_timer = maxf(leniency_timer - delta, 0.0)
 	if Input.is_action_just_pressed("m_jump"):

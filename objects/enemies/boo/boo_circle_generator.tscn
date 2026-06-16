@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://co17ygs5h5lqf"]
+
+[ext_resource type="PackedScene" uid="uid://cawvmevhto1k3" path="res://engine/objects/enemies/paratroopas/paratroopa_circle_generator.tscn" id="1_m26ef"]
+[ext_resource type="PackedScene" uid="uid://d3bbjxn7sj0jo" path="res://engine/objects/enemies/boo/boo_circle.tscn" id="2_tct6u"]
+
+[node name="BooCircleGenerator" instance=ExtResource("1_m26ef")]
+troopa = ExtResource("2_tct6u")
+amount = 5
+frequency = 0.0

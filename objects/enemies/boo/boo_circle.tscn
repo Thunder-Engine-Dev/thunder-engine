@@ -1,0 +1,147 @@
+[gd_scene load_steps=20 format=3 uid="uid://d3bbjxn7sj0jo"]
+
+[ext_resource type="Script" uid="uid://xjbihtvw87b3" path="res://engine/objects/enemies/boo/boo_circle.gd" id="2_ecyob"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_cv8yb"]
+[ext_resource type="Texture2D" uid="uid://ctfjvvm01kq08" path="res://engine/objects/enemies/boo/textures/boo.png" id="3_l2624"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_uvah1"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_g6fvm"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_aq56d"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="7_eub0o"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_83388"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_4enfy"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cyrfk"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85gta"]
+atlas = ExtResource("3_l2624")
+region = Rect2(31, 0, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n521"]
+atlas = ExtResource("3_l2624")
+region = Rect2(0, 30, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxc8n"]
+atlas = ExtResource("3_l2624")
+region = Rect2(31, 30, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4evob"]
+atlas = ExtResource("3_l2624")
+region = Rect2(0, 60, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u35xw"]
+atlas = ExtResource("3_l2624")
+region = Rect2(31, 60, 31, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ql3d7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85gta")
+}],
+"loop": true,
+"name": &"0",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n521")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxc8n")
+}],
+"loop": true,
+"name": &"1",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4evob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u35xw")
+}],
+"loop": true,
+"name": &"2",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_leq7m"]
+radius = 15.0
+
+[sub_resource type="Resource" id="Resource_ov2nj"]
+resource_local_to_scene = true
+script = ExtResource("5_aq56d")
+creation_nodepack = ExtResource("3_uvah1")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_g6fvm")
+
+[sub_resource type="Resource" id="Resource_s6bvr"]
+script = ExtResource("5_aq56d")
+creation_nodepack = ExtResource("3_uvah1")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../AnimatedSprite2D"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_g6fvm")
+
+[node name="Boo" type="Node2D" groups=["#circle"]]
+z_index = 5
+script = ExtResource("2_ecyob")
+amplitude = Vector2(150, 150)
+sprite_path = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_cyrfk")
+sprite_frames = SubResource("SpriteFrames_ql3d7")
+animation = &"0"
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("CircleShape2D_leq7m")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("3_cv8yb")
+stomping_standard = Vector2(0, 0)
+stomping_creation = SubResource("Resource_ov2nj")
+stomping_scores = 100
+stomping_sound = ExtResource("7_eub0o")
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_s6bvr")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("8_83388")
+killing_sound_failed = ExtResource("9_4enfy")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

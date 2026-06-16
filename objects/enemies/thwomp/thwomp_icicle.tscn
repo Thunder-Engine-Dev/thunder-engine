@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://bep7acx32gamy"]
+
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_ev4s0"]
+[ext_resource type="Script" uid="uid://do1ibkypgxib7" path="res://engine/objects/enemies/thwomp/scripts/icicle_animation.gd" id="1_hu5vm"]
+[ext_resource type="PackedScene" uid="uid://bbmf88bb8sjw" path="res://engine/objects/effects/smoke/smoke.tscn" id="2_ai73p"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="2_i7y2v"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="3_mdyt1"]
+[ext_resource type="Texture2D" uid="uid://cd0nqnrqegyai" path="res://engine/objects/enemies/icicle/textures/icicle.png" id="6_q66sa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_po65i"]
+size = Vector2(24, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erq84"]
+size = Vector2(8, 8)
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_hu5vm")
+explosion_effect = ExtResource("2_ai73p")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("1_ev4s0")
+stomping_enabled = false
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"fireball": true,
+"hammer": true,
+"iceball": true
+}
+killing_scores = 100
+killing_sound_succeeded = ExtResource("2_i7y2v")
+killing_sound_failed = ExtResource("3_mdyt1")
+
+[node name="Collision" type="CollisionPolygon2D" parent="Body"]
+position = Vector2(0, -32)
+scale = Vector2(1, -1)
+polygon = PackedVector2Array(-16, -32, 0, 32, 16, -32)
+
+[node name="Obstacle" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_po65i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_erq84")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(15, 0)
+rotation = 3.14159
+texture = ExtResource("6_q66sa")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 60, 30, 64)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[node name="LeftExplosion" type="Marker2D" parent="."]
+position = Vector2(0, -48)
+
+[node name="RightExplosion" type="Marker2D" parent="."]
+position = Vector2(0, -16)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

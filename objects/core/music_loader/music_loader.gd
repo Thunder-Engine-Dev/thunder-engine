@@ -26,6 +26,8 @@ enum GLOBAL_TYPE {
 @export var can_pause: bool = false
 @export var volume_db: Array[float]
 @export var start_from_sec: Array[float]
+## Module subsong index. Module format only (MPT). Set to -1 for default.
+@export var subsong: Array[int]
 @export_group(&"Custom Script")
 @export var custom_vars: Dictionary
 @export var custom_script: GDScript
@@ -41,6 +43,7 @@ var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_wit
 func _ready() -> void:
 	_init_array(volume_db)
 	_init_array(start_from_sec)
+	_init_array(subsong)
 	
 	(func() -> void:
 		if play_globally && Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
@@ -72,9 +75,10 @@ func _change_music(ind: int, ch_id: int) -> void:
 		music[ind], 
 		ch_id, 
 		{
-			"ignore_pause": !can_pause, 
-			"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
-			"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0
+			&"ignore_pause": !can_pause, 
+			&"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
+			&"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0,
+			&"subsong": subsong[ind] if subsong.size() >= ind else 0,
 		}
 	]
 	if play_immediately:

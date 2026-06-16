@@ -189,15 +189,16 @@ func _smooth_movement(delta: float) -> void:
 				smooth_duration = smooth_turning_length / abs(smooth_speed) + smooth_turning_duration_fixer
 				smooth_step = 1
 		1:
-			var tw:Tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS).set_trans(Tween.TRANS_SINE)
+			var tw: Tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS).set_trans(Tween.TRANS_SINE)
 			tw.tween_property(self, "speed", 0, smooth_duration)
-			tw.tween_property(self, "speed", smooth_speed if smooth_on_continue_point else -smooth_speed, smooth_duration)
-			tw.tween_callback(
-				func() -> void: 
-					if smooth_on_continue_point: smooth_next_points.remove_at(0)
-					else: _sign_up_points()
-					smooth_step = 0
-			)
+			if loop_backwards || smooth_on_continue_point:
+				tw.tween_property(self, "speed", smooth_speed if smooth_on_continue_point else -smooth_speed, smooth_duration)
+				tw.tween_callback(
+					func() -> void: 
+						if smooth_on_continue_point: smooth_next_points.remove_at(0)
+						else: _sign_up_points()
+						smooth_step = 0
+				)
 			smooth_step = 2
 
 

@@ -11,6 +11,9 @@ const P_SWITCH_RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.w
 @export var explosion_effect: PackedScene = preload("res://engine/objects/effects/smoke/smoke.tscn")
 @export var p_switch_music = preload("res://engine/objects/p_switch/p_switch_music.ogg")
 @export var p_switch_activation_sound = preload("res://engine/objects/core/checkpoint/sounds/switch.wav")
+## When enabled, adding [Control] nodes as children will act as a working area for this P-Switch,
+## toggling coins and bricks only in the area covered by [Control] child nodes.
+@export var use_control_children_as_working_area: bool = true
 
 @onready var collision_shape: CollisionShape2D = $Collision
 @onready var collision_shape_stomped: CollisionShape2D = $Collision2
@@ -108,6 +111,9 @@ func _on_duration_timeout() -> void:
 	sprite.play(&"default")
 	_swap_coins_and_bricks.call_deferred()
 	_stop_music()
+	if !duration.is_stopped():
+		duration.stop()
+	
 	var player = Thunder._current_player
 	if !is_instance_valid(player): return
 	if player.completed: return
@@ -130,31 +136,58 @@ func _stop_music() -> void:
 
 
 func _swap_coins_and_bricks() -> void:
+	var rects: Array[Rect2]
+	if use_control_children_as_working_area:
+		for rect in get_children():
+			if rect is Control:
+				rects.append(rect.get_global_rect())
+	
 	# Coins -> bricks
 	var new_bricks: Array[Node2D] = []
 	for i in get_tree().get_nodes_in_group(&"coin"):
 		if !i is Node2D:
 			continue
+		
+		if use_control_children_as_working_area && (rects && !rects.any(
+			func(rect):
+				return rect.has_point(i.global_position)
+		)):
+			continue
+		
 		var brick: PackedScene = null
 		for j in source_coins:
 			if i.scene_file_path == j.resource_path:
 				brick = source_bricks[source_coins.find(j)]
 				break
-		var new_brick: = NodeCreator.prepare_2d(brick, i).bind_global_transform().create_2d().get_node()
+		
+		var new_brick = brick.instantiate()
+		new_brick.global_transform = i.global_transform
+		Scenes.current_scene.add_child(new_brick)
 		# Prevents newly created brick from turning into a coin
 		new_brick.remove_from_group(&"brick")
 		new_brick.add_to_group.call_deferred(&"brick")
 		new_bricks.append(new_brick)
 		i.queue_free()
+	
 	# Bricks -> coins
 	for k in get_tree().get_nodes_in_group(&"brick"):
 		if !k is Node2D:
 			continue
+		
+		if use_control_children_as_working_area && (rects && !rects.any(
+			func(rect):
+				return rect.has_point(k.global_position)
+		)):
+			continue
+		
 		var coin: PackedScene = null
 		if &"result" in k && k.result != null: continue
 		for l in source_bricks:
 			if k.scene_file_path == l.resource_path:
 				coin = source_coins[source_bricks.find(l)]
 				break
-		NodeCreator.prepare_2d(coin, k).bind_global_transform().create_2d().get_node()
+		
+		var new_coin = coin.instantiate()
+		new_coin.global_transform = k.global_transform
+		Scenes.current_scene.add_child(new_coin)
 		k.queue_free()

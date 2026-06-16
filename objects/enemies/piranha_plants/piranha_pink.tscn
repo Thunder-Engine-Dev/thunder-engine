@@ -101,8 +101,7 @@ custom_vars = {
 "projectile_collision": false,
 "projectile_gravity_scale": "0.2",
 "projectile_integer_speed": false,
-"projectile_offscreen_time": 3.0,
-"projectile_remove_from_top": false,
+"projectile_offscreen_time": 2.0,
 "projectile_speed_correction": true,
 "projectile_speed_max": Vector2(200, -550),
 "projectile_speed_min": Vector2(-200, -250)

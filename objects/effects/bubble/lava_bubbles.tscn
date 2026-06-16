@@ -6,10 +6,10 @@
 
 [node name="LavaBubbles" type="GPUParticles2D"]
 amount = 25
-process_material = ExtResource("1_4o25r")
 texture = ExtResource("1_yfmkj")
 lifetime = 0.8
 visibility_rect = Rect2(-160, -128, 320, 160)
+process_material = ExtResource("1_4o25r")
 script = ExtResource("2_1p3d7")
 
 [connection signal="finished" from="." to="." method="queue_free"]

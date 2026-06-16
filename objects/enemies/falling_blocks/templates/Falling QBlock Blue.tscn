@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bra6gfr6lwoch"]
+
+[ext_resource type="PackedScene" uid="uid://b3wk5npe3vp0x" path="res://engine/objects/enemies/falling_blocks/falling_qblock.tscn" id="1_w04dq"]
+[ext_resource type="Texture2D" uid="uid://4xc1fldnsncv" path="res://engine/objects/bumping_blocks/question_block/textures/question.png" id="2_yco82"]
+[ext_resource type="Texture2D" uid="uid://niflk6587w6s" path="res://engine/objects/bumping_blocks/question_block/textures/emptyblue.png" id="3_w04dq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq0rc"]
+atlas = ExtResource("2_yco82")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11l08"]
+atlas = ExtResource("2_yco82")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6ok5"]
+atlas = ExtResource("2_yco82")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yco82"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq0rc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11l08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6ok5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_w04dq")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvctg"]
+resource_local_to_scene = true
+size = Vector2(30, 32)
+
+[node name="FallingQBlockBlue" instance=ExtResource("1_w04dq")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_yco82")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_gvctg")

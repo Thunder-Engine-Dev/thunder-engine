@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b3wk5npe3vp0x"]
+[gd_scene load_steps=19 format=3 uid="uid://b3wk5npe3vp0x"]
 
 [ext_resource type="Script" uid="uid://b8u0xuytpeuej" path="res://engine/objects/enemies/falling_blocks/falling_qblock.gd" id="1_nhrl0"]
 [ext_resource type="Texture2D" uid="uid://4xc1fldnsncv" path="res://engine/objects/bumping_blocks/question_block/textures/question.png" id="2_mnexo"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="7_2pk1m"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="8_gtxia"]
 [ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="9_5fedk"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="10_yompe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tq0rc"]
 atlas = ExtResource("2_mnexo")
@@ -84,6 +85,7 @@ sprite = NodePath("AnimatedSprite2D")
 gravity_scale = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+process_mode = 3
 sprite_frames = SubResource("SpriteFrames_k4gy3")
 autoplay = "default"
 flip_v = true
@@ -121,6 +123,13 @@ killing_scores = 400
 killing_sound_succeeded = ExtResource("8_gtxia")
 killing_sound_failed = ExtResource("9_5fedk")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-16, -16, 32, 240)
+script = ExtResource("10_yompe")
+new_rect = Rect2(-128, -512, 256, 1024)
+metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="AnimatedSprite2D" method="stop"]

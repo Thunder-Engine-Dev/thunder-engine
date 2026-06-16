@@ -1,0 +1,139 @@
+[gd_scene load_steps=17 format=3 uid="uid://cbshjgx3hidps"]
+
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="1_huvds"]
+[ext_resource type="Script" uid="uid://hbtxpsokumsh" path="res://engine/objects/enemies/ptooie/ptooie_stationary.gd" id="1_jknll"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_1dbds"]
+[ext_resource type="Script" uid="uid://bspa8lu44t6oy" path="res://engine/objects/enemies/ptooie/do_killed_ptooie.gd" id="3_1bagl"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_5do2x"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="5_3rf25"]
+[ext_resource type="PackedScene" uid="uid://ddy551uvxl0yb" path="res://engine/objects/enemies/ptooie/spikeball.tscn" id="6_wjge6"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="7_2b0iw"]
+[ext_resource type="Texture2D" uid="uid://bfqaq5ec58xdg" path="res://engine/objects/enemies/piranha_plants/textures/head_green.png" id="8_tidp4"]
+[ext_resource type="Texture2D" uid="uid://bc63sqiltulom" path="res://engine/objects/enemies/piranha_plants/textures/stem_orange.png" id="9_nr2v1"]
+
+[sub_resource type="Resource" id="Resource_fdbgt"]
+script = ExtResource("4_5do2x")
+creation_nodepack = ExtResource("2_1dbds")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 3
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Head"),
+"death_speed": Vector2(0, -250),
+"spikeball": NodePath("../../Spikeball")
+}
+custom_script = ExtResource("3_1bagl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubl6y"]
+size = Vector2(32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1r3lw"]
+atlas = ExtResource("8_tidp4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lduic"]
+atlas = ExtResource("8_tidp4")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvro1"]
+atlas = ExtResource("8_tidp4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4scb1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lduic")
+}],
+"loop": false,
+"name": &"close",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvro1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvro1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lduic")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r3lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvro1")
+}],
+"loop": false,
+"name": &"open",
+"speed": 15.0
+}]
+
+[node name="PtooieStationary" type="Node2D"]
+script = ExtResource("1_jknll")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("1_huvds")
+stomping_standard = Vector2(0, 0)
+killing_creation = SubResource("Resource_fdbgt")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("5_3rf25")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ubl6y")
+
+[node name="Spikeball" parent="." instance=ExtResource("6_wjge6")]
+offset = Vector2(0, -80)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-20, -64, 40, 80)
+script = ExtResource("7_2b0iw")
+new_rect = Rect2(-400, -512, 800, 1024)
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+z_index = -2
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_4scb1")
+autoplay = "default"
+metadata/_edit_group_ = true
+
+[node name="Stem" type="Sprite2D" parent="Head"]
+position = Vector2(0, 24)
+texture = ExtResource("9_nr2v1")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Head" method="stop"]
+[connection signal="got_killed" from="Spikeball" to="Head" method="play" binds= [&"normal"]]

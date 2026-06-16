@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cs876qciayw8e"]
+[gd_scene load_steps=13 format=3 uid="uid://cs876qciayw8e"]
 
 [ext_resource type="Script" uid="uid://bafuhi6acb664" path="res://engine/objects/items/grabbable_key/grabbable_key.gd" id="1_iqgwp"]
 [ext_resource type="Script" uid="uid://ctnllsiq4nuie" path="res://engine/objects/projectiles/projectile_attack.gd" id="2_iqgwp"]
 [ext_resource type="Texture2D" uid="uid://bhkorel3swbc8" path="res://engine/objects/items/grabbable_key/textures/key.png" id="3_01sfi"]
 [ext_resource type="PackedScene" uid="uid://djctwyk8b0tpm" path="res://engine/node_modifiers/grabbable_modifier/grabbable_modifier.tscn" id="3_i8ho5"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="5_i8ho5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01sfi"]
 size = Vector2(30, 32)
@@ -48,7 +49,7 @@ animations = [{
 }]
 
 [node name="GrabbableKey" type="CharacterBody2D" groups=["unlocking_key"]]
-collision_layer = 112
+collision_layer = 48
 collision_mask = 64
 collision_priority = 0.01
 script = ExtResource("1_iqgwp")
@@ -85,5 +86,11 @@ autoplay = "default"
 [node name="GrabbableModifier" parent="." instance=ExtResource("3_i8ho5")]
 grabbing_ungrab_throw_power_min = Vector2(250, 100)
 grabbing_ungrab_throw_power_max = Vector2(350, 500)
+enemy_ungrab_throw_power = Vector2(400, 350)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("5_i8ho5")
 
 [connection signal="grab_initiated" from="GrabbableModifier" to="." method="_on_grab_initiated"]

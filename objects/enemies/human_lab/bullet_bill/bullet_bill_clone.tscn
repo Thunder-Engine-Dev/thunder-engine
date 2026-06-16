@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://g6ed3enqcx1d"]
+[gd_scene load_steps=6 format=3 uid="uid://g6ed3enqcx1d"]
 
 [ext_resource type="PackedScene" uid="uid://bw7f131nc4fhf" path="res://engine/objects/enemies/bullet_bill/bill/bullet_bill.tscn" id="1_dksb3"]
 [ext_resource type="AudioStream" uid="uid://dr3xbqpapvbeb" path="res://engine/objects/enemies/human_lab/bullet_bill/sfx/stomp.wav" id="2_8cp88"]
 [ext_resource type="Texture2D" uid="uid://c5mc8so7vsyco" path="res://engine/objects/enemies/human_lab/bullet_bill/textures/clone.png" id="3_25l04"]
+[ext_resource type="AudioStream" uid="uid://sutbarjim6sb" path="res://engine/objects/enemies/human_lab/koopa_bro/sfx/kick.wav" id="3_m3c8h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k2gec"]
 size = Vector2(44, 20)
@@ -24,7 +25,7 @@ killing_immune = {
 "iceball": false,
 "starman": false
 }
-killing_sound_succeeded = ExtResource("2_8cp88")
+killing_sound_succeeded = ExtResource("3_m3c8h")
 sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2"]

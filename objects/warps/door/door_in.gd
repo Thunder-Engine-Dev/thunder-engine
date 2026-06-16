@@ -5,6 +5,7 @@ extends Area2D
 @export_node_path("Area2D") var warp_to: NodePath
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/door.wav")
 @export var warp_to_scene: String
+@export var holding_item_prevents_warping: bool = true
 @export_group("Circle Transition")
 @export var use_circle_transition: bool = false
 @export var circle_closing_speed: float = 0.1
@@ -48,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	var input_y: int = int(Input.get_axis(player.control.up, player.control.down))
 	
 	if player.is_on_floor() && !_on_warp && player.warp == Player.Warp.NONE && \
-	!(&"holding" in player.suit.extra_vars && player.suit.extra_vars.is_holding) && \
+	!(holding_item_prevents_warping && player.is_holding) && \
 	player.global_position.y <= pos_player.global_position.y + 8:
 		if input_y < 0:
 			_on_warp = true
@@ -164,6 +165,9 @@ func pass_warp() -> void:
 		target.sprite.z_index = 10
 		target.sprite_bg.z_index = 1
 		target.sprite_bg.visible = true
+		var cam: PlayerCamera2D = Thunder._current_camera
+		if cam:
+			cam.teleport(true, true)
 	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
 	player = null

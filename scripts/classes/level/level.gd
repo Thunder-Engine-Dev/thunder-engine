@@ -45,6 +45,14 @@ signal level_completed
 ## Warp out node, if Screen Action is set to Pipe Warp
 @export_node_path("Area2D") var falling_below_warp_to: NodePath
 
+@export_group("Game Over", "game_over_")
+## If [code]true[/code], getting a Game Over on this level will force jump to the save room,
+## without prompting the player to continue.
+@export var game_over_disable_continue: bool = false
+## Scene to go to after resuming on a game over continue.[br]
+## Leave empty for the current level scene.
+@export_file("*.tscn", "*.scn") var game_over_continue_scene_override: String
+
 @onready var falling_below_warp_target: Area2D = get_node_or_null(falling_below_warp_to)
 
 # Forces player to walk forward, used in finish sequence

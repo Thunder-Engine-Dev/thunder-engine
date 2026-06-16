@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddy551uvxl0yb"]
+
+[ext_resource type="Script" uid="uid://bd3dh7txrante" path="res://engine/objects/enemies/ptooie/spikeball.gd" id="1_eujlk"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_pp7nv"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="3_0kjm5"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="3_g1g86"]
+[ext_resource type="Texture2D" uid="uid://btyi80owbbp5n" path="res://engine/objects/enemies/ptooie/textures/spike.png" id="4_jk8q7"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="4_srj8d"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_33l55"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_j7uk1"]
+
+[sub_resource type="Resource" id="Resource_t205s"]
+resource_local_to_scene = true
+script = ExtResource("5_33l55")
+creation_nodepack = ExtResource("3_g1g86")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Spike"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("4_srj8d")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6y8ch"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nylki"]
+
+[node name="Spikeball" type="CharacterBody2D"]
+position = Vector2(0, -112)
+script = ExtResource("1_eujlk")
+sprite = NodePath("Spike")
+collision = false
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_pp7nv")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": true,
+"head": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_creation = SubResource("Resource_t205s")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("6_j7uk1")
+killing_sound_failed = ExtResource("3_0kjm5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+visible = false
+shape = SubResource("CircleShape2D_6y8ch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_nylki")
+
+[node name="Spike" type="Sprite2D" parent="."]
+z_index = 2
+texture = ExtResource("4_jk8q7")
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="emit_signal" binds= [&"got_killed"]]

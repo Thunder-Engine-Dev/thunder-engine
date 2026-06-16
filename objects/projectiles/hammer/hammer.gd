@@ -1,14 +1,5 @@
 extends Projectile
 
-@export var remove_offscreen_after: float = 2.5
-@export var remove_top_offscreen: bool = false
-
-func _ready() -> void:
-	super()
-	if !remove_top_offscreen:
-		vision_node.rect.size.y = 618
-	offscreen_handler(remove_offscreen_after)
-
 
 func _physics_process(delta: float) -> void:
 	super(delta)

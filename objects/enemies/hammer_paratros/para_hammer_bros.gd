@@ -1,11 +1,25 @@
+@tool
 extends Node2D
 
 @export_category("Hammer Bro")
 @export_group("Physics")
 @export var amplitude: Vector2 = Vector2(0, 50)
+@export_range(0, 360, 0.01, "suffix: °") var phase: float = -1.0
+@export_tool_button("Randomize Phase", "RandomNumberGenerator") var set_random_phase = randomize_phase
 @export var frequency: float = 100
-@export var phase: float
-@export var random_phase: bool = true
+@export_group("Preview")
+@export var circle_line_spot: int = 24
+@export var line_color: Color = Color.AQUAMARINE
+@export var spot_color: Color = Color.HOT_PINK
+@export_group("Deprecated (Do not use)")
+@export var random_phase: bool:
+	set(rph):
+		random_phase = rph
+		if !random_phase:
+			phase = 0.0
+			return
+		if phase == -1.0:
+			phase = randf_range(0, 360)
 @export_group("Attack")
 @export var attacking_count_unit: float = 0.06
 @export var attacking_chance: float = 0.09
@@ -34,12 +48,32 @@ var _step_attacking: int
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	vision.rect.size = vision.rect.size.max(amplitude * 2)
 	vision.rect.position = -(vision.rect.position.max(amplitude))
 	if random_phase: phase = Thunder.rng.get_randf_range(-180, 180)
+	_physics_process(0)
+
+
+func _draw() -> void:
+	if !Engine.is_editor_hint(): return
+	#if !owner: return
+	if !Thunder.View.shows_tool(self): return
+	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE / global_scale)
+	var spots: PackedVector2Array = []
+	for i in circle_line_spot + 1:
+		var dot: Vector2 = Vector2.RIGHT.rotated(float(i) * TAU / float(circle_line_spot)) * amplitude
+		spots.append(dot)
+	draw_polyline(spots, line_color, 2)
+	draw_circle(Thunder.Math.oval(Vector2.ZERO, amplitude, deg_to_rad(phase)), 3, spot_color)
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+		return
+	
 	_direction()
 	_animation()
 	_oval(delta)
@@ -91,5 +125,16 @@ func _on_attack_timeout() -> void:
 			NodeCreator.prepare_ins_2d(projectile, self).call_method(
 				func(proj: Node2D) -> void:
 					proj.set(&"belongs_to", Data.PROJECTILE_BELONGS.ENEMY)
+					if "is_rotating" in proj:
+						proj.is_rotating = true
 			).execute_instance_script({bro = self}).create_2d().bind_global_transform(pos_attack.position)
 			Audio.play_sound(sound, self, false)
+
+func randomize_phase():
+	if !OS.has_feature("template"): return
+	var undo_redo = Engine.get_singleton(&"EditorInterface").get_editor_undo_redo()
+	if !undo_redo: return
+	undo_redo.create_action("Randomized Paratroopa Phase")
+	undo_redo.add_do_property(self, &"phase", randf_range(0, 360))
+	undo_redo.add_undo_property(self, &"phase", phase)
+	undo_redo.commit_action()

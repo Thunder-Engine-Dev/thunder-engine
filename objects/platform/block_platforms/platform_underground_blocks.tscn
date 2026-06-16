@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4c1kjtnwosg5"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_mo3an"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_bctf5"]
+[ext_resource type="Texture2D" uid="uid://dohmieex8oyqu" path="res://engine/objects/platform/block_platforms/platform_underground_blocks.png" id="3_lrtao"]
+
+[node name="PlatformPath" type="PathFollow2D"]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_mo3an")
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_bctf5")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block"]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 32, -48, 32)
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Block"]
+physics_interpolation_mode = 2
+show_behind_parent = true
+texture_repeat = 2
+position = Vector2(0, 16)
+texture = ExtResource("3_lrtao")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 32)
+
+[node name="Block2" type="AnimatableBody2D" parent="."]
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_bctf5")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2"]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 32, -48, 32)
+one_way_collision = true

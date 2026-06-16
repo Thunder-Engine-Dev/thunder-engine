@@ -1,0 +1,182 @@
+[gd_scene load_steps=22 format=3 uid="uid://ckks7u5g2r7jo"]
+
+[ext_resource type="Script" uid="uid://8x7pkcbnsmca" path="res://engine/objects/enemies/hammer_bros/goomba_bro.gd" id="1_uoodm"]
+[ext_resource type="Resource" uid="uid://cfrf3b68wus5c" path="res://engine/objects/enemies/hammer_bros/textures/goomba_bro_inst.tres" id="2_tlnwd"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_v1ict"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="5_pirhi"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="6_dhxji"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="7_d2guo"]
+[ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="8_eaxq8"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_j7mxo"]
+[ext_resource type="Texture2D" uid="uid://dvm08f0nfj2o" path="res://engine/objects/enemies/hammer_bros/textures/texture.png" id="10_sdsj2"]
+[ext_resource type="Texture2D" uid="uid://dwtn8cky8tb3l" path="res://engine/objects/enemies/goombas/textures/goomba.png" id="11_wxu4r"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="12_jiv8p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0iv4"]
+size = Vector2(28, 40)
+
+[sub_resource type="Resource" id="Resource_wnhwf"]
+resource_local_to_scene = true
+script = ExtResource("4_v1ict")
+creation_nodepack = ExtResource("6_dhxji")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 7
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 1
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, 0),
+"min_quality_offset": Vector2(0, -16)
+}
+custom_script = ExtResource("7_d2guo")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huaio"]
+atlas = ExtResource("10_sdsj2")
+region = Rect2(0, 0, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj3ee"]
+atlas = ExtResource("10_sdsj2")
+region = Rect2(0, 96, 33, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3anug"]
+atlas = ExtResource("10_sdsj2")
+region = Rect2(0, 48, 33, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xmj7k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huaio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj3ee")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huaio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3anug")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmx5j"]
+atlas = ExtResource("11_wxu4r")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t43rb"]
+atlas = ExtResource("11_wxu4r")
+region = Rect2(31, 0, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ntvwa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmx5j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t43rb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tlnwd"]
+size = Vector2(32, 32)
+
+[node name="GoombaBro" type="CharacterBody2D" groups=["koopa_bro"]]
+collision_layer = 2
+collision_mask = 32
+script = ExtResource("1_uoodm")
+jumping_strength_upward = 450.0
+projectile = ExtResource("2_tlnwd")
+speed = Vector2(100, 0)
+gravity_scale = 0.2
+metadata/_edit_pinned_properties_ = [&"speed", &"gravity_scale"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_n0iv4")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_n0iv4")
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("5_pirhi")
+stomping_creation = SubResource("Resource_wnhwf")
+stomping_scores = 200
+stomping_sound = ExtResource("8_eaxq8")
+killing_creation = SubResource("Resource_wnhwf")
+killing_scores = 200
+killing_sound_succeeded = ExtResource("9_j7mxo")
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_xmj7k")
+autoplay = "default"
+
+[node name="SpriteProjectile" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(10, -2)
+sprite_frames = SubResource("SpriteFrames_ntvwa")
+autoplay = "default"
+
+[node name="PosAttack" type="Marker2D" parent="."]
+visible = false
+position = Vector2(10, -2)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-16, -16, 32, 32)
+script = ExtResource("12_jiv8p")
+metadata/_edit_lock_ = true
+
+[node name="Walk" type="Timer" parent="."]
+one_shot = true
+
+[node name="Attack" type="Timer" parent="."]
+wait_time = 0.06
+autostart = true
+
+[node name="Jump" type="Timer" parent="."]
+wait_time = 0.24
+autostart = true
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+enabled = false
+shape = SubResource("RectangleShape2D_tlnwd")
+target_position = Vector2(0, 0)
+max_results = 2
+collision_mask = 32
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
+[connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_speed_scale" binds= [0.0]]
+[connection signal="timeout" from="Walk" to="." method="_on_walk_timeout"]
+[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]
+[connection signal="timeout" from="Jump" to="." method="_on_jump"]

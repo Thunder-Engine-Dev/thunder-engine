@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://kgww5qkhdrrc"]
+
+[ext_resource type="Shader" uid="uid://dtfrycf4lheaa" path="res://engine/shaders/highlight.gdshader" id="1_6vygc"]
+
+[resource]
+shader = ExtResource("1_6vygc")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.5
+shader_parameter/highlight_speed = 6.0
+shader_parameter/highlight_width = 15.0

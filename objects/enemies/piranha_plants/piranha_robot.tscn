@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://clv1ed2vceooo"]
+
+[ext_resource type="Script" uid="uid://cpsnxho2dm7ev" path="res://engine/objects/enemies/piranha_plants/piranha_robot.gd" id="1_eksxs"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_ketb0"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="3_2nkch"]
+[ext_resource type="Texture2D" uid="uid://c0gv5jsghlk8" path="res://engine/objects/enemies/piranha_plants/textures/robot_piranha.png" id="4_rk6hd"]
+[ext_resource type="Texture2D" uid="uid://bxe2fyi7qpw5u" path="res://gfx/deco/light.png" id="5_7yld4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64hdc"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rydo8"]
+atlas = ExtResource("4_rk6hd")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hmcv"]
+atlas = ExtResource("4_rk6hd")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hp3pu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rydo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hmcv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="RobotPiranha" type="Node2D"]
+self_modulate = Color(1, 1, 1, 0.121569)
+script = ExtResource("1_eksxs")
+
+[node name="Body" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 7
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_64hdc")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
+
+[node name="EnemyAttacked" type="Node" parent="Body"]
+script = ExtResource("2_ketb0")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": true,
+"fireball": true,
+"hammer": true,
+"iceball": true,
+"shell": true,
+"shell_defence": 0,
+"shell_forced": true,
+"starman": true
+}
+killing_scores = 100
+killing_sound_succeeded = ExtResource("3_2nkch")
+metadata/_edit_pinned_properties_ = [&"killing_immune"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_hp3pu")
+autoplay = "default"
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+position = Vector2(0, 16)
+scale = Vector2(0.1, 0.1)
+color = Color(0.890196, 0, 0, 1)
+range_z_max = 0
+texture = ExtResource("5_7yld4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenEnabler2D" parent="."]
+modulate = Color(1, 1, 1, 0.0196078)
+position = Vector2(0.5, -24)
+scale = Vector2(1.55, 2.4)
+metadata/_edit_lock_ = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

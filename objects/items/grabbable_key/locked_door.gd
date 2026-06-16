@@ -1,6 +1,7 @@
 extends Area2D
 
 const SMOKE = preload("res://engine/objects/effects/smoke/smoke.tscn")
+const UNLOCK = preload("res://engine/objects/items/grabbable_key/sounds/unlock.wav")
 
 @onready var staticbody: StaticBody2D = $Body
 
@@ -14,7 +15,7 @@ func _on_body_entered(body: Node2D) -> void:
 		smoke.global_position = global_position
 		Scenes.current_scene.add_child(smoke)
 		smoke.reset_physics_interpolation()
-		Audio.play_sound(preload("res://engine/objects/items/grabbable_key/sounds/unlock.wav"), body)
+		Audio.play_sound(UNLOCK, body)
 		body.queue_free()
 		
 		var player: Player = Thunder._current_player

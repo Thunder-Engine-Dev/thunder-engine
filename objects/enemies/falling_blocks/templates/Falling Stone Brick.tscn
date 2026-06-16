@@ -20,6 +20,4 @@ texture = SubResource("AtlasTexture_gpdj6")
 shape = SubResource("RectangleShape2D_pkefl")
 
 [node name="VisibleOnScreenEnabler2D" parent="." index="3"]
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 0)
 rect = Rect2(-48, -48, 96, 96)

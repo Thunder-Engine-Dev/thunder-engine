@@ -201,9 +201,9 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 		return null
 	
 	if &"pitch" in other_keys && (other_keys.pitch is float || other_keys.pitch is int):
-		_music_channels[channel_id].pitch_scale = other_keys.pitch
+		music_player.pitch_scale = other_keys.pitch
 	if &"volume" in other_keys && (other_keys.volume is float || other_keys.volume is int):
-		_music_channels[channel_id].volume_db = other_keys.volume
+		music_player.volume_db = other_keys.volume
 	if &"fade_duration" in other_keys && (other_keys.fade_duration is float || other_keys.fade_duration is int):
 		if &"fade_to" in other_keys && (other_keys.fade_to is float || other_keys.fade_to is int):
 			var _fade_mtd = Tween.TransitionType.TRANS_LINEAR
@@ -212,13 +212,17 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 				_fade_mtd = other_keys.fade_method
 			if &"fade_ease" in other_keys && other_keys.fade_ease is Tween.EaseType:
 				_fade_ease = other_keys.fade_ease
-			fade_music_1d_player(_music_channels[channel_id], other_keys.fade_to, other_keys.fade_duration, _fade_mtd, false, _fade_ease)
-	_music_channels[channel_id].process_mode = Node.PROCESS_MODE_ALWAYS \
+			fade_music_1d_player(music_player, other_keys.fade_to, other_keys.fade_duration, _fade_mtd, false, _fade_ease)
+	music_player.process_mode = Node.PROCESS_MODE_ALWAYS \
 		if &"ignore_pause" in other_keys && other_keys.ignore_pause \
 		else Node.PROCESS_MODE_PAUSABLE
 	music_player.play()
+	if &"subsong" in other_keys && resource is AudioStreamMPT:
+		var playback: AudioStreamPlaybackMPT = music_player.get_stream_playback()
+		if resource.get_num_subsongs() > other_keys.subsong:
+			playback.select_subsong(other_keys.subsong)
 	if &"start_from_sec" in other_keys && (other_keys.start_from_sec is float || other_keys.start_from_sec is int) && other_keys.start_from_sec > 0.0:
-		_music_channels[channel_id].seek(other_keys.start_from_sec)
+		music_player.seek(other_keys.start_from_sec)
 	music_started.emit(channel_id)
 	
 	return music_player if is_instance_valid(music_player) else null

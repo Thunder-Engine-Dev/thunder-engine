@@ -21,7 +21,11 @@ func _ready() -> void:
 	Scenes.scene_ready.connect(func():
 		if !Thunder._current_hud: return
 		Thunder._current_hud.game_over_finished.connect(func():
-			if skip_to_save:
+			var temp_skip_to_save: bool
+			if Scenes.current_scene is Level:
+				temp_skip_to_save = Scenes.current_scene.game_over_disable_continue
+			
+			if skip_to_save || temp_skip_to_save:
 				var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 
 				if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
@@ -79,6 +83,11 @@ func toggle(no_resume: bool = false) -> void:
 		if !no_resume:
 			if Data.technical_values.remaining_continues > 0:
 				Data.technical_values.remaining_continues -= 1
+			if Scenes.current_scene is Level:
+				var temp_resume_scene: String
+				temp_resume_scene = Scenes.current_scene.game_over_continue_scene_override
+				if temp_resume_scene.is_absolute_path():
+					custom_resume_scene = temp_resume_scene
 			if custom_resume_scene.is_empty():
 				Scenes.current_scene.restart()
 			else:

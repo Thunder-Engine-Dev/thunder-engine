@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://bcgt87mbq40gx"]
 
-[ext_resource type="Script" uid="uid://df7hukm1uq7kb" path="res://engine/objects/enemies/thwomp/thwomp.gd" id="1_2gn4n"]
+[ext_resource type="Script" uid="uid://df7hukm1uq7kb" path="res://engine/objects/enemies/thwomp/scripts/thwomp.gd" id="1_2gn4n"]
 [ext_resource type="Texture2D" uid="uid://chcnsi17bk4x2" path="res://engine/objects/enemies/thwomp/textures/thwomp.png" id="2_3s0r0"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_phoms"]
 [ext_resource type="Texture2D" uid="uid://dbv8uhcppf5t0" path="res://engine/objects/enemies/thwomp/textures/thwompsmile.png" id="3_3okpa"]
@@ -183,6 +183,11 @@ wait_time = 2.5
 one_shot = true
 
 [node name="Waiting" type="Timer" parent="."]
+one_shot = true
+
+[node name="Destroy" type="Timer" parent="."]
+process_callback = 0
+wait_time = 7.0
 one_shot = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

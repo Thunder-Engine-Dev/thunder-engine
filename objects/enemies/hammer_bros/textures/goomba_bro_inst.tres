@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="InstanceNode2D" load_steps=4 format=3 uid="uid://cfrf3b68wus5c"]
+
+[ext_resource type="PackedScene" uid="uid://cb5bu6hsd4l5n" path="res://engine/objects/enemies/hammer_bros/additional_objects/goomba_thrown.tscn" id="1_51n1l"]
+[ext_resource type="Script" uid="uid://fdxatwkqrg77" path="res://engine/objects/enemies/hammer_bros/hammer_bro_throwing.gd" id="2_aia5y"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="3_nrrse"]
+
+[resource]
+script = ExtResource("3_nrrse")
+creation_nodepack = ExtResource("1_51n1l")
+creation_force_sibling = false
+trans_offset = Vector2(0, 0)
+trans_inheritances = 6
+trans_rotation = 0.0
+trans_scale = Vector2(1, 1)
+trans_skew = 0.0
+visi_z_index = 0
+visi_z_as_relative = true
+visi_y_sort_enabled = false
+custom_vars = {
+"speed_max": Vector2(200, -450),
+"speed_min": Vector2(50, -250)
+}
+custom_script = ExtResource("2_aia5y")

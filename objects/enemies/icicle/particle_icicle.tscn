@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://b11gbbp03uofx"]
+
+[ext_resource type="Texture2D" uid="uid://cml5g2oursu2q" path="res://engine/objects/effects/brick_debris/ice_debris.png" id="1_fkhff"]
+
+[sub_resource type="Gradient" id="Gradient_hfn7y"]
+colors = PackedColorArray(1, 1, 1, 1, 0.372888, 0.620461, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i5ywo"]
+gradient = SubResource("Gradient_hfn7y")
+
+[sub_resource type="Gradient" id="Gradient_dk3sc"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oitrb"]
+gradient = SubResource("Gradient_dk3sc")
+
+[sub_resource type="Curve" id="Curve_wm5m5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.66272, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vvikf"]
+curve = SubResource("Curve_wm5m5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dkaqi"]
+particle_flag_disable_z = true
+angle_min = 45.0
+angle_max = 135.0
+inherit_velocity_ratio = 800.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.1
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_vvikf")
+color_ramp = SubResource("GradientTexture1D_oitrb")
+color_initial_ramp = SubResource("GradientTexture1D_i5ywo")
+
+[node name="ParticleIcicle" type="GPUParticles2D"]
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_dkaqi")
+texture = ExtResource("1_fkhff")

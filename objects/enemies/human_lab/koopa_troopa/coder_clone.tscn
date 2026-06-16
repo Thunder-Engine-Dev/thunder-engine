@@ -223,7 +223,7 @@ sprite_frames = SubResource("SpriteFrames_d2buv")
 script = ExtResource("10_typ8o")
 
 [node name="ActiveNOGI" type="AnimatedSprite2D" parent="Sprite" index="1"]
-z_index = -1
+show_behind_parent = true
 position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_12g0q")
 autoplay = "default"

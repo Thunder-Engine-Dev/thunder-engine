@@ -89,10 +89,9 @@ metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_sound_faile
 sprite_frames = SubResource("SpriteFrames_qfn7i")
 autoplay = "default"
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(4.76837e-06, 9.53674e-07)
-scale = Vector2(4.8, 3.2)
+rect = Rect2(-16, -16, 32, 32)
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -102,4 +101,3 @@ texture = SubResource("GradientTexture2D_hujyx")
 script = ExtResource("4_t0026")
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

@@ -1,12 +1,12 @@
-[gd_scene load_steps=40 format=3 uid="uid://dxqjmbtsadabq"]
+[gd_scene load_steps=34 format=3 uid="uid://dxqjmbtsadabq"]
 
 [ext_resource type="PackedScene" uid="uid://c58i0gaq0il4o" path="res://engine/objects/enemies/spinies/spiny_red.tscn" id="1_xs17w"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="2_ai65h"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_lrigm"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_4st6u"]
 [ext_resource type="AudioStream" uid="uid://be4t5gueyv5gq" path="res://engine/objects/enemies/human_lab/spiny/sfx/kick.wav" id="5_12kt0"]
-[ext_resource type="Texture2D" uid="uid://dr0tm03ifrn1s" path="res://engine/objects/enemies/spinies/textures/spiny_red_appear.png" id="5_f26b5"]
 [ext_resource type="Texture2D" uid="uid://cxqpgpc2y0k5o" path="res://engine/objects/enemies/human_lab/spiny/textures/clone_body.png" id="6_isn32"]
+[ext_resource type="Texture2D" uid="uid://d4hqfa8mron3c" path="res://engine/objects/enemies/human_lab/spiny/textures/clone_egg.png" id="6_xsn81"]
 [ext_resource type="Texture2D" uid="uid://divifcv6yj50h" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs.png" id="7_mr5yl"]
 [ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="8_mvgoi"]
 [ext_resource type="Texture2D" uid="uid://b8j8mctpdguki" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs_idle.png" id="8_ugsva"]
@@ -34,30 +34,6 @@ custom_vars = {
 }
 custom_script = ExtResource("3_lrigm")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v57uq"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wpycm"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 31, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3w6q8"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 62, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1mp26"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 93, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mx4ph"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 124, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kvse4"]
-atlas = ExtResource("5_f26b5")
-region = Rect2(0, 155, 31, 31)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_t1tl1"]
 atlas = ExtResource("6_isn32")
 region = Rect2(0, 0, 40, 48)
@@ -73,23 +49,8 @@ region = Rect2(0, 48, 40, 48)
 [sub_resource type="SpriteFrames" id="SpriteFrames_kdbtc"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v57uq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wpycm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3w6q8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1mp26")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mx4ph")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kvse4")
+"duration": 2.0,
+"texture": ExtResource("6_xsn81")
 }],
 "loop": false,
 "name": &"appear",

@@ -118,6 +118,7 @@ func _save_progress() -> void:
 			new_level
 		)
 		ProfileManager.save_current_profile()
+		ProfileManager.profile_data_saved_user_display.emit(ProfileManager.current_profile.name)
 
 
 func _save_suspended_progress() -> void:
@@ -148,6 +149,7 @@ func _save_suspended_progress() -> void:
 	
 	ProfileManager.profiles.suspended = profile
 	ProfileManager.save_profile_data("suspended", profile.data)
+	ProfileManager.profile_data_saved_user_display.emit("suspended")
 
 
 # Recive events
@@ -210,7 +212,7 @@ func _draw() -> void:
 func draw_logic(child: Node2D, next_child: Node2D) -> void:
 	# Checks if rotation is near 90 deg
 	var rot: float = child.global_position.direction_to(next_child.global_position).angle()
-	var incorrect: bool = roundi(rad_to_deg(abs(rot))) % 90
+	var incorrect: bool = roundi(rad_to_deg(abs(rot)) * 64) % (90 * 64)
 	var modul: Color = Color.GREEN if !incorrect else Color.RED
 	
 	# Draw a line

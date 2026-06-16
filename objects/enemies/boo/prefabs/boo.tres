@@ -1,0 +1,30 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://bbjnara36vcbq"]
+
+[ext_resource type="Texture2D" uid="uid://ctfjvvm01kq08" path="res://engine/objects/enemies/boo/textures/boo.png" id="1_5wqwo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85gta"]
+atlas = ExtResource("1_5wqwo")
+region = Rect2(31, 0, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y8pq"]
+atlas = ExtResource("1_5wqwo")
+region = Rect2(0, 0, 31, 30)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85gta")
+}],
+"loop": true,
+"name": &"chase",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y8pq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]

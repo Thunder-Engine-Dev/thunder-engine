@@ -1,9 +1,5 @@
 extends ShapeCast2D
 
-##
-##
-##
-
 ## Type of the killer, see [enum Data.ATTACKERS]
 @export var killer_type: StringName = Data.ATTACKERS.fireball
 ## Detection scale of teh killer.[br]
@@ -41,6 +37,9 @@ func _physics_process(delta: float) -> void:
 	
 	if &"belongs_to" in par:
 		belongs_to = par.belongs_to
+	
+	if !enabled:
+		return
 	
 	match belongs_to:
 		Data.PROJECTILE_BELONGS.PLAYER:
