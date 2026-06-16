@@ -551,7 +551,8 @@ func _body_process() -> void:
 
 		var enemy_attacked: Node = collider.get_node("EnemyAttacked")
 		var result: Dictionary = _try_stomp_on_enemy(enemy_attacked, player_velocity)
-		if result.is_empty(): return
+		if result.is_empty():
+			continue
 		
 		pending_stomps.append({"enemy_attacked": enemy_attacked, "result": result})
 
