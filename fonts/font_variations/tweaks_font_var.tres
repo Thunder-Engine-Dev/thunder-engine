@@ -1,6 +1,6 @@
 [gd_resource type="FontVariation" format=3 uid="uid://c5ust2bgtp407"]
 
-[ext_resource type="FontFile" uid="uid://cdqqkkwas717i" path="res://gfx/fonts/ddorktrial.ttf" id="1_an0os"]
+[ext_resource type="FontFile" uid="uid://cdqqkkwas717i" path="res://engine/fonts/ddorktrial.ttf" id="1_an0os"]
 [ext_resource type="FontFile" uid="uid://bep77h6cscd7j" path="res://engine/fonts/VAG-Rounded.otf" id="2_dlwgd"]
 
 [sub_resource type="FontVariation" id="FontVariation_2d3i5"]
