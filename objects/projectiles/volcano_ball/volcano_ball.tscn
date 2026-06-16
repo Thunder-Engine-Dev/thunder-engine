@@ -22,6 +22,7 @@ metadata/_snap_enabled = true
 [node name="VolcanoBall" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 0
+platform_on_leave = 2
 script = ExtResource("1_ao45s")
 sprite = NodePath("Sprite")
 gravity_scale = 0.2

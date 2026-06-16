@@ -11,6 +11,7 @@ size = Vector2(20, 32)
 [node name="Beetroot" type="CharacterBody2D" groups=["#lava_body"]]
 collision_layer = 4
 collision_mask = 192
+platform_on_leave = 2
 script = ExtResource("1_qd3dy")
 speed = Vector2(120, -300)
 gravity_scale = 0.4
