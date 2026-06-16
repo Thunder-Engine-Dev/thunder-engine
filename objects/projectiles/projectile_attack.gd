@@ -1,9 +1,5 @@
 extends ShapeCast2D
 
-##
-##
-##
-
 ## Type of the killer, see [enum Data.ATTACKERS]
 @export var killer_type: StringName = Data.ATTACKERS.fireball
 ## Detection scale of teh killer.[br]

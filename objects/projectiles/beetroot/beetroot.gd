@@ -5,8 +5,6 @@ const BUBBLE = preload("res://engine/objects/effects/bubble/bubble.tscn")
 const STUN = preload("res://engine/objects/projectiles/sounds/stun.wav")
 @export var jumping_speed: float = -450.0
 @export var bounces_left: int = 3
-@export var remove_offscreen_after: float = 3.0
-@export var remove_top_offscreen: bool = false
 
 var drown: bool = false
 var _bubble_timer: float
@@ -14,12 +12,6 @@ var _bubble_timer: float
 @onready var detector: ShapeCast2D = $Attack
 
 signal run_out
-
-func _ready() -> void:
-	if !remove_top_offscreen:
-		vision_node.rect.size.y = 512
-	offscreen_handler(remove_offscreen_after)
-	super()
 
 
 func _physics_process(delta: float) -> void:

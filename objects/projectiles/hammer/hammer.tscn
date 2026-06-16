@@ -32,7 +32,5 @@ script = ExtResource("3_05jam")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-64, -64, 128, 128)
+rect = Rect2(-12, -12, 24, 24)
 metadata/_edit_lock_ = true
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

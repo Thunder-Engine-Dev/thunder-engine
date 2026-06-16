@@ -36,7 +36,9 @@ killer_type = &"beetroot"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-12, -16, 24, 32)
+modulate = Color(1, 1, 1, 0.0196078)
+rect = Rect2(-12, -12, 24, 24)
+metadata/_edit_lock_ = true
 
 [node name="Underwater" type="Node" parent="."]
 script = ExtResource("4_ylopw")
@@ -46,4 +48,3 @@ script = ExtResource("4_ylopw")
 [connection signal="collided_wall" from="." to="." method="bounce"]
 [connection signal="run_out" from="." to="Attack" method="queue_free"]
 [connection signal="killed_notify" from="Attack" to="." method="bounce" binds= [false]]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

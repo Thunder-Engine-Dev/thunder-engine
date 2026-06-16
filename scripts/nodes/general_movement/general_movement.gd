@@ -2,10 +2,6 @@ extends GravityBody2D
 class_name GeneralMovementBody2D
 
 ##
-##
-##
-
-##
 @export var look_at_player: bool
 ## -1 is Left, 1 is Right.
 @export_enum("Disabled: 0", "Left: -1", "Right: 1") var force_direction: int = 0
@@ -18,11 +14,13 @@ class_name GeneralMovementBody2D
 @export_group("References")
 ##
 @export var sprite: NodePath
-@export_node_path("VisibleOnScreenNotifier2D") var visible_on_screen_notifier := NodePath("VisibleOnScreenEnabler2D")
+@export_node_path("VisibleOnScreenEnabler2D") var visible_on_screen_enabler := NodePath("VisibleOnScreenEnabler2D")
+@export_node_path("VisibleOnScreenNotifier2D") var visible_on_screen_notifier := NodePath("VisibleOnScreenNotifier2D")
 
 var dir: int
 
 @onready var sprite_node: Node2D = get_node_or_null(sprite)
+@onready var vis_enabler_node: VisibleOnScreenNotifier2D = get_node_or_null(visible_on_screen_enabler)
 @onready var vis_notifier_node: VisibleOnScreenNotifier2D = get_node_or_null(visible_on_screen_notifier)
 
 
