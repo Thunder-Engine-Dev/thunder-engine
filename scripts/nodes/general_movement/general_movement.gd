@@ -32,7 +32,7 @@ func _ready() -> void:
 	floor_max_angle += PI/180
 	
 	if life_time > 0:
-		assert(is_instance_valid(vis_enabler_node), "Visible On Screen Notifier/Enabler node is invalid.")
+		#assert(is_instance_valid(vis_enabler_node), "Visible On Screen Notifier/Enabler node is invalid.")
 		print_verbose("[GMBody2D] Life time %s: %s" % [name, str(life_time)])
 		get_tree().create_timer(life_time, false, true, false).timeout.connect(_life_time_ended)
 	
@@ -90,9 +90,9 @@ func stopwatch_unpause(from_stopwatch: bool = false) -> void:
 
 func _life_time_ended() -> void:
 	if !is_inside_tree(): return
-	if !vis_notifier_node.is_on_screen():
+	if !vis_enabler_node.is_on_screen():
 		queue_free()
 		print_verbose("[GMBody2D] %s: freed by life time" % [name])
 		return
-	Thunder._connect(vis_notifier_node.screen_exited, queue_free, CONNECT_ONE_SHOT)
+	Thunder._connect(vis_enabler_node.screen_exited, queue_free, CONNECT_ONE_SHOT)
 	print_verbose("[GMBody2D] %s: queued to free on screen exit" % [name])
