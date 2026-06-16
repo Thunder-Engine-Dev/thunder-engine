@@ -51,6 +51,8 @@ var _on_warp: bool
 var _duration: float
 var _target: float = 1.2
 var _warp_triggered: bool = false
+var _smooth_entry_active: bool = false
+var _smooth_entry_speed: float = 0.0
 
 var _gotoscene_patch: bool
 
@@ -130,8 +132,10 @@ func _warp_initiator() -> void:
 			#	Thunder.autosplitter.split("World Warp")
 		player.warp = Player.Warp.IN
 		player.warp_dir = warp_direction
+		player.is_crouching = false
 		player.speed = Vector2.ZERO
 		player.sprite_container.z_index = -5
+		_refresh_player_warp_animation()
 		var _custom_sound = CharacterManager.get_sound_replace(warping_sound, DEFAULT_WARP_SOUND, "pipe_in", true)
 		if warping_sound == WARP_CUTSCENE:
 			_custom_sound = CharacterManager.get_sound_replace(WARP_CUTSCENE, WARP_CUTSCENE, "pipe_cutscene", false)
@@ -139,20 +143,72 @@ func _warp_initiator() -> void:
 		Thunder._current_hud.timer.paused = true
 		
 		if !warp_disable_smooth_entry:
-			var pos_tw = create_tween()
-			pos_tw.tween_property(player, "global_position", pos_player.global_position, 0.1)
-			while pos_tw && pos_tw.is_running():
+			var resolved_pos := _resolve_warp_position(
+				player.global_position,
+				pos_player.global_position
+			)
+			if player.global_position.distance_squared_to(resolved_pos) < 0.25:
+				player.global_position = resolved_pos
 				player.sync_position()
-				await get_tree().physics_frame
-				if !is_inside_tree() || !is_instance_valid(player): break
+			else:
+				_smooth_entry_active = true
+				_smooth_entry_speed = player.global_position.distance_to(resolved_pos) / 0.1
 		else:
-			player.global_position = pos_player.global_position
+			player.global_position = _resolve_warp_position(
+				player.global_position,
+				pos_player.global_position
+			)
 			player.sync_position()
 
 
+func _refresh_player_warp_animation() -> void:
+	var animation_behavior: Variant = player._animation_behavior
+	if animation_behavior && animation_behavior.has_method(&"_animation_process"):
+		animation_behavior._animation_process(0.0)
+
+
+func _get_warp_travel_axis() -> Vector2:
+	# Pipe entry always follows local DOWN, regardless of [member warp_direction].
+	return Vector2.DOWN.rotated(global_rotation)
+
+
+## Align to [param target] without moving backward along the warp travel axis.
+func _resolve_warp_position(current: Vector2, target: Vector2) -> Vector2:
+	var axis := _get_warp_travel_axis()
+	var diff := target - current
+	var parallel_dist := diff.dot(axis)
+	if parallel_dist < 0.0:
+		return target - axis * parallel_dist
+	return target
+
+
+func _smooth_entry_process(delta: float) -> bool:
+	var target := _resolve_warp_position(player.global_position, pos_player.global_position)
+	var to_target := target - player.global_position
+	var axis := _get_warp_travel_axis()
+	var parallel := axis * to_target.dot(axis)
+	if parallel.dot(axis) < 0.0:
+		parallel = Vector2.ZERO
+	var allowed_delta := parallel + (to_target - parallel)
+	var distance := allowed_delta.length()
+	if distance < 0.5:
+		player.global_position = target
+		player.sync_position()
+		return false
+	
+	var step := minf(_smooth_entry_speed * delta, distance)
+	player.global_position += allowed_delta / distance * step
+	player.sync_position()
+	return true
+
+
 func _warping_process(delta: float) -> void:
+	if _smooth_entry_active:
+		_smooth_entry_active = _smooth_entry_process(delta)
+		return
+	
 	if _duration < _target:
-		player.global_position += Vector2.DOWN.rotated(global_rotation) * warping_speed * delta
+		player.global_position += _get_warp_travel_axis() * warping_speed * delta
 		player.sync_position()
 		_duration += delta
 		_tweak_process()
@@ -238,6 +294,7 @@ func pass_warp() -> void:
 	_on_warp = false
 	_warp_triggered = false
 	_duration = 0
+	_smooth_entry_active = false
 	if target:
 		target.pass_player(player)
 		target.player_z_index = player_z_index

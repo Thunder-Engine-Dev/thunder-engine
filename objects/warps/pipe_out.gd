@@ -40,13 +40,65 @@ func _physics_process(delta: float) -> void:
 	
 	if !is_instance_valid(player): return
 	
-	player.global_position += Vector2.UP.rotated(global_rotation) * warping_speed * delta
+	player.global_position += _get_warp_exit_axis() * warping_speed * delta
 	player.sync_position()
 	_tweak_process()
 
 
+func _get_warp_exit_axis() -> Vector2:
+	return Vector2.UP.rotated(global_rotation)
+
+
+func _get_collision_shape_corners(collision_shape: CollisionShape2D) -> PackedVector2Array:
+	var rect_shape := collision_shape.shape as RectangleShape2D
+	if !rect_shape:
+		return PackedVector2Array()
+	
+	var half := rect_shape.size * 0.5
+	var local_corners := PackedVector2Array([
+		Vector2(-half.x, -half.y),
+		Vector2(half.x, -half.y),
+		Vector2(half.x, half.y),
+		Vector2(-half.x, half.y),
+	])
+	var corners := PackedVector2Array()
+	corners.resize(local_corners.size())
+	for i in local_corners.size():
+		corners[i] = collision_shape.global_transform * local_corners[i]
+	return corners
+
+
+func _project_bounds_on_axis(corners: PackedVector2Array, axis: Vector2) -> Vector2:
+	var min_p := INF
+	var max_p := -INF
+	for corner in corners:
+		var projection := corner.dot(axis)
+		min_p = minf(min_p, projection)
+		max_p = maxf(max_p, projection)
+	return Vector2(min_p, max_p)
+
+
+func _snap_player_to_warp_edge(exiting_player: Player) -> void:
+	var exit_axis := _get_warp_exit_axis()
+	var area_corners := _get_collision_shape_corners(shape)
+	var player_corners := _get_collision_shape_corners(exiting_player.collision_shape)
+	if area_corners.is_empty() || player_corners.is_empty():
+		return
+	
+	var area_bounds := _project_bounds_on_axis(area_corners, exit_axis)
+	var player_bounds := _project_bounds_on_axis(player_corners, exit_axis)
+	var gap := player_bounds.x - area_bounds.y
+	if is_zero_approx(gap):
+		return
+	
+	exiting_player.global_position -= exit_axis * gap
+	exiting_player.reset_physics_interpolation()
+
+
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
+		_snap_player_to_warp_edge(player)
+		player.sync_position()
 		player.warp = Player.Warp.NONE
 		player.sprite_container.z_index = player_z_index
 		player = null
