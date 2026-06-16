@@ -42,9 +42,22 @@ func _ready() -> void:
 	
 	_physics_process.call_deferred(0)
 	
+
+	if is_in_bounds() and change_music:
+		change_music_on_ready.call_deferred()
+
+	
 	await get_tree().physics_frame
 	_is_initial = false
 
+func change_music_on_ready():
+	var music_loader = get_node_or_null(music_loader_ref)
+	if !music_loader:
+		printerr("[CamArea] Can't resolve the MusicLoader node")
+	else:
+		if !Audio._music_channels.get(music_loader.channel_id): return
+		if music_loader.music[set_music_index] != Audio._music_channels.get(music_loader.channel_id).stream:
+			music_loader._change_music(music_loader.index, music_loader.channel_id)
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
@@ -79,28 +92,7 @@ func _get_cam_rect(rect: Control) -> Rect2:
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
-	var camera = Thunder._current_camera
-	var is_in_bounds: bool
-	var has_cam_area: bool = (
-		(camera.has_meta(&"cam_area") &&
-		camera.get_meta(&"cam_area", null) != self) ||
-		!camera.has_meta(&"cam_area")
-	)
-	var detections: Array = _det_areas if len(_det_areas) > 0 else [self]
-	var _int_detections: int = 0
-	for i in detections:
-		var rect = _get_cam_rect(i)
-		
-		_int_detections += int(
-			has_cam_area &&
-			camera.position.x >= rect.position.x &&
-			camera.position.y >= rect.position.y &&
-			camera.position.x < rect.end.x &&
-			camera.position.y < rect.end.y
-		)
-	is_in_bounds = bool(_int_detections)
-	
-	if is_in_bounds:
+	if is_in_bounds():
 		if is_current:
 			return
 		
@@ -119,7 +111,9 @@ func _physics_process(_delta: float) -> void:
 		
 		_switch_bounds()
 	
-	if !is_in_bounds && is_current:
+	
+	
+	if !is_in_bounds() && is_current:
 		is_current = false
 
 
@@ -152,3 +146,27 @@ func _switch_bounds() -> void:
 	
 	if _is_initial:
 		camera.force_update_scroll.call_deferred()
+
+func is_in_bounds():
+	var camera = Thunder._current_camera
+	var in_bounds: bool
+	var has_cam_area: bool = (
+		(camera.has_meta(&"cam_area") &&
+		camera.get_meta(&"cam_area", null) != self) ||
+		!camera.has_meta(&"cam_area")
+	)
+	var detections: Array = _det_areas if len(_det_areas) > 0 else [self]
+	var _int_detections: int = 0
+	for i in detections:
+		var rect = _get_cam_rect(i)
+		
+		_int_detections += int(
+			has_cam_area &&
+			camera.position.x >= rect.position.x &&
+			camera.position.y >= rect.position.y &&
+			camera.position.x < rect.end.x &&
+			camera.position.y < rect.end.y
+		)
+	in_bounds = bool(_int_detections)
+	
+	return in_bounds
