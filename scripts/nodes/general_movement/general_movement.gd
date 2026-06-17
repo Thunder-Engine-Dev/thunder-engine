@@ -95,7 +95,7 @@ func stopwatch_unpause(from_stopwatch: bool = false) -> void:
 
 
 func _life_time_ended() -> void:
-	if !is_inside_tree(): return
+	if !is_inside_tree() || !vis_enabler_node: return
 	if !vis_enabler_node.is_on_screen():
 		queue_free()
 		print_verbose("[GMBody2D] %s: freed by life time" % [name])
