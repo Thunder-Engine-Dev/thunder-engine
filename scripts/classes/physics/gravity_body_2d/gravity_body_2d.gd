@@ -2,9 +2,8 @@
 extends CorrectedCharacterBody2D
 class_name GravityBody2D
 
-## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve calculations of gravity and slide collsion.
-##
-##
+## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve
+## calculations of gravity and slide collision.
 
 ## Default gravity acceleration
 const GRAVITY: float = 2500.0
@@ -20,7 +19,8 @@ const GRAVITY: float = 2500.0
 ## The gravity_direction of the body, with length always [code]1.0[/code][br]
 ## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
 @export var gravity_dir: Vector2 = Vector2.DOWN
-## Defines whether the returned value of [method get_global_gravity_dir] equals [member gravity_dir] following the bodie's [member Node2D.global_rotation] or not
+## Defines whether the returned value of [method get_global_gravity_dir] equals [member gravity_dir]
+## following the bodie's [member Node2D.global_rotation] or not
 @export var gravity_dir_rotation: bool = true
 ## Defines the scale of [member GRAVITY], then the gravity acceleration = [member GRAVITY] * [member gravity_scale]
 @export var gravity_scale: float

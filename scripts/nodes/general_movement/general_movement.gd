@@ -1,18 +1,24 @@
 extends GravityBody2D
 class_name GeneralMovementBody2D
 
+## Useful for creating a general purpose moving enemy in 2D that interacts with the world.
 ##
+## This powerful class can be used as is for simple enemies like Goombas or Spinies, and can be extended
+## with additional functionality to create more complex enemies.
+
+## When instanced, changes its direction to look at player. Otherwise, the default direction is used.
 @export var look_at_player: bool
-## -1 is Left, 1 is Right.
+## Forces the direction of the body.
 @export_enum("Disabled: 0", "Left: -1", "Right: 1") var force_direction: int = 0
-##
+## When enabled, toggles the referenced sprite's [code]flip_h[/code] property when changing directions
+## accordingly.
 @export var turn_sprite: bool = true
-##
+## When [code]true[/code], moving on slopes upwards retains the diagonal speed, making slopes act as "bounce pads".
 @export var slide: bool
-## How many seconds the enemy should live. When elapsed, disappears off-screen. 0 to disable
+## How many seconds the enemy should live. When elapsed, disappears off-screen. 0 to disable.
 @export var life_time: float
 @export_group("References")
-##
+## Set this property to a valid Sprite2D or an AnimatedSprite2D child of this body.
 @export var sprite: NodePath
 @export_node_path("VisibleOnScreenEnabler2D") var visible_on_screen_enabler := NodePath("VisibleOnScreenEnabler2D")
 @export_node_path("VisibleOnScreenNotifier2D") var visible_on_screen_notifier := NodePath("VisibleOnScreenNotifier2D")

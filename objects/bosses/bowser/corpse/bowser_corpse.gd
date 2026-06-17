@@ -1,6 +1,6 @@
 extends Area2D
 
-const LAVA_BUBBLES = preload("res://engine/objects/effects/bubble/lava_bubbles.tscn")
+const LAVA_BUBBLES = preload("res://engine/objects/bosses/bowser/corpse/lava_bubbles_bowser.tscn")
 const GRAVITY: float = 2500.0
 
 @export_category("Bowser's Corpse")
@@ -50,8 +50,3 @@ func got_in_lava() -> void:
 	Scenes.current_scene.add_child(bubbles)
 	bubbles.position = global_position + Vector2(0, 32)
 	bubbles.reset_physics_interpolation()
-	var tw = bubbles.create_tween()
-	tw.tween_interval(1.0)
-	tw.tween_callback(bubbles.set_emitting.bind(false))
-	tw.tween_interval(1.0)
-	tw.tween_callback(bubbles.queue_free)

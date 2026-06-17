@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c70c1ulsxuyn3"]
+
+[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="1_oehup"]
+[ext_resource type="Material" uid="uid://6enlom87aw4g" path="res://engine/objects/bosses/bowser/corpse/lava_bubbles_bowser.tres" id="2_u8oq6"]
+
+[node name="LavaBubblesBowser" unique_id=1342365729 instance=ExtResource("1_oehup")]
+process_material = ExtResource("2_u8oq6")
+
+[node name="Timer" type="Timer" parent="." index="0" unique_id=1151612690]
+one_shot = true
+autostart = true
+
+[node name="Timer2" type="Timer" parent="." index="1" unique_id=266209236]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="set_emitting" binds= [false]]
+[connection signal="timeout" from="Timer2" to="." method="queue_free"]

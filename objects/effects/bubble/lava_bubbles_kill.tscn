@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c48ah60x3adlf"]
+
+[ext_resource type="Texture2D" uid="uid://dy4o2w7nrwsyq" path="res://engine/objects/effects/bubble/bubble_lava.png" id="1_l8fq5"]
+[ext_resource type="Material" uid="uid://dkgslwrsmy1nt" path="res://engine/objects/effects/bubble/lava_bubbles_kill.tres" id="2_l8fq5"]
+[ext_resource type="Script" uid="uid://bicwkqx8o4jiu" path="res://engine/scripts/nodes/gpu_particles_2d/gpu_particles_2d.gd" id="3_t25mc"]
+
+[node name="LavaBubblesKill" type="GPUParticles2D" unique_id=1342365729]
+amount = 25
+texture = ExtResource("1_l8fq5")
+lifetime = 0.8
+visibility_rect = Rect2(-80, -128, 160, 160)
+process_material = ExtResource("2_l8fq5")
+script = ExtResource("3_t25mc")
+
+[connection signal="finished" from="." to="." method="queue_free"]

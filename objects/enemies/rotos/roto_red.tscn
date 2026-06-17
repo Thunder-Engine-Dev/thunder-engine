@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_3420r"]
 [ext_resource type="Texture2D" uid="uid://d1rtgrsfyf0pj" path="res://engine/objects/enemies/rotos/roto_red.png" id="2_ib7bh"]
 [ext_resource type="Script" uid="uid://bq7icuvs1dilb" path="res://engine/scripts/classes/effecters/point_light_2d_appear.gd" id="3_cjxur"]
-[ext_resource type="PackedScene" uid="uid://b88ks57c23lyq" path="res://engine/objects/effects/bubble/lava_bubbles.tscn" id="4_rm4x7"]
+[ext_resource type="PackedScene" uid="uid://c48ah60x3adlf" path="res://engine/objects/effects/bubble/lava_bubbles_kill.tscn" id="5_cjxur"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_g8kvb"]
 [ext_resource type="Script" uid="uid://2hwja2gjpc7g" path="res://engine/objects/enemies/_dead/prefabs/do_killed_emit_particles.gd" id="5_rhdfg"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="6_ile01"]
@@ -216,11 +216,11 @@ metadata/_snap_enabled = true
 
 [sub_resource type="Resource" id="Resource_caaoh"]
 script = ExtResource("5_g8kvb")
-creation_nodepack = ExtResource("4_rm4x7")
+creation_nodepack = ExtResource("5_cjxur")
 trans_inheritances = 2
 visi_z_index = 3
 custom_vars = {
-"amount": 15
+"lifetime": 0.3
 }
 custom_script = ExtResource("5_rhdfg")
 
@@ -264,6 +264,7 @@ killing_creation = SubResource("Resource_caaoh")
 killing_scores = 400
 killing_sound_succeeded = ExtResource("6_ile01")
 frozen_enabled = false
+sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"killing_enabled", &"stomping_standard", &"center_node"]
 
 [connection signal="killed_succeeded" from="EnemyAttacked" to="." method="queue_free"]
