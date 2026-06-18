@@ -141,7 +141,7 @@ killing_immune = {
 "boomerang": false,
 "fireball": true,
 "hammer": false,
-"iceball": false,
+"iceball": true,
 "shell": true,
 "shell_defence": 99
 }
@@ -149,6 +149,7 @@ killing_creation = SubResource("Resource_j7a5f")
 killing_scores = 400
 killing_sound_succeeded = ExtResource("6_cdkox")
 killing_sound_failed = ExtResource("7_58bjx")
+frozen_enabled = false
 ice_sprite = NodePath("../../Sprite")
 metadata/_edit_pinned_properties_ = [&"killing_creation", &"killing_immune", &"stomping_standard", &"killing_sound_succeeded", &"killing_sound_failed"]
 

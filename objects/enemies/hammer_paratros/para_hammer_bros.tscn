@@ -111,6 +111,7 @@ killing_creation = SubResource("Resource_yp7dl")
 killing_scores = 200
 killing_sound_succeeded = ExtResource("7_a1xfa")
 ice_sprite = NodePath("../../Sprite")
+ice_fallable = false
 metadata/_edit_pinned_properties_ = [&"stomping_sound", &"stomping_scores", &"stomping_creation", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=367743783]

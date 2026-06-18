@@ -74,7 +74,6 @@ animations = [{
 [node name="KoopaParatroopaGreen" type="Node2D" unique_id=1133360352 groups=["#circle"]]
 script = ExtResource("1_nfn03")
 amplitude = Vector2(0, 50)
-phase = 155.92731445893563
 frequency = 2.0
 random_phase = true
 sprite_path = NodePath("Sprite")
@@ -99,6 +98,7 @@ killing_creation = SubResource("Resource_llg06")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_ilfy3")
 ice_sprite = NodePath("../../Sprite")
+ice_fallable = false
 custom_vars = {
 "attachment_killed": NodePath("../../Sprite/Dead")
 }

@@ -109,8 +109,9 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 		else:
 			ScoreText.new(str(target_enemy_attacked.killing_scores), target_enemy_attacked._center)
 			Data.add_score(target_enemy_attacked.killing_scores)
-	# Gets blocked
-	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack"):
+	# Gets blocked — shell dies unless the target opts out or is immune to shells.
+	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack") \
+			&& !target_enemy_attacked.killing_immune.get(&"shell", false):
 		if &"speed" in target_enemy_attacked.owner:
 			enemy_attacked.set_meta(
 				&"attacker_speed", target_enemy_attacked.owner.speed
