@@ -97,7 +97,7 @@ func _ready() -> void:
 	
 	if destroy_enabled:
 		start_timedown()
-		_timer_destroy.timeout.connect(break_ice.bind(false, false, "таймер оттаивания"))
+		_timer_destroy.timeout.connect(break_ice)
 		
 		if flash_pre_seconds < destroy_delay:
 			if _being_grabbed:
@@ -125,7 +125,7 @@ func _ready() -> void:
 				modulate.a = alpha
 				return
 			else:
-				tw.finished.connect(break_ice.bind(false, false, "мигание перед оттаиванием"))
+				tw.finished.connect(break_ice)
 	
 	grabbing_got_thrown.connect(
 		func(_is_ungrab: bool) -> void:
@@ -165,15 +165,15 @@ func _physics_process(delta: float) -> void:
 			var collider := col.get_collider()
 			if collider is StaticBumpingBlock && collider.has_method(&"bricks_break"):
 				collider.bricks_break()
-				break_ice(true, true, "столкновение с разрушаемым блоком")
+				break_ice(true, true)
 	
 	if !_break_blocked && break_by_speed:
 		if absf(speed_previous.x) > breaking_speed && is_on_wall():
-			break_ice(true, true, "скорость при ударе о стену")
+			break_ice(true, true)
 		if speed_previous.y < 0 && is_on_ceiling():
-			break_ice(true, true, "скорость при ударе о потолок")
+			break_ice(true, true)
 		if speed_previous.y > breaking_speed && _has_solid_floor_collision():
-			break_ice(true, true, "скорость при ударе о пол")
+			break_ice(true, true)
 	
 	_attack.enabled = _attack_active && !is_zero_approx(velocity.length_squared())
 	
@@ -271,7 +271,7 @@ func _handle_post_ungrab() -> void:
 	_break_blocked = true
 	if break_if_stuck && _is_stuck_after_ungrab_via_solid_checker():
 		_break_blocked = false
-		break_ice(true, true, "застревание сразу после ungrab")
+		break_ice(true, true)
 		return
 	await get_tree().physics_frame
 	if !is_instance_valid(self):
@@ -296,7 +296,7 @@ func _try_break_if_geometry_stuck() -> void:
 		return
 	_geometry_stuck_pending = false
 	_restore_player_collision = false
-	break_ice(true, true, "застревание в геометрии")
+	break_ice(true, true)
 
 
 func _try_break_if_player_stuck_inside() -> void:
@@ -307,7 +307,7 @@ func _try_break_if_player_stuck_inside() -> void:
 	if !_is_player_stuck_via_solid_checker():
 		return
 	_restore_player_collision = false
-	break_ice(true, true, "игрок застрял внутри")
+	break_ice(true, true)
 
 
 func _try_restore_player_collision() -> void:
@@ -527,12 +527,9 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 ## Breaks the ice.[br]
 ## If [param heavy] is [code]true[/code], the object in the block will be destroyed.[br]
 ## [param sound_heavily] determines which type of sound will play on the ice's breaking.
-func break_ice(heavy: bool = false, sound_heavily: bool = false, reason: String = "неизвестно") -> void:
+func break_ice(heavy: bool = false, sound_heavily: bool = false) -> void:
 	if process_mode == PROCESS_MODE_DISABLED:
-		print("[IceBlock] break_ice отменён (process disabled): ", reason, " @ ", global_position)
 		return
-	
-	print("[IceBlock] break_ice: ", reason, " heavy=", heavy, " sound_heavily=", sound_heavily, " @ ", global_position)
 	
 	if forced_heavy_break:
 		heavy = true
