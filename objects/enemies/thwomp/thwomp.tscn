@@ -115,6 +115,7 @@ animations = [{
 collision_layer = 0
 collision_mask = 32
 platform_on_leave = 2
+platform_floor_layers = 4294901760
 script = ExtResource("1_2gn4n")
 gravity_scale = 1.0
 

@@ -67,6 +67,8 @@ _data = {
 [node name="Icicle" type="CharacterBody2D" unique_id=994579020]
 collision_layer = 0
 collision_mask = 32
+platform_on_leave = 2
+platform_floor_layers = 4294901760
 script = ExtResource("1_cx3ph")
 trigger_area = Rect2(-64, -32, 128, 480)
 stunning_sound = ExtResource("2_jkm6i")
