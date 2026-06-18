@@ -37,18 +37,18 @@ func _ready() -> void:
 			_det_areas.append(i)
 	if Engine.is_editor_hint():
 		return
+	
 	var player: Player = Thunder._current_player
 	if !player: return
 	
 	_physics_process.call_deferred(0)
 	
-
 	if is_in_bounds() and change_music:
 		change_music_on_ready.call_deferred()
-
 	
 	await get_tree().physics_frame
 	_is_initial = false
+
 
 func change_music_on_ready():
 	var music_loader = get_node_or_null(music_loader_ref)
@@ -58,6 +58,7 @@ func change_music_on_ready():
 		if !Audio._music_channels.get(music_loader.channel_id): return
 		if music_loader.music[set_music_index] != Audio._music_channels.get(music_loader.channel_id).stream:
 			music_loader._change_music(music_loader.index, music_loader.channel_id)
+
 
 func _draw() -> void:
 	if !Engine.is_editor_hint(): return
@@ -92,7 +93,8 @@ func _get_cam_rect(rect: Control) -> Rect2:
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
-	if is_in_bounds():
+	var _is_in_bounds: bool = is_in_bounds()
+	if _is_in_bounds:
 		if is_current:
 			return
 		
@@ -111,9 +113,7 @@ func _physics_process(_delta: float) -> void:
 		
 		_switch_bounds()
 	
-	
-	
-	if !is_in_bounds() && is_current:
+	if !_is_in_bounds && is_current:
 		is_current = false
 
 
@@ -146,6 +146,7 @@ func _switch_bounds() -> void:
 	
 	if _is_initial:
 		camera.force_update_scroll.call_deferred()
+
 
 func is_in_bounds():
 	var camera = Thunder._current_camera
