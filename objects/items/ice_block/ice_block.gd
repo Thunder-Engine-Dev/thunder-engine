@@ -60,7 +60,7 @@ var _being_grabbed: bool
 var _break_blocked: bool = false
 
 @onready var _sprite: NinePatchRect = $SpriteNP
-@onready var _collision_shapes: Array[CollisionShape2D] = [$CollisionShape2D, $Body/Collision] 
+@onready var _collision_shapes: Array[CollisionShape2D] = [$CollisionShape2D, $Body/Collision, $AnimatableBody2D/Collision] 
 @onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
@@ -274,7 +274,7 @@ func _get_in_ice_sprite_size(drawn_sprite: Node2D) -> Vector2:
 
 func _on_ungrabbed() -> void:
 	_break_blocked = true
-	print.call_deferred(_solid_checker.get_overlapping_bodies())
+	print(_solid_checker.get_overlapping_bodies())
 	if break_if_stuck && _solid_checker.get_overlapping_bodies().size() > 0:
 		break_ice(true)
 		return

@@ -21,8 +21,9 @@ size = Vector2(32, 32)
 size = Vector2(24, 24)
 
 [node name="IceBlock" type="CharacterBody2D" unique_id=1940788540 groups=["slippery"]]
-collision_layer = 112
+collision_layer = 80
 collision_mask = 65
+platform_floor_layers = 4294967294
 script = ExtResource("1_s4yfw")
 gravity_dir_rotation = false
 gravity_scale = 0.5
@@ -104,11 +105,19 @@ one_shot = true
 
 [node name="GrabbableModifier" parent="." unique_id=1600528818 instance=ExtResource("6_ch7y1")]
 
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1375621159]
+collision_layer = 32
+collision_mask = 0
+sync_to_physics = false
+
+[node name="Collision" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=2027939181]
+visible = false
+shape = SubResource("RectangleShape2D_ena34")
+
 [node name="SolidChecker" type="Area2D" parent="." unique_id=1981154647]
 visible = false
 collision_layer = 0
 collision_mask = 96
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SolidChecker" unique_id=1332096884]
 shape = SubResource("RectangleShape2D_ouc48")
