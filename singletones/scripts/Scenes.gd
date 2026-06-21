@@ -20,10 +20,11 @@ signal scene_ready
 ## Emitted when loading the scene failed
 signal scene_change_failed
 
-const LOADING_SCREEN = preload("res://engine/components/loading_screen/loading_screen.tscn")
+var LOADING_SCREEN = load("res://engine/components/loading_screen/loading_screen.tscn")
 
 # Loaded scene buffer for optimization purpose
 var _current_scene_buffer: PackedScene
+var _pending_scenes: Array
 ## Current scene
 var current_scene: Node
 ## Name of previous scene
@@ -49,6 +50,7 @@ func load_scene_deferred(scene: Node) -> void:
 	current_scene.free()
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
+	_pending_scenes = []
 	scene_changed.emit(current_scene)
 	if Thunder.autosplitter.get_conf("pause_on_loading"):
 		Thunder.autosplitter.unpause_igt()
@@ -71,6 +73,7 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 	
 	current_scene = scene
 	GlobalViewport.vp.add_child(current_scene)
+	_pending_scenes = []
 	scene_changed.emit(current_scene)
 	if Thunder.autosplitter.get_conf("pause_on_loading"):
 		Thunder.autosplitter.unpause_igt()
@@ -82,11 +85,15 @@ func load_scene_from_packed(pck: PackedScene) -> void:
 
 ## Loads the scene from the given path and instantiates it
 func goto_scene(path: String) -> void:
+	if !_pending_scenes.is_empty():
+		push_error("Trying to load a scene while another one is loading. Aborting")
+		return
 	pre_scene_changed.emit()
 	if Thunder.autosplitter.get_conf("pause_on_loading"):
 		Thunder.autosplitter.pause_igt()
 	if !_current_scene_buffer || _current_scene_buffer.resource_path != path:
 		_current_scene_buffer = load(path)
+	_pending_scenes.append(_current_scene_buffer)
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
 
 

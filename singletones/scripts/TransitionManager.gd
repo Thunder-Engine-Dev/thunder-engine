@@ -12,6 +12,9 @@ func accept_transition(trans: Transition) -> void:
 		GlobalViewport.center_container.add_child(trans)
 	else:
 		GlobalViewport.add_child(trans)
+	
+	if is_instance_valid(current_transition):
+		current_transition.queue_free()
 	current_transition = trans
 	
 	trans.start.connect(func():

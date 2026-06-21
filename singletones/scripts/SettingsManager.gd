@@ -206,8 +206,7 @@ func _get_current_key(action: StringName) -> String:
 	var keys = InputMap.action_get_events(action)
 	for key in keys:
 		if key is InputEventKey:
-			print(key.as_text())
-			return key.as_text().get_slice(' (', 0)
+			return key.as_text().get_slice(' (', 0).replacen(' - Physical', '')
 	return ""
 
 ## Returns the joypad button label of specified action
