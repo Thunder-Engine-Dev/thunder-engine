@@ -100,39 +100,44 @@ func _ready() -> void:
 		start_timedown()
 		_timer_destroy.timeout.connect(break_ice)
 		
-		if flash_pre_seconds < destroy_delay:
-			if _being_grabbed:
-				return
-			
-			const FLASH_INTERVAL := 0.06
-			
-			var alpha := modulate.a
-			
-			await get_tree().create_timer(destroy_delay - flash_pre_seconds, false, true).timeout
-			
-			if _being_grabbed:
-				return
-			elif process_mode == PROCESS_MODE_DISABLED:
-				return
-			
-			_sprite.material = null
-			
-			var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))) \
-				.set_trans(Tween.TRANS_SINE)#.set_pause_mode(Tween.TWEEN_PAUSE_BOUND)
-			tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
-			tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
-			
-			if _being_grabbed:
-				tw.kill()
-				modulate.a = alpha
-				return
-			else:
-				tw.finished.connect(break_ice)
+		_prepare_flashing_animation()
 	
 	grabbing_got_thrown.connect(
 		func(_is_ungrab: bool) -> void:
 			break_by_speed = true
 	)
+
+
+func _prepare_flashing_animation() -> void:
+	if flash_pre_seconds >= destroy_delay:
+		return
+	if _being_grabbed:
+		return
+	
+	const FLASH_INTERVAL := 0.05
+	
+	var alpha := modulate.a
+	
+	await get_tree().create_timer(destroy_delay - flash_pre_seconds, false, true).timeout
+	
+	if _being_grabbed:
+		return
+	elif process_mode == PROCESS_MODE_DISABLED:
+		return
+	
+	#_sprite.material = null
+	
+	var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / (FLASH_INTERVAL * 2)))) \
+		.set_trans(Tween.TRANS_SINE).set_pause_mode(Tween.TWEEN_PAUSE_BOUND)
+	tw.tween_property(self, ^"modulate:a", 0.1, FLASH_INTERVAL)
+	tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
+	
+	if _being_grabbed:
+		tw.kill()
+		modulate.a = alpha
+		return
+	else:
+		tw.finished.connect(break_ice)
 
 
 func _prepare_solid_checker_shape() -> void:
