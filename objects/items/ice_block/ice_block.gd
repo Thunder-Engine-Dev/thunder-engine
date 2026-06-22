@@ -64,6 +64,7 @@ var _powerup_collision_exceptions: Array[Powerup] = []
 @onready var _attack: ShapeCast2D = $Attack
 @onready var _timer_destroy: Timer = $TimerDestroy
 @onready var _visible_on_screen: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
+@warning_ignore("unused_private_class_variable")
 @onready var _solid_checker: Area2D = $SolidChecker
 @onready var _solid_checker_shape: CollisionShape2D = $SolidChecker/CollisionShape2D
 @onready var _powerup_solid_checker_shape: CollisionShape2D = $PowerupSolidChecker/CollisionShape2D
@@ -92,8 +93,8 @@ func _ready() -> void:
 			contained_item.queue_free()
 	)
 	
-	for i in 10:
-		await get_tree().physics_frame
+	#for i in 10:
+	await get_tree().physics_frame
 	
 	if destroy_enabled:
 		start_timedown()
@@ -103,7 +104,7 @@ func _ready() -> void:
 			if _being_grabbed:
 				return
 			
-			const FLASH_INTERVAL := 0.08
+			const FLASH_INTERVAL := 0.06
 			
 			var alpha := modulate.a
 			
@@ -116,7 +117,8 @@ func _ready() -> void:
 			
 			_sprite.material = null
 			
-			var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))).set_trans(Tween.TRANS_SINE)
+			var tw := create_tween().set_loops(int(ceilf(flash_pre_seconds / 0.1))) \
+				.set_trans(Tween.TRANS_SINE)#.set_pause_mode(Tween.TWEEN_PAUSE_BOUND)
 			tw.tween_property(self, ^"modulate:a", 0.25, FLASH_INTERVAL)
 			tw.tween_property(self, ^"modulate:a", alpha, FLASH_INTERVAL)
 			
@@ -179,6 +181,10 @@ func _physics_process(delta: float) -> void:
 	
 	speed.x = move_toward(speed.x, 0, deceleration * delta)
 	
+	# fix ice blocks accelerating speed and breaking randomly when standing on each other
+	if is_on_floor() && velocity.y > 0:
+		velocity.y = 1
+	
 	_update_item_floor_collision_layer()
 	_try_break_if_geometry_stuck()
 	_try_break_if_player_stuck_inside()
@@ -206,7 +212,7 @@ func _has_solid_floor_collision() -> bool:
 		if _collision.get_normal().dot(up_direction) <= 0.5:
 			continue
 		var collider = _collision.get_collider()
-		if collider is Player or collider is CharacterBody2D:
+		if collider is Player || (collider is CharacterBody2D && collider.get_script() != get_script()):
 			return false
 		return true
 	return false
@@ -370,18 +376,18 @@ func _is_geometry_embedded() -> bool:
 			return true
 	
 	for i in get_slide_collision_count():
-		var collision := get_slide_collision(i)
-		if !collision:
+		var _collision := get_slide_collision(i)
+		if !_collision:
 			continue
-		var normal := collision.get_normal()
+		var normal := _collision.get_normal()
 		if !_is_wall_or_ceiling_contact(normal):
 			continue
-		var collider = collision.get_collider()
+		var collider = _collision.get_collider()
 		if !_is_stuck_geometry_collider(collider):
 			continue
 		if !(collider is TileMap or collider is TileMapLayer or collider is StaticBody2D):
 			continue
-		if collision.get_depth() >= STUCK_GEOMETRY_DEPTH:
+		if _collision.get_depth() >= STUCK_GEOMETRY_DEPTH:
 			return true
 		if _solid_checker_intersect_shape(SOLID_CHECKER_MASK, 1, _solid_checker_shape, 0.0).is_empty():
 			continue
