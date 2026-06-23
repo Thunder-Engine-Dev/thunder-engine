@@ -53,13 +53,18 @@ func _physics_process(delta: float) -> void:
 	
 	animate()
 	
-	if is_faster:
-		ex = faster_ex
-	
 	if reached: return
-	if Input.is_action_just_pressed(&"m_jump") || Input.is_action_just_pressed(&"m_attack"):
-		is_faster = true
-		map.player_fast_forwarded.emit()
+	_process_fastforward(delta)
+
+
+func _process_fastforward(delta) -> void:
+	if !is_faster:
+		if Input.is_action_just_pressed(&"m_jump") || Input.is_action_just_pressed(&"m_attack"):
+			is_faster = true
+			map.player_fast_forwarded.emit()
+	
+	if is_faster:
+		ex = min(ex + ex, faster_ex)
 
 
 func move(delta: float) -> void:
@@ -101,12 +106,12 @@ func animate() -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	var par = area.get_parent()
 	if par.is_in_group(&"map_dot"):
-		par.set_meta(&"is_appearing", true)
-		if fast_forwarding:
-			par.visible = true
-		else:
-			await get_tree().create_timer(0.3 / ex, false).timeout
-			if !is_instance_valid(par): return
-			par.visible = true
-			par.set_meta(&"is_appearing", false)
-		return
+		par.is_appearing = true
+		par.appear_sec = 0.3 / ex
+			#par.visible = true
+		#else:
+			#await get_tree().create_timer(0.3 / ex, false).timeout
+			#if !is_instance_valid(par): return
+			#par.visible = true
+			#par.set_meta(&"is_appearing", false)
+		#return
