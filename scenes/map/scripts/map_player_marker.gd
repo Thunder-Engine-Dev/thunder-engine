@@ -58,7 +58,7 @@ func _ready() -> void:
 				loader.set_index.call_deferred(change_music_index)
 			
 			if is_instance_valid(player.camera):
-				player.camera.reset_smoothing.call_deferred()
+				player.camera.reset_smoothing()
 				player.camera.reset_physics_interpolation()
 			
 			marker_space.make_dots_visible_before(self)
