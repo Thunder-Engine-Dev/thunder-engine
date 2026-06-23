@@ -6,12 +6,12 @@ var is_appearing: bool = false
 
 @onready var player: Node2D = Scenes.current_scene.get_node(Scenes.current_scene.player)
 
-func _ready() -> void:
-	Scenes.current_scene.player_fast_forwarded.connect(_appear)
+#func _ready() -> void:
+	#Scenes.current_scene.player_fast_forwarded.connect(_appear)
+#
+#func _appear() -> void:
+	#if visible: return
 
-func _appear() -> void:
-	if visible: return
-	#appear_sec = 0.02
 
 func _physics_process(delta: float) -> void:
 	if !is_appearing:
