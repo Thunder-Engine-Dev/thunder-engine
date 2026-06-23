@@ -3,10 +3,11 @@
 [ext_resource type="Script" uid="uid://cb8357r1fw6ot" path="res://engine/objects/enemies/_dead/enemy_stomped.gd" id="1_slj5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iq7ol"]
+resource_local_to_scene = true
 size = Vector2(0, 0)
 
 [node name="EnemyStomped" type="CharacterBody2D" unique_id=1814186958]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_slj5s")
 gravity_scale = 0.5

@@ -1,10 +1,10 @@
 extends GeneralMovementBody2D
 
-@export var disappearing_strength:float = 0.1
+@export var disappearing_strength: float = 0.1
 
 var destroying: bool
 
-@onready var collision_box:CollisionShape2D = $Collision
+@onready var collision_box: CollisionShape2D = $Collision
 
 
 func _ready() -> void:
@@ -19,5 +19,5 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !destroying: return
 	
-	modulate.a -= 0.1 * Thunder.get_delta(delta)
+	modulate.a -= disappearing_strength * Thunder.get_delta(delta)
 	if modulate.a <= 0: queue_free()
