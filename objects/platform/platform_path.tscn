@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_p2p8j"]
 [ext_resource type="Texture2D" uid="uid://b0lmhrk7erkld" path="res://engine/objects/platform/platform.png" id="2_cmtwa"]
 [ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_co62k"]
+[ext_resource type="Script" uid="uid://bmpelrkmkjyq7" path="res://engine/scripts/nodes/screen_stable_node_2d/screen_stable_node_2d.gd" id="4_x1hgi"]
 
 [node name="PlatformPath" type="PathFollow2D" unique_id=1976199190]
 rotates = false
@@ -23,10 +24,10 @@ polygon = PackedVector2Array(-48, 0, 48, 0, 48, 18, -48, 18)
 one_way_collision = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Block" unique_id=166578107]
-physics_interpolation_mode = 2
 show_behind_parent = true
 position = Vector2(0, 8)
 texture = ExtResource("2_cmtwa")
+script = ExtResource("4_x1hgi")
 
 [node name="Block2" type="AnimatableBody2D" parent="." unique_id=2083995296]
 visible = false

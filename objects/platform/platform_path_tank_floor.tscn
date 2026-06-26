@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_y30xh"]
 [ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_pi1bs"]
 [ext_resource type="Texture2D" uid="uid://cpc057l26xydx" path="res://engine/objects/platform/tank_ground.png" id="3_yc4n1"]
+[ext_resource type="Script" uid="uid://bmpelrkmkjyq7" path="res://engine/scripts/nodes/screen_stable_node_2d/screen_stable_node_2d.gd" id="4_rlule"]
 
 [node name="PlatformPathTankFloor" type="PathFollow2D" unique_id=542241214]
 rotates = false
@@ -29,3 +30,4 @@ position = Vector2(0, 32)
 texture = ExtResource("3_yc4n1")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 64)
+script = ExtResource("4_rlule")
