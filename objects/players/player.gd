@@ -114,7 +114,6 @@ var ignore_input: bool:
 var _force_suit: bool
 var _suit_appear: bool
 var _suit_tree_paused: bool
-var _sprite_ready: bool = false
 
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
@@ -204,8 +203,6 @@ func _ready() -> void:
 		if Data.values.lives == -1 && death_check_for_lives:
 			Data.values.lives = ProjectSettings.get_setting("application/thunder_settings/player/default_lives", 4)
 	).call_deferred()
-	
-	_detach_sprite.call_deferred()
 
 
 var _starman_faded: bool
@@ -426,9 +423,6 @@ func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> voi
 				db.wait_time = death_wait_time
 				db.check_for_lives = death_check_for_lives
 				db.jump_to_scene = death_jump_to_scene
-				#if _suit_pause_tweak:
-				#	Scenes.custom_scenes.pause.paused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_INHERIT))
-				#	Scenes.custom_scenes.pause.unpaused.connect(db.set_process_mode.bind(Node.PROCESS_MODE_ALWAYS))
 				if death_sprite:
 					var dsdup: Node2D = death_sprite.duplicate()
 					var character_death_sprite = CharacterManager.get_misc_texture("death")
@@ -437,11 +431,6 @@ func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> voi
 					db.add_child(dsdup)
 					dsdup.visible = true
 		).create_2d().get_node()
-
-	#if _suit_pause_tweak && _db:
-	#	get_tree().paused = true
-	#	_db.process_mode = Node.PROCESS_MODE_ALWAYS
-	#	Scenes.custom_scenes.pause._no_unpause = true
 
 	died.emit()
 	died_with_body.emit(_db)
@@ -457,7 +446,6 @@ func is_starman() -> bool:
 
 
 func sync_position(sync_camera: bool = true) -> void:
-	#sprite_container.global_position = global_position.round()
 	if !sync_camera: return
 	var cam: Camera2D = Thunder._current_camera
 	if cam && cam is PlayerCamera2D:
@@ -497,26 +485,3 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 
 func _on_settings_updated() -> void:
 	skid.visible = SettingsManager.get_quality() != SettingsManager.QUALITY.MIN
-
-
-func _detach_sprite() -> void:
-#	sprite_container.reparent(get_parent())
-#	Thunder.reorder_on_top_of(sprite_container, self)
-#	sprite_container.reset_physics_interpolation()
-	_sprite_ready = true
-
-
-#func _exit_tree() -> void:
-	#if !_sprite_ready: return
-	#if !is_instance_valid(sprite_container):
-		#assert(false, "Trying to free an already freed sprite container")
-		#return
-	#sprite_container.queue_free()
-
-func _on_reset_interpolation() -> void:
-	if !is_instance_valid(sprite_container): return
-	sprite_container.reset_physics_interpolation.call_deferred()
-
-#func _notification(what: int) -> void:
-	#if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
-		#_on_reset_interpolation()

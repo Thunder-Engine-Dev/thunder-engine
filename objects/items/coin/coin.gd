@@ -10,6 +10,10 @@ const DEFAULT_SOUND = preload("res://engine/objects/items/coin/coin.wav")
 func _ready() -> void:
 	var _custom_sound = CharacterManager.get_sound_replace(enemy_attacked.killing_sound_succeeded, DEFAULT_SOUND, "coin", false)
 	enemy_attacked.killing_sound_succeeded = _custom_sound
+	body_entered.connect(func(body: Node2D):
+		if body == Thunder._current_player:
+			collect()
+	)
 
 
 func _play_sound() -> void:
@@ -22,12 +26,6 @@ func _from_bumping_block() -> void:
 	NodeCreator.prepare_2d(coin_effect, self).create_2d().bind_global_transform()
 	Data.add_coin()
 	queue_free()
-
-
-func _physics_process(delta):
-	if !Thunder._current_player: return
-	if overlaps_body(Thunder._current_player):
-		collect()
 
 
 func collect() -> void:

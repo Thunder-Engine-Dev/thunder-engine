@@ -6,8 +6,7 @@ var exploded: bool
 
 func _ready() -> void:
 	if exploded: return
-	await get_tree().physics_frame
-	_jump()
+	_jump.call_deferred()
 
 func _jump() -> void:
 	var pos: Vector2 = position

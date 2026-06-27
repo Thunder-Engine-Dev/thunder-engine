@@ -6,11 +6,13 @@ extends Node2D
 
 
 func _ready() -> void:
+	_physics_process(get_physics_process_delta_time())
+	
 	var tw: Tween = create_tween()
 	tw.tween_interval(6)
 	tw.tween_property(self, ^"modulate:a", 0, 0.5)
-	await tw.finished
-	queue_free()
+	tw.tween_callback(queue_free)
+
 
 func _physics_process(_delta: float) -> void:
 	var delta = Thunder.get_delta(_delta)

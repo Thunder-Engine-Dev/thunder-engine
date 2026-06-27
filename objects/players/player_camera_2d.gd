@@ -17,10 +17,12 @@ var _shocking: int = 0
 var _xscroll: float
 @onready var ofs: Vector2 = offset
 
+func _init() -> void:
+	process_callback = CAMERA2D_PROCESS_PHYSICS
+
 
 func _ready() -> void:
 	Thunder._current_camera = self
-	process_callback = CAMERA2D_PROCESS_PHYSICS
 	make_current()
 	teleport()
 	reset_physics_interpolation()

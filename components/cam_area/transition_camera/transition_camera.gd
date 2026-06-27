@@ -9,22 +9,19 @@ var function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_OUT
 
 func _ready() -> void:
 	var camera = Thunder._current_camera
-	position_smoothing_enabled = true
 	global_position = camera.get_screen_center_position()
-	
+	reset_physics_interpolation()
 	make_current()
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var camera = Thunder._current_camera
 	
 	Thunder.view.cam_border()
 	camera.make_current()
 	global_position = camera.get_screen_center_position()
 	
-	counter += speed * Thunder.get_delta(delta)
-	if counter > 1:
-		counter = 1
+	counter = minf(counter + speed * Thunder.get_delta(delta), 1.0)
 	
 	var eased_counter: float
 	
@@ -61,5 +58,4 @@ func _process(delta: float) -> void:
 	if counter == 1:
 		camera.make_current()
 		await get_tree().physics_frame
-		#Scenes.current_scene.falling_below_y_offset /= 10
 		queue_free()

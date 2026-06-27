@@ -23,7 +23,7 @@ func _ready() -> void:
 			items.append(i)
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if !menu_items_controller.focused: return
 	_timer += delta * speed
 	items[menu_items_controller.current_item_index].modulate.a = min(
