@@ -69,6 +69,10 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2r8ig")
 belongs_to = 1
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 0.0,
+"player": 0.0
+})
 sprite = NodePath("Sprite")
 speed = Vector2(200, 0)
 collision = false

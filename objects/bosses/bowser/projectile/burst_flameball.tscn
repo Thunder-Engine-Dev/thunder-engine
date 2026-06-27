@@ -57,6 +57,10 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2icyp")
 belongs_to = 1
+remove_offscreen_after_sec_tracking = Dictionary[String, float]({
+"enemy": 0.5,
+"player": 0.0
+})
 turn_sprite = false
 sprite = NodePath("Sprite")
 gravity_scale = 0.25
