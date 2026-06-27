@@ -5,8 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
 [ext_resource type="Material" uid="uid://cpd0lft71406i" path="res://engine/objects/core/checkpoint/textures/checkpoint_material.tres" id="4_ae8fc"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bp6fk"]
+[ext_resource type="AnimationLibrary" uid="uid://bf256cjjnh56l" path="res://engine/objects/core/checkpoint/textures/animation_max_quality.tres" id="6_25t2o"]
+[ext_resource type="Texture2D" uid="uid://u7226ng3patq" path="res://engine/objects/core/checkpoint/textures/max_checkpoint_mario.png" id="6_jvje8"]
+[ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="7_25t2o"]
+[ext_resource type="Texture2D" uid="uid://crtwhy4x3o4w" path="res://engine/objects/core/checkpoint/textures/max_text.png" id="8_67wr8"]
 
 [sub_resource type="Animation" id="Animation_4yr7j"]
 resource_name = "RESET"
@@ -197,7 +199,6 @@ texture = ExtResource("2_13hdd")
 [node name="TextFlying" type="Sprite2D" parent="." unique_id=865319115]
 visible = false
 z_index = 2
-material = SubResource("ShaderMaterial_bp6fk")
 position = Vector2(0, -86)
 texture = ExtResource("2_13hdd")
 
@@ -211,6 +212,23 @@ process_material = ExtResource("4_ae8fc")
 
 [node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying" unique_id=215224057]
 libraries/ = SubResource("AnimationLibrary_dmaa8")
+autoplay = &"RESET"
+
+[node name="SpriteMaxQuality" type="Sprite2D" parent="." unique_id=1715540176]
+visible = false
+z_index = 2
+position = Vector2(0, -86)
+texture = ExtResource("6_jvje8")
+script = ExtResource("7_25t2o")
+custom_texture_name = "checkpoint_max"
+
+[node name="TextMaxQuality" type="Sprite2D" parent="SpriteMaxQuality" unique_id=520081564]
+visible = false
+position = Vector2(0, 48)
+texture = ExtResource("8_67wr8")
+
+[node name="AnimationMaxQuality" type="AnimationPlayer" parent="SpriteMaxQuality" unique_id=1402031724]
+libraries/ = ExtResource("6_25t2o")
 autoplay = &"RESET"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1653193885]

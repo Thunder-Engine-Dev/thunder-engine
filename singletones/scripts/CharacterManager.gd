@@ -242,6 +242,8 @@ func _ready() -> void:
 	add_misc_texture(preload("res://engine/objects/players/prefabs/textures/luigi/luigi_dead.png"), "death", "Luigi")
 	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/cp_star.png"), "particle", "Mario")
 	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/cp_star.png"), "particle", "Luigi")
+	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/max_checkpoint_mario.png"), "checkpoint_max", "Mario")
+	add_misc_texture(preload("res://engine/objects/core/checkpoint/textures/max_checkpoint_luigi.png"), "checkpoint_max", "Luigi")
 	
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Mario")
 	add_misc_texture(DEFAULT_GLOBAL_SKIN_TWEAKS, "global_skin_tweaks", "Luigi")

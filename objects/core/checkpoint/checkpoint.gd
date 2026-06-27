@@ -20,6 +20,9 @@ signal respawned
 @onready var text = $Text
 @onready var animation_player = $AnimationPlayer
 @onready var animation_text_flying: AnimationPlayer = $TextFlying/AnimationTextFlying
+@onready var animation_max_quality: AnimationPlayer = $SpriteMaxQuality/AnimationMaxQuality
+@onready var sprite_max_quality: Sprite2D = $SpriteMaxQuality
+@onready var text_max_quality: Sprite2D = $SpriteMaxQuality/TextMaxQuality
 
 @onready var alpha: float = text.modulate.a
 
@@ -53,6 +56,8 @@ func _physics_process(delta) -> void:
 	if Data.values.checkpoint != id && animation_player.current_animation == "checkpoint":
 		deactivated.emit()
 		animation_player.play(&"RESET")
+		animation_max_quality.play(&"RESET")
+		animation_text_flying.play(&"RESET")
 		var tween = create_tween()
 		tween.tween_property(text, ^"modulate:a", alpha, 0.2)
 
@@ -71,8 +76,21 @@ func activate() -> void:
 	var tween = create_tween()
 	tween.tween_property(text, ^"modulate:a", 1.0, 0.2)
 	animation_player.play(&"checkpoint")
-	if SettingsManager.get_quality() != SettingsManager.QUALITY.MIN:
-		animation_text_flying.play(&"triggered")
+	match SettingsManager.get_quality():
+		SettingsManager.QUALITY.MID:
+			animation_text_flying.play(&"triggered")
+		SettingsManager.QUALITY.MAX:
+			animation_max_quality.play(&"triggered")
+			var tw = create_tween().set_loops(24).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+			tw.tween_await(get_tree().physics_frame)
+			tw.tween_callback(func():
+				var eff = Effect.trail(
+					sprite_max_quality, sprite_max_quality.texture, Vector2.ZERO,
+					false, false, true, 0.1, 0.5, null, -1, false
+				)
+				eff.self_modulate.a = 0.5
+				Thunder.reorder_on_top_of(self, eff)
+			)
 	
 	_play_voice_line()
 
@@ -92,5 +110,11 @@ func _play_voice_line() -> void:
 	
 	get_tree().create_timer(maxf(0.05, checkpoint_wait_tweak), false, false, true).timeout.connect(func() -> void:
 		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
+		if SettingsManager.get_quality() == SettingsManager.QUALITY.MAX:
+			text_max_quality.show()
+			text_max_quality.scale = Vector2.ZERO
+			text_max_quality.reset_physics_interpolation()
+			var tw = text_max_quality.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+			tw.tween_property(text_max_quality, "scale", Vector2.ONE, 0.4)
 	)
 	
