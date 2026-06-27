@@ -161,8 +161,8 @@ func _on_attack_timeout() -> void:
 	match _step_attacking:
 		# Detection for attack
 		0:
-			if !Thunder.view.is_getting_closer(self, 32):
-				return
+			#if !Thunder.view.is_getting_closer(self, 32):
+			#	return
 			var chance: float = Thunder.rng.get_randf()
 			var random_delay: int = floori(log(chance) / log(1 - attacking_chance))
 			_step_attacking = -1
