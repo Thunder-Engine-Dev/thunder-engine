@@ -24,6 +24,9 @@ custom_vars = {
 }
 custom_script = ExtResource("4_ugd8k")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tjojy"]
+size = Vector2(30, 46)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3uu2e"]
 atlas = ExtResource("8_0itiq")
 region = Rect2(0, 0, 32, 48)
@@ -61,11 +64,11 @@ self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_w3cho")
 
 [node name="Body" type="Area2D" parent="." unique_id=1175440472]
-visible = false
 collision_layer = 2
 collision_mask = 7
 
 [node name="Collision" type="CollisionShape2D" parent="Body" unique_id=197228909]
+visible = false
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_64hdc")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
@@ -85,12 +88,23 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_wsasv")
 killing_sound_failed = ExtResource("7_evmnd")
 ice_sprite = NodePath("../../Sprite")
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"killing_immune", &"killing_creation"]
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=627113401]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=59101195]
+visible = false
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_tjojy")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1626429171]
 z_index = -2

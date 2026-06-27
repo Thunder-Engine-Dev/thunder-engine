@@ -35,6 +35,9 @@ custom_vars = {
 }
 custom_script = ExtResource("8_wfga7")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qo35m"]
+size = Vector2(30, 158)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hag0d"]
 atlas = ExtResource("10_ttjsh")
 region = Rect2(0, 0, 32, 48)
@@ -128,6 +131,16 @@ ice_sprite = NodePath("../../Sprite")
 ice_sprite_autoset = false
 ice_fragile = true
 metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation"]
+
+[node name="BodyKilling" type="Area2D" parent="." unique_id=924606130]
+collision_layer = 2
+collision_mask = 6
+
+[node name="Collision" type="CollisionShape2D" parent="BodyKilling" unique_id=473649614]
+visible = false
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_qo35m")
+debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=379202763]
 z_index = -2
