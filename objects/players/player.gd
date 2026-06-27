@@ -416,24 +416,27 @@ func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> voi
 		}
 	)
 
-	var _db: Node2D
-	if death_body:
-		_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform().call_method(
-			func(db: Node2D) -> void:
-				db.wait_time = death_wait_time
-				db.check_for_lives = death_check_for_lives
-				db.jump_to_scene = death_jump_to_scene
-				if death_sprite:
-					var dsdup: Node2D = death_sprite.duplicate()
-					var character_death_sprite = CharacterManager.get_misc_texture("death")
-					if character_death_sprite:
-						dsdup.texture = character_death_sprite
-					db.add_child(dsdup)
-					dsdup.visible = true
-		).create_2d().get_node()
+	(func():
+		var _db: Node2D
+		if death_body:
+			_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform_previous().call_method(
+				func(db: Node2D) -> void:
+					db.wait_time = death_wait_time
+					db.check_for_lives = death_check_for_lives
+					db.jump_to_scene = death_jump_to_scene
+					if death_sprite:
+						var dsdup: Node2D = death_sprite.duplicate()
+						var character_death_sprite = CharacterManager.get_misc_texture("death")
+						if character_death_sprite:
+							dsdup.texture = character_death_sprite
+						db.add_child(dsdup)
+						dsdup.visible = true
+			).create_2d().get_node()
 
-	died.emit()
-	died_with_body.emit(_db)
+		died.emit()
+		died_with_body.emit(_db)
+	).call_deferred()
+	
 	queue_free()
 
 

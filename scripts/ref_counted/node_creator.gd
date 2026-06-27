@@ -92,6 +92,22 @@ class NodeCreation extends RefCounted:
 		_node.reset_physics_interpolation()
 		return self
 	
+	## Similar to [method NodeCreator.bind_global_transform], but it uses the [member GravityBody2D.transform_previous] as the transform base.
+	## Will throw an error when the reference node isn't [class GravityBody2D]
+	func bind_global_transform_previous(offset: Vector2 = Vector2.ZERO, rot: float = 0, scl: Vector2 = Vector2.ONE, skew: float = 0) -> NodeCreation:
+		if !_node || !_on: return self
+		if !(_on is GravityBody2D):
+			printerr('[NodeCreator bind_global_transform_previous] Invalid usage. The reference node is not GravityBody2D')
+			return self
+		var _on_gb = _on as GravityBody2D
+		_node.global_rotation = _on_gb.global_transform_previous.get_rotation() + rot
+		_node.global_scale = _on_gb.global_transform_previous.get_scale() * scl
+		_node.global_position = _on_gb.global_transform_previous.get_origin()
+		_node.translate(offset)
+		_node.global_skew = _on_gb.global_transform_previous.get_skew() + skew
+		_node.reset_physics_interpolation()
+		return self
+	
 	
 	## Execute adding the node input to the tree[br]
 	## If you called [method NodeCreator.prepare_ins_2d] with [param ins2d] input, the function will automatically make the node 

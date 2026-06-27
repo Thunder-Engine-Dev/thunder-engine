@@ -36,6 +36,8 @@ const GRAVITY: float = 2500.0
 
 ## [member speed] in previous frame, useful for calculations of delta position
 var speed_previous: Vector2
+## [member transform] before it gets changed in the current physics frame.
+var global_transform_previous: Transform2D
 
 @onready var _up_temp: Vector2 = up_direction
 
@@ -54,9 +56,11 @@ signal collided_floor
 ## [param delta] should be the one from [method Node._phyiscs_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
 func motion_process(delta: float, slide: bool = false) -> void:
+	
 	var gravity: float = gravity_scale * GRAVITY
 	
 	speed_previous = speed
+	global_transform_previous = global_transform
 	
 	speed += gravity * gravity_dir * delta * 0.5
 	#speed += gravity * gravity_dir * delta
