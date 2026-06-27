@@ -2,7 +2,7 @@
 
 [sub_resource type="Animation" id="Animation_4yr7j"]
 resource_name = "RESET"
-length = 0.009999999999999998
+length = 0.00999999999999999
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
