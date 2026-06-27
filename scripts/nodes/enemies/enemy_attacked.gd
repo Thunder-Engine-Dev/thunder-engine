@@ -75,6 +75,11 @@ const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
 }
 ## Corpse of the enemy killed by the attacker
 @export var killing_creation: InstanceNode2D
+## Body override for enemy killing using the specified Area2D.[br]
+## Only attackers using [code]projectile_attack.gd[/code] look for such overrides
+## (includes all projectiles, but also koopa shells, starman, and head attackers).[br][br]
+## [b]Note[/b]: some enemies may not respect this property, especially if they are complex, like Bowser.
+@export_node_path("Area2D") var killing_body_override: NodePath
 ## Scores given by the enemy when the enemy gets killed
 @export var killing_scores: int
 ## Special attackers, such as starman and koopa shells, can progress combo and earn extra lives
@@ -121,6 +126,7 @@ var _stomping_delayer: SceneTreeTimer:
 @onready var _extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 @onready var _center: Node2D = get_node_or_null(center_node)
 @onready var _ice_sprite: Node2D = get_node_or_null(ice_sprite)
+@onready var _killing_body_override: Area2D = get_node_or_null(killing_body_override)
 
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)
 
@@ -387,6 +393,45 @@ func stomping_delay() -> void:
 
 func get_stomping_delayer() -> SceneTreeTimer:
 	return _stomping_delayer
+
+
+func has_killing_body_override() -> bool:
+	return is_instance_valid(_killing_body_override)
+
+
+func is_killing_body_override_area(area: Area2D) -> bool:
+	return has_killing_body_override() && _killing_body_override == area
+
+
+static func from_killing_area(area: Area2D) -> Node:
+	if !area:
+		return null
+	
+	var enemy_attacked: Node = area.get_node_or_null(^"EnemyAttacked")
+	if enemy_attacked:
+		if enemy_attacked.has_killing_body_override():
+			return null
+		return enemy_attacked
+	
+	var search_root: Node = area.get_parent()
+	if !search_root:
+		return null
+	
+	return _find_enemy_attacked_by_killing_area(search_root, area)
+
+
+static func _find_enemy_attacked_by_killing_area(node: Node, area: Area2D) -> Node:
+	if node is Area2D:
+		var enemy_attacked: Node = node.get_node_or_null(^"EnemyAttacked")
+		if enemy_attacked && enemy_attacked.is_killing_body_override_area(area):
+			return enemy_attacked
+	
+	for child in node.get_children():
+		var found: Node = _find_enemy_attacked_by_killing_area(child, area)
+		if found:
+			return found
+	
+	return null
 
 
 func _on_level_end() -> void:

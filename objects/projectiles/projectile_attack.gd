@@ -1,5 +1,7 @@
 extends ShapeCast2D
 
+const ENEMY_ATTACKED := preload("res://engine/scripts/nodes/enemies/enemy_attacked.gd")
+
 ## Type of the killer, see [enum Data.ATTACKERS]
 @export var killer_type: StringName = Data.ATTACKERS.fireball
 ## Detection scale of teh killer.[br]
@@ -58,7 +60,7 @@ func _kill_enemy(by_enemy: bool = false) -> void:
 		if !ins || ins.get_parent() == get_parent():
 			continue
 		
-		enemy_attacked = ins.get_node_or_null(^"EnemyAttacked")
+		enemy_attacked = ENEMY_ATTACKED.from_killing_area(ins)
 		if !enemy_attacked:
 			continue
 		if by_enemy && enemy_attacked.killing_only_by_player:
