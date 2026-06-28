@@ -70,6 +70,7 @@ func _movement_debug(delta) -> void:
 	var run: int = 1 + int(Input.is_action_pressed(&"m_run"))
 
 	var vel: Vector2 = speed * dir * run * extra
+	player.global_transform_previous = player.global_transform
 	player.position += vel * delta * 50
 
 
