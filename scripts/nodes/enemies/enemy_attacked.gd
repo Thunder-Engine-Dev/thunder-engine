@@ -423,7 +423,10 @@ static func from_killing_area(area: Area2D) -> Node:
 static func _find_enemy_attacked_by_killing_area(node: Node, area: Area2D) -> Node:
 	if node is Area2D:
 		var enemy_attacked: Node = node.get_node_or_null(^"EnemyAttacked")
-		if enemy_attacked && enemy_attacked.is_killing_body_override_area(area):
+		if (
+			enemy_attacked && enemy_attacked.has_method(&"is_killing_body_override_area") &&
+			enemy_attacked.is_killing_body_override_area(area)
+		):
 			return enemy_attacked
 	
 	for child in node.get_children():
