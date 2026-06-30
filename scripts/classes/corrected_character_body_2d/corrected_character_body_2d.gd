@@ -79,7 +79,7 @@ func vertical_correction(amount: int) -> void:
 	if is_on_floor(): return
 	
 	# 4.5: detailized the condition to prevent the player from being stucked at the corner to avoid potential bugs
-	const TEST_MARGIN := 8.0
+	const TEST_MARGIN := 0.1
 	var n := Vector2.UP.rotated(global_rotation)
 	if is_on_wall() && velocity.normalized().dot(n) < 0.0 && test_move(global_transform, -velocity.project(n) * TEST_MARGIN):
 		return
