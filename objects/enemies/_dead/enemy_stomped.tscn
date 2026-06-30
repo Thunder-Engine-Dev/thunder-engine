@@ -7,6 +7,7 @@ resource_local_to_scene = true
 size = Vector2(0, 0)
 
 [node name="EnemyStomped" type="CharacterBody2D" unique_id=1814186958]
+snap_2d_transforms_mode = 1
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("1_slj5s")

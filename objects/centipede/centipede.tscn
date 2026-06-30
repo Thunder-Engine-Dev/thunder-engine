@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dh3ngdb7vv6ln" path="res://engine/objects/centipede/centipede_draw_area.gd" id="4_7hyx0"]
 
 [node name="Centipede" type="StaticBody2D" unique_id=1688669479]
+snap_2d_transforms_mode = 1
 collision_layer = 112
 collision_mask = 0
 script = ExtResource("1_44y8h")
