@@ -141,6 +141,7 @@ visible = false
 position = Vector2(6, -17)
 
 [node name="Attack" type="Timer" parent="." unique_id=194122568]
+process_callback = 0
 wait_time = 0.06
 autostart = true
 

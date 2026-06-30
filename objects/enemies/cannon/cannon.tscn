@@ -38,6 +38,7 @@ enable_node_path = NodePath("../CannonInterval")
 metadata/_edit_lock_ = true
 
 [node name="CannonInterval" type="Timer" parent="." unique_id=1665050160]
+process_callback = 0
 one_shot = true
 
 [connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_entered"]

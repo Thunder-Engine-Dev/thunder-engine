@@ -10,7 +10,7 @@ extends "res://engine/objects/fluid/swimming/control_resize_logic.gd"
 @onready var area_2d = $Area2D
 @onready var bubbles: GPUParticles2D = $Bubbles
 
-func _ready():
+func _ready() -> void:
 	super()
 	if Engine.is_editor_hint(): return
 	bubbles.process_material.duplicate()
@@ -20,7 +20,8 @@ func _ready():
 	bubbles.visibility_rect.position = get_rect().size / -2
 	bubbles.visibility_rect.size = get_rect().size
 
-func _physics_process(delta):
+
+func _physics_process(delta) -> void:
 	if Engine.is_editor_hint(): return
 		
 	var player: Player = Thunder._current_player

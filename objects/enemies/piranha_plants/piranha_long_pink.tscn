@@ -162,9 +162,11 @@ rect = Rect2(-16, -64, 32, 192)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="." unique_id=1609037636]
+process_callback = 0
 one_shot = true
 
 [node name="Fire" type="Timer" parent="." unique_id=1589746869]
+process_callback = 0
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1746651435]

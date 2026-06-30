@@ -120,6 +120,7 @@ new_rect = Rect2(-128, -128, 256, 256)
 metadata/_edit_lock_ = true
 
 [node name="Interval" type="Timer" parent="." unique_id=776601093]
+process_callback = 0
 wait_time = 3.0
 one_shot = true
 autostart = true

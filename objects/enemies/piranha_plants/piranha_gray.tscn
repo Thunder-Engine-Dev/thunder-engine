@@ -120,6 +120,7 @@ scale = Vector2(1.55, 2.4)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="." unique_id=1766583483]
+process_callback = 0
 one_shot = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free"]

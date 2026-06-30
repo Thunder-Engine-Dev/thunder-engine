@@ -177,6 +177,7 @@ wait_time = 2.5
 one_shot = true
 
 [node name="Waiting" type="Timer" parent="." unique_id=1463861446]
+process_callback = 0
 one_shot = true
 
 [node name="Destroy" type="Timer" parent="." unique_id=1498409434]

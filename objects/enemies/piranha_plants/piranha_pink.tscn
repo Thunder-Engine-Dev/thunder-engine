@@ -153,9 +153,11 @@ scale = Vector2(1.6, 3.2)
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="." unique_id=739378013]
+process_callback = 0
 one_shot = true
 
 [node name="Fire" type="Timer" parent="." unique_id=1021339784]
+process_callback = 0
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1730089786]

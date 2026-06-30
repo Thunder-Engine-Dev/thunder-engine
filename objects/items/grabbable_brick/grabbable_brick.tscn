@@ -112,11 +112,13 @@ script = ExtResource("5_afnii")
 metadata/_edit_lock_ = true
 
 [node name="TimerDestroy" type="Timer" parent="." unique_id=912458379]
+process_callback = 0
 process_mode = 1
 process_callback = 0
 one_shot = true
 
 [node name="TimerDestroyFlash" type="Timer" parent="." unique_id=1197700017]
+process_callback = 0
 process_mode = 1
 process_callback = 0
 one_shot = true

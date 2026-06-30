@@ -143,6 +143,7 @@ metadata/_edit_lock_ = true
 libraries/ = SubResource("AnimationLibrary_nxq2d")
 
 [node name="AttackInterval" type="Timer" parent="." unique_id=1822220660]
+process_callback = 0
 wait_time = 2.0
 one_shot = true
 

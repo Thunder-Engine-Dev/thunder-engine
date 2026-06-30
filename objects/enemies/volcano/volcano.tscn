@@ -68,4 +68,5 @@ position = Vector2(0, -40)
 scale = Vector2(3.2, 5.6)
 
 [node name="Timer" type="Timer" parent="." unique_id=997736046]
+process_callback = 0
 one_shot = true

@@ -84,6 +84,7 @@ autoplay = "default"
 metadata/_edit_lock_ = true
 
 [node name="Duration" type="Timer" parent="." unique_id=1332069101]
+process_callback = 0
 wait_time = 11.5
 one_shot = true
 

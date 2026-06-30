@@ -16,6 +16,7 @@ killer_type = &"head"
 metadata/_edit_pinned_properties_ = [&"killer_type"]
 
 [node name="Destroy" type="Timer" parent="." unique_id=362210359]
+process_callback = 0
 wait_time = 0.2
 one_shot = true
 autostart = true

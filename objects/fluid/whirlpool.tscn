@@ -48,9 +48,6 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=4260165]
 shape = SubResource("RectangleShape2D_15ybc")
 
-[node name="Timer" type="Timer" parent="." unique_id=1287056265]
-wait_time = 0.3
-
 [node name="Bubbles" type="GPUParticles2D" parent="." unique_id=130825828]
 position = Vector2(96, 384)
 amount = 30

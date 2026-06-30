@@ -147,13 +147,16 @@ script = ExtResource("12_jiv8p")
 metadata/_edit_lock_ = true
 
 [node name="Walk" type="Timer" parent="." unique_id=1946641992]
+process_callback = 0
 one_shot = true
 
 [node name="Attack" type="Timer" parent="." unique_id=2052115795]
+process_callback = 0
 wait_time = 0.06
 autostart = true
 
 [node name="Jump" type="Timer" parent="." unique_id=573177995]
+process_callback = 0
 wait_time = 0.24
 autostart = true
 

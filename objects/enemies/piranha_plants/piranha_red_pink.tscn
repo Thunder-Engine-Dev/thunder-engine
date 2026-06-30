@@ -162,9 +162,11 @@ position = Vector2(2.38419e-07, -32)
 scale = Vector2(1.6, 3.2)
 
 [node name="Step" type="Timer" parent="." unique_id=1324624837]
+process_callback = 0
 one_shot = true
 
 [node name="Fire" type="Timer" parent="." unique_id=668552429]
+process_callback = 0
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1032754444]

@@ -109,6 +109,7 @@ script = ExtResource("3_egg7o")
 metadata/_edit_lock_ = true
 
 [node name="TimerDestroy" type="Timer" parent="." unique_id=1662152396]
+process_callback = 0
 process_mode = 1
 one_shot = true
 

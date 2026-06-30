@@ -66,6 +66,7 @@ enable_node_path = NodePath("../Interval")
 metadata/_edit_lock_ = true
 
 [node name="Interval" type="Timer" parent="." unique_id=760392855]
+process_callback = 0
 one_shot = true
 
 [connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_screen_entered"]

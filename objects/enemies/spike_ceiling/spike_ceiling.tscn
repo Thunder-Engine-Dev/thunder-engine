@@ -43,6 +43,7 @@ shape = SubResource("RectangleShape2D_faog7")
 script = ExtResource("5_tk3o3")
 
 [node name="Activation" type="Timer" parent="." unique_id=961720241]
+process_callback = 0
 wait_time = 4.0
 
 [connection signal="timeout" from="Activation" to="." method="_on_activation_timeout"]
