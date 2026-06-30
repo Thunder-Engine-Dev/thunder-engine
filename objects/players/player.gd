@@ -438,6 +438,7 @@ func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> voi
 	).call_deferred()
 	
 	queue_free()
+	
 
 
 func is_invincible() -> bool:

@@ -1,6 +1,6 @@
 extends GeneralMovementBody2D
 
-const LENIENCY_AFTER_BOUNCE_SEC: float = 0.14
+const LENIENCY_AFTER_BOUNCE_SEC: float = 0.08
 
 @export var spring_jump_height: float = 975
 @export var enable_physics: bool = false
@@ -34,12 +34,11 @@ func trigger(pl = null) -> void:
 	var current_player: Player = Thunder._current_player
 	if !is_instance_valid(current_player):
 		return
-	#if current_player.is_on_floor():
-	#	return
 	sprite_node.play(&"default")
 	sprite_node.frame = 0
 	current_player._has_jumped = true
 	if can_coyote && enemy_attacked.stomping_player_jumping_max == enemy_attacked.stomping_player_jumping_min:
+		# Pressed jump after bounce (coyote time tweak only)
 		leniency_timer = LENIENCY_AFTER_BOUNCE_SEC
 
 	if animation_node.visible:
@@ -66,6 +65,7 @@ func _process_springboard(delta: float) -> void:
 			player.speed.y = -spring_jump_height
 		leniency_timer = 0
 		if !is_better:
+			# Pressed jump before bounce
 			get_tree().create_timer(0.14, false).timeout.connect(func():
 				enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 			)
