@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
-size = Vector2(32, 28)
+size = Vector2(30, 28)
 
 [sub_resource type="Resource" id="Resource_d0m1t"]
 resource_local_to_scene = true
@@ -136,7 +136,7 @@ metadata/_edit_lock_ = true
 [connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="status_swap" binds= [true]]
 [connection signal="killed" from="Attack" to="." method="_on_killing"]

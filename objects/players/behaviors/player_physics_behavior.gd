@@ -6,6 +6,8 @@ var config: PlayerConfig
 var can_coyote: bool
 var is_max_speed: bool
 var _old_is_max_speed: bool
+var _platform_correction_cached: bool
+var _platform_correction_cache_result: bool
 
 
 func _ready() -> void:
@@ -29,6 +31,8 @@ func _physics_process(delta: float) -> void:
 		player.slow_walking = false
 	# Shape
 	_shape_process()
+	_platform_correction_cached = false
+	
 	if player.warp != Player.Warp.NONE: return
 
 	# Head
@@ -678,9 +682,6 @@ func _floor_process() -> void:
 		var collider = collision.get_collider()
 		if !is_instance_valid(collider): continue
 		
-		#if collider is TileMapLayer && collider.tile_set:
-			#_process_custom_tile_data(collider, collision)
-		
 		if collider.has_method('_player_landed'):
 			collider._player_landed(player)
 		
@@ -692,24 +693,16 @@ func _set_underwater_to(to: bool) -> void:
 	Audio.play_sound(_snd, player, false)
 
 
-#func _process_custom_tile_data(tile: TileMapLayer, kc: KinematicCollision2D) -> void:
-	#var custom_data_arr: PackedStringArray = [
-		#"slippery"
-	#]
-	#var has_data: bool
-	#for i in tile.tile_set.get_custom_data_layers_count():
-		#if custom_data_arr.has(tile.tile_set.get_custom_data_layer_name(i)):
-			#has_data = true
-	#if !has_data: return
-	#
-	#var coord: Vector2i = tile.get_coords_for_body_rid(kc.get_collider_rid())
-	#var tile_data: TileData = tile.get_cell_tile_data(coord)
-	#if !tile_data: return
-	#
-	#for data_name in custom_data_arr:
-		#var _custom_data = tile_data.get_custom_data(data_name)
-		#if data_name == custom_data_arr[0]:
-			#if _custom_data:
-				#player.slippery_strength = _custom_data
-		#else:
-			#return
+func _can_platform_correct_shape(amount: float) -> bool:
+	if _platform_correction_cached:
+		return _platform_correction_cache_result
+	var pl_speed: float = player.speed.y
+	var result: bool = pl_speed >= -5
+	#if result:
+		#if player.test_move(
+			#player.transform,
+			#(Vector2.UP * 20)
+		#):
+			#result = false
+	_platform_correction_cache_result = result
+	return result
