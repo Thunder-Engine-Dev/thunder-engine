@@ -58,10 +58,12 @@ texture = ExtResource("4_da7u6")
 position = Vector2(16, 16)
 
 [node name="Interval" type="Timer" parent="." unique_id=1762096052]
+process_callback = 0
 wait_time = 3.0
 one_shot = true
 
 [node name="IntervalSound" type="Timer" parent="." unique_id=484379071]
+process_callback = 0
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1826251469]
 modulate = Color(1, 1, 1, 0.0196078)

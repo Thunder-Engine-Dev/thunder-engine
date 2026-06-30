@@ -37,6 +37,7 @@ modulate = Color(1, 1, 1, 0.0196078)
 enable_node_path = NodePath("../Interval")
 
 [node name="Interval" type="Timer" parent="." unique_id=523807342]
+process_callback = 0
 wait_time = 0.25
 one_shot = true
 

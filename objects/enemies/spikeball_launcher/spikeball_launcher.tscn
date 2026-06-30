@@ -35,6 +35,7 @@ modulate = Color(1, 1, 1, 0.0196078)
 enable_node_path = NodePath("../Interval")
 
 [node name="Interval" type="Timer" parent="." unique_id=235851901]
+process_callback = 0
 
 [connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
