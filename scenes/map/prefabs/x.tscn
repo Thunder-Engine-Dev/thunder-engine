@@ -5,6 +5,7 @@
 
 [node name="X" type="Sprite2D" unique_id=1170200681]
 z_index = 1
+snap_2d_transforms_mode = 1
 texture = ExtResource("1_y1ote")
 offset = Vector2(-1, -1)
 script = ExtResource("2_s5auh")

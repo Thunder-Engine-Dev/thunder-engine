@@ -7,6 +7,7 @@
 radius = 6.0
 
 [node name="Dot" type="AnimatedSprite2D" unique_id=719955758 groups=["map_dot"]]
+snap_2d_transforms_mode = 1
 sprite_frames = ExtResource("1_8lxv4")
 autoplay = "default"
 script = ExtResource("2_6he3g")
