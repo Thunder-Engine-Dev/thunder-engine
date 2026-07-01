@@ -105,11 +105,9 @@ texture = SubResource("GradientTexture1D_xj0fk")
 [node name="Text" type="Label" parent="CanvasLayer/Box/Texture" unique_id=619646087]
 physics_interpolation_mode = 0
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 pivot_offset = Vector2(0, 27)
 size_flags_horizontal = 4
 theme_override_colors/font_shadow_color = Color(0, 0, 0.188235, 1)
