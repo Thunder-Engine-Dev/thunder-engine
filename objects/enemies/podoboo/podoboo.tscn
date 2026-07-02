@@ -94,6 +94,7 @@ killing_immune = {
 "fireball": true,
 "hammer": false,
 "iceball": false,
+"iceblock": false,
 "shell": false,
 "shell_defence": 0,
 "starman": false

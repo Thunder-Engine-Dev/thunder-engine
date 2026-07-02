@@ -119,6 +119,7 @@ killing_immune = {
 "hammer": false,
 "head": false,
 "iceball": true,
+"iceblock": false,
 "shell": false,
 "shell_defence": 0,
 "shell_forced": false,
