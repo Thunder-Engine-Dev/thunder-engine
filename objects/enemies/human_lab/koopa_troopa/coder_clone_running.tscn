@@ -159,6 +159,7 @@ script = ExtResource("11_n7bsk")
 metadata/_edit_lock_ = true
 
 [node name="Timer" type="Timer" parent="." unique_id=1809062766]
+process_callback = 0
 wait_time = 0.4
 script = ExtResource("12_mt8lq")
 
