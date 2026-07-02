@@ -7,7 +7,7 @@ signal flame_launched
 @export_group("Flameball")
 @export var flameball: InstanceNode2D
 @export var speed: float = 250
-@export var amount: float = 25
+@export var amount: int = 25
 @export var flame_interval: float = 0.05
 @export_group("Sound")
 @export var sound: AudioStream = preload("res://engine/objects/enemies/flameball_launcher/sound/flameball.ogg")
