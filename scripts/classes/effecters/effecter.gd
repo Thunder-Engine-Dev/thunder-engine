@@ -33,6 +33,9 @@ static func trail(
 			tra.material = material
 			tra.z_index = on.z_index + z_index
 			tra.texture_filter = texture_filter
+			# WARNING: If your game crashes here, go download a proper Godot build:
+			# https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE
+			tra.snap_2d_transforms_mode = CanvasItem.SNAP_2D_TRANSFORMS_MODE_CANVAS
 			tra.add_to_group(&"Trail")
 			
 			if interpolation_support:
