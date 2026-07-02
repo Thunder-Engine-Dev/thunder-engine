@@ -13,7 +13,7 @@ func _ready() -> void:
 	
 	if sprite_node:
 		attack.set_deferred(&"enabled", false)
-		var tw = create_tween()
+		var tw = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tw.tween_property(sprite_node, "scale", Vector2.ONE, 0.05)
 		tw.tween_callback(func():
 			if is_instance_valid(attack):
@@ -36,7 +36,6 @@ func _on_level_end() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 	var cam = Thunder._current_camera
-	Thunder.view.cam_border()
 	if !Thunder.view.screen_top(point_light_2d.global_position, 0, false):
 		point_light_2d.global_position.y = cam.get_screen_center_position().y - (cam.get_viewport_rect().size.y / 2)
 		point_light_2d.reset_physics_interpolation()
@@ -44,4 +43,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		point_light_2d.position.y = 0
 		if speed.y > 20:
-			point_light_2d.color.a = lerpf(point_light_2d.color.a, 0, delta * 80)
+			if point_light_2d.color.a > 0:
+				point_light_2d.color.a = move_toward(point_light_2d.color.a, 0, delta * 8)
+			else:
+				point_light_2d.enabled = false
