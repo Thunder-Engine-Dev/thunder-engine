@@ -24,11 +24,17 @@ var belongs_to: Data.PROJECTILE_BELONGS
 
 @onready var par: Node = get_parent()
 
+## Emitted when the attack attempts to kill some enemy. Returns the attackee and the result.
 signal killed(what: Node, result: Dictionary)
+## Emitted when the attack attempts to kill some enemy, but ignores [member trigger_enemy_failed_signal].
 signal killed_notify
+## Emitted when the attackee gets killed successfully.
 signal killed_succeeded
+## Emitted when the attack gets blocked, unless [member trigger_enemy_failed_signal] is false.
 signal killed_failed
+## Emitted when the attack damages or would damage the player.
 signal damaged_player
+## Emitted when the player blocks the attack (e.g. by crouching in boomerang suit).
 signal damaged_player_failed
 
 

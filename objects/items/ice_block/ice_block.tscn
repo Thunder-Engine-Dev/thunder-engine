@@ -83,6 +83,7 @@ collide_with_bodies = false
 script = ExtResource("3_2ogy0")
 killer_type = &"iceblock"
 is_reflectable = true
+trigger_enemy_failed_signal = false
 
 [node name="SpriteNP" type="NinePatchRect" parent="." unique_id=358421985]
 material = ExtResource("4_ab1eo")
@@ -109,8 +110,8 @@ script = ExtResource("3_egg7o")
 metadata/_edit_lock_ = true
 
 [node name="TimerDestroy" type="Timer" parent="." unique_id=1662152396]
-process_callback = 0
 process_mode = 1
+process_callback = 0
 one_shot = true
 
 [node name="GrabbableModifier" parent="." unique_id=1600528818 instance=ExtResource("6_ch7y1")]

@@ -38,6 +38,8 @@ func _ready() -> void:
 	)
 	
 	attack.belongs_to = Data.PROJECTILE_BELONGS.PLAYER
+	attack.special_tags = attack.special_tags.duplicate()
+	attack.special_tags.append(&"shell_sharpness:%d" % sharpness)
 	status_update()
 
 
@@ -61,7 +63,6 @@ func status_update() -> void:
 		await _delayer.timeout
 		_delayer = null
 		
-#		enemy_attacked.add_to_group(&"shell")
 		enemy_attacked.stomping_enabled = true
 		enemy_attacked.stomping_hurtable = true
 		
@@ -69,7 +70,6 @@ func status_update() -> void:
 		animation.stop()
 		animation.frame = 0
 		
-#		enemy_attacked.remove_from_group(&"shell")
 		enemy_attacked.stomping_enabled = false
 		enemy_attacked.stomping_hurtable = false
 		combo.reset_combo()
@@ -87,10 +87,11 @@ func sound() -> void:
 
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	if target_enemy_attacked == enemy_attacked: return
+	var target_defence = target_enemy_attacked.killing_immune.get(&"shell_defence", 0)
 	# Shells crashing with each other
 	if is_instance_of(target_enemy_attacked.owner, Shell) && \
 		!target_enemy_attacked.owner.stopping && \
-		sharpness <= target_enemy_attacked.killing_immune.shell_defence:
+		sharpness <= target_defence:
 			enemy_attacked.set_meta(
 				&"attacker_speed", target_enemy_attacked.owner.speed
 			)
@@ -98,7 +99,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			target_enemy_attacked.set_meta(&"attacker_speed", speed)
 			target_enemy_attacked.got_killed(&"shell_forced")
 	# Combo
-	elif result.result && sharpness >= target_enemy_attacked.killing_immune.shell_defence:
+	elif result.result && sharpness >= target_defence:
 		var _can_combo: bool = target_enemy_attacked.killing_can_combo
 		if combo.get_combo() > 0 && _can_combo:
 			target_enemy_attacked.sound_pitch = combo.get_pitch()
@@ -111,7 +112,7 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			Data.add_score(target_enemy_attacked.killing_scores)
 	# Gets blocked — shell dies unless the target opts out or is immune to shells.
 	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack") \
-			&& !target_enemy_attacked.killing_immune.get(&"shell", false):
+			&& (target_enemy_attacked.killing_immune.has(&"shell") && sharpness < target_defence):
 		if &"speed" in target_enemy_attacked.owner:
 			enemy_attacked.set_meta(
 				&"attacker_speed", target_enemy_attacked.owner.speed

@@ -294,10 +294,15 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		return result
 	
 	_on_killed = true
-	var shell_attack := false
+	var shell_attack: bool = &"shell_attack" in special_tags
 	
 	# Immune
-	if by != &"self" && killing_immune[by]:
+	if by != &"self" && (killing_immune[by] || (shell_attack && special_tags.any(
+		func(e: StringName): 
+			if !e.begins_with(&"shell_sharpness:"):
+				return false
+			return int(e.trim_prefix(&"shell_sharpness:")) < killing_immune.get(&"shell_defence", 0)
+	))):
 		if trigger_killed_failed:
 			killed_failed.emit()
 			killed_failed_by.emit(by)
@@ -343,10 +348,6 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		killed_frozen.emit()
 	# Killed
 	else:
-		# By shell
-		if &"shell_attack" in special_tags:
-			shell_attack = true
-		
 		killed_succeeded.emit()
 		killed_succeeded_by.emit(by)
 		

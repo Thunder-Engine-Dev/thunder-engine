@@ -74,6 +74,7 @@ floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 8.0
 script = ExtResource("1_rhuw5")
+sharpness = 1
 look_at_player = true
 slide = true
 sprite = NodePath("Sprite")
@@ -111,7 +112,7 @@ killing_immune = {
 "hammer": false,
 "head": false,
 "iceball": true,
-"iceblock": true,
+"iceblock": false,
 "shell": false,
 "shell_defence": 1,
 "shell_forced": false,
@@ -133,7 +134,7 @@ collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("9_phcx2")
 killer_type = &"shell"
-killing_detection_scale = 4.0
+killing_detection_scale = 2.0
 special_tags = Array[StringName]([&"shell_attack", &"no_score"])
 metadata/_edit_pinned_properties_ = [&"killing_detection_scale", &"killer_type", &"special_tags"]
 
