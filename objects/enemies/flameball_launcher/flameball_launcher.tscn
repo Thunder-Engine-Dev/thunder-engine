@@ -17,7 +17,6 @@ trans_inheritances = 4
 size = Vector2(1, 1)
 
 [node name="FlameballLauncher" type="HBoxContainer" unique_id=698528653]
-snap_2d_transforms_mode = 1
 clip_contents = true
 offset_right = 64.0
 offset_bottom = 32.0
