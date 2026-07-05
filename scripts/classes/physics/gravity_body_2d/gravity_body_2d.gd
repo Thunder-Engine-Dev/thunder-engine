@@ -72,6 +72,8 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	if auto_update_up_direction:
 		update_up_direction()
 	
+	floor_block_on_wall = !slide
+	
 	do_movement(delta, slide, false)
 	
 	if !is_speed_capped:
