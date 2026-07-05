@@ -73,6 +73,7 @@ collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 8.0
+platform_on_leave = 2
 script = ExtResource("1_rhuw5")
 sharpness = 1
 look_at_player = true
