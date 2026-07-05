@@ -49,6 +49,9 @@ func _ready() -> void:
 	
 	sprite.animation_looped.connect(_sprite_loop)
 	sprite.animation_finished.connect(_sprite_finish)
+	
+	if player.direction != 0 && !player.is_climbing:
+		sprite.flip_h = (player.direction < 0)
 
 
 func _physics_process(delta: float) -> void:

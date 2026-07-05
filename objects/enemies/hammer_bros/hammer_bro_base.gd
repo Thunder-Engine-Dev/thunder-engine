@@ -47,6 +47,10 @@ var _collision_mask: int
 @onready var pos_attack_x: float = pos_attack.position.x
 @onready var shape_cast_2d: ShapeCast2D = $ShapeCast2D
 
+func _ready() -> void:
+	_direction()
+	super()
+
 func _process(delta: float) -> void:
 	_animation()
 

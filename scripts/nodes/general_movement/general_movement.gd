@@ -45,11 +45,12 @@ func _ready() -> void:
 	if force_direction:
 		dir = force_direction
 		speed_to_dir()
-		return
-	
-	if look_at_player && Thunder._current_player:
+	elif look_at_player && Thunder._current_player:
 		update_dir.call_deferred()
 		speed_to_dir.call_deferred()
+	
+	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
+		sprite_node.flip_h = speed.x < 0
 
 
 func _physics_process(delta: float) -> void:
