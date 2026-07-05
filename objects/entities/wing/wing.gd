@@ -41,12 +41,15 @@ func fall() -> void:
 		reparent(get_node(root_path).get_parent())
 		reset_physics_interpolation()
 		
+		var negatiator: int = 1 if flip_h else -1
 		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
+		tw.chain().tween_property(self, ^"offset:x", offset.x + 24 * negatiator, 0.25)
+		tw.tween_property(self, ^"rotation", rotation - PI / 3 * negatiator, 0.25)
 		for i: int in 2:
-			tw.chain().tween_property(self, ^"offset:x", offset.x + 24, 0.5)
-			tw.tween_property(self, ^"rotation", rotation - PI / 3, 0.5)
-			tw.chain().tween_property(self, ^"offset:x", offset.x - 24, 0.5)
-			tw.tween_property(self, ^"rotation", rotation + PI / 3, 0.5)
+			tw.chain().tween_property(self, ^"offset:x", offset.x - 24 * negatiator, 0.5)
+			tw.tween_property(self, ^"rotation", rotation + PI / 3 * negatiator, 0.5)
+			tw.chain().tween_property(self, ^"offset:x", offset.x + 24 * negatiator, 0.5)
+			tw.tween_property(self, ^"rotation", rotation - PI / 3 * negatiator, 0.5)
 		
 		var tw2 := create_tween().set_parallel()
 		tw2.tween_property(self, ^"position", position + Vector2.DOWN.rotated(rotation) * 24, 2)
