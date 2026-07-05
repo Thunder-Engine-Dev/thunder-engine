@@ -36,15 +36,16 @@ func _physics_process(delta: float) -> void:
 
 func _on_interval_flame_timeout() -> void:
 	_amount -= 1
-	NodeCreator.prepare_ins_2d(flameball, pos_flameball).bind_global_transform().create_2d().call_method(
+	var _flameball = NodeCreator.prepare_ins_2d(flameball, pos_flameball).bind_global_transform().call_method(
 		func(ball: Node2D) -> void:
 			if ball is Projectile:
 				ball.global_rotation = 0
 				ball.vel_set(Vector2.RIGHT.rotated(get_global_transform().get_rotation()) * -speed)
 				ball.belongs_to = Data.PROJECTILE_BELONGS.ENEMY
-			ball.reparent.call_deferred(get_parent())
-			Thunder.reorder_on_top_of.call_deferred(ball, self)
-	)
+	).create_2d().get_node()
+	_flameball.reparent.call_deferred(get_parent())
+	Thunder.reorder_on_top_of.call_deferred(_flameball, self)
+	
 	if _amount <= 0:
 		timer_interval.start(interval)
 		Thunder._disconnect(flame_launched, _on_interval_flame_timeout)
