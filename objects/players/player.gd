@@ -114,6 +114,7 @@ var ignore_input: bool:
 var _force_suit: bool
 var _suit_appear: bool
 var _suit_tree_paused: bool
+var _controls_initialized: bool
 
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
@@ -228,6 +229,10 @@ func _physics_process(delta: float) -> void:
 
 	if _stomping_combo_enabled && stomping_combo.get_combo() > 0 && is_on_floor():
 		stomping_combo.reset_combo()
+	
+	if !_controls_initialized:
+		_controls_initialized = true
+
 
 func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> void:
 	_force_suit = forced
@@ -310,6 +315,8 @@ func change_suit(to: PlayerSuit, appear: bool = true, forced: bool = false) -> v
 
 
 func control_process() -> void:
+	if !_controls_initialized:
+		return
 	left_right = clamp(Input.get_axis(control.left, control.right) * 1.25, -1, 1)
 	if stuck_block_left && left_right < 0: left_right = 0
 	if stuck_block_right && left_right > 0: left_right = 0
