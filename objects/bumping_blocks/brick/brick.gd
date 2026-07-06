@@ -27,7 +27,7 @@ func bricks_break() -> void:
 	var speeds = [Vector2(2, -8), Vector2(4, -7), Vector2(-2, -8), Vector2(-4, -7)]
 	for i in speeds:
 		NodeCreator.prepare_2d(debris_effect, self).call_method(func(eff: Node2D):
-			eff.global_transform = global_transform
+			eff.transform = transform
 			eff.velocity = i
 		).create_2d(true)
 		

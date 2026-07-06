@@ -4,10 +4,14 @@ extends StaticBody2D
 @export var correction_on_player_falling: bool = true
 
 @onready var _path_follow = $".."
-@onready var init_collision_margin = get_shape_owner_one_way_collision_margin(0)
+@onready var init_collision_margin
 
 func _ready() -> void:
-	if !is_shape_owner_one_way_collision_enabled(0):
+	if get_shape_owners().size() > 0:
+		init_collision_margin = get_shape_owner_one_way_collision_margin(0)
+		if !is_shape_owner_one_way_collision_enabled(0):
+			correction_on_player_falling = false
+	else:
 		correction_on_player_falling = false
 	if includes_path_follow:
 		_set_position()
