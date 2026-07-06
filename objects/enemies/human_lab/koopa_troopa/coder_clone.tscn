@@ -214,5 +214,8 @@ script = ExtResource("10_uk66u")
 enemy_center_node = NodePath("../..")
 walk_offset = Vector2(-5, 0)
 
+[node name="VisibleOnScreenEnabler2D" parent="." index="3" unique_id=1584166778]
+rect = Rect2(-16, -40, 32, 68)
+
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]

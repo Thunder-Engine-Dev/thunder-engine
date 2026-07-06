@@ -162,6 +162,10 @@ func _ready() -> void:
 	stomping_delay()
 	if turn_into_coin_on_level_end:
 		add_to_group(&"end_level_sequence")
+	
+	if _killing_body_override:
+		_killing_body_override.set_meta(&"enemy_attacked", self)
+	
 	if (
 		!is_instance_valid(_ice_sprite) &&
 		ice_sprite_autoset &&
@@ -396,45 +400,18 @@ func get_stomping_delayer() -> SceneTreeTimer:
 	return _stomping_delayer
 
 
-func has_killing_body_override() -> bool:
-	return is_instance_valid(_killing_body_override)
-
-
-func is_killing_body_override_area(area: Area2D) -> bool:
-	return has_killing_body_override() && _killing_body_override == area
-
-
 static func from_killing_area(area: Area2D) -> Node:
 	if !area:
 		return null
 	
 	var enemy_attacked: Node = area.get_node_or_null(^"EnemyAttacked")
 	if enemy_attacked:
-		if enemy_attacked.has_killing_body_override():
+		if is_instance_valid(enemy_attacked._killing_body_override):
 			return null
 		return enemy_attacked
 	
-	var search_root: Node = area.get_parent()
-	if !search_root:
-		return null
-	
-	return _find_enemy_attacked_by_killing_area(search_root, area)
-
-
-static func _find_enemy_attacked_by_killing_area(node: Node, area: Area2D) -> Node:
-	if node is Area2D:
-		var enemy_attacked: Node = node.get_node_or_null(^"EnemyAttacked")
-		if (
-			enemy_attacked && enemy_attacked.has_method(&"is_killing_body_override_area") &&
-			enemy_attacked.is_killing_body_override_area(area)
-		):
-			return enemy_attacked
-	
-	for child in node.get_children():
-		var found: Node = _find_enemy_attacked_by_killing_area(child, area)
-		if found:
-			return found
-	
+	if area.has_meta(&"enemy_attacked"):
+		return area.get_meta(&"enemy_attacked")
 	return null
 
 
