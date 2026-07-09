@@ -97,7 +97,8 @@ func _snap_player_to_warp_edge(exiting_player: Player) -> void:
 
 func _on_body_exited(body: Node2D) -> void:
 	if body == player:
-		_snap_player_to_warp_edge(player)
+		if warp_direction == Player.WarpDir.UP:
+			_snap_player_to_warp_edge(player)
 		player.sync_position()
 		player.warp = Player.Warp.NONE
 		player.sprite_container.z_index = player_z_index

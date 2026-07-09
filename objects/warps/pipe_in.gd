@@ -173,18 +173,18 @@ func _get_warp_travel_axis() -> Vector2:
 
 
 ## Align to [param target] without moving backward along the warp travel axis.
-func _resolve_warp_position(current: Vector2, target: Vector2) -> Vector2:
+func _resolve_warp_position(current: Vector2, target_pos: Vector2) -> Vector2:
 	var axis := _get_warp_travel_axis()
-	var diff := target - current
+	var diff := target_pos - current
 	var parallel_dist := diff.dot(axis)
 	if parallel_dist < 0.0:
-		return target - axis * parallel_dist
-	return target
+		return target_pos - axis * parallel_dist
+	return target_pos
 
 
 func _smooth_entry_process(delta: float) -> bool:
-	var target := _resolve_warp_position(player.global_position, pos_player.global_position)
-	var to_target := target - player.global_position
+	var target_pos := _resolve_warp_position(player.global_position, pos_player.global_position)
+	var to_target := target_pos - player.global_position
 	var axis := _get_warp_travel_axis()
 	var parallel := axis * to_target.dot(axis)
 	if parallel.dot(axis) < 0.0:
@@ -192,7 +192,7 @@ func _smooth_entry_process(delta: float) -> bool:
 	var allowed_delta := parallel + (to_target - parallel)
 	var distance := allowed_delta.length()
 	if distance < 0.5:
-		player.global_position = target
+		player.global_position = target_pos
 		player.sync_position()
 		return false
 	
@@ -307,7 +307,7 @@ func pass_warp() -> void:
 	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
 	elif trigger_finish:
-		Scenes.current_scene.finish(true)
+		Scenes.current_scene.finish(false)
 		player.modulate.a = 0
 	player = null
 	warp_trans = null

@@ -59,7 +59,7 @@ signal level_completed
 var _force_player_walking: bool = false
 var _force_player_walking_dir: int = 1:
 	set(dir):
-		_force_player_walking_dir = clampi(dir, -1, 1)
+		_force_player_walking_dir = signi(dir)
 		if dir == 0:
 			dir = [-1, 1].pick_random()
 var _forced_player_on_wall: bool
@@ -152,13 +152,13 @@ func _physics_process(delta: float) -> void:
 	# Force player walking when completed
 	if _force_player_walking && !_forced_player_on_wall:
 		player.direction = _force_player_walking_dir
-		player.speed.x = 120 * _force_player_walking_dir
+		player.speed.x = 125 * _force_player_walking_dir
 		_forced_player_on_wall = player.is_on_wall()
 		if _forced_player_on_wall:
 			player.speed.x = 0
 
 	# Falling behavior
-	if !player || !_is_stage_ready:
+	if !_is_stage_ready:
 		return
 	if Thunder.view.screen_bottom(player.global_position, falling_below_y_offset - 16, true):
 		return
