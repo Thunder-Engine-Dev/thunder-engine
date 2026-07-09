@@ -57,6 +57,15 @@ script = ExtResource("1_h4anr")
 [node name="Finishline" type="Sprite2D" parent="." unique_id=1059799333]
 position = Vector2(128, -144)
 texture = ExtResource("1_8jdlp")
+region_enabled = true
+region_rect = Rect2(0, 0, 255, 288)
+
+[node name="FinishlineRight" type="Sprite2D" parent="." unique_id=2042243505]
+z_index = 6
+position = Vector2(240, -144)
+texture = ExtResource("1_8jdlp")
+region_enabled = true
+region_rect = Rect2(224, 0, 31, 288)
 
 [node name="CompletionArea" type="Area2D" parent="." unique_id=1555531841]
 visible = false
