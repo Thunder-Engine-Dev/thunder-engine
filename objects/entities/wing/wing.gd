@@ -19,6 +19,7 @@ func _notification(what: int) -> void:
 func _ready() -> void:
 	if parent_sprite is AnimatedSprite2D && follow_parent_animation_speed:
 		sprite_frames.set_animation_speed(animation, parent_sprite.sprite_frames.get_animation_speed(parent_sprite.animation))
+		frame_progress = parent_sprite.frame_progress
 		_physics_process.call_deferred(0)
 
 func _physics_process(_delta: float) -> void:
