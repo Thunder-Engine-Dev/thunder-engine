@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://453cae28840a4"]
+
+[ext_resource type="PackedScene" uid="uid://ef26d1d7a11b4" path="res://engine/tilesets/underground/scenes/lamp-castle.tscn" id="1_8vpgh"]
+[ext_resource type="Script" uid="uid://0h3x5dwndovw" path="res://engine/scripts/nodes/effects/quality_visible.gd" id="2_bcl88"]
+[ext_resource type="Texture2D" uid="uid://8056f359e97f4" path="res://engine/tilesets/underground/gfx/fancy/lamp_minimum_light.png" id="3_x7bo4"]
+[ext_resource type="Script" uid="uid://f26deea77e7a4" path="res://engine/tilesets/underground/gfx/fancy/light_pulse_minimum.gd" id="4_acicj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sckg0"]
+atlas = ExtResource("3_x7bo4")
+region = Rect2(0, 0, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy16t"]
+atlas = ExtResource("3_x7bo4")
+region = Rect2(0, 53, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqxts"]
+atlas = ExtResource("3_x7bo4")
+region = Rect2(0, 106, 53, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdnw3"]
+atlas = ExtResource("3_x7bo4")
+region = Rect2(0, 159, 53, 53)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t80m5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sckg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy16t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqxts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdnw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqxts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy16t")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 25.0
+}]
+
+[node name="Sprite2D7" unique_id=1464571819 instance=ExtResource("1_8vpgh")]
+position = Vector2(16, 7)
+
+[node name="Node2D2" type="Node2D" parent="." index="1" unique_id=1219165381]
+visible = false
+script = ExtResource("2_bcl88")
+maximum = false
+minimum = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D2" index="0" unique_id=664821965]
+modulate = Color(1, 1, 1, 0.780392)
+position = Vector2(0, 3)
+sprite_frames = SubResource("SpriteFrames_t80m5")
+autoplay = "default"
+script = ExtResource("4_acicj")

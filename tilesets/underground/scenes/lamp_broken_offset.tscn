@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://473474ab375f4"]
+
+[ext_resource type="Texture2D" uid="uid://cnw7t13m2bojq" path="res://engine/tilesets/underground/gfx/underground_lamp.png" id="1_xg46y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvnw2"]
+atlas = ExtResource("1_xg46y")
+region = Rect2(32, 0, 32, 48)
+
+[node name="LampBroken" type="Sprite2D" unique_id=632021048]
+position = Vector2(16, 8)
+texture = SubResource("AtlasTexture_yvnw2")

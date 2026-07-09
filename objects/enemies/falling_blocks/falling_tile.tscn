@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b4m71alwd1txo"]
 
 [ext_resource type="Script" uid="uid://d36l5yx6fd6my" path="res://engine/objects/enemies/falling_blocks/falling_tile.gd" id="1_yeeuu"]
-[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/hard_block.png" id="2_yths7"]
+[ext_resource type="Texture2D" uid="uid://djwe62jh83kf" path="res://engine/tilesets/overworld/gfx/hard_block.png" id="2_yths7"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="4_63d25"]
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="5_6asym"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="6_uvyqs"]

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://defe013ca7c64"]
+
+[ext_resource type="PackedScene" uid="uid://ef26d1d7a11b4" path="res://engine/tilesets/underground/scenes/lamp-castle.tscn" id="1_1v3yf"]
+
+[node name="Sprite2D7" unique_id=1464571819 instance=ExtResource("1_1v3yf")]
+position = Vector2(16, 7)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://x1h126m735je" path="res://engine/objects/enemies/electric_coral/coral_electro.png" id="1_ef6v0"]
 [ext_resource type="Script" uid="uid://cway2863r5lkh" path="res://engine/objects/enemies/spikes/spike.gd" id="1_rvphe"]
-[ext_resource type="Texture2D" uid="uid://c8cqh10bsbdud" path="res://engine/tilesets/underwater/coral.png" id="2_sedtj"]
+[ext_resource type="Texture2D" uid="uid://c8cqh10bsbdud" path="res://engine/tilesets/underwater/gfx/coral.png" id="2_sedtj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdrb"]
 size = Vector2(28, 30)

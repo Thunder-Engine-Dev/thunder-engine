@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://biqdo5a1ivagd"]
+
+[ext_resource type="Texture2D" uid="uid://bxrtju4bs3pr6" path="res://engine/tilesets/overworld/gfx/hill.png" id="1_sj10f"]
+
+[node name="Hill" type="Sprite2D" unique_id=398571716]
+z_index = -12
+position = Vector2(0, -54)
+texture = ExtResource("1_sj10f")

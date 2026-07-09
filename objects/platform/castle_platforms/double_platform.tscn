@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b3cggc3th4xua"]
 
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_2ntqh"]
-[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/castle_tileset.png" id="2_8fx74"]
+[ext_resource type="Texture2D" uid="uid://djeepjjheqxl" path="res://engine/tilesets/castle/gfx/castle_tileset.png" id="2_8fx74"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gylo8"]
 atlas = ExtResource("2_8fx74")

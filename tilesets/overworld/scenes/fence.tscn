@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b8757tmad0xqr"]
+
+[ext_resource type="Texture2D" uid="uid://3f6efhfdu374" path="res://engine/tilesets/overworld/gfx/fence.png" id="1_o1tk0"]
+
+[node name="Fence" type="Sprite2D" unique_id=337346618]
+z_index = -9
+texture = ExtResource("1_o1tk0")

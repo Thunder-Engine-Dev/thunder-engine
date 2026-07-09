@@ -3,6 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://uejrjui7n1cg" path="res://engine/tilesets/underground/gfx/blue_hard_block.png" id="1_ebmvl"]
 [ext_resource type="Texture2D" uid="uid://ccryml061eqti" path="res://engine/tilesets/underground/gfx/underground_tileset.png" id="2_vqu6d"]
 [ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="3_nkhax"]
+[ext_resource type="PackedScene" uid="uid://bcc5vwnadl3yr" path="res://engine/tilesets/underground/scenes/lamp.tscn" id="lamp_1"]
+[ext_resource type="PackedScene" uid="uid://1670dbea1fe4" path="res://engine/tilesets/underground/scenes/lamp_offset.tscn" id="lamp_2"]
+[ext_resource type="PackedScene" uid="uid://7udt7iwhw6bd" path="res://engine/tilesets/underground/scenes/lamp_broken.tscn" id="lamp_3"]
+[ext_resource type="PackedScene" uid="uid://c5813ptj5s04r" path="res://engine/tilesets/underground/scenes/lamp_broken_offset.tscn" id="lamp_4"]
+[ext_resource type="PackedScene" uid="uid://kobrygxpt5kd" path="res://engine/tilesets/underground/scenes/lamp-castle.tscn" id="lamp_5"]
+[ext_resource type="PackedScene" uid="uid://defe013ca7c64" path="res://engine/tilesets/underground/scenes/lamp-castle_offset.tscn" id="lamp_6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tqmrc"]
 texture = ExtResource("1_ebmvl")
@@ -323,6 +329,14 @@ texture_region_size = Vector2i(32, 32)
 8:4/0/terrains_peering_bit/top_side = 0
 8:4/0/terrains_peering_bit/top_right_corner = 0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_lamps"]
+scenes/1/scene = ExtResource("lamp_1")
+scenes/2/scene = ExtResource("lamp_2")
+scenes/3/scene = ExtResource("lamp_3")
+scenes/5/scene = ExtResource("lamp_4")
+scenes/6/scene = ExtResource("lamp_5")
+scenes/7/scene = ExtResource("lamp_6")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_477pq"]
 texture = ExtResource("3_nkhax")
 texture_region_size = Vector2i(32, 32)
@@ -361,3 +375,4 @@ terrain_set_0/terrain_0/color = Color(0.501961, 0.345098, 1, 1)
 sources/0 = SubResource("TileSetAtlasSource_tqmrc")
 sources/1 = SubResource("TileSetAtlasSource_78v0e")
 sources/3 = SubResource("TileSetAtlasSource_477pq")
+sources/2 = SubResource("TileSetScenesCollectionSource_lamps")

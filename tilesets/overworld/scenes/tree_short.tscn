@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://daj1wvxfervpr"]
+
+[ext_resource type="Texture2D" uid="uid://d7bguquxitp5" path="res://engine/tilesets/overworld/gfx/tree_short.png" id="1_e4681"]
+
+[node name="TreeShort" type="Sprite2D" unique_id=1109758191]
+z_index = -10
+position = Vector2(0, -16)
+texture = ExtResource("1_e4681")
