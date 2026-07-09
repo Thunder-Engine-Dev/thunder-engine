@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_6qfc5"]
 [ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_ciqvt"]
-[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="3_5257n"]
+[ext_resource type="TileSet" uid="uid://duodk2nyl4k2h" path="res://engine/tilesets/overworld/overworld.tres" id="3_6tpdk"]
 
 [node name="PlatformPath" type="PathFollow2D" unique_id=175820021]
 rotates = false
@@ -23,6 +23,6 @@ polygon = PackedVector2Array(-96, 0, 96, 0, 96, 192, -96, 192)
 
 [node name="Layer0" type="TileMapLayer" parent="Block" unique_id=195903853]
 tile_map_data = PackedByteArray("AAD+/wAAAAABAAAAAAD//wAAAAABAAAAAAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAACAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAEAAAD9/wIAAAAAAAEAAAD9/wMAAAAAAAEAAAD9/wQAAAAAAAEAAAACAAQAAAACAAEAAAACAAMAAAACAAEAAAACAAIAAAACAAEAAAACAAEAAAACAAEAAAACAAUAAAACAAEAAAD9/wUAAAAAAAEAAAD+/wUAAAABAAEAAAD//wUAAAABAAEAAAAAAAUAAAABAAEAAAABAAUAAAABAAEAAAD+/wQAAAABAAEAAAD//wQAAAABAAEAAAAAAAQAAAABAAEAAAABAAQAAAABAAEAAAABAAMAAAABAAEAAAABAAIAAAABAAEAAAABAAEAAAABAAEAAAAAAAEAAAABAAEAAAD//wEAAAABAAEAAAD+/wEAAAABAAEAAAD+/wIAAAABAAEAAAD+/wMAAAABAAEAAAD//wMAAAABAAEAAAAAAAMAAAABAAEAAAAAAAIAAAABAAEAAAD//wIAAAABAAEAAAA=")
-tile_set = ExtResource("3_5257n")
+tile_set = ExtResource("3_6tpdk")
 collision_enabled = false
 navigation_enabled = false
