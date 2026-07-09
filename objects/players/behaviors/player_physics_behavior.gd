@@ -117,7 +117,7 @@ func _movement_x(delta: float) -> void:
 				return
 	
 	# Crouching / Completed Level motion speed
-	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0 || player.completed:
+	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0:
 		player.is_skidding = false
 		if (
 			(!player.crouch_forced || player.is_on_floor()) &&

@@ -151,8 +151,11 @@ func _physics_process(delta: float) -> void:
 
 	# Force player walking when completed
 	if _force_player_walking && !_forced_player_on_wall:
-		player.direction = _force_player_walking_dir
-		player.speed.x = 125 * _force_player_walking_dir
+		player.left_right = _force_player_walking_dir
+		player.running = false
+		player.suit.physics_config.walk_max_walking_speed = 125 * _force_player_walking_dir
+		if player.completed && player.is_crouching && !Input.is_action_pressed(player.control.down):
+			player.is_crouching = false
 		_forced_player_on_wall = player.is_on_wall()
 		if _forced_player_on_wall:
 			player.speed.x = 0
