@@ -1,0 +1,32 @@
+[gd_resource type="TileSet" format=3 uid="uid://bkc31edmhu6n3"]
+
+[ext_resource type="Texture2D" uid="uid://bincxpssxusj5" path="res://engine/tilesets/underground/gfx/blue_platform.png" id="1_ec5jk"]
+[ext_resource type="Texture2D" uid="uid://nllabywju3oa" path="res://engine/tilesets/underground/gfx/purple_pipe.png" id="2_r1g0s"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ie4xm"]
+texture = ExtResource("1_ec5jk")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_41ajo"]
+texture = ExtResource("2_r1g0s")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[resource]
+physics_layer_0/collision_layer = 112
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_ie4xm")
+sources/1 = SubResource("TileSetAtlasSource_41ajo")

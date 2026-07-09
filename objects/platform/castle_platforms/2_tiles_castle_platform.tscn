@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bxbx27ax0ru2"]
+
+[ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_ke2tv"]
+[ext_resource type="Texture2D" uid="uid://cx7r753l4l8ex" path="res://engine/objects/platform/castle_platforms/2_tiles_castle_platform.png" id="2_ke2tv"]
+
+[node name="PlatformPath2Tiles" unique_id=643793396 instance=ExtResource("1_ke2tv")]
+
+[node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="0" unique_id=478764510]
+position = Vector2(-16, 0)
+polygon = PackedVector2Array(-16, 0, 48, 0, 48, 32, -16, 32)
+
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="1" unique_id=166578107]
+position = Vector2(0, 16)
+texture = ExtResource("2_ke2tv")
+region_rect = Rect2(0, 0, 70, 32)
+
+[node name="CollisionPolygon2D" parent="Block2" parent_id_path=PackedInt32Array(2083995296) index="0" unique_id=707615798]
+visible = true
+polygon = PackedVector2Array(-32, 0, 32, 0, 33, 32, -32, 32)

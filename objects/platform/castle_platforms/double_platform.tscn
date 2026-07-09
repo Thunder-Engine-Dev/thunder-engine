@@ -7,7 +7,7 @@
 atlas = ExtResource("2_8fx74")
 region = Rect2(64, 0, 32, 32)
 
-[node name="PlatformPath" unique_id=1204951763 instance=ExtResource("1_2ntqh")]
+[node name="PlatformPathDouble" unique_id=1204951763 instance=ExtResource("1_2ntqh")]
 
 [node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="0" unique_id=478764510]
 polygon = PackedVector2Array(-16, 0, 16, 0, 16, 64, -16, 64)

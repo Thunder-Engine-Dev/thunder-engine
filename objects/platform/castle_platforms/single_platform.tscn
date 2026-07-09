@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://rhrex2vth7at" path="res://engine/objects/platform/platform_path.tscn" id="1_1tovy"]
 [ext_resource type="Texture2D" uid="uid://f5m8lxtm1527" path="res://engine/objects/platform/castle_platforms/platform_castle_small.png" id="2_4e13b"]
 
-[node name="PlatformPath" unique_id=865174472 instance=ExtResource("1_1tovy")]
+[node name="PlatformPathSingle" unique_id=865174472 instance=ExtResource("1_1tovy")]
 
 [node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(878541733) index="0" unique_id=478764510]
 polygon = PackedVector2Array(-16, 0, 16, 0, 16, 34, -16, 34)

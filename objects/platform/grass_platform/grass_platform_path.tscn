@@ -1,0 +1,28 @@
+[gd_scene format=4 uid="uid://v5ll6rgx7foy"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_6qfc5"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_ciqvt"]
+[ext_resource type="TileSet" uid="uid://dtvs1rult8kbe" path="res://tilesets/overworld_green/overworld_green.tres" id="3_5257n"]
+
+[node name="PlatformPath" type="PathFollow2D" unique_id=175820021]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_6qfc5")
+
+[node name="Block" type="AnimatableBody2D" parent="." unique_id=1821090598]
+collision_layer = 112
+collision_mask = 0
+script = ExtResource("2_ciqvt")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block" unique_id=981783050]
+visible = false
+polygon = PackedVector2Array(-96, 0, 96, 0, 96, 192, -96, 192)
+
+[node name="Layer0" type="TileMapLayer" parent="Block" unique_id=195903853]
+tile_map_data = PackedByteArray("AAD+/wAAAAABAAAAAAD//wAAAAABAAAAAAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAACAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAEAAAD9/wIAAAAAAAEAAAD9/wMAAAAAAAEAAAD9/wQAAAAAAAEAAAACAAQAAAACAAEAAAACAAMAAAACAAEAAAACAAIAAAACAAEAAAACAAEAAAACAAEAAAACAAUAAAACAAEAAAD9/wUAAAAAAAEAAAD+/wUAAAABAAEAAAD//wUAAAABAAEAAAAAAAUAAAABAAEAAAABAAUAAAABAAEAAAD+/wQAAAABAAEAAAD//wQAAAABAAEAAAAAAAQAAAABAAEAAAABAAQAAAABAAEAAAABAAMAAAABAAEAAAABAAIAAAABAAEAAAABAAEAAAABAAEAAAAAAAEAAAABAAEAAAD//wEAAAABAAEAAAD+/wEAAAABAAEAAAD+/wIAAAABAAEAAAD+/wMAAAABAAEAAAD//wMAAAABAAEAAAAAAAMAAAABAAEAAAAAAAIAAAABAAEAAAD//wIAAAABAAEAAAA=")
+tile_set = ExtResource("3_5257n")
+collision_enabled = false
+navigation_enabled = false

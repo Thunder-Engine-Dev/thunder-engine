@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://djy38ghr51rya"]
+
+[ext_resource type="Script" uid="uid://ck0i5tcbxjott" path="res://engine/objects/platform/platform_path.gd" id="1_66yne"]
+[ext_resource type="Script" uid="uid://ddh5g4b7vqg8n" path="res://engine/objects/platform/platform_block.gd" id="2_bdukt"]
+[ext_resource type="Texture2D" uid="uid://dxfdf1vhn16ie" path="res://engine/tilesets/rockland/gfx/pink_platform.png" id="3_d6a6h"]
+
+[node name="PlatformPath" type="PathFollow2D" unique_id=1809580156]
+rotates = false
+cubic_interp = false
+loop = false
+script = ExtResource("1_66yne")
+sprite = NodePath("Block/Sprite2D")
+
+[node name="Block" type="AnimatableBody2D" parent="." unique_id=1127020473]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_bdukt")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block" unique_id=1170583818]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 20, -48, 20)
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Block" unique_id=119163859]
+physics_interpolation_mode = 2
+show_behind_parent = true
+position = Vector2(0, 10)
+texture = ExtResource("3_d6a6h")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 20)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Block/Sprite2D" unique_id=1023820888]
+physics_interpolation_mode = 2
+show_behind_parent = true
+position = Vector2(-32, 0)
+texture = ExtResource("3_d6a6h")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 20)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Block/Sprite2D" unique_id=130839564]
+physics_interpolation_mode = 2
+show_behind_parent = true
+position = Vector2(32, 0)
+texture = ExtResource("3_d6a6h")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 20)
+
+[node name="Block2" type="AnimatableBody2D" parent="." unique_id=117148237]
+collision_layer = 96
+collision_mask = 0
+script = ExtResource("2_bdukt")
+correction_on_player_falling = false
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Block2" unique_id=830362724]
+visible = false
+polygon = PackedVector2Array(-48, 0, 48, 0, 48, 20, -48, 20)
+one_way_collision = true

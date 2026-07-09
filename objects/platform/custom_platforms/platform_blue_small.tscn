@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d2dofsbykr7fx"]
+
+[ext_resource type="PackedScene" uid="uid://7p86qw2ptq4o" path="res://engine/objects/platform/custom_platforms/platform_blue.tscn" id="1_ll73l"]
+
+[node name="PlatformPath" unique_id=1660510356 instance=ExtResource("1_ll73l")]
+
+[node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(1883672768) index="0" unique_id=1945746030]
+polygon = PackedVector2Array(-16, 0, 16, 0, 16, 18, -16, 18)
+
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(1883672768) index="1" unique_id=2123880559]
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="CollisionPolygon2D" parent="Block2" parent_id_path=PackedInt32Array(677457645) index="0" unique_id=332811656]
+polygon = PackedVector2Array(-16, 0, 16, 0, 16, 18, -16, 18)

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b2iburc8batdn"]
+
+[ext_resource type="PackedScene" uid="uid://ddldd020oordq" path="res://engine/objects/platform/platform_path_small.tscn" id="1_qn501"]
+[ext_resource type="Texture2D" uid="uid://dxfdf1vhn16ie" path="res://engine/tilesets/rockland/gfx/pink_platform.png" id="2_b2wgy"]
+
+[node name="PlatformPinkMedium" unique_id=1330392519 instance=ExtResource("1_qn501")]
+
+[node name="CollisionPolygon2D" parent="Block" parent_id_path=PackedInt32Array(561274708) index="0" unique_id=3248463]
+polygon = PackedVector2Array(-32, 0, 32, 0, 32, 19, -32, 19)
+
+[node name="Sprite2D" parent="Block" parent_id_path=PackedInt32Array(561274708) index="1" unique_id=910352997]
+position = Vector2(-16, 10)
+texture = ExtResource("2_b2wgy")
+region_rect = Rect2(0, 0, 32, 20)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Block/Sprite2D" index="0" unique_id=137178876]
+position = Vector2(32, 0)
+texture = ExtResource("2_b2wgy")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 20)
+
+[node name="Block2" parent="." index="1" unique_id=392395693]
+visible = true
+
+[node name="CollisionPolygon2D" parent="Block2" index="0" unique_id=439206778]
+polygon = PackedVector2Array(-32, 0, 32, 0, 32, 19, -32, 19)
