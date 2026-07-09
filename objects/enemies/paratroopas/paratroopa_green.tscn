@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_6gke4"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_onbsx"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_ilfy3"]
-[ext_resource type="Texture2D" uid="uid://8b83rb3phy7y" path="res://engine/objects/enemies/koopas/textures/koopa_green.png" id="10_6wrqt"]
+[ext_resource type="Texture2D" uid="uid://taer3lm320gs" path="res://engine/objects/enemies/paratroopas/textures/paratroopa_green.png" id="10_nfn03"]
 [ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="11_iya8u"]
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="12_ktrak"]
 
@@ -34,22 +34,22 @@ custom_vars = {
 }
 custom_script = ExtResource("8_onbsx")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_onbvk"]
-atlas = ExtResource("10_6wrqt")
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtvh4"]
+atlas = ExtResource("10_nfn03")
 region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vamrm"]
-atlas = ExtResource("10_6wrqt")
+[sub_resource type="AtlasTexture" id="AtlasTexture_64j48"]
+atlas = ExtResource("10_nfn03")
 region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oof6l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_onbvk")
+"texture": SubResource("AtlasTexture_gtvh4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vamrm")
+"texture": SubResource("AtlasTexture_64j48")
 }],
 "loop": 1,
 "name": &"default",
@@ -105,6 +105,7 @@ custom_vars = {
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1866130847]
+show_behind_parent = true
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_oof6l")
 autoplay = "default"

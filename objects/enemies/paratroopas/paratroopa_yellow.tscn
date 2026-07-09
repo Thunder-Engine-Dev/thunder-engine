@@ -7,10 +7,10 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="3_ijbjv"]
 [ext_resource type="Script" uid="uid://jk1chlh3hlmf" path="res://engine/objects/enemies/paratroopas/paratroopa_spawn_koopa.gd" id="3_nys84"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_gbw3c"]
-[ext_resource type="Texture2D" uid="uid://byht8hd1sml51" path="res://engine/objects/enemies/koopas/textures/koopa_yellow.png" id="5_55c6k"]
 [ext_resource type="AudioStream" uid="uid://46ern2rknx3i" path="res://engine/objects/enemies/_sounds/stomp.wav" id="6_b87fx"]
 [ext_resource type="Texture2D" uid="uid://of8f6domdmig" path="res://engine/objects/enemies/koopas/textures/shell_yellow.png" id="8_fhan7"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_ncc16"]
+[ext_resource type="Texture2D" uid="uid://bnckuwalxp658" path="res://engine/objects/enemies/paratroopas/textures/paratroopa_yellow.png" id="10_0aj2s"]
 [ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="12_l6b3h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxfep"]
@@ -34,22 +34,22 @@ custom_vars = {
 }
 custom_script = ExtResource("3_ijbjv")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ro4yw"]
-atlas = ExtResource("5_55c6k")
+[sub_resource type="AtlasTexture" id="AtlasTexture_g78kl"]
+atlas = ExtResource("10_0aj2s")
 region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_imttg"]
-atlas = ExtResource("5_55c6k")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b87fx"]
+atlas = ExtResource("10_0aj2s")
 region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ds46o"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ro4yw")
+"texture": SubResource("AtlasTexture_g78kl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_imttg")
+"texture": SubResource("AtlasTexture_b87fx")
 }],
 "loop": 1,
 "name": &"default",

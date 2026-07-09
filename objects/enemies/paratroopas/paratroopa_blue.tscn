@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_s0el6"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_q3loj"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_do5l5"]
-[ext_resource type="Texture2D" uid="uid://b8myuvxesg01g" path="res://engine/objects/enemies/koopas/textures/koopa_blue.png" id="11_khtf2"]
+[ext_resource type="Texture2D" uid="uid://ckojb0xkwddo2" path="res://engine/objects/enemies/paratroopas/textures/paratroopa_blue.png" id="11_j7hcf"]
 [ext_resource type="PackedScene" uid="uid://dq2mqt7l7f4ya" path="res://engine/objects/entities/wing/wing.tscn" id="12_q8dyn"]
 [ext_resource type="Texture2D" uid="uid://b5ru4nrm6iejt" path="res://engine/objects/enemies/koopas/textures/shell_blue.png" id="13_l8bgk"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="14_02l8i"]
@@ -36,22 +36,22 @@ custom_vars = {
 }
 custom_script = ExtResource("9_q3loj")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j8ole"]
-atlas = ExtResource("11_khtf2")
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpijx"]
+atlas = ExtResource("11_j7hcf")
 region = Rect2(0, 0, 32, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w7n2v"]
-atlas = ExtResource("11_khtf2")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph2td"]
+atlas = ExtResource("11_j7hcf")
 region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b04x4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j8ole")
+"texture": SubResource("AtlasTexture_cpijx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w7n2v")
+"texture": SubResource("AtlasTexture_ph2td")
 }],
 "loop": 1,
 "name": &"default",
