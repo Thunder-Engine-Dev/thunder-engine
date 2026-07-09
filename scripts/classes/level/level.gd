@@ -62,6 +62,7 @@ var _force_player_walking_dir: int = 1:
 		_force_player_walking_dir = signi(dir)
 		if dir == 0:
 			dir = [-1, 1].pick_random()
+var _force_player_walking_speed: float = 125
 var _forced_player_on_wall: bool
 
 var completed: bool
@@ -153,7 +154,9 @@ func _physics_process(delta: float) -> void:
 	if _force_player_walking && !_forced_player_on_wall:
 		player.left_right = _force_player_walking_dir
 		player.running = false
-		player.suit.physics_config.walk_max_walking_speed = 125 * _force_player_walking_dir
+		player.suit.physics_config.walk_max_walking_speed = _force_player_walking_speed
+		if player.speed.x * _force_player_walking_dir > _force_player_walking_speed:
+			player.speed.x = _force_player_walking_speed * _force_player_walking_dir
 		if player.completed && player.is_crouching && !Input.is_action_pressed(player.control.down):
 			player.is_crouching = false
 		_forced_player_on_wall = player.is_on_wall()
