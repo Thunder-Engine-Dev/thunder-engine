@@ -101,24 +101,52 @@ func _physics_process(delta: float) -> void:
 			
 			_vel = velocity.normalized()
 			motion_process(delta)
+			var ray_cast_target = Vector2(0, 4) + (speed * delta * 2).rotated(-global_rotation)
+			left_explosion.target_position = ray_cast_target
+			right_explosion.target_position = ray_cast_target
+			
 			if is_on_floor():
 				# Breaks Brick
 				var bricks: bool
 				for i in get_slide_collision_count():
-					var j: KinematicCollision2D = get_slide_collision(i)
-					if j.get_collider() is StaticBumpingBlock && j.get_collider().has_method(&"bricks_break"):
-						j.get_collider().bricks_break.call_deferred()
-						bricks = true
+					var collider: Node = get_slide_collision(i).get_collider()
+					if collider is StaticBumpingBlock && collider.has_method(&"got_bumped"):
+						collider.got_bumped(false)
+						if collider.has_method(&"bricks_break") && !collider.result:
+							bricks = true
 				# Non-stop for the thwomp who broke the bricks
 				if bricks:
 					_explosion()
 					timer_destroy.start()
 					return
 				# Stops if stunning on the ground
-				_step = 2
 				_stun()
-				_stunspot = global_position
-				timer_waiting.start(waiting_time)
+				return
+			else:
+				var col: bool = false
+				var bricks: bool = true
+				if left_explosion.is_colliding():
+					var collider = left_explosion.get_collider()
+					if is_instance_valid(collider) && collider.has_method(&"got_bumped"):
+						collider.got_bumped(false)
+						if !collider.has_method(&"bricks_break"):
+							bricks = false
+						col = true
+				if right_explosion.is_colliding():
+					var collider2 = right_explosion.get_collider()
+					if is_instance_valid(collider2) && collider2.has_method(&"got_bumped"):
+						collider2.got_bumped(false)
+						if !collider2.has_method(&"bricks_break"):
+							bricks = false
+						col = true
+				if col:
+					if bricks:
+						motion_process(1)
+						_explosion()
+						timer_destroy.start()
+						return
+					_step = 2
+					_stun.call_deferred()
 		# Rising
 		3:
 			collision = false
@@ -137,13 +165,17 @@ func _physics_process(delta: float) -> void:
 
 
 func _stun() -> void:
+	_step = 2
 	stun.emit()
 	timer_destroy.stop()
 	var _sfx = CharacterManager.get_sound_replace(stunning_sound, stunning_sound, "stun", false)
 	Audio.play_sound(_sfx, self)
+	motion_process(1)
 	_explosion()
 	if Thunder._current_camera.has_method(&"shock"):
 		Thunder._current_camera.shock(0.2, Vector2.ONE * 4)
+	_stunspot = global_position
+	timer_waiting.start(waiting_time)
 
 
 func _explosion() -> void:

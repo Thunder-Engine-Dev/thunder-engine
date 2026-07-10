@@ -13,6 +13,9 @@ func _physics_process(delta: float) -> void:
 	match _step:
 		# Waiting
 		0:
+			collision = false
+			collision_shape_2d.disabled = true
+			
 			var player: Player = Thunder._current_player
 			if !player:
 				return
@@ -23,6 +26,9 @@ func _physics_process(delta: float) -> void:
 				timer_destroy.start()
 		# Stunning
 		1:
+			collision = true
+			collision_shape_2d.disabled = false
+			
 			_vel = velocity.normalized()
 			motion_process(delta)
 			var ray_cast_target = Vector2(0, 4) + (speed * delta * 2).rotated(-global_rotation)
@@ -36,7 +42,7 @@ func _physics_process(delta: float) -> void:
 					var collider: Node = get_slide_collision(i).get_collider()
 					if collider is StaticBumpingBlock && collider.has_method(&"got_bumped"):
 						collider.got_bumped(false)
-						if collider.has_method(&"bricks_break"):
+						if collider.has_method(&"bricks_break") && !collider.result:
 							bricks = true
 				# Non-stop for the thwomp who broke the bricks
 				if bricks:
@@ -73,10 +79,13 @@ func _physics_process(delta: float) -> void:
 					_stun.call_deferred()
 		# Rising
 		3:
+			collision = false
+			collision_shape_2d.disabled = true
+			
 			#velocity = -_vel * rising_speed
 			velocity = global_position.direction_to(_origin) * rising_speed
 			do_movement(delta)
-			if (_origin - global_position).dot(_origin - _stunspot) <= 0 && global_position.distance_squared_to(_origin) <= 50 * delta:
+			if (_origin - global_position).dot(_origin - _stunspot) <= 0 && global_position.distance_squared_to(_origin) <= rising_speed * delta:
 				velocity = Vector2.ZERO
 				speed = velocity
 				global_position = _origin
