@@ -102,8 +102,8 @@ func _editor_process() -> void:
 ## Make the block bumped. If the block was just now got or is being bumped, then nothing will happen[br]
 ## If [code]disable[/code] is [code]true[/code], then all cast detectors will be disabled[br]
 ## [code]bump_rotation[/code] is the direction angle that the block moves when it is being bumped[br]
-## [code]interrupy[/code] no usge currently
-func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
+## [code]trigger_hit_attacker[/code] will trigger a [code]head[/code] attacker when bumping the block
+func bump(disable: bool, bump_rotation: float = 0, trigger_hit_attacker: bool = true):
 	if _triggered && lock_while_triggered: return
 	if !active: return
 	
@@ -135,7 +135,8 @@ func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
 		Audio.play_sound(bump_sound, self)
 	
 	bumped.emit()
-	hit_attack()
+	if trigger_hit_attacker:
+		hit_attack()
 
 func _lt(disable):
 	if !disable:

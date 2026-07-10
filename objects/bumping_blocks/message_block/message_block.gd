@@ -19,10 +19,10 @@ var _prev_pause_bool: bool
 signal message_shown
 signal message_hidden
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if _triggered: return
 	if activated: return
-	bump(false)
+	bump(false, 0, trigger_hit_attacker)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	await get_tree().physics_frame
 	show_message.call_deferred()
@@ -40,8 +40,8 @@ func _physics_process(delta: float) -> void:
 		activated = false
 
 
-func bump(disable: bool, bump_rotation: float = 0, interrupt: bool = false):
-	super(disable, bump_rotation, interrupt)
+func bump(disable: bool, bump_rotation: float = 0, trigger_hit_attacker: bool = true):
+	super(disable, bump_rotation, trigger_hit_attacker)
 
 
 func show_message() -> void:

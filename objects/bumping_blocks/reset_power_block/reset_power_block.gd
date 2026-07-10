@@ -16,17 +16,17 @@ func _physics_process(delta):
 		_animated_sprite_2d.animation = &"default"
 
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if _triggered: return
-	call_bump()
+	call_bump(trigger_hit_attacker)
 
 
-func call_bump() -> void:
+func call_bump(trigger_hit_attacker: bool = true) -> void:
 	if active:
 		bump_sound = CharacterManager.get_sound_replace(bump_sound, bump_sound, "hurt", true)
 	else:
 		bump_sound = CharacterManager.get_sound_replace(DEFAULT_BUMP, DEFAULT_BUMP, "block_bump", false)
-	bump(false)
+	bump(false, 0, trigger_hit_attacker)
 	if !active: return
 	_animated_sprite_2d.animation = &"empty"
 	Thunder._current_player.change_suit(CharacterManager.get_suit("small"), false)

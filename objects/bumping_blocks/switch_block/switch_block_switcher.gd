@@ -34,9 +34,10 @@ func _physics_process(_delta) -> void:
 	super(_delta)
 
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if _triggered: return
 	if !by_player && only_bump_by_player: return
-	bump(false)
+	bump(false, 0, trigger_hit_attacker)
 	for i in get_tree().get_nodes_in_group("switch_" + str(id)):
-		if i.has_method(&"switch"): i.switch()
+		if i.has_method(&"switch"):
+			i.switch()

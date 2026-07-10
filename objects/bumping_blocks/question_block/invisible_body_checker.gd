@@ -17,10 +17,10 @@ func _ready() -> void:
 	)
 
 
-func got_bumped(by_player: bool = false) -> void:
+func got_bumped(by_player: bool = false, trigger_hit_attacker: bool = true) -> void:
 	if !_active: return
 	if parent._triggered: return
 	if by_player: return
 	
-	parent.call_bump()
+	parent.call_bump(trigger_hit_attacker)
 	
