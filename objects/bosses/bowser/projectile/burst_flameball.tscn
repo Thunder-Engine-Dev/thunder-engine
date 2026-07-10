@@ -53,6 +53,7 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="BurstFlameball" type="CharacterBody2D" unique_id=291781224]
+platform_on_leave = 2
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2icyp")

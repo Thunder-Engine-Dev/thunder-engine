@@ -97,6 +97,7 @@ animations = [{
 }]
 
 [node name="BooSnake" type="CharacterBody2D" unique_id=1241089435]
+platform_on_leave = 2
 z_index = 2
 collision_layer = 2
 collision_mask = 32

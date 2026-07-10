@@ -76,6 +76,7 @@ _data = {
 [node name="GoombaInBricks" type="CharacterBody2D" unique_id=245355321 node_paths=PackedStringArray("sprite_goomba", "sprite_bricks")]
 collision_layer = 114
 collision_mask = 32
+platform_on_leave = 2
 script = ExtResource("1_gmc6n")
 sprite_goomba = NodePath("SpriteGoomba")
 sprite_bricks = NodePath("SpriteBricks")
@@ -148,7 +149,7 @@ wait_time = 2.0
 one_shot = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
-[connection signal="killed_succeeded" from="Hitbox/EnemyAttacked" to="." method="queue_free"]
 [connection signal="killed_succeeded" from="Hitbox/EnemyAttacked" to="." method="bricks_break"]
-[connection signal="stomped_succeeded" from="Hitbox/EnemyAttacked" to="." method="queue_free"]
+[connection signal="killed_succeeded" from="Hitbox/EnemyAttacked" to="." method="queue_free"]
 [connection signal="stomped_succeeded" from="Hitbox/EnemyAttacked" to="." method="bricks_break"]
+[connection signal="stomped_succeeded" from="Hitbox/EnemyAttacked" to="." method="queue_free"]

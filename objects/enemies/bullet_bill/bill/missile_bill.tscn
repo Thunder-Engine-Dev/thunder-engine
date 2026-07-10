@@ -39,6 +39,7 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="MissileBill" unique_id=69566433 instance=ExtResource("1_bxwn5")]
+platform_on_leave = 2
 script = ExtResource("2_lak03")
 speed_cap = 200.0
 turn_speed = 5.0

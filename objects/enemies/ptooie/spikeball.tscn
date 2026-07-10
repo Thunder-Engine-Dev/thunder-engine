@@ -27,6 +27,7 @@ radius = 16.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nylki"]
 
 [node name="Spikeball" type="CharacterBody2D" unique_id=1451880592]
+platform_on_leave = 2
 position = Vector2(0, -112)
 script = ExtResource("1_eujlk")
 sprite = NodePath("Spike")

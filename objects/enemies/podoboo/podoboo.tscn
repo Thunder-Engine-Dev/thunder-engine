@@ -66,6 +66,7 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="Podoboo" type="CharacterBody2D" unique_id=1884896969 groups=["#lava_body"]]
+platform_on_leave = 2
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_kck43")

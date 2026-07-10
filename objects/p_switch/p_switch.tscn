@@ -48,6 +48,7 @@ animations = [{
 }]
 
 [node name="PSwitch" type="CharacterBody2D" unique_id=836060499]
+platform_on_leave = 2
 collision_layer = 100
 collision_mask = 64
 script = ExtResource("1_ko4hk")

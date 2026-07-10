@@ -65,6 +65,7 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="Flame" type="CharacterBody2D" unique_id=799870239]
+platform_on_leave = 2
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_2r8ig")

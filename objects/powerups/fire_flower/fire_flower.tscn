@@ -56,10 +56,11 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="FireFlower" type="CharacterBody2D" unique_id=1130765794]
+platform_on_leave = 2
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
-floor_snap_length = 20.0
+floor_snap_length = 5.0
 script = ExtResource("1_a0bpr")
 to_suit = "fireball"
 gravity_scale = 0.5

@@ -35,11 +35,12 @@ animations = [{
 }]
 
 [node name="PoisonousMushroom" type="CharacterBody2D" unique_id=1418149343 groups=["end_level_sequence"]]
+platform_on_leave = 2
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
 floor_max_angle = 0.837758
-floor_snap_length = 20.0
+floor_snap_length = 5.0
 script = ExtResource("1_iyqkm")
 speed = Vector2(100, 0)
 gravity_scale = 0.5

@@ -31,10 +31,11 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="Clock" type="CharacterBody2D" unique_id=1317900774]
+platform_on_leave = 2
 collision_layer = 4
 collision_mask = 64
 floor_constant_speed = true
-floor_snap_length = 20.0
+floor_snap_length = 5.0
 script = ExtResource("1_jmtqx")
 to_suit = "super"
 gravity_scale = 0.5

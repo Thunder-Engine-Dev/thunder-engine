@@ -93,6 +93,7 @@ size = Vector2(32, 32)
 [node name="GoombaBro" type="CharacterBody2D" unique_id=504345913 groups=["koopa_bro"]]
 collision_layer = 2
 collision_mask = 32
+platform_on_leave = 2
 script = ExtResource("1_uoodm")
 jumping_strength_upward = 450.0
 projectile = ExtResource("2_tlnwd")

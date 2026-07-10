@@ -26,6 +26,7 @@ custom_vars = {
 custom_script = ExtResource("4_ik838")
 
 [node name="BulletBill" type="CharacterBody2D" unique_id=1514230021]
+platform_on_leave = 2
 script = ExtResource("1_rybvi")
 look_at_player = true
 sprite = NodePath("Sprite")

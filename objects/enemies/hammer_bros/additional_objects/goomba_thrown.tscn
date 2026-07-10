@@ -73,6 +73,7 @@ size = Vector2(32, 31)
 [node name="GoombaThrown" type="CharacterBody2D" unique_id=62516220]
 collision_layer = 2
 collision_mask = 32
+platform_on_leave = 2
 script = ExtResource("1_43ao1")
 goomba_creation = SubResource("Resource_e7iss")
 rotation_speed = 9.0

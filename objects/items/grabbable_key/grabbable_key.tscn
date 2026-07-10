@@ -49,6 +49,7 @@ animations = [{
 }]
 
 [node name="GrabbableKey" type="CharacterBody2D" unique_id=848315730 groups=["unlocking_key"]]
+platform_on_leave = 2
 collision_layer = 48
 collision_mask = 64
 collision_priority = 0.01

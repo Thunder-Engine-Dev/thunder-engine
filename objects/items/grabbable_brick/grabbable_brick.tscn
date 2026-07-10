@@ -47,6 +47,7 @@ animations = [{
 }]
 
 [node name="GrabbableBrick" type="CharacterBody2D" unique_id=1455510709]
+platform_on_leave = 2
 disable_mode = 1
 collision_layer = 112
 collision_mask = 64

@@ -193,6 +193,7 @@ animations = [{
 }]
 
 [node name="ThwompChilly" unique_id=352570667 instance=ExtResource("1_tu3pw")]
+platform_on_leave = 2
 script = ExtResource("2_fpapu")
 max_falling_speed = 2400.0
 

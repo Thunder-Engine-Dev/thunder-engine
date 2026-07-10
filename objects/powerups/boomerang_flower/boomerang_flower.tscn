@@ -20,6 +20,7 @@ fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
 [node name="BoomerangFlower" type="CharacterBody2D" unique_id=1279122386]
+platform_on_leave = 2
 collision_layer = 4
 collision_mask = 64
 script = ExtResource("1_ty2os")
