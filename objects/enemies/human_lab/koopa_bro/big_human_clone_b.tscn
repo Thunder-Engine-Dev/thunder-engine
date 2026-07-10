@@ -167,7 +167,6 @@ animations = [{
 }]
 
 [node name="BigHumanCloneB" unique_id=105640848 instance=ExtResource("1_5iym8")]
-platform_on_leave = 2
 sound = ExtResource("2_85p4r")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1436643882]

@@ -5,8 +5,10 @@ const EnemyKilled: Script = preload("res://engine/objects/enemies/_dead/enemy_ki
 @export var enemy_center_node: NodePath
 @export var can_idle: bool = false
 @export var can_move_both_ways: bool = false
+@export var can_jump: bool = false
 @export var idle_offset: Vector2
 @export var walk_offset: Vector2
+@export var jump_offset: Vector2
 
 @onready var parent = $'..'
 @onready var _center: GravityBody2D = get_node_or_null(enemy_center_node)
@@ -17,6 +19,11 @@ func _physics_process(delta: float) -> void:
 	
 	if _center == null || _center is EnemyKilled:
 		animation = "idle"
+		return
+	
+	if can_jump && !_center.is_on_floor():
+		animation = "jump"
+		offset = jump_offset * sign(_center.speed.x)
 		return
 
 	if can_idle:
