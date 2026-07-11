@@ -113,7 +113,7 @@ func _prepare_template() -> void:
 	tileset.set_physics_layer_collision_layer(0, 0b1110000)
 	tileset.set_physics_layer_collision_mask(0, 0)
 	var tileset_source = TileSetAtlasSource.new()
-	tileset_source.texture = load("res://engine/tilesets/overworld/hard_block.png")
+	tileset_source.texture = load("res://engine/tilesets/overworld/gfx/hard_block.png")
 	tileset_source.texture_region_size = Vector2(32, 32)
 	tileset_source.create_tile(Vector2i.ZERO)
 	tileset.add_source(tileset_source)
