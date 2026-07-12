@@ -460,16 +460,6 @@ func _shape_recovery_process(precise: bool = false) -> bool:
 						if !tile_data.is_collision_polygon_one_way(i, j):
 							is_colliding[index] = true
 							break
-		#elif collider is TileMapLayer:
-			#var cell: Vector2i = collider.get_coords_for_body_rid(raycast.get_collider_rid())
-			#var tile_data: TileData = collider.get_cell_tile_data(cell)
-			#if tile_data:
-				#var phys_layer = collider.tile_set.get_physics_layers_count()
-				#for i in phys_layer:
-					#for j in tile_data.get_collision_polygons_count(i):
-						#if !tile_data.is_collision_polygon_one_way(i, j):
-							#is_colliding[index] = true
-							#break
 		elif collider is CollisionObject2D:
 			var i = raycast.get_collider_shape()
 			if !collider.is_shape_owner_one_way_collision_enabled(i):

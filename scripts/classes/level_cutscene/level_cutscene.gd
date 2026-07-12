@@ -4,10 +4,18 @@ class_name LevelCutscene extends Stage2D
 const LETS = preload("res://engine/scenes/main_menu/sounds/lets.wav")
 const FADEOUT = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
+## Which scene to go to after the cutscene ends. Not required for cutscenes with warps in them,
+## but recommended to set anyway.
 @export_file("*.tscn", "*.scn") var goto_path: String
 @export var fade_out_time: float = 0.04
 @export var fade_out_focus_on_player: bool = true
+@export_group("Skipping")
+## If [code]true[/code], after [param skip_delay_sec] seconds passes, the cutscene can be skipped with
+## jump or Enter keys.[br]Requires [param goto_path] to be set.
+@export var can_be_skipped: bool = false
+@export var skip_delay_sec: float = 1.0
 @export_group("Cutscene Options")
+## Music that will start playing when cutscene starts. Set to an empty WAV stream for no music.
 @export var intro_music: AudioStream = LETS
 @export var transition_sound: AudioStream = FADEOUT
 
@@ -27,17 +35,19 @@ func _ready() -> void:
 	var _sfx = CharacterManager.get_sound_replace(intro_music, LETS, "level_cutscene_song", false)
 	Audio.play_1d_sound(_sfx, false, { "bus": "Music" })
 	
-	await get_tree().create_timer(1.0, true, false, true).timeout
-	skippable = true
-	
 	Console.executed.connect(func(command_name, args):
 		if command_name == "finish" && !TransitionManager.current_transition && goto_path:
 			end()
 	)
-
-#func _physics_process(delta: float) -> void:
-#	if skippable: _cutscene_skip_logic()
 	
+	await get_tree().create_timer(skip_delay_sec, false, false, false).timeout
+	skippable = true
+	
+
+func _physics_process(delta: float) -> void:
+	if can_be_skipped && skippable && goto_path:
+		_cutscene_skip_logic()
+
 
 func _cutscene_skip_logic() -> void:
 	if Input.is_action_just_pressed("m_jump") || Input.is_action_just_pressed("ui_accept"):

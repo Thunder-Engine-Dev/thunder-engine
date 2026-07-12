@@ -259,6 +259,11 @@ func _circle_transition() -> void:
 		)
 		warp_to_scene = ""
 		return
+	
+	# If there is already a circle transition that's closing, we'll do nothing to prevent breaking the game
+	if is_instance_valid(TransitionManager.current_transition) && !TransitionManager.current_transition.get(&"middle_switch"):
+		return
+	
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()

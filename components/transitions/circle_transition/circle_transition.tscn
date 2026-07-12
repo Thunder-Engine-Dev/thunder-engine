@@ -5,6 +5,7 @@
 
 [node name="Transition" type="Control" unique_id=1688948086]
 layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_tg3ld")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1512837303]

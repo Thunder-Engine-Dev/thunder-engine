@@ -40,14 +40,15 @@ func _set_calculated_multiplier(ratio: Vector2) -> void:
 ## Sets the center of transition on some node
 func on(ref: Variant, direct = false, unpause = false) -> Transition:
 	var value: Vector2
-	if ref is Node2D:
+	if ref is Node2D && is_instance_valid(ref):
 		value = Thunder.view.get_pos_ratio_in_screen(ref)
 		color_rect.material.set_shader_parameter(&"center", value)
 		_set_calculated_multiplier(value)
 		await get_tree().physics_frame
-		value = Thunder.view.get_pos_ratio_in_screen(ref)
-		color_rect.material.set_shader_parameter(&"center", value)
-		_set_calculated_multiplier(value)
+		if is_instance_valid(ref):
+			value = Thunder.view.get_pos_ratio_in_screen(ref)
+			color_rect.material.set_shader_parameter(&"center", value)
+			_set_calculated_multiplier(value)
 	elif ref is Vector2 && direct:
 		color_rect.material.set_shader_parameter(&"center", ref)
 		_set_calculated_multiplier(ref)

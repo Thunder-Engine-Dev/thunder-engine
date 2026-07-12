@@ -42,6 +42,7 @@ func _physics_process(delta: float) -> void:
 	if _moving:
 		if player.global_position.y > marker_2d.global_position.y && player.speed.y > 0:
 			player.jump(-700)
+			player.coyote_time = 0.0
 			if _jump_num == 0:
 				player.gravity_scale = 0.45
 			else:
