@@ -47,7 +47,7 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 	player = Thunder._current_player
 	if player && player.is_queued_for_deletion(): return
 	if !par is PathFollow2D && player:
-		global_position = player.global_position#.round()
+		global_position = player.global_position
 		if reset_interpolation:
 			reset_physics_interpolation()
 			_xscroll = 0
@@ -69,24 +69,25 @@ func _screen_border_logic() -> void:
 	if player.warp != Player.Warp.NONE: return
 	
 	var rot: float = get_viewport_transform().affine_inverse().get_rotation()
-	var kc: KinematicCollision2D = null
-	var left_col: bool
-	var right_col: bool
-	while !kc && player.get_global_transform_with_canvas().get_origin().x < border_push_offset:
-		kc = player.move_and_collide(Vector2.RIGHT.rotated(rot))
-		left_col = enable_left_border_death
-		if player.velocity.dot(Vector2.LEFT.rotated(rot)) > 0:
-			player.vel_set_x.call_deferred(0)
-		#player.sync_position.call_deferred(false)
-	while !kc && player.get_global_transform_with_canvas().get_origin().x > get_viewport_rect().size.x - border_push_offset:
-		kc = player.move_and_collide(Vector2.LEFT.rotated(rot))
-		left_col = false
-		right_col = enable_right_border_death
-		if player.velocity.dot(Vector2.RIGHT.rotated(rot)) > 0:
-			player.vel_set_x.call_deferred(0)
-		#player.sync_position.call_deferred(false)
-	if kc && kc.get_collider() && (left_col || right_col):
-		player.die()
+	var right: Vector2 = Vector2.RIGHT.rotated(rot)
+	var left: Vector2 = Vector2.LEFT.rotated(rot)
+	var viewport_width: float = get_viewport_rect().size.x
+	var canvas_x: float = player.get_global_transform_with_canvas().get_origin().x
+	
+	if canvas_x < border_push_offset:
+		var push: Vector2 = right * (border_push_offset - canvas_x)
+		var kc: KinematicCollision2D = player.move_and_collide(push)
+		if player.velocity.dot(left) > 0:
+			player.vel_set_x(0)
+		if kc && kc.get_collider() && enable_left_border_death:
+			player.die()
+	elif canvas_x > viewport_width - border_push_offset:
+		var push: Vector2 = left * (canvas_x - (viewport_width - border_push_offset))
+		var kc: KinematicCollision2D = player.move_and_collide(push)
+		if player.velocity.dot(right) > 0:
+			player.vel_set_x(0)
+		if kc && kc.get_collider() && enable_right_border_death:
+			player.die()
 
 
 func _xscroll_logic() -> void:
