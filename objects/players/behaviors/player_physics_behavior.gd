@@ -462,7 +462,8 @@ func _shape_recovery_process(precise: bool = false) -> bool:
 							break
 		elif collider is CollisionObject2D:
 			var i = raycast.get_collider_shape()
-			if !collider.is_shape_owner_one_way_collision_enabled(i):
+			var owner_id = collider.shape_find_owner(i)
+			if !collider.is_shape_owner_one_way_collision_enabled(owner_id):
 				is_colliding[index] = true
 		else:
 			is_colliding[index] = raycast.is_colliding()

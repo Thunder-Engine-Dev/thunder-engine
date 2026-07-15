@@ -55,6 +55,7 @@ var _ignore_colliding_body_correction: bool = false
 @onready var collision_mask_ori: int = collision_mask
 
 @onready var _collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var _collision_one_way: CollisionShape2D = get_node_or_null(^"CollisionShape2D2")
 @onready var _sprites: Node2D = $Sprites
 @onready var _animated_sprite_2d: AnimatedSprite2D = $Sprites/AnimatedSprite2D
 
@@ -72,22 +73,27 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	if !Engine.is_editor_hint():
-		modulate.a = 1
-		if !Data.values.onetime_blocks && exists_once: return queue_free()
-		if !initially_visible_and_solid:
-			collision_layer = _unsolid_layer
-			collision_mask = _unsolid_mask
-			_collision_shape_2d.set_deferred(&"disabled", true)
-		_ignore_colliding_body_correction = !initially_visible_and_solid
-		_sprites.visible = initially_visible_and_solid
-		if Console.cv.item_display_shown:
-			_sprites.visible = true
-		
-		if appear_sound && appear_sound == DEFAULT_APPEAR:
-			appear_sound = CharacterManager.get_sound_replace(appear_sound, DEFAULT_APPEAR, "block_appear", false)
-		bump_sound = CharacterManager.get_sound_replace(bump_sound, DEFAULT_BUMP, "block_bump", false)
-		break_sound = CharacterManager.get_sound_replace(break_sound, DEFAULT_BREAK, "block_break", false)
+	if Engine.is_editor_hint():
+		return
+	
+	modulate.a = 1
+	if !Data.values.onetime_blocks && exists_once:
+		return queue_free()
+	if !initially_visible_and_solid:
+		collision_layer = _unsolid_layer
+		collision_mask = _unsolid_mask
+		_collision_shape_2d.set_deferred(&"disabled", true)
+	elif _collision_one_way:
+		_collision_one_way.set_deferred(&"disabled", true)
+	_ignore_colliding_body_correction = !initially_visible_and_solid
+	_sprites.visible = initially_visible_and_solid
+	if Console.cv.item_display_shown:
+		_sprites.visible = true
+	
+	if appear_sound && appear_sound == DEFAULT_APPEAR:
+		appear_sound = CharacterManager.get_sound_replace(appear_sound, DEFAULT_APPEAR, "block_appear", false)
+	bump_sound = CharacterManager.get_sound_replace(bump_sound, DEFAULT_BUMP, "block_bump", false)
+	break_sound = CharacterManager.get_sound_replace(break_sound, DEFAULT_BREAK, "block_break", false)
 
 
 func _physics_process(delta) -> void:
@@ -115,6 +121,8 @@ func bump(disable: bool, bump_rotation: float = 0, trigger_hit_attacker: bool = 
 		collision_layer = collision_layer_ori
 		collision_mask = collision_mask_ori
 		_collision_shape_2d.set_deferred(&"disabled", false)
+		if _collision_one_way:
+			_collision_one_way.set_deferred(&"disabled", true)
 	
 	_triggered = true
 	
