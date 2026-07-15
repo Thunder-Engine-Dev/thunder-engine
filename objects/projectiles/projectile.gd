@@ -50,10 +50,10 @@ func _ready() -> void:
 	super()
 
 
-func _exit_tree_offscreen_listener() -> void:
-	var tree := get_tree()
-	if is_instance_valid(tree) && tree.physics_frame.is_connected(offscreen_handler_process):
-		tree.physics_frame.disconnect(offscreen_handler_process)
+#func _exit_tree_offscreen_listener() -> void:
+	#var tree := get_tree()
+	#if is_instance_valid(tree) && tree.physics_frame.is_connected(offscreen_handler_process):
+		#tree.physics_frame.disconnect(offscreen_handler_process)
 
 
 ## ABSTRACT METHOD
@@ -90,7 +90,7 @@ func _setup_offscreen_handler_process() -> void:
 	vis_notifier_node.screen_exited.connect(_on_offscreen_notifier_exited)
 	vis_notifier_node.screen_entered.connect(_on_offscreen_notifier_entered)
 	get_tree().physics_frame.connect(offscreen_handler_process)
-	tree_exiting.connect(_exit_tree_offscreen_listener)
+	#tree_exiting.connect(_exit_tree_offscreen_listener)
 
 
 func _on_offscreen_notifier_exited() -> void:
@@ -131,6 +131,8 @@ func offscreen_handler_process() -> void:
 	if !is_inside_tree() || !_offscreen_tracking || !vis_notifier_node:
 		return
 	if _is_offscreen_tracking_grace_zone():
+		return
+	if (get_tree().paused || process_mode == Node.PROCESS_MODE_DISABLED) && process_mode != Node.PROCESS_MODE_ALWAYS:
 		return
 	
 	_offscreen_elapsed += get_physics_process_delta_time()
