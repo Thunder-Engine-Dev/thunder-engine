@@ -10,5 +10,6 @@ func _ready() -> void:
 	node.pos = body.global_position
 	node.respawn_delay = body.respawn_delay
 	node.respawn_offset = body.respawn_offset
+	node.recalculate_y_pos_on_respawn = body.recalculate_y_pos_on_respawn
 	
 	super()

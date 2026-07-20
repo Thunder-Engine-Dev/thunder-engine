@@ -11,6 +11,7 @@ var pos: Vector2
 var respawn_delay: float
 var respawn_offset: float
 var center: Vector2
+var recalculate_y_pos_on_respawn: bool
 
 
 func _ready() -> void:
@@ -45,6 +46,8 @@ func _ready() -> void:
 						* body.leaving_direction * \
 						(get_viewport_rect().size.x / 2 + 64 + respawn_offset)
 					)
+					if !recalculate_y_pos_on_respawn:
+						body.global_position.y = pos.y
 					body.reset_physics_interpolation()
 				body = null
 				queue_free()
