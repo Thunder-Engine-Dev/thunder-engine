@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="14_02l8i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w2yun"]
-size = Vector2(32, 32)
+size = Vector2(30, 32)
 
 [sub_resource type="Resource" id="Resource_y4dty"]
 script = ExtResource("6_c3xf2")
@@ -114,7 +114,7 @@ custom_vars = {
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation", &"killing_scores"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=741281317]
-position = Vector2(0, -8)
+position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_b04x4")
 autoplay = "default"
 

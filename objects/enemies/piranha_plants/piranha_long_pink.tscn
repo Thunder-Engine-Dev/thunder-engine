@@ -124,6 +124,7 @@ killing_immune = {
 "starman": false
 }
 killing_creation = SubResource("Resource_hukh6")
+killing_body_override = NodePath("../../BodyKilling")
 killing_scores = 100
 killing_sound_succeeded = ExtResource("9_7y7fr")
 killing_sound_failed = ExtResource("10_lmflq")

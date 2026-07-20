@@ -27,6 +27,7 @@ var _p_run_enabled: bool
 var _stomp_enabled: bool
 var _idle_timer: float
 var _previous_animation: String
+var _jump_on_floor_correction_fix: bool
 
 func _ready() -> void:
 	player = node as Player
@@ -44,6 +45,7 @@ func _ready() -> void:
 	player.grabbed.connect(_grabbed)
 	player.invinciblized.connect(_invincible)
 	player.head_bumped.connect(_head_bumped)
+	player.corrected_to_floor_and_stopped.connect(_corrected_to_floor_and_stopped)
 	
 	player.bubbler.timeout.connect(_bubble_spawn)
 	
@@ -60,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	
 	delta = player.get_physics_process_delta_time()
 	_animation_process(delta)
+	_jump_on_floor_correction_fix = false
 
 
 #= Connected
@@ -196,6 +199,10 @@ func _handle_grabbed_finished() -> void:
 	, CONNECT_ONE_SHOT)
 
 
+func _corrected_to_floor_and_stopped() -> void:
+	_jump_on_floor_correction_fix = true
+
+
 func _setup_tweaks() -> void:
 	_attack_air_tweak = CharacterManager.get_suit_tweak("attack_air_animation", "", player.suit.name)
 	_look_up_tweak = CharacterManager.get_suit_tweak("look_up_animation", "", player.suit.name)
@@ -241,7 +248,7 @@ func _animation_non_warping_process(delta: float) -> void:
 	player.skid.emitting = player.is_skidding && player.is_on_floor()
 	if player.is_skidding:
 		_skid_sound_loop()
-	if player.is_on_floor() || player.coyote_time > 0.0:
+	if player.is_on_floor() || player.coyote_time > 0.0 || _jump_on_floor_correction_fix:
 		_animation_floor_process(delta)
 	elif player.is_underwater:
 		_animation_swimming_process(delta)

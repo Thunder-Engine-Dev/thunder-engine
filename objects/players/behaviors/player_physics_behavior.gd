@@ -16,6 +16,7 @@ func _ready() -> void:
 	
 	player.underwater.got_into_water.connect(_set_underwater_to.bind(true), CONNECT_REFERENCE_COUNTED)
 	player.underwater.got_out_of_water.connect(_set_underwater_to.bind(false), CONNECT_REFERENCE_COUNTED)
+	player.corrected_to_floor_and_stopped.connect(_corrected_to_floor_and_stopped)
 
 
 func _physics_process(delta: float) -> void:
@@ -62,6 +63,15 @@ func _physics_process(delta: float) -> void:
 	player.running_grace = move_toward(player.running_grace, 0.0, delta)
 	if player.is_on_slope() && player.is_on_wall() && (player.get_which_wall_collided() == sign(player.left_right)) && abs(player.speed.x) < 70:
 		player.speed.x = 0
+
+
+func _corrected_to_floor_and_stopped() -> void:
+	if player.get_tree().paused: return
+	if player.warp != Player.Warp.NONE: return
+	if player.no_movement:
+		return
+	if can_coyote:
+		player.coyote_time = config.jump_coyote_time_sec
 
 
 func _movement_debug(delta) -> void:
