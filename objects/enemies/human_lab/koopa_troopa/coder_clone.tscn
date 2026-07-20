@@ -25,6 +25,7 @@ trans_inheritances = 7
 resource_local_to_scene = true
 script = ExtResource("4_jp4b2")
 creation_nodepack = ExtResource("2_i0fi6")
+trans_offset = Vector2(0, 3)
 trans_inheritances = 7
 custom_vars = {
 "death": NodePath("../../Sprite/Dead"),
@@ -181,11 +182,11 @@ animations = [{
 [node name="CoderClone" unique_id=1251967220 instance=ExtResource("1_cayg7")]
 
 [node name="Collision" parent="." index="0" unique_id=2094193784]
-position = Vector2(0, -5)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_xa3qa")
 
 [node name="Collision" parent="Body" parent_id_path=PackedInt32Array(624006947) index="0" unique_id=1954738934]
-position = Vector2(0, -6)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_xa3qa")
 
 [node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(624006947) index="1" unique_id=107757371]
@@ -199,6 +200,7 @@ sound_ignore_pitch_modification = true
 script = ExtResource("7_0gc58")
 
 [node name="Sprite" parent="." index="2" unique_id=611997468]
+position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_gtw8g")
 
 [node name="Dead" parent="Sprite" index="0" unique_id=49069282]
@@ -210,12 +212,13 @@ show_behind_parent = true
 position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_12g0q")
 autoplay = "default"
+offset = Vector2(-5, 0)
 script = ExtResource("10_uk66u")
 enemy_center_node = NodePath("../..")
 walk_offset = Vector2(-5, 0)
 
 [node name="VisibleOnScreenEnabler2D" parent="." index="3" unique_id=1584166778]
-rect = Rect2(-16, -40, 32, 68)
+rect = Rect2(-16, -32, 32, 64)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Body/Node" method="create"]

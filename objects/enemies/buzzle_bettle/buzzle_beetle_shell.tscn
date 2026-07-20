@@ -129,7 +129,7 @@ metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_sound", &"ki
 visible = false
 shape = SubResource("CircleShape2D_alv11")
 target_position = Vector2(0, 0)
-max_results = 8
+max_results = 24
 collision_mask = 3
 collide_with_areas = true
 collide_with_bodies = false
@@ -153,7 +153,7 @@ metadata/_edit_lock_ = true
 [connection signal="collided_wall" from="." to="." method="_on_collided_wall"]
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
-[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_visible" binds= [true]]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="set_frame" binds= [0]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="." method="status_swap" binds= [true]]
 [connection signal="killed" from="Attack" to="." method="_on_killing"]

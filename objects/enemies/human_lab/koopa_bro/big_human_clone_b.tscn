@@ -170,7 +170,7 @@ animations = [{
 sound = ExtResource("2_85p4r")
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1436643882]
-position = Vector2(0, -3)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_gepp8")
 
 [node name="Body" parent="." index="1" unique_id=177313346]
@@ -178,10 +178,12 @@ visible = true
 
 [node name="CollisionShape2D" parent="Body" index="0" unique_id=1107433309]
 visible = false
-position = Vector2(0, -3)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_gepp8")
+debug_color = Color(0, 0.7, 0.09333341, 0.41960785)
 
 [node name="EnemyAttacked" parent="Body" index="1" unique_id=1833375533]
+stomping_offset = Vector2(0, 8)
 stomping_creation = SubResource("Resource_pn87v")
 stomping_sound = ExtResource("5_13l8y")
 killing_creation = SubResource("Resource_pn87v")
@@ -189,6 +191,7 @@ killing_sound_succeeded = ExtResource("5_13l8y")
 sound_ignore_pitch_modification = true
 
 [node name="Sprite" parent="." index="2" unique_id=1016435817]
+position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_jwl4n")
 animation = &"attack"
 
@@ -204,11 +207,17 @@ can_move_both_ways = true
 idle_offset = Vector2(1, 0)
 
 [node name="SpriteProjectile" parent="." index="3" unique_id=1835548326]
-position = Vector2(-12, -2)
+position = Vector2(-12, 6)
 scale = Vector2(-1, 1)
 
 [node name="PosAttack" parent="." index="4" unique_id=233206360]
-position = Vector2(-14, -1)
+position = Vector2(-14, 7)
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="5" unique_id=433977246]
+rect = Rect2(-20, -32, 40, 64)
+
+[node name="ShapeCast2D" parent="." index="9" unique_id=1319335921]
+position = Vector2(0, 0)
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite/ActiveNOGI" method="set_animation" binds= ["idle"]]
 [connection signal="stomped_succeeded" from="Body/EnemyAttacked" to="Sprite/ActiveNOGI" method="set_animation" binds= ["idle"]]

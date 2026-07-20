@@ -25,6 +25,7 @@ size = Vector2(30, 54)
 resource_local_to_scene = true
 script = ExtResource("6_guai4")
 creation_nodepack = ExtResource("4_msv8e")
+trans_offset = Vector2(0, 5)
 trans_inheritances = 7
 custom_vars = {
 "death": NodePath("../../Sprite/Dead")
@@ -35,6 +36,7 @@ custom_script = ExtResource("5_jo8b4")
 resource_local_to_scene = true
 script = ExtResource("6_guai4")
 creation_nodepack = ExtResource("8_afrjp")
+trans_offset = Vector2(0, 5)
 trans_inheritances = 7
 visi_z_index = 1
 custom_vars = {
@@ -217,6 +219,7 @@ gravity_scale = 0.5
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=672150923]
 visible = false
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_aahbl")
 
 [node name="Body" type="Area2D" parent="." unique_id=2070787638]
@@ -226,11 +229,13 @@ script = ExtResource("2_48cqc")
 
 [node name="Collision" type="CollisionShape2D" parent="Body" unique_id=2128703508]
 visible = false
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_aahbl")
 debug_color = Color(0, 0.643137, 0.309804, 0.419608)
 
 [node name="EnemyAttacked" type="Node" parent="Body" unique_id=2010630448]
 script = ExtResource("3_8o0dw")
+stomping_offset = Vector2(0, 5)
 stomping_creation = SubResource("Resource_kg3jd")
 stomping_scores = 100
 stomping_sound = ExtResource("7_yjslt")
@@ -241,6 +246,7 @@ sound_ignore_pitch_modification = true
 metadata/_edit_pinned_properties_ = [&"stomping_scores", &"stomping_creation", &"stomping_sound", &"killing_creation"]
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1233518160]
+position = Vector2(0, 5)
 sprite_frames = SubResource("SpriteFrames_wd5co")
 autoplay = "default"
 
@@ -267,7 +273,7 @@ enemy_center_node = NodePath("../..")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=841448392]
 self_modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-20, -32, 40, 64)
+rect = Rect2(-20, -28, 40, 64)
 script = ExtResource("14_vuk5p")
 metadata/_edit_lock_ = true
 
