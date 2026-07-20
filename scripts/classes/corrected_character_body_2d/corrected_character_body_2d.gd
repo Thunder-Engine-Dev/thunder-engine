@@ -1,6 +1,11 @@
 extends CharacterBody2D
 class_name CorrectedCharacterBody2D
 
+signal corrected_to_floor
+signal corrected_to_floor_and_stopped
+signal corrected_to_wall
+signal corrected_to_wall_and_stopped
+
 ## A kind of [CharacterBody2D] that walks with correction when moving over through 32*32 tile gap
 
 @export_group("Correction")
@@ -70,7 +75,13 @@ func horizontal_correction(amount: int) -> void:
 					Vector2(0, velocity.y * delta).rotated(global_rotation)
 				):
 					translate(Vector2(i * j, 0).rotated(global_rotation))
-					if velocity.x * j < 0: velocity.x = 0
+					corrected_to_wall.emit()
+					if velocity.x * j < 0:
+						velocity.x = 0
+						corrected_to_wall_and_stopped.emit()
+						if has_signal(&"collided_wall"):
+							emit_signal(&"collided")
+							emit_signal(&"collided_wall")
 					return
 
 ## Process of vertical correction
@@ -120,5 +131,11 @@ func vertical_correction(amount: int) -> void:
 			):
 				#prints(_translation, Vector2(velocity.x * delta, 0).rotated(global_rotation))
 				translate(Vector2(0, _translation + velocity.y * delta).rotated(global_rotation))
-				if velocity.y > 0: velocity.y = 0
+				corrected_to_floor.emit()
+				if velocity.y > 0:
+					velocity.y = 0
+					corrected_to_floor_and_stopped.emit()
+					if has_signal(&"collided_floor"):
+						emit_signal(&"collided")
+						emit_signal(&"collided_floor")
 				return
