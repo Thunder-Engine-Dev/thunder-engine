@@ -88,9 +88,11 @@ var fps_reducer: Callable = func():
 	if mode == Window.Mode.MODE_MINIMIZED:
 		Engine.max_fps = 10
 		_has_minimized = true
+		AudioServer.set_bus_mute(AudioServer.get_bus_index(&"Master"), true)
 	elif _has_minimized:
 		_has_minimized = false
 		Engine.max_fps = ceili(DisplayServer.screen_get_refresh_rate())
+		AudioServer.set_bus_mute(AudioServer.get_bus_index(&"Master"), false)
 
 func _init() -> void:
 	#var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
