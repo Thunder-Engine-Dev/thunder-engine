@@ -31,6 +31,7 @@ func _ready() -> void:
 		player_z_index = player.sprite_container.z_index
 		player.speed = Vector2.ZERO
 		player.warp = Player.Warp.OUT
+		player.warp_dir = warp_direction
 		pass_player.call_deferred(player)
 
 func _physics_process(delta: float) -> void:
