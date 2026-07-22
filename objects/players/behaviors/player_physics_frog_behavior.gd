@@ -49,7 +49,7 @@ func _movement_x(delta: float) -> void:
 	player.is_skidding = false
 	
 	# Crouching / Completed Level motion speed
-	if player.left_right == 0 || player.completed:
+	if player.left_right == 0:
 		_decelerate(config.walk_deceleration, delta)
 		if player.is_on_floor() && !player.completed && jump_delay >= 0.45 && !player.is_holding:
 			player.speed.x = 0

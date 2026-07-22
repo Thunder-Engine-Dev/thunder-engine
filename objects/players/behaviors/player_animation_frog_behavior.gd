@@ -39,9 +39,17 @@ func _sprite_loop() -> void:
 
 func _sprite_finish() -> void:
 	if !sprite: return
-	super()
+	match sprite.animation:
+		&"attack", &"idle":
+			_play_anim(&"default")
+			_animation_process(0)
+			_idle_timer = 0.0
 	if sprite.animation != &"swim_idle":
 		_can_swim_idle = true
+
+func _sprite_change() -> void:
+	if !sprite: return
+	super()
 
 
 #= Main

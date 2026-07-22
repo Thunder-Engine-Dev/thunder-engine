@@ -51,6 +51,7 @@ func _ready() -> void:
 	
 	sprite.animation_looped.connect(_sprite_loop)
 	sprite.animation_finished.connect(_sprite_finish)
+	sprite.animation_changed.connect(_sprite_change)
 	
 	if player.direction != 0 && !player.is_climbing:
 		sprite.flip_h = (player.direction < 0)
@@ -149,6 +150,10 @@ func _sprite_finish() -> void:
 			_play_anim(&"jump" if player.speed.y < 0 else &"fall")
 		&"swim" when _swim_idle_tweak:
 			_play_anim(&"swim_idle")
+
+
+func _sprite_change() -> void:
+	pass
 
 
 var _skid_sound_timer: bool
