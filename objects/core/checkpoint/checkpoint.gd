@@ -23,6 +23,7 @@ signal respawned
 @onready var animation_max_quality: AnimationPlayer = $SpriteMaxQuality/AnimationMaxQuality
 @onready var sprite_max_quality: Sprite2D = $SpriteMaxQuality
 @onready var text_max_quality: Sprite2D = $SpriteMaxQuality/TextMaxQuality
+@onready var max_gpu_particles: GPUParticles2D = $SpriteMaxQuality/TextMaxQuality/GPUParticles2D
 
 @onready var alpha: float = text.modulate.a
 
@@ -81,12 +82,13 @@ func activate() -> void:
 			animation_text_flying.play(&"triggered")
 		SettingsManager.QUALITY.MAX:
 			animation_max_quality.play(&"triggered")
-			var tw = create_tween().set_loops(24).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+			var tw = create_tween().set_loops(20).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 			tw.tween_await(get_tree().physics_frame)
 			tw.tween_callback(func():
 				var eff = Effect.trail(
-					sprite_max_quality, sprite_max_quality.texture, Vector2.ZERO,
-					false, false, true, 0.1, 0.5, null, -1, false
+					sprite_max_quality, sprite_max_quality.texture, sprite_max_quality.offset,
+					sprite_max_quality.flip_h, sprite_max_quality.flip_v, sprite_max_quality.centered,
+					0.1, 0.5, sprite_max_quality.material, -1, false
 				)
 				eff.self_modulate.a = 0.5
 				Thunder.reorder_on_top_of(self, eff)
@@ -116,5 +118,7 @@ func _play_voice_line() -> void:
 			text_max_quality.reset_physics_interpolation()
 			var tw = text_max_quality.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 			tw.tween_property(text_max_quality, "scale", Vector2.ONE, 0.4)
+			await tw.finished
+			max_gpu_particles.emitting = true
 	)
 	
