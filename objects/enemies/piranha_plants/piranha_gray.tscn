@@ -80,11 +80,11 @@ killing_immune = {
 "beetroot": true,
 "boomerang": true,
 "fireball": true,
-"hammer": true,
+"hammer": false,
 "iceball": true,
-"shell": true,
+"shell": false,
 "shell_defence": 5,
-"shell_forced": true,
+"shell_forced": false,
 "starman": false
 }
 killing_creation = SubResource("Resource_fvcap")

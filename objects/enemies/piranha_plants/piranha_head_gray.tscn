@@ -50,7 +50,7 @@ killing_immune = {
 "head": false,
 "iceball": true,
 "shell": true,
-"shell_defence": 0,
+"shell_defence": 99,
 "shell_forced": false,
 "starman": true
 }
