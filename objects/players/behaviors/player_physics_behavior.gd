@@ -153,6 +153,8 @@ func _movement_x(delta: float) -> void:
 			_accelerate(config.walk_slow_walk_speed, config.walk_acceleration, delta)
 		return
 	
+	_movement_x_acceleration(delta)
+	
 	_consistent_crouch_speed = sign(player.left_right) != -player.direction
 	
 	# Initial speed
@@ -161,8 +163,6 @@ func _movement_x(delta: float) -> void:
 			player.direction = sign(player.left_right)
 			player.speed.x = player.direction * config.walk_initial_speed
 			#player.is_skidding = false
-	
-	_movement_x_acceleration(delta)
 	
 	if abs(player.speed.x) > 100 || player.is_skidding:
 		player.is_able_to_skid = true
