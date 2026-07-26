@@ -7,13 +7,13 @@ class_name PlayerConfig
 @export var walk_deceleration: float = 312.5
 @export var walk_crouch_deceleration: float = 468.75
 @export var walk_turning_acce: float = 1250
-@export var walk_max_walking_speed: float = 175
-@export var walk_max_running_speed: float = 350
+@export var walk_max_walking_speed: float = 210
+@export var walk_max_running_speed: float = 360
 @export var walk_running_grace_time: float = 0.05
 @export var walk_slow_walk_speed: float = 68.75
 @export_group("Underwater Walk", "underwater_walk_")
-@export var underwater_walk_max_walking_speed: float = 175
-@export var underwater_walk_max_running_speed: float = 175
+@export var underwater_walk_max_walking_speed: float = 210
+@export var underwater_walk_max_running_speed: float = 210
 @export_group("Jump", "jump_")
 @export var jump_speed: float = 700
 @export var jump_buff_static: float = 1000

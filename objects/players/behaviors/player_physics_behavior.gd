@@ -140,10 +140,10 @@ func _movement_x(delta: float) -> void:
 			)
 			_decelerate(deceleration, delta)
 		if player.slow_walking && !player.is_crouching:
-			if abs(player.speed.x) < config.walk_initial_speed:
+			if abs(player.speed.x) < config.walk_initial_speed - config.walk_deceleration / 50.0:
 				if player.is_on_wall():
 					player.direction *= -1
-				player.speed.x = player.direction * config.walk_initial_speed
+				player.speed.x = player.direction * (config.walk_initial_speed - config.walk_deceleration / 50.0)
 			_accelerate(config.walk_slow_walk_speed, config.walk_acceleration, delta)
 		return
 	
