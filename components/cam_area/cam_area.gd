@@ -69,6 +69,7 @@ func _draw() -> void:
 
 func _notification(what):
 	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
+		if !Engine.is_editor_hint(): return
 		queue_redraw()
 
 
@@ -149,8 +150,11 @@ func _switch_bounds() -> void:
 
 
 func is_in_bounds():
-	var camera = Thunder._current_camera
+	var camera: Camera2D = Thunder._current_camera
 	var in_bounds: bool
+	if !camera:
+		return in_bounds
+	
 	var has_cam_area: bool = (
 		(camera.has_meta(&"cam_area") &&
 		camera.get_meta(&"cam_area", null) != self) ||

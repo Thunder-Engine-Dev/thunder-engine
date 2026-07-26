@@ -20,36 +20,38 @@ func _ready() -> void:
 	Scenes.custom_scenes.game_over = self
 	Scenes.scene_ready.connect(func():
 		if !Thunder._current_hud: return
-		Thunder._current_hud.game_over_finished.connect(func():
-			var temp_skip_to_save: bool
-			if Scenes.current_scene is Level:
-				temp_skip_to_save = Scenes.current_scene.game_over_disable_continue
-			
-			if skip_to_save || temp_skip_to_save:
-				var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
-
-				if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
-					TransitionManager.accept_transition(
-						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-							.instantiate()
-							.with_scene(sgr_path)
-					)
-					return
-
-				TransitionManager.accept_transition(
-					load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-						.instantiate()
-						.with_speeds(0.03, -0.1)
-						.with_pause()
-						.on_player_after_middle(true)
-				)
-
-				await TransitionManager.transition_middle
-				Scenes.goto_scene(sgr_path)
-			else:
-				toggle()
-		)
+		Thunder._current_hud.game_over_finished.connect(_on_game_over_finished)
 	)
+
+
+func _on_game_over_finished() -> void:
+	var temp_skip_to_save: bool
+	if Scenes.current_scene is Level:
+		temp_skip_to_save = Scenes.current_scene.game_over_disable_continue
+	
+	if skip_to_save || temp_skip_to_save:
+		var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
+
+		if SettingsManager.get_tweak("replace_circle_transitions_with_fades", false):
+			TransitionManager.accept_transition(
+				load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
+					.instantiate()
+					.with_scene(sgr_path)
+			)
+			return
+
+		TransitionManager.accept_transition(
+			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
+				.instantiate()
+				.with_speeds(0.03, -0.1)
+				.with_pause()
+				.on_player_after_middle(true)
+		)
+
+		await TransitionManager.transition_middle
+		Scenes.goto_scene(sgr_path)
+	else:
+		toggle()
 
 
 func toggle(no_resume: bool = false) -> void:

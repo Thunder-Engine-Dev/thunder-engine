@@ -50,6 +50,19 @@ var _movement: bool:
 @onready var visible_on_screen_2d: VisibleOnScreenNotifier2D = $VisibleOnScreen2D
 
 
+func _ready() -> void:
+	if Data.values.stopwatch > 0.0:
+		process_mode = Node.PROCESS_MODE_ALWAYS
+		await get_tree().physics_frame
+		if !is_inside_tree() || is_queued_for_deletion():
+			return
+		if Data.values.stopwatch > 0.0:
+			process_mode = Node.PROCESS_MODE_DISABLED
+			get_node(^"Body").process_mode = Node.PROCESS_MODE_ALWAYS
+		else:
+			process_mode = Node.PROCESS_MODE_INHERIT
+
+
 func _physics_process(delta: float) -> void:
 	var player: Player = Thunder._current_player
 	if !player:

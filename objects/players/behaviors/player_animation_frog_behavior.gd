@@ -3,6 +3,7 @@ extends "res://engine/objects/players/behaviors/player_animation_behavior.gd"
 var _swim_frame_progress: float
 var _swim_frame: int
 var _can_swim_idle: bool
+var _prev_anim: String
 
 #= Connected
 func _suit_appeared() -> void:
@@ -18,10 +19,10 @@ func _suit_appeared() -> void:
 
 func _swam() -> void:
 	if !sprite: return
-	_swim_frame_progress = 0
-	_swim_frame = 0
 	_can_swim_idle = false
+	_swim_frame_progress = 0
 	if sprite.animation in [&"swim", &"swim_up", &"swim_down"]:
+		_swim_frame = 0
 		sprite.frame = 0
 		sprite.play()
 

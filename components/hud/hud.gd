@@ -48,8 +48,11 @@ func game_over() -> void:
 	var _sfx = CharacterManager.get_sound_replace(game_over_music, game_over_music, "game_over", false)
 	Audio.play_music(_sfx, 1, { "ignore_pause": true }, false, false)
 	
-	game_over_timer = get_tree().create_timer(6, false)
-	Thunder._connect(game_over_timer.timeout, emit_signal.bind("game_over_finished"), CONNECT_ONE_SHOT)
+	game_over_timer = get_tree().create_timer(6, false, true)
+	Thunder._connect(game_over_timer.timeout, func():
+		game_over_timer = null
+		game_over_finished.emit()
+	, CONNECT_ONE_SHOT)
 	
 	if Data.technical_values.remaining_continues == 0 && "suspended" in ProfileManager.profiles:
 		if ProfileManager.profiles.suspended.data.get("saved_profile") == ProfileManager.current_profile.name:
@@ -58,9 +61,6 @@ func game_over() -> void:
 
 func _input(event: InputEvent) -> void:
 	if !game_over_timer: return
-	if game_over_timer.time_left == 0:
-		game_over_timer = null
-		return
 	if event.is_action_pressed(&"ui_accept") || event.is_action_pressed(&"m_jump") || event.is_action_pressed(&"m_attack"):
 		game_over_timer = null
 		game_over_finished.emit()

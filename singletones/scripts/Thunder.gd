@@ -41,7 +41,7 @@ var _current_hud: CanvasLayer:
 		if !(is_instance_valid(_current_hud) && (_current_hud is CanvasLayer)): return null
 		return _current_hud
 
-## TO GET CURRENT CAMERA, USE GlobalViewport.vp.get_camera_2d()
+## You can also use GlobalViewport.vp.get_camera_2d() to get the current camera
 @warning_ignore("unused_private_class_variable")
 var _current_camera: Camera2D
 
@@ -194,7 +194,7 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 		if target_parent != get_tree().root:
 			reorder_on_top_of(node, target_parent)
 		else:
-			printerr("Invalid call. Node and target should be on the same subtree.")
+			print_debug("ERROR: Invalid call. Node and target should be on the same subtree.")
 		return
 
 	node_parent.move_child(node, target.get_index())

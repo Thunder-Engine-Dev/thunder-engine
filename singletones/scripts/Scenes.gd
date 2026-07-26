@@ -40,6 +40,7 @@ func _ready() -> void:
 	current_scene = get_tree().current_scene
 	get_tree().root.remove_child.call_deferred(current_scene)
 	GlobalViewport.vp.add_child.call_deferred(current_scene)
+	call_deferred(&"emit_signal", "scene_ready")
 
 
 ## Loads a node as current scene, call with call_deferred
