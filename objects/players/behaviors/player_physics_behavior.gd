@@ -248,7 +248,7 @@ func _movement_y(delta: float) -> void:
 				player._has_jumped = true
 				player.coyote_time = 0.0
 				player.ghost_speed_y = 0.0
-				player.jump(config.jump_speed)
+				player.jump(config.jump_speed + abs(_calculate_jump_acceleration() * delta * 0.5))
 				player.jumped_signal.emit()
 				Thunder.autosplitter.update_il_counter()
 				if player.is_crouching && player._crouch_jump_tweak:
