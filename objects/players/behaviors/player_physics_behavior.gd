@@ -8,6 +8,7 @@ var is_max_speed: bool
 var _old_is_max_speed: bool
 var _platform_correction_cached: bool
 var _platform_correction_cache_result: bool
+var _old_is_on_floor: bool
 
 
 func _ready() -> void:
@@ -124,7 +125,12 @@ func _movement_x(delta: float) -> void:
 		if _consistent_crouch_speed:
 			_consistent_crouch_speed = false
 			if player.crouch_forced && sign(player.left_right) != -player.direction:
+				if !_old_is_on_floor:
+					_consistent_crouch_speed = true
+				_old_is_on_floor = player.is_on_floor()
 				return
+	
+	_old_is_on_floor = player.is_on_floor()
 	
 	# Crouching / Completed Level motion speed
 	if (player.is_crouching && player.is_on_floor()) || player.left_right == 0:
@@ -147,8 +153,6 @@ func _movement_x(delta: float) -> void:
 			_accelerate(config.walk_slow_walk_speed, config.walk_acceleration, delta)
 		return
 	
-	_movement_x_acceleration(delta)
-	
 	_consistent_crouch_speed = sign(player.left_right) != -player.direction
 	
 	# Initial speed
@@ -157,6 +161,8 @@ func _movement_x(delta: float) -> void:
 			player.direction = sign(player.left_right)
 			player.speed.x = player.direction * config.walk_initial_speed
 			#player.is_skidding = false
+	
+	_movement_x_acceleration(delta)
 	
 	if abs(player.speed.x) > 100 || player.is_skidding:
 		player.is_able_to_skid = true
