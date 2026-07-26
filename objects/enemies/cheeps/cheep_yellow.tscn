@@ -45,7 +45,7 @@ animations = [{
 [node name="CheepYellow" unique_id=1461601069 instance=ExtResource("1_c2vrp")]
 type = 3
 always_unstompable = true
-tracking_speed = 62.5
+tracking_speed = 56.25
 metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
 [node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1945428) index="1" unique_id=1316147869]
