@@ -37,7 +37,7 @@ class_name PlayerConfig
 @export_group("Animation", "animation_")
 @export var animation_walking_speed: float = 1.5
 @export var animation_max_walking_speed: float = 6
-@export var animation_min_walking_speed: float = 1
+@export var animation_min_walking_speed: float = 1.5
 @export_group("Sound", "sound_")
 @export var sound_jump: Array = [preload("res://engine/objects/players/prefabs/sounds/jump.wav")]
 @export var sound_swim: Array = [preload("res://engine/objects/players/prefabs/sounds/swim.wav")]

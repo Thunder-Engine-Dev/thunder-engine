@@ -51,7 +51,7 @@ signal collided_ceiling
 signal collided_floor
 
 
-## Main method to make the body move with both gravity and collision(if [member collsion] is [code]true[/code]),
+## Main method to make the body move with both gravity and collision(if [member collision] is [code]true[/code]),
 ## This will automatically call [method do_movement][br]
 ## [param delta] should be the one from [method Node._phyiscs_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
@@ -85,8 +85,8 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	_collision_signals()
 
 
-## Direct method to process the body move with both gravity and collision(if [member collsion] is [code]true[/code])[br]
-## [param delta] should be the one from [method Node._phyiscs_process][br]
+## Direct method to process the body move with both gravity and collision (if [member collision] is [code]true[/code])[br]
+## [param delta] should be the one from [method Node._physics_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
 ## [param emit_detection_signal] makes the body emit [b]collision*[b] signals if collision happens[br]
 func do_movement(delta: float, slide: bool = false, emit_detection_signal: bool = true) -> void:
@@ -161,7 +161,7 @@ func turn_y() -> void:
 	#	do_movement(get_physics_process_delta_time(), false, true)
 
 
-## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always negative(upwards)
+## Jump. No matter if [code]jumping_speed[/code] is positive or negative, it will always be negative(upwards)
 func jump(jumping_speed: float) -> void:
 	speed.y = -abs(jumping_speed)
 
