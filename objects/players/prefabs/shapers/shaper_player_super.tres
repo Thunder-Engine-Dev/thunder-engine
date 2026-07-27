@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://bpmdgdlimero3" path="res://engine/scripts/resources/shaper/shaper_2d.gd" id="1_m5qpk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lqycm"]
-size = Vector2(20, 58)
+size = Vector2(20, 52)
 
 [resource]
 script = ExtResource("1_m5qpk")
 shape = SubResource("RectangleShape2D_lqycm")
-shape_pos = Vector2(0, -13)
+shape_pos = Vector2(0, -10)
