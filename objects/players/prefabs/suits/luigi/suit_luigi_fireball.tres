@@ -26,7 +26,7 @@ trans_inheritances = 7
 [sub_resource type="Resource" id="Resource_w5vmj"]
 script = ExtResource("5_wwbei")
 projectile = SubResource("Resource_yudqa")
-speed = Vector2(406.25, 0)
+speed = Vector2(381.25, 0)
 
 [resource]
 script = ExtResource("16_vc7uu")
