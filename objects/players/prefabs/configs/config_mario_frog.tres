@@ -7,8 +7,6 @@
 
 [resource]
 script = ExtResource("1_irdat")
-walk_crouch_deceleration = 625.0
 jump_buff_dynamic = 1350.0
 swim_max_falling_speed = 350.0
 swim_gravity_scale = 0.0
-animation_max_walking_speed = 3.5

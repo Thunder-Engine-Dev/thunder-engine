@@ -9,11 +9,9 @@
 script = ExtResource("1_ywmkl")
 walk_acceleration = 250.0
 walk_deceleration = 250.0
-walk_crouch_deceleration = 625.0
 walk_turning_acce = 834.0
 jump_buff_static = 1200.0
 jump_buff_dynamic = 1600.0
 jump_coyote_time_sec = 0.067
 swim_max_falling_speed = 350.0
 swim_gravity_scale = 0.0
-animation_max_walking_speed = 3.5

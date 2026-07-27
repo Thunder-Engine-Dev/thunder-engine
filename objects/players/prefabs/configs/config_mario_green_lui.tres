@@ -7,7 +7,5 @@
 
 [resource]
 script = ExtResource("1_34e5a")
-walk_crouch_deceleration = 625.0
 jump_buff_static = 1500.0
 jump_buff_dynamic = 1500.0
-animation_max_walking_speed = 3.5
