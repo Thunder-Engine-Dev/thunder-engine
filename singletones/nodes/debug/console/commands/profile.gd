@@ -1,7 +1,8 @@
 extends Command
 
 static func register() -> Command:
-	return new().set_name("profile").add_param("name", TYPE_STRING, true).set_debug().set_description("Switch the current profile")
+	return new().set_name("profile").add_param("name", TYPE_STRING, true).set_debug() \
+		.set_description("Switch the current profile")
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var profile = ProfileManager
@@ -20,3 +21,10 @@ func execute(args:Array) -> Command.ExecuteResult:
 		)
 	
 	return Command.ExecuteResult.new("Success")
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = ProfileManager.profiles.keys()
+	return result

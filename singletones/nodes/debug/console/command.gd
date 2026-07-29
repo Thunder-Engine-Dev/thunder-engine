@@ -33,7 +33,7 @@ var is_cheat: bool = true
 
 
 ## NOT FOR OVERRIDING
-func try_execute(args: Array) -> Variant:
+func try_execute(args: PackedStringArray) -> Variant:
 	var arg_count: int = 0
 	for k in params.keys():
 		if !params[k].optional:
@@ -51,12 +51,12 @@ func try_execute(args: Array) -> Variant:
 	
 	var res: ExecuteResult = execute(args)
 	
-	if res.err != Error.OK:
+	if res && res.err != Error.OK:
 		return messages[res.err]
 	
 	Console.executed.emit(name, args)
 	
-	return res.msg
+	return res.msg if res else null
 
 ## NOT FOR OVERRIDING
 func get_help() -> String:
@@ -93,10 +93,14 @@ func _get_usage() -> String:
 ## For overriding
 static func register() -> Command:
 	return null
-	
+
 ## For overriding
-func execute(args: Array) -> ExecuteResult:
+func execute(args: Array[String]) -> ExecuteResult:
 	return ExecuteResult.new(NIY)
+
+## For overriding
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	return []
 
 
 func set_description(desc: String) -> Command:

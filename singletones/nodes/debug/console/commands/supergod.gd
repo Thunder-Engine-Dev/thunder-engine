@@ -35,3 +35,10 @@ func set_on(player: Player) -> void:
 
 func set_off(player: Player) -> void:
 	player.debug_god = false
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = ["on", "off"]
+	return result

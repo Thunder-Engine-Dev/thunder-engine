@@ -3,7 +3,7 @@ extends Command
 static func register() -> Command:
 	return new().set_name("addscore").add_param("amount", TYPE_INT, false).set_description("Adds score.")
 
-func execute(args:Array) -> Command.ExecuteResult:
+func execute(args: Array[String]) -> Command.ExecuteResult:
 	if args.is_empty() || is_nan(float(args[0])):
 		return Command.ExecuteResult.new("[color=red]Provide a valid amount of score.[/color]")
 	else:

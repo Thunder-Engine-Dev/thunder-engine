@@ -51,3 +51,18 @@ func patch_level() -> void:
 	for i in persist_vars.keys():
 		pl.suit.physics_config.set(i, persist_vars[i])
 		pl.config_buffer.set(i, persist_vars[i])
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		var pl := Thunder._current_player
+		if !pl || !pl.get(&"suit"):
+			return result
+		var list: Array[Dictionary] = pl.suit.physics_config.get_property_list()
+		var sorted: PackedStringArray
+		for i in list:
+			if i.usage & PROPERTY_USAGE_EDITOR && (i.type == TYPE_INT || i.type == TYPE_FLOAT):
+				sorted.append(i.name)
+		result = sorted
+	return result

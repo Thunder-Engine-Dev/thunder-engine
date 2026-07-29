@@ -8,4 +8,3 @@ func execute(args:Array) -> Command.ExecuteResult:
 	
 	var result: Command.ExecuteResult = Command.ExecuteResult.new("Game speed set to " + str(Engine.time_scale))
 	return result
-

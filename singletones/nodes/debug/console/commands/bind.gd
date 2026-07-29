@@ -8,10 +8,10 @@ static func register() -> Command:
 		.set_description("Binds a command to a preferred key") \
 		.set_not_cheat()
 
-func execute(args: Array) -> Command.ExecuteResult:
+func execute(args: Array[String]) -> Command.ExecuteResult:
 	var option_list: String = "set, remove, list"
 	if args.is_empty():
-		return Command.ExecuteResult.new(option_list + "\nFor a list of valid keys to bind, see [url=https://docs.godotengine.org/en/4.4/classes/class_@globalscope.html#enum-globalscope-key]the Godot documentation[/url].")
+		return Command.ExecuteResult.new(option_list + "\nFor a list of valid keys to bind, see [url=https://docs.godotengine.org/en/4.7/classes/class_@globalscope.html#enum-globalscope-key]the Godot documentation[/url].")
 
 	var arg_option: String = args[0]
 	
@@ -125,3 +125,17 @@ func _get_bind_raw_list() -> Dictionary:
 		i += 1
 	
 	return binds
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = ["set","list","remove","reset","rawlist"]
+		return result
+	elif args[0] == "set" && index == 2:
+		result = Console.commands.keys()
+	elif args[0] == "set" && args.size() > 2 && Console.commands.keys().has(args[2]):
+		for i in 2:
+			args.remove_at(0)
+		result = Console.get_argument_keys(args)
+	return result

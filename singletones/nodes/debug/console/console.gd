@@ -1,17 +1,20 @@
 extends Window
 
 const EnableDebug = preload("res://engine/singletones/nodes/debug/enable_debug.gd")
+const NULL_CHAR: String = char(0xFFFD)
 
-signal executed(command_name: String, args: Array)
+signal executed(command_name: String, args: Array[String])
 
-var commands: Dictionary
+var commands: Dictionary[String, Command]
 
 @onready var input: LineEdit = $"UI/CmdInput"
 @onready var output: RichTextLabel = $"UI/OutputContainer/Output"
 @onready var bind_logic = $BindLogic
 
-var history: Array = ['']
+var history: Array[String] = [""]
 var position_in_history: int
+var _suggestion_old_input_text: String = NULL_CHAR
+var _suggestion_temp_output_holder: String = NULL_CHAR
 
 var debug_mode: bool
 var command_executed: bool
@@ -46,15 +49,23 @@ func _ready():
 	if debug_mode:
 		self.print("[b]Debug Mode is enabled.[/b]")
 	
-	self.print("[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]")
+	self.print(
+		"[wave amp=50 freq=2][b][rainbow freq=0.2][center][font_size=24]Welcome to the Console![/font_size][/center][/rainbow][/b][/wave]"
+	, false)
+	self.print(
+		"[color=lime]Hint:[/color] Press Tab or Shift+Tab for autocompletion, and Up/Down for command history."
+	, false)
 	
 	$"UI/Enter".pressed.connect(execute)
 	$"UI/Paused".pressed.connect(func():
 		Thunder.set_pause_game($"UI/Paused".button_pressed)
 	)
-	$"UI/OutputContainer/Output".focus_mode = Control.FOCUS_CLICK
-	$"UI/OutputContainer/Output".meta_clicked.connect(func(meta: Variant):
+	output.focus_mode = Control.FOCUS_CLICK
+	output.meta_clicked.connect(func(meta: Variant):
 		OS.shell_open(str(meta))
+	)
+	input.text_changed.connect(func(new_text: String):
+		_suggestion_old_input_text = NULL_CHAR
 	)
 	mouse_entered.connect(func():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -66,13 +77,18 @@ func _ready():
 	)
 	
 
-func _input(event) -> void:
+func _input(event: InputEvent) -> void:
 	if !debug_mode && !SettingsManager.get_tweak("console_enabled", false): return
 	if event.is_action_pressed("ui_accept") && has_focus():
 		execute()
+	
+	if !visible || !has_focus(): return
+	if event is InputEventKey && event.is_pressed():
+		_handle_command_input(event)
+
 
 func load_commands(dir: String) -> void:
-	for cmd in DirAccess.get_files_at(dir):
+	for cmd: String in DirAccess.get_files_at(dir):
 		if cmd.ends_with(".uid"): continue
 		if cmd.begins_with("."): continue
 		var command: Command = load(dir + cmd.replace(".remap", "")).register()
@@ -87,25 +103,36 @@ func _physics_process(delta: float) -> void:
 		Thunder.set_pause_game(visible)
 	
 	output.modulate.a = 0.5 if (Console.cv.player_stats_shown || Console.cv.general_stats_shown) else 0.863
-	
-	if !visible || !has_focus(): return
-	
-	if Input.is_action_just_pressed("ui_up"):
+
+
+func _handle_command_input(event: InputEventKey) -> void:
+	var handled: bool = true
+	if event.is_action(&"ui_up"):
 		move_history(1)
-	if Input.is_action_just_pressed("ui_down"):
+	elif event.is_action(&"ui_down"):
 		move_history(-1)
-	if Input.is_action_just_pressed(&"ui_focus_prev"):
+	elif event.is_action(&"ui_focus_prev"):
 		move_suggestion(-1)
-	elif Input.is_action_just_pressed(&"ui_focus_next"):
+	elif event.is_action(&"ui_focus_next"):
 		move_suggestion(1)
+	else:
+		handled = false
+	if handled:
+		get_viewport().set_input_as_handled()
 
 
 
 func execute() -> void:
+	if input.text.strip_edges() == "":
+		input.clear()
+		input.grab_focus()
+		return
+	
 	self.print("[b]> %s[/b]" % input.text)
 	
 	history.remove_at(0)
-	history.push_front(input.text)
+	if (history.is_empty() || history.front() != input.text) && input.text.strip_edges():
+		history.push_front(input.text)
 	history.push_front("")
 	move_history_to_latest(null)
 	
@@ -115,9 +142,9 @@ func execute() -> void:
 	input.grab_focus()
 
 func internal_execute(_in: String) -> void:
-	var args = _in.split(' ')
+	var args: PackedStringArray = _in.strip_edges().split(" ")
 	
-	var cmdName = args[0]
+	var cmdName: String = args[0]
 	args.remove_at(0)
 	
 	if !commands.has(cmdName):
@@ -132,7 +159,7 @@ func internal_execute(_in: String) -> void:
 
 func move_history(amount: int) -> void:
 	position_in_history += amount
-	position_in_history = clamp(position_in_history, 0, history.size() - 1)
+	position_in_history = clampi(position_in_history, 0, history.size() - 1)
 	input.text = history[position_in_history]
 	input.caret_column = input.text.length()
 	if !input.text_changed.is_connected(move_history_to_latest):
@@ -142,40 +169,106 @@ func move_history_to_latest(_new_text) -> void:
 	position_in_history = 0
 
 func move_suggestion(amount: int) -> void:
+	var last_split: String = input.text.get_slice(" ", input.text.get_slice_count(" ") - 1)
 	var uncompl_text: String = input.text.left(input.caret_column)
-	if " " in uncompl_text:
+	if input.text.length() > input.caret_column && input.text.right(-input.caret_column).strip_edges() != "":
 		return
 	var found: String
-	var cmd_keys: Array = commands.keys()
-	for i: int in len(cmd_keys):
-		var cmd: String = cmd_keys[i]
-		if cmd.begins_with(uncompl_text) && uncompl_text != cmd:
-			found = cmd
-			break
-		if uncompl_text == cmd:
-			found = cmd_keys[wrapi(i + amount, 0, commands.size())]
-			break
+	if " " in uncompl_text:
+		uncompl_text = last_split.left(input.caret_column)
+		found = get_next_suggestion(get_argument_keys(), amount)
+		if found:
+			var old_text: String = input.text
+			if old_text:
+				old_text = old_text + " "
+			input.text = old_text.left(len(input.text) - len(uncompl_text)) + found
+			input.caret_column = input.text.length()
+		return
+	found = get_next_suggestion(commands.keys(), amount)
 	if found:
 		var old_text: String = input.text.get_slice(" ", 1)
-		if old_text: old_text = " " + old_text
+		if old_text:
+			old_text = " " + old_text
 		input.text = found + old_text.right(len(input.text) - len(uncompl_text))
-		input.caret_column = found.length()
+		input.caret_column = input.text.length()
 
-func print(msg: Variant) -> void:
-	if output: output.text += "%s\n" % msg
+
+func print(msg: Variant, to_stdout: bool = true) -> void:
+	if _suggestion_temp_output_holder != NULL_CHAR:
+		output.text = _suggestion_temp_output_holder
+		_suggestion_temp_output_holder = NULL_CHAR
 	
-	print_rich(msg)
+	output.text += "%s\n" % msg
+	if to_stdout:
+		print_rich(msg)
 
-func col_print(msg: String, col:Color) -> void:
+func col_print(msg: String, col: Color, to_stdout: bool = true) -> void:
+	if _suggestion_temp_output_holder != NULL_CHAR:
+		output.text = _suggestion_temp_output_holder
+		_suggestion_temp_output_holder = NULL_CHAR
+	
 	output.text += "[color=%s]%s[/color]\n" % [col.to_html(), msg]
-	print_rich(msg)
+	if to_stdout:
+		print_rich(msg)
+
+func _print_suggested_values(msg: String) -> void:
+	if _suggestion_temp_output_holder == NULL_CHAR:
+		_suggestion_temp_output_holder = output.text
+	
+	var new_output: String = (
+		_suggestion_temp_output_holder + "[color=dark_gray]Suggested:[/color] " + msg + ""
+	)
+	if output.text != new_output:
+		output.text = new_output
+
+
+func get_next_suggestion(search_keys: Array, amount: int) -> String:
+	if !search_keys:
+		return ""
+	var _input_text: String = _suggestion_old_input_text
+	if _input_text == NULL_CHAR:
+		_input_text = input.text
+	
+	var last_split: String = _input_text.get_slice(" ", _input_text.get_slice_count(" ") - 1)
+	var uncompl_text: String = last_split.left(_input_text.length())
+	var _suggestions: Array = get_suggestions(search_keys, uncompl_text)
+	if !_suggestions:
+		return ""
+	
+	var suggested: String = input.text.get_slice(
+		" ", input.text.get_slice_count(" ") - 1
+	).left(input.text.length())
+	
+	var found: String = str(_suggestions.front())
+	if _suggestions.has(suggested):
+		found = str(_suggestions[wrapi(_suggestions.find(suggested) + amount, 0, _suggestions.size())])
+	
+	if _suggestion_old_input_text == NULL_CHAR:
+		_suggestion_old_input_text = input.text
+	if _suggestions.size() > 1:
+		_print_suggested_values(", ".join(_suggestions))
+	return found
+
+func get_suggestions(search_keys: Array, input_text: String) -> Array:
+	return search_keys.filter(func(cmd: String):
+		return cmd.begins_with(input_text)
+	)
+
+
+func get_argument_keys(args: PackedStringArray = input.text.split(" ")) -> Array:
+	var cmdName := args[0]
+	args.remove_at(0)
+	
+	if !commands.has(cmdName):
+		return []
+	return commands[cmdName].get_argument_options(args, args.size() - 1)
 
 
 var init_pos := position
 func _on_visibility_changed():
 	input.grab_focus()
 	if !visible: return
-	var scale = SettingsManager.get_ui_scale(self)
+	var scale: float = SettingsManager.get_ui_scale(self)
 	SettingsManager.scale_window(self, scale)
 	if position == init_pos:
 		position *= scale

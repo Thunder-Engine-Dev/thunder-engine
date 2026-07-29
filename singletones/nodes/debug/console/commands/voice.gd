@@ -2,8 +2,8 @@ extends Command
 
 static func register() -> Command:
 	return new().set_name("voice").add_param("ID", TYPE_STRING, true) \
-	.set_description("Plays a global sound effect of the current character or skin") \
-	.set_not_cheat()
+		.set_description("Plays a global sound effect of the current character or skin") \
+		.set_not_cheat()
 
 func execute(args:Array) -> Command.ExecuteResult:
 	var names: PackedStringArray = CharacterManager.voice_lines[CharacterManager.get_character_name()].keys()
@@ -18,4 +18,11 @@ func execute(args:Array) -> Command.ExecuteResult:
 	Audio.play_1d_sound(voice_line, true, { ignore_pause = true })
 	
 	var result: Command.ExecuteResult = Command.ExecuteResult.new("Success")
+	return result
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = CharacterManager.voice_lines[CharacterManager.get_character_name()].keys()
 	return result

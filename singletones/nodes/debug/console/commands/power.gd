@@ -3,7 +3,7 @@ extends Command
 static func register() -> Command:
 	return new().set_name("power").add_param("state", TYPE_STRING).set_description("Set current player power state")
 
-func execute(args:Array) -> Command.ExecuteResult:
+func execute(args: Array[String]) -> Command.ExecuteResult:
 	var player: Player = Thunder._current_player
 	if !player:
 		return Command.ExecuteResult.new("Error: Player not found")
@@ -14,3 +14,9 @@ func execute(args:Array) -> Command.ExecuteResult:
 	player.change_suit(suit, true, true)
 	#Thunder._current_player.suit = suit
 	return Command.ExecuteResult.new("Success")
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = CharacterManager.get_suit_names()
+	return result

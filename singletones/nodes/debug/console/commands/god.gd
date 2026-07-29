@@ -38,3 +38,10 @@ func set_off(player: Player) -> void:
 	if is_instance_valid(player.flasher):
 		player.flasher.stop()
 		player.sprite.modulate.a = 1.0
+
+
+func get_argument_options(args: PackedStringArray, index: int) -> Array:
+	var result: Array
+	if index == 0:
+		result = ["on", "off"]
+	return result

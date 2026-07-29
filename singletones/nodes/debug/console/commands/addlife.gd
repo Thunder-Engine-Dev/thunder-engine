@@ -3,7 +3,7 @@ extends Command
 static func register() -> Command:
 	return new().set_name("addlife").add_param("amount", TYPE_INT, true).set_description("Adds lives.")
 
-func execute(args:Array) -> Command.ExecuteResult:
+func execute(args: Array[String]) -> Command.ExecuteResult:
 	if args.is_empty() || is_nan(float(args[0])):
 		Thunder.add_lives(1)
 	else:
