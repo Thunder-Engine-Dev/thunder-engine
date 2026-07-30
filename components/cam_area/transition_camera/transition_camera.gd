@@ -9,8 +9,8 @@ var function: Thunder.SmoothFunction = Thunder.SmoothFunction.EASE_OUT
 
 func _ready() -> void:
 	var camera = Thunder._current_camera
+	position_smoothing_enabled = true
 	global_position = camera.get_screen_center_position()
-	reset_physics_interpolation()
 	make_current()
 
 
