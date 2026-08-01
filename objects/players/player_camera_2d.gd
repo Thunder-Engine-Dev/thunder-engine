@@ -1,6 +1,8 @@
 extends Camera2D
 class_name PlayerCamera2D
 
+signal physics_interpolation_reset
+
 var stop_blocking_edges: bool
 
 @export var force_xscroll_off: bool = false
@@ -19,6 +21,11 @@ var _xscroll: float
 
 func _init() -> void:
 	process_callback = CAMERA2D_PROCESS_PHYSICS
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESET_PHYSICS_INTERPOLATION:
+		physics_interpolation_reset.emit()
 
 
 func _ready() -> void:
