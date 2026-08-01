@@ -46,8 +46,8 @@ func _toggled_option(old_val, new_val) -> void:
 	if old_val == new_val: return
 	var _sfx = CharacterManager.get_sound_replace(toggle_sound, toggle_sound, "menu_toggle", false)
 	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
-	SettingsManager.request_restart = (
-		new_val > 0 &&
-		new_val != _saved_value
-	)
+	#SettingsManager.request_restart = (
+	#	new_val > 0 &&
+	#	new_val != _saved_value
+	#)
 	SettingsManager._process_settings()
