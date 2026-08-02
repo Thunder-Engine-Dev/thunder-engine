@@ -11,6 +11,8 @@ extends Node
 @export_subgroup("Cheep spawn speed")
 @export var speed_min := Vector2i(-7 * 50, -8 * 50)
 @export var speed_max := Vector2i(-1 * 50, -5 * 50)
+@export var random_spawn_min := Vector2i(-100, 0)
+@export var random_spawn_max := Vector2i(0, 0)
 
 func _ready() -> void:
 	_time()
@@ -27,7 +29,10 @@ func _time() -> void:
 		if get_tree().get_node_count_in_group("obj_by_" + str(get_instance_id())) >= max_on_screen:
 			return
 		Thunder.view.cam_border()
-		var to_pos = Vector2(Thunder.view.border.end) + Vector2(Thunder.rng.get_randi_range(-100, 0), 0)
+		var to_pos = Vector2(Thunder.view.border.end) + Vector2(
+			Thunder.rng.get_randi_range(random_spawn_min.x, random_spawn_max.x),
+			Thunder.rng.get_randi_range(random_spawn_min.y, random_spawn_max.y)
+		)
 		
 		var fish = cheep_scene.instantiate()
 		fish.global_position = to_pos
