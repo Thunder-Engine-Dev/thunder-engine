@@ -201,7 +201,7 @@ func _movement_x_acceleration(delta: float) -> void:
 		if abs(player.speed.x) < 1:
 			player.direction *= -1
 	if abs(player.speed.x) > max_speed && sign(player.left_right) != -player.direction && player.is_underwater:
-		_decelerate(config.walk_turning_acce, delta)
+		_decelerate(config.walk_deceleration, delta)
 
 
 func _movement_x_recovery(delta: float) -> void:
