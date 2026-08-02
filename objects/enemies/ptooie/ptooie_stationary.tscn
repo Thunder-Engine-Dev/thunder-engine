@@ -19,6 +19,7 @@ visi_z_index = 3
 custom_vars = {
 "death": NodePath("../../Head"),
 "death_speed": Vector2(0, -250),
+"fast_death_effect": true,
 "spikeball": NodePath("../../Spikeball")
 }
 custom_script = ExtResource("3_1bagl")
@@ -109,6 +110,7 @@ shape = SubResource("RectangleShape2D_ubl6y")
 
 [node name="Spikeball" parent="." unique_id=1398643599 instance=ExtResource("6_wjge6")]
 offset = Vector2(0, -80)
+gravity_dir_rotation = false
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1123527735]
 self_modulate = Color(1, 1, 1, 0)

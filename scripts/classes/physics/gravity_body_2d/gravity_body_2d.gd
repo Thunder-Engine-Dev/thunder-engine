@@ -5,24 +5,25 @@ class_name GravityBody2D
 ## Very useful [CorrectedCharacterBody2D] with easy-call [method motion_process] method to achieve
 ## calculations of gravity and slide collision.
 
-## Default gravity acceleration
+# NOTE
+# Gravity acceleration is now located in ProjectSettings.
+# See "physics/2d/default_gravity"
+# Default value: 2500.0
+## DEPRECATED: prefer [method get_gravity_vector] / ProjectSettings [code]physics/2d/default_gravity[/code]
 const GRAVITY: float = 2500.0
 
 @export_group("Speed")
-## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
-@export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
+## The velocity of the body. [color=gold][b]This is related to the body's[/b][/color] [member Node2D.global_rotation]
+@export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity direction
 	set(value):
 		velocity = value.rotated(get_global_gravity_dir().angle() - PI/2)
 	get:
 		return velocity.rotated(-get_global_gravity_dir().angle() + PI/2)
 @export_group("Gravity")
-## The gravity_direction of the body, with length always [code]1.0[/code][br]
-## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
-@export var gravity_dir: Vector2 = Vector2.DOWN
-## Defines whether the returned value of [method get_global_gravity_dir] equals [member gravity_dir]
-## following the bodie's [member Node2D.global_rotation] or not
+## If [code]true[/code], rotates project/Area2D gravity by [member Node2D.global_rotation]
+## (ceiling-walking without an Area2D). Set [code]false[/code] when Area2D already supplies world gravity.
 @export var gravity_dir_rotation: bool = true
-## Defines the scale of [member GRAVITY], then the gravity acceleration = [member GRAVITY] * [member gravity_scale]
+## Multiplier for gravity acceleration from [method get_gravity_vector]
 @export var gravity_scale: float
 ## Defines maximum of speed.y affected by gravity
 @export_range(0, 100000, 0.1) var max_falling_speed: float
@@ -39,7 +40,17 @@ var speed_previous: Vector2
 ## [member transform] before it gets changed in the current physics frame.
 var global_transform_previous: Transform2D
 
-@onready var _up_temp: Vector2 = up_direction
+## Optional world-space gravity direction lock (e.g. death effects with collision_layer 0
+## that cannot receive Area2D gravity). Assign via [member gravity_dir]. Zero = use physics.
+var _gravity_dir_override: Vector2 = Vector2.ZERO
+
+## Effective gravity direction. Assigning sets a world-space override (no Area2D needed).
+## Reading returns [method get_global_gravity_dir].
+var gravity_dir: Vector2:
+	set(value):
+		_gravity_dir_override = value.normalized() if !value.is_zero_approx() else Vector2.ZERO
+	get:
+		return get_global_gravity_dir()
 
 ## Emitted when any kind of collision happens
 signal collided
@@ -57,12 +68,13 @@ signal collided_floor
 ## [param slide] makes the body fly from sloping-up[br]
 func motion_process(delta: float, slide: bool = false) -> void:
 	
-	var gravity: float = gravity_scale * GRAVITY
+	# Fall along local +Y (speed is gravity-local); magnitude from project/area gravity.
+	var gravity_accel: float = gravity_scale * get_gravity_vector().length()
 	
 	speed_previous = speed
 	global_transform_previous = global_transform
 	
-	speed += gravity * gravity_dir * delta * 0.5
+	speed.y += gravity_accel * delta * 0.5
 	
 	var is_speed_capped: bool
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
@@ -77,7 +89,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	do_movement(delta, slide, false)
 	
 	if !is_speed_capped:
-		speed += gravity * gravity_dir * delta * 0.5
+		speed.y += gravity_accel * delta * 0.5
 	
 	if slide && floor_constant_speed && !is_on_wall():
 		speed.x = speed_previous.x
@@ -189,9 +201,35 @@ func stop_notify(wall_notify:bool = true, ceiling_notify:bool = true, floor_noti
 
 
 # Getters
-## Get globalized [member gravity_dir], if [member gravity_dir_rotation] is [code]false[/code], the globalized one equals [member gravity_dir]
+## World-space gravity vector. Safe when physics state is missing (export init, deferred spawn).
+func get_gravity_vector() -> Vector2:
+	if is_inside_tree():
+		var space := PhysicsServer2D.body_get_space(get_rid())
+		if space.is_valid():
+			var g := get_gravity()
+			if !g.is_zero_approx():
+				return g
+	var dir: Vector2 = ProjectSettings.get_setting(&"physics/2d/default_gravity_vector", Vector2(0, 1))
+	var amount: float = float(ProjectSettings.get_setting(&"physics/2d/default_gravity", GRAVITY))
+	if dir.is_zero_approx():
+		dir = Vector2.DOWN
+	return dir.normalized() * amount
+
+
+## Gravity direction for [member speed] ↔ velocity.
+## Uses [method get_gravity_vector] (project + Area2Ds), optionally rotated by body;
+## or [member gravity_dir] override when set.
 func get_global_gravity_dir() -> Vector2:
-	return gravity_dir.rotated(global_rotation) if gravity_dir_rotation else gravity_dir
+	if !_gravity_dir_override.is_zero_approx():
+		return _gravity_dir_override
+	var g := get_gravity_vector()
+	var dir := Vector2.DOWN if g.is_zero_approx() else g.normalized()
+	return dir.rotated(global_rotation) if gravity_dir_rotation else dir
+
+
+## Clear a [member gravity_dir] override and return to live physics gravity.
+func clear_gravity_dir_override() -> void:
+	_gravity_dir_override = Vector2.ZERO
 
 
 ## -1 is Left, 1 is Right, 0 is None
@@ -205,14 +243,14 @@ func get_which_wall_collided() -> int:
 # Updaters
 ## Update [member up_direction] to suit certain current situation
 func update_up_direction() -> void:
-	up_direction = _up_temp.rotated(global_rotation)
+	up_direction = -get_global_gravity_dir()
 
 
 # Is-methods
 ## To check if the body is standing on a slope
 func is_on_slope() -> bool:
-	var dot:float = get_floor_normal().dot(get_global_gravity_dir())
-	return dot < 0 && !is_equal_approx(dot,-1)
+	var dot: float = get_floor_normal().dot(get_global_gravity_dir())
+	return dot < 0 && !is_equal_approx(dot, -1)
 
 
 ## To check if the body is able to slope down

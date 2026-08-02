@@ -54,8 +54,10 @@ func _shoot() -> void:
 	
 	var computed_x_speed: int
 	if no_rng_enabled:
+		@warning_ignore("narrowing_conversion")
 		computed_x_speed = _fair_index * podoboo_speed_multiplicator
 	else:
+		@warning_ignore("narrowing_conversion")
 		computed_x_speed = Thunder.rng.get_randi_range(podoboo_min_speed, podoboo_max_speed) * podoboo_speed_multiplicator
 	
 	var projectile = PODOBOO.instantiate()

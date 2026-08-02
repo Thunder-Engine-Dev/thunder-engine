@@ -288,7 +288,7 @@ func _movement_climbing(delta: float) -> void:
 	if player.left_right != 0:
 		player.direction = sign(player.left_right)
 	# Resist to gravity
-	player.speed -= player.gravity_dir * player.gravity_scale * GravityBody2D.GRAVITY * delta * 0.5
+	player.speed.y -= player.gravity_scale * player.get_gravity_vector().length() * delta * 0.5
 
 	# Jump from climbing
 	if player.jumping > 0 && !player._has_jumped && player.up_down == 0:

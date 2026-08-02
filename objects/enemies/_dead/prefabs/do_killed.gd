@@ -45,9 +45,9 @@ func _ready() -> void:
 			node.max_falling_speed = max_falling_speed
 			if is_fast_quality:
 				death_node.offset -= min_quality_offset
-			var root := enemy_attacked.get_parent().get_parent() as GravityBody2D
-			if root:
-				node.gravity_dir = root.gravity_dir
+			var root = enemy_attacked._center
+			if root && root is GravityBody2D:
+				node.gravity_dir = root.get_global_gravity_dir()
 	node.add_child(death_node)
 
 

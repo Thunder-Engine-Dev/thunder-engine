@@ -156,9 +156,9 @@ func _prepare_powerup_solid_checker_shape() -> void:
 
 func _physics_process(delta: float) -> void:
 	if _is_inside_tree:
-		gravity_dir = get_gravity().normalized()
-		if !gravity_dir.is_zero_approx():
-			up_direction = -gravity_dir
+		var g := get_gravity_vector()
+		if !g.is_zero_approx():
+			up_direction = -g.normalized()
 	
 	super(delta)
 	
