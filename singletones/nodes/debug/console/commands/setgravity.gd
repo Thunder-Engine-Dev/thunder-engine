@@ -9,8 +9,4 @@ func execute(args: Array) -> Command.ExecuteResult:
 		GlobalViewport.vp.find_world_2d().space,
 		PhysicsServer2D.AREA_PARAM_GRAVITY, float(args[0])
 	)
-	PhysicsServer2D.area_set_param(
-		GlobalViewport.vp.find_world_2d().space,
-		PhysicsServer2D.AREA_PARAM_GRAVITY_IS_POINT, true
-	)
 	return Command.ExecuteResult.new("Success")
