@@ -24,7 +24,7 @@ XY: %v
 SPD: %12.6v
 VEL: %12.6v
 REAL:%12.6v
-suit: %s | lr:%s ud:%s
+suit: %s | lr:%s ud:%s | rot:%3.f°
 SLIDED:%s IS_SLDNG:%s CLIMB:%s
 COMPL:%s NOMOVE:%s WARP_STATE:%s
 FCWS: %s%s%s%s WALL:%s BUG_SPD:%s
@@ -40,6 +40,7 @@ ITEM:%s
 		pl.suit.name if pl.get("suit") else null,
 		pl.get("left_right"),
 		pl.get("up_down"),
+		pl.global_rotation_degrees,
 		_get_bool_mono(pl, "slided"),
 		_get_bool_mono(pl, "is_sliding"),
 		_get_bool_mono(pl, "is_climbing"),

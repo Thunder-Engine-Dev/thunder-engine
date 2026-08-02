@@ -306,7 +306,7 @@ func _movement_climbing(delta: float) -> void:
 #= Sliding from slopes
 func _movement_sliding(delta: float) -> void:
 	if player.completed: return
-	var floor_normal: float = rad_to_deg(player.get_floor_normal().x)
+	var floor_normal: float = rad_to_deg(player.get_floor_normal().rotated(-player.global_rotation).x)
 	var dir: bool = player.direction == 1
 	# Acceleration
 	var accel: Callable = func(_norm: float) -> void:
@@ -361,7 +361,7 @@ func _movement_sliding(delta: float) -> void:
 
 func _start_sliding_movement(do_initial_push: bool = true) -> bool:
 	if player.is_holding: return false
-	var floor_norm = rad_to_deg(player.get_floor_normal().x)
+	var floor_norm = rad_to_deg(player.get_floor_normal().rotated(-player.global_rotation).x)
 	var _initial_push: float = config.walk_initial_speed if do_initial_push else 1.0
 	if floor_norm <= -40.0 + (int(!do_initial_push) * 30):
 		if abs(player.speed.x) < _initial_push:

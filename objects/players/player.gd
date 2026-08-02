@@ -340,7 +340,8 @@ func control_process() -> void:
 			) || (crouch_forced && !is_on_floor())
 		)
 	slided = up_down > 0 \
-		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().x)) > 39 && !get_meta(&"not_slidable", false)
+		&& is_on_floor() && abs(rad_to_deg(get_floor_normal().rotated(-global_rotation).x)) > 39 \
+		&& !get_meta(&"not_slidable", false)
 
 
 func _set_ignore_input() -> void:
