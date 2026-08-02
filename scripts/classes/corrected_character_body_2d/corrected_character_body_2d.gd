@@ -46,20 +46,28 @@ func move_and_slide_corrected() -> bool:
 	horizontal_correction(horizontal_correction_amount)
 	return move_and_slide()
 
+## [member velocity] is world-space; correction logic uses body-local axes.
+func _get_local_velocity() -> Vector2:
+	return velocity.rotated(-global_rotation)
+
+func _set_local_velocity(local_velocity: Vector2) -> void:
+	velocity = local_velocity.rotated(global_rotation)
+
 ## Process of horizontal correction
 func horizontal_correction(amount: int) -> void:
-	if velocity.y >= 0: return
+	var local_velocity := _get_local_velocity()
+	if local_velocity.y >= 0: return
 	
 	var actual_delta := get_physics_process_delta_time()
 	var subtick_check_loop_amount: int = 1
 	subtick_check_loop_amount += min(
-		floori(abs(velocity.x) / 250.0),
+		floori(abs(local_velocity.x) / 250.0),
 		subtick_max_horizontal_corrections_amount - 1
 	)
 	
 	for subtick in subtick_check_loop_amount:
 		var delta := (actual_delta / float(subtick_check_loop_amount)) * float(subtick + 1)
-		var collide := move_and_collide(Vector2(0, velocity.y * delta).rotated(global_rotation), true)
+		var collide := move_and_collide(Vector2(0, local_velocity.y * delta).rotated(global_rotation), true)
 		
 		if !collide: continue
 		if Thunder.get_or_null(collide.get_collider(), "visible") == false: continue
@@ -71,23 +79,25 @@ func horizontal_correction(amount: int) -> void:
 		for i in range(1, amount + 1):
 			for j in [-1.0, 1.0]:
 				if !test_move(
-					global_transform.translated(Vector2(i * j, 0)),
-					Vector2(0, velocity.y * delta).rotated(global_rotation)
+					global_transform.translated_local(Vector2(i * j, 0)),
+					Vector2(0, local_velocity.y * delta).rotated(global_rotation)
 				):
 					translate(Vector2(i * j, 0).rotated(global_rotation))
 					corrected_to_wall.emit()
-					if velocity.x * j < 0:
-						velocity.x = 0
+					if local_velocity.x * j < 0:
+						local_velocity.x = 0
+						_set_local_velocity(local_velocity)
 						corrected_to_wall_and_stopped.emit()
 						if has_signal(&"collided_wall"):
 							emit_signal(&"collided")
 							emit_signal(&"collided_wall")
 					return
-
-## Process of vertical correction
-# Tile gap runover
+ 
+## Process of vertical correction (Tile gap runover)
 func vertical_correction(amount: int) -> void:
 	if is_on_floor(): return
+	var local_velocity := _get_local_velocity()
+	if local_velocity.y <= 0 or abs(local_velocity.x) <= 1: return
 	
 	# 4.5: detailized the condition to prevent the player from being stucked at the corner to avoid potential bugs
 	const TEST_MARGIN := 0.1
@@ -95,23 +105,16 @@ func vertical_correction(amount: int) -> void:
 	if is_on_wall() && velocity.normalized().dot(n) < 0.0 && test_move(global_transform, -velocity.project(n) * TEST_MARGIN):
 		return
 	
-	if velocity.y <= 0 or abs(velocity.x) <= 1: return
-	
 	var actual_delta := get_physics_process_delta_time()
 	var subtick_check_loop_amount: int = 1
 	subtick_check_loop_amount += min(
-		floori(velocity.y / 250.0),
+		floori(local_velocity.y / 250.0),
 		subtick_max_vertical_corrections_amount - 1
 	)
-	
 	for subtick in subtick_check_loop_amount:
 		var delta := (actual_delta / float(subtick_check_loop_amount)) * float(subtick + 1)
-		var collide := move_and_collide(
-			Vector2(
-				velocity.x * delta,
-				velocity.y * delta
-			).rotated(global_rotation), true, 0.08, false
-		)
+		var motion := Vector2(local_velocity.x * delta, local_velocity.y * delta).rotated(global_rotation)
+		var collide := move_and_collide(motion, true, 0.08, false)
 		
 		if !collide: continue
 		if Thunder.get_or_null(collide.get_collider(), "visible") == false: continue
@@ -126,14 +129,14 @@ func vertical_correction(amount: int) -> void:
 			var _translation: int = -i / 2
 			if _translation == 0: continue
 			if !test_move(
-				global_transform.translated(Vector2(0, _translation)),
-				Vector2(velocity.x * delta, velocity.y * delta).rotated(global_rotation),
+				global_transform.translated_local(Vector2(0, _translation)),
+				motion,
 			):
-				#prints(_translation, Vector2(velocity.x * delta, 0).rotated(global_rotation))
-				translate(Vector2(0, _translation + velocity.y * delta).rotated(global_rotation))
+				translate(Vector2(0, _translation + local_velocity.y * delta).rotated(global_rotation))
 				corrected_to_floor.emit()
-				if velocity.y > 0:
-					velocity.y = 0
+				if local_velocity.y > 0:
+					local_velocity.y = 0
+					_set_local_velocity(local_velocity)
 					corrected_to_floor_and_stopped.emit()
 					if has_signal(&"collided_floor"):
 						emit_signal(&"collided")

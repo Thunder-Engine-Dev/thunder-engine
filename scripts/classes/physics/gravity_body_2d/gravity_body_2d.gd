@@ -12,9 +12,9 @@ const GRAVITY: float = 2500.0
 ## The velocity of the body. [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation]
 @export var speed: Vector2: # Not the scaler "speed", but the vector "velocity" affected by gravity_dir
 	set(value):
-		velocity = value.rotated(gravity_dir.angle() - PI/2)
+		velocity = value.rotated(get_global_gravity_dir().angle() - PI/2)
 	get:
-		return velocity.rotated(-gravity_dir.angle() + PI/2)
+		return velocity.rotated(-get_global_gravity_dir().angle() + PI/2)
 @export_group("Gravity")
 ## The gravity_direction of the body, with length always [code]1.0[/code][br]
 ## [color=gold][b]This is related to the bodie's[/b][/color] [member Node2D.global_rotation] if [member gravity_dir_rotation] is [code]true[/code]
@@ -63,7 +63,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	global_transform_previous = global_transform
 	
 	speed += gravity * gravity_dir * delta * 0.5
-	#speed += gravity * gravity_dir * delta
+	
 	var is_speed_capped: bool
 	if max_falling_speed > 0 && speed.y > max_falling_speed:
 		speed.y = max_falling_speed
@@ -96,8 +96,8 @@ func do_movement(delta: float, slide: bool = false, emit_detection_signal: bool 
 		global_position += velocity * delta
 		return
 		
-	if is_on_floor() && velocity.y > 0: # fix enemies turning around corners randomly
-		velocity.y = 1
+	if is_on_floor() && speed.y > 0: # fix enemies turning around corners randomly
+		speed.y = 1
 	
 	if correct_collision:
 		move_and_slide_corrected()

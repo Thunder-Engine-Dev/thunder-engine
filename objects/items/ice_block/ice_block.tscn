@@ -31,7 +31,6 @@ floor_constant_speed = true
 platform_on_leave = 2
 platform_floor_layers = 4294967262
 script = ExtResource("1_s4yfw")
-slide = true
 gravity_dir_rotation = false
 gravity_scale = 0.5
 auto_update_up_direction = false

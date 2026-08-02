@@ -77,6 +77,7 @@ turn_sprite = false
 sprite = NodePath("Sprite")
 speed = Vector2(50, 0)
 gravity_scale = 0.5
+max_falling_speed = 625.0
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1586526616]
 visible = false
