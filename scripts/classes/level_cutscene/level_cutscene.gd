@@ -13,7 +13,7 @@ const FADEOUT = preload("res://engine/components/ui/_sounds/fadeout.wav")
 ## If [code]true[/code], after [param skip_delay_sec] seconds passes, the cutscene can be skipped with
 ## jump or Enter keys.[br]Requires [param goto_path] to be set.
 @export var can_be_skipped: bool = false
-@export var skip_delay_sec: float = 1.0
+@export var skip_delay_sec: float = 0.5
 @export_group("Cutscene Options")
 ## Music that will start playing when cutscene starts. Set to an empty WAV stream for no music.
 @export var intro_music: AudioStream = LETS
