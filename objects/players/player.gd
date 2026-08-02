@@ -44,6 +44,8 @@ const RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
 		direction = to
 		if !direction in [-1, 1]:
 			direction = [-1, 1].pick_random()
+@export_group("Control")
+@export var control: PlayerControl = PlayerControl.new()
 @export_group("Death", "death_")
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
 @export var death_music_override: AudioStream
@@ -119,7 +121,6 @@ var _controls_initialized: bool
 @warning_ignore("unused_private_class_variable")
 @onready var _is_ready: bool = true
 
-@onready var control: PlayerControl = PlayerControl.new()
 @onready var starman_combo: Combo = Combo.new(self)
 @onready var stomping_combo: Combo = Combo.new(self, 10, true, Combo.STOMP_COMBO_ARRAY)
 @onready var _stomping_combo_enabled: bool = SettingsManager.get_tweak("stomping_combo", false)

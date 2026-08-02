@@ -1,4 +1,4 @@
-extends RefCounted
+extends Resource
 class_name PlayerControl
 
 @export var left: StringName = &"m_left"
