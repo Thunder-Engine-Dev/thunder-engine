@@ -285,10 +285,7 @@ func _animation_floor_process(delta: float) -> void:
 		)
 	else:
 		_p_run_enabled = false
-		if player.up_down == -1 && _look_up_tweak:
-			if Input.is_action_just_pressed(&"m_up"):
-				var _sfx = CharacterManager.get_sound_replace(null, null, "look_up", true)
-				Audio.play_sound(_sfx, player, false)
+		if player.up_down == -1 && _look_up_tweak && !player.slow_walking:
 			_play_anim(_get_animation_prefixed(&"look_up"))
 		else:
 			_idle_timer += delta
@@ -374,6 +371,9 @@ func _play_anim(animation: StringName) -> void:
 	if sprite.animation != animation || _previous_animation == "":
 		if sprite.sprite_frames.has_animation(animation):
 			sprite.play(animation)
+		if &"look_up" in animation && !&"look_up" in _previous_animation:
+			var _sfx = CharacterManager.get_sound_replace(null, null, "look_up", true)
+			Audio.play_sound(_sfx, player, false)
 		_previous_animation = animation
 	else:
 		sprite.animation = animation
