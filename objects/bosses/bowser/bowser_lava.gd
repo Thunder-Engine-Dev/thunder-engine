@@ -34,15 +34,18 @@ func _start_splash_seq(pos: Vector2) -> void:
 func _set_lava_velocities(i: int) -> void: # 14
 	var vel := 20.0
 	lava_velocity[i] = vel
+	phases[i] = 0
 	var li: int = i - 1 # 13
 	var ri: int = i + 1 # 15
 	while vel > 0:
 		await get_tree().create_timer(0.1, false).timeout
 		if li >= 0:
 			lava_velocity[li] = vel
+			phases[li] = 0
 			li -= 1 # 12 => 12 >= 0 => true
 		if ri < lava_objects.size(): # 15 < 16
 			lava_velocity[ri] = vel
+			phases[ri] = 0
 			ri += 1 # 16 => 16 < 16 => false
 		vel -= 4
 
