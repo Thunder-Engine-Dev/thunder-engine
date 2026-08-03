@@ -39,9 +39,13 @@ func activate_stopwatch(hide_original: bool = true) -> void:
 	Data.stopwatch_activated.emit()
 	
 	if !stopwatch_tw:
+		var _sfx = CharacterManager.get_sound_replace(STOPWATCH, STOPWATCH, "bonus_stopwatch", false)
 		stopwatch_tw = create_tween().set_loops()
-		stopwatch_tw.tween_interval(max(0.2, 0.55 * Engine.time_scale))
-		stopwatch_tw.tween_callback(Audio.play_1d_sound.bind(STOPWATCH, false, {"volume": 3}))
+		var sfx_delay = float(CharacterManager.get_global_tweak("stopwatch_sound_delay_sec"))
+		stopwatch_tw.tween_interval(max(0.05, sfx_delay * Engine.time_scale))
+		stopwatch_tw.tween_callback(
+			Audio.play_1d_sound.bind(_sfx, false)
+		)
 	
 
 func _physics_process(delta: float) -> void:

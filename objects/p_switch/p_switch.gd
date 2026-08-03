@@ -66,7 +66,10 @@ func active() -> void:
 	collision_shape_activator.set_deferred(&"disabled", true)
 	
 	sprite.play(&"activated")
-	Audio.play_sound(p_switch_activation_sound, self)
+	var _sfx = CharacterManager.get_sound_replace(
+		p_switch_activation_sound, p_switch_activation_sound, "p_switch_activate", false
+	)
+	Audio.play_sound(_sfx, self)
 	duration.start()
 	_swap_coins_and_bricks.call_deferred()
 	

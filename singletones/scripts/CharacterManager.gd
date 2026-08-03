@@ -84,7 +84,9 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"water_splash_out": [],
 	"boomerang_spin": [],
 	"p_switch": [],
+	"p_switch_activate": [],
 	"bonus_run_out": [],
+	"bonus_stopwatch": [],
 }
 
 ## Base voice lines for Mario
@@ -213,6 +215,7 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 	"force_override_level_complete_music": false,
 	"boomerang_spin_sound_delay_sec": 0.5,
 	"enable_starman_run_out_sound": false,
+	"stopwatch_sound_delay_sec": 0.55,
 }
 
 const DEFAULT_STORY_TEXT = ["they", "them", "plumber", "their"]
