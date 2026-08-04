@@ -124,7 +124,9 @@ func _bubble_spawn() -> void:
 	var bubble = BUBBLE.instantiate()
 	bubble.transform = player.global_transform
 	var _of: Vector2 = node.suit.animation_underwater_bubble_offset
-	bubble.position += Vector2(_of.x * player.direction, _of.y)
+	bubble.position += Vector2(
+		_of.x * player.direction, _of.y
+	).rotated(player.global_rotation)
 	Scenes.current_scene.add_child(bubble)
 
 

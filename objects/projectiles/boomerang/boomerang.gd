@@ -61,7 +61,7 @@ func _on_trail() -> void:
 	if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
 		return
 	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h)
-	trail.rotation = sprite_node.rotation
+	trail.global_rotation = sprite_node.global_rotation
 	Thunder.reorder_on_top_of(trail, self)
 
 
