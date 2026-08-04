@@ -95,30 +95,23 @@ var fps_reducer: Callable = func():
 		AudioServer.set_bus_mute(AudioServer.get_bus_index(&"Master"), false)
 
 func _init() -> void:
-	#var rate: int = ceili(DisplayServer.screen_get_refresh_rate())
-	#if rate < 119:
-		#Engine.physics_ticks_per_second = rate * 2
-		#print(&"Using double fps for physics")
-	#else:
-		#Engine.physics_ticks_per_second = rate
-
 	Engine.max_fps = ceili(DisplayServer.screen_get_refresh_rate())
 	#Engine.max_fps = 0
-
+	
 	# Setting minimum window dimensions
 	DisplayServer.window_set_min_size(Vector2i(640, 480))
-
+	
 	# Set default background in-game from solid gray to solid black
 	RenderingServer.set_default_clear_color(Color.BLACK)
+	
+	print("CPU: %s (x%d)" % [OS.get_processor_name(), OS.get_processor_count()])
+	print("OS: %s %s" % [OS.get_distribution_name(), OS.get_version_alias()])
 
 
 func _ready() -> void:
 	autosplitter = AutoSplitter.new()
 	get_tree().process_frame.connect(fps_reducer)
-	
-	#for i in 3:
-	#	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
-	#	await get_tree().physics_frame
+
 
 func _physics_process(delta: float) -> void:
 	if !autosplitter.has_closed:
