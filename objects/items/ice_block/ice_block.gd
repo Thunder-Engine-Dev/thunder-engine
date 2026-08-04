@@ -89,7 +89,8 @@ func _ready() -> void:
 	_prepare_powerup_solid_checker_shape()
 	
 	get_tree().node_removed.connect(func(node: Node) -> void:
-		if node == Scenes.current_scene && is_instance_valid(contained_item):
+		# Contained items stay parented in-place; only free true orphans if any remain.
+		if node == Scenes.current_scene && is_instance_valid(contained_item) && !contained_item.is_inside_tree():
 			contained_item.queue_free()
 	)
 	
@@ -497,6 +498,42 @@ func _overlaps_player() -> bool:
 	return _is_player_stuck_via_solid_checker()
 
 
+## Freezes [param item] in place (hidden, no process/collision) so it is not left orphaned.
+func contain_item(item: Node2D, enemy_killed: Node = null) -> void:
+	contained_item = item
+	contained_item_enemy_killed = enemy_killed
+	item.visible = false
+	item.process_mode = Node.PROCESS_MODE_DISABLED
+	_set_contained_item_collision_enabled(false)
+	# Orphaned enemies were excluded from group queries; keep that while frozen.
+	if is_instance_valid(enemy_killed) && enemy_killed.is_in_group(&"end_level_sequence"):
+		enemy_killed.remove_from_group(&"end_level_sequence")
+		enemy_killed.set_meta(&"_ice_was_end_level", true)
+
+
+func _set_contained_item_collision_enabled(enabled: bool) -> void:
+	if !is_instance_valid(contained_item):
+		return
+	var stack: Array[Node] = [contained_item]
+	while !stack.is_empty():
+		var node: Node = stack.pop_back()
+		if node is CollisionObject2D:
+			var co := node as CollisionObject2D
+			if enabled:
+				if co.has_meta(&"_ice_col_layer"):
+					co.collision_layer = co.get_meta(&"_ice_col_layer")
+					co.collision_mask = co.get_meta(&"_ice_col_mask")
+					co.remove_meta(&"_ice_col_layer")
+					co.remove_meta(&"_ice_col_mask")
+			else:
+				co.set_meta(&"_ice_col_layer", co.collision_layer)
+				co.set_meta(&"_ice_col_mask", co.collision_mask)
+				co.collision_layer = 0
+				co.collision_mask = 0
+		for child in node.get_children():
+			stack.append(child)
+
+
 ## Draws the sprite for the ice
 func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 = Vector2.ZERO) -> void:
 	if !is_instance_valid(drawn_sprite):
@@ -511,6 +548,8 @@ func draw_sprite(drawn_sprite: Node2D = contained_item_sprite, offset: Vector2 =
 	
 	drawn_sprite.material = PREMULT_MATERIAL
 	drawn_sprite.process_mode = Node.PROCESS_MODE_DISABLED
+	_sprite.z_index = drawn_sprite.z_index
+	_sprite.z_as_relative = drawn_sprite.z_as_relative
 	
 	var size := _get_in_ice_sprite_size(drawn_sprite)
 	_sprite.size = size
@@ -572,20 +611,30 @@ func _release_contained_item(heavy: bool) -> void:
 	if !is_instance_valid(contained_item):
 		return
 	
-	var spawn_parent := get_parent()
-	if !is_instance_valid(spawn_parent):
-		return
-	
 	var item := contained_item
 	var enemy_killed := contained_item_enemy_killed
 	var sprite_offset := Vector2.ZERO
 	if is_instance_valid(contained_item_sprite):
 		sprite_offset = contained_item_sprite.position
 	
+	_set_contained_item_collision_enabled(true)
 	contained_item = null
 	contained_item_enemy_killed = null
 	
-	spawn_parent.add_child(item)
+	item.visible = true
+	item.process_mode = Node.PROCESS_MODE_INHERIT
+	if is_instance_valid(enemy_killed) && enemy_killed.get_meta(&"_ice_was_end_level", false):
+		enemy_killed.add_to_group(&"end_level_sequence")
+		enemy_killed.remove_meta(&"_ice_was_end_level")
+	
+	# Match previous behavior: if the item was left orphaned, reparent beside the ice.
+	if !item.is_inside_tree():
+		var spawn_parent := get_parent()
+		if !is_instance_valid(spawn_parent):
+			item.queue_free()
+			return
+		spawn_parent.add_child(item)
+	
 	item.global_transform = global_transform
 	item.position += sprite_offset
 	
