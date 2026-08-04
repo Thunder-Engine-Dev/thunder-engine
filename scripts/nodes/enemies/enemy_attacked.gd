@@ -13,6 +13,8 @@ const DEFAULT_STOMP = preload("res://engine/objects/enemies/_sounds/stomp.wav")
 const DEFAULT_BUMP = preload("res://engine/objects/bumping_blocks/_sounds/bump.wav")
 
 const ICEBLOCK_PATH = "res://engine/objects/items/ice_block/ice_block.tscn"
+# Cannot preload: ice_block.tscn references this script (circular). Cached + warmed instead.
+static var _iceblock_scene: PackedScene
 
 @export_category("EnemyAttacked")
 @export_group("General")
@@ -174,6 +176,33 @@ func _ready() -> void:
 		_center.sprite
 	):
 		_ice_sprite = _center.get_node_or_null(_center.sprite)
+	
+	if frozen_enabled:
+		_initialize_iceblock()
+
+
+static func _initialize_iceblock() -> void:
+	if _iceblock_scene:
+		return
+	if ResourceLoader.has_cached(ICEBLOCK_PATH):
+		_iceblock_scene = ResourceLoader.load(ICEBLOCK_PATH) as PackedScene
+		return
+	match ResourceLoader.load_threaded_get_status(ICEBLOCK_PATH):
+		ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+			ResourceLoader.load_threaded_request(ICEBLOCK_PATH, "PackedScene", true)
+		ResourceLoader.THREAD_LOAD_LOADED:
+			_iceblock_scene = ResourceLoader.load_threaded_get(ICEBLOCK_PATH) as PackedScene
+
+
+static func _get_iceblock_scene() -> PackedScene:
+	if _iceblock_scene:
+		return _iceblock_scene
+	if ResourceLoader.load_threaded_get_status(ICEBLOCK_PATH) == ResourceLoader.THREAD_LOAD_LOADED:
+		_iceblock_scene = ResourceLoader.load_threaded_get(ICEBLOCK_PATH) as PackedScene
+	else:
+		# Sync fallback if freeze races ahead of the warm load (load waits on in-progress requests).
+		_iceblock_scene = ResourceLoader.load(ICEBLOCK_PATH) as PackedScene
+	return _iceblock_scene
 
 
 func _lss():
@@ -321,18 +350,16 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 		if is_instance_valid(_ice_sprite):
 			_add_pos = _ice_sprite.position
 		
-		var ice := NodeCreator.prepare_2d(load(ICEBLOCK_PATH), _center) \
-			.bind_global_transform(_add_pos) \
+		var ice := NodeCreator.prepare_2d(_get_iceblock_scene(), _center) \
+			.bind_global_transform(_add_pos.rotated(_center.global_rotation)) \
 			.create_2d() \
 			.get_node() as PhysicsBody2D
-		ice.ready.connect(ice.move_and_collide.bind(Vector2.DOWN.rotated(ice.global_rotation)))
+		ice.ready.connect(ice.move_and_collide.bind(ice.get_global_gravity_dir()))
 		
 		(func() -> void:
 			#ice.global_transform = _center.global_transform.translated_local(_add_pos)
 			ice.unfreeze_offset = -_add_pos
 			ice.destroy_enabled = true
-			ice.contained_item = _center
-			ice.contained_item_enemy_killed = self
 			ice.forced_heavy_break = ice_fragile
 			ice.ice_fallable = ice_fallable
 			
@@ -341,7 +368,7 @@ func got_killed(by: StringName, special_tags: Array = [], trigger_killed_failed:
 				in_ice_spr = _ice_sprite.duplicate()
 			ice.draw_sprite(in_ice_spr, ice_sprite_offset)
 			
-			_center.get_parent().remove_child(_center)
+			ice.contain_item(_center, self)
 		).call_deferred()
 		
 		result = {
