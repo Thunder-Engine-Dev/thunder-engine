@@ -87,6 +87,7 @@ const GLOBAL_SOUNDS_BASE: Dictionary = {
 	"p_switch_activate": [],
 	"bonus_run_out": [],
 	"bonus_stopwatch": [],
+	"enemy_freeze": [],
 }
 
 ## Base voice lines for Mario
