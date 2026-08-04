@@ -23,10 +23,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var collided_areas = get_overlapping_areas()
 	for area in _prev_collided_areas:
 		var instance = instance_from_id(area)
-		if !is_instance_valid(instance) || !(instance in collided_areas):
+		if !is_instance_valid(instance) || !overlaps_area(instance):
 			_prev_collided_areas[area] += 10 * delta
 			if _prev_collided_areas[area] > 4:
 				_prev_collided_areas.erase(area)

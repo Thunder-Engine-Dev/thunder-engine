@@ -67,8 +67,8 @@ func _update_pos() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if smooth_transition:
-		global_position = global_position.lerp(target_position, clampf(smooth_speed * Thunder.get_delta(delta), 0, 1))
+	if smooth_transition && is_visible_in_tree():
+		global_position = global_position.lerp(target_position, clampf(smooth_speed * delta * 50, 0, 1))
 	else:
 		global_position = target_position
 		reset_physics_interpolation()

@@ -111,7 +111,7 @@ func _play_voice_line() -> void:
 		checkpoint_wait_tweak = voice_line_delay_override
 	
 	get_tree().create_timer(maxf(0.05, checkpoint_wait_tweak), false, false, true).timeout.connect(func() -> void:
-		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)])
+		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)], false)
 		if SettingsManager.get_quality() == SettingsManager.QUALITY.MAX:
 			text_max_quality.show()
 			text_max_quality.scale = Vector2.ZERO

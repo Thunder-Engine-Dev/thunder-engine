@@ -18,8 +18,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta):
-	super(delta)
 	if Engine.is_editor_hint() || (Console.cv.item_display_shown && is_instance_valid(item_displayer)):
+		super(delta)
 		_item_display()
 		return
 

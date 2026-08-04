@@ -13,8 +13,9 @@ var counter_enabled: bool = false
 
 
 func _physics_process(_delta):
-	super(_delta)
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint():
+		super(_delta)
+		return
 	
 	var delta = Thunder.get_delta(_delta)
 	
