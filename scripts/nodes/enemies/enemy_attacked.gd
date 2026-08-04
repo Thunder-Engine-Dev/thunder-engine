@@ -38,6 +38,10 @@ static var _iceblock_scene: PackedScene
 ## Offset of detection of stomping, used to make the detection
 ## more precise and flexible
 @export var stomping_offset: Vector2
+## If [code]false[/code], rotated enemy's stomping will count from the player's transform.[br]
+## If [code]true[/code], rotated enemy's stomping will count from the enemy's transform
+## (legacy behavior).
+@export var stomping_use_self_rotation: bool = false
 ## Corpse of the enemy stomped by the player
 @export var stomping_creation: InstanceNode2D
 ## Scores given to the player when the enemy gets stomped
@@ -218,7 +222,8 @@ func _lkf():
 	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 
 func _lkfz():
-	Audio.play_sound(frozen_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
+	var _custom_sound = CharacterManager.get_sound_replace(frozen_sound, frozen_sound, "enemy_freeze", false)
+	Audio.play_sound(_custom_sound, _center, false, {pitch = sound_pitch} if !sound_ignore_pitch_modification else {})
 
 
 ## Makes the enemy stomped by the player, usually triggered
@@ -241,7 +246,8 @@ func got_stomped(
 		return result
 	
 	var from_pos: Vector2 = from_global_position if from_global_position != Vector2.INF else by.global_position
-	var stomp_dots: Vector2 = _get_stomp_dots(from_pos, vel, offset, enemy_global_origin)
+	var from_rot: float = by.global_rotation
+	var stomp_dots: Vector2 = _get_stomp_dots(from_pos, vel, offset, enemy_global_origin, from_rot)
 	
 	stomped.emit()
 	if stomp_dots.x > 0 && !(stomping_only_from_above && stomp_dots.y < 0):
@@ -292,11 +298,14 @@ func can_stomp_succeed(
 	vel: Vector2,
 	offset: Vector2 = Vector2(0, -16),
 	enemy_global_origin: Vector2 = Vector2.INF,
+	from_rotation: float = 0,
 ) -> bool:
 	if !stomping_enabled || _stomping_delayer || !_center:
 		return false
 	
-	var stomp_dots: Vector2 = _get_stomp_dots(from_global_position, vel, offset, enemy_global_origin)
+	var stomp_dots: Vector2 = _get_stomp_dots(
+		from_global_position, vel, offset, enemy_global_origin, from_rotation
+	)
 	return stomp_dots.x > 0 && !(stomping_only_from_above && stomp_dots.y < 0)
 
 
@@ -305,12 +314,15 @@ func _get_stomp_dots(
 	vel: Vector2,
 	offset: Vector2,
 	enemy_global_origin: Vector2,
+	from_rotation: float,
 ) -> Vector2:
 	var origin: Vector2 = (
 		enemy_global_origin if enemy_global_origin != Vector2.INF else
 		_center.global_transform.translated(stomping_offset + offset).get_origin()
 	)
-	var standard: Vector2 = stomping_standard.rotated(_center.global_rotation)
+	var standard: Vector2 = stomping_standard.rotated(
+		_center.global_rotation if stomping_use_self_rotation else from_rotation
+	)
 	return Vector2(
 		from_global_position.direction_to(origin).dot(standard),
 		vel.dot(standard)
@@ -433,7 +445,7 @@ static func from_killing_area(area: Area2D) -> Node:
 	
 	var enemy_attacked: Node = area.get_node_or_null(^"EnemyAttacked")
 	if enemy_attacked:
-		if is_instance_valid(enemy_attacked._killing_body_override):
+		if is_instance_valid(enemy_attacked.get(&"_killing_body_override")):
 			return null
 		return enemy_attacked
 	

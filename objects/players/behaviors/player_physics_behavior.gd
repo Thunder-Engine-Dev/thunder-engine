@@ -609,7 +609,9 @@ func _try_stomp_on_enemy(enemy_attacked: Node, player_velocity: Vector2) -> Dict
 			).get_origin()
 			enemy_origin = enemy_origin_now + enemy_velocity * (subtick_delta - actual_delta)
 		
-		if !enemy_attacked.can_stomp_succeed(player_pos, player_velocity, stomp_offset, enemy_origin):
+		if !enemy_attacked.can_stomp_succeed(
+			player_pos, player_velocity, stomp_offset, enemy_origin, player.global_rotation
+		):
 			continue
 		
 		success_player_pos = player_pos
