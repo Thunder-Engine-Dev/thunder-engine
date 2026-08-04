@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dvmhwh1khygq6"]
 
 [ext_resource type="PackedScene" uid="uid://2yepdgrhpmj3" path="res://engine/objects/bumping_blocks/brick/brick.tscn" id="1_bwt8c"]
-[ext_resource type="PackedScene" uid="uid://s5m42q4w2hj0" path="res://engine/objects/effects/brick_debris/brick_debris_grey.tscn" id="2_ip27f"]
+[ext_resource type="PackedScene" uid="uid://s5m42q4w2hj0" path="res://engine/objects/effects/brick_debris/brick_debris_gray.tscn" id="2_ip27f"]
 [ext_resource type="SpriteFrames" uid="uid://2nd282g7cu0i" path="res://engine/objects/bumping_blocks/brick/brick_gray.tres" id="3_w5u3l"]
 
 [node name="Brick" unique_id=1881880263 instance=ExtResource("1_bwt8c")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpvggkvs8pffa"
-path="res://.godot/imported/brick_grey.png-e20a52b53fafbfcdc8fca56d90f116fc.ctex"
+uid="uid://85gn851puu2g"
+path="res://.godot/imported/brick_debris_gray.png-cfcd66c71e315bd053a293b2ee825892.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://engine/objects/bumping_blocks/brick/textures/brick_grey.png"
-dest_files=["res://.godot/imported/brick_grey.png-e20a52b53fafbfcdc8fca56d90f116fc.ctex"]
+source_file="res://engine/objects/effects/brick_debris/brick_debris_gray.png"
+dest_files=["res://.godot/imported/brick_debris_gray.png-cfcd66c71e315bd053a293b2ee825892.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://2nd282g7cu0i"]
 
-[ext_resource type="Texture2D" uid="uid://dpvggkvs8pffa" path="res://engine/objects/bumping_blocks/brick/textures/brick_grey.png" id="1_hfg1j"]
+[ext_resource type="Texture2D" uid="uid://dpvggkvs8pffa" path="res://engine/objects/bumping_blocks/brick/textures/brick_gray.png" id="1_hfg1j"]
 [ext_resource type="Texture2D" uid="uid://dfbk3lh686xsc" path="res://engine/objects/bumping_blocks/question_block/textures/emptygray.png" id="2_0mvb3"]
 
 [resource]
