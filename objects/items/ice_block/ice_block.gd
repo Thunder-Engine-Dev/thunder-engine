@@ -286,7 +286,7 @@ func _handle_post_ungrab() -> void:
 		break_ice(true, true)
 		return
 	await get_tree().physics_frame
-	if !is_instance_valid(self):
+	if !is_inside_tree():
 		return
 	_restore_throw_collisions()
 	_break_blocked = false
