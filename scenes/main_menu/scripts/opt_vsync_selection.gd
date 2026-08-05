@@ -7,6 +7,7 @@ const TRIPLE_POS = 190
 @onready var _value: TextureRect = $HBoxContainer/Value
 @onready var _buffer: TextureRect = $HBoxContainer/Buffer
 @onready var _off: TextureRect = $HBoxContainer/OFF
+@warning_ignore("unused_private_class_variable")
 var _saved_value: int
 
 func _ready() -> void:

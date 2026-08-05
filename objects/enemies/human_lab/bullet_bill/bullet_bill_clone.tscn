@@ -9,7 +9,6 @@
 size = Vector2(44, 20)
 
 [node name="BulletBill" unique_id=337425059 instance=ExtResource("1_dksb3")]
-platform_on_leave = 2
 
 [node name="CollisionShape2D" parent="Body" parent_id_path=PackedInt32Array(399342097) index="0" unique_id=1969885727]
 visible = false
@@ -23,6 +22,9 @@ killing_immune = {
 "fireball": false,
 "hammer": false,
 "iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
 "starman": false
 }
 killing_sound_succeeded = ExtResource("3_m3c8h")
