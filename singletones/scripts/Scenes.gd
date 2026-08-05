@@ -98,6 +98,41 @@ func goto_scene(path: String) -> void:
 	load_scene_from_packed.call_deferred(_current_scene_buffer)
 
 
+## Loads [param path] with a screen transition.[br]
+## [br]
+## [param transition] may be:[br]
+## - [code]&"auto"[/code] (default): circle or crossfade from the settings tweak[br]
+## - a built-in / registered id ([code]&"circle"[/code], [code]&"crossfade"[/code],
+##   [code]&"fade"[/code], [code]&"blur"[/code], …)[br]
+## - a pre-configured [Transition] from [method TransitionManager.create_transition][br]
+## - a [Callable] that configures the transition when auto resolves to circle
+##   (or another non-[member Transition.switches_scene] type):[br]
+##   [code]await Scenes.goto_scene_with_transition(path, func(t): t.with_speeds(0.04, -0.1).with_pause())[/code][br]
+## [br]
+## [param configure] is an optional [Callable] applied the same way when
+## [param transition] is an id or instance (ignored for crossfade / [member Transition.switches_scene]).[br]
+## [br]
+## Crossfade-style transitions receive [param path] automatically via [method with_scene].
+## Other transitions await [signal TransitionManager.transition_middle], then call [method goto_scene].
+func goto_scene_with_transition(path: String, transition: Variant = &"auto", configure: Callable = Callable()) -> Transition:
+	if is_instance_valid(TransitionManager.current_transition):
+		TransitionManager.current_transition.queue_free()
+		TransitionManager.current_transition = null
+	
+	var trans: Transition = TransitionManager._resolve_transition(transition, configure)
+	
+	if trans.switches_scene:
+		if trans.has_method(&"with_scene"):
+			trans.with_scene(path)
+		TransitionManager.accept_transition(trans)
+		return trans
+	
+	TransitionManager.accept_transition(trans)
+	await TransitionManager.transition_middle
+	goto_scene(path)
+	return trans
+
+
 func goto_scene_with_loading(path: String) -> void:
 	if _current_scene_buffer && _current_scene_buffer.resource_path == path:
 		reload_current_scene()

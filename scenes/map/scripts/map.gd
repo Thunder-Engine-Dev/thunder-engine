@@ -1,5 +1,7 @@
 class_name Map2D extends Node2D
 
+## Emitted when the user hits Jump/Run while the player is moving on the map
+## to make them move faster.
 signal player_fast_forwarded
 signal next_level_ready(index: int) ## Emitted with the next level index on ready
 signal player_entered_level ## Emitted when the player enters a level.
@@ -22,20 +24,31 @@ func _ready() -> void:
 	Data.values.checked_cps = []
 	Data.values.onetime_blocks = true
 
-	var music := _get_music()
 	if _is_simple_fade: return
 	await get_tree().physics_frame
+	
+	TransitionManager.transition_middle.connect(
+		_on_transition_middle_enter_level,
+		CONNECT_ONE_SHOT | CONNECT_DEFERRED
+	)
 
-	TransitionManager.transition_middle.connect(func():
-		if is_instance_valid(music): music.stop()
-		TransitionManager.current_transition.paused = true
-		Scenes.goto_scene(get_node(player).current_marker.level)
-		Scenes.scene_ready.connect(func():
-			TransitionManager.current_transition.on(Thunder._current_player, false, true)
-			if !Thunder._current_player:
-				TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
-	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+
+func _on_transition_middle_enter_level() -> void:
+	var music := _get_music()
+	if is_instance_valid(music):
+		music.stop()
+	TransitionManager.current_transition.paused = true
+	Scenes.goto_scene(get_node(player).current_marker.level)
+	Scenes.scene_ready.connect(_on_level_scene_ready_after_map, CONNECT_ONE_SHOT)
+
+
+static func _on_level_scene_ready_after_map() -> void:
+	var trans := TransitionManager.current_transition
+	if !is_instance_valid(trans):
+		return
+	trans.on(Thunder._current_player, false, true)
+	if !Thunder._current_player:
+		trans.paused = false
 
 
 func get_first_marker_space() -> MarkerSpace:
@@ -69,7 +82,7 @@ func enter_level_sequence() -> void:
 		Thunder.autosplitter.start_timer()
 	var music := _get_music()
 	if music && is_instance_valid(music):
-		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, true)
+		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, false)
 
 	await get_tree().create_timer(0.4, false).timeout
 	var _sfx = CharacterManager.get_sound_replace(transition_sound, transition_sound, "menu_fade_out", false)

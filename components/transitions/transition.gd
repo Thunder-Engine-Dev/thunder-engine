@@ -7,6 +7,10 @@ signal middle
 signal end
 
 var correct_aspect_ratio: bool = true
+## If [code]true[/code], the transition calls [method Scenes.goto_scene] itself
+## (e.g. crossfade). [method Scenes.goto_scene_with_transition] will only set the
+## scene path and start the transition, without awaiting [signal middle].
+var switches_scene: bool = false
 
 ## Adds the transition globally and calls the start signal
 func build() -> void:

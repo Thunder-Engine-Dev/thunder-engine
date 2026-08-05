@@ -228,27 +228,44 @@ func play_music(resource: Resource, channel_id: int, other_keys: Dictionary = {}
 	return music_player if is_instance_valid(music_player) else null
 
 ## Fade a music player that is playing, and you can choose it's way to fade.[br]
-## [param player] is the music player that is playing[br]
-## [param to] is the final [member AudioStreamPlayer.volume_db] you wish[br]
-## [param weight] is the strength/delta-value to fade the music[br]
-## [param method] is the way to fade the music, different [param method] decides different [param weight] calculation. See [enum FadingMethod][br]
-## [param stop_after_fading] determines whether the music stops playing after it fades to goal value. This is very useful when you are trying making fading-out-and-stop musics
+## - [param player] is the music player that is playing[br]
+## - [param to] is the final [member AudioStreamPlayer.volume_db] you wish[br]
+## - [param weight] is the strength/delta-value to fade the music[br]
+## - [param method] is the way to fade the music, different [param method] decides different
+## - [param weight] calculation. See [enum FadingMethod][br]
+## - [param stop_after_fading] determines whether the music stops playing after it fades to goal value.
+## This is very useful when you are trying making fading-out-and-stop musics.
+## DO NOT use this if the music player can free while fading (e.g. during scene change).
 func fade_music_1d_player(player: AudioStreamPlayer, to: float, duration: float, method: Tween.TransitionType = Tween.TRANS_LINEAR, stop_after_fading: bool = false, _ease: Tween.EaseType = Tween.EASE_IN) -> void:
 	if !player: return
 	if !is_instance_valid(player): return
 	
 	var tween: Tween = create_tween().set_trans(method).set_ease(_ease)
 	tween.tween_property(player, "volume_db", to, duration)
-	tween.tween_callback(
-		func() -> void:
-			if stop_after_fading && is_instance_valid(player):
-				player.stop()
-				player.free()
-			tween.kill()
-			if tween in _music_tweens:
-				_music_tweens.erase(tween)
-	)
+	# Bind instance id (not the Object): scene changes can free the player while this
+	# Audio-owned tween is still running (esp. fast crossfades), which would trigger
+	# "Lambda capture at index N was freed" if the player were captured directly
+	tween.tween_callback(_on_music_fade_finished.bind(player.get_instance_id(), stop_after_fading, tween))
 	_music_tweens.append(tween)
+
+
+func _on_music_fade_finished(player_id: int, stop_after_fading: bool, tween: Tween) -> void:
+	if stop_after_fading:
+		var player = instance_from_id(player_id)
+		if is_instance_valid(player):
+			player.stop()
+			player.free()
+	if is_instance_valid(tween):
+		tween.kill()
+	if tween in _music_tweens:
+		_music_tweens.erase(tween)
+
+
+func _kill_music_tweens() -> void:
+	for tween in _music_tweens:
+		if tween:
+			tween.kill()
+	_music_tweens.clear()
 
 
 ## Stop a channel from playing
@@ -264,6 +281,8 @@ func stop_music_channel(channel_id: int, fade: bool) -> void:
 
 ## Stop all musics from playing
 func stop_all_musics(fade: bool = false) -> void:
+	if !fade:
+		_kill_music_tweens()
 	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]):
 			continue
@@ -276,6 +295,9 @@ func stop_all_musics(fade: bool = false) -> void:
 	all_musics_stopped.emit()
 
 func _stop_all_musics_scene_changed() -> void:
+	# Crossfade calls goto_scene immediately; kill fades first so their callbacks
+	# never run against players freed below
+	_kill_music_tweens()
 	for i in _music_channels.keys():
 		if !is_instance_valid(_music_channels[i]) || !_music_channels[i].get_meta(&"play_when_scene_changed", true):
 			continue

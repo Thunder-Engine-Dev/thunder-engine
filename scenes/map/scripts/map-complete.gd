@@ -30,10 +30,19 @@ func _physics_process(delta: float) -> void:
 				.with_speeds(0.01, -0.1)
 		)
 		
-		TransitionManager.transition_middle.connect(func():
-			TransitionManager.current_transition.paused = true
-			Scenes.goto_scene(goto_scene)
-			Scenes.scene_changed.connect(func(_current_scene):
-				TransitionManager.current_transition.paused = false
-			, CONNECT_ONE_SHOT)
-		, CONNECT_ONE_SHOT)
+		TransitionManager.transition_middle.connect(
+			_on_transition_middle_goto_next,
+			CONNECT_ONE_SHOT
+		)
+
+
+func _on_transition_middle_goto_next() -> void:
+	TransitionManager.current_transition.paused = true
+	Scenes.goto_scene(goto_scene)
+	Scenes.scene_changed.connect(_on_scene_changed_unpause_transition, CONNECT_ONE_SHOT)
+
+
+static func _on_scene_changed_unpause_transition(_current_scene: Node) -> void:
+	var trans := TransitionManager.current_transition
+	if is_instance_valid(trans):
+		trans.paused = false

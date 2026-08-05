@@ -17,18 +17,21 @@ func _ready() -> void:
 		CONNECT_ONE_SHOT
 	)
 
-## Sets the center of transition on some node
+## No operation
 func on(ref: Variant, direct = false, unpause = false) -> Transition:
 	return self
 
 
 ## Sets the speeds
 func with_speeds(s_closing: float, s_opening: float) -> Transition:
-	speed_closing = s_closing
-	speed_opening = s_opening
+	speed_closing = abs(s_closing)
+	speed_opening = -abs(s_opening)
 	return self
 
 
+## Set animation. Available animations:[br]
+## [code]to_white[/code], [code]to_black[/code],
+## [code]to_white_linear[/code], [code]to_black_linear[/code]
 func with_animation(anim: String) -> Transition:
 	animation_name = anim
 	return self

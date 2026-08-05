@@ -243,28 +243,15 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 			if Scenes.custom_scenes.get("game_over"):
 				if Scenes.custom_scenes.game_over.get("opened"):
 					return
-			var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 			Data.values.checkpoint = -1
 			Data.values.checked_cps = []
 
 			if jump_to_scene:
-				if !_crossfade:
-					TransitionManager.accept_transition(
-						load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-							.instantiate()
-							.with_speeds(0.04, -0.1)
-							.with_pause()
-							.on_player_after_middle(completion_center_on_player_after_transition)
-					)
-
-					await TransitionManager.transition_middle
-					Scenes.goto_scene(jump_to_scene)
-				else:
-					TransitionManager.accept_transition(
-						load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-							.instantiate()
-							.with_scene(jump_to_scene)
-					)
+				await Scenes.goto_scene_with_transition(jump_to_scene, func(t):
+					t.with_speeds(0.04, -0.1) \
+						.with_pause() \
+						.on_player_after_middle(completion_center_on_player_after_transition)
+				)
 			else:
 				printerr("[Level] Jump to scene is not defined in the level.")
 	)

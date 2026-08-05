@@ -33,6 +33,22 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_x187k"]
+resource_name = "to_black"
+length = 1.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_n7fdo"]
 resource_name = "to_white"
 length = 1.05
@@ -49,11 +65,29 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_usajj"]
+resource_name = "to_white"
+length = 1.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4gqb7"]
 _data = {
 &"RESET": SubResource("Animation_qsjiv"),
 &"to_black": SubResource("Animation_gyau7"),
-&"to_white": SubResource("Animation_n7fdo")
+&"to_black_linear": SubResource("Animation_x187k"),
+&"to_white": SubResource("Animation_n7fdo"),
+&"to_white_linear": SubResource("Animation_usajj")
 }
 
 [node name="FadeTransition" type="Control" unique_id=1748489768]

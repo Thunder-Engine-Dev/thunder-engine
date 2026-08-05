@@ -2,59 +2,71 @@ extends Transition
 
 @export var fade_time: float = 0.54
 
-#@onready var texture_rect_from: TextureRect = $TextureRect
 var _scene: String
 var _forced_pause: bool
+var _canvas_item_rid: RID
+var _img_rid: RID
+
+
+func _init() -> void:
+	switches_scene = true
+
 
 func _ready() -> void:
 	name = "crossfade_transition"
-	## print("[Transition] Making 'FROM' image...")
-	#await RenderingServer.frame_post_draw
-	#var image: Image = GlobalViewport.vp.get_texture().get_image()
-	#texture_rect_from.texture = ImageTexture.create_from_image(image)
 	
-	var rs := RenderingServer
 	var vp_rid := GlobalViewport.vp.get_viewport_rid()
-	var img_rid: RID
-	img_rid = rs.texture_2d_create(rs.texture_2d_get(rs.viewport_get_texture(vp_rid)))
-	
-	var canvas_item_rid := rs.canvas_item_create()
-	rs.canvas_item_set_default_texture_filter(
-		canvas_item_rid,
-		RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST if !SettingsManager.settings.filter else \
-		RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_LINEAR
+	_img_rid = RenderingServer.texture_2d_create(
+		RenderingServer.texture_2d_get(RenderingServer.viewport_get_texture(vp_rid))
 	)
-	rs.canvas_item_set_parent(canvas_item_rid, GlobalViewport.container.get_canvas_item())
+	
+	_canvas_item_rid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_default_texture_filter(
+		_canvas_item_rid,
+		int(GlobalViewport.container.texture_filter)
+	)
+	RenderingServer.canvas_item_set_use_parent_material(_canvas_item_rid, true)
+	RenderingServer.canvas_item_set_parent(_canvas_item_rid, GlobalViewport.container.get_canvas_item())
 	
 	var rect := Rect2(Vector2.ZERO, GlobalViewport.vp.size)
-	rs.canvas_item_add_texture_rect(canvas_item_rid, rect, img_rid)
+	RenderingServer.canvas_item_add_texture_rect(_canvas_item_rid, rect, _img_rid)
 	start.emit()
 	
-	## print("[Transition] Going to scene...")
 	Scenes.goto_scene(_scene)
-	Thunder._connect(tree_exiting, rs.free_rid.bind(canvas_item_rid), CONNECT_ONE_SHOT)
+	Thunder._connect(tree_exiting, _free_canvas_item, CONNECT_ONE_SHOT)
 	await Scenes.scene_ready
 	get_tree().paused = true
 	_forced_pause = true
 	
-	## print("[Transition] Done")
 	middle.emit()
 	var tw = create_tween()
-	#tw.tween_property(texture_rect_from, "self_modulate:a", 0.0, fade_time)
-	tw.tween_method(
-		func(value: Color):
-			rs.canvas_item_set_modulate(canvas_item_rid, value),
-		Color.WHITE, Color(1, 1, 1, 0), fade_time
-	)
-	tw.tween_callback(func():
-		_forced_pause = false
-		rs.free_rid(canvas_item_rid)
-		Thunder._disconnect(tree_exiting, rs.free_rid.bind(canvas_item_rid))
-		get_tree().paused = false
-		end.emit()
-	)
+	tw.tween_method(_set_canvas_modulate, Color.WHITE, Color(1, 1, 1, 0), fade_time)
+	tw.tween_callback(_on_fade_finished)
 
-func _physics_process(delta: float) -> void:
+
+func _set_canvas_modulate(value: Color) -> void:
+	if _canvas_item_rid.is_valid():
+		RenderingServer.canvas_item_set_modulate(_canvas_item_rid, value)
+
+
+func _free_canvas_item() -> void:
+	if _canvas_item_rid.is_valid():
+		RenderingServer.free_rid(_canvas_item_rid)
+		_canvas_item_rid = RID()
+	if _img_rid.is_valid():
+		RenderingServer.free_rid(_img_rid)
+		_img_rid = RID()
+
+
+func _on_fade_finished() -> void:
+	_forced_pause = false
+	Thunder._disconnect(tree_exiting, _free_canvas_item)
+	_free_canvas_item()
+	get_tree().paused = false
+	end.emit()
+
+
+func _physics_process(_delta: float) -> void:
 	if _forced_pause:
 		get_tree().paused = true
 

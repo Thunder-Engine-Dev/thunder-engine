@@ -65,21 +65,6 @@ func end() -> void:
 func _start_transition() -> void:
 	if has_skipped: return
 	has_skipped = true
-	if _crossfade:
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn")
-				.instantiate()
-				.with_scene(goto_path)
-		)
-		return
-	
-	TransitionManager.accept_transition(
-		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-			.instantiate()
-			.with_speeds(fade_out_time, -0.1)
-			.with_pause()
-			.on_player_after_middle(fade_out_focus_on_player)
+	await Scenes.goto_scene_with_transition(goto_path, func(t):
+		t.with_speeds(fade_out_time, -0.1).with_pause().on_player_after_middle(fade_out_focus_on_player)
 	)
-	
-	await TransitionManager.transition_middle
-	Scenes.goto_scene(goto_path)

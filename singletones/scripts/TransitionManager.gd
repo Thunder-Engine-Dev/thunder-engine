@@ -1,7 +1,15 @@
 extends Node
 ## This class acts as a transition manager and should be used in transitions internally
 
+const BUILTIN_TRANSITIONS: Dictionary = {
+	&"circle": "res://engine/components/transitions/circle_transition/circle_transition.tscn",
+	&"crossfade": "res://engine/components/transitions/crossfade_transition/crossfade_transition.tscn",
+	&"fade": "res://engine/components/transitions/fade_transition/fade_transition.tscn",
+	&"blur": "res://engine/components/transitions/blur_transition/blur_transition.tscn",
+}
+
 var current_transition: Transition
+var _transitions: Dictionary = BUILTIN_TRANSITIONS.duplicate()
 
 signal transition_start
 signal transition_middle
@@ -28,3 +36,54 @@ func accept_transition(trans: Transition) -> void:
 		trans.queue_free()
 		current_transition = null
 	)
+
+
+## Registers a custom transition scene under [param id] for use with
+## [method create_transition] / [method Scenes.goto_scene_with_transition].
+func register_transition(id: StringName, scene_path: String) -> void:
+	_transitions[id] = scene_path
+
+
+## Instantiates a transition by id.[br]
+## Built-in ids: [code]&"circle"[/code], [code]&"crossfade"[/code],
+## [code]&"fade"[/code], [code]&"blur"[/code].[br]
+## [code]&"auto"[/code] picks crossfade or circle based on the settings tweak.
+func create_transition(id: StringName = &"auto") -> Transition:
+	if id == &"auto":
+		id = &"crossfade" if _is_crossfade_enabled() else &"circle"
+	if !_transitions.has(id):
+		push_error("[TransitionManager] Unknown transition id: %s" % id)
+		id = &"circle"
+	return (load(_transitions[id]) as PackedScene).instantiate()
+
+
+## Resolves [param transition] into a [Transition] instance.[br]
+## Accepts a [Transition], a [StringName]/[String] id, or a [Callable] used as
+## configuration for the auto-selected non-crossfade transition.
+func _resolve_transition(transition: Variant, configure: Callable = Callable()) -> Transition:
+	var config := configure
+	var id_or_instance: Variant = transition
+	
+	if transition is Callable:
+		config = transition
+		id_or_instance = &"auto"
+	
+	var trans: Transition
+	if id_or_instance is Transition:
+		trans = id_or_instance
+	elif id_or_instance is StringName or id_or_instance is String:
+		trans = create_transition(StringName(id_or_instance))
+	else:
+		push_error("[TransitionManager] Invalid transition argument: %s" % type_string(typeof(id_or_instance)))
+		trans = create_transition(&"auto")
+	
+	# Circle-style config (with_speeds, with_pause, ...) does not apply to
+	# transitions that switch the scene themselves (crossfade).
+	if config.is_valid() && !trans.switches_scene:
+		config.call(trans)
+	
+	return trans
+
+
+func _is_crossfade_enabled() -> bool:
+	return SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)

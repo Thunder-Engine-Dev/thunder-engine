@@ -1,6 +1,11 @@
 shader_type canvas_item;
 
 uniform bool enable = true;
+varying float vertex_alpha;
+
+void vertex() {
+	vertex_alpha = COLOR.a;
+}
 
 vec4 texturePointSmooth(sampler2D tex, vec2 uv) {
 	vec2 size = vec2(textureSize(tex, 0));
@@ -16,6 +21,7 @@ vec4 texturePointSmooth(sampler2D tex, vec2 uv) {
 void fragment() {
 	if (enable) {
 		vec4 Texture = texturePointSmooth(TEXTURE, UV);
-		COLOR = Texture.rgba;
+		COLOR.rgb = Texture.rgb;
 	}
+	COLOR.a = vertex_alpha;
 }
