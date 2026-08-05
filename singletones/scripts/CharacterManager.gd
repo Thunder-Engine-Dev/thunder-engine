@@ -1,16 +1,24 @@
 extends Node
 
-## This Dictionary contains all suits for all characters available in the game.
-## To add your own suits and characters, use the "add_suits" method in an autoload script inside of your project.
-## The dictionary is stored like this:
-##   (list of power names) => dictionary of character names => suit resources
+## Autoload that stores and resolves character data: suits, voice lines, misc textures,
+## suit tweaks/sounds, and helpers for skins and sound replacement.
+
+## This Dictionary contains all suits for all characters available in the game.[br]
+## To add your own suits and characters, use [method add_suits] in an autoload script inside of your project.
+## [br][br]
+## The dictionary is stored like this:[br]
+##   (list of power names) => dictionary of character names => suit resources[br]
 ## i.e. "suits.Mario.small" returns a PlayerSuit of small Mario.
 var suits: Dictionary = {}
-## Contains all voice lines for all characters in the game.
-## Add new ones with "add_voice_line" method.
+## Contains all voice lines for all characters in the game.[br][br]
+## Add new ones with [method add_voice_line].
 var voice_lines: Dictionary = {}
-## Miscelleneous textures for all characters, like the menu player head selector.
-## Add new ones with "add_misc_texture" method.
+## Miscelleneous textures for all characters, like the menu player head selector.[br]
+## This Dictionary is not limited to just textures, as it can also contain [SpriteFrames],
+## [JSON], and other [Resource] files.[br]
+## This is also where Global Skin Tweaks are stored.
+## [br][br]
+## Add new ones with [method add_misc_texture].
 var misc_textures: Dictionary = {}
 var suit_tweaks: Dictionary = {}
 var suit_sounds: Dictionary = {}
@@ -221,14 +229,17 @@ const DEFAULT_GLOBAL_SKIN_TWEAKS: Dictionary = {
 
 const DEFAULT_STORY_TEXT = ["they", "them", "plumber", "their"]
 
+## When non-empty, overrides the character from settings (see [method get_character_name]).
+## Setting this emits [signal character_updated].
 var forced_character: String:
 	set(value):
 		forced_character = value
 		character_updated.emit()
 
+## Emitted when [member forced_character] changes.
 signal character_updated
 
-# Preparing Mario and Luigi characters
+## Registers base Mario/Luigi suits, voice lines, misc textures, tweaks, and suit sounds.
 func _ready() -> void:
 	add_suits(MARIO_SUITS, "Mario")
 	add_suits(LUIGI_SUITS, "Luigi")
@@ -272,12 +283,14 @@ func _ready() -> void:
 	add_default_suit_sounds(LUIGI_SUITS, "Luigi")
 
 
+## Returns the active character name, preferring forced_character over settings.
 func get_character_name() -> String:
 	if !forced_character.is_empty():
 		return forced_character
 	return SettingsManager.settings.character
 
 
+## Returns the display name, using a custom skin nickname when available.
 func get_character_display_name() -> String:
 	var character: String = SkinsManager.custom_nicknames.get(SkinsManager.current_skin, "")
 	if character.is_empty():
@@ -285,6 +298,7 @@ func get_character_display_name() -> String:
 	return character
 
 
+## Returns a story pronoun/role string by index for the current skin (or Mario defaults).
 func get_character_story_text(index: int) -> String:
 	var text: Array = SkinsManager.custom_story_text.get(SkinsManager.current_skin, [])
 	if text.is_empty():
@@ -295,10 +309,12 @@ func get_character_story_text(index: int) -> String:
 	return text[index]
 
 
+## Returns the PlayerSuit resource for a power-up name and character.
 func get_suit(suit_name: String, character_name: String = "") -> PlayerSuit:
 	return _get_something(suit_name, character_name, suits, {})
 
 
+## Returns all power-up suit names registered for a character.
 func get_suit_names(character_name: String = "") -> Array:
 	var chara: String = character_name
 	if chara.is_empty(): chara = get_character_name()
@@ -310,34 +326,40 @@ func get_suit_names(character_name: String = "") -> Array:
 	return suit_name_arr
 
 
+## Returns voice/global sound streams for a line name, optionally preferring the current skin.
 func get_voice_line(voice_line: String, character_name: String = "", skinned: bool = true) -> Array:
 	var skinned_dict = SkinsManager.misc_sounds if skinned else {}
 	var out = _get_something(voice_line, character_name, voice_lines, skinned_dict)
 	return out if out else []
 
 
+## Returns a misc texture (or other variant) by name, optionally preferring the current skin.
 func get_misc_texture(texture_name: String, character_name: String = "", skinned: bool = true) -> Variant:
 	var skinned_dict = SkinsManager.misc_textures if skinned else {}
 	return _get_something(texture_name, character_name, misc_textures, skinned_dict)
 
 
+## Returns a single global skin tweak value by key.
 func get_global_tweak(tweak: String) -> Variant:
 	var global_skin_tweaks = get_misc_texture("global_skin_tweaks")
 	if !global_skin_tweaks || !global_skin_tweaks is Dictionary: return null
 	return global_skin_tweaks.get(tweak)
 
 
+## Returns a suit-specific tweak value, optionally preferring the current skin.
 func get_suit_tweak(tweak: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Variant:
 	var skinned_dict = SkinsManager.suit_tweaks if skinned else {}
 	return _get_something_suit(tweak, character_name, suit, suit_tweaks, skinned_dict)
 
 
+## Returns suit-specific sound streams, optionally preferring the current skin.
 func get_suit_sound(sound: String, character_name: String = "", suit: String = "", skinned: bool = true) -> Array:
 	var skinned_dict = SkinsManager.suit_sounds if skinned else {}
 	var out = _get_something_suit(sound, character_name, suit, suit_sounds, skinned_dict)
 	return out if out else []
 
 
+## Returns the names of all registered characters.
 func get_character_names() -> Array:
 	var chara_name_arr: Array = []
 	for key in suits.keys():
@@ -345,6 +367,29 @@ func get_character_names() -> Array:
 	return chara_name_arr
 
 
+## Resolves which sound to play when skins/characters can override SFX.
+## [br][br]
+## [param sound] is the stream you are about to play (often an @export or const on the object).[br]
+## [param default_sound] is the stock/builtin stream for that action.
+## [br][br]
+## If [param sound] equals [param default_sound], a character/skin custom sound for
+## [param sound_name] is returned (random pick if several). If they differ, [param sound]
+## is returned unchanged so level-specific overrides are kept.[br]
+## Set [param from_suit] to [code]true[/code] for suit sounds, [code]false[/code] for voice/global sounds.
+## [br][br]
+## Example - only replace when still using the default coin sound:
+## [codeblock]
+## const DEFAULT_SOUND = preload("res://engine/.../coin.wav")
+## @export var sound: AudioStream = DEFAULT_SOUND
+##
+## func _play_sound() -> void:
+##     var sfx := CharacterManager.get_sound_replace(sound, DEFAULT_SOUND, "coin", false)
+##     Audio.play_sound(sfx, self)
+## [/codeblock]
+## Pass the same stream twice to always allow skin replacement:
+## [codeblock]
+## var sfx := CharacterManager.get_sound_replace(STUN, STUN, "stun", false)
+## [/codeblock]
 func get_sound_replace(sound: AudioStream, default_sound: AudioStream, sound_name: String, from_suit: bool) -> AudioStream:
 	var _custom_snd: Array = (
 		CharacterManager.get_suit_sound(sound_name) if from_suit else CharacterManager.get_voice_line(sound_name)
@@ -354,6 +399,7 @@ func get_sound_replace(sound: AudioStream, default_sound: AudioStream, sound_nam
 	return sound if sound != default_sound else _custom_snd[randi_range(0, len(_custom_snd) - 1)]
 
 
+## Registers a single suit for a character power-up name.
 func add_suit(suit: PlayerSuit, power: String, character: String, override: bool = false) -> void:
 	var new_suit_dict: Dictionary = suits.duplicate(true) 
 	if !character in new_suit_dict:
@@ -363,6 +409,7 @@ func add_suit(suit: PlayerSuit, power: String, character: String, override: bool
 	new_suit_dict[character][power] = suit
 
 
+## Merges a dictionary of suits into a character's suit list.
 func add_suits(dict: Dictionary, character: String, override: bool = false) -> void:
 	var new_suit_dict: Dictionary = suits.duplicate(true)
 	if !character in new_suit_dict:
@@ -371,6 +418,7 @@ func add_suits(dict: Dictionary, character: String, override: bool = false) -> v
 	suits = new_suit_dict
 
 
+## Merges voice/global sound entries for a character into from_dict and returns the result.
 func add_voice_lines(dict: Dictionary, from_dict: Dictionary, character: String, override: bool = false) -> Dictionary:
 	var new_voice_dict: Dictionary = from_dict.duplicate(true)
 	if !character in new_voice_dict:
@@ -379,6 +427,7 @@ func add_voice_lines(dict: Dictionary, from_dict: Dictionary, character: String,
 	return new_voice_dict
 
 
+## Registers a misc texture (or other value) under a name for a character.
 func add_misc_texture(texture: Variant, texture_name: String, character: String, override: bool = false) -> void:
 	var new_texture_dict: Dictionary = misc_textures.duplicate(true)
 	if !character in new_texture_dict:
@@ -389,6 +438,7 @@ func add_misc_texture(texture: Variant, texture_name: String, character: String,
 	misc_textures = new_texture_dict
 
 
+## Merges suit tweak values for a character's power-up suit.
 func add_suit_tweaks(dict: Dictionary, character: String, suit: String, override: bool = false) -> void:
 	var new_tweak_dict: Dictionary = suit_tweaks.duplicate(true)
 	if !character in new_tweak_dict:
@@ -399,6 +449,7 @@ func add_suit_tweaks(dict: Dictionary, character: String, suit: String, override
 	suit_tweaks = new_tweak_dict
 
 
+## Fills DEFAULT_SUIT_SOUNDS for every suit in suits_dict for the given character.
 func add_default_suit_sounds(suits_dict: Dictionary, character: String) -> void:
 	for i in suits_dict.keys():
 		if !character in suit_sounds:
@@ -406,6 +457,7 @@ func add_default_suit_sounds(suits_dict: Dictionary, character: String) -> void:
 		suit_sounds[character] = add_voice_lines(DEFAULT_SUIT_SOUNDS, suit_sounds[character], i)
 
 
+## Looks up a character-scoped entry, preferring the current skin when skinned_dict has it.
 func _get_something(what: String, character_name: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
 	var chara: String = character_name
 	if chara.is_empty(): chara = get_character_name()
@@ -416,6 +468,7 @@ func _get_something(what: String, character_name: String, dict_ref: Dictionary, 
 		return dict_ref[chara][what]
 	return null
 
+## Looks up a character+suit-scoped entry, preferring the current skin when available.
 func _get_something_suit(what: String, character_name: String, suit: String, dict_ref: Dictionary, skinned_dict: Dictionary = {}) -> Variant:
 	var chara: String = character_name
 	if chara.is_empty(): chara = get_character_name()
