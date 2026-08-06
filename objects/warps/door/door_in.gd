@@ -1,7 +1,11 @@
+@tool
 extends Area2D
 
 @export var sprite_frames: SpriteFrames = preload("res://engine/objects/warps/door/door_animation.tres")
 @export_category("Warp")
+@export_group("Editor","warping_editor_")
+@export var warping_editor_display_path: bool = true
+@export var warping_editor_color: Color = Color(0.5,1,0.3,0.6)
 @export_node_path("Area2D") var warp_to: NodePath
 @export var warping_sound: AudioStream = preload("res://engine/objects/players/prefabs/sounds/door.wav")
 @export var warp_to_scene: String
@@ -12,7 +16,6 @@ extends Area2D
 @export var circle_opening_speed: float = 0.1
 @export var circle_focus_on_player: bool = true
 @export var circle_center_after_middle: bool = false
-@export var circle_wait_till_scene_changed: bool = true
 @export_group("Crossfade Transition")
 @export var force_circle_instead_of_crossfade: bool = false
 @export var crossfade_fade_speed: float = 0.54
@@ -41,9 +44,31 @@ signal warp_started
 signal warped
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	$AnimatedSprite2D.sprite_frames = sprite_frames
 
+func _draw() -> void:
+	if !Engine.is_editor_hint(): return
+
+	draw_set_transform(Vector2.ZERO, -global_rotation, Vector2.ONE / global_scale)
+
+	var tg: Area2D = get_node_or_null(warp_to)
+	if !tg: return
+	if !tg.is_in_group("door_out"):
+		printerr(name,
+			""": warp_to contains a path to an invalid warp scene. Property has been reset."""
+		)
+		warp_to = ""
+		return
+
+	if !warping_editor_display_path: return
+	draw_line(Vector2.ZERO, tg.global_position - global_position, warping_editor_color, 4)
+
+
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+		return
 	if !player: return
 	
 	var input_y: int = int(Input.get_axis(player.control.up, player.control.down))
@@ -124,6 +149,11 @@ func _circle_transition() -> void:
 		)
 		warp_to_scene = ""
 		return
+	
+	# If there is already a circle transition that's closing, we'll do nothing to prevent breaking the game
+	if is_instance_valid(TransitionManager.current_transition) && !TransitionManager.current_transition.get(&"middle_switch"):
+		return
+	
 	TransitionManager.accept_transition(
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
@@ -136,16 +166,11 @@ func _circle_transition() -> void:
 
 	TransitionManager.current_transition.paused = true
 
-	if warp_to_scene && circle_wait_till_scene_changed:
-		if is_instance_valid(player):
-			player.sprite.visible = false
-		Scenes.scene_ready.connect(func():
-			if !Thunder._current_player:
-				TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
+	if warp_to_scene && is_instance_valid(player):
+		player.sprite.visible = false
+	if circle_center_after_middle:
+		TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 	else:
-		if circle_center_after_middle:
-			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
 		TransitionManager.current_transition.paused = false
 
 	pass_warp.call_deferred()
