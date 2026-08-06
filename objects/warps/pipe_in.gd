@@ -34,7 +34,6 @@ const WARP_CUTSCENE = preload("res://engine/objects/players/prefabs/sounds/pipe_
 @export var circle_opening_speed: float = 0.1
 @export var circle_focus_on_player: bool = true
 @export var circle_center_after_middle: bool = false
-@export var circle_wait_till_scene_changed: bool = true
 @export_group("Crossfade Transition")
 @export var force_circle_instead_of_crossfade: bool = false
 @export var crossfade_fade_speed: float = 0.54
@@ -74,7 +73,7 @@ func _draw() -> void:
 
 	draw_set_transform(Vector2.ZERO, -global_rotation, Vector2.ONE / global_scale)
 
-	var tg:Area2D = get_node_or_null(warp_to)
+	var tg: Area2D = get_node_or_null(warp_to)
 	if !tg: return
 	if !tg.is_in_group("pipe_out"):
 		printerr(name,
@@ -84,7 +83,7 @@ func _draw() -> void:
 		return
 
 	if !warping_editor_display_path: return
-	draw_line(Vector2.ZERO,tg.global_position - global_position, warping_editor_color,4)
+	draw_line(Vector2.ZERO, tg.global_position - global_position, warping_editor_color, 4)
 
 
 func _physics_process(delta: float) -> void:
@@ -231,16 +230,6 @@ func _warping_process(delta: float) -> void:
 			TransitionManager.accept_transition(trans)
 			await TransitionManager.transition_middle
 
-			# The commented code needs fixing and is temporarily commented out
-			#TransitionManager.current_transition.paused = true
-			
-			#if warp_to_scene:
-			#	Scenes.scene_changed.connect(func(_current_scene):
-			#		TransitionManager.current_transition.paused = false
-			#	, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
-			#else:
-			#	TransitionManager.current_transition.paused = false
-
 			await get_tree().physics_frame
 			pass_warp()
 		else: pass_warp()
@@ -275,17 +264,11 @@ func _circle_transition() -> void:
 	await TransitionManager.transition_middle
 
 	TransitionManager.current_transition.paused = true
-
-	if warp_to_scene && circle_wait_till_scene_changed:
-		Scenes.scene_ready.connect(func():
-			if !Thunder._current_player:
-				TransitionManager.current_transition.paused = false
-		, CONNECT_ONE_SHOT)
+	
+	if circle_center_after_middle:
+		TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
 	else:
-		if circle_center_after_middle:
-			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
-		else:
-			TransitionManager.current_transition.paused = false
+		TransitionManager.current_transition.paused = false
 
 	pass_warp.call_deferred()
 
