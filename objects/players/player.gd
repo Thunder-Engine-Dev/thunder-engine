@@ -97,8 +97,6 @@ var stuck_block_left: bool
 var stuck_block_right: bool
 var is_sliding_accelerating: bool
 var is_able_to_skid: bool
-## -1 = blocked by left screen border, 1 = right, 0 = none
-var screen_border_blocked: int
 
 var slippery_strength: float
 

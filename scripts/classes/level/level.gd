@@ -76,6 +76,7 @@ func _ready() -> void:
 
 	Data.values.time = time
 	Data.values.stopwatch = 0.0
+	print("[Level] Ready: %s" % scene_file_path)
 
 	super()
 
