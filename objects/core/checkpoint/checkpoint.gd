@@ -24,6 +24,7 @@ signal respawned
 @onready var sprite_max_quality: Sprite2D = $SpriteMaxQuality
 @onready var text_max_quality: Sprite2D = $SpriteMaxQuality/TextMaxQuality
 @onready var max_gpu_particles: GPUParticles2D = $SpriteMaxQuality/TextMaxQuality/GPUParticles2D
+@onready var med_checkpoint_bg: Sprite2D = $TextFlying/MedCheckpointBg
 
 @onready var alpha: float = text.modulate.a
 
@@ -80,6 +81,18 @@ func activate() -> void:
 	match SettingsManager.get_quality():
 		SettingsManager.QUALITY.MID:
 			animation_text_flying.play(&"triggered")
+			var tw = create_tween().set_loops(20).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+			tw.tween_await(get_tree().physics_frame)
+			tw.tween_callback(func():
+				var eff = Effect.trail(
+					med_checkpoint_bg, med_checkpoint_bg.texture, med_checkpoint_bg.offset,
+					med_checkpoint_bg.flip_h, med_checkpoint_bg.flip_v, med_checkpoint_bg.centered,
+					0.1, 0.5, med_checkpoint_bg.material, 0, false
+				)
+				eff.self_modulate.a = 0.5
+				eff.global_rotation = 0
+				Thunder.reorder_on_top_of(self, eff)
+			)
 		SettingsManager.QUALITY.MAX:
 			animation_max_quality.play(&"triggered")
 			var tw = create_tween().set_loops(20).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
@@ -98,7 +111,7 @@ func activate() -> void:
 
 
 func _play_voice_line() -> void:
-	var _voices
+	var _voices: Array
 	if !voice_lines.is_empty():
 		_voices = voice_lines
 	else:
@@ -110,15 +123,19 @@ func _play_voice_line() -> void:
 	if voice_line_delay_override:
 		checkpoint_wait_tweak = voice_line_delay_override
 	
-	get_tree().create_timer(maxf(0.05, checkpoint_wait_tweak), false, false, true).timeout.connect(func() -> void:
-		Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)], false)
-		if SettingsManager.get_quality() == SettingsManager.QUALITY.MAX:
-			text_max_quality.show()
-			text_max_quality.scale = Vector2.ZERO
-			text_max_quality.reset_physics_interpolation()
-			var tw = text_max_quality.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-			tw.tween_property(text_max_quality, "scale", Vector2.ONE, 0.4)
-			await tw.finished
-			max_gpu_particles.emitting = true
+	get_tree().create_timer(maxf(0.05, checkpoint_wait_tweak), false, false, true).timeout.connect(
+		_on_checkpoint_wait_timeout.bind(_voices)
 	)
+
+
+func _on_checkpoint_wait_timeout(_voices: Array) -> void:
+	Audio.play_1d_sound(_voices[randi_range(0, len(_voices) - 1)], false)
+	if SettingsManager.get_quality() == SettingsManager.QUALITY.MAX:
+		text_max_quality.show()
+		text_max_quality.scale = Vector2.ZERO
+		text_max_quality.reset_physics_interpolation()
+		var tw = text_max_quality.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+		tw.tween_property(text_max_quality, "scale", Vector2.ONE, 0.4)
+		await tw.finished
+		max_gpu_particles.emitting = true
 	

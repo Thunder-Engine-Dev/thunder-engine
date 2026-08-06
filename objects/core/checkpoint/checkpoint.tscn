@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://rxx0e2phc703" path="res://engine/objects/core/checkpoint/textures/text.png" id="2_13hdd"]
 [ext_resource type="Material" uid="uid://cpd0lft71406i" path="res://engine/objects/core/checkpoint/textures/checkpoint_material.tres" id="4_ae8fc"]
 [ext_resource type="Texture2D" uid="uid://gpm6x2w6mmmn" path="res://engine/objects/core/checkpoint/textures/cp_star.png" id="4_wmifw"]
+[ext_resource type="Texture2D" uid="uid://dvb6xm0ef16xe" path="res://engine/objects/core/checkpoint/textures/med_checkpoint_bg.png" id="6_0yo3j"]
 [ext_resource type="AnimationLibrary" uid="uid://bf256cjjnh56l" path="res://engine/objects/core/checkpoint/textures/animation_max_quality.tres" id="6_25t2o"]
 [ext_resource type="Texture2D" uid="uid://u7226ng3patq" path="res://engine/objects/core/checkpoint/textures/max_checkpoint_mario.png" id="6_jvje8"]
 [ext_resource type="Script" uid="uid://84tklnoxykkh" path="res://engine/scenes/map/scripts/player_icon.gd" id="7_25t2o"]
@@ -13,6 +14,7 @@
 
 [sub_resource type="Animation" id="Animation_4yr7j"]
 resource_name = "RESET"
+length = 0.00999999999999999
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,7 +37,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -86)]
+"values": [Vector2(0, -85)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -73,30 +75,43 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GPUParticles2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_2cdhs"]
 resource_name = "triggered"
-length = 3.0
+length = 2.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(0, -84), Vector2(0, -160)]
+"values": [Vector2(0, -84), Vector2(0, -224)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 2
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 6.28319]
@@ -108,7 +123,7 @@ tracks/2/path = NodePath(".:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 2.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -120,7 +135,7 @@ tracks/3/path = NodePath(".:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(2.5, 3),
+"times": PackedFloat32Array(2, 2.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -132,10 +147,22 @@ tracks/4/path = NodePath("GPUParticles2D:emitting")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 0.4, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GPUParticles2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, false]
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dmaa8"]
@@ -200,16 +227,21 @@ texture = ExtResource("2_13hdd")
 [node name="TextFlying" type="Sprite2D" parent="." unique_id=865319115]
 visible = false
 z_index = 2
-position = Vector2(0, -86)
+position = Vector2(0, -85)
 texture = ExtResource("2_13hdd")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="TextFlying" unique_id=453771716]
+visible = false
 show_behind_parent = true
 emitting = false
 amount = 24
 texture = ExtResource("4_wmifw")
 lifetime = 0.5
 process_material = ExtResource("4_ae8fc")
+
+[node name="MedCheckpointBg" type="Sprite2D" parent="TextFlying" unique_id=894306423]
+show_behind_parent = true
+texture = ExtResource("6_0yo3j")
 
 [node name="AnimationTextFlying" type="AnimationPlayer" parent="TextFlying" unique_id=215224057]
 libraries/ = SubResource("AnimationLibrary_dmaa8")
