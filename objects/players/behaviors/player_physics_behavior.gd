@@ -62,6 +62,9 @@ func _physics_process(delta: float) -> void:
 	elif can_coyote:
 		player.coyote_time = config.jump_coyote_time_sec
 	player.running_grace = move_toward(player.running_grace, 0.0, delta)
+	# Screen border push runs deferred; cancel speed into it so animation matches walls
+	if player.screen_border_blocked != 0 && sign(player.speed.x) == player.screen_border_blocked:
+		player.speed.x = 0
 	if player.is_on_slope() && player.is_on_wall() && (player.get_which_wall_collided() == sign(player.left_right)) && abs(player.speed.x) < 70:
 		player.speed.x = 0
 
@@ -161,8 +164,12 @@ func _movement_x(delta: float) -> void:
 	if abs(player.speed.x) < config.walk_initial_speed:
 		if (player.left_right > 0 && player.speed.x >= -1) || (player.left_right < 0 && player.speed.x <= 1):
 			player.direction = sign(player.left_right)
+			# This code fixes the walk animation flicker when walking into tank wheels,
+			# however it will be commented for now in case it breaks something else
+			#if player.is_on_slope() || !player.test_move(
+				#player.transform, Vector2(player.direction, 0).rotated(player.global_rotation)
+			#):
 			player.speed.x = player.direction * config.walk_initial_speed
-			#player.is_skidding = false
 	
 	if abs(player.speed.x) > 100 || player.is_skidding:
 		player.is_able_to_skid = true
@@ -193,7 +200,10 @@ func _movement_x_acceleration(delta: float) -> void:
 			)
 		
 		if (!player.crouch_forced || player.is_on_floor()) || (player.crouch_forced && abs(player.speed.x) < max_speed):
-			_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+			if sign(player.speed.x) != -player.direction:
+				_accelerate(max_speed * abs(player.left_right), config.walk_acceleration, delta)
+			else:
+				_decelerate(config.walk_turning_acce / 2.0, delta)
 			
 	# Deceleration upon changing direction
 	elif sign(player.left_right) == -player.direction:
@@ -702,6 +712,7 @@ func _set_underwater_to(to: bool) -> void:
 	Audio.play_sound(_snd, player, false)
 
 
+## this is NO-OP for now
 func _can_platform_correct_shape(amount: float) -> bool:
 	if _platform_correction_cached:
 		return _platform_correction_cache_result

@@ -72,10 +72,16 @@ func teleport(sync_position_only = false, reset_interpolation: bool = false) -> 
 
 
 func _screen_border_logic() -> void:
-	if !player || stop_blocking_edges: return
-	if !("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
+	if !player || stop_blocking_edges:
+		if player:
+			player.screen_border_blocked = 0
 		return
-	if player.warp != Player.Warp.NONE: return
+	if !("_is_stage_ready" in Scenes.current_scene && Scenes.current_scene._is_stage_ready):
+		player.screen_border_blocked = 0
+		return
+	if player.warp != Player.Warp.NONE:
+		player.screen_border_blocked = 0
+		return
 	
 	var rot: float = get_viewport_transform().affine_inverse().get_rotation()
 	var right: Vector2 = Vector2.RIGHT.rotated(rot)
@@ -86,6 +92,7 @@ func _screen_border_logic() -> void:
 	if canvas_x < border_push_offset:
 		var push: Vector2 = right * (border_push_offset - canvas_x)
 		var kc: KinematicCollision2D = player.move_and_collide(push)
+		player.screen_border_blocked = -1
 		if player.velocity.dot(left) > 0:
 			player.vel_set_x(0)
 		if kc && kc.get_collider() && enable_left_border_death:
@@ -93,10 +100,13 @@ func _screen_border_logic() -> void:
 	elif canvas_x > viewport_width - border_push_offset:
 		var push: Vector2 = left * (canvas_x - (viewport_width - border_push_offset))
 		var kc: KinematicCollision2D = player.move_and_collide(push)
+		player.screen_border_blocked = 1
 		if player.velocity.dot(right) > 0:
 			player.vel_set_x(0)
 		if kc && kc.get_collider() && enable_right_border_death:
 			player.die()
+	else:
+		player.screen_border_blocked = 0
 
 
 func _xscroll_logic() -> void:
