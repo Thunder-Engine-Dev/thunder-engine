@@ -23,7 +23,7 @@ func compile() -> void:
 	_initialize_nodes()
 	await get_tree().process_frame
 	await get_tree().process_frame
-	await get_tree().create_timer(0.4, false, true, false).timeout
+	await get_tree().create_timer(0.4, false, true, true).timeout
 	complete.emit()
 
 
