@@ -171,6 +171,14 @@ func _process_settings() -> void:
 
 	# Vsync
 	var current_vsync = DisplayServer.window_get_vsync_mode(0)
+	if settings.vsync > 0:
+		var xbuffer = ProjectSettings.get_setting("rendering/rendering_device/vsync/swapchain_image_count", 2)
+		if xbuffer != (settings.vsync + 1):
+			ProjectSettings.set_setting(
+				"rendering/rendering_device/vsync/swapchain_image_count",
+				mini(settings.vsync + 1, 3)
+			)
+			DisplayServer.window_set_vsync_mode(current_vsync)
 	if settings.vsync && current_vsync != DisplayServer.VSYNC_ENABLED:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	elif !settings.vsync && current_vsync != DisplayServer.VSYNC_DISABLED:
@@ -308,7 +316,7 @@ func _fullscreen_logic() -> void:
 			await get_tree().physics_frame
 			get_window().move_to_center.call_deferred()
 			get_window().grab_focus.call_deferred()
-	elif settings.fullscreen:
+	elif settings.fullscreen && DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
 
@@ -357,17 +365,12 @@ func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -
 func save_settings() -> void:
 	save_data(settings, settings_path, "Settings")
 	no_saved_settings = false
-	if settings.vsync:
-		var boot_path: String = ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss")
-		if !boot_path.is_absolute_path():
-			boot_path = "user://boot.thss"
-			ProjectSettings.set_setting("application/config/project_settings_override", "user://boot.thss")
-		var file: FileAccess = FileAccess.open( boot_path, FileAccess.WRITE )
-		
-		file.store_string("""[rendering]
-rendering_device/vsync/swapchain_image_count=%d
-""" % [int(settings.vsync) + 1])
-		file.close()
+	var boot_path: String #= ProjectSettings.get_setting("application/config/project_settings_override", "user://boot.thss")
+	if !boot_path.is_absolute_path():
+		boot_path = "user://boot.thss"
+		#ProjectSettings.set_setting("application/config/project_settings_override", "user://boot.thss")
+	if FileAccess.file_exists(boot_path):
+		DirAccess.remove_absolute(boot_path)
 
 	settings_saved.emit()
 	print("[Settings Manager] Settings saved!")
