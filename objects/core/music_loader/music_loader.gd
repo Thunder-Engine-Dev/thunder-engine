@@ -76,9 +76,9 @@ func _change_music(ind: int, ch_id: int) -> void:
 		ch_id, 
 		{
 			&"ignore_pause": !can_pause, 
-			&"volume": volume_db[ind] if volume_db.size() >= ind else 0.0,
-			&"start_from_sec": start_from_sec[ind] if start_from_sec.size() >= ind else 0.0,
-			&"subsong": subsong[ind] if subsong.size() >= ind else 0,
+			&"volume": volume_db[ind] if volume_db.size() > ind else 0.0,
+			&"start_from_sec": start_from_sec[ind] if start_from_sec.size() > ind else 0.0,
+			&"subsong": subsong[ind] if subsong.size() > ind else 0,
 		}
 	]
 	if play_immediately:
