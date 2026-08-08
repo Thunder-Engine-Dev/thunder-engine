@@ -257,18 +257,17 @@ func _circle_transition() -> void:
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
 			.with_speeds(circle_closing_speed, -circle_opening_speed)
+			.with_pause()
 			.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 	)
 	if circle_focus_on_player:
 		TransitionManager.current_transition.on(Thunder._current_player, false, true)
 	await TransitionManager.transition_middle
 
-	TransitionManager.current_transition.paused = true
+	#TransitionManager.current_transition.paused = true
 	
 	if circle_center_after_middle:
 		TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
-	else:
-		TransitionManager.current_transition.paused = false
 
 	pass_warp.call_deferred()
 
@@ -311,10 +310,13 @@ func _tweak_process() -> void:
 
 
 func _transition_update() -> void:
-	if use_circle_transition && circle_focus_on_player:
+	if use_circle_transition:
 		await get_tree().physics_frame
 		await get_tree().physics_frame
-		TransitionManager.current_transition.on(Thunder._current_player, false, true)
+		if circle_focus_on_player:
+			TransitionManager.current_transition.on(Thunder._current_player, false, true)
+		else:
+			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
 
 
 func _label() -> void:
