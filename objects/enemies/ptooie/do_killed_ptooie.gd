@@ -48,7 +48,7 @@ func _ready() -> void:
 				death_node.position -= min_quality_offset
 			var root = enemy_attacked._center
 			if root:
-				node.gravity_dir = root.gravity_dir
+				node.gravity_dir_rotation = false
 	node.add_child(death_node)
 
 
