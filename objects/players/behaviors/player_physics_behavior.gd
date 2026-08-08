@@ -36,6 +36,10 @@ func _physics_process(delta: float) -> void:
 	_platform_correction_cached = false
 	
 	if player.warp != Player.Warp.NONE: return
+	
+	if player.is_holding && !is_instance_valid(player.holding_item):
+		player.is_holding = false
+		player.holding_item = null
 
 	# Head
 	_head_process()
