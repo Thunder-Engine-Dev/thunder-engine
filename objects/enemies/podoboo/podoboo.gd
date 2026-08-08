@@ -28,7 +28,22 @@ func _draw() -> void:
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
+	if life_time == 0 && one_shot:
+		life_time = 3
+	if life_time > 0:
+		print_verbose("[GMBody2D] Life time %s: %s" % [name, str(life_time)])
+		get_tree().create_timer(life_time, false, true, false).timeout.connect(_life_time_ended)
+	
 	timer_interval.start(interval)
+
+func _life_time_ended() -> void:
+	if !is_inside_tree() || !vis_notifier_node: return
+	if !vis_notifier_node.is_on_screen():
+		queue_free()
+		print_verbose("[GMBody2D] %s: freed by life time" % [name])
+		return
+	Thunder._connect(vis_notifier_node.screen_exited, queue_free, CONNECT_ONE_SHOT)
+	print_verbose("[GMBody2D] %s: queued to free on screen exit" % [name])
 
 
 func _physics_process(delta: float) -> void:
