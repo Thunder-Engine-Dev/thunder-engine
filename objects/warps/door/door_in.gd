@@ -158,20 +158,17 @@ func _circle_transition() -> void:
 		load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
 			.instantiate()
 			.with_speeds(circle_closing_speed, -circle_opening_speed)
+			.with_pause()
 			.on_player_after_middle(circle_focus_on_player && !circle_center_after_middle)
 	)
 	if circle_focus_on_player:
 		TransitionManager.current_transition.on(Thunder._current_player, false, true)
 	await TransitionManager.transition_middle
 
-	TransitionManager.current_transition.paused = true
-
-	if warp_to_scene && is_instance_valid(player):
-		player.sprite.visible = false
+	#TransitionManager.current_transition.paused = true
+	
 	if circle_center_after_middle:
-		TransitionManager.current_transition.on(Vector2(0.5, 0.5), true)
-	else:
-		TransitionManager.current_transition.paused = false
+		TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
 
 	pass_warp.call_deferred()
 
@@ -193,9 +190,22 @@ func pass_warp() -> void:
 		var cam: PlayerCamera2D = Thunder._current_camera
 		if cam:
 			cam.teleport(true, true)
+		_transition_update()
 	elif warp_to_scene && !_gotoscene_patch:
 		Scenes.goto_scene(warp_to_scene)
 	player = null
+
+
+func _transition_update() -> void:
+	if use_circle_transition:
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		if !is_instance_valid(TransitionManager.current_transition):
+			return
+		if circle_focus_on_player:
+			TransitionManager.current_transition.on(Thunder._current_player, false, true)
+		else:
+			TransitionManager.current_transition.on(Vector2(0.5, 0.5), true, true)
 
 
 func _on_body_entered(body: Node2D) -> void:
