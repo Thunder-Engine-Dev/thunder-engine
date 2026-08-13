@@ -545,17 +545,15 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
 		if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false) && _path != menu_path:
 			Data.technical_values._skip_menu_transition = true
+			if is_instance_valid(TransitionManager.current_transition):
+				TransitionManager.current_transition.queue_free()
+				TransitionManager.current_transition = null
 			Scenes.goto_scene(menu_path)
-			for i in 3:
-				if TransitionManager.current_transition:
-					TransitionManager.current_transition.end.emit()
-				await get_tree().physics_frame
 			_process_settings()
 		elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false) && _path != sgr_path:
 			Data.technical_values.impulse_progress_continue = true
+			if is_instance_valid(TransitionManager.current_transition):
+				TransitionManager.current_transition.queue_free()
+				TransitionManager.current_transition = null
 			Scenes.goto_scene(sgr_path)
-			for i in 3:
-				if TransitionManager.current_transition:
-					TransitionManager.current_transition.end.emit()
-				await get_tree().physics_frame
 			_process_settings()
