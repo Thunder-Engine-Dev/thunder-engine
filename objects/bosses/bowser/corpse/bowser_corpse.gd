@@ -20,7 +20,7 @@ var direction_to_complete: int
 func _ready() -> void:
 	add_to_group(&"#bowser_corpse")
 	if duration > 0:
-		await get_tree().create_timer(duration, false).timeout
+		await get_tree().create_timer(duration, false, true).timeout
 	elif duration < 0: return
 	Audio.play_sound(falling_sound, self)
 	move = true

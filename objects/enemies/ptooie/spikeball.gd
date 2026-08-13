@@ -59,4 +59,4 @@ func independence() -> void:
 		speed = Vector2(0, sin(counter) * -256).rotated(global_rotation)
 	else:
 		speed = Vector2(0, sin(counter) * -512).rotated(global_rotation)
-	get_tree().create_timer(3.0, false).timeout.connect(queue_free)
+	get_tree().create_timer(3.0, false, true).timeout.connect(queue_free)

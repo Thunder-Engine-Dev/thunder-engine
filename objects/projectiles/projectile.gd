@@ -73,12 +73,12 @@ func _offscreen_handler_creation() -> void:
 			queue_free()
 		# Delete projectile if shot by enemy off-screen
 		elif !vis_notifier_node.is_on_screen():
-			await get_tree().create_timer(remove_offscreen_after_sec_creation["enemy"], false).timeout
+			await Thunder.timer(remove_offscreen_after_sec_creation["enemy"]).timeout
 			if is_inside_tree() && !vis_notifier_node.is_on_screen():
 				queue_free()
 	# Delete projectile shot by player off-screen if it's there for too long
 	elif !vis_notifier_node.is_on_screen():
-		await get_tree().create_timer(remove_offscreen_after_sec_creation["player"], false).timeout
+		await Thunder.timer(remove_offscreen_after_sec_creation["player"]).timeout
 		if is_inside_tree() && !vis_notifier_node.is_on_screen():
 			queue_free()
 

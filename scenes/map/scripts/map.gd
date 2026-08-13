@@ -84,7 +84,7 @@ func enter_level_sequence() -> void:
 	if music && is_instance_valid(music):
 		Audio.fade_music_1d_player(music, -40, 1.0, Tween.TRANS_LINEAR, false)
 
-	await get_tree().create_timer(0.4, false).timeout
+	await get_tree().create_timer(0.4, false, true).timeout
 	var _sfx = CharacterManager.get_sound_replace(transition_sound, transition_sound, "menu_fade_out", false)
 	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	_start_transition.call_deferred()

@@ -144,4 +144,4 @@ func shock_smooth(duration: int, time_scale: float = 1.0, interval: float = 0.01
 		if step <= 0:
 			offset = ofs
 			_shocking -= 1
-		await get_tree().create_timer(interval, false).timeout
+		await get_tree().create_timer(interval, false, false).timeout

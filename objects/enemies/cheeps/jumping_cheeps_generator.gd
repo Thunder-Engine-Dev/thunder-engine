@@ -18,7 +18,7 @@ func _ready() -> void:
 	_time()
 
 func _time() -> void:
-	await get_tree().create_timer(chance_every_sec, false).timeout
+	await get_tree().create_timer(chance_every_sec, false, true).timeout
 	_time()
 	
 	if !enabled: return

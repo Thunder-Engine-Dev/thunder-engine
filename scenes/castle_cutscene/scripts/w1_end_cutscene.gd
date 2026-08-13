@@ -22,18 +22,18 @@ func _ready() -> void:
 	player = Thunder._current_player
 	player.completed = true
 	
-	await get_tree().create_timer(0.5, false).timeout
+	await get_tree().create_timer(0.5, false, true).timeout
 	var tw = create_tween()
 	tw.tween_property(player, "modulate:a", 1.0, 1.0)
 	
-	await get_tree().create_timer(0.5, false).timeout
+	await get_tree().create_timer(0.5, false, true).timeout
 	_moving = true
 	
-	await get_tree().create_timer(2.5, false).timeout
+	await get_tree().create_timer(2.5, false, true).timeout
 	Audio.play_1d_sound(CASTLE_CRASH)
 	Thunder._current_camera.shock(2, Vector2(4, 4))
 	
-	await get_tree().create_timer(2, false).timeout
+	await get_tree().create_timer(2, false, true).timeout
 	_destroying = true
 	run_while(
 		func():

@@ -38,7 +38,7 @@ func _set_lava_velocities(i: int) -> void: # 14
 	var li: int = i - 1 # 13
 	var ri: int = i + 1 # 15
 	while vel > 0:
-		await get_tree().create_timer(0.1, false).timeout
+		await get_tree().create_timer(0.1, false, true).timeout
 		if li >= 0:
 			lava_velocity[li] = vel
 			phases[li] = 0

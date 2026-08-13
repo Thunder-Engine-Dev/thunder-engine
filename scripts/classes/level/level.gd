@@ -239,7 +239,7 @@ func finish(walking: bool = false, walking_dir: int = 1) -> void:
 
 	Thunder._current_hud.time_countdown_finished.connect(
 		func() -> void:
-			await get_tree().create_timer(0.8, false, false).timeout
+			await get_tree().create_timer(0.8, false, true).timeout
 			# Do not switch scenes if game over screen is opened, might be rare but just in case
 			if Scenes.custom_scenes.get("game_over"):
 				if Scenes.custom_scenes.game_over.get("opened"):

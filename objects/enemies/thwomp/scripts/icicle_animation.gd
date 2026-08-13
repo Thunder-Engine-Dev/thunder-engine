@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 		ooawel = true
 		sprite_2d.region_rect.position.y = 0.0
 		
-		await get_tree().create_timer(0.2, false, false, false).timeout
+		await get_tree().create_timer(0.2, false, false).timeout
 		Audio.play_sound(ICE_2, self)
 		_explosion()
 		queue_free()

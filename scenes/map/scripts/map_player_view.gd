@@ -108,10 +108,3 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if par.is_in_group(&"map_dot"):
 		par.is_appearing = true
 		par.appear_sec = (12 / speed) / ex
-			#par.visible = true
-		#else:
-			#await get_tree().create_timer(0.3 / ex, false).timeout
-			#if !is_instance_valid(par): return
-			#par.visible = true
-			#par.set_meta(&"is_appearing", false)
-		#return

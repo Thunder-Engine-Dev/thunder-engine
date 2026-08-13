@@ -40,7 +40,7 @@ func _ready() -> void:
 			end()
 	)
 	
-	await get_tree().create_timer(skip_delay_sec, false, false, false).timeout
+	await get_tree().create_timer(skip_delay_sec, false, true).timeout
 	skippable = true
 	
 

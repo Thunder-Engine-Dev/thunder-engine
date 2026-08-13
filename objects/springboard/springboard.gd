@@ -66,7 +66,7 @@ func _process_springboard(delta: float) -> void:
 		leniency_timer = 0
 		if !is_better:
 			# Pressed jump before bounce
-			get_tree().create_timer(0.14, false).timeout.connect(func():
+			Thunder.timer(0.14).timeout.connect(func():
 				enemy_attacked.stomping_player_jumping_max = enemy_attacked.stomping_player_jumping_min
 			)
 		

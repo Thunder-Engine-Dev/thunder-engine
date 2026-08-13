@@ -50,7 +50,7 @@ func _on_triggered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_s
 		ray.force_update_transform()
 		ray.force_raycast_update()
 		
-		await get_tree().create_timer(icicle_creation_interval, false).timeout
+		await get_tree().create_timer(icicle_creation_interval, false, true).timeout
 	
 	# After finishing the detection, delete the ray caster to save memory
 	ray.queue_free()

@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 			_falling_vel = 0
 			Thunder._current_camera.shock_smooth(10, 5)
 			Audio.play_1d_sound(FALL)
-			await get_tree().create_timer(2.0, false).timeout
+			await Thunder.timer(2.0).timeout
 			_state = 4
 	elif _state == 4:
 		global_position.y = move_toward(global_position.y, init_pos.y, reabilitation_speed * delta)

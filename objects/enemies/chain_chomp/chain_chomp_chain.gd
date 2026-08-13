@@ -28,8 +28,8 @@ func disconnect_chomp() -> void:
 		freeze = false
 		linear_velocity = -get_gravity().normalized().rotated(Thunder.rng.get_randf_range(-PI / 6, PI / 6)) * Thunder.rng.get_randf_range(250, 350)
 		
-		await get_tree().create_timer(1.5, false).timeout
-		var tw: Tween = create_tween()
+		await get_tree().create_timer(1.5, false, true).timeout
+		var tw: Tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tw.tween_property(self, ^"modulate:a", 0.0, 1)
 		await tw.finished
 		queue_free()

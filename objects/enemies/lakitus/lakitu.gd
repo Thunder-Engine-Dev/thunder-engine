@@ -139,7 +139,7 @@ func _on_pitching() -> void:
 		await sprite.animation_finished
 	if sprite.animation == &"pitch":
 		if pitching_duration >= 0.05:
-			await get_tree().create_timer(pitching_duration, false).timeout
+			await get_tree().create_timer(pitching_duration, false, true).timeout
 		if skip_pitch_animation_delay:
 			_pitch()
 		sprite.play_backwards(&"pitch")

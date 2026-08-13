@@ -9,7 +9,7 @@ func _ready() -> void:
 		assert(par is PointLight2D)
 		if par.random_pause:
 			rand_pause = par.rand_pause
-			await get_tree().create_timer(rand_pause, false, false, false).timeout
+			await get_tree().create_timer(rand_pause, false, false).timeout
 	var tw3 = create_tween().set_loops().set_trans(Tween.TRANS_LINEAR)
 	tw3.tween_interval(0.07)
 	tw3.tween_property(self, "color:b", 0.3, 0.35)

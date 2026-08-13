@@ -15,11 +15,11 @@ const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_d
 func _ready() -> void:
 	var destination := global_position + Vector2.DOWN.rotated(global_rotation) * sprite.texture.get_size().y
 	
-	var tw := create_tween()
+	var tw := create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tw.tween_property(self, ^"global_position", destination, movement_duration)
 	
 	await tw.finished
-	await get_tree().create_timer(0.2, false).timeout
+	await get_tree().create_timer(0.2, false, true).timeout
 	
 	_explosion()
 

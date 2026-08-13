@@ -80,6 +80,14 @@ func _disconnect(sig: Signal, callable: Callable) -> bool:
 ## Gets relative FPS by inputting delta in [method Node._process] or [method Node._physics_process]
 func get_delta(delta: float) -> float:
 	return _target_speed * delta
+
+
+## A short-hand timer, pre-configured to pause on game pause, and to run in physics
+## frame, making it more stable.[br]
+## Use with [code]await Thunder.timer(sec).timeout[/code][br]
+## Equivalent to [code]get_tree().create_timer(sec, false, true)[/code]
+func timer(sec: float) -> SceneTreeTimer:
+	return get_tree().create_timer(sec, false, true)
 #endregion
 
 var _has_minimized: bool

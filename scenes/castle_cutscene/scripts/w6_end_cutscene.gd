@@ -20,13 +20,13 @@ func _ready() -> void:
 	player = Thunder._current_player
 	player.completed = true
 	
-	await get_tree().create_timer(0.5, false).timeout
+	await get_tree().create_timer(0.5, false, true).timeout
 	var tw = create_tween()
 	tw.tween_property(player, "modulate:a", 1.0, 1.0)
 	
-	await get_tree().create_timer(0.5, false).timeout
+	await get_tree().create_timer(0.5, false, true).timeout
 	_moving = true
-	await get_tree().create_timer(2.5, false).timeout
+	await get_tree().create_timer(2.5, false, true).timeout
 	
 	Audio.play_1d_sound(CASTLE_PIPE_SUCK)
 	run_while(_smoke_particles, 0.1)
@@ -49,7 +49,7 @@ func _ready() -> void:
 	tw = create_tween().set_trans(Tween.TRANS_SPRING)
 	tw.tween_property(castle, "scale:x", 0.18, 0.8).set_ease(Tween.EASE_OUT)
 	
-	await get_tree().create_timer(2, false).timeout
+	await get_tree().create_timer(2, false, true).timeout
 	
 	var _sfx = CharacterManager.get_sound_replace(PIPEC, PIPEC, "pipe_cutscene", false)
 	Audio.play_1d_sound(_sfx)

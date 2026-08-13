@@ -32,7 +32,7 @@ func _ready() -> void:
 		life_time = 3
 	if life_time > 0:
 		print_verbose("[GMBody2D] Life time %s: %s" % [name, str(life_time)])
-		get_tree().create_timer(life_time, false, true, false).timeout.connect(_life_time_ended)
+		get_tree().create_timer(life_time, false, true).timeout.connect(_life_time_ended)
 	
 	timer_interval.start(interval)
 

@@ -12,7 +12,7 @@ func stomp() -> void:
 	collision_shape.set_deferred("disabled", true)
 	speed.x = 0
 	is_broken = true
-	await get_tree().create_timer(4.0, false).timeout
+	await get_tree().create_timer(4.0, false, true).timeout
 	_shake()
 
 
@@ -33,7 +33,7 @@ func _shake() -> void:
 	await tw.finished
 	sprite_node.play_backwards("crash")
 	
-	await get_tree().create_timer(0.4, false).timeout
+	await get_tree().create_timer(0.4, false, true).timeout
 	enemy_attacked.stomping_enabled = true
 	collision_shape.set_deferred("disabled", false)
 	is_broken = false

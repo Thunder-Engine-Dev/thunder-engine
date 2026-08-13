@@ -37,7 +37,7 @@ func _ready() -> void:
 	var pos_to: Vector2 = (pos - center).project(Vector2.UP).rotated(global_rotation)
 	
 	if respawn_delay > 0:
-		get_tree().create_timer(respawn_delay, false).timeout.connect(
+		get_tree().create_timer(respawn_delay, false, true).timeout.connect(
 			func() -> void:
 				if Thunder._current_player && !Thunder._current_player.completed:
 					add_sibling(body)

@@ -74,7 +74,7 @@ func active() -> void:
 	_swap_coins_and_bricks.call_deferred()
 	
 	if is_once:
-		await get_tree().create_timer(1.5).timeout
+		await get_tree().create_timer(1.5, false, true).timeout
 		NodeCreator.prepare_2d(explosion_effect, self).bind_global_transform(Vector2.UP * 16).create_2d()
 		set_deferred("collision", false)
 		$Sprite.visible = false
