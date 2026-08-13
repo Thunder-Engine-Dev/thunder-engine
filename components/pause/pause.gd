@@ -111,6 +111,8 @@ func _notification(what: int) -> void:
 func _autopause_toggle() -> void:
 	if DisplayServer.window_can_draw() && !SettingsManager.settings.get("autopause", true):
 		return
+	if Scenes.current_scene.get(&"disable_pause_menu"):
+		return
 	if !opened:
 		toggle(false, true)
 
@@ -120,6 +122,7 @@ func _can_autopause() -> bool:
 	if !&"game_over" in Scenes.custom_scenes: return false
 	if opened || Scenes.custom_scenes.game_over.opened: return false
 	if get_tree().paused: return false
+	
 	var pl = Thunder._current_player
 	if pl && pl.completed:
 		return false
