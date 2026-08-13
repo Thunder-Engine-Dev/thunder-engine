@@ -45,12 +45,9 @@ func _ready() -> void:
 	_init_array(start_from_sec)
 	_init_array(subsong)
 	
-	(func() -> void:
-		if play_globally && Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
-			Scenes.pre_scene_changed.disconnect(Audio._stop_all_musics_scene_changed)
-		if !play_globally && !Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
-			Scenes.pre_scene_changed.connect(Audio._stop_all_musics_scene_changed)
-	).call_deferred() # To ensure the connection/disconnection is successful
+	# Named method (not a capturing lambda): scene changes can free this node
+	# before idle, and deferred lambdas then hit "Bad address index"
+	_sync_global_music_connection.call_deferred()
 	
 	if play_globally == GLOBAL_TYPE.CHECK_FOR_ONETIME_BLOCKS && !Data.values.onetime_blocks:
 		return
@@ -86,15 +83,31 @@ func _change_music(ind: int, ch_id: int) -> void:
 		var _trans = TransitionManager.current_transition
 		if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 			await _trans.end
+			if !is_inside_tree():
+				return
 		var player = await Audio.play_music(options[0], options[1], options[2], play_globally)
-		(func():
-			if play_globally && player:
-				player.set_meta(&"play_when_scene_changed", true)
-		).call_deferred()
+		if !is_inside_tree():
+			return
+		# Pass player as an argument. A lambda capturing it after await lives on
+		# the coroutine stack and crashes with "Bad address index" if this node
+		# is freed during a fast scene switch.
+		_apply_global_music_meta.call_deferred(player)
 		is_paused = false
 	else:
 		music_buffered.emit(ind)
 		buffer = options
+
+
+func _sync_global_music_connection() -> void:
+	if play_globally && Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
+		Scenes.pre_scene_changed.disconnect(Audio._stop_all_musics_scene_changed)
+	if !play_globally && !Scenes.pre_scene_changed.is_connected(Audio._stop_all_musics_scene_changed):
+		Scenes.pre_scene_changed.connect(Audio._stop_all_musics_scene_changed)
+
+
+func _apply_global_music_meta(player: AudioStreamPlayer) -> void:
+	if play_globally && is_instance_valid(player):
+		player.set_meta(&"play_when_scene_changed", true)
 
 
 func pause_music(ind: int = index, ch_id: int = channel_id) -> void:
@@ -136,6 +149,8 @@ func play_buffered(buffered_to_play: Array = buffer) -> bool:
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
+		if !is_inside_tree():
+			return false
 	Audio.play_music(buffered_to_play[0], buffered_to_play[1], buffered_to_play[2], play_globally)
 	music_resumed_buffered.emit()
 	buffered_to_play = []
