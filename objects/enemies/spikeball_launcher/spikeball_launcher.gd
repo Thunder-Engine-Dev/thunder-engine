@@ -6,7 +6,7 @@ extends AnimatableBody2D
 @export var explosion: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 @export var spikeball_velocity_min: Vector2 = Vector2(-100, -450)
 @export var spikeball_velocity_max: Vector2 = Vector2(100, -300)
-@export var sound: AudioStream = preload("res://engine/objects/enemies/spikeball_launcher/spikeball.ogg")
+@export var sound: AudioStream = preload("res://engine/objects/enemies/spikeball_launcher/spikeball.wav")
 
 @onready var timer_interval: Timer = $Interval
 

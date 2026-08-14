@@ -1,6 +1,6 @@
 extends Area2D
 
-const ICE_2 = preload("../sounds/ice2.wav")
+const ICE_2 = preload("res://engine/objects/enemies/icicle/sounds/icicle.wav")
 const DEBRIS_EFFECT = preload("res://engine/objects/effects/brick_debris/brick_debris.tscn")
 
 var THWOMP_ICICLE = load("res://engine/objects/enemies/thwomp/thwomp_icicle.tscn")

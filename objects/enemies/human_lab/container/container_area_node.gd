@@ -1,6 +1,6 @@
 extends Node
 
-const BUBBLES = preload("res://engine/objects/enemies/human_lab/container/sfx/bubbles.ogg")
+const BUBBLES = preload("res://engine/objects/enemies/human_lab/container/sfx/bubbles.wav")
 @onready var area: Area2D = $".."
 var delay: float = 1.9
 
