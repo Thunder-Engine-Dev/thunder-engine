@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://dwj5s6427oy2q"]
+
+[ext_resource type="Texture2D" uid="uid://c83yeno04gxim" path="res://engine/tilesets/rockland/gfx/cloud_face_anim.png" id="1_6b38s"]
+[ext_resource type="Script" uid="uid://ci4e25oay5aac" path="res://engine/tilesets/rockland/cloud_face_anim.gd" id="2_rsh87"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_135r0"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(0, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qma3y"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(30, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7272j"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(60, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d3sg"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(90, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnl2o"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(120, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fsa"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(150, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7mec"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(180, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltyjo"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(210, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fbob"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(240, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcrpc"]
+atlas = ExtResource("1_6b38s")
+region = Rect2(270, 0, 30, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nlkt7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1fsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fbob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltyjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7mec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnl2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d3sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7272j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qma3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_135r0")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 40.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcrpc")
+}],
+"loop": 0,
+"name": &"grin",
+"speed": 5.0
+}]
+
+[node name="BigCloudsFace" type="AnimatedSprite2D" unique_id=1595445731]
+sprite_frames = SubResource("SpriteFrames_nlkt7")
+autoplay = "default"
+script = ExtResource("2_rsh87")
