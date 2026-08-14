@@ -11,11 +11,12 @@
 [ext_resource type="Script" uid="uid://d0ir2qr4v6lu7" path="res://engine/objects/enemies/human_lab/goomba/scripts/legs_script.gd" id="8_mvgoi"]
 [ext_resource type="Texture2D" uid="uid://b8j8mctpdguki" path="res://engine/objects/enemies/human_lab/goomba/textures/clone_legs_idle.png" id="8_ugsva"]
 [ext_resource type="Texture2D" uid="uid://db7xoha6wj8gt" path="res://engine/objects/enemies/human_lab/spiny/textures/clone_dead.png" id="11_y61eb"]
+[ext_resource type="Script" uid="uid://cnlhhipls88ws" path="res://engine/objects/enemies/human_lab/goomba/scripts/killed_rotation_quality.gd" id="12_uwc5g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d26ok"]
 size = Vector2(32, 36)
 
-[sub_resource type="Resource" id="Resource_xsn81"]
+[sub_resource type="Resource" id="Resource_xfhw2"]
 resource_local_to_scene = true
 script = ExtResource("4_4st6u")
 creation_nodepack = ExtResource("2_ai65h")
@@ -199,7 +200,7 @@ position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_d26ok")
 
 [node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(677106046) index="1" unique_id=217506266]
-killing_creation = SubResource("Resource_xsn81")
+killing_creation = SubResource("Resource_xfhw2")
 killing_sound_succeeded = ExtResource("5_12kt0")
 sound_ignore_pitch_modification = true
 
@@ -218,6 +219,7 @@ walk_offset = Vector2(-1, 0)
 [node name="Dead" type="Sprite2D" parent="Sprite" index="1" unique_id=895077066]
 visible = false
 texture = ExtResource("11_y61eb")
+script = ExtResource("12_uwc5g")
 
 [node name="Vision" parent="." index="3" unique_id=1951954231]
 rect = Rect2(-24, -28, 48, 52)
