@@ -16,7 +16,7 @@ It allows you to create games with previously unseen level of flexibility and st
 Current state: PRODUCTION READY<br/>
 Required game engine:<br/>
 Godot 4.4.1 on STABLE branch<br/>
-Godot 4.7 on UNSTABLE branch<br/>
+Godot 4.7-custom build on UNSTABLE branch<br/>
 </h3>
 
 ------------
@@ -28,6 +28,7 @@ Godot 4.7 on UNSTABLE branch<br/>
 - Use the [unstable template](https://github.com/Thunder-Engine-Dev/te-unstable-template) to try out the latest features of the engine.
 2. Install [Git](https://git-scm.com/downloads).
 3. Install [Godot Engine 4.4.1](https://godotengine.org/download/archive/4.4.1-stable/) (standard edition). If you are going to program with C#, please choose **Mono** edition.
+- For unstable branch, use the following link to download a patched Godot Engine with rendering fixes: https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE (or [compile it yourself](https://github.com/Thunder-Engine-Dev/godot-te/tree/4.7))
 
 <h3>Installation</h3>
 
