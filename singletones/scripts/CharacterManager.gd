@@ -153,6 +153,7 @@ const DEFAULT_SUIT_TWEAKS: Dictionary = {
 	"head_bump_sound": false, # play global sound "block_bump" on every touch of ceiling
 	"fall_animation": true, # if false, "fall" animation and the derivatives are replaced by "jump"
 	"separate_swim_idle_animation": false, # "swim_idle"
+	"frog_restart_swim_on_direction_change": false, # frog: restart swim/swim_up/swim_down from frame 0 on direction change; play vertical swim fully before swim_idle
 	"emit_particles": {
 		"enabled": false, # if no texture is set, the default texture will be starman particles
 		"color": "#ffffffff", # HTML color, corresponds to HEX #RRGGBBAA, where A is alpha transparency

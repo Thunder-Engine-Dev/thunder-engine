@@ -5,6 +5,7 @@ const small_jump = preload("res://engine/objects/players/prefabs/sounds/small_ju
 var jump_delay: float
 var jump_sound_delay: float
 var swim_delay: float
+var hop_pausing: bool
 
 var small_jump_played: bool = false
 
@@ -23,6 +24,7 @@ func _movement_x(delta: float) -> void:
 	if !player.is_on_floor():
 		jump_delay = -0.001
 		jump_sound_delay = 0
+		hop_pausing = false
 	else:
 		if jump_delay < 0 && !player.is_holding:
 			jump_delay += delta
@@ -30,7 +32,8 @@ func _movement_x(delta: float) -> void:
 			small_jump_played = false
 			jump_sound_delay = 0
 			return
-		elif !small_jump_played && jump_sound_delay > 0.2:
+		hop_pausing = false
+		if !small_jump_played && jump_sound_delay > 0.2:
 			small_jump_played = true
 			var _sfx = CharacterManager.get_sound_replace(small_jump, small_jump, "jump_small", true)
 			Audio.play_sound(_sfx, player, false, {pitch = suit.sound_pitch})
@@ -54,6 +57,7 @@ func _movement_x(delta: float) -> void:
 		if player.is_on_floor() && !player.completed && jump_delay >= 0.45 && !player.is_holding:
 			player.speed.x = 0
 			jump_delay = -0.12
+			hop_pausing = true
 		return
 	
 	_movement_x_acceleration(delta)
@@ -76,6 +80,7 @@ func _movement_x_acceleration(delta: float) -> void:
 		if jump_delay >= 0.45 && !player.is_holding:
 			player.speed.x = 0
 			jump_delay = -0.12
+			hop_pausing = true
 	
 	if sign(player.left_right) == player.direction:
 		max_speed = (
@@ -180,8 +185,10 @@ func _movement_y(delta: float) -> void:
 func _stop_sliding_movement() -> void:
 	super()
 	jump_delay = 0
+	hop_pausing = false
 
 func _start_sliding_movement(do_initial_push: bool = true) -> bool:
 	jump_delay = 0
 	jump_sound_delay = 0
+	hop_pausing = false
 	return super(do_initial_push)
