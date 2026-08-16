@@ -38,7 +38,7 @@ const CannonBall = preload("./cannon_ball.gd")
 @export_range(0, 20) var rotation_periods: int = 2
 @export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_waiting_interval: float = 1
 @export_group("Sounds", "sound_")
-@export var sound_shoot: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var sound_shoot: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 
 @onready var _itrvl: Timer = $Interval
 

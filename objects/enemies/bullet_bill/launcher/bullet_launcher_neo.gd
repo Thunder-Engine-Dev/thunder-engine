@@ -53,7 +53,7 @@ extends AnimatableBody2D
 @export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_delay_max: float = 4.5
 @export_range(-1, 1, 1) var shooting_force_dir: int = 0
 @export_group("Sounds", "sound_")
-@export var sound_shooting: AudioStream = preload("../bill/sounds/bullet.ogg")
+@export var sound_shooting: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 @export var sound_shooting_pitch_min: float = 1.0
 @export var sound_shooting_pitch_max: float = 1.2
 @export var sound_shooting_volume: float = -4

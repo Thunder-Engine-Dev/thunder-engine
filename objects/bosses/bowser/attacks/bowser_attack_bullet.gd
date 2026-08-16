@@ -4,7 +4,7 @@ extends BowserAttack
 @export var explosion: PackedScene = preload("res://engine/objects/effects/explosion/explosion.tscn")
 @export var bullet_speed: float = 162.5
 @export_group("Sound")
-@export var shooting_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var shooting_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 @export var sound_pitch_min: float = 1.0
 @export var sound_pitch_max: float = 1.2
 @export var sound_volume: float = -4

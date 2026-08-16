@@ -14,7 +14,7 @@ extends AnimatableBody2D
 @export_enum("Both:0", "Left:-1", "Right:1") var shooting_force_dir: int = 0
 @export var shooting_force_no_shoot_on_wrong_dir: bool = true
 @export_group("Sound")
-@export var shooting_sound: AudioStream = preload("../bill/sounds/bullet.ogg")
+@export var shooting_sound: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 @export var sound_pitch_min: float = 1.0
 @export var sound_pitch_max: float = 1.2
 @export var sound_volume: float = -4

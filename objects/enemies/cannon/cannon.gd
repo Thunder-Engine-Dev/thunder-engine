@@ -32,7 +32,7 @@ const CannonBall = preload("./cannon_ball.gd")
 @export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_delay_min: float = 1.5
 @export_range(0, 20, 0.001, "or_greater", "suffix:s") var shooting_delay_max: float = 4.5
 @export_group("Sounds", "sound_")
-@export var sound_shoot: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.ogg")
+@export var sound_shoot: AudioStream = preload("res://engine/objects/enemies/bullet_bill/bill/sounds/bullet.wav")
 
 @onready var _pos_cball: Marker2D = $SpriteHead/PosCannonBall
 @onready var _cannon_itrvl: Timer = $CannonInterval
