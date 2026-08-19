@@ -104,6 +104,7 @@ func _get_loop_offset_frame(anim: StringName) -> int:
 
 #= Main
 func _animation_non_warping_process(delta: float) -> void:
+	_sync_hop_walk_start()
 	if sprite.animation in [&"appear", &"attack", &"grab", &"kick"]: return
 	_loop_offsets.walk = 0
 	# Climbing
@@ -115,12 +116,24 @@ func _animation_non_warping_process(delta: float) -> void:
 	player.skid.emitting = false
 	if player.is_underwater && !player.completed:
 		return _animation_swimming_process(delta)
-	if player.is_on_floor() || player.coyote_time > 0.0:
+	if player.is_on_floor() || player.coyote_time > 0.0 || _jump_on_floor_correction_fix || _is_gap_run_hopping():
 		sprite.sprite_frames.set_animation_loop(&"walk", false)
 		_loop_offsets.walk = sprite.sprite_frames.get_frame_count(&"walk") - 1
 		_animation_floor_process(delta)
 	else:
 		_animation_jumping_process(delta)
+
+
+func _is_gap_run_hopping() -> bool:
+	if player._has_jumped:
+		return false
+	return player._physics_behavior.jump_delay >= 0
+
+
+func _sync_hop_walk_start() -> void:
+	if player._physics_behavior.jump_delay >= 0 && player._physics_behavior.jump_delay < 0.08:
+		_hop_walk_finished = false
+
 
 func _animation_floor_process(delta: float) -> void:
 	var keep_hop_walk := !player.is_holding && sprite.animation == &"walk" && sprite.is_playing()
@@ -137,8 +150,7 @@ func _animation_floor_process(delta: float) -> void:
 				config.animation_max_walking_speed)
 			)
 		elif player._physics_behavior.jump_delay >= 0:
-			if player._physics_behavior.jump_delay < 0.08:
-				_hop_walk_finished = false
+			_sync_hop_walk_start()
 			if _hop_walk_finished:
 				_play_anim(&"default")
 			else:

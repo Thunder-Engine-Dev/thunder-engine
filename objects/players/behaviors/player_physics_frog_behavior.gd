@@ -1,6 +1,8 @@
 extends "res://engine/objects/players/behaviors/player_physics_behavior.gd"
 
 const small_jump = preload("res://engine/objects/players/prefabs/sounds/small_jump.wav")
+## Fall speed past which an airborne hop is treated as a real fall, not a 1-tile gap.
+const HOP_AIR_BREAK_FALL_SPEED := 200.0
 
 var jump_delay: float
 var jump_sound_delay: float
@@ -22,9 +24,13 @@ func _movement_x(delta: float) -> void:
 		return
 	
 	if !player.is_on_floor():
-		jump_delay = -0.001
-		jump_sound_delay = 0
 		hop_pausing = false
+		# Keep hop cadence while run-hopping over 1-tile gaps (body correction).
+		if player._has_jumped || player.speed.y > HOP_AIR_BREAK_FALL_SPEED:
+			jump_delay = -0.001
+			jump_sound_delay = 0
+		elif jump_delay >= 0:
+			_advance_hop_cycle(delta)
 	else:
 		if jump_delay < 0 && !player.is_holding:
 			jump_delay += delta
@@ -33,16 +39,7 @@ func _movement_x(delta: float) -> void:
 			jump_sound_delay = 0
 			return
 		hop_pausing = false
-		if !small_jump_played && jump_sound_delay > 0.2:
-			small_jump_played = true
-			var _sfx = CharacterManager.get_sound_replace(small_jump, small_jump, "jump_small", true)
-			Audio.play_sound(_sfx, player, false, {pitch = suit.sound_pitch})
-		if abs(player.speed.x) > 1:
-			jump_delay += delta
-		if player.sprite.animation == &"walk":
-			jump_sound_delay += delta
-		else:
-			jump_sound_delay = 0
+		_advance_hop_cycle(delta)
 		if abs(player.speed.x) <= 1 && (player.left_right == 0 || player.is_on_wall()) && jump_sound_delay == 0:
 			jump_delay = -0.001
 			jump_sound_delay = 0
@@ -67,6 +64,20 @@ func _movement_x(delta: float) -> void:
 		if (player.left_right > 0 && player.speed.x >= -1) || (player.left_right < 0 && player.speed.x <= 1):
 			player.direction = sign(player.left_right)
 			player.speed.x = player.direction * config.walk_initial_speed
+
+
+func _advance_hop_cycle(delta: float) -> void:
+	if abs(player.speed.x) > 1:
+		jump_delay += delta
+	var interrupting := player.sprite.animation in [&"kick", &"attack", &"grab"]
+	if player.sprite.animation == &"walk":
+		jump_sound_delay += delta
+	elif !interrupting:
+		jump_sound_delay = 0
+	if !small_jump_played && !player.is_holding && player.sprite.animation == &"walk" && jump_delay > 0.2:
+		small_jump_played = true
+		var _sfx = CharacterManager.get_sound_replace(small_jump, small_jump, "jump_small", true)
+		Audio.play_sound(_sfx, player, false, {pitch = suit.sound_pitch})
 
 
 func _movement_x_acceleration(delta: float) -> void:
