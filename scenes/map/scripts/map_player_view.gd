@@ -30,10 +30,11 @@ func _ready() -> void:
 		_suit = Thunder._current_player_state
 	else:
 		_suit = CharacterManager.get_suit("small")
-	player.sprite_frames = SkinsManager.apply_player_skin(_suit)
+	player.sprite_frames = SkinsManager.apply_player_skin(_suit).duplicate()
 	
 	loop_offset_behavior_script = ByNodeScript.activate_script(LoopOffsetBehaviorScript, player, {suit = _suit.name})
 	player.play(&"walk")
+	player.sprite_frames.set_animation_loop_mode(&"walk", SpriteFrames.LoopMode.LOOP_LINEAR)
 	
 	await get_tree().physics_frame
 	if !current_marker:
@@ -92,7 +93,7 @@ func move(delta: float) -> void:
 
 
 func animate() -> void:
-	if player.animation == "swim":
+	if player.animation == &"swim":
 		player.speed_scale = 1
 		bubbles.emitting = true
 		return

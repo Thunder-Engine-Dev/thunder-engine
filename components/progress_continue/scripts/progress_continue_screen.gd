@@ -54,8 +54,9 @@ func suspended_game_logic() -> void:
 		loop_offset_behavior_script = ByNodeScript.activate_script(
 			LoopOffsetBehaviorScript, state_preview, {suit = _suit.name}
 		)
-		state_preview.sprite_frames = SkinsManager.apply_player_skin(_suit)
+		state_preview.sprite_frames = SkinsManager.apply_player_skin(_suit).duplicate()
 		state_preview.play(&"walk")
+		state_preview.sprite_frames.set_animation_loop_mode(&"walk", SpriteFrames.LoopMode.LOOP_LINEAR)
 	Scenes.custom_scenes.pause.open_blocked = true
 	
 	animation_player.play(&"init")
