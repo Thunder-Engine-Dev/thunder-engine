@@ -321,14 +321,14 @@ mouse_filter = 2
 hide_bg = true
 main_menu_controls = "Pause/VBoxContainer"
 
-[node name="Controls" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="2" unique_id=176011520]
+[node name="Controls" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="3" unique_id=176011520]
 script = ExtResource("20_44axe")
 
-[node name="Credits" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="11" unique_id=33689942]
+[node name="Credits" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="12" unique_id=33689942]
 script = ExtResource("21_npsqc")
 metadata/_edit_pinned_properties_ = [&"script"]
 
-[node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="12" unique_id=374875197]
+[node name="Exit" parent="Settings/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(963243133, 117537532) index="13" unique_id=374875197]
 script = ExtResource("20_r3d2l")
 
 [node name="Controls" parent="." unique_id=458045212 instance=ExtResource("21_hgbbf")]
