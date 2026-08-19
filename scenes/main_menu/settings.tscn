@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
 [ext_resource type="Texture2D" uid="uid://ckrd0kfu2ue28" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
 [ext_resource type="Texture2D" uid="uid://dqvmle8qmxx2g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
+[ext_resource type="Texture2D" uid="uid://b0n418tde6rit" path="res://engine/scenes/main_menu/textures/master_volume.png" id="7_oaioy"]
 [ext_resource type="Script" uid="uid://cpfsdh7klyuxa" path="res://engine/scenes/main_menu/scripts/quality_selection.gd" id="7_str7j"]
 [ext_resource type="Script" uid="uid://bub3yp4s5l32s" path="res://engine/scenes/main_menu/scripts/boolean_selection.gd" id="8_8cp54"]
 [ext_resource type="Texture2D" uid="uid://dek2begmgx1bo" path="res://engine/scenes/main_menu/textures/on_off.png" id="9_0v236"]
@@ -353,7 +354,7 @@ size = Vector2i(640, 480)
 render_target_update_mode = 4
 
 [node name="Options" type="VBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=117537532]
-anchors_preset = 11
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -362,10 +363,29 @@ offset_top = 15.0
 offset_right = -64.0
 offset_bottom = 55.0
 grow_horizontal = 0
-grow_vertical = 2
 script = ExtResource("3_0fdie")
 focused = false
 prev_screen_node_path = NodePath("Exit")
+
+[node name="Master" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=986222622]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("4_n618i")
+type = "master"
+
+[node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Master" unique_id=347676370]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("7_oaioy")
+stretch_mode = 2
+
+[node name="Value" parent="SubViewportContainer/SubViewport/Options/Master" unique_id=1378570004 instance=ExtResource("5_rjuej")]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+mouse_filter = 1
 
 [node name="Sound" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=731136513]
 custom_minimum_size = Vector2(0, 36)
@@ -681,7 +701,7 @@ process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 640
-limit_bottom = 552
+limit_bottom = 592
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 25.0
@@ -693,7 +713,6 @@ layer = 128
 
 [node name="Control" type="Control" parent="RestartPopup" unique_id=1415250358]
 physics_interpolation_mode = 1
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -772,7 +791,7 @@ stretch_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RestartPopup/Control" unique_id=462780881]
 libraries/ = SubResource("AnimationLibrary_5i4gi")
-autoplay = &"RESET"
+autoplay = &"init"
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Node" method="handle_selection"]

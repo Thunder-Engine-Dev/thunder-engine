@@ -47,18 +47,19 @@ func _input(event: InputEvent) -> void:
 		else:
 			selector_repeat_timer = 0.06
 	
-	var old_value = SettingsManager.settings[type]
+	var old_value: float = SettingsManager.settings[type]
 	if event.is_action("ui_right"):
-		SettingsManager.settings[type] = clampf(old_value + 0.1, 0.0, 1.0)
+		SettingsManager.settings[type] = snappedf(clampf(old_value + 0.1, 0.0, 1.0), 0.1)
 		_toggled_option(old_value, SettingsManager.settings[type])
-		
-	if event.is_action("ui_left"):
-		SettingsManager.settings[type] = clampf(old_value - 0.1, 0.0, 1.0)
+	elif event.is_action("ui_left"):
+		SettingsManager.settings[type] = snappedf(clampf(old_value - 0.1, 0.0, 1.0), 0.1)
 		_toggled_option(old_value, SettingsManager.settings[type])
 
 
 func _toggled_option(old_val, new_val) -> void:
-	if old_val == new_val: return
+	# 0.1 steps can land on 0.999... which already looks full on the 10-segment bar
+	if roundi(clampf(float(old_val), 0.0, 1.0) * 10.0) == roundi(clampf(float(new_val), 0.0, 1.0) * 10.0):
+		return
 	var _sfx = CharacterManager.get_sound_replace(change_sound, DEFAULT_SCORING, "menu_select_short", false)
 	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()

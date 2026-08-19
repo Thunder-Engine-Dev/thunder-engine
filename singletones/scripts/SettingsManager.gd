@@ -11,6 +11,7 @@ const tweaks_path = "user://tweaks.thss"
 var custom_file_paths: Dictionary = {}
 
 var default_settings: Dictionary = {
+	"master": 1.0,
 	"sound": 0.5,
 	"music": 0.5,
 	"quality": ProjectSettings.get_setting("application/thunder_settings/default_quality_setting", QUALITY.MAX),
@@ -19,7 +20,6 @@ var default_settings: Dictionary = {
 	"xscroll": false,
 	"vsync": 1,
 	"scale": 1,
-	"physics_tps": 0, # DEPRECATED
 	"filter": false,
 	"fullscreen": false,
 	"controls": {
@@ -198,10 +198,9 @@ func _process_settings() -> void:
 		int(settings.filter)
 	)
 
-	# Music Volume
+	# Volume
+	Audio._settings_master_bus_volume_db = linear_to_db(settings.master)
 	Audio._settings_music_bus_volume_db = linear_to_db(settings.music)
-
-	# Sound Volume
 	Audio._settings_sound_bus_volume_db = linear_to_db(settings.sound)
 
 	settings_updated.emit()

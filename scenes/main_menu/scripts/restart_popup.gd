@@ -11,7 +11,6 @@ signal closed
 
 func _ready() -> void:
 	animation_player.play(&"init")
-	show.call_deferred()
 
 
 func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
