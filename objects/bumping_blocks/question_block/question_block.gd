@@ -55,6 +55,7 @@ func _item_display() -> void:
 			item_displayer.texture = sprite.sprite_frames.get_frame_texture(sprite.animation, 0)
 		item_displayer.scale = Vector2.ONE / 2
 	
+	creation_scene.free()
 	current_displaying_item = result.creation_nodepack.resource_path
 
 func _item_display_reset() -> void:
