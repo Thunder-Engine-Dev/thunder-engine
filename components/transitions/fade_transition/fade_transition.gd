@@ -38,6 +38,8 @@ func with_animation(anim: String) -> Transition:
 
 
 func _end_transition(anim_name: StringName) -> void:
+	if cancelled:
+		return
 	middle.emit()
 	animation_player.play_backwards.call_deferred(animation_name)
 	animation_player.speed_scale = speed_closing

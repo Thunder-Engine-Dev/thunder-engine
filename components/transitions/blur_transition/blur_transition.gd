@@ -31,6 +31,8 @@ func on(ref: Variant, direct = false, unpause = false) -> Transition:
 	#animation_player.play(ANIMATION_NAME)
 
 func _end_transition(anim_name: StringName) -> void:
+	if cancelled:
+		return
 	middle.emit()
 	animation_player.play_backwards.call_deferred(ANIMATION_NAME)
 	animation_player.speed_scale = speed_closing

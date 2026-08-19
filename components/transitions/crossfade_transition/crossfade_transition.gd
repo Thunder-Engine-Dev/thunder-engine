@@ -35,6 +35,8 @@ func _ready() -> void:
 	Scenes.goto_scene(_scene)
 	Thunder._connect(tree_exiting, _free_canvas_item, CONNECT_ONE_SHOT)
 	await Scenes.scene_ready
+	if cancelled || !is_inside_tree():
+		return
 	get_tree().paused = true
 	_forced_pause = true
 	
@@ -59,6 +61,8 @@ func _free_canvas_item() -> void:
 
 
 func _on_fade_finished() -> void:
+	if cancelled:
+		return
 	_forced_pause = false
 	Thunder._disconnect(tree_exiting, _free_canvas_item)
 	_free_canvas_item()

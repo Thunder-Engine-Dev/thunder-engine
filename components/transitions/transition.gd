@@ -11,11 +11,28 @@ var correct_aspect_ratio: bool = true
 ## (e.g. crossfade). [method Scenes.goto_scene_with_transition] will only set the
 ## scene path and start the transition, without awaiting [signal middle].
 var switches_scene: bool = false
+## Set by [method cancel]. Awaiters must check this after [signal middle] or [code]await[/code].
+var cancelled: bool = false
 
 ## Adds the transition globally and calls the start signal
 func build() -> void:
 	TransitionManager.accept_transition(self)
 	start.emit()
+
+
+## Stops this transition immediately and removes it from the tree.[br]
+## Does not emit [signal middle] or [signal end]; [method TransitionManager.clear_transition]
+## handles waking [code]await trans.middle[/code] callers after disconnecting global forwarders.
+func cancel() -> void:
+	if cancelled:
+		return
+	cancelled = true
+	set_process(false)
+	set_physics_process(false)
+	hide()
+	if is_inside_tree():
+		get_parent().remove_child(self)
+	queue_free()
 
 ## Run this every process frame
 var _prev_delta: float = -1

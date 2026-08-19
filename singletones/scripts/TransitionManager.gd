@@ -16,13 +16,13 @@ signal transition_middle
 signal transition_end
 
 func accept_transition(trans: Transition) -> void:
+	clear_transition()
+	
 	if trans.correct_aspect_ratio:
 		GlobalViewport.center_container.add_child(trans)
 	else:
 		GlobalViewport.add_child(trans)
 	
-	if is_instance_valid(current_transition):
-		current_transition.queue_free()
 	current_transition = trans
 	
 	trans.start.connect(func():
@@ -33,9 +33,38 @@ func accept_transition(trans: Transition) -> void:
 	)
 	trans.end.connect(func():
 		transition_end.emit()
+		if current_transition == trans:
+			current_transition = null
 		trans.queue_free()
-		current_transition = null
 	)
+
+
+## Immediately stops and removes [member current_transition].[br]
+## The old overlay is taken out of the tree this frame (not [method Node.queue_free]
+## only), so a new circle cannot share its shader state or draw over it for a frame.[br]
+## [signal transition_middle] is [b]not[/b] emitted, so leftover
+## [code]await TransitionManager.transition_middle[/code] callers do not follow the
+## cancelled transition. Direct [code]await trans.middle[/code] callers are woken
+## and must ignore the signal when [member Transition.cancelled] is true.
+func clear_transition() -> void:
+	if !is_instance_valid(current_transition):
+		current_transition = null
+		return
+	var trans := current_transition
+	current_transition = null
+	_disconnect_all(trans.start)
+	_disconnect_all(trans.middle)
+	_disconnect_all(trans.end)
+	trans.cancel()
+	# Wake [code]await trans.middle[/code] without re-emitting [signal transition_middle].
+	if is_instance_valid(trans):
+		trans.middle.emit()
+
+
+func _disconnect_all(sig: Signal) -> void:
+	for conn in sig.get_connections():
+		if sig.is_connected(conn.callable):
+			sig.disconnect(conn.callable)
 
 
 ## Registers a custom transition scene under [param id] for use with

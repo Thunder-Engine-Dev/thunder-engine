@@ -18,7 +18,12 @@ func _init() -> void:
 
 func _ready() -> void:
 	name = "circle_transition"
+	# Each instance must own its shader params. The .tres is shared, so a cancelled
+	# transition would otherwise leak its center/size into the next one for a frame.
+	if color_rect.material:
+		color_rect.material = color_rect.material.duplicate()
 	color_rect.material.set_shader_parameter(&"center", Vector2(0.5, 0.5))
+	color_rect.material.set_shader_parameter(&"circle_size", circle * circle_multiplier)
 	#var rect = get_rect()
 	#color_rect.material.set_shader_parameter("screen_width", rect.size.x)
 	#color_rect.material.set_shader_parameter("screen_height", rect.size.y)
@@ -31,6 +36,12 @@ func _ready() -> void:
 	start.emit()
 
 
+func cancel() -> void:
+	if Scenes.scene_ready.is_connected(_on_scene_ready_after_pause):
+		Scenes.scene_ready.disconnect(_on_scene_ready_after_pause)
+	super.cancel()
+
+
 func _set_calculated_multiplier(ratio: Vector2) -> void:
 	var center = Vector2(0.5, 0.5)
 	var addition = center - ratio
@@ -39,12 +50,16 @@ func _set_calculated_multiplier(ratio: Vector2) -> void:
 
 ## Sets the center of transition on some node
 func on(ref: Variant, direct = false, unpause = false) -> Transition:
+	if cancelled || !is_instance_valid(color_rect):
+		return self
 	var value: Vector2
 	if ref is Node2D && is_instance_valid(ref):
 		value = Thunder.view.get_pos_ratio_in_screen(ref)
 		color_rect.material.set_shader_parameter(&"center", value)
 		_set_calculated_multiplier(value)
 		await get_tree().physics_frame
+		if cancelled || !is_inside_tree():
+			return self
 		if is_instance_valid(ref):
 			value = Thunder.view.get_pos_ratio_in_screen(ref)
 			color_rect.material.set_shader_parameter(&"center", value)
@@ -84,6 +99,7 @@ func with_pause() -> Transition:
 	return self
 
 func _process(delta: float) -> void:
+	if cancelled: return
 	if _calculate_delta_lag(delta): return
 	if paused: return
 	
@@ -94,31 +110,41 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if paused: return
+	if cancelled || paused: return
 	
 	if circle == 0 && !middle_switch:
 		#var aaa: float = Time.get_ticks_msec()
 		if _is_with_pause:
 			paused = true
 		await get_tree().physics_frame
+		if cancelled || !is_inside_tree():
+			return
 		middle.emit()
 		#print("M: " + str(Time.get_ticks_msec() - aaa))
 		if _is_with_pause:
-			Scenes.scene_ready.connect(func():
-				var pl = Thunder._current_player
-				#print("R: " + str(Time.get_ticks_msec() - aaa))
-				if _on_player_after_middle && is_instance_valid(pl):
-					on(pl)
-				else:
-					on(Vector2(0.5, 0.5), true)
-					await get_tree().physics_frame
-					#print("P: " + str(Time.get_ticks_msec() - aaa))
-					paused = false
-			, CONNECT_ONE_SHOT)
+			Scenes.scene_ready.connect(_on_scene_ready_after_pause, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
+		if cancelled || !is_inside_tree():
+			return
 		middle_switch = true
 		#print("NP " + str(Time.get_ticks_msec() - aaa))
 		speed_closing = speed_opening
 	
 	if middle_switch && circle > 2:
 		end.emit()
+
+
+func _on_scene_ready_after_pause() -> void:
+	if cancelled || !is_inside_tree():
+		return
+	var pl = Thunder._current_player
+	#print("R: " + str(Time.get_ticks_msec() - aaa))
+	if _on_player_after_middle && is_instance_valid(pl):
+		on(pl)
+	else:
+		on(Vector2(0.5, 0.5), true)
+		await get_tree().physics_frame
+		if cancelled || !is_inside_tree():
+			return
+		#print("P: " + str(Time.get_ticks_msec() - aaa))
+		paused = false

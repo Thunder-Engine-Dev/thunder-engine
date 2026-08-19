@@ -113,11 +113,10 @@ func goto_scene(path: String) -> void:
 ## [param transition] is an id or instance (ignored for crossfade / [member Transition.switches_scene]).[br]
 ## [br]
 ## Crossfade-style transitions receive [param path] automatically via [method with_scene].
-## Other transitions await [signal TransitionManager.transition_middle], then call [method goto_scene].
+## Other transitions await the instance [signal Transition.middle], then call [method goto_scene].
+## If the transition is cancelled (e.g. F3/F4), the scene change is skipped.
 func goto_scene_with_transition(path: String, transition: Variant = &"auto", configure: Callable = Callable()) -> Transition:
-	if is_instance_valid(TransitionManager.current_transition):
-		TransitionManager.current_transition.queue_free()
-		TransitionManager.current_transition = null
+	TransitionManager.clear_transition()
 	
 	var trans: Transition = TransitionManager._resolve_transition(transition, configure)
 	
@@ -128,7 +127,10 @@ func goto_scene_with_transition(path: String, transition: Variant = &"auto", con
 		return trans
 	
 	TransitionManager.accept_transition(trans)
-	await TransitionManager.transition_middle
+	await trans.middle
+	# F3/F4 (and any other clear) cancels this instance; do not load its scene.
+	if !is_instance_valid(trans) || trans.cancelled || TransitionManager.current_transition != trans:
+		return trans
 	goto_scene(path)
 	return trans
 
