@@ -47,6 +47,9 @@ Godot 4.4.1<br/>
 
 5. Import the project to Godot Engine.
 
+> [!IMPORTANT]
+> Opening the project for the first time may display errors. However, this is normal. After it imports everything (no loading bars are visible on screen), close the project and open it up again. The errors should disappear.
+
 <h3>Notes and Hints</h3>
 
 - If you need to edit or add something to your project, do **not** edit the <code>engine</code> folder. Instead, duplicate the desired scenes/resources/scripts from the engine to your project repository. Everything outside of the <code>engine</code> folder is considered as your own project.
@@ -62,4 +65,10 @@ Godot 4.4.1<br/>
 - Join our [Discord Server](https://discord.gg/VwgV6GmwXv) for assistance.
 
 ------------
-All of the assets and GFX are all courtesy of Nintendo. This project is free and is not created for any sort of profit. We also do not condone commercial use of our engine.
+<h2>License</h2>
+
+Original Thunder Engine source code is licensed under the <a href="LICENSE">BSD 2-Clause License</a>. However, there are exceptions:
+
+Characters, names, graphics, music, and anything based on them that originates from Nintendo remain the property of Nintendo. They are bundled here only as part of a free fan project and are <b>not</b> licensed under BSD 2-Clause.
+
+This project is free and is not created for any sort of profit. We do not condone commercial use of this engine as distributed.

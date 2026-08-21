@@ -23,3 +23,14 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ADDITIONAL NOTICE - NINTENDO ASSETS
+
+The BSD 2-Clause License above applies only to original Thunder Engine source
+code and original engine-authored material. It does NOT apply to Nintendo
+characters, names, graphics, music, sound, or anything based on them that is
+bundled with this engine. Those assets remain the property of Nintendo and are
+not licensed under BSD 2-Clause.
+
+This engine is a free, non-commercial fan project. Commercial use of the
+engine as distributed, including those Nintendo assets, is not permitted.
