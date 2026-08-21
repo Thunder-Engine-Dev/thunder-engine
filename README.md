@@ -27,7 +27,8 @@ Godot 4.7-custom build on UNSTABLE branch<br/>
 1. Get started with the [template](https://github.com/Thunder-Engine-Dev/te-template) (stable, Godot 4.4.1) to create a new repository for your game. Make sure to choose PRIVATE visibility if you don't want your game sources to be open for everyone.
 - Use the [unstable template](https://github.com/Thunder-Engine-Dev/te-unstable-template) to try out the latest features of the engine.
 2. Install [Git](https://git-scm.com/downloads).
-3. Install [Godot Engine 4.4.1](https://godotengine.org/download/archive/4.4.1-stable/) (standard edition). If you are going to program with C#, please choose **Mono** edition.
+3. Depending on the branch you chose, different software should be installed:
+- For stable branch, install [Godot Engine 4.4.1](https://godotengine.org/download/archive/4.4.1-stable/) (standard edition). If you are going to program with C#, please choose **Mono** edition.
 - For unstable branch, use the following link to download a patched Godot Engine with rendering fixes: https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE (or [compile it yourself](https://github.com/Thunder-Engine-Dev/godot-te/tree/4.7))
 
 <h3>Installation</h3>
@@ -49,6 +50,9 @@ Godot 4.7-custom build on UNSTABLE branch<br/>
 
 5. Import the project to Godot Engine.
 
+> [!IMPORTANT]
+> Opening the project for the first time may display errors. However, this is normal. After it imports everything (no loading bars are visible on screen), close the project and open it up again. The errors should disappear.
+
 <h3>Notes and Hints</h3>
 
 - If you need to edit or add something to your project, do **not** edit the <code>engine</code> folder. Instead, duplicate the desired scenes/resources/scripts from the engine to your project repository. Everything outside of the <code>engine</code> folder is considered as your own project.
@@ -59,9 +63,15 @@ Godot 4.7-custom build on UNSTABLE branch<br/>
 
 - To replace the default save room, main menu and credits scenes, copy the corresponding template scenes to your project first (The templates already include them). To change references, open up Project Settings, turn on "Advanced Settings", go to the Application/Thunder Settings section and replace the paths to match your project.
 
-- Please keep an eye whenever the engine receives a new update. You can press the Watch button in this repository to get notifications, or join our Discord server and follow the `#github-updates` channel. New updates provide more functions and stability. To update it in your project, see Step 4 in the Installation section of this README document. Note that any changes you make inside the `engine` folder will be reset, unless you fork it and update the fork instead. (Forks cannot be private)
+- Please keep an eye whenever the engine receives a new update. You can press the Watch button in this repository to get notifications, or join our Discord server and follow the `#Github Updates` category. New updates provide more functions and stability. To update it in your project, see Step 4 in the Installation section of this README document. Note that any changes you make inside the `engine` folder will be reset, unless you fork it and update the fork instead. (Forks cannot be private)
 
 - Join our [Discord Server](https://discord.gg/VwgV6GmwXv) for assistance.
 
 ------------
-All of the assets and GFX are all courtesy of Nintendo. This project is free and is not created for any sort of profit. We also do not condone commercial use of our engine.
+<h2>License</h2>
+
+Original Thunder Engine source code is licensed under the <a href="LICENSE">BSD 2-Clause License</a>. However, there are exceptions:
+
+Characters, names, graphics, music, and anything based on them that originates from Nintendo remain the property of Nintendo. They are bundled here only as part of a free fan project and are <b>not</b> licensed under BSD 2-Clause.
+
+This project is free and is not created for any sort of profit. We do not condone commercial use of this engine as distributed.
