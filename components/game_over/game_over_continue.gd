@@ -8,6 +8,7 @@ var opened: bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: VBoxContainer = $VBoxContainer
+var cancelled: bool
 
 signal remaining_continues(count: String)
 signal no_remaining_continues
@@ -16,6 +17,7 @@ signal have_continues
 signal screen_opened
 
 func _ready() -> void:
+	Scenes.scene_shortcut_pressed.connect(reset_state)
 	animation_player.play(&"init")
 	Scenes.custom_scenes.game_over = self
 	Scenes.scene_ready.connect(func():
@@ -23,8 +25,18 @@ func _ready() -> void:
 		Thunder._current_hud.game_over_finished.connect(_on_game_over_finished)
 	)
 
+func reset_state() -> void:
+	cancelled = true
+	if opened:
+		opened = false
+		v_box_container.focused = false
+		v_box_container.move_selector(0, true)
+		animation_player.play(&"init")
+	custom_resume_scene = ""
+	
 
 func _on_game_over_finished() -> void:
+	cancelled = false
 	var temp_skip_to_save: bool
 	if Scenes.current_scene is Level:
 		temp_skip_to_save = Scenes.current_scene.game_over_disable_continue
@@ -56,13 +68,20 @@ func _on_game_over_finished() -> void:
 
 func toggle(no_resume: bool = false) -> void:
 	while Scenes.custom_scenes.pause.opened:
+		if !is_inside_tree():
+			return
 		await get_tree().physics_frame
+		if cancelled:
+			return
+		
 		if !Scenes.custom_scenes.pause._no_unpause:
 			break
+	if cancelled:
+		return
 	opened = !opened
 
 	if opened:
-		v_box_container.move_selector(0)
+		v_box_container.move_selector(0, true)
 		animation_player.play("open")
 		#Audio.play_1d_sound(open_sound, true, { "ignore_pause": true })
 		#Audio.play_music(music, 99, { "ignore_pause": true })

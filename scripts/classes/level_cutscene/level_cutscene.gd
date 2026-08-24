@@ -24,11 +24,13 @@ const FADEOUT = preload("res://engine/components/ui/_sounds/fadeout.wav")
 
 var skippable: bool = false
 var has_skipped: bool = false
+var _unpause_skip_block: bool
 
 @onready var _crossfade: bool = SettingsManager.get_tweak("replace_circle_transitions_with_fades", false)
 
 func _ready() -> void:
 	super()
+	Scenes.custom_scenes.pause.unpaused.connect(_on_pause_unpaused)
 	var _trans = TransitionManager.current_transition
 	if _crossfade && is_instance_valid(_trans) && _trans.name == "crossfade_transition":
 		await _trans.end
@@ -50,9 +52,19 @@ func _physics_process(delta: float) -> void:
 
 
 func _cutscene_skip_logic() -> void:
+	if _unpause_skip_block:
+		if Input.is_action_just_pressed("m_jump") || Input.is_action_just_pressed("ui_accept"):
+			return
+		_unpause_skip_block = false
+	if Scenes._pending_scenes.size() > 0:
+		return
 	if Input.is_action_just_pressed("m_jump") || Input.is_action_just_pressed("ui_accept"):
 		skippable = false
 		_start_transition()
+
+
+func _on_pause_unpaused() -> void:
+	_unpause_skip_block = true
 
 
 func end() -> void:

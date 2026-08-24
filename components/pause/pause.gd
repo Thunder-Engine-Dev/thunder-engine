@@ -15,10 +15,12 @@ const open_sound = preload("./sounds/pause_open.wav")
 signal paused
 signal unpaused
 
+var _music_volume_tween: Tween
+
 func _ready() -> void:
 	Scenes.custom_scenes.pause = self
+	Scenes.scene_shortcut_pressed.connect(reset_state)
 	animation_player.play(&"init")
-
 	Scenes.scene_changed.connect(_on_scene_changed)
 
 
@@ -42,15 +44,17 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 
 	opened = !opened
 	if opened:
-		unpaused.emit()
-	else:
 		paused.emit()
+	else:
+		unpaused.emit()
 
 	$'..'.offset = Vector2.ZERO
 
+	if is_instance_valid(_music_volume_tween):
+		_music_volume_tween.kill()
 	var target_volume: float = -20.0 if opened else 0.0
-	var tw = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	tw.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
+	_music_volume_tween = Audio.create_tween().set_ease(Tween.EASE_IN).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	_music_volume_tween.tween_property(Audio, "_target_music_bus_volume_db", target_volume, 0.3)
 
 	if opened:
 		v_box_container.move_selector(0, true)
@@ -72,6 +76,32 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 		await get_tree().physics_frame
 
 	v_box_container.focused = opened
+	options.focused = false
+	controls_options.focused = false
+
+
+func reset_state() -> void:
+	if is_instance_valid(_music_volume_tween):
+		_music_volume_tween.kill()
+		_music_volume_tween = null
+	Audio._target_music_bus_volume_db = 0.0
+
+	if opened:
+		unpaused.emit()
+		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
+			SettingsManager.hide_mouse()
+		get_tree().paused = false
+	
+	if is_instance_valid(autopause_timer_2):
+		Thunder._disconnect(autopause_timer_2.timeout, _autopause_toggle)
+		autopause_timer_2 = null
+	if is_instance_valid(autopause_timer):
+		Thunder._disconnect(autopause_timer.timeout, _autopause_toggle)
+		autopause_timer = null
+	opened = false
+	animation_player.play(&"init")
+	v_box_container.move_selector(0, true)
+	v_box_container.focused = false
 	options.focused = false
 	controls_options.focused = false
 
@@ -133,8 +163,10 @@ func _on_scene_changed(to: Node) -> void:
 	_no_unpause = false
 	if to is Stage2D && SettingsManager.settings.autopause:
 		await Scenes.current_scene.stage_ready
-		if TransitionManager.current_transition:
+		var trans = TransitionManager.current_transition
+		if trans:
 			await TransitionManager.transition_end
-
+			if !is_instance_valid(trans) || trans.cancelled || TransitionManager.current_transition != trans:
+				return
 		if !DisplayServer.window_is_focused():
 			_autopause_toggle()
