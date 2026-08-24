@@ -47,6 +47,7 @@ var values: Dictionary = {
 
 ## Internal values that require preservation between scenes, but don't have to be saved.
 ## If inside "custom_saved_values", then they are saved in the suspended profile.
+## It is adviced not to erase/replace the whole Dictionary. (custom_saved_values can be replaced)
 var technical_values: Dictionary = {
 	impulse_progress_continue = false,
 	remaining_continues = ProjectSettings.get_setting(
@@ -75,8 +76,7 @@ var life_on_hundred_coins: bool = true
 func add_coin(amount: int = 1) -> void:
 	coin_added.emit()
 	values.coins += 1
-	if values.coins > 99:
-		if !life_on_hundred_coins: return
+	if values.coins > 99 && life_on_hundred_coins:
 		values.coins = 0
 		Thunder.add_lives(1)
 		var _sfx = CharacterManager.get_sound_replace(LIFE_SOUND, LIFE_SOUND, "1up", false)
