@@ -27,6 +27,7 @@ var _current_item_index: int = -1
 var _current_item_node: Control = null
 var _immediate: bool
 
+
 ## Handles the selection change, used as a signal handler
 func handle_selection(item_index: int, item_node: Control, immediate: bool, mouse_input: bool = false) -> void:
 	_current_item_index = item_index

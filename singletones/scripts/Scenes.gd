@@ -20,7 +20,15 @@ signal scene_ready
 ## Emitted when loading the scene failed
 signal scene_change_failed
 
+## Emitted when pressing F3 / F4 to navigate to save room or main menu, if such tweak is enabled
+signal scene_shortcut_pressed
+
 var LOADING_SCREEN = load("res://engine/components/loading_screen/loading_screen.tscn")
+
+const _SCENE_SHORTCUT_SAME_COOLDOWN_MSEC := 1000
+const _SCENE_SHORTCUT_SWITCH_COOLDOWN_MSEC := 300
+var _last_scene_shortcut_path: String = ""
+var _last_scene_shortcut_msec: int = 0
 
 # Loaded scene buffer for optimization purpose
 var _current_scene_buffer: PackedScene
@@ -158,3 +166,52 @@ func get_scene_path(scene_path_or_uid: String) -> String:
 	if ResourceUID.has_id(ResourceUID.text_to_id(scene_path_or_uid)):
 		return ResourceUID.get_id_path(ResourceUID.text_to_id(scene_path_or_uid))
 	return scene_path_or_uid
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if !SettingsManager.enable_shortcut_scene_change_keys:
+		return
+	var _path = current_scene.get(&"scene_file_path")
+	if !_path:
+		return
+	if !(event is InputEventKey) || !event.is_pressed() || event.is_echo():
+		return
+	
+	var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
+	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
+	if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false):
+		if !_can_use_scene_shortcut(menu_path):
+			return
+		Data.technical_values._skip_menu_transition = true
+		_goto_scene_from_shortcut(menu_path)
+	elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false):
+		if !_can_use_scene_shortcut(sgr_path):
+			return
+		Data.technical_values.impulse_progress_continue = true
+		_goto_scene_from_shortcut(sgr_path)
+
+
+func _can_use_scene_shortcut(path: String) -> bool:
+	var required: int = (
+		_SCENE_SHORTCUT_SAME_COOLDOWN_MSEC
+		if path == _last_scene_shortcut_path else
+		_SCENE_SHORTCUT_SWITCH_COOLDOWN_MSEC
+	)
+	return Time.get_ticks_msec() - _last_scene_shortcut_msec >= required
+
+
+func _goto_scene_from_shortcut(path: String) -> void:
+	_last_scene_shortcut_path = path
+	_last_scene_shortcut_msec = Time.get_ticks_msec()
+	
+	TransitionManager.clear_transition()
+	Audio.stop_all_sounds()
+	custom_scenes.pause.open_blocked = false
+	Engine.time_scale = SettingsManager.settings.game_speed
+	@warning_ignore("narrowing_conversion")
+	Engine.physics_ticks_per_second = Engine.time_scale * SettingsManager._default_tps
+	
+	scene_shortcut_pressed.emit()
+	
+	goto_scene(path)
+	SettingsManager._process_settings()

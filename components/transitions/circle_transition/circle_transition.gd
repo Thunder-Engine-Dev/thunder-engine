@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 		middle.emit()
 		#print("M: " + str(Time.get_ticks_msec() - aaa))
 		if _is_with_pause:
-			Scenes.scene_ready.connect(_on_scene_ready_after_pause, CONNECT_ONE_SHOT)
+			Thunder._connect(Scenes.scene_ready, _on_scene_ready_after_pause, CONNECT_ONE_SHOT)
 		await get_tree().physics_frame
 		if cancelled || !is_inside_tree():
 			return

@@ -79,10 +79,6 @@ var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 var game_focused: bool = true
 
 var enable_shortcut_scene_change_keys: bool = true
-const _SCENE_SHORTCUT_SAME_COOLDOWN_MSEC := 1000
-const _SCENE_SHORTCUT_SWITCH_COOLDOWN_MSEC := 300
-var _last_scene_shortcut_path: String = ""
-var _last_scene_shortcut_msec: int = 0
 
 ## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows
 var ui_scale: float
@@ -535,44 +531,3 @@ func _input(event: InputEvent) -> void:
 func _hide_mouse() -> void:
 	if mouse_mode != Input.MOUSE_MODE_HIDDEN: return
 	Input.mouse_mode = mouse_mode
-
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	if !enable_shortcut_scene_change_keys:
-		return
-	var _path = Scenes.current_scene.get(&"scene_file_path")
-	if !_path || get_tree().paused:
-		return
-	if !(event is InputEventKey) || !event.is_pressed() || event.is_echo():
-		return
-	
-	var menu_path = ProjectSettings.get_setting("application/thunder_settings/main_menu_path")
-	var sgr_path = ProjectSettings.get_setting("application/thunder_settings/save_game_room_path")
-	if event.keycode == KEY_F4 && SettingsManager.get_tweak("f4_keybind", false):
-		if !_can_use_scene_shortcut(menu_path):
-			return
-		Data.technical_values._skip_menu_transition = true
-		_goto_scene_from_shortcut(menu_path)
-	elif event.keycode == KEY_F3 && SettingsManager.get_tweak("f3_keybind", false):
-		if !_can_use_scene_shortcut(sgr_path):
-			return
-		Data.technical_values.impulse_progress_continue = true
-		_goto_scene_from_shortcut(sgr_path)
-
-
-func _can_use_scene_shortcut(path: String) -> bool:
-	var required: int = (
-		_SCENE_SHORTCUT_SAME_COOLDOWN_MSEC
-		if path == _last_scene_shortcut_path else
-		_SCENE_SHORTCUT_SWITCH_COOLDOWN_MSEC
-	)
-	return Time.get_ticks_msec() - _last_scene_shortcut_msec >= required
-
-
-func _goto_scene_from_shortcut(path: String) -> void:
-	_last_scene_shortcut_path = path
-	_last_scene_shortcut_msec = Time.get_ticks_msec()
-	TransitionManager.clear_transition()
-	Scenes.custom_scenes.pause.open_blocked = false
-	Scenes.goto_scene(path)
-	_process_settings()
