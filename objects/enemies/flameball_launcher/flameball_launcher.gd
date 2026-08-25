@@ -18,13 +18,18 @@ var _counter: float
 @onready var timer_interval: Timer = $Interval
 @onready var timer_interval_sound: Timer = $IntervalSound
 @onready var pos_flameball: Marker2D = $PosFlameball
+@onready var vis_enabler: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
 
 
 func _ready() -> void:
 	timer_interval.start(initial_interval)
+	vis_enabler.screen_exited.connect(_stop_burst)
 
 
 func _on_interval_timeout() -> void:
+	if !_is_muzzle_on_screen():
+		timer_interval.start(interval)
+		return
 	_amount = amount
 	Thunder._connect(flame_launched, _on_interval_flame_timeout)
 
@@ -34,7 +39,21 @@ func _physics_process(delta: float) -> void:
 		_counter -= flame_interval
 		flame_launched.emit()
 
+func _is_muzzle_on_screen() -> bool:
+	# Vis rect is larger than the muzzle, so autoscroll can keep us active after the head has left.
+	return Thunder.view.is_getting_closer(pos_flameball, 0)
+
+func _stop_burst() -> void:
+	var was_bursting := flame_launched.is_connected(_on_interval_flame_timeout)
+	Thunder._disconnect(flame_launched, _on_interval_flame_timeout)
+	timer_interval_sound.stop()
+	if was_bursting:
+		timer_interval.start(interval)
+
 func _on_interval_flame_timeout() -> void:
+	if !_is_muzzle_on_screen():
+		_stop_burst()
+		return
 	_amount -= 1
 	var _flameball = NodeCreator.prepare_ins_2d(flameball, pos_flameball).bind_global_transform().call_method(
 		func(ball: Node2D) -> void:
@@ -47,9 +66,7 @@ func _on_interval_flame_timeout() -> void:
 	Thunder.reorder_on_top_of.call_deferred(_flameball, self)
 	
 	if _amount <= 0:
-		timer_interval.start(interval)
-		Thunder._disconnect(flame_launched, _on_interval_flame_timeout)
-		timer_interval_sound.stop()
+		_stop_burst()
 		return
 	if timer_interval_sound.is_stopped():
 		timer_interval_sound.start(0.2)
