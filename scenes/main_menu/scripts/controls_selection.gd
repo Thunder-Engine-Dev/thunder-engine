@@ -65,38 +65,27 @@ func _text_process() -> void:
 		or_string.visible = false
 		return
 
-	if _device_check(["xbox", "xinput"]):
-		_gamepad_icon_logic(
-			preload("res://engine/scenes/main_menu/textures/gamepad_icons/xbox_icons.png"),
-			15
-		)
-	elif _device_check(["ps3", "ps4", "ps5", "dualshock", "playstation 3", "playstation 4", "playstation 5"]):
-		_gamepad_icon_logic(
-			preload("res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png"),
-			20,
-			[-1, 5, 16, 17, 18, 19, 48, 50]
-		)
-	#elif _device_check(["nintendo switch"]):
-	#	_gamepad_icon_logic(
-	#		preload("res://engine/scenes/main_menu/textures/gamepad_icons/switch_icons.png"),
-	#		15
-	#	)
-	else:
-		icon.visible = false
-		icon_2.visible = false
-		or_string.visible = false
-		var _action_arr: Array = SettingsManager.settings.controls_joypad.get(action_name)
-		for i in len(_action_arr):
-			_action_arr[i] = int(_action_arr[i])
-		var _action_str: String = " / ".join(_action_arr)
-		value.text = "Joy " + _action_str
-
-
-func _device_check(arr: Array[String]) -> bool:
-	for i in len(arr):
-		if arr[i] in SettingsManager.device_name.to_lower():
-			return true
-	return false
+	match SettingsManager.get_gamepad_hint():
+		"xbox":
+			_gamepad_icon_logic(
+				preload("res://engine/scenes/main_menu/textures/gamepad_icons/xbox_icons.png"),
+				15
+			)
+		"playstation":
+			_gamepad_icon_logic(
+				preload("res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png"),
+				20,
+				[-1, 5, 16, 17, 18, 19, 48, 50]
+			)
+		_:
+			icon.visible = false
+			icon_2.visible = false
+			or_string.visible = false
+			var _action_arr: Array = SettingsManager.settings.controls_joypad.get(action_name)
+			for i in len(_action_arr):
+				_action_arr[i] = int(_action_arr[i])
+			var _action_str: String = " / ".join(_action_arr)
+			value.text = "Joy " + _action_str
 
 
 func _gamepad_icon_logic(texture: Texture2D, max_icons: int = 15, icon_exceptions: Array = [-1, 48, 50]) -> void:

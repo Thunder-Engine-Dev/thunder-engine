@@ -202,6 +202,16 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 #endregion
 
 
+#func get_input_rich_text(action: String) -> String:
+
+func joy_vibrate(duration_sec: float, weak: float, strong: float):
+	var intensity: float = float(SettingsManager.settings.get("vibration", 1.0))
+	if intensity <= 0.001:
+		return
+	
+	Input.start_joy_vibration(0, weak * intensity, strong * intensity, duration_sec)
+
+
 ## == SUBSINGLETONS ==
 
 

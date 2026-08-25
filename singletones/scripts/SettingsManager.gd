@@ -64,6 +64,8 @@ var default_settings: Dictionary = {
 	},
 	"character": ProjectSettings.get_setting("application/thunder_settings/default_character_setting", "Mario"),
 	"skin": "",
+	"vibration": 1.0,
+	"gamepad_hint": "",
 	"custom": {},
 }
 
@@ -139,6 +141,14 @@ func set_tweak(tweak_name: String, value: Variant) -> void:
 	tweaks[tweak_name] = value
 	tweaks_updated.emit()
 
+## Updates one tweak in memory and writes only that key to the tweaks file
+func save_tweak_independently(tweak_name: String, value: Variant) -> void:
+	set_tweak(tweak_name, value)
+	var disk_tweaks: Dictionary = load_data(tweaks_path, "Tweaks")
+	disk_tweaks[tweak_name] = value
+	save_data(disk_tweaks, tweaks_path, "Tweaks")
+	print("[Settings Manager] Saved tweak '%s' independently." % tweak_name)
+
 ## Returns a project-specific custom setting from settings variable
 func get_custom_setting(setting: String, default_value: Variant = null) -> Variant:
 	if setting in settings.custom:
@@ -149,6 +159,35 @@ func get_custom_setting(setting: String, default_value: Variant = null) -> Varia
 ## Sets a project-specific custom setting to a new value
 func set_custom_setting(setting: String, value: Variant = null) -> void:
 	settings.custom[setting] = value
+
+
+const GAMEPAD_HINT_XBOX: PackedStringArray = [
+	"xbox", "xinput",
+]
+const GAMEPAD_HINT_PLAYSTATION: PackedStringArray = [
+	"ps3", "ps4", "ps5",
+	"dualshock", "dualsense",
+	"playstation 3", "playstation 4", "playstation 5",
+]
+const GAMEPAD_HINT_OPTIONS: PackedStringArray = [
+	"xbox", "playstation", "raw",
+]
+
+
+## Returns the active gamepad icon style: "xbox", "playstation", or "raw".
+## An empty setting falls back to detecting the connected device.
+func get_gamepad_hint() -> String:
+	var hint := str(settings.get("gamepad_hint", ""))
+	if hint in GAMEPAD_HINT_OPTIONS:
+		return hint
+	var joy_name := device_name.to_lower()
+	for token in GAMEPAD_HINT_XBOX:
+		if token in joy_name:
+			return "xbox"
+	for token in GAMEPAD_HINT_PLAYSTATION:
+		if token in joy_name:
+			return "playstation"
+	return "raw"
 
 
 func _check_for_validity() -> void:

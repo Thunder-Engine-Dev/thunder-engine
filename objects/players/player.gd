@@ -195,6 +195,7 @@ func _ready() -> void:
 	add_to_group(&"#lava_body")
 	
 	Thunder._connect(SettingsManager.settings_updated, _on_settings_updated)
+	Thunder._connect(SettingsManager.tweaks_updated, _on_tweaks_updated)
 	_on_settings_updated.call_deferred()
 
 	if !is_starman():
@@ -498,3 +499,7 @@ func _on_starman_killed(what: Node, result: Dictionary) -> void:
 
 func _on_settings_updated() -> void:
 	skid.visible = SettingsManager.get_quality() != SettingsManager.QUALITY.MIN
+
+
+func _on_tweaks_updated() -> void:
+	_autorun_tweak = SettingsManager.get_tweak("autorun", false)

@@ -10,7 +10,7 @@ const open_sound = preload("./sounds/pause_open.wav")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var v_box_container: MenuItemsController = $VBoxContainer
 @onready var options: MenuItemsController = $"../Settings/SubViewportContainer/SubViewport/Options"
-@onready var controls_options: MenuItemsController = $"../Controls/SubViewportContainer/SubViewport/Options"
+@onready var controls_scene: Control = $"../Controls"
 
 signal paused
 signal unpaused
@@ -77,7 +77,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 
 	v_box_container.focused = opened
 	options.focused = false
-	controls_options.focused = false
+	controls_scene.unfocus_all_menus()
 
 
 func reset_state() -> void:
@@ -103,7 +103,7 @@ func reset_state() -> void:
 	v_box_container.move_selector(0, true)
 	v_box_container.focused = false
 	options.focused = false
-	controls_options.focused = false
+	controls_scene.reset_menus()
 
 
 func _physics_process(delta: float) -> void:

@@ -276,7 +276,7 @@ stretch_mode = 2
 [node name="Value" parent="SubViewportContainer/SubViewport/Options/Master" unique_id=1378570004 instance=ExtResource("5_rjuej")]
 layout_mode = 2
 size_flags_horizontal = 10
-size_flags_vertical = 1
+size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Sound" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=731136513]
@@ -296,7 +296,7 @@ stretch_mode = 2
 [node name="Value" parent="SubViewportContainer/SubViewport/Options/Sound" unique_id=299277531 instance=ExtResource("5_rjuej")]
 layout_mode = 2
 size_flags_horizontal = 10
-size_flags_vertical = 1
+size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Music" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=926895318]
@@ -316,7 +316,7 @@ stretch_mode = 2
 [node name="Value" parent="SubViewportContainer/SubViewport/Options/Music" unique_id=1951327019 instance=ExtResource("5_rjuej")]
 layout_mode = 2
 size_flags_horizontal = 10
-size_flags_vertical = 1
+size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Controls" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=176011520]
