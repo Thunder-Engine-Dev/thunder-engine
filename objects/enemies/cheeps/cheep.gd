@@ -22,6 +22,8 @@ enum Type {
 				collision_shape.set_deferred(&"disabled", false)
 			Type.TRACK:
 				speed = Vector2.ZERO
+				if turn_sprite && is_instance_valid(sprite_node):
+					sprite_node.flip_h = bool(randi_range(0, 1))
 				interval.start(tracking_interval)
 			Type.LEAP:
 				gravity_scale = leaping_gravity_scale
@@ -50,9 +52,7 @@ enum Type {
 @export_group("Cheep Leaping", "leaping_")
 @export var leaping_gravity_scale: float = 0.2
 
-var is_spawned: bool:
-	set(to):
-		is_spawned = to
+var is_spawned: bool
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var swim_x: ShapeCast2D = $SwimX

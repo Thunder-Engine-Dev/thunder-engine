@@ -46,6 +46,7 @@ animations = [{
 type = 3
 always_unstompable = true
 tracking_speed = 56.25
+turn_sprite_force_on_zero_speed = false
 metadata/_edit_pinned_properties_ = [&"type", &"always_unstompable"]
 
 [node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1945428) index="1" unique_id=1316147869]
