@@ -13,6 +13,7 @@ class_name GeneralMovementBody2D
 ## When enabled, toggles the referenced sprite's [code]flip_h[/code] property when changing directions
 ## accordingly.
 @export var turn_sprite: bool = true
+@export var turn_sprite_force_on_zero_speed: bool = true
 ## When [code]true[/code], moving on slopes upwards retains the diagonal speed, making slopes act as "bounce pads".
 @export var slide: bool
 ## How many seconds the enemy should live. When elapsed, disappears off-screen. 0 to disable.
@@ -48,16 +49,12 @@ func _ready() -> void:
 	elif look_at_player && Thunder._current_player:
 		update_dir.call_deferred()
 		speed_to_dir.call_deferred()
-	
-	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
-		sprite_node.flip_h = speed.x < 0
+	_update_sprite_flip()
 
 
 func _physics_process(delta: float) -> void:
 	motion_process(delta, slide)
-	
-	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
-		sprite_node.flip_h = speed.x < 0
+	_update_sprite_flip()
 
 
 func update_dir() -> void:
@@ -78,8 +75,7 @@ func stopwatch_pause(from_stopwatch: bool = false) -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 	if has_node(^"Body"):
 		get_node(^"Body").process_mode = Node.PROCESS_MODE_ALWAYS
-	if turn_sprite && sprite_node && is_instance_valid(sprite_node):
-		sprite_node.flip_h = speed.x < 0
+	_update_sprite_flip()
 
 
 func stopwatch_unpause(from_stopwatch: bool = false) -> void:
@@ -103,3 +99,9 @@ func _life_time_ended() -> void:
 		return
 	Thunder._connect(vis_enabler_node.screen_exited, queue_free, CONNECT_ONE_SHOT)
 	print_verbose("[GMBody2D] %s: queued to free on screen exit" % [name])
+
+
+func _update_sprite_flip() -> void:
+	if turn_sprite && is_instance_valid(sprite_node):
+		if turn_sprite_force_on_zero_speed || !is_zero_approx(speed.x):
+			sprite_node.flip_h = speed.x < 0
