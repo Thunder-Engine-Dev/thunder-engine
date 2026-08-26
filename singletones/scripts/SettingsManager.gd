@@ -64,7 +64,7 @@ var default_settings: Dictionary = {
 	},
 	"character": ProjectSettings.get_setting("application/thunder_settings/default_character_setting", "Mario"),
 	"skin": "",
-	"vibration": 1.0,
+	"vibration": 0.0,
 	"gamepad_hint": "",
 	"custom": {},
 }
@@ -75,7 +75,12 @@ var request_restart: bool = false
 
 var tweaks: Dictionary = {}
 
-var device_keyboard: bool = true
+var device_keyboard: bool = true:
+	set(value):
+		if device_keyboard == value:
+			return
+		device_keyboard = value
+		device_changed.emit(value)
 var device_name: String = ""
 var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_HIDDEN
 var game_focused: bool = true
@@ -88,6 +93,8 @@ var ui_scale: float
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
 signal mouse_moved()
+signal device_changed(is_keyboard: bool)
+signal gamepad_disconnected
 
 signal settings_updated
 signal settings_saved
@@ -110,6 +117,7 @@ func _ready() -> void:
 	load_tweaks()
 	device_name = Input.get_joy_name(0)
 	device_keyboard = device_name.is_empty()
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	add_child(_mouse_timer)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if get_tweak("custom_mouse_cursor", false):
@@ -188,6 +196,15 @@ func get_gamepad_hint() -> String:
 		if token in joy_name:
 			return "playstation"
 	return "raw"
+
+
+func _on_joy_connection_changed(_device: int, connected: bool) -> void:
+	var was_using_gamepad := !device_keyboard
+	device_name = Input.get_joy_name(0)
+	if device_name.is_empty():
+		device_keyboard = true
+		if was_using_gamepad && !connected:
+			gamepad_disconnected.emit()
 
 
 func _check_for_validity() -> void:

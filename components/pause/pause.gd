@@ -22,6 +22,7 @@ func _ready() -> void:
 	Scenes.scene_shortcut_pressed.connect(reset_state)
 	animation_player.play(&"init")
 	Scenes.scene_changed.connect(_on_scene_changed)
+	Thunder._connect(SettingsManager.gamepad_disconnected, _try_autopause)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -116,13 +117,7 @@ var autopause_timer_2: SceneTreeTimer
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		if !_can_autopause(): return
-		if DisplayServer.window_can_draw() && !SettingsManager.settings.get("autopause", true): return
-		if is_instance_valid(autopause_timer):
-			Thunder._disconnect(autopause_timer.timeout, _autopause_toggle)
-		autopause_timer = null
-		autopause_timer = get_tree().create_timer(0.2)
-		Thunder._connect(autopause_timer.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
+		_try_autopause()
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		await get_tree().physics_frame
 		if DisplayServer.window_can_draw():
@@ -136,6 +131,16 @@ func _notification(what: int) -> void:
 		autopause_timer_2 = null
 		autopause_timer_2 = get_tree().create_timer(0.2)
 		Thunder._connect(autopause_timer_2.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
+
+
+func _try_autopause() -> void:
+	if !_can_autopause(): return
+	if DisplayServer.window_can_draw() && !SettingsManager.settings.get("autopause", true): return
+	if is_instance_valid(autopause_timer):
+		Thunder._disconnect(autopause_timer.timeout, _autopause_toggle)
+	autopause_timer = null
+	autopause_timer = get_tree().create_timer(0.2)
+	Thunder._connect(autopause_timer.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
 
 
 func _autopause_toggle() -> void:
