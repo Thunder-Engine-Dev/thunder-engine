@@ -18,6 +18,8 @@ var mouse_hovered: bool = false
 @export var trigger_action: StringName = "ui_accept"
 ## Mouse input is passed
 @export var trigger_mouse: bool = true
+## If true, [MenuItemsController] skips this item when navigating, and it cannot be activated
+@export var disabled: bool = false
 
 ## Focus handler
 func _handle_focused(focus: bool) -> void:
@@ -43,7 +45,7 @@ func _play_sound() -> void:
 		Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 
 func _physics_process(delta: float) -> void:
-	if !focused || !get_parent().focused: return
+	if disabled || !focused || !get_parent().focused: return
 	if !get_window().has_focus(): return
 
 	if Input.is_action_just_pressed(trigger_action):

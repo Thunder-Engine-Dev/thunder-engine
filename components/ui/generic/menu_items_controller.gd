@@ -37,6 +37,7 @@ func _ready() -> void:
 	Thunder._connect(SettingsManager.mouse_moved, _on_mouse_moved)
 	#SettingsManager.mouse_released.connect(_on_mouse_released)
 
+	_skip_disabled_current_item()
 	if trigger_selection_immediately:
 		selected.emit(current_item_index, selectors[current_item_index], true, false)
 		selectors[current_item_index]._handle_focused(true)
@@ -62,15 +63,12 @@ func _input(event: InputEvent) -> void:
 		else:
 			selector_repeat_timer = 0.06
 	
-	var sel = current_item_index
 	if event.is_action_pressed(control_forward, true):
-		current_item_index = 0 if sel + 1 > selectors.size() - 1 else current_item_index + 1
-		_selection(false, event.is_echo())
+		_step_selection(1, event.is_echo())
 		return
 
 	if event.is_action_pressed(control_backward, true):
-		current_item_index = selectors.size() - 1 if sel - 1 < 0 else current_item_index - 1
-		_selection(false, event.is_echo())
+		_step_selection(-1, event.is_echo())
 		return
 
 
@@ -87,6 +85,46 @@ func _update_selectors() -> void:
 		if child.is_queued_for_deletion():
 			continue
 		selectors.push_back(child)
+
+
+func _item_selectable(item: Variant) -> bool:
+	if !is_instance_valid(item):
+		return false
+	if item is MenuSelection && item.disabled:
+		return false
+	return true
+
+
+func _skip_disabled_current_item() -> void:
+	if selectors.is_empty():
+		return
+	if current_item_index < 0 || current_item_index >= selectors.size():
+		current_item_index = 0
+	if _item_selectable(selectors[current_item_index]):
+		return
+	var next := _find_selectable(current_item_index, 1)
+	if next >= 0:
+		current_item_index = next
+
+
+func _find_selectable(from: int, direction: int) -> int:
+	var count := selectors.size()
+	if count <= 0:
+		return -1
+	var next := from
+	for i in count:
+		next = wrapi(next + direction, 0, count)
+		if _item_selectable(selectors[next]):
+			return next
+	return -1
+
+
+func _step_selection(direction: int, is_echo: bool) -> void:
+	var next := _find_selectable(current_item_index, direction)
+	if next < 0:
+		return
+	current_item_index = next
+	_selection(false, is_echo)
 
 
 func _selection(_mouse_input: bool = false, is_echo: bool = false) -> void:
@@ -140,6 +178,7 @@ func _on_mouse_pressed(index: MouseButton) -> void:
 	for item in selectors:
 		if !is_instance_valid(item): continue
 		if !item is Control: continue
+		if !_item_selectable(item): continue
 		if item.mouse_hovered && item.trigger_mouse:
 			if index == MOUSE_BUTTON_LEFT:
 				item._handle_select(true)
@@ -154,6 +193,9 @@ func _on_mouse_moved() -> void:
 		if !is_instance_valid(item): continue
 		if !item is Control: continue
 		if item.get_global_rect().has_point(item.get_global_mouse_position()):
+			if !_item_selectable(item):
+				item.mouse_hovered = false
+				continue
 			if item.mouse_hovered == false:
 				item.mouse_hovered = true
 				current_item_index = selectors.find(item)
