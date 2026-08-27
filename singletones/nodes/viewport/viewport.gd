@@ -6,6 +6,8 @@ extends Control
 
 @onready var keep_aspect: bool = ProjectSettings.get("display/window/stretch/aspect") == "keep" 
 
+signal view_updated
+
 func _ready() -> void:
 	resized.connect(_on_window_resized)
 	#_update_sound_function()
@@ -48,6 +50,7 @@ func _update_view() -> void:
 		container.position.y = (window_size.y / 2.0) - (vp.size.y * container.scale.y / 2)
 	
 	_update_sound_function()
+	view_updated.emit()
 
 
 func _update_sound_function() -> void:

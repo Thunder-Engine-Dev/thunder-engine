@@ -335,7 +335,7 @@ script = ExtResource("20_r3d2l")
 process_mode = 3
 hide_bg = true
 
-[node name="Back" parent="Controls/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(458045212, 1780989432) index="6" unique_id=1822349734]
+[node name="Back" parent="Controls/SubViewportContainer/SubViewport/Options" parent_id_path=PackedInt32Array(458045212, 1780989432) index="7" unique_id=1822349734]
 script = ExtResource("22_rhyed")
 
 [connection signal="selected" from="Pause/VBoxContainer" to="Pause/Selector" method="handle_selection"]
