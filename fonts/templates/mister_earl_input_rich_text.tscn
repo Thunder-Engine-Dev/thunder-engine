@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://daeak20xtro33"]
+
+[ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="1_dtmji"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="2_irtl"]
+
+[node name="LabelMisterEarl" type="RichTextLabel" unique_id=914191917]
+clip_contents = false
+offset_right = 98.0
+offset_bottom = 16.0
+texture_filter = 1
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0.368627, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("1_dtmji")
+theme_override_font_sizes/normal_font_size = 21
+bbcode_enabled = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("2_irtl")
+keyboard_as_button = true
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"

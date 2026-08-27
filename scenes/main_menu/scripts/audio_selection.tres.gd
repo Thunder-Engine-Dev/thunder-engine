@@ -64,7 +64,7 @@ func _toggled_option(old_val, new_val) -> void:
 	Audio.play_1d_sound(_sfx, true, { "ignore_pause": true, "bus": "1D Sound" })
 	SettingsManager._process_settings()
 	if type == "vibration":
-		Thunder.joy_vibrate(0.2, 1.0, 1.0)
+		Thunder.input.joy_vibrate(0.2, 1.0, 1.0)
 	
 
 func _on_mouse_released(index: MouseButton) -> void:

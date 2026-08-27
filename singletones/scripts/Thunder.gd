@@ -8,6 +8,8 @@ extends Node
 
 ## Used to get access to [Thunder.View] subsingleton
 var view: View = View.new() # View subsingleton
+## Used to get access to [Thunder.InputDisplay] subsingleton
+var input: InputDisplay = InputDisplay.new()
 ## Used to get access to [Thunder.RNG] subsingleton
 var rng: RNG = RNG.new()
 ## Used to get access to [Thunder.AutoSplitter] class
@@ -202,17 +204,153 @@ func reorder_on_top_of(node: Node, target: Node) -> void:
 #endregion
 
 
-#func get_input_rich_text(action: String) -> String:
-
-func joy_vibrate(duration_sec: float, weak: float, strong: float):
-	var intensity: float = float(SettingsManager.settings.get("vibration", 1.0))
-	if intensity <= 0.001:
-		return
-	
-	Input.start_joy_vibration(0, weak * intensity, strong * intensity, duration_sec)
-
-
 ## == SUBSINGLETONS ==
+
+
+## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] for input display helpers and gamepad vibration
+class InputDisplay:
+	const GAMEPAD_ICONS_XBOX := preload("res://engine/scenes/main_menu/textures/gamepad_icons/xbox_icons.png")
+	const GAMEPAD_ICONS_PLAYSTATION := preload("res://engine/scenes/main_menu/textures/gamepad_icons/ps_icons.png")
+	const GAMEPAD_ICON_CELL := 32
+	const GAMEPAD_ICON_COLUMNS := 10
+	const GAMEPAD_ICON_SHEET_WIDTH := 320
+
+	var _input_token_regex: RegEx
+
+	## Returns BBCode for the currently bound input of [param action], ready to drop into a [RichTextLabel].[br]
+	## Keyboard uses the configured key name. Gamepad uses spritesheet icons when the hint style is
+	## [code]xbox[/code] or [code]playstation[/code], otherwise [code]Joy N[/code].
+	func get_input_rich_text(action: StringName, separator: String = " / ", icon_height: String = "1em") -> String:
+		if SettingsManager.device_keyboard:
+			return _get_keyboard_input_text(action)
+		return get_joy_input_rich_text(action, separator, icon_height)
+
+
+	## Same as [method get_input_rich_text], but always uses the joypad bindings from settings.
+	func get_joy_input_rich_text(action: StringName, separator: String = " / ", icon_height: String = "1em") -> String:
+		var indices: Array = SettingsManager.settings.controls_joypad.get(str(action), [])
+		if indices.is_empty():
+			return "<NOT SET>"
+		
+		var parts: PackedStringArray = []
+		var shown: int = 0
+		for joy_index in indices:
+			if shown >= 2:
+				break
+			parts.append(get_joy_icon_bbcode(int(joy_index), icon_height))
+			shown += 1
+		return separator.join(parts)
+
+
+	## Keyboard key name or [code]Joy N[/code] listing. For regular [Label]s that cannot show icons.
+	func get_input_plain_text(action: StringName, separator: String = " / ") -> String:
+		if SettingsManager.device_keyboard:
+			return _get_keyboard_input_text(action)
+		
+		var indices: Array = SettingsManager.settings.controls_joypad.get(str(action), [])
+		if indices.is_empty():
+			return "<NOT SET>"
+		
+		var parts: PackedStringArray = []
+		var shown: int = 0
+		for joy_index in indices:
+			if shown >= 2:
+				break
+			var idx := int(joy_index)
+			parts.append("Joy Unknown" if idx == -1 else "Joy %d" % idx)
+			shown += 1
+		return separator.join(parts)
+
+
+	## Returns BBCode for a single joypad index using the current gamepad hint spritesheet.[br]
+	## Falls back to [code]Joy N[/code] when the hint is [code]raw[/code] or the index has no icon.
+	func get_joy_icon_bbcode(joy_index: int, icon_size: String = "1em") -> String:
+		if joy_index == -1:
+			return "Joy Unknown"
+		if !_has_gamepad_icon(joy_index):
+			return "Joy %d" % joy_index
+		
+		var tex := get_gamepad_icon_texture()
+		var region := get_joy_icon_region(joy_index)
+		# Width and height must both be set. Height-only uses the full sheet aspect ratio,
+		# which shrinks a 32×32 region to a sliver of the line height.
+		return "[img width=%s height=%s region=%d,%d,%d,%d]%s[/img]" % [
+			icon_size, icon_size,
+			region.position.x, region.position.y,
+			region.size.x, region.size.y,
+			tex.resource_path,
+		]
+
+
+	## Replaces [code]{action}[/code] tokens (e.g. [code]{m_jump}[/code]) with [method get_input_rich_text].
+	func format_input_rich_text(template: String, separator: String = " / ", icon_height: String = "1em") -> String:
+		if _input_token_regex == null:
+			_input_token_regex = RegEx.create_from_string("\\{([A-Za-z0-9_]+)\\}")
+		
+		var result := template
+		var seen: Dictionary = {}
+		for matched in _input_token_regex.search_all(template):
+			var action := matched.get_string(1)
+			if action in seen:
+				continue
+			seen[action] = true
+			if (
+				!InputMap.has_action(action)
+				&& !SettingsManager.settings.controls.has(action)
+				&& !SettingsManager.settings.controls_joypad.has(action)
+			):
+				continue
+			result = result.replace("{%s}" % action, get_input_rich_text(action, separator, icon_height))
+		return result
+
+
+	## Spritesheet for the current gamepad hint, or [code]null[/code] when using raw joy indices.
+	func get_gamepad_icon_texture() -> Texture2D:
+		match SettingsManager.get_gamepad_hint():
+			"xbox":
+				return GAMEPAD_ICONS_XBOX
+			"playstation":
+				return GAMEPAD_ICONS_PLAYSTATION
+			_:
+				return null
+
+
+	## Atlas cell for [param joy_index] on the 32×32, 10-column gamepad icon sheets.
+	func get_joy_icon_region(joy_index: int) -> Rect2:
+		return Rect2(
+			wrapi(joy_index * GAMEPAD_ICON_CELL, 0, GAMEPAD_ICON_SHEET_WIDTH),
+			floori(joy_index / float(GAMEPAD_ICON_COLUMNS)) * GAMEPAD_ICON_CELL,
+			GAMEPAD_ICON_CELL,
+			GAMEPAD_ICON_CELL
+		)
+
+
+	func _get_keyboard_input_text(action: StringName) -> String:
+		var stored: Variant = SettingsManager.settings.controls.get(str(action), "")
+		if stored is String && !stored.is_empty():
+			return stored
+		return SettingsManager.get_key_label(str(action))
+
+
+	func _has_gamepad_icon(joy_index: int) -> bool:
+		var hint := SettingsManager.get_gamepad_hint()
+		if hint != "xbox" && hint != "playstation":
+			return false
+		var max_icons := 20 if hint == "playstation" else 15
+		var exceptions: Array = [-1, 5, 16, 17, 18, 19, 48, 50] if hint == "playstation" else [-1, 48, 50]
+		return !(
+			(joy_index > max_icons && joy_index < 40)
+			|| joy_index > 51
+			|| joy_index in exceptions
+		)
+
+
+	func joy_vibrate(duration_sec: float, weak: float, strong: float):
+		var intensity: float = float(SettingsManager.settings.get("vibration", 0.0))
+		if intensity <= 0.001:
+			return
+		
+		Input.start_joy_vibration(0, weak * intensity, strong * intensity, duration_sec)
 
 
 ## Subsingleton of ["engine/singletones/scripts/Thunder.gd"] to majorly manage functions related to screen borders and the detection of them

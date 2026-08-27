@@ -1,25 +1,25 @@
 extends Label
+## DEPRECATED
+## Formats a single [code]%s[/code] in [member text] with the current binding.[br]
+## Prefer [InputRichTextLabel] for new UI — it supports multiple actions and gamepad icons.
 
 @export var action: String = "m_jump"
 @onready var _template: String = text
 
 func _ready() -> void:
+	Thunder._connect(SettingsManager.settings_saved, update_text)
+	Thunder._connect(SettingsManager.settings_updated, update_text)
+	Thunder._connect(SettingsManager.settings_loaded, update_text)
+	Thunder._connect(SettingsManager.device_changed, update_text.unbind(1))
+	Thunder._connect(Input.joy_connection_changed, update_text.unbind(2))
 	update_text()
-	SettingsManager.settings_saved.connect(update_text)
 
 
 func update_text() -> void:
-	var _events: Array[InputEvent] = InputMap.action_get_events(action)
-	var _event: String = "buttons on keyboard"
-	var _temp: String
-	for i in _events:
-		if i is InputEventKey:
-			_temp = i.as_text().get_slice(' (', 0) + ' button'
-			#if SettingsManager.device_keyboard:
-			_event = _temp
-			break
-		#elif i is InputEventJoypadButton:
-		#	_temp = "Joy " + str(i.button_index)
-		if _temp: _event = _temp
+	if !"%s" in _template:
+		return
 	
-	text = _template % [_event]
+	var _event := Thunder.input.get_input_plain_text(action)
+	if SettingsManager.device_keyboard && !_event.to_lower().ends_with("button"):
+		_event += " button"
+	text = _template.replace("%s", _event)

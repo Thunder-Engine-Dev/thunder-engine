@@ -347,11 +347,13 @@ texture = SubResource("AtlasTexture_61oy2")
 stretch_mode = 2
 
 [node name="Vibration" type="HBoxContainer" parent="SubViewportContainer/SubViewport/Options" unique_id=1938883981]
+visible = false
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("6_vib")
 type = "vibration"
+disabled = true
 
 [node name="Text" type="TextureRect" parent="SubViewportContainer/SubViewport/Options/Vibration" unique_id=751603634]
 layout_mode = 2
