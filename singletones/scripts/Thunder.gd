@@ -274,7 +274,7 @@ class InputDisplay:
 		var region := get_joy_icon_region(joy_index)
 		# Width and height must both be set. Height-only uses the full sheet aspect ratio,
 		# which shrinks a 32×32 region to a sliver of the line height.
-		return "[img width=%s height=%s region=%d,%d,%d,%d]%s[/img]" % [
+		return "[img width=%s height=%s region=%d,%d,%d,%d align=center]%s[/img]" % [
 			icon_size, icon_size,
 			region.position.x, region.position.y,
 			region.size.x, region.size.y,

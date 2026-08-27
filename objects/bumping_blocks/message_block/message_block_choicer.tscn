@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://cnljy5svxs637" path="res://engine/objects/bumping_blocks/message_block/hsv.gdshader" id="2_h62d5"]
 [ext_resource type="FontVariation" uid="uid://4h0cbbutybo2" path="res://engine/fonts/font_variations/mister_earl_variation.tres" id="3_yw6ft"]
 [ext_resource type="FontFile" uid="uid://dod5x6pna7fub" path="res://engine/fonts/comix_heavy.ttf" id="4_gsgqq"]
+[ext_resource type="Script" uid="uid://b3j5nkqkpkikr" path="res://engine/scripts/nodes/ui/input_rich_text_label.gd" id="5_irtl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ouvlt"]
 font = ExtResource("3_yw6ft")
@@ -64,6 +65,12 @@ uppercase = true
 [node name="Text2" parent="CanvasLayer/Box/Texture" index="2" unique_id=1544713833]
 offset_top = 2.0
 offset_bottom = 43.0
-theme_override_font_sizes/font_size = 16
-text = "PRESS %s TO ACCEPT
-PRESS %s TO CANCEL"
+grow_vertical = 1
+theme_override_font_sizes/normal_font_size = 16
+text = "PRESS {ui_accept} TO ACCEPT
+PRESS {ui_cancel} TO CANCEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_irtl")
+uppercase = true
+metadata/_custom_type_script = "uid://b3j5nkqkpkikr"
