@@ -9,8 +9,8 @@ variation_embolden = -0.2
 variation_transform = Transform2D(0.85, 0, 0, 0.85, 0, 0)
 spacing_glyph = -2
 spacing_space = -1
-spacing_top = -10
-spacing_bottom = -8
+spacing_top = -12
+spacing_bottom = -11
 
 [resource]
 fallbacks = Array[Font]([SubResource("FontVariation_2d3i5")])
