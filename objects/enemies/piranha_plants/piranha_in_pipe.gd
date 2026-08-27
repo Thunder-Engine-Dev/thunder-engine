@@ -4,7 +4,7 @@ extends Node2D
 @export var range_in_pipe: float = 80.0
 @export var stay_in_interval: float = 1.0
 @export var stay_out_interval: float = 1.0
-@export var stretching_speed: float = 41.67
+@export var stretching_speed: float = 50.0
 @export var stretching_length: float = 60.0
 @export var custom_vars: Dictionary
 @export var custom_script: Script
