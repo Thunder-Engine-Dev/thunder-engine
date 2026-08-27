@@ -15,8 +15,8 @@ func _handle_select(mouse_input: bool = false) -> void:
 
 	if cancel_erase:
 		var tw = create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
-		tw.tween_property(game_paused_2, "modulate:a", 1.0, 0.5).set_ease(Tween.EASE_IN)
-		tw.tween_property(progress_clearing, "modulate:a", 0.0, 0.5).set_ease(Tween.EASE_OUT)
+		tw.tween_property(game_paused_2, "modulate:a", 1.0, 0.25).set_ease(Tween.EASE_IN)
+		tw.tween_property(progress_clearing, "modulate:a", 0.0, 0.25).set_ease(Tween.EASE_OUT)
 		v_box_container_2.focused = false
 		progress_continue.v_box_container.visible = true
 		v_box_container_2.visible = false
