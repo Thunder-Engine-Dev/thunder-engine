@@ -11,9 +11,9 @@ const tweaks_path = "user://tweaks.thss"
 var custom_file_paths: Dictionary = {}
 
 var default_settings: Dictionary = {
-	"master": 1.0,
-	"sound": 0.5,
-	"music": 0.5,
+	"master": 0.5,
+	"sound": 1.0,
+	"music": 1.0,
 	"quality": ProjectSettings.get_setting("application/thunder_settings/default_quality_setting", QUALITY.MAX),
 	"game_speed": 1,
 	"autopause": true,
