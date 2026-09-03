@@ -523,7 +523,7 @@ func _head_process() -> void:
 		
 		# Bumpable Block
 		if !player._crouch_jump_tweak && player.is_crouching && player.is_on_floor() && \
-			collider is StaticBumpingBlock && collider.has_method(&"got_bumped") && !_on_cooldown:
+			collider.has_method(&"got_bumped") && !_on_cooldown:
 				collider.got_bumped.call_deferred(true)
 				_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
 	
@@ -563,7 +563,7 @@ func _process_collision_deferred(_dir: int, _on_cooldown: bool) -> void:
 				
 				if !(id in _already_processed):
 					_already_processed.append(id)
-					if l is StaticBumpingBlock && l.has_method(&"got_bumped"):
+					if l.has_method(&"got_bumped"):
 						l.got_bumped.call_deferred(true)
 						_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
 
@@ -645,12 +645,11 @@ func _get_enemy_stomp_velocity(enemy_attacked: Node) -> Vector2:
 	var center: Node2D = enemy_attacked._center as Node2D
 	if !center:
 		return Vector2.ZERO
-	if center is CharacterBody2D:
-		return (center as CharacterBody2D).velocity
-	if center is AnimatableBody2D:
-		return (center as AnimatableBody2D).velocity
 	if center is RigidBody2D:
 		return (center as RigidBody2D).linear_velocity
+	var custom: Variant = center.get(&"velocity")
+	if custom is Vector2:
+		return custom
 	return Vector2.ZERO
 
 
