@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://clm1anrf3fw3j" path="res://engine/scripts/nodes/general_movement/circle_movement.gd" id="4_2sncp"]
 [ext_resource type="Script" uid="uid://cl1jbbibwvavs" path="res://engine/scenes/main_menu/scripts/audio_selection.tres.gd" id="4_n618i"]
 [ext_resource type="Texture2D" uid="uid://cr0xmvg0ljpxj" path="res://engine/scenes/main_menu/textures/settings.png" id="4_wobiu"]
+[ext_resource type="Material" uid="uid://drf7ojp1tgq2d" path="res://engine/shaders/premul_alpha.tres" id="5_nj8ge"]
 [ext_resource type="PackedScene" uid="uid://cmi1is5qvulsf" path="res://engine/scenes/main_menu/10_bar.tscn" id="5_rjuej"]
 [ext_resource type="Texture2D" uid="uid://ckrd0kfu2ue28" path="res://engine/scenes/main_menu/textures/maxminmed.png" id="6_b6bjk"]
 [ext_resource type="Texture2D" uid="uid://dqvmle8qmxx2g" path="res://engine/scenes/main_menu/textures/speed.png" id="7_5b828"]
@@ -230,6 +231,7 @@ offset_bottom = 142.0
 texture = ExtResource("2_lauxo")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=163709632]
+material = ExtResource("5_nj8ge")
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
@@ -583,8 +585,6 @@ script = ExtResource("25_v32i0")
 [node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=179610386]
 script = ExtResource("24_fqkuj")
 menu_items_controller_path = NodePath("../Options")
-modulate_division = 4.5
-modulate_offset = 0.82
 modulate_first_child = true
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport" unique_id=1099331689]

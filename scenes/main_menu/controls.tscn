@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dwy0ri4q1seia" path="res://engine/scenes/main_menu/scripts/controls_scene.gd" id="1_i03yo"]
 [ext_resource type="Texture2D" uid="uid://ibc6xo4a3k4v" path="res://engine/scenes/main_menu/textures/keys.png" id="2_je4c7"]
 [ext_resource type="Script" uid="uid://cn67joohcklbn" path="res://engine/components/ui/generic/menu_items_controller.gd" id="3_0brmq"]
+[ext_resource type="Material" uid="uid://drf7ojp1tgq2d" path="res://engine/shaders/premul_alpha.tres" id="4_0aibh"]
 [ext_resource type="AudioStream" uid="uid://baoxhpfyoq70u" path="res://engine/components/ui/_sounds/select_controls.wav" id="4_t3dkp"]
 [ext_resource type="Texture2D" uid="uid://dpr3vndpudjhl" path="res://engine/scenes/main_menu/textures/controls.png" id="6_3wm1w"]
 [ext_resource type="Script" uid="uid://r87dbx334ub5" path="res://engine/scenes/main_menu/scripts/controls_autorun_selection.gd" id="6_autorun"]
@@ -184,6 +185,7 @@ offset_bottom = 142.0
 texture = ExtResource("2_je4c7")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=414168759]
+material = ExtResource("4_0aibh")
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
@@ -627,22 +629,16 @@ script = ExtResource("15_k5vhu")
 [node name="Node" type="Node" parent="SubViewportContainer/SubViewport" unique_id=1019228889]
 script = ExtResource("16_jvgix")
 menu_items_controller_path = NodePath("../Options")
-modulate_division = 4.5
-modulate_offset = 0.82
 modulate_first_child = true
 
 [node name="GameplayBlinking" type="Node" parent="SubViewportContainer/SubViewport" unique_id=1900100007]
 script = ExtResource("16_jvgix")
 menu_items_controller_path = NodePath("../GameplayOptions")
-modulate_division = 4.5
-modulate_offset = 0.82
 modulate_first_child = true
 
 [node name="MenuBlinking" type="Node" parent="SubViewportContainer/SubViewport" unique_id=1900100008]
 script = ExtResource("16_jvgix")
 menu_items_controller_path = NodePath("../MenuOptions")
-modulate_division = 4.5
-modulate_offset = 0.82
 modulate_first_child = true
 
 [connection signal="selected" from="SubViewportContainer/SubViewport/Options" to="SubViewportContainer/SubViewport/Selector" method="handle_selection"]
