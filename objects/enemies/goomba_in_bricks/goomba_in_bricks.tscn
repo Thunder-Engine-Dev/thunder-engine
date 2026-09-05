@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxphu670egbro" path="res://engine/objects/enemies/goomba_in_bricks/goomba_in_bricks.gd" id="1_gmc6n"]
 [ext_resource type="Texture2D" uid="uid://cuponpwydksyj" path="res://engine/objects/enemies/goomba_in_bricks/textures/mini_goomba.png" id="2_d1g5f"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_gcvmc"]
 [ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="2_pkylj"]
 [ext_resource type="Texture2D" uid="uid://ckiq7mmn7yufe" path="res://engine/objects/bumping_blocks/brick/textures/brick.png" id="3_ui5h8"]
 [ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="5_wdsg3"]
@@ -10,6 +11,7 @@
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_hchcm"]
 [ext_resource type="Shader" uid="uid://dtfrycf4lheaa" path="res://engine/shaders/highlight.gdshader" id="9_5548o"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_ri36l"]
+[ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_nkyk4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sornf"]
 size = Vector2(32, 32)
@@ -61,10 +63,10 @@ tracks/0/path = NodePath("SpriteBricks:offset")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
+"times": PackedFloat32Array(0, 0.2, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -8), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, -12), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nxq2d"]
@@ -74,7 +76,7 @@ _data = {
 }
 
 [node name="GoombaInBricks" type="CharacterBody2D" unique_id=245355321 node_paths=PackedStringArray("sprite_goomba", "sprite_bricks")]
-collision_layer = 114
+collision_layer = 2
 collision_mask = 32
 platform_on_leave = 2
 script = ExtResource("1_gmc6n")
@@ -93,6 +95,7 @@ shape = SubResource("RectangleShape2D_sornf")
 position = Vector2(0, -8)
 collision_layer = 2
 collision_mask = 7
+script = ExtResource("2_gcvmc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=82078921]
 visible = false
@@ -102,6 +105,7 @@ debug_color = Color(0.997418, 0, 0.166377, 0.42)
 
 [node name="EnemyAttacked" type="Node" parent="Hitbox" unique_id=116589429]
 script = ExtResource("2_pkylj")
+stomping_offset = Vector2(0, -16)
 stomping_creation = SubResource("Resource_7eulf")
 stomping_scores = 100
 stomping_sound = ExtResource("6_ndedd")
@@ -136,16 +140,16 @@ texture = ExtResource("3_ui5h8")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=318698090]
 modulate = Color(1, 1, 1, 0.0392157)
-position = Vector2(2.38419e-07, -8)
-rect = Rect2(-16, -16, 32, 32)
+rect = Rect2(-16, -48, 32, 64)
+script = ExtResource("11_nkyk4")
 metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1959543079]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_nxq2d")
 
 [node name="AttackInterval" type="Timer" parent="." unique_id=1822220660]
 process_callback = 0
-wait_time = 2.0
 one_shot = true
 
 [connection signal="collided_wall" from="." to="." method="turn_x"]
