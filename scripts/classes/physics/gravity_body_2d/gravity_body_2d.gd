@@ -43,6 +43,9 @@ var global_transform_previous: Transform2D
 ## Optional world-space gravity direction lock (e.g. death effects with collision_layer 0
 ## that cannot receive Area2D gravity). Assign via [member gravity_dir]. Zero = use physics.
 var _gravity_dir_override: Vector2 = Vector2.ZERO
+## When true, skip the on-floor [member speed].y stick until the next [method do_movement]
+## that actually slides (call [method invalidate_collision_state] after an external teleport).
+var _collision_state_invalid: bool = false
 
 ## Effective gravity direction. Assigning sets a world-space override (no Area2D needed).
 ## Reading returns [method get_global_gravity_dir].
@@ -60,6 +63,10 @@ signal collided_wall
 signal collided_ceiling
 ## Emitted when the body collides with the floor
 signal collided_floor
+## Emitted at the start of [method motion_process], before gravity and [method do_movement].
+signal before_motion(delta: float)
+## Emitted at the end of [method motion_process], after [method do_movement].
+signal after_motion(delta: float)
 
 
 ## Main method to make the body move with both gravity and collision(if [member collision] is [code]true[/code]),
@@ -67,6 +74,7 @@ signal collided_floor
 ## [param delta] should be the one from [method Node._phyiscs_process][br]
 ## [param slide] makes the body fly from sloping-up[br]
 func motion_process(delta: float, slide: bool = false) -> void:
+	before_motion.emit(delta)
 	
 	# Fall along local +Y (speed is gravity-local); magnitude from project/area gravity.
 	var gravity_accel: float = gravity_scale * get_gravity_vector().length()
@@ -94,6 +102,7 @@ func motion_process(delta: float, slide: bool = false) -> void:
 	if slide && floor_constant_speed && !is_on_wall():
 		speed.x = speed_previous.x
 	
+	after_motion.emit(delta)
 	_collision_signals()
 
 
@@ -108,13 +117,15 @@ func do_movement(delta: float, slide: bool = false, emit_detection_signal: bool 
 		global_position += velocity * delta
 		return
 		
-	if is_on_floor() && speed.y > 0: # fix enemies turning around corners randomly
+	if !_collision_state_invalid && is_on_floor() && speed.y > 0: # fix enemies turning around corners randomly
 		speed.y = 1
 	
 	if correct_collision:
 		move_and_slide_corrected()
 	else:
 		move_and_slide()
+	
+	_collision_state_invalid = false
 	
 	if slide:
 		velocity = get_real_velocity()
@@ -230,6 +241,12 @@ func get_global_gravity_dir() -> Vector2:
 ## Clear a [member gravity_dir] override and return to live physics gravity.
 func clear_gravity_dir_override() -> void:
 	_gravity_dir_override = Vector2.ZERO
+
+
+## Discard leftover floor/wall/ceiling state after an external teleport.
+## Skips the on-floor [member speed].y stick until the next real [method do_movement].
+func invalidate_collision_state() -> void:
+	_collision_state_invalid = true
 
 
 ## -1 is Left, 1 is Right, 0 is None

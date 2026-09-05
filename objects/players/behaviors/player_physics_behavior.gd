@@ -414,28 +414,34 @@ func _shape_process() -> void:
 	)
 	if !shaper: return
 	
-	var has_previously_stuck: bool = player.has_stuck
-	var is_colliding: bool
-	var is_colliding_in_advance: bool = _shape_recovery_process(false)
-	
-	player.has_stuck = is_colliding_in_advance
-	if !player.has_stuck && (player.has_stuck_animation || has_previously_stuck):
-		if player.is_crouching:
-			is_colliding = false
-		else:
-			is_colliding = _shape_recovery_process(true)
-		player.has_stuck_animation = is_colliding
-		if !is_colliding:
-			player.stuck_block_left = false
-			player.stuck_block_right = false
-			if !player.is_crouching:
-				if (player.left_right >= 0 && player.speed.x < -1) || (player.left_right <= 0 && player.speed.x > 1):
-					player.speed.x = 0
-		else:
-			if player.stuck_block_left && player.left_right < 0: player.left_right = 0
-			if player.stuck_block_right && player.left_right > 0: player.left_right = 0
-	if player.has_stuck || player.has_stuck_animation:
-		shaper = suit.physics_shaper_crouch
+	if player.has_meta(&"skip_stuck") || (player.collision_mask & player.collision_recovery.collision_mask) == 0:
+		player.has_stuck = false
+		player.has_stuck_animation = false
+		player.stuck_block_left = false
+		player.stuck_block_right = false
+	else:
+		var has_previously_stuck: bool = player.has_stuck
+		var is_colliding: bool
+		var is_colliding_in_advance: bool = _shape_recovery_process(false)
+		
+		player.has_stuck = is_colliding_in_advance
+		if !player.has_stuck && (player.has_stuck_animation || has_previously_stuck):
+			if player.is_crouching:
+				is_colliding = false
+			else:
+				is_colliding = _shape_recovery_process(true)
+			player.has_stuck_animation = is_colliding
+			if !is_colliding:
+				player.stuck_block_left = false
+				player.stuck_block_right = false
+				if !player.is_crouching:
+					if (player.left_right >= 0 && player.speed.x < -1) || (player.left_right <= 0 && player.speed.x > 1):
+						player.speed.x = 0
+			else:
+				if player.stuck_block_left && player.left_right < 0: player.left_right = 0
+				if player.stuck_block_right && player.left_right > 0: player.left_right = 0
+		if player.has_stuck || player.has_stuck_animation:
+			shaper = suit.physics_shaper_crouch
 	
 	shaper.install_shape_for(player.collision_shape)
 	shaper.install_shape_for_caster(player.body)
