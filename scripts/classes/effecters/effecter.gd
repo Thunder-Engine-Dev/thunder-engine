@@ -40,7 +40,7 @@ static func trail(
 				tra.set("snap_2d_transforms_mode", const_val)
 				print("[INFO] SNAP_2D_TRANSFORMS_MODE_CANVAS Value: ", const_val)
 			else:
-				# Verificăm setarea nativă din Godot oficial (dacă e bifat Snap 2D în Project Settings)
+				# Check the native setting in official Godot (whether Snap 2D is checked in Project Settings)
 				var is_global_snap_enabled: bool = ProjectSettings.get_setting("rendering/2d/snap/snap_2d_transforms_to_pixel", false)
 				
 				if is_global_snap_enabled:
