@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://dfrouvuwj4hk0" path="res://engine/objects/enemies/koopas/textures/shell_green.png" id="10_bsier"]
 [ext_resource type="Script" uid="uid://doq0qyrr5ihr6" path="res://engine/scripts/nodes/vision/vision.gd" id="11_vu45w"]
 
+[sub_resource type="PackedScene" id="PackedScene_0wt3v"]
+resource_local_to_scene = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dceiv"]
 size = Vector2(30, 28)
 
@@ -74,6 +77,9 @@ floor_max_angle = 0.837758
 floor_snap_length = 8.0
 platform_on_leave = 2
 script = ExtResource("1_4u51b")
+restoring_damage_delay = 2.0
+enemy_alive_scene = SubResource("PackedScene_0wt3v")
+resurrection_time = 10.0
 look_at_player = true
 slide = true
 sprite = NodePath("Sprite")
