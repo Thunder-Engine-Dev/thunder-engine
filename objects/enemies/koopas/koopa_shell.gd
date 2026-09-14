@@ -1,12 +1,24 @@
 extends GeneralMovementBody2D
 
 const Shell: Script = preload("./koopa_shell.gd")
-
 const DEFAULT_KICK = preload("res://engine/objects/players/prefabs/sounds/kick.wav")
 
 @export_category("KoopaShell")
 @export var stopping: bool = true
 @export var restoring_damage_delay: float = 0.6
+
+# ==========================================================
+# ==========================================================
+@export var enemy_alive_scene: PackedScene
+@export var resurrection_time: float = 5.0
+@export var warning_duration: float = 1.5
+
+var _resurrection_timer: SceneTreeTimer
+var _warning_timer: SceneTreeTimer
+var _is_blinking: bool = false
+var _blink_time: float = 0.0
+# ==========================================================
+
 @export_group("Breaking")
 @export_range(0, 64, 1, "or_greater") var max_multiple_breaking_blocks: int = 32
 @export_group("Attack")
@@ -47,6 +59,12 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 	if stopping:
 		speed.x = 0
+		
+		if _is_blinking && animation:
+			_blink_time += delta
+			if _blink_time >= 0.06:
+				animation.visible = !animation.visible
+				_blink_time = 0.0
 
 
 func status_update() -> void:
@@ -58,6 +76,10 @@ func status_update() -> void:
 	
 	if !stopping:
 		animation.play()
+		if animation:
+			animation.visible = true
+		
+		_cancel_resurrection()
 		
 		_delayer = get_tree().create_timer(restoring_damage_delay, false)
 		await _delayer.timeout
@@ -73,12 +95,83 @@ func status_update() -> void:
 		enemy_attacked.stomping_enabled = false
 		enemy_attacked.stomping_hurtable = false
 		combo.reset_combo()
+		
+		_start_resurrection()
 
 
 func status_swap(to: bool) -> void:
 	stopping = to
 	status_update()
 
+
+# ==========================================================
+# ==========================================================
+func _start_resurrection() -> void:
+	_cancel_resurrection()
+	# if !enemy_alive_scene: return 
+		
+	var time_before_warning = max(0.0, resurrection_time - warning_duration)
+	
+	_warning_timer = get_tree().create_timer(time_before_warning, false)
+	_warning_timer.timeout.connect(func():
+		if stopping: 
+			_is_blinking = true
+	)
+	
+	_resurrection_timer = get_tree().create_timer(resurrection_time, false)
+	_resurrection_timer.timeout.connect(_on_resurrection_timeout)
+
+
+func _cancel_resurrection() -> void:
+	_is_blinking = false
+	_blink_time = 0.0
+	if _resurrection_timer:
+		if _resurrection_timer.timeout.is_connected(_on_resurrection_timeout):
+			_resurrection_timer.timeout.disconnect(_on_resurrection_timeout)
+		_resurrection_timer = null
+	_warning_timer = null
+
+
+func _on_resurrection_timeout() -> void:
+	if !stopping: return # Safety check: do not revive if it was just hit/kicked
+	
+	# Identify the alive enemy path based on the current node name
+	var target_path: String = ""
+	
+	if name.contains("Buzzle"):
+		target_path = "res://engine/objects/enemies/buzzle_bettle/buzzle_beetle.tscn"
+	elif name.contains("Red"):
+		target_path = "res://engine/objects/enemies/koopas/koopa_red.tscn"
+	elif name.contains("Blue"):
+		target_path = "res://engine/objects/enemies/koopas/koopa_blue.tscn"
+	else:
+		# Default for standard KoopaGreen
+		target_path = "res://engine/objects/enemies/koopas/koopa_green.tscn"
+		
+	# Dynamically load the resource at runtime
+	var spawned_scene = load(target_path) as PackedScene
+	if !spawned_scene:
+		return
+		
+	# Instantiate the alive enemy
+	var alive_enemy = spawned_scene.instantiate() as Node2D
+	if alive_enemy:
+		# 1. Add the enemy to the SceneTree FIRST
+		get_parent().add_child(alive_enemy)
+		
+		# 2. Set global position and direction
+		alive_enemy.global_position = global_position
+		if "dir" in alive_enemy:
+			alive_enemy.dir = dir
+		
+		# 3. Now that the node is in the tree, RayCast2D can access World2D without error
+		var turner = alive_enemy.get_node_or_null("Turner") as RayCast2D
+		if turner:
+			turner.position.x = abs(turner.position.x) * dir
+			turner.force_raycast_update()
+			
+		# Remove the shell
+		queue_free()
 
 func sound() -> void:
 	var _custom_sound = CharacterManager.get_sound_replace(kicked_sound, DEFAULT_KICK, "kick", true)
@@ -88,7 +181,6 @@ func sound() -> void:
 func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 	if target_enemy_attacked == enemy_attacked: return
 	var target_defence = target_enemy_attacked.killing_immune.get(&"shell_defence", 0)
-	# Shells crashing with each other
 	if is_instance_of(target_enemy_attacked.owner, Shell) && \
 		!target_enemy_attacked.owner.stopping && \
 		sharpness <= target_defence:
@@ -98,7 +190,6 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 			enemy_attacked.got_killed(&"shell_forced")
 			target_enemy_attacked.set_meta(&"attacker_speed", speed)
 			target_enemy_attacked.got_killed(&"shell_forced")
-	# Combo
 	elif result.result && sharpness >= target_defence:
 		var _can_combo: bool = target_enemy_attacked.killing_can_combo
 		if combo.get_combo() > 0 && _can_combo:
@@ -110,7 +201,6 @@ func _on_killing(target_enemy_attacked: Node, result: Dictionary) -> void:
 		else:
 			ScoreText.new(str(target_enemy_attacked.killing_scores), target_enemy_attacked._center)
 			Data.add_score(target_enemy_attacked.killing_scores)
-	# Gets blocked — shell dies unless the target opts out or is immune to shells.
 	elif !target_enemy_attacked.owner.has_meta(&"#no_shell_attack") \
 			&& (target_enemy_attacked.killing_immune.has(&"shell") && sharpness < target_defence):
 		if &"speed" in target_enemy_attacked.owner:
@@ -129,7 +219,6 @@ func _on_body_entered(player: Node2D) -> void:
 	status_swap(false)
 	sound()
 
-
 var _already_processed: Array[int]
 
 func _on_collided_wall() -> void:
@@ -146,7 +235,6 @@ func _process_collision_deferred(_dir: int, saved_pos: Vector2) -> void:
 	if is_zero_approx(vel.y):
 		vel.y = 0
 	
-	# WARNING: Only the first collision shape will be considered!
 	var query := PhysicsShapeQueryParameters2D.new()
 	query.collision_mask = collision_mask
 	query.motion = vel
