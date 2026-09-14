@@ -35,7 +35,19 @@ static func trail(
 			tra.texture_filter = texture_filter
 			# WARNING: If your game crashes here, go download a proper Godot build:
 			# https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE
-			tra.snap_2d_transforms_mode = CanvasItem.SNAP_2D_TRANSFORMS_MODE_CANVAS
+			if "SNAP_2D_TRANSFORMS_MODE_CANVAS" in CanvasItem:
+				var const_val = CanvasItem["SNAP_2D_TRANSFORMS_MODE_CANVAS"]
+				tra.set("snap_2d_transforms_mode", const_val)
+				print("[INFO] SNAP_2D_TRANSFORMS_MODE_CANVAS Value: ", const_val)
+			else:
+				# Verificăm setarea nativă din Godot oficial (dacă e bifat Snap 2D în Project Settings)
+				var is_global_snap_enabled: bool = ProjectSettings.get_setting("rendering/2d/snap/snap_2d_transforms_to_pixel", false)
+				
+				if is_global_snap_enabled:
+					print("[INFO] Custom constant missing, but global Project Pixel Snapping is ENABLED (1). Trail is safe.")
+				else:
+					push_warning("[WARNING] Custom constant missing and global Project Pixel Snapping is DISABLED (0). Trail might look choppy!")
+
 			tra.add_to_group(&"Trail")
 			
 			if interpolation_support:
