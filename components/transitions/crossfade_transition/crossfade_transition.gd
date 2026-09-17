@@ -1,11 +1,14 @@
 extends Transition
 
+const MIX_SHADER: Shader = preload("res://engine/components/transitions/crossfade_transition/bilinear_scaling_mix.gdshader")
+
 @export var fade_time: float = 0.54
 
 var _scene: String
 var _forced_pause: bool
 var _canvas_item_rid: RID
 var _img_rid: RID
+var _material: ShaderMaterial
 
 
 func _init() -> void:
@@ -25,7 +28,10 @@ func _ready() -> void:
 		_canvas_item_rid,
 		int(GlobalViewport.container.texture_filter)
 	)
-	RenderingServer.canvas_item_set_use_parent_material(_canvas_item_rid, true)
+	var parent_mat := GlobalViewport.container.material
+	_material = parent_mat.duplicate() if parent_mat is ShaderMaterial else ShaderMaterial.new()
+	_material.shader = MIX_SHADER
+	RenderingServer.canvas_item_set_material(_canvas_item_rid, _material.get_rid())
 	RenderingServer.canvas_item_set_parent(_canvas_item_rid, GlobalViewport.container.get_canvas_item())
 	
 	var rect := Rect2(Vector2.ZERO, GlobalViewport.vp.size)
@@ -58,6 +64,7 @@ func _free_canvas_item() -> void:
 	if _img_rid.is_valid():
 		RenderingServer.free_rid(_img_rid)
 		_img_rid = RID()
+	_material = null
 
 
 func _on_fade_finished() -> void:
