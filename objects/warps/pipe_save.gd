@@ -46,7 +46,7 @@ func delete_save() -> void:
 		ProfileManager.delete_profile("suspended")
 	save_deleted.emit()
 	print(&"Save " + profile_name + &" deleted!")
-	Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
+	Audio.play_1d_sound(StaticBumpingBlock.DEFAULT_BREAK)
 
 
 func pass_warp() -> void:

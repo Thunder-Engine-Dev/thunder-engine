@@ -13,7 +13,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	
 	if really_erase:
 		ProfileManager.delete_profile("suspended")
-		Audio.play_1d_sound(preload("res://engine/objects/bumping_blocks/_sounds/break.wav"))
+		Audio.play_1d_sound(StaticBumpingBlock.DEFAULT_BREAK)
 		progress_continue.toggle(false)
 		v_box_container_2.focused = false
 		progress_continue.trigger_pipe()

@@ -22,6 +22,7 @@ func _physics_process(delta):
 	
 	player = Thunder._current_player
 	var restart_enabled: bool = (
+		is_instance_valid(Scenes.current_scene) &&
 		&"enable_restart_in_pause" in Scenes.current_scene &&
 		Scenes.current_scene.enable_restart_in_pause
 	)

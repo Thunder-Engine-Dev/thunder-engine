@@ -24,25 +24,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("m_jump") || Input.is_action_pressed("ui_accept"):
 		skippable = false
 		Audio.stop_music_channel(1, true)
-		TransitionManager.accept_transition(
-			load("res://engine/components/transitions/circle_transition/circle_transition.tscn")
-				.instantiate()
-				.with_speeds(0.01, -0.1)
+		Scenes.goto_scene_with_transition(goto_scene, &"fade", func(t):
+			t.with_animation("to_black_linear")
+			t.with_speeds(3.0, 0.5)
 		)
-		
-		TransitionManager.transition_middle.connect(
-			_on_transition_middle_goto_next,
-			CONNECT_ONE_SHOT
-		)
-
-
-func _on_transition_middle_goto_next() -> void:
-	TransitionManager.current_transition.paused = true
-	Scenes.goto_scene(goto_scene)
-	Scenes.scene_changed.connect(_on_scene_changed_unpause_transition, CONNECT_ONE_SHOT)
-
-
-static func _on_scene_changed_unpause_transition(_current_scene: Node) -> void:
-	var trans := TransitionManager.current_transition
-	if is_instance_valid(trans):
-		trans.paused = false
