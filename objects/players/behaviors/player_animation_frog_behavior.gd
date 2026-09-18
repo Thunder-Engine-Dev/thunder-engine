@@ -52,7 +52,7 @@ func _head_bumped() -> void:
 func _sprite_loop() -> void:
 	if !sprite: return
 	super()
-	if sprite.animation == &"walk":
+	if sprite.animation == &"walk" && !player.completed:
 		_hop_walk_finished = true
 		_play_anim(_get_animation_prefixed(&"default"))
 	elif _restart_swim_on_dir_change && sprite.animation in [&"swim_up", &"swim_down"] && player.left_right == 0 && player.up_down == 0:
@@ -67,8 +67,14 @@ func _sprite_finish() -> void:
 			_animation_process(0)
 			_idle_timer = 0.0
 		&"walk":
-			_hop_walk_finished = true
-			_play_anim(_get_animation_prefixed(&"default"))
+			if player.completed:
+				if player.is_on_floor() && abs(player.speed.x) > 1:
+					sprite.play()
+				else:
+					_play_anim(_get_animation_prefixed(&"default"))
+			else:
+				_hop_walk_finished = true
+				_play_anim(_get_animation_prefixed(&"default"))
 	if sprite.animation != &"swim_idle":
 		_can_swim_idle = true
 
@@ -116,9 +122,12 @@ func _animation_non_warping_process(delta: float) -> void:
 	player.skid.emitting = false
 	if player.is_underwater && !player.completed:
 		return _animation_swimming_process(delta)
-	if player.is_on_floor() || player.coyote_time > 0.0 || _jump_on_floor_correction_fix || _is_gap_run_hopping():
-		sprite.sprite_frames.set_animation_loop(&"walk", false)
-		_loop_offsets.walk = sprite.sprite_frames.get_frame_count(&"walk") - 1
+	if player.completed && !player.is_on_floor():
+		_animation_jumping_process(delta)
+	elif player.is_on_floor() || player.coyote_time > 0.0 || _jump_on_floor_correction_fix || _is_gap_run_hopping():
+		if !player.completed:
+			sprite.sprite_frames.set_animation_loop(&"walk", false)
+			_loop_offsets.walk = sprite.sprite_frames.get_frame_count(&"walk") - 1
 		_animation_floor_process(delta)
 	else:
 		_animation_jumping_process(delta)
@@ -169,13 +178,20 @@ func _animation_floor_process(delta: float) -> void:
 	#if player._physics_behavior.jump_delay < 0 && !player.completed:
 	#	sprite.set_frame_and_progress(0, 0.8)
 	player.skid.emitting = false
-	if player.completed:
-		if sprite.animation in [&"swim", &"swim_up", &"swim_down", &"swim_idle", &"hold_swim"]:
-			sprite.animation = _get_animation_prefixed(&"walk")
-		if sprite.animation == _get_animation_prefixed(&"walk"):
-			sprite.sprite_frames.set_animation_loop(&"walk", true)
-			sprite.speed_scale = 2.4
-			sprite.play()
+	_apply_completed_level_animation()
+
+
+func _apply_completed_level_animation() -> void:
+	if !player.completed || !sprite || !player.is_on_floor():
+		return
+	if abs(player.speed.x) <= 1:
+		_play_anim(_get_animation_prefixed(&"default"))
+		return
+	var walk_anim := _get_animation_prefixed(&"walk")
+	sprite.sprite_frames.set_animation_loop(&"walk", true)
+	_play_anim(walk_anim)
+	sprite.speed_scale = 2.4
+	sprite.play()
 
 
 func _wants_frog_look_up() -> bool:

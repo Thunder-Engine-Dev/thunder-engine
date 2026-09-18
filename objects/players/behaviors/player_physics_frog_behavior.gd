@@ -3,6 +3,8 @@ extends "res://engine/objects/players/behaviors/player_physics_behavior.gd"
 const small_jump = preload("res://engine/objects/players/prefabs/sounds/small_jump.wav")
 ## Fall speed past which an airborne hop is treated as a real fall, not a 1-tile gap.
 const HOP_AIR_BREAK_FALL_SPEED := 200.0
+## Frog swim gravity is 0, so restore a normal underwater fall when the level is completed.
+const COMPLETED_SWIM_GRAVITY_SCALE := 0.1
 
 var jump_delay: float
 var jump_sound_delay: float
@@ -20,7 +22,7 @@ func _movement_x(delta: float) -> void:
 			if _start_sliding_movement(true):
 				return
 	_movement_x_recovery(delta)
-	if player.is_underwater:
+	if player.is_underwater && !player.completed:
 		return
 	
 	if !player.is_on_floor():
@@ -32,7 +34,7 @@ func _movement_x(delta: float) -> void:
 		elif jump_delay >= 0:
 			_advance_hop_cycle(delta)
 	else:
-		if jump_delay < 0 && !player.is_holding:
+		if jump_delay < 0 && !player.is_holding && !player.completed:
 			jump_delay += delta
 			player.speed.x = 0
 			small_jump_played = false
@@ -88,7 +90,7 @@ func _movement_x_acceleration(delta: float) -> void:
 	if player.is_on_floor():
 		acce_multiplier = 2.25 if player.running else 1.5
 		
-		if jump_delay >= 0.45 && !player.is_holding:
+		if jump_delay >= 0.45 && !player.is_holding && !player.completed:
 			player.speed.x = 0
 			jump_delay = -0.12
 			hop_pausing = true
@@ -117,6 +119,10 @@ func _movement_y(delta: float) -> void:
 		if player.crouch_forced && !player.is_on_floor():
 			player.is_crouching = false
 			player.crouch_forced = false
+		if player.is_underwater:
+			player.gravity_scale = maxf(player.gravity_scale, COMPLETED_SWIM_GRAVITY_SCALE)
+			if !player.is_on_floor() && player.speed.y < 0:
+				player.speed.y = move_toward(player.speed.y, 0, 625 * delta)
 		return
 
 	# Swimming
