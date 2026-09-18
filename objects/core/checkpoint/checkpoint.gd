@@ -91,7 +91,7 @@ func activate() -> void:
 				)
 				eff.self_modulate.a = 0.5
 				eff.global_rotation = 0
-				Thunder.reorder_on_top_of(self, eff)
+				Thunder.reorder_on_top_of(eff, self)
 			)
 		SettingsManager.QUALITY.MAX:
 			animation_max_quality.play(&"triggered")
@@ -104,7 +104,7 @@ func activate() -> void:
 					0.1, 0.5, sprite_max_quality.material, z_index, false
 				)
 				eff.self_modulate.a = 0.5
-				Thunder.reorder_on_top_of(self, eff)
+				Thunder.reorder_on_top_of(eff, self)
 			)
 	
 	_play_voice_line()
