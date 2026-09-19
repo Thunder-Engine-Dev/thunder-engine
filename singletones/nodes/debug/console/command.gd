@@ -102,6 +102,14 @@ func execute(args: Array[String]) -> ExecuteResult:
 func get_argument_options(args: PackedStringArray, index: int) -> Array:
 	return []
 
+## For overriding. If true, spaces belong to one argument; Tab completes that value instead of starting a new one.
+func joins_arguments() -> bool:
+	return false
+
+## For overriding. Args passed to get_argument_options while cycling Tab suggestions.
+func get_completion_args(current_args: PackedStringArray, cycling_from_args: PackedStringArray) -> PackedStringArray:
+	return current_args
+
 
 func set_description(desc: String) -> Command:
 	description = desc

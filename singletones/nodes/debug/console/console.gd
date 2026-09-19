@@ -168,21 +168,32 @@ func move_history(amount: int) -> void:
 func move_history_to_latest(_new_text) -> void:
 	position_in_history = 0
 
-func move_suggestion(amount: int) -> void:
+func _apply_argument_suggestion(found: String) -> void:
+	var trimmed: String = input.text.rstrip(" ")
+	var cmd_name: String = trimmed.get_slice(" ", 0)
+	var last_token: String = trimmed.get_slice(" ", trimmed.get_slice_count(" ") - 1)
 	var last_split: String = input.text.get_slice(" ", input.text.get_slice_count(" ") - 1)
+	var command: Command = commands.get(cmd_name)
+	if command && command.joins_arguments() && trimmed == cmd_name:
+		input.text = cmd_name + " " + found
+	elif (!command || !command.joins_arguments()) && input.text.ends_with(" ") && last_split == "":
+		input.text = trimmed + " " + found
+	else:
+		input.text = trimmed.left(trimmed.length() - last_token.length()) + found
+	input.caret_column = input.text.length()
+	if found.ends_with("/"):
+		_suggestion_old_input_text = input.text
+
+
+func move_suggestion(amount: int) -> void:
 	var uncompl_text: String = input.text.left(input.caret_column)
 	if input.text.length() > input.caret_column && input.text.right(-input.caret_column).strip_edges() != "":
 		return
 	var found: String
 	if " " in uncompl_text:
-		uncompl_text = last_split.left(input.caret_column)
 		found = get_next_suggestion(get_argument_keys(), amount)
 		if found:
-			var old_text: String = input.text
-			if old_text:
-				old_text = old_text + " "
-			input.text = old_text.left(len(input.text) - len(uncompl_text)) + found
-			input.caret_column = input.text.length()
+			_apply_argument_suggestion(found)
 		return
 	found = get_next_suggestion(commands.keys(), amount)
 	if found:
@@ -255,12 +266,21 @@ func get_suggestions(search_keys: Array, input_text: String) -> Array:
 	)
 
 
-func get_argument_keys(args: PackedStringArray = input.text.split(" ")) -> Array:
+func get_argument_keys(args: PackedStringArray = PackedStringArray()) -> Array:
+	var cycling_from: PackedStringArray
+	if args.is_empty():
+		args = input.text.split(" ")
+		if _suggestion_old_input_text != NULL_CHAR:
+			cycling_from = _suggestion_old_input_text.split(" ")
 	var cmdName := args[0]
 	args.remove_at(0)
+	if !cycling_from.is_empty():
+		cycling_from.remove_at(0)
 	
 	if !commands.has(cmdName):
 		return []
+	if !cycling_from.is_empty():
+		args = commands[cmdName].get_completion_args(args, cycling_from)
 	return commands[cmdName].get_argument_options(args, args.size() - 1)
 
 
