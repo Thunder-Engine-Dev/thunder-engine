@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b2v6tmf2fdim4"]
+
+[ext_resource type="PackedScene" uid="uid://dgcgfl28trox0" path="res://engine/objects/springboard/springboard.tscn" id="1_pajql"]
+[ext_resource type="Shader" uid="uid://c1yibfdu766i8" path="res://engine/shaders/hsv_global.gdshader" id="2_oej81"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xvpf"]
+shader = ExtResource("2_oej81")
+shader_parameter/hue = 0.265
+shader_parameter/saturation = 0.0
+shader_parameter/value = 0.0
+
+[node name="SpringboardGreen" unique_id=2017934026 instance=ExtResource("1_pajql")]
+spring_jump_height = 1400.0
+
+[node name="Sprite" parent="." index="2" unique_id=643745534]
+material = SubResource("ShaderMaterial_4xvpf")
+
+[node name="BallL" parent="Node2D" parent_id_path=PackedInt32Array(504721446) index="4" unique_id=1660639954]
+material = SubResource("ShaderMaterial_4xvpf")
+
+[node name="BallR" parent="Node2D" parent_id_path=PackedInt32Array(504721446) index="5" unique_id=1445928586]
+material = SubResource("ShaderMaterial_4xvpf")
+
+[node name="SpringBoard1" parent="Node2D" parent_id_path=PackedInt32Array(504721446) index="6" unique_id=1880420294]
+material = SubResource("ShaderMaterial_4xvpf")
+
+[node name="SpringBoard2" parent="Node2D" parent_id_path=PackedInt32Array(504721446) index="7" unique_id=224488274]
+material = SubResource("ShaderMaterial_4xvpf")
