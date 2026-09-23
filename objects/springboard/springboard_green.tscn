@@ -10,7 +10,7 @@ shader_parameter/saturation = 0.0
 shader_parameter/value = 0.0
 
 [node name="SpringboardGreen" unique_id=2017934026 instance=ExtResource("1_pajql")]
-spring_jump_height = 1400.0
+spring_jump_height = 1475.0
 
 [node name="Sprite" parent="." index="2" unique_id=643745534]
 material = SubResource("ShaderMaterial_4xvpf")
