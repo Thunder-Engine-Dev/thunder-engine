@@ -22,7 +22,6 @@ metadata/_snap_enabled = true
 
 [node name="FireballFirebar" type="Node2D" unique_id=1802456843]
 script = ExtResource("1_8r468")
-sprite_rotation_speed = 300.0
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1244814570]
 z_index = 1

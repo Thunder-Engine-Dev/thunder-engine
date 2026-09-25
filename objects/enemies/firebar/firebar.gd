@@ -55,8 +55,6 @@ const ClassFireball := preload("./fireball_firebar.gd")
 				if i is ClassFireball:
 					i.angle = angle
 
-@onready var visible_on_screen_enabler_2d: VisibleOnScreenEnabler2D = $VisibleOnScreenEnabler2D
-
 
 func _ready() -> void:
 	# Create fireballs
@@ -64,7 +62,3 @@ func _ready() -> void:
 	
 	if Engine.is_editor_hint():
 		set_deferred(&"preview", preview) # Triggers setter to iterate children for preview setting in deferred manner
-	else:
-		visible_on_screen_enabler_2d.visible = true
-		visible_on_screen_enabler_2d.rect.position = -Vector2.ONE * 2 * ball_radius * fireballs
-		visible_on_screen_enabler_2d.rect.size = Vector2.ONE * 4 * ball_radius * fireballs
