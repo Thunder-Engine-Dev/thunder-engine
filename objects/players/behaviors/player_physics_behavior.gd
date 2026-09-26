@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	player.motion_process(delta)
 	if !player.is_on_floor():
 		player.coyote_time = move_toward(player.coyote_time, 0.0, delta)
-	elif can_coyote:
+	elif can_coyote && config:
 		player.coyote_time = config.jump_coyote_time_sec
 	player.running_grace = move_toward(player.running_grace, 0.0, delta)
 	if player.is_on_slope() && player.is_on_wall() && (player.get_which_wall_collided() == sign(player.left_right)) && abs(player.speed.x) < 70:
@@ -75,7 +75,7 @@ func _corrected_to_floor_and_stopped() -> void:
 	if player.warp != Player.Warp.NONE: return
 	if player.no_movement:
 		return
-	if can_coyote:
+	if can_coyote && config:
 		player.coyote_time = config.jump_coyote_time_sec
 
 
