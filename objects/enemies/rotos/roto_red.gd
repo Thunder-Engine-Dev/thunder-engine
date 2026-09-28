@@ -21,8 +21,7 @@ extends Area2D
 			_amplitude_in = false
 @export var circle_line_spot: int = 32
 @export var line_color: Color = Color.ANTIQUE_WHITE
-@export_group("Physics")
-@export_subgroup("Amplitude")
+@export_group("Amplitude")
 @export var amplitude_enable: bool = false
 @export var amplitude: Vector2 = 150 * Vector2.ONE:
 	set(to):
@@ -32,14 +31,14 @@ extends Area2D
 @export_range(0, 9999, 0.01, "suffix:px/s") var amplitude_changing_speed: float = 350
 @export var amplitude_min: Vector2
 @export var amplitude_max: Vector2 = 200 * Vector2.ONE
-@export_subgroup("Phase")
+@export_group("Phase")
 @export_range(-180, 180, 0.01, "suffix:°") var phase: float:
 	set(to):
 		phase = to
 		if Engine.is_editor_hint() && !preview:
 			oval_pos()
 @export_range(-21599.94, 21599.94, 0.001, "suffix:°/s") var frequency: float = 50
-@export_subgroup("Track rotation")
+@export_group("Track rotation")
 @export var track_rot: float:
 	set(to):
 		track_rot = to
