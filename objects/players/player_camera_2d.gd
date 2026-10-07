@@ -111,11 +111,12 @@ func _xscroll_logic() -> void:
 		drag_horizontal_offset = _xscroll / 1.25
 
 
-func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
+func shock(duration: float, amplitude: Vector2, interval: float = 0.01, process_always: bool = false) -> void:
 	if _shocking == 0:
 		ofs = offset
 	_shocking += 1
 	var tw: Tween = create_tween().set_loops(ceili(duration / interval))
+	if process_always: tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tw.tween_callback(
 		func() -> void:
 			offset = Vector2(
@@ -130,7 +131,7 @@ func shock(duration: float, amplitude: Vector2, interval: float = 0.01) -> void:
 	)
 
 
-func shock_smooth(duration: int, time_scale: float = 1.0, interval: float = 0.01) -> void:
+func shock_smooth(duration: int, time_scale: float = 1.0, interval: float = 0.01, process_always: bool = false) -> void:
 	if _shocking == 0:
 		ofs = offset
 	_shocking += 1
@@ -144,4 +145,4 @@ func shock_smooth(duration: int, time_scale: float = 1.0, interval: float = 0.01
 		if step <= 0:
 			offset = ofs
 			_shocking -= 1
-		await get_tree().create_timer(interval, false, false).timeout
+		await get_tree().create_timer(interval, process_always, false).timeout
