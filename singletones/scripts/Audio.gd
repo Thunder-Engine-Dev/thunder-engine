@@ -327,7 +327,7 @@ func stop_all_sounds() -> void:
 			i.queue_free()
 	for i in get_children():
 		if i is AudioStreamPlayer2D || i is AudioStreamPlayer:
-			if !_music_channels.find_key(i):
+			if _music_channels.find_key(i) == null:
 				i.stop()
 				i.queue_free()
 
