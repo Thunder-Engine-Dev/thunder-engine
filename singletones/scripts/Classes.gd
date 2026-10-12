@@ -4,12 +4,6 @@ extends Node
 # const CLASS_NAME:Script = preload("script path here!")
 
 func _init() -> void:
-	var autoload_script_list: Array = get_files("res://modules/", "preload.gd")
-	if !autoload_script_list.is_empty():
-		for i in autoload_script_list:
-			var instance = load(i).new()
-			add_child(instance)
-	
 	var autoload_scene_list: Array = get_files("res://modules/", "preload.tscn")
 	if !autoload_scene_list.is_empty():
 		for i in autoload_scene_list:

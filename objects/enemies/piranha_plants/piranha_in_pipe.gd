@@ -14,6 +14,8 @@ var first_visible: bool = false
 
 @onready var vision: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var timer_step: Timer = $Step
+@onready var light: PointLight2D = get_node_or_null(^"PointLight2D") as PointLight2D
+@onready var light_energy: float = light.energy if light else 0.0
 @onready var extra_script: Script = ByNodeScript.activate_script(custom_script, self, custom_vars)
 
 @onready var stretching_end: Vector2 = position
@@ -29,11 +31,24 @@ func _ready() -> void:
 		reset_physics_interpolation()
 	else: step = 3
 	
+	_update_light()
+	
 	timer_step.timeout.connect(
 		func() -> void:
 			step += 1
 			if step >= 4: step = 0
 	)
+
+func _process(_delta: float) -> void:
+	_update_light()
+
+
+func _update_light() -> void:
+	if !light: return
+	var total: float = stretching_start.distance_to(stretching_end)
+	var out: float = 1.0 if is_zero_approx(total) else 1.0 - position.distance_to(stretching_end) / total
+	light.energy = light_energy * smoothstep(1.0 / 3.0, 2.0 / 3.0, out)
+
 
 func _physics_process(delta: float) -> void:
 	var speed: float = stretching_speed * delta
