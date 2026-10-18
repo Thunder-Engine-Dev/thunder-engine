@@ -81,28 +81,30 @@ func activate() -> void:
 	match SettingsManager.get_quality():
 		SettingsManager.QUALITY.MID:
 			animation_text_flying.play(&"triggered")
+			var trail_settings := Effect.TrailSettings.new()
+			trail_settings.fade_out_strength = 0.1
+			trail_settings.lifetime = 0.5
 			var tw = create_tween().set_loops(20).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 			tw.tween_await(get_tree().physics_frame)
 			tw.tween_callback(func():
-				var eff = Effect.trail(
-					med_checkpoint_bg, med_checkpoint_bg.texture, med_checkpoint_bg.offset,
-					med_checkpoint_bg.flip_h, med_checkpoint_bg.flip_v, med_checkpoint_bg.centered,
-					0.1, 0.5, med_checkpoint_bg.material, z_index + 1, false
-				)
+				trail_settings.material = med_checkpoint_bg.material
+				trail_settings.z_index = med_checkpoint_bg.z_index + z_index + 1
+				var eff := Effect.emit_trail(med_checkpoint_bg, med_checkpoint_bg.global_position, trail_settings)
 				eff.self_modulate.a = 0.5
 				eff.global_rotation = 0
 				Thunder.reorder_on_top_of(eff, self)
 			)
 		SettingsManager.QUALITY.MAX:
 			animation_max_quality.play(&"triggered")
+			var trail_settings := Effect.TrailSettings.new()
+			trail_settings.fade_out_strength = 0.1
+			trail_settings.lifetime = 0.5
 			var tw = create_tween().set_loops(20).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 			tw.tween_await(get_tree().physics_frame)
 			tw.tween_callback(func():
-				var eff = Effect.trail(
-					sprite_max_quality, sprite_max_quality.texture, sprite_max_quality.offset,
-					sprite_max_quality.flip_h, sprite_max_quality.flip_v, sprite_max_quality.centered,
-					0.1, 0.5, sprite_max_quality.material, z_index, false
-				)
+				trail_settings.material = sprite_max_quality.material
+				trail_settings.z_index = sprite_max_quality.z_index + z_index
+				var eff := Effect.emit_trail(sprite_max_quality, sprite_max_quality.global_position, trail_settings)
 				eff.self_modulate.a = 0.5
 				Thunder.reorder_on_top_of(eff, self)
 			)

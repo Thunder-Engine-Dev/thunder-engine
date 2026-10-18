@@ -6,6 +6,10 @@ const explosion_effect = preload("res://engine/objects/effects/explosion/explosi
 @export_range(0, 20, 0.1, "hide_slider", "suffix:s") var trail_emitting_interval: float = 0.4
 
 var flag: bool = false
+var _trail_position: Vector2
+var _trail_end_position: Vector2
+var _trail_frame: int = -1
+var _trail_settings := Effect.TrailSettings.new()
 
 @onready var area_2d: Area2D = $Area2D
 @onready var sound_flying: AudioStreamPlayer2D = $SoundFlying
@@ -26,7 +30,12 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_instance_valid(sprite_node):
+		_trail_position = sprite_node.global_position
+		_trail_frame = Engine.get_physics_frames()
 	super(delta)
+	if is_instance_valid(sprite_node):
+		_trail_end_position = sprite_node.global_position
 	delta = Thunder.get_delta(delta)
 	if !sprite_node: return
 	sprite_node.rotation_degrees += 12 * dir * delta
@@ -60,8 +69,11 @@ func _on_trail() -> void:
 		return
 	if SettingsManager.get_quality() == SettingsManager.QUALITY.MIN:
 		return
-	var trail = Effect.trail(self, sprite_node.texture, Vector2.ZERO, sprite_node.flip_h)
-	trail.global_rotation = sprite_node.global_rotation
+	var previous_position: Vector2 = sprite_node.global_position
+	if _trail_frame == Engine.get_physics_frames() && previous_position.is_equal_approx(_trail_end_position):
+		previous_position = _trail_position
+	_trail_settings.z_index = z_index
+	var trail := Effect.emit_trail(sprite_node, previous_position, _trail_settings)
 	Thunder.reorder_on_top_of(trail, self)
 
 
