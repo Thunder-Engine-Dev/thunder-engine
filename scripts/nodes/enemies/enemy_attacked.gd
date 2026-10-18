@@ -188,7 +188,7 @@ func _ready() -> void:
 static func _initialize_iceblock() -> void:
 	if _iceblock_scene:
 		return
-	if ResourceLoader.has_cached(ICEBLOCK_PATH):
+	if Thunder.is_single_threaded() || ResourceLoader.has_cached(ICEBLOCK_PATH):
 		_iceblock_scene = ResourceLoader.load(ICEBLOCK_PATH) as PackedScene
 		return
 	match ResourceLoader.load_threaded_get_status(ICEBLOCK_PATH):
@@ -200,6 +200,9 @@ static func _initialize_iceblock() -> void:
 
 static func _get_iceblock_scene() -> PackedScene:
 	if _iceblock_scene:
+		return _iceblock_scene
+	if Thunder.is_single_threaded():
+		_iceblock_scene = ResourceLoader.load(ICEBLOCK_PATH) as PackedScene
 		return _iceblock_scene
 	if ResourceLoader.load_threaded_get_status(ICEBLOCK_PATH) == ResourceLoader.THREAD_LOAD_LOADED:
 		_iceblock_scene = ResourceLoader.load_threaded_get(ICEBLOCK_PATH) as PackedScene

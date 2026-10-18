@@ -33,6 +33,11 @@ var cv: Dictionary = {
 }
 
 
+func _enter_tree() -> void:
+	if Thunder.is_single_threaded():
+		$"UI/OutputContainer/Output".threaded = false
+
+
 func _ready():
 	if "--developer-commands" in OS.get_cmdline_user_args():
 		allow_developer_commands = true

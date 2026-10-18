@@ -33,7 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ok2ax")
-scene = "res://stages/world_1/levelaryx.tscn"
+scene = "res://engine/scenes/castle_cutscene/w1_end_cutscene.tscn"
 metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1186679452]

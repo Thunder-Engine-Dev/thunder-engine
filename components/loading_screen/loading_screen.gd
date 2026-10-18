@@ -1,6 +1,6 @@
 extends Control
 
-@export var scene: String
+@export_file_path("*.tscn", "*.scn") var scene: String
 
 var loading_status: int
 var progress: Array[float]
@@ -8,6 +8,17 @@ var progress: Array[float]
 @onready var progress_bar: ProgressBar = $ProgressBar
 
 func _ready() -> void:
+	if Thunder.is_single_threaded():
+		set_process(false)
+		var packed_scene := ResourceLoader.load(scene, "PackedScene") as PackedScene
+		if packed_scene:
+			loading_status = ResourceLoader.THREAD_LOAD_LOADED
+			progress_bar.value = 100.0
+			Scenes.load_scene_from_packed.call_deferred(packed_scene)
+		else:
+			loading_status = ResourceLoader.THREAD_LOAD_FAILED
+			print("Error. Could not load Resource")
+		return
 	# Request to load the target scene:
 	ResourceLoader.load_threaded_request(scene)
 	

@@ -47,9 +47,21 @@ var _current_hud: CanvasLayer:
 @warning_ignore("unused_private_class_variable")
 var _current_camera: Camera2D
 
+const SINGLE_THREADED_FLAG := "--nothreading"
+
+var _single_threaded: bool = (
+	OS.get_cmdline_args().has(SINGLE_THREADED_FLAG) ||
+	OS.get_cmdline_user_args().has(SINGLE_THREADED_FLAG)
+)
 
 #region Helper Functions
-## Gets an [param key] from [param obj], and this won't send any errors if there is no such key in the object
+## Whether the project was launched with [code]--nothreading[/code]
+func is_single_threaded() -> bool:
+	return _single_threaded
+
+
+## Gets an [param key] from [param obj], and this won't send any errors
+## if there is no such key in the object
 func get_or_null(obj: Variant, key: String):
 	if !is_instance_valid(obj) || !obj.get(key): return null
 	return obj[key]
