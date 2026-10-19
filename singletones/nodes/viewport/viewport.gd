@@ -54,12 +54,12 @@ func _apply_view_to_container(cont: SubViewportContainer, sub_vp: SubViewport, w
 	)
 	cont.scale.x = con_scale.y if con_scale.y < con_scale.x else con_scale.x
 	cont.scale.y = cont.scale.x
+	# Based on the real scale of the container (window size), not on the Scale option
+	var is_integer_scale: bool = is_equal_approx(cont.scale.y, roundf(cont.scale.y))
+	var pixel_perfect: bool = !SettingsManager.settings.filter
 	if cont.material:
-		cont.material.set_shader_parameter(
-			&"enable",
-			!SettingsManager.settings.filter && cont.scale.y != 1
-		)
-	cont.texture_filter = TEXTURE_FILTER_NEAREST if ((cont.scale.y == 1 || (int(ceil(cont.scale.y)) % 2 == 0 && cont.scale.y >= 2)) && !SettingsManager.settings.filter) else TEXTURE_FILTER_LINEAR
+		cont.material.set_shader_parameter(&"enable", pixel_perfect && !is_integer_scale)
+	cont.texture_filter = TEXTURE_FILTER_NEAREST if (pixel_perfect && is_integer_scale) else TEXTURE_FILTER_LINEAR
 	if keep_aspect:
 		cont.position.x = (window_size.x / 2.0) - (sub_vp.size.x * cont.scale.x / 2)
 		cont.position.y = (window_size.y / 2.0) - (sub_vp.size.y * cont.scale.y / 2)

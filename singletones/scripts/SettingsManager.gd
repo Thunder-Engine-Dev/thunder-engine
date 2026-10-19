@@ -119,6 +119,7 @@ var _default_tps: int = Engine.physics_ticks_per_second
 var _current_mouse_pos: Vector2
 
 @onready var _mouse_timer := Timer.new()
+@onready var _display_scale_timer := Timer.new()
 
 func _ready() -> void:
 	load_settings()
@@ -129,6 +130,10 @@ func _ready() -> void:
 	device_keyboard = device_name.is_empty()
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	add_child(_mouse_timer)
+	_display_scale_timer.wait_time = 0.25
+	_display_scale_timer.autostart = true
+	_display_scale_timer.timeout.connect(_check_display_scale_changed)
+	add_child(_display_scale_timer)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if get_tweak("custom_mouse_cursor", false):
 		Input.set_custom_mouse_cursor(
@@ -352,11 +357,12 @@ func _load_joy_controls() -> void:
 var old_scale: float = -1
 var old_auto_scale: float = -1
 var _window_resize_id: int = 0
-## Handles scaling the window via the Scale menu option and the automatic system (HiDPI) scale
-func _window_scale_logic(force_update: bool = false) -> void:
+## Handles scaling the window via the Scale menu option and the automatic system (HiDPI) scale.
+## If [param recenter] is false, the window keeps its center instead of moving to the screen center.
+func _window_scale_logic(force_update: bool = false, recenter: bool = true) -> void:
 	var auto_scale := get_window_auto_scale()
 	# Without saved settings keep the default window, unless the system scale needs compensation
-	if no_saved_settings && is_equal_approx(auto_scale, 1.0): return
+	if no_saved_settings && is_equal_approx(auto_scale, 1.0) && old_auto_scale < 0.0: return
 
 	DisplayServer.window_set_min_size(Vector2i((Vector2(640, 480) * auto_scale).round()))
 
@@ -383,8 +389,12 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	# Set through the Window, not DisplayServer: on X11 and Wayland the window manager applies the size
 	# asynchronously (and not reliably in time), while the Window keeps its own size in sync immediately
 	var root := get_tree().root
+	var old_center := root.position + root.size / 2
 	root.size = target_size
-	root.move_to_center()
+	if recenter:
+		root.move_to_center()
+	else:
+		_keep_window_center(old_center, target_size)
 	GlobalViewport._update_view()
 
 	# The window manager may reposition the window after resizing (or after it's first shown),
@@ -392,8 +402,40 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	for i in 3:
 		await get_tree().process_frame
 	if resize_id != _window_resize_id: return # A newer resize took over
-	root.move_to_center()
+	if recenter:
+		root.move_to_center()
+	else:
+		_keep_window_center(old_center, target_size)
 	GlobalViewport._update_view()
+
+
+## Moves the window so its center is at [param center], but keeps it inside the usable screen area
+func _keep_window_center(center: Vector2i, window_size: Vector2i) -> void:
+	var usable := DisplayServer.screen_get_usable_rect(DisplayServer.window_get_current_screen())
+	var pos := center - window_size / 2
+	pos.x = clampi(pos.x, usable.position.x, maxi(usable.position.x, usable.end.x - window_size.x))
+	pos.y = clampi(pos.y, usable.position.y, maxi(usable.position.y, usable.end.y - window_size.y))
+	get_tree().root.position = pos
+
+
+var _last_window_pos: Vector2i
+## Reapplies the window scale when the window gets moved to a screen with another system (HiDPI) scale.
+## Called periodically, as [signal Window.dpi_changed] isn't implemented on Windows and X11.
+func _check_display_scale_changed() -> void:
+	# Wait until the window stops moving, so it isn't resized while being dragged
+	var pos := DisplayServer.window_get_position()
+	if pos != _last_window_pos:
+		_last_window_pos = pos
+		return
+	var auto_scale := get_window_auto_scale()
+	var previous_scale: float = old_auto_scale if old_auto_scale > 0.0 else 1.0
+	if is_equal_approx(auto_scale, previous_scale): return
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED || settings.scale == 0:
+		# Nothing to resize, just remember it; the window is resized when it returns to windowed mode
+		DisplayServer.window_set_min_size(Vector2i((Vector2(640, 480) * auto_scale).round()))
+		old_auto_scale = auto_scale
+		return
+	_window_scale_logic(false, false)
 
 
 func _fullscreen_logic() -> void:
