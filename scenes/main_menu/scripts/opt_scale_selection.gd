@@ -16,11 +16,7 @@ func _handle_select(mouse_input: bool = false) -> void:
 	if _fullscr:
 		Audio.play_1d_sound(bump, true, { "ignore_pause": true, "bus": "1D Sound" })
 		return
-	var user_screen := float(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen()).y)
-	var max_val: float = 4.0
-	
-	max_val = floorf((user_screen / viewport_height) * 2.0) / 2.0
-	print(max_val)
+	var max_val := _get_max_scale()
 	
 	var old_value = SettingsManager.settings.scale
 	if old_value == 0:
@@ -30,13 +26,19 @@ func _handle_select(mouse_input: bool = false) -> void:
 	_toggled_option(old_value, SettingsManager.settings.scale)
 
 
+## The biggest scale that fits the screen, not counting the automatic HiDPI scale
+func _get_max_scale() -> float:
+	var user_screen := float(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen()).y)
+	var max_val := floorf((user_screen / (viewport_height * SettingsManager.get_window_auto_scale())) * 2.0) / 2.0
+	return clampf(max_val, 1.0, 4.0)
+
+
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if (
-		(fmod(GlobalViewport.container.scale.x, 0.5) == 0 ||
-		fmod(GlobalViewport.container.scale.y, 0.5) == 0)
-	):
-		_value.texture.region.position.y = 38 * (-1 + GlobalViewport.container.scale.x * 2)
+	# The automatic HiDPI scale is not a part of the scale option
+	var view_scale := snappedf(GlobalViewport.container.scale.x / SettingsManager.get_window_auto_scale(), 0.001)
+	if fmod(view_scale, 0.5) == 0:
+		_value.texture.region.position.y = 38 * (-1 + view_scale * 2)
 		is_custom = true
 	else:
 		_value.texture.region.position.y = 0
@@ -58,7 +60,7 @@ func _physics_process(delta: float) -> void:
 		if old_value == 0:
 			SettingsManager.settings.scale = 1
 		else:
-			SettingsManager.settings.scale = clamp(old_value + 0.5, 1, 4)
+			SettingsManager.settings.scale = clamp(old_value + 0.5, 1, _get_max_scale())
 		_toggled_option(old_value, SettingsManager.settings.scale)
 		
 	if Input.is_action_just_pressed("ui_left"):
@@ -66,7 +68,7 @@ func _physics_process(delta: float) -> void:
 			Audio.play_1d_sound(bump, true, { "ignore_pause": true, "bus": "1D Sound" })
 			return
 		var old_value = SettingsManager.settings.scale
-		SettingsManager.settings.scale = clamp(old_value - 0.5, 1, 4)
+		SettingsManager.settings.scale = clamp(old_value - 0.5, 1, _get_max_scale())
 		_toggled_option(old_value, SettingsManager.settings.scale)
 		#if is_custom:
 			#if DisplayServer.window_get_mode(0) == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:

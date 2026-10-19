@@ -87,8 +87,18 @@ var game_focused: bool = true
 
 var enable_shortcut_scene_change_keys: bool = true
 
-## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows
-var ui_scale: float
+## Command line flag that disables the automatic window scaling based on the system (HiDPI) scale
+const NO_AUTO_HIDPI_FLAG := "--no-auto-hidpi"
+## Command line argument (e.g. [code]--ui-scale=1.5[/code]) that forces [member ui_scale]
+const UI_SCALE_ARG := "--ui-scale="
+
+## 0.0 means automatic; 0.5 or above will force this scaling on all supported windows.
+## Can be set with [code]--ui-scale=<value>[/code] on launch.
+var ui_scale: float = _get_float_cmdline_arg(UI_SCALE_ARG)
+
+## Whether the game window is automatically enlarged to match the system scale (HiDPI).
+## Independent from [code]settings.scale[/code]. Disable with [code]--no-auto-hidpi[/code].
+var auto_hidpi: bool = !_has_cmdline_flag(NO_AUTO_HIDPI_FLAG)
 
 signal mouse_pressed(index: MouseButton)
 signal mouse_released(index: MouseButton)
@@ -111,6 +121,7 @@ var _current_mouse_pos: Vector2
 @onready var _mouse_timer := Timer.new()
 
 func _ready() -> void:
+	_print_scaling_info()
 	load_settings()
 	_load_keys()
 	_load_joy_controls()
@@ -340,23 +351,54 @@ func _load_joy_controls() -> void:
 
 
 var old_scale: float = -1
-## Handles scaling the window via the Scale menu option
+var old_auto_scale: float = -1
+var _window_resize_id: int = 0
+## Handles scaling the window via the Scale menu option and the automatic system (HiDPI) scale
 func _window_scale_logic(force_update: bool = false) -> void:
-	if no_saved_settings: return
+	var auto_scale := get_window_auto_scale()
+	# Without saved settings keep the default window, unless the system scale needs compensation
+	if no_saved_settings && is_equal_approx(auto_scale, 1.0): return
+
+	DisplayServer.window_set_min_size(Vector2i((Vector2(640, 480) * auto_scale).round()))
+
 	if settings.scale == 0: return
-	if old_scale == settings.scale && !force_update: return
+	if old_scale == settings.scale && old_auto_scale == auto_scale && !force_update: return
 
-	if old_scale != 0 || settings.scale > 1:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		DisplayServer.window_set_size(Vector2i(
-			ProjectSettings.get_setting("display/window/size/viewport_width"),
-			ProjectSettings.get_setting("display/window/size/viewport_height")
-		) * settings.scale)
-		await get_tree().physics_frame
-		get_tree().root.move_to_center()
-		GlobalViewport._update_view()
-
+	var should_resize: bool = old_scale != 0 || settings.scale > 1 || auto_scale > 1.0
+	# Set before awaiting so repeated calls don't run concurrently
 	old_scale = settings.scale
+	old_auto_scale = auto_scale
+	if !should_resize: return
+
+	var new_size: Vector2 = Vector2(
+		ProjectSettings.get_setting("display/window/size/viewport_width"),
+		ProjectSettings.get_setting("display/window/size/viewport_height")
+	) * settings.scale * auto_scale
+	var usable_size := Vector2(DisplayServer.screen_get_usable_rect(
+		DisplayServer.window_get_current_screen()
+	).size)
+	var target_size := Vector2i(new_size.min(usable_size).round())
+	print("[Settings Manager] Window scaling: scale %sx, auto HiDPI %sx -> window size %s (usable area %s)" % [
+		settings.scale, auto_scale, target_size, Vector2i(usable_size)
+	])
+	_window_resize_id += 1
+	var resize_id := _window_resize_id
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	# Set through the Window, not DisplayServer: on X11 and Wayland the window manager applies the size
+	# asynchronously (and not reliably in time), while the Window keeps its own size in sync immediately
+	var root := get_tree().root
+	root.size = target_size
+	root.move_to_center()
+	GlobalViewport._update_view()
+
+	# The window manager may reposition the window after resizing (or after it's first shown),
+	# so center it again a few frames later
+	for i in 3:
+		await get_tree().process_frame
+	if resize_id != _window_resize_id: return # A newer resize took over
+	print("[Settings Manager] Window size after 3 frames: %s (requested %s)" % [DisplayServer.window_get_size(), target_size])
+	root.move_to_center()
+	GlobalViewport._update_view()
 
 
 func _fullscreen_logic() -> void:
@@ -375,33 +417,82 @@ func _fullscreen_logic() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
 
+## Prints the screen and scaling information to the log
+func _print_scaling_info() -> void:
+	var window := get_window()
+	var screen := DisplayServer.window_get_current_screen(window.get_window_id())
+	print("[Settings Manager] Display driver: %s" % DisplayServer.get_name())
+	print("[Settings Manager] Screen %d: size %s, DPI %d, system scale %sx (reported by engine: %sx)" % [
+		screen, DisplayServer.screen_get_size(screen), DisplayServer.screen_get_dpi(screen),
+		get_system_scale(window), DisplayServer.screen_get_scale(screen)
+	])
+	if auto_hidpi:
+		print("[Settings Manager] Auto HiDPI scaling enabled, window auto scale: %sx" % get_window_auto_scale(window))
+	else:
+		print("[Settings Manager] Auto HiDPI scaling disabled (%s)" % NO_AUTO_HIDPI_FLAG)
+	if ui_scale >= 0.5:
+		print("[Settings Manager] UI scale forced to %sx (%s)" % [ui_scale, UI_SCALE_ARG])
+
+
+## Returns the scale factor of the screen the [param window] is on, as set in the system (HiDPI).
+## Snapped to 0.25 and never below 1.0.
+func get_system_scale(window: Window = get_window()) -> float:
+	var current_screen := DisplayServer.window_get_current_screen(window.get_window_id())
+	var system_scale := DisplayServer.screen_get_scale(current_screen)
+	if OS.get_name() == "Windows":
+		system_scale = maxf(system_scale, DisplayServer.screen_get_dpi(current_screen) / 96.0)
+	elif system_scale <= 1.0 && DisplayServer.get_name() == "X11":
+		# X11 (including XWayland) doesn't report the scale, so use the desktop's Xft.dpi
+		system_scale = _get_x11_scale()
+	return maxf(snappedf(system_scale, 0.25), 1.0)
+
+
+var _x11_scale: float = -1.0
+## Returns the scale from the [code]Xft.dpi[/code] X resource (96 DPI = 1.0), or 1.0 if unavailable.
+## Queried once, since it spawns a process.
+func _get_x11_scale() -> float:
+	if _x11_scale >= 0.0:
+		return _x11_scale
+	_x11_scale = 1.0
+	var output: Array = []
+	if OS.execute("xrdb", ["-query"], output) == 0 && !output.is_empty():
+		for line: String in String(output[0]).split("\n"):
+			if line.begins_with("Xft.dpi:"):
+				var dpi := line.trim_prefix("Xft.dpi:").strip_edges().to_float()
+				if dpi > 0.0:
+					_x11_scale = dpi / 96.0
+				break
+	print("[Settings Manager] X11 scale from Xft.dpi: %sx" % _x11_scale)
+	return _x11_scale
+
+
+## Returns the factor the game window is enlarged by to match the system scale,
+## on top of [code]settings.scale[/code]. Always 1.0 when launched with [code]--no-auto-hidpi[/code].
+func get_window_auto_scale(window: Window = get_window()) -> float:
+	if !auto_hidpi:
+		return 1.0
+	return get_system_scale(window)
+
+
 ## Defines UI scale, mainly for HiDPI displays. Use for external windows, e.g. the console.
 func get_ui_scale(window: Window = get_window()) -> float:
 	if ui_scale >= 0.5:
 		return ui_scale
-	var current_screen := DisplayServer.window_get_current_screen(window.get_window_id())
-	var non_windows_scale := DisplayServer.screen_get_scale(current_screen)
-	if OS.get_name() != "Windows":
-		return non_windows_scale
-	elif DisplayServer.screen_get_dpi(current_screen) > 120:
-		return 2.0
-	return 1.0
+	return get_system_scale(window)
 
 
 func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -> void:
-	if window.content_scale_factor == scale: return
+	var old_factor := window.content_scale_factor
+	if is_equal_approx(old_factor, scale): return
 	window.content_scale_factor = scale
+	print("[Settings Manager] Window %s content scale factor: %sx -> %sx" % [window.name, old_factor, scale])
 	if no_resize:
 		return
-	window.size *= scale
-	window.min_size *= scale
-	
-	#if (!no_resize && window.content_scale_factor != scale) || resize_forced: 4.4.1
-		#window.size *= scale
-		#window.min_size *= scale
-	#if window.content_scale_factor != scale:
-		#window.content_scale_factor = scale
-	
+	# Resize relatively to the previous factor, not from scratch
+	var ratio := scale / old_factor
+	window.size = Vector2i((Vector2(window.size) * ratio).round())
+	window.min_size = Vector2i((Vector2(window.min_size) * ratio).round())
+
 	var usable_size = DisplayServer.screen_get_usable_rect(
 		DisplayServer.window_get_current_screen(window.get_window_id())
 	).size
@@ -409,11 +500,17 @@ func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -
 		window.size.y = usable_size.y
 	if window.size.x > usable_size.x:
 		window.size.x = usable_size.x
-	
-	#if window.position.x + window.size.x > usable_size.x: 4.4.1
-		#window.position.x = usable_size.x - window.size.x
-	#if window.position.y + window.size.y > usable_size.y:
-		#window.position.y = usable_size.y - window.size.y
+
+
+static func _has_cmdline_flag(flag: String) -> bool:
+	return OS.get_cmdline_args().has(flag) || OS.get_cmdline_user_args().has(flag)
+
+
+static func _get_float_cmdline_arg(prefix: String) -> float:
+	for arg in OS.get_cmdline_args() + OS.get_cmdline_user_args():
+		if arg.begins_with(prefix):
+			return arg.trim_prefix(prefix).to_float()
+	return 0.0
 
 
 ## Saves the settings variable to file
