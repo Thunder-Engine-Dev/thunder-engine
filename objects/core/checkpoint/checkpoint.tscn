@@ -226,6 +226,7 @@ texture = ExtResource("2_13hdd")
 
 [node name="TextFlying" type="Sprite2D" parent="." unique_id=865319115]
 visible = false
+physics_interpolation_mode = 2
 z_index = 2
 position = Vector2(0, -85)
 texture = ExtResource("2_13hdd")
@@ -249,6 +250,7 @@ autoplay = &"RESET"
 
 [node name="SpriteMaxQuality" type="Sprite2D" parent="." unique_id=1715540176]
 visible = false
+physics_interpolation_mode = 2
 z_index = 2
 position = Vector2(0, -86)
 texture = ExtResource("6_jvje8")
