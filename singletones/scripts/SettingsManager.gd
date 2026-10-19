@@ -121,7 +121,6 @@ var _current_mouse_pos: Vector2
 @onready var _mouse_timer := Timer.new()
 
 func _ready() -> void:
-	_print_scaling_info()
 	load_settings()
 	_load_keys()
 	_load_joy_controls()
@@ -378,9 +377,6 @@ func _window_scale_logic(force_update: bool = false) -> void:
 		DisplayServer.window_get_current_screen()
 	).size)
 	var target_size := Vector2i(new_size.min(usable_size).round())
-	print("[Settings Manager] Window scaling: scale %sx, auto HiDPI %sx -> window size %s (usable area %s)" % [
-		settings.scale, auto_scale, target_size, Vector2i(usable_size)
-	])
 	_window_resize_id += 1
 	var resize_id := _window_resize_id
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
@@ -396,7 +392,6 @@ func _window_scale_logic(force_update: bool = false) -> void:
 	for i in 3:
 		await get_tree().process_frame
 	if resize_id != _window_resize_id: return # A newer resize took over
-	print("[Settings Manager] Window size after 3 frames: %s (requested %s)" % [DisplayServer.window_get_size(), target_size])
 	root.move_to_center()
 	GlobalViewport._update_view()
 
@@ -415,23 +410,6 @@ func _fullscreen_logic() -> void:
 			get_window().grab_focus.call_deferred()
 	elif settings.fullscreen && DisplayServer.window_get_mode(0) != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-
-
-## Prints the screen and scaling information to the log
-func _print_scaling_info() -> void:
-	var window := get_window()
-	var screen := DisplayServer.window_get_current_screen(window.get_window_id())
-	print("[Settings Manager] Display driver: %s" % DisplayServer.get_name())
-	print("[Settings Manager] Screen %d: size %s, DPI %d, system scale %sx (reported by engine: %sx)" % [
-		screen, DisplayServer.screen_get_size(screen), DisplayServer.screen_get_dpi(screen),
-		get_system_scale(window), DisplayServer.screen_get_scale(screen)
-	])
-	if auto_hidpi:
-		print("[Settings Manager] Auto HiDPI scaling enabled, window auto scale: %sx" % get_window_auto_scale(window))
-	else:
-		print("[Settings Manager] Auto HiDPI scaling disabled (%s)" % NO_AUTO_HIDPI_FLAG)
-	if ui_scale >= 0.5:
-		print("[Settings Manager] UI scale forced to %sx (%s)" % [ui_scale, UI_SCALE_ARG])
 
 
 ## Returns the scale factor of the screen the [param window] is on, as set in the system (HiDPI).
@@ -462,7 +440,6 @@ func _get_x11_scale() -> float:
 				if dpi > 0.0:
 					_x11_scale = dpi / 96.0
 				break
-	print("[Settings Manager] X11 scale from Xft.dpi: %sx" % _x11_scale)
 	return _x11_scale
 
 
@@ -485,7 +462,6 @@ func scale_window(window: Window, scale: float = 1.0, no_resize: bool = false) -
 	var old_factor := window.content_scale_factor
 	if is_equal_approx(old_factor, scale): return
 	window.content_scale_factor = scale
-	print("[Settings Manager] Window %s content scale factor: %sx -> %sx" % [window.name, old_factor, scale])
 	if no_resize:
 		return
 	# Resize relatively to the previous factor, not from scratch
