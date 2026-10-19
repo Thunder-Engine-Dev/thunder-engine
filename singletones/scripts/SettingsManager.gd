@@ -135,12 +135,7 @@ func _ready() -> void:
 	_display_scale_timer.timeout.connect(_check_display_scale_changed)
 	add_child(_display_scale_timer)
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	if get_tweak("custom_mouse_cursor", false):
-		Input.set_custom_mouse_cursor(
-			load(
-				ProjectSettings.get_setting("application/thunder_settings/custom_mouse_cursor_path")
-			)
-		)
+	apply_custom_mouse_cursor()
 	_mouse_timer.timeout.connect(func():
 		if get_tree().root.get_visible_rect().has_point(SettingsManager._current_mouse_pos):
 			_hide_mouse()
@@ -418,6 +413,30 @@ func _keep_window_center(center: Vector2i, window_size: Vector2i) -> void:
 	get_tree().root.position = pos
 
 
+var _cursor_scale: float = 0.0
+## Sets or removes the custom mouse cursor depending on the tweak.
+## The cursor is scaled by the system (HiDPI) scale only, the Scale option doesn't affect it.
+func apply_custom_mouse_cursor() -> void:
+	if !get_tweak("custom_mouse_cursor", false):
+		Input.set_custom_mouse_cursor(null)
+		return
+	var cursor: Texture2D = load(
+		ProjectSettings.get_setting("application/thunder_settings/custom_mouse_cursor_path")
+	)
+	_cursor_scale = get_window_auto_scale()
+	if !is_equal_approx(_cursor_scale, 1.0):
+		var image := cursor.get_image()
+		if image.is_compressed():
+			image.decompress()
+		image.resize(
+			maxi(1, roundi(image.get_width() * _cursor_scale)),
+			maxi(1, roundi(image.get_height() * _cursor_scale)),
+			Image.INTERPOLATE_LANCZOS
+		)
+		cursor = ImageTexture.create_from_image(image)
+	Input.set_custom_mouse_cursor(cursor)
+
+
 var _last_window_pos: Vector2i
 ## Reapplies the window scale when the window gets moved to a screen with another system (HiDPI) scale.
 ## Called periodically, as [signal Window.dpi_changed] isn't implemented on Windows and X11.
@@ -428,6 +447,8 @@ func _check_display_scale_changed() -> void:
 		_last_window_pos = pos
 		return
 	var auto_scale := get_window_auto_scale()
+	if !is_equal_approx(auto_scale, _cursor_scale) && get_tweak("custom_mouse_cursor", false):
+		apply_custom_mouse_cursor()
 	var previous_scale: float = old_auto_scale if old_auto_scale > 0.0 else 1.0
 	if is_equal_approx(auto_scale, previous_scale): return
 	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED || settings.scale == 0:
