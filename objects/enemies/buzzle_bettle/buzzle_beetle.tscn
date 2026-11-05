@@ -71,12 +71,12 @@ animations = [{
 }]
 
 [node name="BuzzleBettle" type="CharacterBody2D" unique_id=605331814]
-platform_on_leave = 2
 collision_layer = 2
 collision_mask = 32
 floor_constant_speed = true
 floor_max_angle = 0.837758
 floor_snap_length = 5.0
+platform_on_leave = 2
 script = ExtResource("1_j2djr")
 look_at_player = true
 sprite = NodePath("Sprite")
@@ -113,6 +113,7 @@ killing_immune = {
 "head": false,
 "iceball": true,
 "iceblock": false,
+"lava": false,
 "shell": false,
 "shell_defence": 1,
 "shell_forced": false,
