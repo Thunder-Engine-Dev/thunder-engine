@@ -187,12 +187,19 @@ const GAMEPAD_HINT_PLAYSTATION: PackedStringArray = [
 	"dualshock", "dualsense",
 	"playstation 3", "playstation 4", "playstation 5",
 ]
+const GAMEPAD_HINT_SWITCH: PackedStringArray = [
+	"switch", "pro controller", "powera core", 
+	# For switch, we generally consider pro controller only,
+	# because joycons are generally not recognized as a controller in default OS drivers.
+	# Also, their icons are different. 
+]
 const GAMEPAD_HINT_OPTIONS: PackedStringArray = [
-	"xbox", "playstation", "raw",
+	"xbox", "playstation", "switch", "raw",
 ]
 
 
-## Returns the active gamepad icon style: "xbox", "playstation", or "raw".
+
+## Returns the active gamepad icon style: "xbox", "playstation", "switch", or "raw".
 ## An empty setting falls back to detecting the connected device.
 func get_gamepad_hint() -> String:
 	var hint := str(settings.get("gamepad_hint", ""))
@@ -205,6 +212,9 @@ func get_gamepad_hint() -> String:
 	for token in GAMEPAD_HINT_PLAYSTATION:
 		if token in joy_name:
 			return "playstation"
+	for token in GAMEPAD_HINT_SWITCH:
+		if token in joy_name:
+			return "switch"
 	return "raw"
 
 
