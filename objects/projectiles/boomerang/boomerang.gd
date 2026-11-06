@@ -10,6 +10,7 @@ var _trail_position: Vector2
 var _trail_end_position: Vector2
 var _trail_frame: int = -1
 var _trail_settings := Effect.TrailSettings.new()
+var enemy_owner: Node
 
 @onready var area_2d: Area2D = $Area2D
 @onready var sound_flying: AudioStreamPlayer2D = $SoundFlying
@@ -24,7 +25,9 @@ func _ready() -> void:
 		sound_interval.start(spin_delay)
 	await get_tree().physics_frame
 	dir = sign(speed.x)
-		
+	if belongs_to != Data.PROJECTILE_BELONGS.PLAYER:
+		area_2d.collision_mask = 2
+	
 	if sprite_node is Sprite2D:
 		sprite_node.texture = sprite_node.texture if belongs_to == Data.PROJECTILE_BELONGS.PLAYER else enemy_mode_texture
 
@@ -51,6 +54,11 @@ func _physics_process(delta: float) -> void:
 		if belongs_to == Data.PROJECTILE_BELONGS.PLAYER:
 			for i in area_2d.get_overlapping_bodies():
 				if i is Player:
+					queue_free()
+					return
+		else:
+			for i in area_2d.get_overlapping_bodies():
+				if i == enemy_owner:
 					queue_free()
 					return
 		

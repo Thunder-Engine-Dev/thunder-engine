@@ -9,3 +9,4 @@ func _ready() -> void:
 			Thunder.rng.get_randf_range(min_speed.x, max_speed.x) * vars.bro.dir,
 			Thunder.rng.get_randf_range(min_speed.y, max_speed.y)
 		))
+		node.set(&"enemy_owner", vars.bro)

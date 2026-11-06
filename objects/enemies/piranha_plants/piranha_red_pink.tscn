@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="7_60vhi"]
 [ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="8_cbroa"]
 [ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="9_mkmy1"]
-[ext_resource type="Texture2D" uid="uid://bvsblr02fnosw" path="res://engine/objects/enemies/piranha_plants/textures/piranha_pink.png" id="10_3i0y4"]
 [ext_resource type="Texture2D" uid="uid://c3kt61mcfsne6" path="res://engine/objects/enemies/piranha_plants/textures/piranha_red.png" id="10_dkfer"]
+[ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="11_cihe2"]
 [ext_resource type="Script" uid="uid://dufc72buf55ad" path="res://engine/scripts/classes/effecters/item_visibility_stage2d_controlled.gd" id="12_cihe2"]
 
 [sub_resource type="Resource" id="Resource_i5haj"]
@@ -91,9 +91,9 @@ custom_vars = {
 "attack_thrower": SubResource("Resource_i5haj"),
 "attack_times": 3,
 "projectile_collision": false,
-"projectile_gravity_scale": "0.18",
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": false,
 "projectile_offscreen_time": 2.0,
-"projectile_remove_from_top": false,
 "projectile_speed_correction": true,
 "projectile_speed_max": Vector2(200, -550),
 "projectile_speed_min": Vector2(-200, -250)
@@ -152,14 +152,11 @@ metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite" unique_id=1484425853]
 position = Vector2(0, 24)
-texture = ExtResource("10_3i0y4")
-region_enabled = true
-region_rect = Rect2(0, 32, 32, 16)
+texture = ExtResource("11_cihe2")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1972247728]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(2.38419e-07, -32)
-scale = Vector2(1.6, 3.2)
+rect = Rect2(-16, -64, 32, 64)
+show_rect = false
 
 [node name="Step" type="Timer" parent="." unique_id=1324624837]
 process_callback = 0

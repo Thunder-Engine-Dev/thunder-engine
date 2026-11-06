@@ -60,7 +60,6 @@ animations = [{
 }]
 
 [node name="PiranhaGray" type="Node2D" unique_id=188820881]
-self_modulate = Color(1, 1, 1, 0.121569)
 script = ExtResource("1_vwk7g")
 
 [node name="Body" type="Area2D" parent="." unique_id=2004669837]
@@ -114,10 +113,8 @@ sprite_frames = SubResource("SpriteFrames_ym01l")
 autoplay = "default"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=243980874]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(0.5, -24)
-scale = Vector2(1.55, 2.4)
-metadata/_edit_lock_ = true
+rect = Rect2(-16, -64, 32, 64)
+show_rect = false
 
 [node name="Step" type="Timer" parent="." unique_id=1766583483]
 process_callback = 0

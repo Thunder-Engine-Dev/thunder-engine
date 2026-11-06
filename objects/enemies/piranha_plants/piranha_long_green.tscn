@@ -60,8 +60,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PiranhaGreen" type="Node2D" unique_id=398817113]
-self_modulate = Color(1, 1, 1, 0.121569)
+[node name="PiranhaLongGreen" type="Node2D" unique_id=398817113]
 script = ExtResource("1_24gpt")
 stay_in_pipe_at_first = false
 stretching_speed = 60.0
@@ -124,8 +123,8 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 112)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1763415189]
-modulate = Color(1, 1, 1, 0.0196078)
 rect = Rect2(-16, -64, 32, 192)
+show_rect = false
 metadata/_edit_lock_ = true
 
 [node name="Step" type="Timer" parent="." unique_id=1049116817]

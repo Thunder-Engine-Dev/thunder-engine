@@ -80,7 +80,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.1)
 metadata/_snap_enabled = true
 
-[node name="PiranhaPink" type="Node2D" unique_id=1683214328]
+[node name="PiranhaLongPink" type="Node2D" unique_id=1683214328]
 script = ExtResource("1_pv05w")
 stretching_speed = 60.0
 stretching_length = 172.0
@@ -91,7 +91,8 @@ custom_vars = {
 "attack_thrower": SubResource("Resource_i5haj"),
 "attack_times": 3,
 "projectile_collision": false,
-"projectile_gravity_scale": "0.18",
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": false,
 "projectile_offscreen_time": 2.0,
 "projectile_speed_correction": true,
 "projectile_speed_max": Vector2(200, -550),

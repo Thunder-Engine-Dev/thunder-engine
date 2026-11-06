@@ -147,10 +147,8 @@ autoplay = "default"
 metadata/_edit_pinned_properties_ = [&"sprite_frames"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=933789772]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(2.38419e-07, -32)
-scale = Vector2(1.6, 3.2)
-metadata/_edit_lock_ = true
+rect = Rect2(-16, -64, 32, 64)
+show_rect = false
 
 [node name="Step" type="Timer" parent="." unique_id=739378013]
 process_callback = 0

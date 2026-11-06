@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://47vsp45yv7xc"]
+
+[ext_resource type="PackedScene" uid="uid://c5ckuqfrnnltw" path="res://engine/objects/enemies/piranha_plants/piranha_long_green.tscn" id="1_y5lbp"]
+[ext_resource type="Texture2D" uid="uid://cuuampkjmhj6j" path="res://engine/objects/enemies/piranha_plants/textures/piranha_gray.png" id="2_y5lbp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_214it"]
+atlas = ExtResource("2_y5lbp")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpk8u"]
+atlas = ExtResource("2_y5lbp")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlqah"]
+atlas = ExtResource("2_y5lbp")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dj17r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_214it")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpk8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlqah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpk8u")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaLongGray" unique_id=398817113 instance=ExtResource("1_y5lbp")]
+
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(401680276) index="1" unique_id=213566397]
+killing_immune = {
+"beetroot": true,
+"boomerang": true,
+"fireball": true,
+"hammer": false,
+"iceball": true,
+"shell": true,
+"shell_defence": 99,
+"shell_forced": false,
+"starman": false
+}
+
+[node name="Sprite" parent="." index="2" unique_id=1356633563]
+sprite_frames = SubResource("SpriteFrames_dj17r")

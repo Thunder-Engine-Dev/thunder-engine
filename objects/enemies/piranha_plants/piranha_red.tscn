@@ -117,9 +117,8 @@ sprite_frames = SubResource("SpriteFrames_qgjvw")
 autoplay = "default"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=884211194]
-modulate = Color(1, 1, 1, 0.0196078)
-rect = Rect2(-16, -48, 32, 96)
-metadata/_edit_lock_ = true
+rect = Rect2(-16, -64, 32, 64)
+show_rect = false
 
 [node name="Step" type="Timer" parent="." unique_id=291977301]
 process_callback = 0

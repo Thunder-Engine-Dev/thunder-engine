@@ -99,9 +99,8 @@ sprite_frames = SubResource("SpriteFrames_tjbik")
 autoplay = "default"
 
 [node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=1845691615]
-modulate = Color(1, 1, 1, 0.0196078)
-position = Vector2(1.43051e-06, 1.43051e-06)
-scale = Vector2(1.6, 1.6)
+rect = Rect2(-16, -16, 32, 32)
+show_rect = false
 metadata/_edit_lock_ = true
 
 [connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]

@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cxn37xpumyh1l"]
+
+[ext_resource type="PackedScene" uid="uid://oja3uy1y4hpl" path="res://engine/objects/enemies/piranha_plants/piranha_pink.tscn" id="1_hwi7s"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="2_jsbcn"]
+[ext_resource type="Texture2D" uid="uid://ds42qdr753m7x" path="res://engine/objects/enemies/piranha_plants/textures/head_blue.png" id="3_2gfp3"]
+[ext_resource type="Texture2D" uid="uid://8kxgol8bgmfi" path="res://engine/objects/enemies/piranha_plants/textures/stem_pink.png" id="4_3cg3v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mf0c"]
+atlas = ExtResource("3_2gfp3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xb6sx"]
+atlas = ExtResource("3_2gfp3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykx7a"]
+atlas = ExtResource("3_2gfp3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbgr5"]
+atlas = ExtResource("3_2gfp3")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhbsu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mf0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xb6sx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykx7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbgr5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="PiranhaBluePink" unique_id=1342841014 instance=ExtResource("1_hwi7s")]
+range_in_pipe = 0.0
+
+[node name="EnemyAttacked" parent="Body" parent_id_path=PackedInt32Array(1261853971) index="1" unique_id=1880168084]
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": false
+}
+killing_sound_failed = ExtResource("2_jsbcn")
+
+[node name="Sprite" parent="." index="2" unique_id=439088943]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_bhbsu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite" index="0" unique_id=1303288151]
+position = Vector2(0, 24)
+texture = ExtResource("4_3cg3v")

@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://ccfq8ukoy3ukr"]
+
+[ext_resource type="Script" uid="uid://dmwyp48em601h" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_nhakc"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="2_cekof"]
+[ext_resource type="PackedScene" uid="uid://bg1q2ryf5r2ky" path="res://engine/objects/projectiles/iceball/iceball.tscn" id="3_nhakc"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="4_wgalm"]
+[ext_resource type="Script" uid="uid://c0j62sxsdu1lp" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="5_q4wi0"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="6_1how5"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="7_nfu5p"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="8_q6kke"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="9_wvsd5"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="10_2mr3s"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="11_b52it"]
+[ext_resource type="Texture2D" uid="uid://c1gbisvbe8kdh" path="res://engine/objects/enemies/piranha_plants/textures/head_light_blue.png" id="12_k70k8"]
+
+[sub_resource type="Resource" id="Resource_tm078"]
+script = ExtResource("4_wgalm")
+creation_nodepack = ExtResource("3_nhakc")
+trans_inheritances = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w104"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_l87kq"]
+script = ExtResource("4_wgalm")
+creation_nodepack = ExtResource("8_q6kke")
+trans_inheritances = 7
+visi_z_index = 1
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("9_wvsd5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhakc"]
+atlas = ExtResource("12_k70k8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cekof"]
+atlas = ExtResource("12_k70k8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_246ds"]
+atlas = ExtResource("12_k70k8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgalm"]
+atlas = ExtResource("12_k70k8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjbik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhakc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cekof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_246ds")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgalm")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="PiranhaHeadIce" type="Node2D" unique_id=1907126208]
+script = ExtResource("1_nhakc")
+fire_interval = 2.4
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("2_cekof"),
+"attack_thrower": SubResource("Resource_tm078"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": false,
+"projectile_offscreen_time": 2.0,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
+custom_script = ExtResource("5_q4wi0")
+
+[node name="Body" type="Area2D" parent="." unique_id=1817882490]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("6_1how5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body" unique_id=1589031990]
+visible = false
+shape = SubResource("RectangleShape2D_3w104")
+
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1400885768]
+script = ExtResource("7_nfu5p")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": true
+}
+killing_creation = SubResource("Resource_l87kq")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("10_2mr3s")
+killing_sound_failed = ExtResource("11_b52it")
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1634074432]
+sprite_frames = SubResource("SpriteFrames_tjbik")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=1845691615]
+rect = Rect2(-64, -64, 128, 80)
+show_rect = false
+metadata/_edit_lock_ = true
+
+[node name="Fire" type="Timer" parent="." unique_id=833174515]
+process_callback = 0
+one_shot = true
+
+[node name="Step" type="Timer" parent="." unique_id=1167600084]
+process_callback = 0
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]

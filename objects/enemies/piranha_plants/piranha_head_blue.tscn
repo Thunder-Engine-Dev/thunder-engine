@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://d3m02oqhag6kk"]
+
+[ext_resource type="PackedScene" uid="uid://dt52xvrtre8h3" path="res://engine/objects/enemies/piranha_plants/piranha_head.tscn" id="1_1a3sa"]
+[ext_resource type="Texture2D" uid="uid://ds42qdr753m7x" path="res://engine/objects/enemies/piranha_plants/textures/head_blue.png" id="2_1a3sa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o31w3"]
+atlas = ExtResource("2_1a3sa")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anscr"]
+atlas = ExtResource("2_1a3sa")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdnaj"]
+atlas = ExtResource("2_1a3sa")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pityv"]
+atlas = ExtResource("2_1a3sa")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7lse7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o31w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anscr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdnaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pityv")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="PiranhaHeadBlue" unique_id=1907126208 instance=ExtResource("1_1a3sa")]
+
+[node name="Sprite" parent="." index="1" unique_id=1634074432]
+sprite_frames = SubResource("SpriteFrames_7lse7")

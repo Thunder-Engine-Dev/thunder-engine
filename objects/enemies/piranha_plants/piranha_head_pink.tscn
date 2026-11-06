@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://djq81hkvdxf8a"]
+
+[ext_resource type="Script" uid="uid://dmwyp48em601h" path="res://engine/objects/enemies/piranha_plants/piranha_head.gd" id="1_6f3re"]
+[ext_resource type="Script" uid="uid://dhaqb1incjw33" path="res://engine/objects/enemies/enemy_body_collision.gd" id="2_c7quw"]
+[ext_resource type="AudioStream" uid="uid://dtr88jdx4yuq4" path="res://engine/objects/projectiles/sounds/shoot.wav" id="2_n8h7b"]
+[ext_resource type="PackedScene" uid="uid://c4jlbnswk5dlw" path="res://engine/objects/projectiles/fireball/fireball.tscn" id="3_elyk1"]
+[ext_resource type="Script" uid="uid://1n3p7ctv1snn" path="res://engine/scripts/nodes/enemies/enemy_attacked.gd" id="3_kwsk2"]
+[ext_resource type="PackedScene" uid="uid://oe7i3cief0g" path="res://engine/objects/enemies/_dead/enemy_killed.tscn" id="4_hcvhm"]
+[ext_resource type="Script" uid="uid://c0j62sxsdu1lp" path="res://engine/objects/enemies/piranha_plants/piranha_fireball.gd" id="5_ku1ei"]
+[ext_resource type="Script" uid="uid://du32vchaulqj6" path="res://engine/objects/enemies/_dead/prefabs/do_killed.gd" id="5_n8h7b"]
+[ext_resource type="Script" uid="uid://bm81fg3h4j8sj" path="res://engine/scripts/resources/instance_node2d/instance_node2d.gd" id="6_elyk1"]
+[ext_resource type="AudioStream" uid="uid://be3uvqev2c1p6" path="res://engine/objects/players/prefabs/sounds/kick.wav" id="7_ku1ei"]
+[ext_resource type="AudioStream" uid="uid://c162tqddc8eej" path="res://engine/objects/bumping_blocks/_sounds/bump.wav" id="8_ij6ph"]
+[ext_resource type="Texture2D" uid="uid://cn66b21sja8vk" path="res://engine/objects/enemies/piranha_plants/textures/head_pink.png" id="9_6f3re"]
+[ext_resource type="Script" uid="uid://dufc72buf55ad" path="res://engine/scripts/classes/effecters/item_visibility_stage2d_controlled.gd" id="10_c7quw"]
+
+[sub_resource type="Resource" id="Resource_i5haj"]
+script = ExtResource("6_elyk1")
+creation_nodepack = ExtResource("3_elyk1")
+trans_inheritances = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w104"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_l87kq"]
+script = ExtResource("6_elyk1")
+creation_nodepack = ExtResource("4_hcvhm")
+trans_inheritances = 7
+visi_z_index = 1
+custom_vars = {
+"death": NodePath("../../Sprite"),
+"death_speed": Vector2(0, -250)
+}
+custom_script = ExtResource("5_n8h7b")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7quw"]
+atlas = ExtResource("9_6f3re")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwsk2"]
+atlas = ExtResource("9_6f3re")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcvhm"]
+atlas = ExtResource("9_6f3re")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8h7b"]
+atlas = ExtResource("9_6f3re")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjbik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7quw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwsk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcvhm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8h7b")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_h4xr3"]
+colors = PackedColorArray(1, 1, 1, 0.203922, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kwsk2"]
+gradient = SubResource("Gradient_h4xr3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
+metadata/_snap_enabled = true
+
+[node name="PiranhaHeadPink" type="Node2D" unique_id=1907126208]
+script = ExtResource("1_6f3re")
+fire_interval = 2.4
+custom_vars = {
+"attack_amount": 1,
+"attack_interval": 0.2,
+"attack_sound": ExtResource("2_n8h7b"),
+"attack_thrower": SubResource("Resource_i5haj"),
+"attack_times": 3,
+"projectile_collision": false,
+"projectile_gravity_scale": "0.2",
+"projectile_integer_speed": false,
+"projectile_offscreen_time": 2.0,
+"projectile_speed_correction": true,
+"projectile_speed_max": Vector2(200, -550),
+"projectile_speed_min": Vector2(-200, -250)
+}
+custom_script = ExtResource("5_ku1ei")
+
+[node name="Body" type="Area2D" parent="." unique_id=1817882490]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("2_c7quw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body" unique_id=1589031990]
+visible = false
+shape = SubResource("RectangleShape2D_3w104")
+
+[node name="EnemyAttacked" type="Node" parent="Body" unique_id=1400885768]
+script = ExtResource("3_kwsk2")
+stomping_standard = Vector2(0, 0)
+killing_immune = {
+"beetroot": true,
+"boomerang": false,
+"fireball": true,
+"hammer": false,
+"head": false,
+"iceball": false,
+"shell": false,
+"shell_defence": 0,
+"shell_forced": false,
+"starman": true
+}
+killing_creation = SubResource("Resource_l87kq")
+killing_scores = 100
+killing_sound_succeeded = ExtResource("7_ku1ei")
+killing_sound_failed = ExtResource("8_ij6ph")
+ice_sprite = NodePath("../../Sprite")
+metadata/_edit_pinned_properties_ = [&"stomping_standard", &"killing_immune", &"killing_creation", &"killing_scores", &"killing_sound_succeeded"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1634074432]
+sprite_frames = SubResource("SpriteFrames_tjbik")
+autoplay = "default"
+
+[node name="Vision" type="VisibleOnScreenNotifier2D" parent="." unique_id=1845691615]
+rect = Rect2(-64, -64, 128, 80)
+show_rect = false
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=395780059]
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_kwsk2")
+script = ExtResource("10_c7quw")
+
+[node name="Fire" type="Timer" parent="." unique_id=833174515]
+process_callback = 0
+one_shot = true
+
+[node name="Step" type="Timer" parent="." unique_id=1167600084]
+process_callback = 0
+one_shot = true
+
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="." method="queue_free" flags=3]
+[connection signal="killed_succeeded" from="Body/EnemyAttacked" to="Sprite" method="stop"]
