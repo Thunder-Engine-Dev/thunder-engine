@@ -23,7 +23,7 @@ signal closed
 
 func _ready() -> void:
 	animation_player.play(&"init")
-
+	
 	if (
 		Data.technical_values.impulse_progress_continue &&
 		ProfileManager.profiles.has("suspended") &&
@@ -37,11 +37,21 @@ func _ready() -> void:
 	Data.technical_values.impulse_progress_continue = false
 
 
+func _wait_for_crossfade() -> void:
+	var trans: Transition = TransitionManager.current_transition
+	if !is_instance_valid(trans) || !trans.switches_scene:
+		return
+	while is_instance_valid(trans) && !trans.cancelled && TransitionManager.current_transition == trans:
+		await get_tree().process_frame
+	#await get_tree().physics_frame
+
+
 func suspended_game_logic() -> void:
 	var player: Player = Thunder._current_player
 	player.no_movement = true
 	player.hide()
-
+	await _wait_for_crossfade()
+	
 	profile = ProfileManager.profiles.suspended.data
 	scene = profile.scene
 	var label_text: String = profile.title_prefix.replacen("\\n", "
