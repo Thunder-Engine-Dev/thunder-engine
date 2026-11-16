@@ -2,6 +2,8 @@ extends RefCounted
 class_name Effect
 
 const TRAIL: PackedScene = preload("res://engine/objects/effects/trail/trail.tscn")
+## Trail that shrinks instead of (or together with) fading; see [member TrailSettings.shrink_strength].
+const TRAIL_SHRINK: PackedScene = preload("res://engine/objects/effects/trail_shrink/trail_shrink.tscn")
 
 
 ## Reusable settings for [method emit_trail]. Emission never modifies this object.
@@ -14,6 +16,11 @@ class TrailSettings extends RefCounted:
 	var z_index: int = 0
 	var material: Material
 	var texture_filter: CanvasItem.TextureFilter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
+	## Scene of the trail instead of [constant TRAIL], e.g. [constant TRAIL_SHRINK].
+	## Its root must be a Sprite2D with the properties of the trail script.
+	var scene: PackedScene
+	## Applied when the trail scene has a shrink_strength property ([constant TRAIL_SHRINK]).
+	var shrink_strength: float = 0.05
 
 
 ## Emits one immediately visible image of a Sprite2D or AnimatedSprite2D.
@@ -51,7 +58,7 @@ static func emit_trail(
 		return null
 	var config: TrailSettings = settings if settings != null else TrailSettings.new()
 	# Attach before applying world coordinates, including when the scene is transformed.
-	return NodeCreator.prepare_2d(TRAIL, sprite).create_2d().call_method(
+	return NodeCreator.prepare_2d(config.scene if config.scene != null else TRAIL, sprite).create_2d().call_method(
 		func(effect: Sprite2D) -> void:
 			effect.global_transform = sprite.global_transform
 			effect.global_position = previous_global_position if sprite.is_physics_interpolated_and_enabled() else sprite.global_position
@@ -72,9 +79,12 @@ static func emit_trail(
 			effect.material = config.material
 			effect.z_index = config.z_index
 			effect.texture_filter = config.texture_filter
-			# WARNING: If your game crashes here, go download a proper Godot build:
-			# https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE
+			if &"shrink_strength" in effect:
+				effect.set(&"shrink_strength", config.shrink_strength)
+			# ATTENTION: If your game crashes here, go download a proper Godot build:
+			# https://github.com/Thunder-Engine-Dev/godot-thunder/releases/latest
 			effect.snap_2d_transforms_mode = CanvasItem.SNAP_2D_TRANSFORMS_MODE_CANVAS
+			# PLEASE READ THE COMMENT ABOVE !!!
 			effect.add_to_group(&"Trail")
 	).get_node() as Sprite2D
 
