@@ -20,8 +20,12 @@ class_name Stage2D
 ## If you have a dark area and you do not handle Minimum quality, it's adviced to turn it on.[br][br]
 ## See [param Stage2D.lighting_force_hide_on_start] for more information.
 @export_flags("Minimum:1", "Medium:2", "Maximum:4") var lighting_show_on_quality = 6
+@export_group("Miscellaneous")
 ## If [code]true[/code], the pause menu cannot be opened.
 @export var disable_pause_menu: bool = false
+## If the level involves mouse cursor, you can uncheck this to prevent it from hiding on ready.[br]
+## You will still need to call [method SettingsManager.show_mouse] yourself in some cases.
+@export var hide_mouse_on_ready: bool = true
 
 var _is_stage_ready: bool
 var is_lighting_visible: bool = !lighting_force_hide_on_start
@@ -32,6 +36,8 @@ func _ready() -> void:
 	SettingsManager.settings_updated.connect(_update_lighting_visibility)
 	_update_lighting_visibility.call_deferred()
 	await get_tree().physics_frame
+	if hide_mouse_on_ready:
+		SettingsManager.hide_mouse()
 	while get_tree().is_paused():
 		await get_tree().physics_frame
 	for i in 5:
