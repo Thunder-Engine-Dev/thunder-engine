@@ -320,11 +320,17 @@ func _stop_all_musics_scene_changed() -> void:
 	all_musics_stopped.emit()
 
 
-func stop_all_sounds() -> void:
+func stop_all_sounds(include_1d: bool = false) -> void:
 	for i in GlobalViewport.get_children():
 		if i is AudioStreamPlayer2D || i is AudioStreamPlayer:
 			i.stop()
 			i.queue_free()
+	if include_1d:
+		for i in get_children():
+			if i is AudioStreamPlayer2D || i is AudioStreamPlayer:
+				if _music_channels.find_key(i) == null:
+					i.stop()
+					i.queue_free()
 
 func stop_audio_channel(channel: String) -> void:
 	if is_instance_valid(_audio_channels.get(channel)):
