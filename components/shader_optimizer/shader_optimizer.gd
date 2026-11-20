@@ -8,8 +8,10 @@ const SCAN_ROOT := "res://"
 
 var _shader_materials: Array[ShaderMaterial] = []
 var _particle_entries: Array[Dictionary] = []
+var _canvas_item_materials: Array[CanvasItemMaterial] = []
 var _seen_shader_keys: Dictionary = {}
 var _seen_particle_keys: Dictionary = {}
+var _seen_canvas_item_keys: Dictionary = {}
 
 var is_verbose: bool = ProjectSettings.get_setting("application/thunder_settings/verbose_shader_optimizing", false)
 
@@ -52,7 +54,9 @@ func _scan_dir(dir_path: String) -> void:
 
 func _register_tres(path: String) -> void:
 	var resource := load(path)
-	if resource is ShaderMaterial:
+	if resource is CanvasItemMaterial:
+		_register_canvas_item_material(resource)
+	elif resource is ShaderMaterial:
 		_register_shader_material(resource)
 	elif resource is ParticleProcessMaterial:
 		_register_particle_material(resource)
@@ -90,6 +94,16 @@ func _register_particle_material(material: Material, label: String = "") -> void
 		"label": label if label != "" else _particle_label(material),
 	})
 
+func _register_canvas_item_material(material: CanvasItemMaterial) -> void:
+	var key := "%d/%d/%s/%d/%d/%s" % [
+		material.blend_mode, material.light_mode, material.particles_animation,
+		material.particles_anim_h_frames, material.particles_anim_v_frames,
+		material.particles_anim_loop,
+	]
+	if _seen_canvas_item_keys.has(key):
+		return
+	_seen_canvas_item_keys[key] = true
+	_canvas_item_materials.append(material)
 
 func _shader_key(shader: Shader) -> String:
 	if shader.resource_path != "":
@@ -126,8 +140,8 @@ func _initialize_nodes() -> void:
 		var rect := ColorRect.new()
 		rect.name = "Shader_%d" % index
 		rect.size = Vector2(4, 4)
-		rect.position = Vector2(-64, index * 4)
-		rect.modulate.a = 0.0
+		rect.position = Vector2(floorf(index / 60.0) * 4, (index % 60) * 4)
+		rect.modulate.a = 0.05
 		rect.material = material
 		node_2d.add_child(rect)
 		index += 1
@@ -137,17 +151,33 @@ func _initialize_nodes() -> void:
 			print("[ShaderOptimizer] Optimizing particles: %s" % entry["label"])
 		var particles := GPUParticles2D.new()
 		particles.name = "Particles_%d" % index
-		particles.position = Vector2(-64, index * 4)
+		particles.position = Vector2(floorf(index / 60.0) * 4, (index % 60) * 4)
 		particles.amount = 4
 		particles.one_shot = true
 		particles.explosiveness = 1.0
 		particles.emitting = true
-		particles.modulate.a = 0.0
+		particles.modulate.a = 0.05
 		particles.process_material = entry["material"]
 		node_2d.add_child(particles)
 		index += 1
 
+	for material in _canvas_item_materials:
+		if is_verbose:
+			print("[ShaderOptimizer] Optimizing canvas item material: %s" % material.resource_path)
+		var rect := ColorRect.new()
+		rect.name = "CanvasItemMaterial_%d" % index
+		rect.size = Vector2(4, 4)
+		rect.position = Vector2(floorf(index / 60.0) * 4, (index % 60) * 4)
+		rect.modulate.a = 0.05
+		rect.material = material
+		node_2d.add_child(rect)
+		index += 1
+
 	print(
-		"[ShaderOptimizer] Done: %d shaders, %d particle materials."
-		% [_shader_materials.size(), _particle_entries.size()]
+		"[ShaderOptimizer] Done: %d shaders, %d particle materials, %d canvas item materials."
+		% [
+			_shader_materials.size(),
+			_particle_entries.size(),
+			_canvas_item_materials.size()
+		]
 	)
