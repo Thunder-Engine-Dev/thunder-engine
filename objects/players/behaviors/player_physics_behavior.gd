@@ -9,6 +9,7 @@ var _old_is_max_speed: bool
 var _platform_correction_cached: bool
 var _platform_correction_cache_result: bool
 var _old_is_on_floor: bool
+var _consistent_crouch_speed: bool
 
 
 func _ready() -> void:
@@ -100,12 +101,6 @@ func _accelerate(to: float, acce: float, delta: float) -> void:
 
 func _decelerate(dece: float, delta: float) -> void:
 	_accelerate(0, dece, delta)
-
-
-var _consistent_crouch_speed: bool
-
-const STOMP_SUBTICK_SPEED_THRESHOLD := 250.0
-const STOMP_SUBTICK_MAX := 4
 
 
 func _movement_x(delta: float) -> void:
@@ -661,11 +656,11 @@ func _get_enemy_stomp_velocity(enemy_attacked: Node) -> Vector2:
 
 func _stomp_subtick_check_loop_amount(player_velocity: Vector2, enemy_velocity: Vector2) -> int:
 	var relative_y_speed: float = abs(player_velocity.y) + abs(enemy_velocity.y)
-	if relative_y_speed < STOMP_SUBTICK_SPEED_THRESHOLD:
+	if relative_y_speed < player.stomp_subtick_speed_threshold:
 		return 1
 	return 1 + mini(
-		floori(relative_y_speed / STOMP_SUBTICK_SPEED_THRESHOLD) - 1,
-		STOMP_SUBTICK_MAX - 1
+		floori(relative_y_speed / player.stomp_subtick_speed_threshold) - 1,
+		player.stomp_subtick_max - 1
 	)
 
 

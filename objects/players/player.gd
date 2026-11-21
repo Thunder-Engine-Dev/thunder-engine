@@ -37,6 +37,7 @@ const RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
 
 @export_group("General")
 @export var suit: PlayerSuit
+## When starting the scene, exiting circle from the previous scene will center on the player 
 @export var circle_transition_on_self: bool = true
 @export_group("Physics")
 @export_enum("Left: -1", "Right: 1") var direction: int = 1:
@@ -44,13 +45,23 @@ const RUNOUT = preload("res://engine/objects/p_switch/p_switch_runout.wav")
 		direction = to
 		if !direction in [-1, 1]:
 			direction = [-1, 1].pick_random()
+## Y Speed threshold after which more than 1 stomp subticks are applied.[br]
+## The regular terminal falling player speed of 500.0 with default threshold will apply 2 subticks.[br]
+@export var stomp_subtick_speed_threshold: float = 250.0
+## Maximum count of stomp subticks in a single tick
+@export var stomp_subtick_max: int = 4
 @export_group("Control")
+## Set to override player's controls input map
 @export var control: PlayerControl = PlayerControl.new()
 @export_group("Death", "death_")
 @export var death_body: PackedScene = preload("res://engine/objects/players/deaths/player_death.tscn")
+## Override the standard death music with specified
 @export var death_music_override: AudioStream
 @export var death_music_ignore_pause: bool = false
+## Delay before the level restarts
 @export var death_wait_time: float = 3.5
+## Will trigger a game over when player dies with 0 lives. Set to [code]false[/code]
+## to go negative lives instead.
 @export var death_check_for_lives: bool = true
 ## Specify where to go after player's death. Leave empty to restart the current scene.
 @export_file("*.tscn", "*.scn") var death_jump_to_scene: String = ""
