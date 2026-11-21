@@ -440,6 +440,8 @@ func die(tags: Dictionary = {}, override_behavior: Callable = Callable()) -> voi
 	(func():
 		var _db: Node2D
 		if death_body:
+			if global_transform_previous.get_origin() == Vector2.ZERO:
+				global_transform_previous = global_transform
 			_db = NodeCreator.prepare_2d(death_body, self).bind_global_transform_previous().call_method(
 				func(db: Node2D) -> void:
 					db.wait_time = death_wait_time
