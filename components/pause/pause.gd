@@ -71,6 +71,7 @@ func toggle(no_resume: bool = false, no_sound_effect: bool = false) -> void:
 			SettingsManager.hide_mouse()
 	
 	get_tree().paused = opened if !_no_unpause else true
+	_set_screen_keep_on(!opened)
 	v_box_container.focused = false
 
 	for i in 2:
@@ -92,6 +93,7 @@ func reset_state() -> void:
 		if _prev_mouse_mode != Input.MOUSE_MODE_VISIBLE:
 			SettingsManager.hide_mouse()
 		get_tree().paused = false
+		_set_screen_keep_on(true)
 	
 	if is_instance_valid(autopause_timer_2):
 		Thunder._disconnect(autopause_timer_2.timeout, _autopause_toggle)
@@ -117,8 +119,10 @@ var autopause_timer_2: SceneTreeTimer
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_set_screen_keep_on(false)
 		_try_autopause()
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		_set_screen_keep_on(!opened)
 		await get_tree().physics_frame
 		if DisplayServer.window_can_draw():
 			if is_instance_valid(autopause_timer):
@@ -131,6 +135,13 @@ func _notification(what: int) -> void:
 		autopause_timer_2 = null
 		autopause_timer_2 = get_tree().create_timer(0.2)
 		Thunder._connect(autopause_timer_2.timeout, _autopause_toggle, CONNECT_ONE_SHOT)
+
+
+## Keep the screen awake only while the game is running.
+## If paused or out of focus, the system may go to sleep.
+func _set_screen_keep_on(enable: bool) -> void:
+	if DisplayServer.screen_is_kept_on() != enable:
+		DisplayServer.screen_set_keep_on(enable)
 
 
 func _try_autopause() -> void:
