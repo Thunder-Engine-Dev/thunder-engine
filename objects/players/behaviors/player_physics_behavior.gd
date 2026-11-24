@@ -550,6 +550,7 @@ func _process_collision_deferred(_dir: int, _on_cooldown: bool) -> void:
 	query.motion = vel
 	
 	var _already_processed: Array[int]
+	var _bumped_any: bool = false
 	
 	for i in player.get_shape_owners():
 		query.transform = (player.shape_owner_get_owner(i) as Node2D).global_transform
@@ -567,6 +568,23 @@ func _process_collision_deferred(_dir: int, _on_cooldown: bool) -> void:
 					if l.has_method(&"got_bumped"):
 						l.got_bumped.call_deferred(true)
 						_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
+						_bumped_any = true
+	
+	# Fallback: when the player only grazes a block's edge, the body is pushed out of it
+	# by the safe margin, so the shape query above sees no overlap even though the ceiling
+	# collision already stopped the player. Use the actual slide collisions in that case.
+	if _bumped_any: return
+	var up_dir: Vector2 = vel.normalized()
+	for i in player.get_slide_collision_count():
+		var collision: KinematicCollision2D = player.get_slide_collision(i)
+		if collision.get_normal().dot(up_dir) > -0.7: continue
+		var collider: Object = collision.get_collider()
+		if !is_instance_valid(collider) || !collider.has_method(&"got_bumped"): continue
+		var collider_id: int = collider.get_instance_id()
+		if collider_id in _already_processed: continue
+		_already_processed.append(collider_id)
+		collider.got_bumped.call_deferred(true)
+		_head_signal_cooldown = player.HEAD_SIGNAL_COOLDOWN
 
 
 #= Body
