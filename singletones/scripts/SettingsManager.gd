@@ -192,6 +192,7 @@ const GAMEPAD_HINT_SWITCH: PackedStringArray = [
 	# For switch, we generally consider pro controller only,
 	# because joycons are generally not recognized as a controller in default OS drivers.
 	# Also, their icons are different. 
+	# keyword "PowerA Core" is from https://github.com/nathanhoad/godot_input_helper. Not tested. 
 ]
 const GAMEPAD_HINT_OPTIONS: PackedStringArray = [
 	"xbox", "playstation", "switch", "raw",
