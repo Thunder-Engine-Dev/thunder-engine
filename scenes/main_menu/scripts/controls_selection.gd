@@ -77,6 +77,12 @@ func _text_process() -> void:
 				20,
 				[-1, 5, 16, 17, 18, 19, 48, 50]
 			)
+		"switch":
+			_gamepad_icon_logic(
+				preload("res://engine/scenes/main_menu/textures/gamepad_icons/switch_icons.png"),
+				15,
+				[-1, 5, 15, 18, 19, 48, 50]
+			)
 		_:
 			icon.visible = false
 			icon_2.visible = false
