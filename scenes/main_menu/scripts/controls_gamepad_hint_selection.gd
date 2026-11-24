@@ -6,7 +6,6 @@ const toggle_sound = preload("res://engine/scenes/main_menu/sounds/change.wav")
 
 
 func _ready() -> void:
-	SettingsManager.mouse_pressed.connect(_on_mouse_pressed)
 	_update_string()
 
 
@@ -46,9 +45,3 @@ func _cycle_hint(direction: int) -> void:
 
 func _update_string() -> void:
 	value.text = SettingsManager.get_gamepad_hint()
-
-
-func _on_mouse_pressed(index: MouseButton) -> void:
-	if !mouse_hovered || !focused || !get_parent().focused: return
-	if index != MOUSE_BUTTON_LEFT: return
-	_cycle_hint(1)
