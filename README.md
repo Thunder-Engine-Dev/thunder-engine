@@ -1,4 +1,5 @@
-<img src="https://rnx.su/s/ckNQqDTNRrb9r89/download/Frame_17.png">
+<!--<img src="https://rnx.su/s/ckNQqDTNRrb9r89/download/Frame_17.png">-->
+<h2 align="center">Thunder Engine</h2>
 
 ------------
 <h3 align="center">
@@ -19,6 +20,8 @@ Godot 4.4.1 on STABLE branch<br/>
 Godot 4.7-custom build on UNSTABLE branch<br/>
 </h3>
 
+You can get the custom 4.7 build with rendering patches and Opus support [here](https://github.com/Thunder-Engine-Dev/godot-thunder/releases). Using other builds for the main branch may make the game unstable.
+
 ------------
 <h2>How to use the Engine</h2>
 
@@ -29,7 +32,7 @@ Godot 4.7-custom build on UNSTABLE branch<br/>
 2. Install [Git](https://git-scm.com/downloads).
 3. Depending on the branch you chose, different software should be installed:
 - For stable branch, install [Godot Engine 4.4.1](https://godotengine.org/download/archive/4.4.1-stable/) (standard edition). If you are going to program with C#, please choose **Mono** edition.
-- For unstable branch, use the following link to download a patched Godot Engine with rendering fixes: https://nx.wtf/s/aVtZ?path=Software%2FGodot-TE (or [compile it yourself](https://github.com/Thunder-Engine-Dev/godot-te/tree/4.7))
+- For unstable branch, use the following link to download a patched Godot Engine with rendering fixes: https://github.com/Thunder-Engine-Dev/godot-thunder/releases (or [compile it yourself](https://github.com/Thunder-Engine-Dev/godot-thunder)).
 
 <h3>Installation</h3>
 
